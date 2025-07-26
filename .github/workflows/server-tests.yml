@@ -1,10 +1,14 @@
-name: Run Unit Tests
+name: Run Server Unit Tests
 
 on:
   push:
-    branches: [ server ]
+    branches: [ server, development, main ]
+    paths:
+      - 'server/**'
   pull_request:
-    branches: [ server ]
+    branches: [ server, development, main ]
+    paths:
+        - 'server/**'
 
 jobs:
   test:
@@ -20,10 +24,13 @@ jobs:
           dotnet-version: '8.0.x'
 
       - name: Restore dependencies
+        working-directory: ./server
         run: dotnet restore
 
       - name: Build solution
+        working-directory: ./server
         run: dotnet build --no-restore --configuration Release
 
       - name: Run unit tests
+        working-directory: ./server
         run: dotnet test --no-build --configuration Release --verbosity normal
