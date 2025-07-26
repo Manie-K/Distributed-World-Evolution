@@ -2,7 +2,7 @@
 Public repository for our diploma project. It consists of server and clients able to process virtual world evolution.
 
 ## Branches
-master (treated as "release")
+master (treated as "release")  
 *development*  
 server  
 client  
