@@ -8,7 +8,7 @@ on:
   pull_request:
     branches: [ server, development, main ]
     paths:
-        - 'server/**'
+      - 'server/**'
 
 jobs:
   test:
