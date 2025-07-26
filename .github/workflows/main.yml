@@ -3,7 +3,7 @@ name: Enforce PR Source Branch
 on:
   pull_request:
     branches:
-      - main
+      - master
 
 jobs:
   check_branch:
