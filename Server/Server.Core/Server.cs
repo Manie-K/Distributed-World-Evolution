@@ -27,7 +27,7 @@ namespace Server.Core
             TcpListener listener = new TcpListener(IPAddress.Any, 5000);
             listener.Start();
 
-            logger.Log("Main server started...", LogLevel.Info);
+            logger.Log("Server started...", LogLevel.Info);
 
             while(true)
             {
