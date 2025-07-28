@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Net.Sockets;
 using System.Text;
+using Server.Core.Frames;
 using Server.Shared.Logging;
 
 namespace Server.Core.Lobby
@@ -78,6 +79,7 @@ namespace Server.Core.Lobby
             }
         }
 
+        //@Temp
         private string GetMessageFromClient(TcpClient client)
         {
             byte[] buffer = new byte[1024];
@@ -87,11 +89,30 @@ namespace Server.Core.Lobby
             return msg;
         }
 
+        //@Temp
         private void SendMessageToClient(TcpClient client, string message)
         {
             byte[] data = Encoding.UTF8.GetBytes(message);
             NetworkStream stream = client.GetStream();
             stream.Write(data, 0, data.Length);
+        }
+
+        private void SendFrameToClient(TcpClient client, DataFrameBase frame)
+        {
+            using MemoryStream ms = new MemoryStream();
+            using BinaryWriter writer = new BinaryWriter(ms);
+
+        }
+
+        private void SendFrameToAllClients(DataFrameBase frame)
+        {
+            lock (clients)
+            {
+                foreach (var client in clients)
+                {
+                    SendFrameToClient(client, frame);
+                }
+            }
         }
     }
 }
