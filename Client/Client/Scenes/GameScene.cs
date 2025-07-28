@@ -4,11 +4,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Client;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Client
 {
@@ -19,6 +15,7 @@ namespace Client
         private SceneManager sceneManager;
         private AudioManager audioManager;
         private MouseState previousMouseState;
+        private KeyboardState previousKeyboardState;
         private Player player;
 
         public GameScene(ContentManager contentManager, SceneManager sceneManager, AudioManager audiomanager, Player player)
@@ -26,15 +23,14 @@ namespace Client
             this.contentManager = contentManager;
             this.sceneManager = sceneManager;
             this.BackGround = contentManager.Load<Texture2D>("UI/BG_Forest");
-            this.player = player;   
+            this.player = player;
             this.audioManager = audiomanager;
         }
 
         public void Load()
         {
-
+            // Możesz tu wrzucić dodatkowe dane do załadowania jeśli chcesz
         }
-
         public void Update(GameTime gameTime)
         {
             MouseState currentMouseState = Mouse.GetState();
@@ -43,11 +39,15 @@ namespace Client
             if (currentMouseState.LeftButton == ButtonState.Pressed && previousMouseState.LeftButton == ButtonState.Released)
             {
 
-
             }
 
-            player.Update(gameTime);
+            KeyboardState currentKeyboardState = Keyboard.GetState();
+
+
+            player.Update(gameTime, currentKeyboardState, previousKeyboardState);
+
             previousMouseState = currentMouseState;
+            previousKeyboardState = currentKeyboardState;
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -55,6 +55,5 @@ namespace Client
             spriteBatch.Draw(BackGround, new Rectangle(0, 0, 1280, 720), Color.White);
             player.Draw(spriteBatch);
         }
-
     }
 }

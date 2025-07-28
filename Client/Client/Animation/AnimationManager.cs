@@ -2,27 +2,54 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace Client
 {
     public class AnimationManager
     {
-        private Animation animation;
+        
+        private readonly AnimationTexturesLoader _AnimationtextureLoader;
+
+        private AnimationTexture AcctualAnimationTexture;
+        private int DefaultAnimationIndex;
+        private int AcctualAnimationPriorytet;
+
+        private int AcctualAnimationIndex;
+        private int AcctualAnimationDirectionIndex;
+        private bool shouldResetToIdle = false;
 
         private int counter;
         private int activeFrame;
-        private int interval = 8;
+        private int interval = 7;
 
-        public AnimationManager(Animation animation)
+        public AnimationManager(ref AnimationTexturesLoader AnimationtextureLoader)
         {
-            SetAnimation(animation);
+            _AnimationtextureLoader = AnimationtextureLoader;
+            DefaultAnimationIndex = 0;
+            AcctualAnimationDirectionIndex = 2;
+            SetIdleAnimation();
+
         }
 
-        public void SetAnimation(Animation newAnimation)
+        public void SetAnimation(int animationIndex, int index, int animationPriorytet, bool resetToIdle = true)
         {
-            animation = newAnimation;
-            activeFrame = 0;
-            counter = 0;
+            if (!(AcctualAnimationIndex == animationIndex && AcctualAnimationDirectionIndex == index) && animationPriorytet >= AcctualAnimationPriorytet)
+            {
+                
+                if (AcctualAnimationIndex != animationIndex)
+                {
+                    activeFrame = 0;
+                    counter = 0;
+                }
+
+                AcctualAnimationTexture = _AnimationtextureLoader.GetTexture(animationIndex, index);
+                AcctualAnimationIndex = animationIndex;
+                AcctualAnimationDirectionIndex = index;
+                AcctualAnimationPriorytet = animationPriorytet;
+
+                shouldResetToIdle = resetToIdle;
+            }
         }
 
         public void Update()
@@ -31,23 +58,48 @@ namespace Client
             if (counter > interval)
             {
                 counter = 0;
-                activeFrame = (activeFrame + 1) % animation.NumFrames;
+                activeFrame++;
+
+                if (activeFrame >= AcctualAnimationTexture.GetNumFrames())
+                {
+                    if (shouldResetToIdle) SetIdleAnimation();                 
+                    else activeFrame = 0;                  
+                }
+
             }
+        }
+
+        private void SetIdleAnimation()
+        {
+            AcctualAnimationTexture = _AnimationtextureLoader.GetTexture(DefaultAnimationIndex, AcctualAnimationDirectionIndex);
+            AcctualAnimationIndex = 0;
+            AcctualAnimationPriorytet = 1;
+            activeFrame = 0;
+            counter = 0;
+        }
+
+        public int GetAcctualAnimationIndex()
+        {
+            return AcctualAnimationIndex;
         }
 
         public Rectangle GetFrame()
         {
-            // Oblicz indeks absolutny w sprite sheet
-            int globalFrameIndex = animation.StartCol + animation.StartRow * animation.SheetColumns + activeFrame;
+            int globalFrameIndex = AcctualAnimationTexture.GetStarCol() + AcctualAnimationTexture.GetStartRow() * AcctualAnimationTexture.GetColNumbers() + activeFrame;
 
-            int col = globalFrameIndex % animation.SheetColumns;
-            int row = globalFrameIndex / animation.SheetColumns;
+            int col = globalFrameIndex % AcctualAnimationTexture.GetColNumbers();
+            int row = globalFrameIndex / AcctualAnimationTexture.GetColNumbers();
 
             return new Rectangle(
-                col * (int)animation.FrameSize.X,
-                row * (int)animation.FrameSize.Y,
-                (int)animation.FrameSize.X,
-                (int)animation.FrameSize.Y);
+                col * (int)AcctualAnimationTexture.GetFrameSize().X,
+                row * (int)AcctualAnimationTexture.GetFrameSize().Y,
+                (int)AcctualAnimationTexture.GetFrameSize().X,
+                (int)AcctualAnimationTexture.GetFrameSize().Y);
+        }
+
+        public Texture2D GetAcctualTexture()
+        {
+            return AcctualAnimationTexture.GetTexture();
         }
     }
 }

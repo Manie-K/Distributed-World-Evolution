@@ -22,7 +22,10 @@ namespace Client
         private Button RefreshButton;
         private MouseState previousMouseState;
         private AudioManager audioManager;
+        
+        //to raczej w gamescene trzeba robic dopiero 
         private Player player;
+        private AnimationTexturesLoader animationTexturesLoader;
 
         public LobbyScene(ContentManager contentManager, SceneManager sceneManager, AudioManager audiomanager, string PlayerName)
         {
@@ -34,8 +37,11 @@ namespace Client
             this.JoinButton = new Button(contentManager.Load<Texture2D>("UI/Buttons/JoinButton"), null, null, new Vector2(953, 240), 180, 70, new Color(255, 255, 128));
             this.RefreshButton = new Button(contentManager.Load<Texture2D>("UI/Buttons/RefreshButton"), null, null, new Vector2(953, 330), 180, 70, new Color(255, 255, 128));
             this.CreateButton = new Button(contentManager.Load<Texture2D>("UI/Buttons/CreateButton"), null, null, new Vector2(953, 420), 180, 70, new Color(255, 255, 128));
-            this.player = new Player(contentManager.Load<Texture2D>("Warrior_Sheet-Effect"), new Vector2(500, 300), Color.White, 
-                                     new Text(contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"),PlayerName,true,new Vector2(500, 300 - 110),70,40));
+
+            this.animationTexturesLoader = new AnimationTexturesLoader(contentManager);
+            this.player = new Player( new Vector2(500, 300), Color.White, 
+                                     new Text(contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"),PlayerName,true,new Vector2(500, 300 - 110),70,40), ref this.animationTexturesLoader);
+            
             this.audioManager = audiomanager;
         }
 

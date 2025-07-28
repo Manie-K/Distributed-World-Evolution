@@ -11,7 +11,7 @@ namespace Client
     public class ColoredSprite : ScaledSprite
     {
         public Color color;
-        public ColoredSprite(Texture2D texture, Vector2 position, Color color) : base(texture, position)
+        public ColoredSprite(Texture2D texture, Vector2 position, int width, int height, Color color) : base(texture, position, width, height)
         {
             this.color = color;
         }

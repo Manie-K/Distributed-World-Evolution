@@ -10,17 +10,22 @@ namespace Client
 {
     public class ScaledSprite : Sprite
     {
+        private int width;
+        private int height;
+
         public Rectangle Rect
         {
             get
             {
-                return new Rectangle((int)position.X, (int)position.Y, 125, 80);
+                return new Rectangle((int)position.X, (int)position.Y, width, height);
             }
+
         }
 
-        public ScaledSprite(Texture2D texture, Vector2 position) : base(texture, position)
+        public ScaledSprite(Texture2D texture, Vector2 position, int width, int height) : base(texture, position)
         {
-
+            this.width = width;
+            this.height = height;
         }
 
     }
