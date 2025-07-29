@@ -34,6 +34,8 @@
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.*" />
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="Content\Animations\EnemyPlant1\" />
+    <Folder Include="Content\Animations\Pig\" />
     <Folder Include="Content\Animations\Player\Attack\" />
     <Folder Include="Content\Animations\Player\Idle\" />
     <Folder Include="Content\Animations\Player\Run\" />

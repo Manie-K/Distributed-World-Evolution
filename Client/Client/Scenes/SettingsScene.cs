@@ -23,6 +23,7 @@ namespace Client
         private AudioManager audioManager;
         private Texture2D[] KeyBoardKeysImages;
         private Text[] KeyBoardKeysText;
+        private KeyboardState previousKeyboardState;
 
         public SettingsScene(ContentManager contentManager, SceneManager sceneManager, AudioManager AudioManager)
         {
@@ -54,6 +55,8 @@ namespace Client
             this.KeyBoardKeysText[3] = new Text(contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), "MENU", false, new Vector2(700, 100), 100, 60);
 
             this.BackGround = contentManager.Load<Texture2D>("UI/BG_Settings");
+
+            previousKeyboardState = Keyboard.GetState();
             this.audioManager = AudioManager;
         }
 
@@ -65,6 +68,7 @@ namespace Client
         public void Update(GameTime gameTime)
         {
             MouseState currentMouseState = Mouse.GetState();
+            KeyboardState currentKeyboardState = Keyboard.GetState(); 
             Vector2 position = new Vector2(currentMouseState.X, currentMouseState.Y);
 
             if (currentMouseState.LeftButton == ButtonState.Pressed && previousMouseState.LeftButton == ButtonState.Released)
@@ -80,8 +84,16 @@ namespace Client
                 if (SwitchButtons[1].GetRightButton().CheckLeftClick(position)) audioManager.IncreaseEffectVolume();
             }
 
+            if (currentKeyboardState.IsKeyDown(Keys.Escape) && previousKeyboardState.IsKeyUp(Keys.Escape))
+            {
+                sceneManager.RemoveScene();
+                audioManager.UnmuteAll();
+            }
+
             ExitButton.Update(position);
+
             previousMouseState = currentMouseState;
+            previousKeyboardState = currentKeyboardState;
         }
 
         public void Draw(SpriteBatch spriteBatch)

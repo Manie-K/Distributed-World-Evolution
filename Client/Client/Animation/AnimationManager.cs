@@ -23,10 +23,10 @@ namespace Client
         private int activeFrame;
         private int interval = 7;
 
-        public AnimationManager(ref AnimationTexturesLoader AnimationtextureLoader)
+        public AnimationManager(ref AnimationTexturesLoader AnimationtextureLoader, int DefaultAnimationIndex)
         {
             _AnimationtextureLoader = AnimationtextureLoader;
-            DefaultAnimationIndex = 0;
+            this.DefaultAnimationIndex = DefaultAnimationIndex;
             AcctualAnimationDirectionIndex = 2;
             SetIdleAnimation();
 
@@ -51,6 +51,29 @@ namespace Client
                 shouldResetToIdle = resetToIdle;
             }
         }
+
+        public void SetAnimationWithDuration(int animationIndex, int index, int animationPriorytet, int totalDuration, bool resetToIdle = true)
+        {
+            if (!(AcctualAnimationIndex == animationIndex && AcctualAnimationDirectionIndex == index) && animationPriorytet >= AcctualAnimationPriorytet)
+            {
+                if (AcctualAnimationIndex != animationIndex)
+                {
+                    activeFrame = 0;
+                    counter = 0;
+                }
+
+                AcctualAnimationTexture = _AnimationtextureLoader.GetTexture(animationIndex, index);
+                AcctualAnimationIndex = animationIndex;
+                AcctualAnimationDirectionIndex = index;
+                AcctualAnimationPriorytet = animationPriorytet;
+
+                shouldResetToIdle = resetToIdle;
+
+                int numFrames = AcctualAnimationTexture.GetNumFrames();
+                interval = Math.Max(1, totalDuration / numFrames);
+            }
+        }
+
 
         public void Update()
         {

@@ -1,26 +1,24 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO.Compression;
-using static System.Net.Mime.MediaTypeNames;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Client
 {
-
-    public class Player : ColoredSprite
+    public class EnemyPlant1 : ColoredSprite
     {
-        private float speed = 200f;
-        private Text text;
+        private float speed = 150f;
         private AnimationManager am;
         private int CurrentDirection;
 
-        public Player(Vector2 position, Color color, Text text, ref AnimationTexturesLoader ATL)
-            : base(null, position, 140, 108, color)
+        public EnemyPlant1(Vector2 position, Color color, ref AnimationTexturesLoader ATL)
+            : base(null, position, 100, 100, color)
         {
-            this.text = text;
-            am = new AnimationManager(ref ATL, 0);
+            am = new AnimationManager(ref ATL, 5);
             CurrentDirection = 2;
         }
 
@@ -54,27 +52,27 @@ namespace Client
             {
                 movement.Normalize();
                 position += movement * speed * delta;
-                am.SetAnimationWithDuration(1, CurrentDirection, 1, 36, false);
+                am.SetAnimationWithDuration(6, CurrentDirection, 1, 36, false);
             }
             else
             {
-                am.SetAnimationWithDuration(0, CurrentDirection, 1, 36);
+                am.SetAnimationWithDuration(5, CurrentDirection, 1, 36);
             }
 
 
             if (currentKeyboardState.IsKeyDown(Keys.Space))
             {
-                am.SetAnimationWithDuration(2, CurrentDirection, 2, 36, true);               
+                am.SetAnimationWithDuration(3, CurrentDirection, 2, 36, true);
             }
 
 
-            if (am.GetAcctualAnimationIndex() == 2)
+            if (am.GetAcctualAnimationIndex() == 3)
             {
                 speed = 70f;
-                am.SetAnimationWithDuration(2, CurrentDirection, 2, 36, true);
+                am.SetAnimationWithDuration(3, CurrentDirection, 2, 36, true);
             }
             else speed = 200f;
-            
+
 
             am.Update();
         }
@@ -82,7 +80,6 @@ namespace Client
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(am.GetAcctualTexture(), Rect, am.GetFrame(), Color.White);
-            text.Draw(spriteBatch);
         }
     }
 }
