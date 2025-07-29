@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Server.Core.Lobby;
 using Server.Shared.Logging;
+using Server.Shared.Messages;
 
 namespace Server.Core
 {
@@ -42,15 +43,14 @@ namespace Server.Core
 
         void HandleClientConnection(TcpClient client)
         {
-            NetworkStream stream = client.GetStream();
-
-            byte[] buffer = new byte[1024];
-            int byteCount = stream.Read(buffer, 0, buffer.Length);
-            string message = Encoding.UTF8.GetString(buffer, 0, byteCount).Trim();
+            IMessage message = MessageManager.RecvieMessage(client);
 
             //Creating new lobby
-            if (message.StartsWith("CREATE"))
+            if (message.MessageType == IMessageType.CreateLobby)
             {
+                CreateLobbyMessage createLobbyMessage = (CreateLobbyMessage)message;
+
+                //TODO: validate message; transfer data from message to lobby
                 int lobbyId = lobbyManager.CreateAndInitialiseLobby();
                 try
                 {
@@ -64,28 +64,29 @@ namespace Server.Core
             }
 
             //Joining existing lobby
-            else if (message.StartsWith("JOIN"))
+            else if (message.MessageType == IMessageType.JoinLobby)
             {
-                string[] parts = message.Split(' ');
-                if (parts.Length >= 2 && int.TryParse(parts[1], out int joinId))
+                JoinLobbyMessage createLobbyMessage = (JoinLobbyMessage)message;
+
+                //TODO: change lobby id to be dynamic, not hardcoded
+                int lobbyId = 1;
+                try
                 {
-                    try
-                    {
-                        lobbyManager.AddUserToLobby(joinId, client);
-                    }
-                    catch (Exception ex)
-                    {
-                        logger.Log(ex, LogLevel.Error);
-                        client.Close();
-                    }
+                    lobbyManager.AddUserToLobby(lobbyId, client);
+                }
+                catch (Exception ex)
+                {
+                    logger.Log(ex, LogLevel.Error);
+                    client.Close();
                 }
             }
+
+            //Else
             else
             {
-                byte[] error = Encoding.UTF8.GetBytes("Invalid command. Use CREATE or JOIN <id>.\n");
-                stream.Write(error, 0, error.Length);
                 client.Close();
             }
+
         }
     }
 }

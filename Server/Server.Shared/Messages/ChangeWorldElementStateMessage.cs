@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Server.Shared.Messages
 {
-    public class ChangeWorldElementStateMessage : IMessageBuilder
+    public class ChangeWorldElementStateMessage : IMessage
     {
-        public string MessageType => "ChangeWorldElementState";
+        public IMessageType MessageType => IMessageType.ChangeWorldElementState;
 
         //TODO: add properties for world element state change
         public Guid GUID { get; set; }
@@ -22,11 +22,11 @@ namespace Server.Shared.Messages
         {
             var payload = new
             {
-                type = MessageType,
-                guid = GUID.ToString(),
-                elementaName = ElementName,
-                elementType = ElementType,
-                health = Health,
+                message_type = MessageType,
+                element_guid = GUID.ToString(),
+                element_name = ElementName,
+                element_type = ElementType,
+                element_health = Health,
                 // Add other properties as needed
             };
 

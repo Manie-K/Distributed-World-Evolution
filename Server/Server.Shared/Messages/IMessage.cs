@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Server.Shared.Messages
 {
-    public interface IMessageBuilder
+    public interface IMessage
     {
-        string MessageType { get; }
+        IMessageType MessageType { get; }
         string BuildJson();
     }
 }

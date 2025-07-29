@@ -3,24 +3,27 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.Sockets;
 using System.Text;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace Server.Shared.Messages
 {
     public class MessageManager
     {
-        static object RecvieMessage(IMessageBuilder message, TcpClient client)
+        public static IMessage RecvieMessage(TcpClient client)
         {
             byte[] buffer = new byte[1024];
             NetworkStream stream = client.GetStream();
 
             int count = stream.Read(buffer, 0, buffer.Length);
-            string msg = Encoding.UTF8.GetString(buffer, 0, count);
+            string stringMessage = Encoding.UTF8.GetString(buffer, 0, count);
 
-            return msg;
+            IMessage message = JsonSerializer.Deserialize<IMessage>(stringMessage);
+
+            return message;
         }
 
-        static bool SendMessage(IMessageBuilder message, TcpClient client)
+        public static bool SendMessage(IMessage message, TcpClient client)
         {
             try
             {

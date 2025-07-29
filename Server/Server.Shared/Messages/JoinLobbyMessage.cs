@@ -7,14 +7,13 @@ using System.Threading.Tasks;
 
 namespace Server.Shared.Messages
 {
-    public class ChangeUserStateMessage : IMessage
+    public class JoinLobbyMessage : IMessage
     {
-        public IMessageType MessageType => IMessageType.ChangeUserState;
+        public IMessageType MessageType => IMessageType.JoinLobby;
 
-        //TODO: add properties for user state change
-        public Guid UserGUID { get; set; }
-        public string UserName { get; set; }
-        public int Health { get; set; }
+        //TODO: add properties for lobby joining
+        public Guid LobbyGUID { get; set; }
+        public string LobbyName { get; set; }
 
 
         public string BuildJson()
@@ -22,9 +21,8 @@ namespace Server.Shared.Messages
             var payload = new
             {
                 message_type = MessageType,
-                user_guid = UserGUID.ToString(),
-                user_name = UserName,
-                user_health = Health,
+                user_guid = LobbyGUID.ToString(),
+                lobby_name = LobbyName,
                 // Add other properties as needed
             };
 

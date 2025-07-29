@@ -7,13 +7,13 @@ using System.Threading.Tasks;
 
 namespace Server.Shared.Messages
 {
-    public class CreateLobbyMessage : IMessageBuilder
+    public class CreateLobbyMessage : IMessage
     {
-        public string MessageType => "CreateLobby";
+        public IMessageType MessageType => IMessageType.CreateLobby;
 
         //TODO: add properties for lobby creation
         //Question: How to add modules?
-        public Guid GUID { get; set; }
+        public Guid LobbyGUID { get; set; }
         public string LobbyName { get; set; }
         public int MaxPlayers { get; set; }
 
@@ -22,9 +22,10 @@ namespace Server.Shared.Messages
         {
             var payload = new
             {
-                type = MessageType,
-                lobbyName = LobbyName,
-                maxPlayers = MaxPlayers
+                message_type = MessageType,
+                lobby_guid = LobbyGUID.ToString(),
+                lobby_name = LobbyName,
+                max_players = MaxPlayers
                 // Add other properties as needed
             };
 
