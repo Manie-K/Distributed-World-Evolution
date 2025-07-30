@@ -9,11 +9,12 @@ using System.Threading.Tasks;
 
 namespace Client
 {
-    public class EnemyPlant1 : Character
+    public class Slime3 : Character
     {
 
-        public EnemyPlant1(Vector2 position, Color color, ref AnimationTexturesLoader ATL)
-            : base(position, color, 100, 100, 150f, ref ATL, 5)
+
+        public Slime3(Vector2 position, Color color, ref AnimationTexturesLoader ATL)
+            : base(position, color, 100, 100, 150f, ref ATL, 34)
         {
 
         }
@@ -48,24 +49,24 @@ namespace Client
             {
                 movement.Normalize();
                 position += movement * speed * delta;
-                am.SetAnimationWithDuration(6, CurrentDirection, 1, 36, false);
+                am.SetAnimationWithDuration(35, CurrentDirection, 1, 36, false);
             }
             else
             {
-                am.SetAnimationWithDuration(5, CurrentDirection, 1, 36);
+                am.SetAnimationWithDuration(34, CurrentDirection, 1, 36);
             }
 
 
             if (currentKeyboardState.IsKeyDown(Keys.Space))
             {
-                am.SetAnimationWithDuration(3, CurrentDirection, 2, 36, true);
+                am.SetAnimationWithDuration(32, CurrentDirection, 2, 36, true);
             }
 
 
-            if (am.GetAcctualAnimationIndex() == 3)
+            if (am.GetAcctualAnimationIndex() == 32)
             {
                 speed = 70f;
-                am.SetAnimationWithDuration(3, CurrentDirection, 2, 36, true);
+                am.SetAnimationWithDuration(32, CurrentDirection, 2, 36, true);
             }
             else speed = 200f;
 

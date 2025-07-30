@@ -9,20 +9,16 @@ using System.Threading.Tasks;
 
 namespace Client
 {
-    public class BrownRabbit : ColoredSprite
+    public class BrownRabbit : Character
     {
-        private float speed = 150f;
-        private AnimationManager am;
-        private int CurrentDirection;
 
         public BrownRabbit(Vector2 position, Color color, ref AnimationTexturesLoader ATL)
-            : base(null, position, 192, 192, color)
+            : base(position, color, 192, 192, 150f, ref ATL, 14)
         {
-            am = new AnimationManager(ref ATL, 14);
-            CurrentDirection = 2;
+
         }
 
-        public void Update(GameTime gameTime, KeyboardState currentKeyboardState, KeyboardState previousKeyboardState)
+        public override void Update(GameTime gameTime, KeyboardState currentKeyboardState, KeyboardState previousKeyboardState)
         {
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             Vector2 movement = Vector2.Zero;

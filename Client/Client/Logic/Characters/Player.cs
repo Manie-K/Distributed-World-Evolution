@@ -9,22 +9,19 @@ using static System.Net.Mime.MediaTypeNames;
 namespace Client
 {
 
-    public class Player : ColoredSprite
+    public class Player : Character
     {
-        private float speed = 200f;
+
         private Text text;
-        private AnimationManager am;
-        private int CurrentDirection;
 
         public Player(Vector2 position, Color color, Text text, ref AnimationTexturesLoader ATL)
-            : base(null, position, 140, 108, color)
+            : base(position, color, 140, 108, 150f, ref ATL, 0)
         {
             this.text = text;
-            am = new AnimationManager(ref ATL, 0);
-            CurrentDirection = 2;
+
         }
 
-        public void Update(GameTime gameTime, KeyboardState currentKeyboardState, KeyboardState previousKeyboardState)
+        public override void Update(GameTime gameTime, KeyboardState currentKeyboardState, KeyboardState previousKeyboardState)
         {
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             Vector2 movement = Vector2.Zero;
