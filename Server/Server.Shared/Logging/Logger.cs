@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Server.Shared.Logging
 {
-    //TODO: Refactor
+    //TODO: Refactor logger. Decide where it belongs, where it outputs too etc. Multiple loggers support available?
     public class Logger : ILogger
     {
         public void Log(string message, LogLevel level)
