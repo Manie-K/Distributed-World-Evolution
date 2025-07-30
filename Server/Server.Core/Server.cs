@@ -38,12 +38,14 @@ namespace Server.Core
                 //1. ThreadPool.QueueUserWorkItem(HandleClientConnection, client);
                 //2. Convert it into async method
                 Task.Factory.StartNew(() => HandleClientConnection(client), TaskCreationOptions.LongRunning); //3.
+                logger.Log("New client joined server.", LogLevel.Info);
+                MessageManager.SendMessage(client, new StringMessage("Welcome to the server!"));
             }
         }
 
         void HandleClientConnection(TcpClient client)
         {
-            IMessage message = MessageManager.RecvieMessage(client);
+            IMessage message = MessageManager.ReceiveMessage(client);
 
             //Creating new lobby
             if (message.MessageType == IMessageType.CreateLobby)

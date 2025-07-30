@@ -14,17 +14,17 @@ namespace Server.Shared.Messages
         //TODO: add properties for user state change
         public Guid UserGUID { get; set; }
         public string UserName { get; set; }
-        public int Health { get; set; }
+        public int UserHealth { get; set; }
 
 
         public string BuildJson()
         {
             var payload = new
             {
-                message_type = MessageType,
-                user_guid = UserGUID.ToString(),
-                user_name = UserName,
-                user_health = Health,
+                MessageType = MessageType,
+                UserGUID = UserGUID.ToString(),
+                UserName = UserName,
+                UserHealth = UserHealth,
                 // Add other properties as needed
             };
 

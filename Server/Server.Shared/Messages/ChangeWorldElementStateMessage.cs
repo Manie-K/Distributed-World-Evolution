@@ -12,21 +12,21 @@ namespace Server.Shared.Messages
         public IMessageType MessageType => IMessageType.ChangeWorldElementState;
 
         //TODO: add properties for world element state change
-        public Guid GUID { get; set; }
+        public Guid ElementGUID { get; set; }
         public string ElementName { get; set; }
         public string ElementType { get; set; }
-        public int Health { get; set; }
+        public int ElementHealth { get; set; }
 
 
         public string BuildJson()
         {
             var payload = new
             {
-                message_type = MessageType,
-                element_guid = GUID.ToString(),
-                element_name = ElementName,
-                element_type = ElementType,
-                element_health = Health,
+                MessageType = MessageType,
+                ElementGUID = ElementGUID.ToString(),
+                ElementName = ElementName,
+                ElementType = ElementType,
+                ElementHealth = ElementHealth,
                 // Add other properties as needed
             };
 

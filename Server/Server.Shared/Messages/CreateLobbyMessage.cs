@@ -13,7 +13,6 @@ namespace Server.Shared.Messages
 
         //TODO: add properties for lobby creation
         //Question: How to add modules?
-        public Guid LobbyGUID { get; set; }
         public string LobbyName { get; set; }
         public int MaxPlayers { get; set; }
 
@@ -22,10 +21,9 @@ namespace Server.Shared.Messages
         {
             var payload = new
             {
-                message_type = MessageType,
-                lobby_guid = LobbyGUID.ToString(),
-                lobby_name = LobbyName,
-                max_players = MaxPlayers
+                MessageType = MessageType,
+                LobbyName = LobbyName,
+                MaxPlayers = MaxPlayers
                 // Add other properties as needed
             };
 

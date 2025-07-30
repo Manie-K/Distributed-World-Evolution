@@ -13,7 +13,8 @@ namespace Server.Shared.Messages
         CreateLobby,
         ChangeWorldElementState,
         ChangeUserState,
-        JoinLobby
+        JoinLobby,
+        String
 
     }
 }

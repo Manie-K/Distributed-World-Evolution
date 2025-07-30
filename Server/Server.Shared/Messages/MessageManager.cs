@@ -5,32 +5,55 @@ using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Server.Shared.Logging;
 
 namespace Server.Shared.Messages
 {
     public class MessageManager
     {
-        public static IMessage RecvieMessage(TcpClient client)
+        public static IMessage ReceiveMessage(TcpClient client)
         {
-            byte[] buffer = new byte[1024];
             NetworkStream stream = client.GetStream();
+            byte[] lengthBuffer = new byte[4];
+            stream.Read(lengthBuffer, 0, 4);
+            int messageLength = BitConverter.ToInt32(lengthBuffer, 0);
 
-            int count = stream.Read(buffer, 0, buffer.Length);
-            string stringMessage = Encoding.UTF8.GetString(buffer, 0, count);
+            byte[] messageBuffer = new byte[messageLength];
+            int totalRead = 0;
+            while (totalRead < messageLength)
+            {
+                int read = stream.Read(messageBuffer, totalRead, messageLength - totalRead);
+                if (read == 0)
+                    throw new IOException("Connection with sender lost.");
+                totalRead += read;
+            }
 
-            IMessage message = JsonSerializer.Deserialize<IMessage>(stringMessage);
+            string json = Encoding.UTF8.GetString(messageBuffer);
+            using JsonDocument document = JsonDocument.Parse(json);
+            JsonElement root = document.RootElement;
+            string messageType = root.GetProperty("MessageType").GetString();
+
+            IMessage message = messageType switch
+            {
+                "CreateLobby" => JsonSerializer.Deserialize<CreateLobbyMessage>(json),
+                "ChangeWorldElementState" => JsonSerializer.Deserialize<ChangeWorldElementStateMessage>(json),
+                "String" => JsonSerializer.Deserialize<StringMessage>(json),
+                "ChangeUserState" => JsonSerializer.Deserialize<ChangeUserStateMessage>(json),
+                "JoinLobby" => JsonSerializer.Deserialize<JoinLobbyMessage>(json),
+                _ => throw new NotSupportedException($"Undefined message type: {messageType}")
+            };
 
             return message;
         }
 
-        public static bool SendMessage(IMessage message, TcpClient client)
+        public static bool SendMessage(TcpClient client, IMessage message)
         {
             try
             {
                 if (client == null || !client.Connected) return false;
 
-                NetworkStream stream = client.GetStream();
                 string json = message.BuildJson();
+                NetworkStream stream = client.GetStream();
 
                 byte[] messageBytes = Encoding.UTF8.GetBytes(json);
                 byte[] lengthPrefix = BitConverter.GetBytes(messageBytes.Length);

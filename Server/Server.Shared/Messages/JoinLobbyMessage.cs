@@ -20,9 +20,9 @@ namespace Server.Shared.Messages
         {
             var payload = new
             {
-                message_type = MessageType,
-                user_guid = LobbyGUID.ToString(),
-                lobby_name = LobbyName,
+                MessageType = MessageType,
+                LobbyGUID = LobbyGUID.ToString(),
+                LobbyName = LobbyName,
                 // Add other properties as needed
             };
 
