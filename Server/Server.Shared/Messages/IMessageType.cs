@@ -14,7 +14,6 @@ namespace Server.Shared.Messages
         ChangeWorldElementState,
         ChangeUserState,
         JoinLobby,
-        String
-
+        DefaultMessage
     }
 }

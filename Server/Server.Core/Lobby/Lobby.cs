@@ -9,6 +9,7 @@ namespace Server.Core.Lobby
 {
     internal class Lobby : ILobby
     {
+        //TODO: add modules when they are implemented
         /// <inheritdoc/>
         public int LobbyId { get; private init; }
 
@@ -37,7 +38,7 @@ namespace Server.Core.Lobby
                 clients.Add(client);
             }
 
-            MessageManager.SendMessage(client, new StringMessage($"You have joined lobby {LobbyId}.\n"));
+            MessageManager.SendMessage(client, new DefaultMessage($"You have joined lobby {LobbyId}.\n"));
         }
 
         public void Run()

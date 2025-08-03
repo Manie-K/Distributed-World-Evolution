@@ -37,7 +37,7 @@ namespace Server.Shared.Messages
             {
                 "CreateLobby" => JsonSerializer.Deserialize<CreateLobbyMessage>(json),
                 "ChangeWorldElementState" => JsonSerializer.Deserialize<ChangeWorldElementStateMessage>(json),
-                "String" => JsonSerializer.Deserialize<StringMessage>(json),
+                "String" => JsonSerializer.Deserialize<DefaultMessage>(json),
                 "ChangeUserState" => JsonSerializer.Deserialize<ChangeUserStateMessage>(json),
                 "JoinLobby" => JsonSerializer.Deserialize<JoinLobbyMessage>(json),
                 _ => throw new NotSupportedException($"Undefined message type: {messageType}")

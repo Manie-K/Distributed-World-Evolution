@@ -12,8 +12,7 @@ namespace Server.Shared.Messages
         public IMessageType MessageType => IMessageType.JoinLobby;
 
         //TODO: add properties for lobby joining
-        public Guid LobbyGUID { get; set; }
-        public string LobbyName { get; set; }
+        public int LobbyID { get; set; }
 
 
         public string BuildJson()
@@ -21,9 +20,8 @@ namespace Server.Shared.Messages
             var payload = new
             {
                 MessageType = MessageType,
-                LobbyGUID = LobbyGUID.ToString(),
-                LobbyName = LobbyName,
-                // Add other properties as needed
+                LobbyID = LobbyID
+                //TODO: add other properties as needed
             };
 
             return JsonSerializer.Serialize(payload);

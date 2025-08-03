@@ -6,20 +6,23 @@ using System.Threading.Tasks;
 
 namespace Server.Shared.Messages
 {
-    public class StringMessage : IMessage
+    public class DefaultMessage : IMessage
     {
-        public IMessageType MessageType => IMessageType.String;
+        public IMessageType MessageType => IMessageType.DefaultMessage;
         /// <summary>
         /// The message content.
         /// </summary>
         public string MessageContent { get; set; }
 
-        public StringMessage()
+        public DefaultMessage()
         {}
 
-        public StringMessage(string messageContent)
+        public DefaultMessage(object messageContent)
         {
-            MessageContent = messageContent ?? throw new ArgumentNullException(nameof(messageContent), "String message content cannot be null.");
+            if (messageContent == null)
+                throw new ArgumentNullException(nameof(messageContent), "Message content cannot be null.");
+
+            MessageContent = messageContent.ToString();        
         }
 
         /// <summary>

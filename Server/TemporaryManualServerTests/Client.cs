@@ -21,7 +21,7 @@ class Client
             Thread receiveThread = new Thread(() =>
             {
                 IMessage message = MessageManager.ReceiveMessage(client);
-                StringMessage stringMessage = (StringMessage)message;
+                DefaultMessage stringMessage = (DefaultMessage)message;
                 Console.WriteLine($"[Client] Received message: {stringMessage.MessageContent}");
             });
             receiveThread.Start();
