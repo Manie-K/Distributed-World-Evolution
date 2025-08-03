@@ -25,7 +25,7 @@ namespace Server.Shared.Messages
                 UserGUID = UserGUID.ToString(),
                 UserName = UserName,
                 UserHealth = UserHealth,
-                // Add other properties as needed
+                //TODO: add other properties as needed
             };
 
             return JsonSerializer.Serialize(payload);

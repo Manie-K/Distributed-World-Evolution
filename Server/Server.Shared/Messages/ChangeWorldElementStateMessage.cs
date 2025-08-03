@@ -27,7 +27,7 @@ namespace Server.Shared.Messages
                 ElementName = ElementName,
                 ElementType = ElementType,
                 ElementHealth = ElementHealth,
-                // Add other properties as needed
+                //TODO: add other properties as needed
             };
 
             return JsonSerializer.Serialize(payload);

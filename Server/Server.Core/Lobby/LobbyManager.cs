@@ -17,7 +17,8 @@ namespace Server.Core.Lobby
             this.logger = logger;
         }
 
-        public int CreateAndInitialiseLobby()
+        //TODO: add modules when they are implemented
+        public int CreateAndInitializeLobby()
         {
             int lobbyId;
             

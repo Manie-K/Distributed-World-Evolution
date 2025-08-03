@@ -12,9 +12,11 @@ namespace Server.Shared.Messages
         public IMessageType MessageType => IMessageType.CreateLobby;
 
         //TODO: add properties for lobby creation
-        //Question: How to add modules?
         public string LobbyName { get; set; }
         public int MaxPlayers { get; set; }
+
+        //TODO: change when modules are implemented
+        Dictionary<string, string> Modules { get; set; } = new Dictionary<string, string>();
 
 
         public string BuildJson()
@@ -23,8 +25,9 @@ namespace Server.Shared.Messages
             {
                 MessageType = MessageType,
                 LobbyName = LobbyName,
-                MaxPlayers = MaxPlayers
-                // Add other properties as needed
+                MaxPlayers = MaxPlayers,
+                Modules = Modules
+                //TODO: add other properties as needed
             };
 
             return JsonSerializer.Serialize(payload);
