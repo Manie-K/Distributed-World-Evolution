@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using System.Net.Sockets;
 using System.Text;
+using Server.Core.Frames;
 using Server.Shared.Logging;
 using Server.Shared.Messages;
 
@@ -84,7 +85,27 @@ namespace Server.Core.Lobby
 
         private void SendMessageToClient(TcpClient client, IMessage message)
         {
-            MessageManager.SendMessage(client, message);
+            byte[] data = Encoding.UTF8.GetBytes(message);
+            NetworkStream stream = client.GetStream();
+            stream.Write(data, 0, data.Length);
+        }
+
+        private void SendFrameToClient(TcpClient client, DataFrameBase frame)
+        {
+            using MemoryStream ms = new MemoryStream();
+            using BinaryWriter writer = new BinaryWriter(ms);
+
+        }
+
+        private void SendFrameToAllClients(DataFrameBase frame)
+        {
+            lock (clients)
+            {
+                foreach (var client in clients)
+                {
+                    SendFrameToClient(client, frame);
+                }
+            }
         }
     }
 }
