@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace Server.Shared.Messages
 {
-    public class JoinLobbyMessage : IMessage
+    public class JoinLobbyMessage : MessageBase
     {
-        public IMessageType MessageType => IMessageType.JoinLobby;
+        public MessageType MessageType => MessageType.JoinLobby;
 
         //TODO: add properties for lobby joining
         public int LobbyID { get; set; }
 
 
-        public string BuildJson()
+        public override string BuildJson()
         {
             var payload = new
             {

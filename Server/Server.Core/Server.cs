@@ -45,10 +45,10 @@ namespace Server.Core
 
         void HandleClientConnection(TcpClient client)
         {
-            IMessage message = MessageManager.ReceiveMessage(client);
+            MessageBase message = MessageManager.ReceiveMessage(client);
 
             //Creating new lobby
-            if (message.MessageType == IMessageType.CreateLobby)
+            if (message.MessageType == MessageType.CreateLobby)
             {
                 CreateLobbyMessage createLobbyMessage = (CreateLobbyMessage)message;
 
@@ -66,7 +66,7 @@ namespace Server.Core
             }
 
             //Joining existing lobby
-            else if (message.MessageType == IMessageType.JoinLobby)
+            else if (message.MessageType == MessageType.JoinLobby)
             {
                 JoinLobbyMessage joinLobbyMessage = (JoinLobbyMessage)message;
 

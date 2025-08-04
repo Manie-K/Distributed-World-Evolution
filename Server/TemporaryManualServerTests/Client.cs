@@ -20,7 +20,7 @@ class Client
             //Thread receiving messages
             Thread receiveThread = new Thread(() =>
             {
-                IMessage message = MessageManager.ReceiveMessage(client);
+                MessageBase message = MessageManager.ReceiveMessage(client);
                 DefaultMessage stringMessage = (DefaultMessage)message;
                 Console.WriteLine($"[Client] Received message: {stringMessage.MessageContent}");
             });

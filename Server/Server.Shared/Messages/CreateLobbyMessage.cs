@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Server.Shared.Messages
 {
-    public class CreateLobbyMessage : IMessage
+    public class CreateLobbyMessage : MessageBase
     {
-        public IMessageType MessageType => IMessageType.CreateLobby;
+        public MessageType MessageType => MessageType.CreateLobby;
 
         //TODO: add properties for lobby creation
         public string LobbyName { get; set; }
@@ -19,7 +19,7 @@ namespace Server.Shared.Messages
         Dictionary<string, string> Modules { get; set; } = new Dictionary<string, string>();
 
 
-        public string BuildJson()
+        public override string BuildJson()
         {
             var payload = new
             {
