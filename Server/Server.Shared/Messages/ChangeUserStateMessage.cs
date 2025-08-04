@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Server.Shared.Messages
 {
-    public class ChangeUserStateMessage : IMessage
+    public class ChangeUserStateMessage : MessageBase
     {
-        public IMessageType MessageType => IMessageType.ChangeUserState;
+        public MessageType MessageType => MessageType.ChangeUserState;
 
         //TODO: add properties for user state change
         public Guid UserGUID { get; set; }
@@ -17,7 +17,7 @@ namespace Server.Shared.Messages
         public int UserHealth { get; set; }
 
 
-        public string BuildJson()
+        public override string BuildJson()
         {
             var payload = new
             {

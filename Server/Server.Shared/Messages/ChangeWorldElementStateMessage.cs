@@ -7,9 +7,9 @@ using System.Threading.Tasks;
 
 namespace Server.Shared.Messages
 {
-    public class ChangeWorldElementStateMessage : IMessage
+    public class ChangeWorldElementStateMessage : MessageBase
     {
-        public IMessageType MessageType => IMessageType.ChangeWorldElementState;
+        public MessageType MessageType => MessageType.ChangeWorldElementState;
 
         //TODO: add properties for world element state change
         public Guid ElementGUID { get; set; }
@@ -18,7 +18,7 @@ namespace Server.Shared.Messages
         public int ElementHealth { get; set; }
 
 
-        public string BuildJson()
+        public override string BuildJson()
         {
             var payload = new
             {

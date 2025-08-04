@@ -11,7 +11,7 @@ namespace Server.Shared.Messages
 {
     public class MessageManager
     {
-        public static IMessage ReceiveMessage(TcpClient client)
+        public static MessageBase ReceiveMessage(TcpClient client)
         {
             NetworkStream stream = client.GetStream();
             byte[] lengthBuffer = new byte[4];
@@ -33,7 +33,7 @@ namespace Server.Shared.Messages
             JsonElement root = document.RootElement;
             string messageType = root.GetProperty("MessageType").GetString();
 
-            IMessage message = messageType switch
+            MessageBase message = messageType switch
             {
                 "CreateLobby" => JsonSerializer.Deserialize<CreateLobbyMessage>(json),
                 "ChangeWorldElementState" => JsonSerializer.Deserialize<ChangeWorldElementStateMessage>(json),
@@ -46,7 +46,7 @@ namespace Server.Shared.Messages
             return message;
         }
 
-        public static bool SendMessage(TcpClient client, IMessage message)
+        public static bool SendMessage(TcpClient client, MessageBase message)
         {
             try
             {

@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace Server.Shared.Messages
 {
-    public class DefaultMessage : IMessage
+    public class DefaultMessage : MessageBase
     {
-        public IMessageType MessageType => IMessageType.DefaultMessage;
+        public MessageType MessageType => MessageType.DefaultMessage;
         /// <summary>
         /// The message content.
         /// </summary>
@@ -29,7 +29,7 @@ namespace Server.Shared.Messages
         /// Builds the JSON representation of the message.
         /// </summary>
         /// <returns>A JSON string representing the message.</returns>
-        public string BuildJson()
+        public override string BuildJson()
         {
             var payload = new
             {

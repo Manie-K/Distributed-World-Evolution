@@ -63,7 +63,7 @@ namespace Server.Core.Lobby
                     if (client.Available > 0)
                     {
                         //Chat communication between users
-                        IMessage message = GetMessageFromClient(client);
+                        MessageBase message = GetMessageFromClient(client);
 
                         foreach (var c in clients)
                         {
@@ -77,14 +77,14 @@ namespace Server.Core.Lobby
             }
         }
 
-        private IMessage GetMessageFromClient(TcpClient client)
+        private MessageBase GetMessageFromClient(TcpClient client)
         {
-            IMessage message = MessageManager.ReceiveMessage(client);
+            MessageBase message = MessageManager.ReceiveMessage(client);
 
             return message;
         }
 
-        private void SendMessageToClient(TcpClient client, IMessage message)
+        private void SendMessageToClient(TcpClient client, MessageBase message)
         {
             MessageManager.SendMessage(client, message);
         }
