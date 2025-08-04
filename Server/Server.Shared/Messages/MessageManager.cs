@@ -31,19 +31,28 @@ namespace Server.Shared.Messages
             string json = Encoding.UTF8.GetString(messageBuffer);
             using JsonDocument document = JsonDocument.Parse(json);
             JsonElement root = document.RootElement;
-            string messageType = root.GetProperty("MessageType").GetString();
+            string messageTypeString = root.GetProperty("MessageTypeEnum")
+                                     .GetString();
 
-            MessageBase message = messageType switch
+            MessageBase? message;
+            if(Enum.TryParse(messageTypeString, out MessageTypeEnum parsedMessageType))
             {
-                "CreateLobby" => JsonSerializer.Deserialize<CreateLobbyMessage>(json),
-                "ChangeWorldElementState" => JsonSerializer.Deserialize<ChangeWorldElementStateMessage>(json),
-                "String" => JsonSerializer.Deserialize<DefaultMessage>(json),
-                "ChangeUserState" => JsonSerializer.Deserialize<ChangeUserStateMessage>(json),
-                "JoinLobby" => JsonSerializer.Deserialize<JoinLobbyMessage>(json),
-                _ => throw new NotSupportedException($"Undefined message type: {messageType}")
-            };
+                message = parsedMessageType switch
+                {
+                    MessageTypeEnum.CreateLobby => JsonSerializer.Deserialize<CreateLobbyMessage>(json),
+                    MessageTypeEnum.ChangeWorldElementState => JsonSerializer.Deserialize<ChangeWorldElementStateMessage>(json),
+                    MessageTypeEnum.DefaultMessage => JsonSerializer.Deserialize<DefaultMessage>(json),
+                    MessageTypeEnum.ChangeUserState => JsonSerializer.Deserialize<ChangeUserStateMessage>(json),
+                    MessageTypeEnum.JoinLobby => JsonSerializer.Deserialize<JoinLobbyMessage>(json),
+                    _ => throw new NotImplementedException(),
+                };
+            }
+            else
+            {
+               throw new NotSupportedException($"Undefined message type: {messageTypeString}");
+            }
 
-            return message;
+            return message ?? throw new Exception("Message null");
         }
 
         public static bool SendMessage(TcpClient client, MessageBase message)

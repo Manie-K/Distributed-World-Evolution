@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace Server.Shared.Messages
 {
     [JsonConverter(typeof(JsonStringEnumConverter))]
-    public enum MessageType
+    public enum MessageTypeEnum
     {
         CreateLobby,
         ChangeWorldElementState,

@@ -48,7 +48,7 @@ namespace Server.Core
             MessageBase message = MessageManager.ReceiveMessage(client);
 
             //Creating new lobby
-            if (message.MessageType == MessageType.CreateLobby)
+            if (message.MessageType == MessageTypeEnum.CreateLobby)
             {
                 CreateLobbyMessage createLobbyMessage = (CreateLobbyMessage)message;
 
@@ -66,7 +66,7 @@ namespace Server.Core
             }
 
             //Joining existing lobby
-            else if (message.MessageType == MessageType.JoinLobby)
+            else if (message.MessageType == MessageTypeEnum.JoinLobby)
             {
                 JoinLobbyMessage joinLobbyMessage = (JoinLobbyMessage)message;
 

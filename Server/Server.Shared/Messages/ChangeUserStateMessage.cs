@@ -9,7 +9,7 @@ namespace Server.Shared.Messages
 {
     public class ChangeUserStateMessage : MessageBase
     {
-        public MessageType MessageType => MessageType.ChangeUserState;
+        public override MessageTypeEnum MessageType => MessageTypeEnum.ChangeUserState;
 
         //TODO: add properties for user state change
         public Guid UserGUID { get; set; }
