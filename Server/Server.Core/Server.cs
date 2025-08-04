@@ -6,8 +6,10 @@ using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 using Server.Core.Lobby;
-using Server.Shared.Logging;
 using Server.Shared.Messages;
+using Server.Core.Logging;
+using System.Drawing;
+using System.Diagnostics;
 
 namespace Server.Core
 {
@@ -15,12 +17,13 @@ namespace Server.Core
     internal class Server
     {
         private readonly LobbyManager lobbyManager;
-        private ILogger logger;
 
         public Server()
         {
-            lobbyManager = new LobbyManager(new Logger());
-            logger = new Logger();
+            lobbyManager = new LobbyManager();
+
+            lobbyManager.OnLog += OnLog_Delegate;
+            Lobby.Lobby.OnLog += OnLog_Delegate;
         }
 
         public void Start(string[] args)
@@ -28,7 +31,7 @@ namespace Server.Core
             TcpListener listener = new TcpListener(IPAddress.Any, 5000);
             listener.Start();
 
-            logger.Log("Server started...", LogLevel.Info);
+            Log("Server started...", LogLevelEnum.Info);
 
             while(true)
             {
@@ -38,7 +41,7 @@ namespace Server.Core
                 //1. ThreadPool.QueueUserWorkItem(HandleClientConnection, client);
                 //2. Convert it into async method
                 Task.Factory.StartNew(() => HandleClientConnection(client), TaskCreationOptions.LongRunning); //3.
-                logger.Log("New client joined server.", LogLevel.Info);
+                Log("New client joined server.", LogLevelEnum.Info);
                 MessageManager.SendMessage(client, new DefaultMessage("Welcome to the server!"));
             }
         }
@@ -60,7 +63,7 @@ namespace Server.Core
                 }
                 catch (Exception ex)
                 {
-                    logger.Log(ex, LogLevel.Error);
+                    Log(LogLevelEnum.Error, sender: ex.Message);
                     client.Close();
                 }
             }
@@ -76,7 +79,7 @@ namespace Server.Core
                 }
                 catch (Exception ex)
                 {
-                    logger.Log(ex, LogLevel.Error);
+                    Log(LogLevelEnum.Error, sender: ex.Message);
                     client.Close();
                 }
             }
@@ -87,6 +90,29 @@ namespace Server.Core
                 client.Close();
             }
 
+        }
+
+        private void OnLog_Delegate(object? sender, OnLogEventArgs e)
+        {
+            Log(e.Message, e.LogLevel, sender, e.Timestamp);
+        }
+
+        private void Log(string message, LogLevelEnum level, object? sender = null, DateTime? timestamp = null)
+        {
+            timestamp ??= DateTime.Now;
+
+            var color = level switch
+            {
+                LogLevelEnum.Debug => Color.White,
+                LogLevelEnum.Info => Color.Green,
+                LogLevelEnum.Warning => Color.Yellow,
+                LogLevelEnum.Error => Color.OrangeRed,
+                LogLevelEnum.Critical => Color.Red,
+                _ => Color.Gray,
+            };
+
+            //TODO: Create GUI console with rich text support
+            Console.WriteLine($"[{timestamp:HH:mm:ss}] [{level}] {message}");
         }
     }
 }
