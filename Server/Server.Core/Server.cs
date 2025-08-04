@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Server.Core.Lobby;
 using Server.Shared.Logging;
+using Server.Shared.Messages;
 
 namespace Server.Core
 {
@@ -27,7 +28,7 @@ namespace Server.Core
             TcpListener listener = new TcpListener(IPAddress.Any, 5000);
             listener.Start();
 
-            logger.Log("Main server started...", LogLevel.Info);
+            logger.Log("Server started...", LogLevel.Info);
 
             while(true)
             {
@@ -37,21 +38,22 @@ namespace Server.Core
                 //1. ThreadPool.QueueUserWorkItem(HandleClientConnection, client);
                 //2. Convert it into async method
                 Task.Factory.StartNew(() => HandleClientConnection(client), TaskCreationOptions.LongRunning); //3.
+                logger.Log("New client joined server.", LogLevel.Info);
+                MessageManager.SendMessage(client, new DefaultMessage("Welcome to the server!"));
             }
         }
 
         void HandleClientConnection(TcpClient client)
         {
-            NetworkStream stream = client.GetStream();
-
-            byte[] buffer = new byte[1024];
-            int byteCount = stream.Read(buffer, 0, buffer.Length);
-            string message = Encoding.UTF8.GetString(buffer, 0, byteCount).Trim();
+            MessageBase message = MessageManager.ReceiveMessage(client);
 
             //Creating new lobby
-            if (message.StartsWith("CREATE"))
+            if (message.MessageType == MessageType.CreateLobby)
             {
-                int lobbyId = lobbyManager.CreateAndInitialiseLobby();
+                CreateLobbyMessage createLobbyMessage = (CreateLobbyMessage)message;
+
+                //TODO: validate message; transfer data from message to lobby
+                int lobbyId = lobbyManager.CreateAndInitializeLobby();
                 try
                 {
                     lobbyManager.AddUserToLobby(lobbyId, client);
@@ -64,28 +66,27 @@ namespace Server.Core
             }
 
             //Joining existing lobby
-            else if (message.StartsWith("JOIN"))
+            else if (message.MessageType == MessageType.JoinLobby)
             {
-                string[] parts = message.Split(' ');
-                if (parts.Length >= 2 && int.TryParse(parts[1], out int joinId))
+                JoinLobbyMessage joinLobbyMessage = (JoinLobbyMessage)message;
+
+                try
                 {
-                    try
-                    {
-                        lobbyManager.AddUserToLobby(joinId, client);
-                    }
-                    catch (Exception ex)
-                    {
-                        logger.Log(ex, LogLevel.Error);
-                        client.Close();
-                    }
+                    lobbyManager.AddUserToLobby(joinLobbyMessage.LobbyID, client);
+                }
+                catch (Exception ex)
+                {
+                    logger.Log(ex, LogLevel.Error);
+                    client.Close();
                 }
             }
+
+            //Else
             else
             {
-                byte[] error = Encoding.UTF8.GetBytes("Invalid command. Use CREATE or JOIN <id>.\n");
-                stream.Write(error, 0, error.Length);
                 client.Close();
             }
+
         }
     }
 }

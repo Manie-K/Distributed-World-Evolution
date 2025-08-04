@@ -3,11 +3,13 @@ using System.Net.Sockets;
 using System.Text;
 using Server.Core.Frames;
 using Server.Shared.Logging;
+using Server.Shared.Messages;
 
 namespace Server.Core.Lobby
 {
     internal class Lobby : ILobby
     {
+        //TODO: add modules when they are implemented
         /// <inheritdoc/>
         public int LobbyId { get; private init; }
 
@@ -36,11 +38,7 @@ namespace Server.Core.Lobby
                 clients.Add(client);
             }
 
-            NetworkStream stream = client.GetStream();
-
-            string msg = $"You have joined lobby {LobbyId}.\n";
-            byte[] response = Encoding.UTF8.GetBytes(msg);
-            stream.Write(response, 0, response.Length);
+            MessageManager.SendMessage(client, new DefaultMessage($"You have joined lobby {LobbyId}.\n"));
         }
 
         public void Run()
@@ -65,7 +63,7 @@ namespace Server.Core.Lobby
                     if (client.Available > 0)
                     {
                         //Chat communication between users
-                        string message = GetMessageFromClient(client);
+                        MessageBase message = GetMessageFromClient(client);
 
                         foreach (var c in clients)
                         {
@@ -79,22 +77,16 @@ namespace Server.Core.Lobby
             }
         }
 
-        //@Temp
-        private string GetMessageFromClient(TcpClient client)
+        private MessageBase GetMessageFromClient(TcpClient client)
         {
-            byte[] buffer = new byte[1024];
-            int count = client.GetStream().Read(buffer, 0, buffer.Length);
+            MessageBase message = MessageManager.ReceiveMessage(client);
 
-            string msg = Encoding.UTF8.GetString(buffer, 0, count);
-            return msg;
+            return message;
         }
 
-        //@Temp
-        private void SendMessageToClient(TcpClient client, string message)
+        private void SendMessageToClient(TcpClient client, MessageBase message)
         {
-            byte[] data = Encoding.UTF8.GetBytes(message);
-            NetworkStream stream = client.GetStream();
-            stream.Write(data, 0, data.Length);
+            MessageManager.SendMessage(client, message);
         }
 
         private void SendFrameToClient(TcpClient client, DataFrameBase frame)
