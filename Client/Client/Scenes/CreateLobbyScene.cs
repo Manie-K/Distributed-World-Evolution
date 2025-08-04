@@ -17,30 +17,30 @@ namespace Client
     {
         private ContentManager contentManager;
         private SceneManager sceneManager;
-        private SwitchPage LobbyswitchPage; //do zmienienia robienie lobby(na serwer przesylac informacje)
+        private SwitchPage lobbyswitchPage; //do zmienienia robienie lobby(na serwer przesylac informacje)
 
-        private Texture2D BackGround;
-        private Button ExitButton;
-        private SwitchPageLobby SwitchPageLobby;
-        private Button SaveButton;
-        private TextBox GameNameBox;
+        private Texture2D backGround;
+        private Button exitButton;
+        private SwitchPageLobby switchPageLobby;
+        private Button saveButton;
+        private TextBox gameNameBox;
 
         private SwitchPageParameters switchPageParametersAnimals;
         private SwitchPageParameters switchPageParametersPlants;
 
         private MouseState previousMouseState;
 
-        public CreateLobbyScene(ContentManager contentManager, SceneManager sceneManager, SwitchPage LobbyswitchPage)
+        public CreateLobbyScene(ContentManager ContentManager, SceneManager SceneManager, SwitchPage LobbyswitchPage)
         {
-            this.contentManager = contentManager;
-            this.sceneManager = sceneManager;
-            this.ExitButton = new Button(contentManager.Load<Texture2D>("UI/White Close 2"), contentManager.Load<SpriteFont>("Fonts/ButtonFont"), "", new Vector2(1220, 25), 35, 35, Color.Red);
-            this.BackGround = contentManager.Load<Texture2D>("UI/Scenes/Create_Lobby");
-            this.SwitchPageLobby = new SwitchPageLobby( contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), new Vector2(155, 295), contentManager, 4);
-            this.SaveButton = new Button(contentManager.Load<Texture2D>("UI/Buttons/SaveButton"), null, null, new Vector2(540, 570), 211, 79, new Color(255, 255, 128));
-            this.GameNameBox = new TextBox(null, contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"),
+            contentManager = ContentManager;
+            sceneManager = SceneManager;
+            exitButton = new Button(contentManager.Load<Texture2D>("UI/White Close 2"), contentManager.Load<SpriteFont>("Fonts/ButtonFont"), "", new Vector2(1220, 25), 35, 35, Color.Red);
+            backGround = contentManager.Load<Texture2D>("UI/Scenes/Create_Lobby");
+            switchPageLobby = new SwitchPageLobby( contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), new Vector2(155, 295), contentManager, 4);
+            saveButton = new Button(contentManager.Load<Texture2D>("UI/Buttons/SaveButton"), null, null, new Vector2(540, 570), 211, 79, new Color(255, 255, 128));
+            gameNameBox = new TextBox(null, contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"),
                                         new Vector2(340, 135), 280, 22, Color.White);
-            this.LobbyswitchPage = LobbyswitchPage;
+            lobbyswitchPage = LobbyswitchPage;
             this.switchPageParametersAnimals = new SwitchPageParameters(contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"),
                                                                  new Vector2(848, 485), contentManager, 4);
             this.switchPageParametersPlants = new SwitchPageParameters(contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"),
@@ -57,13 +57,13 @@ namespace Client
 
         public void InitializeCreaturesRows()
         {
-            SwitchPageLobby.AddRow(new AnimalData("wolf", 131, 220, 5, 3, 1, 25));
-            SwitchPageLobby.AddRow(new AnimalData("eagle",400, 300,45, 3, 10, 35));
-            SwitchPageLobby.AddRow(new AnimalData("mouse", 100, 400, 35, 3, 13, 65));
-            SwitchPageLobby.AddRow(new AnimalData("rat", 500, 2500, 5, 23, 12, 4));
-            SwitchPageLobby.AddRow(new AnimalData("cat", 150, 260, 5, 13, 155, 25));
-            SwitchPageLobby.AddRow(new PlantData("rose", 222, 10));
-            SwitchPageLobby.AddRow(new PlantData("mushroom", 265, 105));
+            switchPageLobby.AddRow(new AnimalData("wolf", 131, 220, 5, 3, 1, 25));
+            switchPageLobby.AddRow(new AnimalData("eagle",400, 300,45, 3, 10, 35));
+            switchPageLobby.AddRow(new AnimalData("mouse", 100, 400, 35, 3, 13, 65));
+            switchPageLobby.AddRow(new AnimalData("rat", 500, 2500, 5, 23, 12, 4));
+            switchPageLobby.AddRow(new AnimalData("cat", 150, 260, 5, 13, 155, 25));
+            switchPageLobby.AddRow(new PlantData("rose", 222, 10));
+            switchPageLobby.AddRow(new PlantData("mushroom", 265, 105));
         }
 
         public void InitalizeParametersPanel()
@@ -83,54 +83,54 @@ namespace Client
 
             if (currentMouseState.LeftButton == ButtonState.Pressed && previousMouseState.LeftButton == ButtonState.Released)
             {
-                SwitchPageLobby.CheckLeftClick(position);
-                if (ExitButton.CheckLeftClick(position))
+                switchPageLobby.CheckLeftClick(position);
+                if (exitButton.CheckLeftClick(position))
                 {
                     sceneManager.RemoveScene();
                 }
-                if (SaveButton.CheckLeftClick(position) && !GameNameBox.CheckTextIfEmpty())
+                if (saveButton.CheckLeftClick(position) && !gameNameBox.CheckTextIfEmpty())
                 {
-                    if (SwitchPageLobby.GetSelectedRow() != -1)
+                    if (switchPageLobby.GetSelectedRow() != -1)
                     {
-                        ICreatureData tmp = SwitchPageLobby.GetSelectedCreatureData(SwitchPageLobby.GetSelectedRow());
-                        if (tmp.type == Type.Animal) switchPageParametersAnimals.SaveAnimalParameters((AnimalData)tmp);
-                        else if (tmp.type == Type.Plant) switchPageParametersPlants.SavePlantParameters((PlantData)tmp);
+                        ICreatureData tmp = switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetSelectedRow());
+                        if (tmp.Type == CreatureType.Animal) switchPageParametersAnimals.SaveAnimalParameters((AnimalData)tmp);
+                        else if (tmp.Type == CreatureType.Plant) switchPageParametersPlants.SavePlantParameters((PlantData)tmp);
                     }
 
                     LobbyInfoSerialization();
-                    LobbyswitchPage.AddRow(GameNameBox.GetText());
+                    lobbyswitchPage.AddRow(gameNameBox.GetText());
                     sceneManager.RemoveScene();
                 }
 
-                if (SwitchPageLobby.GetSelectedRow() != -1)
+                if (switchPageLobby.GetSelectedRow() != -1)
                 {
-                    if (SwitchPageLobby.GetSelectedCreatureData(SwitchPageLobby.GetSelectedRow()).type == Type.Animal) switchPageParametersAnimals.CheckLeftClick(position);
-                    else if (SwitchPageLobby.GetSelectedCreatureData(SwitchPageLobby.GetSelectedRow()).type == Type.Plant) switchPageParametersPlants.CheckLeftClick(position);
+                    if (switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetSelectedRow()).Type == CreatureType.Animal) switchPageParametersAnimals.CheckLeftClick(position);
+                    else if (switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetSelectedRow()).Type == CreatureType.Plant) switchPageParametersPlants.CheckLeftClick(position);
                 }
 
-                GameNameBox.CheckLeftClick(position);
+                gameNameBox.CheckLeftClick(position);
 
                 isPressed = true;
             }
 
-            ExitButton.Update(position);
-            SaveButton.Update(position);
-            GameNameBox.Update();
+            exitButton.Update(position);
+            saveButton.Update(position);
+            gameNameBox.Update();
 
-            if (SwitchPageLobby.GetSelectedRow() != -1)
+            if (switchPageLobby.GetSelectedRow() != -1)
             {
-                if (SwitchPageLobby.GetSelectedCreatureData(SwitchPageLobby.GetSelectedRow()).type == Type.Animal) switchPageParametersAnimals.UpdateRows();
-                else if (SwitchPageLobby.GetSelectedCreatureData(SwitchPageLobby.GetSelectedRow()).type == Type.Plant) switchPageParametersPlants.UpdateRows();
+                if (switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetSelectedRow()).Type == CreatureType.Animal) switchPageParametersAnimals.UpdateRows();
+                else if (switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetSelectedRow()).Type == CreatureType.Plant) switchPageParametersPlants.UpdateRows();
             }
 
 
-            if (SwitchPageLobby.UpdateRows(position, isPressed))
+            if (switchPageLobby.UpdateRows(position, isPressed))
             {
-                if (SwitchPageLobby.GetPreviousRow() != -1)
+                if (switchPageLobby.GetPreviousRow() != -1)
                 {
-                    ICreatureData tmp = SwitchPageLobby.GetSelectedCreatureData(SwitchPageLobby.GetPreviousRow());
-                    if (tmp.type == Type.Animal) switchPageParametersAnimals.SaveAnimalParameters((AnimalData) tmp);
-                    else if (tmp.type == Type.Plant) switchPageParametersPlants.SavePlantParameters((PlantData) tmp);
+                    ICreatureData tmp = switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetPreviousRow());
+                    if (tmp.Type == CreatureType.Animal) switchPageParametersAnimals.SaveAnimalParameters((AnimalData) tmp);
+                    else if (tmp.Type == CreatureType.Plant) switchPageParametersPlants.SavePlantParameters((PlantData) tmp);
                 }
                 SetParameters();
             }
@@ -140,17 +140,17 @@ namespace Client
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(BackGround, new Rectangle(0, 0, 1280, 720), Color.White);
-            SwitchPageLobby.Draw(spriteBatch);
-            SaveButton.Draw(spriteBatch);
-            ExitButton.Draw(spriteBatch);
-            GameNameBox.Draw(spriteBatch);
+            spriteBatch.Draw(backGround, new Rectangle(0, 0, 1280, 720), Color.White);
+            switchPageLobby.Draw(spriteBatch);
+            saveButton.Draw(spriteBatch);
+            exitButton.Draw(spriteBatch);
+            gameNameBox.Draw(spriteBatch);
 
 
-            if (SwitchPageLobby.GetSelectedRow() != -1)
+            if (switchPageLobby.GetSelectedRow() != -1)
             {
-                if (SwitchPageLobby.GetSelectedCreatureData(SwitchPageLobby.GetSelectedRow()).type == Type.Animal) switchPageParametersAnimals.Draw(spriteBatch);
-                else if (SwitchPageLobby.GetSelectedCreatureData(SwitchPageLobby.GetSelectedRow()).type == Type.Plant) switchPageParametersPlants.Draw(spriteBatch);
+                if (switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetSelectedRow()).Type == CreatureType.Animal) switchPageParametersAnimals.Draw(spriteBatch);
+                else if (switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetSelectedRow()).Type == CreatureType.Plant) switchPageParametersPlants.Draw(spriteBatch);
             }
 
 
@@ -159,12 +159,12 @@ namespace Client
 
         private void SetParameters()
         {
-            if (SwitchPageLobby.GetSelectedRow() != -1)
+            if (switchPageLobby.GetSelectedRow() != -1)
             {
-                ICreatureData CreatureSelected = SwitchPageLobby.GetSelectedCreatureData(SwitchPageLobby.GetSelectedRow());
+                ICreatureData CreatureSelected = switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetSelectedRow());
                 
-                if (CreatureSelected.type == Type.Animal) switchPageParametersAnimals.SetParametersCreatureData((AnimalData) CreatureSelected);               
-                else if (CreatureSelected.type == Type.Plant) switchPageParametersPlants.SetParametersCreatureData((PlantData) CreatureSelected);
+                if (CreatureSelected.Type == CreatureType.Animal) switchPageParametersAnimals.SetParametersCreatureData((AnimalData) CreatureSelected);               
+                else if (CreatureSelected.Type == CreatureType.Plant) switchPageParametersPlants.SetParametersCreatureData((PlantData) CreatureSelected);
                 
             }
         }
@@ -173,8 +173,8 @@ namespace Client
         {
             var json = JsonSerializer.Serialize(new
             {
-                LobbyName = GameNameBox.GetText(),
-                Creatures = SwitchPageLobby.GetCreaturesList()
+                LobbyName = gameNameBox.GetText(),
+                Creatures = switchPageLobby.GetCreaturesList()
             });
 
             Debug.WriteLine(json);

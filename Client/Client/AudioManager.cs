@@ -22,11 +22,11 @@ public class AudioManager
     private Dictionary<string, Song> songs = new();
     private ContentManager content;
 
-    // Global volumes
+
     private float globalMusicVolume = 1.0f;
     private float globalEffectVolume = 1.0f;
 
-    // Mute state
+
     private bool isMuted = false;
     private float savedMusicVolume = 1.0f;
     private float savedEffectVolume = 1.0f;
@@ -36,7 +36,6 @@ public class AudioManager
         this.content = content;
     }
 
-    // === MUSIC ===
 
     public void LoadSong(string name, string path)
     {
@@ -82,7 +81,6 @@ public class AudioManager
        else return globalMusicVolume;
     }
 
-    // === SOUND EFFECTS ===
 
     public void LoadSoundEffect(string name, string path, float baseVolume = 1.0f)
     {
@@ -132,7 +130,7 @@ public class AudioManager
         }
     }
 
-    // === MUTE ===
+
 
     public void MuteAll()
     {

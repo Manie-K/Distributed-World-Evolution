@@ -14,32 +14,32 @@ namespace Client
     public class LobbyScene : IScene
     {
         private ContentManager contentManager;
-        private Texture2D BackGround;
+        private Texture2D backGround;
         private SceneManager sceneManager;
-        private SwitchPage SwitchPage;
-        private Button CreateButton;
-        private Button JoinButton;
-        private Button RefreshButton;
+        private SwitchPage switchPage;
+        private Button createButton;
+        private Button joinButton;
+        private Button refreshButton;
         private MouseState previousMouseState;
         private AudioManager audioManager;
 
 
         private string playername;
 
-        public LobbyScene(ContentManager contentManager, SceneManager sceneManager, AudioManager audiomanager, string PlayerName)
+        public LobbyScene(ContentManager ContentManager, SceneManager SceneManager, AudioManager Audiomanager, string PlayerName)
         {
-            this.contentManager = contentManager;
-            this.sceneManager = sceneManager;
-            this.BackGround = contentManager.Load<Texture2D>("UI/Scenes/Lobby_BG");
-            this.SwitchPage = new SwitchPage(contentManager.Load<Texture2D>("UI/White Left"), contentManager.Load<Texture2D>("UI/White Right"),
+            contentManager = ContentManager;
+            sceneManager = SceneManager;
+            backGround = contentManager.Load<Texture2D>("UI/Scenes/Lobby_BG");
+            switchPage = new SwitchPage(contentManager.Load<Texture2D>("UI/White Left"), contentManager.Load<Texture2D>("UI/White Right"),
                                              contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), new Vector2(542, 628), contentManager);
-            this.JoinButton = new Button(contentManager.Load<Texture2D>("UI/Buttons/JoinButton"), null, null, new Vector2(953, 240), 180, 70, new Color(255, 255, 128));
-            this.RefreshButton = new Button(contentManager.Load<Texture2D>("UI/Buttons/RefreshButton"), null, null, new Vector2(953, 330), 180, 70, new Color(255, 255, 128));
-            this.CreateButton = new Button(contentManager.Load<Texture2D>("UI/Buttons/CreateButton"), null, null, new Vector2(953, 420), 180, 70, new Color(255, 255, 128));
+            joinButton = new Button(contentManager.Load<Texture2D>("UI/Buttons/JoinButton"), null, null, new Vector2(953, 240), 180, 70, new Color(255, 255, 128));
+            refreshButton = new Button(contentManager.Load<Texture2D>("UI/Buttons/RefreshButton"), null, null, new Vector2(953, 330), 180, 70, new Color(255, 255, 128));
+            createButton = new Button(contentManager.Load<Texture2D>("UI/Buttons/CreateButton"), null, null, new Vector2(953, 420), 180, 70, new Color(255, 255, 128));
 
-            this.playername = PlayerName;
+            playername = PlayerName;
 
-            this.audioManager = audiomanager;
+            audioManager = Audiomanager;
         }
 
         public void Load()
@@ -54,36 +54,36 @@ namespace Client
             bool isPressed = false;
             if (currentMouseState.LeftButton == ButtonState.Pressed && previousMouseState.LeftButton == ButtonState.Released)
             {
-                SwitchPage.CheckLeftClick(position);
-                if (CreateButton.CheckLeftClick(position))
+                switchPage.CheckLeftClick(position);
+                if (createButton.CheckLeftClick(position))
                 {
-                    sceneManager.AddScene(new CreateLobbyScene(contentManager, sceneManager, SwitchPage));
+                    sceneManager.AddScene(new CreateLobbyScene(contentManager, sceneManager, switchPage));
                 }
-                else if (JoinButton.CheckLeftClick(position))
+                else if (joinButton.CheckLeftClick(position))
                 {
                     sceneManager.RemoveScene();
                     sceneManager.AddScene(new GameScene(contentManager, sceneManager, audioManager, playername));
-                }else if (RefreshButton.CheckLeftClick(position))
+                }else if (refreshButton.CheckLeftClick(position))
                 {
                     Debug.WriteLine("Refresh");
                 }
                 isPressed= true;    
             }
 
-            CreateButton.Update(position);
-            JoinButton.Update(position);
-            RefreshButton.Update(position);
-            SwitchPage.UpdateRows(position, isPressed);
+            createButton.Update(position);
+            joinButton.Update(position);
+            refreshButton.Update(position);
+            switchPage.UpdateRows(position, isPressed);
             previousMouseState = currentMouseState;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(BackGround, new Rectangle(0, 0, 1280, 720), Color.White);
-            SwitchPage.Draw(spriteBatch);
-            CreateButton.Draw(spriteBatch);
-            JoinButton.Draw(spriteBatch);
-            RefreshButton.Draw(spriteBatch);  
+            spriteBatch.Draw(backGround, new Rectangle(0, 0, 1280, 720), Color.White);
+            switchPage.Draw(spriteBatch);
+            createButton.Draw(spriteBatch);
+            joinButton.Draw(spriteBatch);
+            refreshButton.Draw(spriteBatch);  
 
         }
 

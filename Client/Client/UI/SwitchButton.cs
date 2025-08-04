@@ -8,35 +8,35 @@ namespace Client
 {
     public class SwitchButton
     {
-        private Button Left;
-        private Button Right;
-        private Text Name;
-        private Text ValueText;
+        private Button left;
+        private Button right;
+        private Text name;
+        private Text valueText;
 
-        public SwitchButton(Texture2D LeftTexture, Texture2D RightTexture, SpriteFont fontText,SpriteFont fontNumbers, string name, Vector2 position)
+        public SwitchButton(Texture2D LeftTexture, Texture2D RightTexture, SpriteFont FontText, SpriteFont fontNumbers, string Name, Vector2 Position)
         {
-            Left = new Button(LeftTexture, fontNumbers, "", new Vector2(position.X+30, position.Y + 50), 25, 25, Color.White);
-            Right = new Button(RightTexture, fontNumbers, "", new Vector2(position.X + 200, position.Y + 50), 25, 25, Color.White);
-            Name = new Text(fontText, name, true, position, 250, 40);
-            ValueText = new Text(fontNumbers, "100 %", true, new Vector2(position.X + 117,position.Y + 50), 25, 25);
+            left = new Button(LeftTexture, fontNumbers, "", new Vector2(Position.X+30, Position.Y + 50), 25, 25, Color.White);
+            right = new Button(RightTexture, fontNumbers, "", new Vector2(Position.X + 200, Position.Y + 50), 25, 25, Color.White);
+            name = new Text(FontText, Name, true, Position, 250, 40);
+            valueText = new Text(fontNumbers, "100 %", true, new Vector2(Position.X + 117, Position.Y + 50), 25, 25);
         }
 
         public void Draw(SpriteBatch spriteBatch, int value)
         {
-            Left.Draw(spriteBatch);
-            Right.Draw(spriteBatch);
-            Name.Draw(spriteBatch);
-            ValueText.SetText(value.ToString() + " %");
-            ValueText.Draw(spriteBatch);
+            left.Draw(spriteBatch);
+            right.Draw(spriteBatch);
+            name.Draw(spriteBatch);
+            valueText.SetText(value.ToString() + " %");
+            valueText.Draw(spriteBatch);
         }
 
         public Button GetLeftButton()
         {
-            return Left;
+            return left;
         }
         public Button GetRightButton()
         {
-            return Right;
+            return right;
         }
 
 

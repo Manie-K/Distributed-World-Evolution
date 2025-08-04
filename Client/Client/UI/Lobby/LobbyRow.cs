@@ -5,47 +5,47 @@ namespace Client
 {
     public class LobbyRow
     {
-        private Text GameName;
-        private Text PlayersText;
-        private Rectangle Bounds;
+        private Text gameName;
+        private Text playersText;
+        private Rectangle bounds;
 
-        public LobbyRow(SpriteFont font, string name, string numberOfPlayers, Vector2 position, int width, int height)
+        public LobbyRow(SpriteFont Font, string Name, string NumberOfPlayers, Vector2 Position, int Width, int Height)
         {
-            int nameWidth = (int)(width * 0.8f);
-            int playersWidth = width - nameWidth;
+            int nameWidth = (int)(Width * 0.8f);
+            int playersWidth = Width - nameWidth;
 
-            GameName = new Text(font, name, true, position, nameWidth, height);
-            PlayersText = new Text(font, numberOfPlayers, true,
-                new Vector2(position.X + nameWidth, position.Y), playersWidth, height);
+            gameName = new Text(Font, Name, true, Position, nameWidth, Height);
+            playersText = new Text(Font, NumberOfPlayers, true,
+                new Vector2(Position.X + nameWidth, Position.Y), playersWidth, Height);
 
-            Bounds = new Rectangle((int)position.X, (int)position.Y, width, height);
+            bounds = new Rectangle((int)Position.X, (int)Position.Y, Width, Height);
         }
 
         public bool Update(Vector2 cursorPosition, bool isSelected)
         {
             if (isSelected)
             {
-                GameName.SetTextColor(Color.HotPink);
-                PlayersText.SetTextColor(Color.HotPink);
+                gameName.SetTextColor(Color.HotPink);
+                playersText.SetTextColor(Color.HotPink);
             }
-            else if (Bounds.Contains(cursorPosition))
+            else if (bounds.Contains(cursorPosition))
             {
-                GameName.SetTextColor(Color.Gold);
-                PlayersText.SetTextColor(Color.Gold);
+                gameName.SetTextColor(Color.Gold);
+                playersText.SetTextColor(Color.Gold);
                 return true;
             }
             else
             {
-                GameName.SetTextColor(Color.White);
-                PlayersText.SetTextColor(Color.White);
+                gameName.SetTextColor(Color.White);
+                playersText.SetTextColor(Color.White);
             }
             return false;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            GameName.Draw(spriteBatch);
-            PlayersText.Draw(spriteBatch);
+            gameName.Draw(spriteBatch);
+            playersText.Draw(spriteBatch);
         }
     }
 }

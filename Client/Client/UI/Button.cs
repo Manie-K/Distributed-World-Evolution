@@ -7,57 +7,57 @@ namespace Client
 {
     public class Button
     {
-        private Texture2D BackGroundTexture;
-        private SpriteFont Font;
-        private string Text;
-        private Vector2 Position;
-        private Rectangle Bounds;
-        private Color TextColor;
-        private Color BackgroundColor;
-        private Color HoverColor;
-        private bool IsHovered;
+        private Texture2D backGroundTexture;
+        private SpriteFont font;
+        private string text;
+        private Vector2 position;
+        private Rectangle bounds;
+        private Color textColor;
+        private Color backgroundColor;
+        private Color hoverColor;
+        private bool isHovered;
 
 
-        public Button(Texture2D backgroundTexture, SpriteFont font, string text, Vector2 position, int width, int height, Color color)
+        public Button(Texture2D BackgroundTexture, SpriteFont Font, string Text, Vector2 Position, int Width, int Height, Color Color)
         {
-            BackGroundTexture = backgroundTexture;
-            Font = font;
-            Text = text;
-            Position = position;
-            Bounds = new Rectangle((int)position.X, (int)position.Y, width, height);
-            TextColor = Color.Black;
-            BackgroundColor = Color.White;
-            HoverColor = color;
+            backGroundTexture = BackgroundTexture;
+            font = Font;
+            text = Text;
+            position = Position;
+            bounds = new Rectangle((int)position.X, (int)position.Y, Width, Height);
+            textColor = Color.Black;
+            backgroundColor = Color.White;
+            hoverColor = Color;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (BackGroundTexture != null)
+            if (backGroundTexture != null)
             {
-                BackgroundColor = IsHovered ? HoverColor : Color.White;
-                spriteBatch.Draw(BackGroundTexture, Bounds, BackgroundColor);
+                backgroundColor = isHovered ? hoverColor : Color.White;
+                spriteBatch.Draw(backGroundTexture, bounds, backgroundColor);
             }
 
-            if (Font != null && !string.IsNullOrEmpty(Text))
+            if (font != null && !string.IsNullOrEmpty(text))
             {
-                Vector2 textSize = Font.MeasureString(Text);
+                Vector2 textSize = font.MeasureString(text);
                 Vector2 textPosition = new Vector2(
-                    Position.X + (Bounds.Width - textSize.X) / 2,
-                    Position.Y + (Bounds.Height - textSize.Y) / 2
+                    position.X + (bounds.Width - textSize.X) / 2,
+                    position.Y + (bounds.Height - textSize.Y) / 2
                 );
 
-                spriteBatch.DrawString(Font, Text, textPosition, TextColor);
+                spriteBatch.DrawString(font, text, textPosition, textColor);
             }
         }
 
         public void Update(Vector2 mousePosition)
         {
-            IsHovered = Bounds.Contains(mousePosition);
+            isHovered = bounds.Contains(mousePosition);
         }
 
         public bool CheckLeftClick(Vector2 clickPosition)
         {
-            if (Bounds.Contains(clickPosition))
+            if (bounds.Contains(clickPosition))
             {
                 return true;
             }

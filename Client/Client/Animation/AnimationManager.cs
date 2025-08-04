@@ -9,14 +9,14 @@ namespace Client
     public class AnimationManager
     {
         
-        private readonly AnimationTexturesLoader _AnimationtextureLoader;
+        private readonly AnimationTexturesLoader animationtextureLoader;
 
-        private AnimationTexture AcctualAnimationTexture;
-        private int DefaultAnimationIndex;
-        private int AcctualAnimationPriorytet;
+        private AnimationTexture actualAnimationTexture;
+        private int defaultAnimationIndex;
+        private int actualAnimationPriority;
 
-        private int AcctualAnimationIndex;
-        private int AcctualAnimationDirectionIndex;
+        private int actualAnimationIndex;
+        private Direction actualAnimationDirectionIndex;
         private bool shouldResetToIdle = false;
 
         private int counter;
@@ -25,51 +25,51 @@ namespace Client
 
         public AnimationManager(ref AnimationTexturesLoader AnimationtextureLoader, int DefaultAnimationIndex)
         {
-            _AnimationtextureLoader = AnimationtextureLoader;
-            this.DefaultAnimationIndex = DefaultAnimationIndex;
-            AcctualAnimationDirectionIndex = 2;
+            animationtextureLoader = AnimationtextureLoader;
+            defaultAnimationIndex = DefaultAnimationIndex;
+            actualAnimationDirectionIndex = Direction.down;
             SetIdleAnimation();
 
         }
 
-        public void SetAnimation(int animationIndex, int index, int animationPriorytet, bool resetToIdle = true)
+        public void SetAnimation(int animationIndex, Direction index, int animationPriority, bool resetToIdle = true)
         {
-            if (!(AcctualAnimationIndex == animationIndex && AcctualAnimationDirectionIndex == index) && animationPriorytet >= AcctualAnimationPriorytet)
+            if (!(actualAnimationIndex == animationIndex && actualAnimationDirectionIndex == index) && animationPriority >= actualAnimationPriority)
             {
                 
-                if (AcctualAnimationIndex != animationIndex)
+                if (actualAnimationIndex != animationIndex)
                 {
                     activeFrame = 0;
                     counter = 0;
                 }
 
-                AcctualAnimationTexture = _AnimationtextureLoader.GetTexture(animationIndex, index);
-                AcctualAnimationIndex = animationIndex;
-                AcctualAnimationDirectionIndex = index;
-                AcctualAnimationPriorytet = animationPriorytet;
+                actualAnimationTexture = animationtextureLoader.GetTexture(animationIndex, index);
+                actualAnimationIndex = animationIndex;
+                actualAnimationDirectionIndex = index;
+                actualAnimationPriority = animationPriority;
 
                 shouldResetToIdle = resetToIdle;
             }
         }
 
-        public void SetAnimationWithDuration(int animationIndex, int index, int animationPriorytet, int totalDuration, bool resetToIdle = true)
+        public void SetAnimationWithDuration(int animationIndex, Direction index, int animationPriority, int totalDuration, bool resetToIdle = true)
         {
-            if (!(AcctualAnimationIndex == animationIndex && AcctualAnimationDirectionIndex == index) && animationPriorytet >= AcctualAnimationPriorytet)
+            if (!(actualAnimationIndex == animationIndex && actualAnimationDirectionIndex == index) && animationPriority >= actualAnimationPriority)
             {
-                if (AcctualAnimationIndex != animationIndex)
+                if (actualAnimationIndex != animationIndex)
                 {
                     activeFrame = 0;
                     counter = 0;
                 }
 
-                AcctualAnimationTexture = _AnimationtextureLoader.GetTexture(animationIndex, index);
-                AcctualAnimationIndex = animationIndex;
-                AcctualAnimationDirectionIndex = index;
-                AcctualAnimationPriorytet = animationPriorytet;
+                actualAnimationTexture = animationtextureLoader.GetTexture(animationIndex, index);
+                actualAnimationIndex = animationIndex;
+                actualAnimationDirectionIndex = index;
+                actualAnimationPriority = animationPriority;
 
                 shouldResetToIdle = resetToIdle;
 
-                int numFrames = AcctualAnimationTexture.GetNumFrames();
+                int numFrames = actualAnimationTexture.GetNumFrames();
                 interval = Math.Max(1, totalDuration / numFrames);
             }
         }
@@ -83,7 +83,7 @@ namespace Client
                 counter = 0;
                 activeFrame++;
 
-                if (activeFrame >= AcctualAnimationTexture.GetNumFrames())
+                if (activeFrame >= actualAnimationTexture.GetNumFrames())
                 {
                     if (shouldResetToIdle) SetIdleAnimation();                 
                     else activeFrame = 0;                  
@@ -94,35 +94,35 @@ namespace Client
 
         private void SetIdleAnimation()
         {
-            AcctualAnimationTexture = _AnimationtextureLoader.GetTexture(DefaultAnimationIndex, AcctualAnimationDirectionIndex);
-            AcctualAnimationIndex = 0;
-            AcctualAnimationPriorytet = 1;
+            actualAnimationTexture = animationtextureLoader.GetTexture(defaultAnimationIndex, actualAnimationDirectionIndex);
+            actualAnimationIndex = 0;
+            actualAnimationPriority = 1;
             activeFrame = 0;
             counter = 0;
         }
 
         public int GetAcctualAnimationIndex()
         {
-            return AcctualAnimationIndex;
+            return actualAnimationIndex;
         }
 
         public Rectangle GetFrame()
         {
-            int globalFrameIndex = AcctualAnimationTexture.GetStarCol() + AcctualAnimationTexture.GetStartRow() * AcctualAnimationTexture.GetColNumbers() + activeFrame;
+            int globalFrameIndex = actualAnimationTexture.GetStarCol() + actualAnimationTexture.GetStartRow() * actualAnimationTexture.GetColNumbers() + activeFrame;
 
-            int col = globalFrameIndex % AcctualAnimationTexture.GetColNumbers();
-            int row = globalFrameIndex / AcctualAnimationTexture.GetColNumbers();
+            int col = globalFrameIndex % actualAnimationTexture.GetColNumbers();
+            int row = globalFrameIndex / actualAnimationTexture.GetColNumbers();
 
             return new Rectangle(
-                col * (int)AcctualAnimationTexture.GetFrameSize().X,
-                row * (int)AcctualAnimationTexture.GetFrameSize().Y,
-                (int)AcctualAnimationTexture.GetFrameSize().X,
-                (int)AcctualAnimationTexture.GetFrameSize().Y);
+                col * (int)actualAnimationTexture.GetFrameSize().X,
+                row * (int)actualAnimationTexture.GetFrameSize().Y,
+                (int)actualAnimationTexture.GetFrameSize().X,
+                (int)actualAnimationTexture.GetFrameSize().Y);
         }
 
         public Texture2D GetAcctualTexture()
         {
-            return AcctualAnimationTexture.GetTexture();
+            return actualAnimationTexture.GetTexture();
         }
     }
 }

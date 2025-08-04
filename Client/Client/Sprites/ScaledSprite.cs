@@ -17,7 +17,7 @@ namespace Client
         {
             get
             {
-                return new Rectangle((int)position.X, (int)position.Y, width, height);
+                return new Rectangle((int)Position.X, (int)Position.Y, width, height);
             }
 
         }

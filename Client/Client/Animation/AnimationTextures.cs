@@ -11,20 +11,20 @@ namespace Client
     public class AnimationTexture
     {
         private Texture2D texture;
-        private Vector2 FrameSize;
-        private int NumFrames;
-        private int ColNumbers;
-        private int StartRow;
-        private int StartCol;
+        private Vector2 frameSize;
+        private int numFrames;
+        private int colNumbers;
+        private int startRow;
+        private int startCol;
 
-        public AnimationTexture(Texture2D texture, Vector2 FrameSize, int numFrames, int colNumbers, int startRow, int starCol)
+        public AnimationTexture(Texture2D Texture, Vector2 FrameSize, int NumFrames, int ColNumbers, int StartRow, int StarCol)
         {
-            this.texture = texture;
-            this.FrameSize = FrameSize;
-            NumFrames = numFrames;
-            ColNumbers = colNumbers;
-            StartRow = startRow;
-            StartCol = starCol;
+            texture = Texture;
+            frameSize = FrameSize;
+            numFrames = NumFrames;
+            colNumbers = ColNumbers;
+            startRow = StartRow;
+            startCol = StarCol;
         }
 
         public Texture2D GetTexture()
@@ -34,27 +34,27 @@ namespace Client
 
         public Vector2 GetFrameSize()
         {
-            return FrameSize;
+            return frameSize;
         }
 
         public int GetNumFrames()
         {
-            return NumFrames;
+            return numFrames;
         }
 
         public int GetStartRow()
         {
-            return StartRow;
+            return startRow;
         }
 
         public int GetStarCol()
         {
-            return StartCol;
+            return startCol;
         }
 
         public int GetColNumbers()
         {
-            return ColNumbers;
+            return colNumbers;
         }
     }
 }

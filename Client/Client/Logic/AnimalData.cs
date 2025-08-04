@@ -8,22 +8,22 @@ namespace Client
 {
     public class AnimalData : ICreatureData
     {
-        public int speed { set; get; }
-        public int health { set; get; }
-        public int damage { set; get; }
-        public int attackRange { set; get; }
+        public int Speed { set; get; }
+        public int Health { set; get; }
+        public int Damage { set; get; }
+        public int AttackRange { set; get; }
         public int Defense { get; set; }
 
-        public AnimalData(string name, int health, int damage, int speed, int attackRange, int defense, int reproducecooldown)
+        public AnimalData(string name, int health, int damage, int speed, int attackRange, int defense, int reproduceCooldown)
         {
-            this.type = Type.Animal;
-            this.name = name;
-            this.health = health;
-            this.damage = damage;
-            this.speed = speed;
-            this.attackRange = attackRange;
-            this.Defense = defense;
-            this.ReproduceCooldown = reproducecooldown;
+            Type = CreatureType.Animal;
+            Name = name;
+            Health = health;
+            Damage = damage;
+            Speed = speed;
+            AttackRange = attackRange;
+            Defense = defense;
+            ReproduceCooldown = reproduceCooldown;
         }
     }
 }

@@ -10,12 +10,12 @@ namespace Client
     {
         public int ToxicityDamage { get; set; }
 
-        public PlantData(string name, int reproducecooldown, int toxicitydamage)
+        public PlantData(string name, int reproduceCooldown, int toxicityDamage)
         {
-            this.type = Type.Plant;
-            this.name = name;
-            this.ReproduceCooldown = reproducecooldown;
-            this.ToxicityDamage = toxicitydamage;
+            this.Type = CreatureType.Plant;
+            this.Name = name;
+            this.ReproduceCooldown = reproduceCooldown;
+            this.ToxicityDamage = toxicityDamage;
         }
     }
 }

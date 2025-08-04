@@ -26,29 +26,29 @@ namespace Client
 
             if (currentKeyboardState.IsKeyDown(Keys.W))
             {
-                CurrentDirection = 0;
+                CurrentDirection = Direction.up;
                 movement.Y -= 1;
             }
             if (currentKeyboardState.IsKeyDown(Keys.S))
             {
-                CurrentDirection = 2;
+                CurrentDirection = Direction.down;
                 movement.Y += 1;
             }
             if (currentKeyboardState.IsKeyDown(Keys.A))
             {
-                CurrentDirection = 3;
+                CurrentDirection = Direction.left;
                 movement.X -= 1;
             }
             if (currentKeyboardState.IsKeyDown(Keys.D))
             {
-                CurrentDirection = 1;
+                CurrentDirection = Direction.right;
                 movement.X += 1;
             }
 
             if (movement != Vector2.Zero)
             {
                 movement.Normalize();
-                position += movement * speed * delta;
+                Position += movement * speed * delta;
                 am.SetAnimationWithDuration(59, CurrentDirection, 1, 36, false);
             }
             else

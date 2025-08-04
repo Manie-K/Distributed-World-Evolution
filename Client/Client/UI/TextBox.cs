@@ -11,60 +11,60 @@ namespace Client
 {
     public class TextBox
     {
-        private Texture2D BackGroundTexture;
-        private SpriteFont Font;
-        private string Text;
-        private Vector2 Position;
-        private Rectangle Bounds;
-        private Color TextColor;
-        private Color BackgroundColor;
+        private Texture2D backGroundTexture;
+        private SpriteFont font;
+        private string text;
+        private Vector2 position;
+        private Rectangle bounds;
+        private Color textColor;
+        private Color backgroundColor;
         private KeyboardState currentKeyboardState;
         private KeyboardState previousKeyboardState;
         private bool isFocused = false;
-        private bool OnlyNumbers;
+        private bool onlyNumbers;
 
-        public TextBox(Texture2D backgroundTexture, SpriteFont font, Vector2 position, int width, int height, Color color, bool onlynumbers = false)
+        public TextBox(Texture2D BackgroundTexture, SpriteFont Font, Vector2 Position, int Width, int Height, Color Color, bool Onlynumbers = false)
         {
-            BackGroundTexture = backgroundTexture;
-            Font = font;
-            Text = "|";
-            Position = position;
-            Bounds = new Rectangle((int)position.X, (int)position.Y, width, height);
-            TextColor = color;
-            BackgroundColor = Color.White;
-            OnlyNumbers = onlynumbers;
+            backGroundTexture = BackgroundTexture;
+            font = Font;
+            text = "|";
+            position = Position;
+            bounds = new Rectangle((int)position.X, (int)position.Y, Width, Height);
+            textColor = Color;
+            backgroundColor = Color.White;
+            onlyNumbers = Onlynumbers;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (BackGroundTexture != null)
+            if (backGroundTexture != null)
             {
-                spriteBatch.Draw(BackGroundTexture, Bounds, BackgroundColor);
+                spriteBatch.Draw(backGroundTexture, bounds, backgroundColor);
             }
 
-            if (Font != null && !string.IsNullOrEmpty(Text))
+            if (font != null && !string.IsNullOrEmpty(text))
             {
-                Vector2 textSize = Font.MeasureString(Text);
+                Vector2 textSize = font.MeasureString(text);
                 Vector2 textPosition = new Vector2(
-                    Position.X + (Bounds.Width - textSize.X) / 2,
-                    Position.Y + (Bounds.Height - textSize.Y) / 2
+                    position.X + (bounds.Width - textSize.X) / 2,
+                    position.Y + (bounds.Height - textSize.Y) / 2
                 );
 
-                spriteBatch.DrawString(Font, Text, textPosition, TextColor);
+                spriteBatch.DrawString(font, text, textPosition, textColor);
             }
         }
 
         public bool CheckLeftClick(Vector2 clickPosition)
         {
-            if (Bounds.Contains(clickPosition))
+            if (bounds.Contains(clickPosition))
             {
                 isFocused = true;
-                Text = "";
+                text = "";
                 return true;
             }
-            if (isFocused && OnlyNumbers && string.IsNullOrWhiteSpace(Text))
+            if (isFocused && onlyNumbers && string.IsNullOrWhiteSpace(text))
             {
-                Text = "0";
+                text = "0";
             }
             isFocused = false;
             return false;
@@ -88,11 +88,11 @@ namespace Client
                     string keyString = KeyToString(key);
                     if (!string.IsNullOrEmpty(keyString))
                     {
-                        Text += keyString;
+                        text += keyString;
                     }
-                    if (key == Keys.Back && Text.Length > 0)
+                    if (key == Keys.Back && text.Length > 0)
                     {
-                        Text = Text.Substring(0, Text.Length - 1);
+                        text = text.Substring(0, text.Length - 1);
                     }
                 }
             }
@@ -101,27 +101,27 @@ namespace Client
 
         public void SetTextColor(Color color)
         {
-            TextColor = color;
+            textColor = color;
         }
 
         public string GetText()
         {
-            return Text;
+            return text;
         }
 
-        public void SetText(string text)
+        public void SetText(string Text)
         {
-            Text = text;
+            text = Text;
         }
 
         public bool CheckTextIfEmpty()
         {
-            return string.IsNullOrEmpty(Text) || Text == "|";
+            return string.IsNullOrEmpty(text) || text == "|";
         }
 
         private string KeyToString(Keys key)
         {
-            if (OnlyNumbers)
+            if (onlyNumbers)
             {
                 if (key >= Keys.D0 && key <= Keys.D9)
                     return ((char)('0' + (key - Keys.D0))).ToString();

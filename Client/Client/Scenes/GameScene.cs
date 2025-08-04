@@ -12,27 +12,27 @@ namespace Client
     public class GameScene : IScene
     {
         private ContentManager contentManager;
-        private Texture2D BackGround;
+        private Texture2D backGround;
         private SceneManager sceneManager;
         private AudioManager audioManager;
         private MouseState previousMouseState;
         private KeyboardState previousKeyboardState;
         private Player player;
 
-        private List<Character> Characters;
+        private List<Character> characters;
 
         private AnimationTexturesLoader animationTexturesLoader;
 
-        public GameScene(ContentManager contentManager, SceneManager sceneManager, AudioManager audiomanager, string PlayerName)
+        public GameScene(ContentManager ContentManager, SceneManager SceneManager, AudioManager Audiomanager, string PlayerName)
         {
-            this.contentManager = contentManager;
-            this.sceneManager = sceneManager;
-            this.BackGround = contentManager.Load<Texture2D>("UI/BG_Forest");
-            this.animationTexturesLoader = new AnimationTexturesLoader(contentManager);
-            this.player = new Player(new Vector2(600, 200), Color.White,
+            contentManager = ContentManager;
+            sceneManager = SceneManager;
+            backGround = contentManager.Load<Texture2D>("UI/BG_Forest");
+            animationTexturesLoader = new AnimationTexturesLoader(contentManager);
+            player = new Player(new Vector2(600, 200), Color.White,
                                      new Text(contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), PlayerName, true, new Vector2(500, 300 - 110), 70, 40), ref this.animationTexturesLoader);
-            this.Characters = new List<Character>();
-            this.audioManager = audiomanager;
+            characters = new List<Character>();
+            audioManager = Audiomanager;
 
             LoadCharacters();
         }
@@ -62,7 +62,7 @@ namespace Client
 
 
             player.Update(gameTime, currentKeyboardState, previousKeyboardState);
-            foreach(Character character in this.Characters)
+            foreach(Character character in characters)
             {
                 character.Update(gameTime, currentKeyboardState, previousKeyboardState);
             }
@@ -73,9 +73,9 @@ namespace Client
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(BackGround, new Rectangle(0, 0, 1280, 720), Color.White);
+            spriteBatch.Draw(backGround, new Rectangle(0, 0, 1280, 720), Color.White);
             player.Draw(spriteBatch);
-            foreach (Character character in this.Characters)
+            foreach (Character character in characters)
             {
                 character.Draw(spriteBatch);
             }
@@ -83,23 +83,23 @@ namespace Client
 
         private void LoadCharacters()
         {
-            Characters.Add(new EnemyPlant1(new Vector2(200, 200), Color.White, ref this.animationTexturesLoader));
-            Characters.Add(new EnemyPlant2(new Vector2(300, 200), Color.White, ref this.animationTexturesLoader));
-            Characters.Add(new Pig(new Vector2(400, 200), Color.White, ref this.animationTexturesLoader));
-            Characters.Add(new Boar(new Vector2(500, 200), Color.White, ref this.animationTexturesLoader));
-            Characters.Add(new WhiteRabbit(new Vector2(700, 200), Color.White, ref this.animationTexturesLoader));
-            Characters.Add(new BrownRabbit(new Vector2(800, 200), Color.White, ref this.animationTexturesLoader));
-            Characters.Add(new EnemyPlant3(new Vector2(200, 350), Color.White, ref this.animationTexturesLoader));
-            Characters.Add(new Slime1(new Vector2(300, 350), Color.White, ref this.animationTexturesLoader));
-            Characters.Add(new Slime2(new Vector2(400, 350), Color.White, ref this.animationTexturesLoader));
+            characters.Add(new EnemyPlant1(new Vector2(200, 200), Color.White, ref this.animationTexturesLoader));
+            characters.Add(new EnemyPlant2(new Vector2(300, 200), Color.White, ref this.animationTexturesLoader));
+            characters.Add(new Pig(new Vector2(400, 200), Color.White, ref this.animationTexturesLoader));
+            characters.Add(new Boar(new Vector2(500, 200), Color.White, ref this.animationTexturesLoader));
+            characters.Add(new WhiteRabbit(new Vector2(700, 200), Color.White, ref this.animationTexturesLoader));
+            characters.Add(new BrownRabbit(new Vector2(800, 200), Color.White, ref this.animationTexturesLoader));
+            characters.Add(new EnemyPlant3(new Vector2(200, 350), Color.White, ref this.animationTexturesLoader));
+            characters.Add(new Slime1(new Vector2(300, 350), Color.White, ref this.animationTexturesLoader));
+            characters.Add(new Slime2(new Vector2(400, 350), Color.White, ref this.animationTexturesLoader));
 
-            Characters.Add(new Slime3(new Vector2(500, 350), Color.White, ref this.animationTexturesLoader));
-            Characters.Add(new Orc1(new Vector2(600, 350), Color.White, ref this.animationTexturesLoader));
-            Characters.Add(new Orc2(new Vector2(700, 350), Color.White, ref this.animationTexturesLoader));
-            Characters.Add(new Orc3(new Vector2(200, 500), Color.White, ref this.animationTexturesLoader));
-            Characters.Add(new Vampire1(new Vector2(300, 500), Color.White, ref this.animationTexturesLoader));
-            Characters.Add(new Vampire2(new Vector2(400, 500), Color.White, ref this.animationTexturesLoader));
-            Characters.Add(new Vampire3(new Vector2(500, 500), Color.White, ref this.animationTexturesLoader));
+            characters.Add(new Slime3(new Vector2(500, 350), Color.White, ref this.animationTexturesLoader));
+            characters.Add(new Orc1(new Vector2(600, 350), Color.White, ref this.animationTexturesLoader));
+            characters.Add(new Orc2(new Vector2(700, 350), Color.White, ref this.animationTexturesLoader));
+            characters.Add(new Orc3(new Vector2(200, 500), Color.White, ref this.animationTexturesLoader));
+            characters.Add(new Vampire1(new Vector2(300, 500), Color.White, ref this.animationTexturesLoader));
+            characters.Add(new Vampire2(new Vector2(400, 500), Color.White, ref this.animationTexturesLoader));
+            characters.Add(new Vampire3(new Vector2(500, 500), Color.White, ref this.animationTexturesLoader));
         }
     }
 }

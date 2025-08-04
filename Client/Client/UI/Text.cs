@@ -5,43 +5,43 @@ namespace Client
 {
     public class Text
     {
-        private SpriteFont Font;
+        private SpriteFont font;
         private string text;
-        private Vector2 Position;
-        private Rectangle Bounds;
-        private Color TextColor;
+        private Vector2 position;
+        private Rectangle bounds;
+        private Color textColor;
         private bool isCentered;
 
-        public Text(SpriteFont font, string text, bool isCentered, Vector2 position, int width, int height)
+        public Text(SpriteFont Font, string Text, bool IsCentered, Vector2 Position, int Width, int Height)
         {
-            this.Font = font;
-            this.text = text;
-            this.isCentered = isCentered;
-            this.Position = position;
-            this.Bounds = new Rectangle((int)position.X, (int)position.Y, width, height);
-            this.TextColor = Color.Black;
+            font = Font;
+            text = Text;
+            isCentered = IsCentered;
+            position = Position;
+            bounds = new Rectangle((int)position.X, (int)position.Y, Width, Height);
+            textColor = Color.Black;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {     
-            Vector2 textSize = Font.MeasureString(text);
+            Vector2 textSize = font.MeasureString(text);
             Vector2 textPosition;
             if (isCentered)
             {
                 textPosition = new Vector2(
-                Position.X + (Bounds.Width - textSize.X) / 2,
-                Position.Y + (Bounds.Height - textSize.Y) / 2
+                position.X + (bounds.Width - textSize.X) / 2,
+                position.Y + (bounds.Height - textSize.Y) / 2
             );
             }
             else
             {
                 textPosition = new Vector2(
-                                Position.X,
-                                Position.Y + (Bounds.Height - textSize.Y) / 2
+                                position.X,
+                                position.Y + (bounds.Height - textSize.Y) / 2
                             );
             }
 
-            spriteBatch.DrawString(Font, text, textPosition, TextColor);
+            spriteBatch.DrawString(font, text, textPosition, textColor);
             
 
 
@@ -54,7 +54,7 @@ namespace Client
 
         public void SetTextColor(Color color)
         {
-            TextColor = color;
+            textColor = color;
         }
     }
 }

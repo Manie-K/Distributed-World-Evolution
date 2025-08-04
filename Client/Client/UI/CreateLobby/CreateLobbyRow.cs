@@ -7,41 +7,41 @@ namespace Client
     public class CreateLobbyRow
     {
         private ICreatureData creatureData;
-        private Text CreatureName;
-        private Rectangle Bounds;
+        private Text creatureName;
+        private Rectangle bounds;
 
-        public CreateLobbyRow(SpriteFont font, AnimalData animal, Vector2 position, int width, int height)
+        public CreateLobbyRow(SpriteFont Font, AnimalData Animal, Vector2 Position, int Width, int Height)
         {
 
-            this.creatureData = animal;
-            CreatureName = new Text(font, animal.name, true, position, width, height);
+            creatureData = Animal;
+            creatureName = new Text(Font, Animal.Name, true, Position, Width, Height);
 
-            Bounds = new Rectangle((int)position.X, (int)position.Y, width, height);
+            bounds = new Rectangle((int)Position.X, (int)Position.Y, Width, Height);
         }
 
         public CreateLobbyRow(SpriteFont font, PlantData plant, Vector2 position, int width, int height)
         {
 
-            this.creatureData = plant;
-            CreatureName = new Text(font, plant.name, true, position, width, height);
+            creatureData = plant;
+            creatureName = new Text(font, plant.Name, true, position, width, height);
 
-            Bounds = new Rectangle((int)position.X, (int)position.Y, width, height);
+            bounds = new Rectangle((int)position.X, (int)position.Y, width, height);
         }
 
         public bool Update(Vector2 cursorPosition, bool isSelected)
         {
             if (isSelected)
             {
-                CreatureName.SetTextColor(Color.HotPink);
+                creatureName.SetTextColor(Color.HotPink);
             }
-            else if (Bounds.Contains(cursorPosition))
+            else if (bounds.Contains(cursorPosition))
             {
-                CreatureName.SetTextColor(Color.Gold);
+                creatureName.SetTextColor(Color.Gold);
                 return true;
             }
             else
             {
-                CreatureName.SetTextColor(Color.White);
+                creatureName.SetTextColor(Color.White);
             }
             return false;
         }
@@ -53,7 +53,7 @@ namespace Client
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            CreatureName.Draw(spriteBatch);
+            creatureName.Draw(spriteBatch);
         }
 
 

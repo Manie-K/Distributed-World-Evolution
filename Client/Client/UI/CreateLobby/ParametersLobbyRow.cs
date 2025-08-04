@@ -6,46 +6,46 @@ namespace Client
 {
     public class ParametersLobbyRow
     {
-        private Text ParameterName;
-        private TextBox ParameterValue;
-        private Rectangle Bounds;
+        private Text parameterName;
+        private TextBox parameterValue;
+        private Rectangle bounds;
 
-        public ParametersLobbyRow(SpriteFont font,string ParameterName, int value, Vector2 position, int width, int height)
+        public ParametersLobbyRow(SpriteFont Font,string ParameterName, int Value, Vector2 Position, int Width, int Height)
         {
-            this.ParameterName = new Text(font, ParameterName, true, position, width, height);
-            this.ParameterName.SetTextColor(Color.White);
-            this.ParameterValue = new TextBox(null, font, new Vector2(position.X + 174, position.Y), width, height, Color.White, true);
-            this.ParameterValue.SetTextColor(Color.White);
+            parameterName = new Text(Font, ParameterName, true, Position, Width, Height);
+            parameterName.SetTextColor(Color.White);
+            parameterValue = new TextBox(null, Font, new Vector2(Position.X + 174, Position.Y), Width, Height, Color.White, true);
+            parameterValue.SetTextColor(Color.White);
 
-            this.ParameterValue.SetText(value.ToString());
+            parameterValue.SetText(Value.ToString());
 
-            Bounds = new Rectangle((int)position.X, (int)position.Y, width, height);
+            bounds = new Rectangle((int)Position.X, (int)Position.Y, Width, Height);
         }
 
         public void CheckLeftClick(Vector2 cursorPosition)
         {
-            ParameterValue.CheckLeftClick(cursorPosition);
+            parameterValue.CheckLeftClick(cursorPosition);
         }
 
         public void Update()
         {
-            ParameterValue.Update();
+            parameterValue.Update();
         }
 
         public void SetParameter(string parameter)
         {
-            ParameterValue.SetText(parameter);
+            parameterValue.SetText(parameter);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            ParameterName.Draw(spriteBatch);
-            ParameterValue.Draw(spriteBatch);
+            parameterName.Draw(spriteBatch);
+            parameterValue.Draw(spriteBatch);
         }
 
         public string GetParameterValue()
         {
-            return ParameterValue.GetText();
+            return parameterValue.GetText();
         }
     }
 }

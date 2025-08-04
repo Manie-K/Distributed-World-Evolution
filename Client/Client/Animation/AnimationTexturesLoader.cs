@@ -12,17 +12,17 @@ namespace Client
 {
     public class AnimationTexturesLoader
     {
-        private AnimationTexture[][] AnimationsStore;
-        private int AnimationsAmount;
+        private AnimationTexture[][] animationsStore;
+        private int animationsAmount;
 
         public AnimationTexturesLoader(ContentManager content)
         {
-            AnimationsAmount = 60;
-            AnimationsStore = new AnimationTexture[AnimationsAmount][];
+            animationsAmount = 60;
+            animationsStore = new AnimationTexture[animationsAmount][];
 
-            for (int i = 0; i < AnimationsAmount; i++)
+            for (int i = 0; i < animationsAmount; i++)
             {
-                AnimationsStore[i] = new AnimationTexture[4];                                                                                                                             
+                animationsStore[i] = new AnimationTexture[4];                                                                                                                             
             }
 
             LoadAllAnimations(content);
@@ -60,7 +60,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Player/Idle/idle_left"), new Vector2(130, 108), 8, 8, 0, 0)
             ];
 
-            AnimationsStore[0] = IdleTextures;
+            animationsStore[0] = IdleTextures;
 
 
             AnimationTexture[] RunTextures =
@@ -71,7 +71,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Player/Run/run_left"), new Vector2(130, 108), 8, 8, 0, 0)
             ];
 
-            AnimationsStore[1] = RunTextures;
+            animationsStore[1] = RunTextures;
 
             AnimationTexture[] AttackTextures =
             [
@@ -81,7 +81,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Player/Attack/attack1_left"), new Vector2(130, 108), 8, 8, 0, 0)
             ];
 
-            AnimationsStore[2] = AttackTextures;
+            animationsStore[2] = AttackTextures;
 
         }
 
@@ -96,7 +96,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/EnemyPlant1/Plant1_Attack_full"), new Vector2(100, 100), 7, 7, 2, 0)
             ];
 
-            AnimationsStore[3] = AttackTextures;
+            animationsStore[3] = AttackTextures;
 
             AnimationTexture[] DeathTextures =
             [
@@ -106,7 +106,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/EnemyPlant1/Plant1_Death_full"), new Vector2(100, 100), 10, 10, 2, 0)
             ];
 
-            AnimationsStore[4] = DeathTextures;
+            animationsStore[4] = DeathTextures;
 
 
             AnimationTexture[] IdleTextures =
@@ -117,7 +117,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/EnemyPlant1/Plant1_Idle_full"), new Vector2(100, 100), 4, 4, 2, 0)
             ];
 
-            AnimationsStore[5] = IdleTextures;
+            animationsStore[5] = IdleTextures;
 
             AnimationTexture[] RunTextures =
             [
@@ -127,7 +127,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/EnemyPlant1/Plant1_Run_full"), new Vector2(100, 100), 8, 8, 2, 0)
             ];
 
-            AnimationsStore[6] = RunTextures;
+            animationsStore[6] = RunTextures;
         }
 
 
@@ -141,7 +141,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Pig/Pig_Idle"), new Vector2(173, 173), 4, 4, 1, 0)
             ];
 
-            AnimationsStore[7] = IdleTextures;
+            animationsStore[7] = IdleTextures;
 
             AnimationTexture[] RunTextures =
             [
@@ -151,7 +151,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Pig/Pig_Move"), new Vector2(173, 173), 6, 6, 1, 0)
             ];
 
-            AnimationsStore[8] = RunTextures;
+            animationsStore[8] = RunTextures;
         }
 
 
@@ -165,7 +165,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Boar/Boar_Idle"), new Vector2(160, 160), 4, 4, 1, 0)
             ];
 
-            AnimationsStore[9] = IdleTextures;
+            animationsStore[9] = IdleTextures;
 
             AnimationTexture[] RunTextures =
             [
@@ -175,7 +175,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Boar/Boar_Move"), new Vector2(160, 160), 6, 6, 1, 0)
             ];
 
-            AnimationsStore[10] = RunTextures;
+            animationsStore[10] = RunTextures;
 
             AnimationTexture[] AttackTextures =
             [
@@ -185,7 +185,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Boar/Boar_Attack"), new Vector2(160, 160), 6, 6, 1, 0)
             ];
 
-            AnimationsStore[11] = AttackTextures;
+            animationsStore[11] = AttackTextures;
         }
 
 
@@ -199,7 +199,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/WhiteRabbit/Rabbit_Horned_Idle"), new Vector2(192, 192), 4, 4, 1, 0)
             ];
 
-            AnimationsStore[12] = IdleTextures;
+            animationsStore[12] = IdleTextures;
 
             AnimationTexture[] RunTextures =
             [
@@ -209,7 +209,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/WhiteRabbit/Rabbit_Horned_Move"), new Vector2(192, 192), 6, 6, 1, 0)
             ];
 
-            AnimationsStore[13] = RunTextures;
+            animationsStore[13] = RunTextures;
         }
 
 
@@ -223,7 +223,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/BrownRabbit/Rabbit_Brown_Idle"), new Vector2(192, 192), 4, 4, 1, 0)
             ];
 
-            AnimationsStore[14] = IdleTextures;
+            animationsStore[14] = IdleTextures;
 
             AnimationTexture[] RunTextures =
             [
@@ -233,7 +233,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/BrownRabbit/Rabbit_Brown_Move"), new Vector2(192, 192), 6, 6, 1, 0)
             ];
 
-            AnimationsStore[15] = RunTextures;
+            animationsStore[15] = RunTextures;
         }
 
 
@@ -247,7 +247,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/EnemyPlant2/Plant2_Attack_full"), new Vector2(100, 100), 7, 7, 2, 0)
             ];
 
-            AnimationsStore[16] = AttackTextures;
+            animationsStore[16] = AttackTextures;
 
             AnimationTexture[] DeathTextures =
             [
@@ -257,7 +257,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/EnemyPlant2/Plant2_Death_full"), new Vector2(100, 100), 10, 10, 2, 0)
             ];
 
-            AnimationsStore[17] = DeathTextures;
+            animationsStore[17] = DeathTextures;
 
 
             AnimationTexture[] IdleTextures =
@@ -268,7 +268,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/EnemyPlant2/Plant2_Idle_full"), new Vector2(100, 100), 4, 4, 2, 0)
             ];
 
-            AnimationsStore[18] = IdleTextures;
+            animationsStore[18] = IdleTextures;
 
             AnimationTexture[] RunTextures =
             [
@@ -278,7 +278,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/EnemyPlant2/Plant2_Run_full"), new Vector2(100, 100), 8, 8, 2, 0)
             ];
 
-            AnimationsStore[19] = RunTextures;
+            animationsStore[19] = RunTextures;
         }
 
 
@@ -292,7 +292,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/EnemyPlant3/Plant3_Attack_full"), new Vector2(100, 100), 7, 7, 2, 0)
             ];
 
-            AnimationsStore[20] = AttackTextures;
+            animationsStore[20] = AttackTextures;
 
             AnimationTexture[] DeathTextures =
             [
@@ -302,7 +302,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/EnemyPlant3/Plant3_Death_full"), new Vector2(100, 100), 10, 10, 2, 0)
             ];
 
-            AnimationsStore[21] = DeathTextures;
+            animationsStore[21] = DeathTextures;
 
 
             AnimationTexture[] IdleTextures =
@@ -313,7 +313,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/EnemyPlant3/Plant3_Idle_full"), new Vector2(100, 100), 4, 4, 2, 0)
             ];
 
-            AnimationsStore[22] = IdleTextures;
+            animationsStore[22] = IdleTextures;
 
             AnimationTexture[] RunTextures =
             [
@@ -323,7 +323,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/EnemyPlant3/Plant3_Run_full"), new Vector2(100, 100), 8, 8, 2, 0)
             ];
 
-            AnimationsStore[23] = RunTextures;
+            animationsStore[23] = RunTextures;
         }
 
         private void LoadSlime1(ContentManager content)
@@ -336,7 +336,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Slime1/Slime1_Attack_full"), new Vector2(100, 100), 10, 10, 2, 0)
             ];
 
-            AnimationsStore[24] = AttackTextures;
+            animationsStore[24] = AttackTextures;
 
             AnimationTexture[] DeathTextures =
             [
@@ -346,7 +346,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Slime1/Slime1_Death_full"), new Vector2(100, 100), 10, 10, 2, 0)
             ];
 
-            AnimationsStore[25] = DeathTextures;
+            animationsStore[25] = DeathTextures;
 
 
             AnimationTexture[] IdleTextures =
@@ -357,7 +357,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Slime1/Slime1_Idle_full"), new Vector2(100, 100), 6, 6, 2, 0)
             ];
 
-            AnimationsStore[26] = IdleTextures;
+            animationsStore[26] = IdleTextures;
 
             AnimationTexture[] RunTextures =
             [
@@ -367,7 +367,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Slime1/Slime1_Run_full"), new Vector2(100, 100), 8, 8, 2, 0)
             ];
 
-            AnimationsStore[27] = RunTextures;
+            animationsStore[27] = RunTextures;
         }
 
         private void LoadSlime2(ContentManager content)
@@ -380,7 +380,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Slime2/Slime2_Attack_full"), new Vector2(100, 100), 11, 11, 2, 0)
             ];
 
-            AnimationsStore[28] = AttackTextures;
+            animationsStore[28] = AttackTextures;
 
             AnimationTexture[] DeathTextures =
             [
@@ -390,7 +390,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Slime2/Slime2_Death_full"), new Vector2(100, 100), 10, 10, 2, 0)
             ];
 
-            AnimationsStore[29] = DeathTextures;
+            animationsStore[29] = DeathTextures;
 
 
             AnimationTexture[] IdleTextures =
@@ -401,7 +401,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Slime2/Slime2_Idle_full"), new Vector2(100, 100), 6, 6, 2, 0)
             ];
 
-            AnimationsStore[30] = IdleTextures;
+            animationsStore[30] = IdleTextures;
 
             AnimationTexture[] RunTextures =
             [
@@ -411,7 +411,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Slime2/Slime2_Run_full"), new Vector2(100, 100), 8, 8, 2, 0)
             ];
 
-            AnimationsStore[31] = RunTextures;
+            animationsStore[31] = RunTextures;
         }
 
         private void LoadSlime3(ContentManager content)
@@ -424,7 +424,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Slime3/Slime3_Attack_full"), new Vector2(100, 100), 9, 9, 2, 0)
             ];
 
-            AnimationsStore[32] = AttackTextures;
+            animationsStore[32] = AttackTextures;
 
             AnimationTexture[] DeathTextures =
             [
@@ -434,7 +434,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Slime3/Slime3_Death_full"), new Vector2(100, 100), 10, 10, 2, 0)
             ];
 
-            AnimationsStore[33] = DeathTextures;
+            animationsStore[33] = DeathTextures;
 
 
             AnimationTexture[] IdleTextures =
@@ -445,7 +445,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Slime3/Slime3_Idle_full"), new Vector2(100, 100), 6, 6, 2, 0)
             ];
 
-            AnimationsStore[34] = IdleTextures;
+            animationsStore[34] = IdleTextures;
 
             AnimationTexture[] RunTextures =
             [
@@ -455,7 +455,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Slime3/Slime3_Run_full"), new Vector2(100, 100), 8, 8, 2, 0)
             ];
 
-            AnimationsStore[35] = RunTextures;
+            animationsStore[35] = RunTextures;
         }
 
         private void LoadOrc1(ContentManager content)
@@ -468,7 +468,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Orc1/orc1_attack_full"), new Vector2(100, 100), 8, 8, 2, 0)
             ];
 
-            AnimationsStore[36] = AttackTextures;
+            animationsStore[36] = AttackTextures;
 
             AnimationTexture[] DeathTextures =
             [
@@ -478,7 +478,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Orc1/orc1_death_full"), new Vector2(100, 100), 8, 8, 2, 0)
             ];
 
-            AnimationsStore[37] = DeathTextures;
+            animationsStore[37] = DeathTextures;
 
 
             AnimationTexture[] IdleTextures =
@@ -489,7 +489,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Orc1/orc1_idle_full"), new Vector2(100, 100), 4, 4, 2, 0)
             ];
 
-            AnimationsStore[38] = IdleTextures;
+            animationsStore[38] = IdleTextures;
 
             AnimationTexture[] RunTextures =
             [
@@ -499,7 +499,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Orc1/orc1_run_full"), new Vector2(100, 100), 8, 8, 2, 0)
             ];
 
-            AnimationsStore[39] = RunTextures;
+            animationsStore[39] = RunTextures;
         }
 
         private void LoadOrc2(ContentManager content)
@@ -512,7 +512,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Orc2/orc2_attack_full"), new Vector2(100, 100), 8, 8, 2, 0)
             ];
 
-            AnimationsStore[40] = AttackTextures;
+            animationsStore[40] = AttackTextures;
 
             AnimationTexture[] DeathTextures =
             [
@@ -522,7 +522,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Orc2/orc2_death_full"), new Vector2(100, 100), 8, 8, 2, 0)
             ];
 
-            AnimationsStore[41] = DeathTextures;
+            animationsStore[41] = DeathTextures;
 
 
             AnimationTexture[] IdleTextures =
@@ -533,7 +533,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Orc2/orc2_idle_full"), new Vector2(100, 100), 4, 4, 2, 0)
             ];
 
-            AnimationsStore[42] = IdleTextures;
+            animationsStore[42] = IdleTextures;
 
             AnimationTexture[] RunTextures =
             [
@@ -543,7 +543,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Orc2/orc2_run_full"), new Vector2(100, 100), 8, 8, 2, 0)
             ];
 
-            AnimationsStore[43] = RunTextures;
+            animationsStore[43] = RunTextures;
         }
 
         private void LoadOrc3(ContentManager content)
@@ -556,7 +556,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Orc3/orc3_attack_full"), new Vector2(100, 100), 8, 8, 2, 0)
             ];
 
-            AnimationsStore[44] = AttackTextures;
+            animationsStore[44] = AttackTextures;
 
             AnimationTexture[] DeathTextures =
             [
@@ -566,7 +566,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Orc3/orc3_death_full"), new Vector2(100, 100), 8, 8, 2, 0)
             ];
 
-            AnimationsStore[45] = DeathTextures;
+            animationsStore[45] = DeathTextures;
 
 
             AnimationTexture[] IdleTextures =
@@ -577,7 +577,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Orc3/orc3_idle_full"), new Vector2(100, 100), 4, 4, 2, 0)
             ];
 
-            AnimationsStore[46] = IdleTextures;
+            animationsStore[46] = IdleTextures;
 
             AnimationTexture[] RunTextures =
             [
@@ -587,7 +587,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Orc3/orc3_run_full"), new Vector2(100, 100), 8, 8, 2, 0)
             ];
 
-            AnimationsStore[47] = RunTextures;
+            animationsStore[47] = RunTextures;
         }
 
         private void LoadVampire1(ContentManager content)
@@ -600,7 +600,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Vampire1/Vampires1_Attack_full"), new Vector2(110, 110), 12, 12, 2, 0)
             ];
 
-            AnimationsStore[48] = AttackTextures;
+            animationsStore[48] = AttackTextures;
 
             AnimationTexture[] DeathTextures =
             [
@@ -610,7 +610,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Vampire1/Vampires1_Death_full"), new Vector2(110, 110), 11, 11, 2, 0)
             ];
 
-            AnimationsStore[49] = DeathTextures;
+            animationsStore[49] = DeathTextures;
 
 
             AnimationTexture[] IdleTextures =
@@ -621,7 +621,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Vampire1/Vampires1_Idle_full"), new Vector2(110, 110), 4, 4, 2, 0)
             ];
 
-            AnimationsStore[50] = IdleTextures;
+            animationsStore[50] = IdleTextures;
 
             AnimationTexture[] RunTextures =
             [
@@ -631,7 +631,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Vampire1/Vampires1_Run_full"), new Vector2(110, 110), 8, 8, 2, 0)
             ];
 
-            AnimationsStore[51] = RunTextures;
+            animationsStore[51] = RunTextures;
         }
 
         private void LoadVampire2(ContentManager content)
@@ -644,7 +644,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Vampire2/Vampires2_Attack_full"), new Vector2(110, 110), 12, 12, 2, 0)
             ];
 
-            AnimationsStore[52] = AttackTextures;
+            animationsStore[52] = AttackTextures;
 
             AnimationTexture[] DeathTextures =
             [
@@ -654,7 +654,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Vampire2/Vampires2_Death_full"), new Vector2(110, 110), 11, 11, 2, 0)
             ];
 
-            AnimationsStore[53] = DeathTextures;
+            animationsStore[53] = DeathTextures;
 
 
             AnimationTexture[] IdleTextures =
@@ -665,7 +665,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Vampire2/Vampires2_Idle_full"), new Vector2(110, 110), 4, 4, 2, 0)
             ];
 
-            AnimationsStore[54] = IdleTextures;
+            animationsStore[54] = IdleTextures;
 
             AnimationTexture[] RunTextures =
             [
@@ -675,7 +675,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Vampire2/Vampires2_Run_full"), new Vector2(110, 110), 8, 8, 2, 0)
             ];
 
-            AnimationsStore[55] = RunTextures;
+            animationsStore[55] = RunTextures;
         }
 
         private void LoadVampire3(ContentManager content)
@@ -688,7 +688,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Vampire3/Vampires3_Attack_full"), new Vector2(110, 110), 12, 12, 2, 0)
             ];
 
-            AnimationsStore[56] = AttackTextures;
+            animationsStore[56] = AttackTextures;
 
             AnimationTexture[] DeathTextures =
             [
@@ -698,7 +698,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Vampire3/Vampires3_Death_full"), new Vector2(110, 110), 11, 11, 2, 0)
             ];
 
-            AnimationsStore[57] = DeathTextures;
+            animationsStore[57] = DeathTextures;
 
 
             AnimationTexture[] IdleTextures =
@@ -709,7 +709,7 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Vampire3/Vampires3_Idle_full"), new Vector2(110, 110), 4, 4, 2, 0)
             ];
 
-            AnimationsStore[58] = IdleTextures;
+            animationsStore[58] = IdleTextures;
 
             AnimationTexture[] RunTextures =
             [
@@ -719,12 +719,12 @@ namespace Client
                 new AnimationTexture(content.Load<Texture2D>("Animations/Vampire3/Vampires3_Run_full"), new Vector2(110, 110), 8, 8, 2, 0)
             ];
 
-            AnimationsStore[59] = RunTextures;
+            animationsStore[59] = RunTextures;
         }
 
-        public AnimationTexture GetTexture(int AnimaionIndex, int DirectionIndex)
+        public AnimationTexture GetTexture(int AnimaionIndex, Direction DirectionIndex)
         {
-            return AnimationsStore[AnimaionIndex][DirectionIndex];
+            return animationsStore[AnimaionIndex][(int)DirectionIndex];
         }
 
 

@@ -18,7 +18,7 @@ namespace Client
 
         public override void Draw(SpriteBatch spritebatch)
         {
-            spritebatch.Draw(texture, Rect, Color.White);
+            spritebatch.Draw(Texture, Rect, Color.White);
         }
     }
 }

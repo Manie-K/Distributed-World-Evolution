@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace Client
 {
-    public enum Type{
+    public enum CreatureType{
         Plant,
         Animal
     }
@@ -18,8 +18,8 @@ namespace Client
     public abstract class ICreatureData
     {
 
-        public string name { set; get; }
-        public Type type { set; get; }
+        public string Name { set; get; }
+        public CreatureType Type { set; get; }
 
         public int ReproduceCooldown { get; set; }
 
