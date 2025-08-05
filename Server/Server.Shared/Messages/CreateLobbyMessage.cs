@@ -9,7 +9,7 @@ namespace Server.Shared.Messages
 {
     public class CreateLobbyMessage : MessageBase
     {
-        public MessageType MessageType => MessageType.CreateLobby;
+        public override MessageTypeEnum MessageType => MessageTypeEnum.CreateLobby;
 
         //TODO: add properties for lobby creation
         public string LobbyName { get; set; }

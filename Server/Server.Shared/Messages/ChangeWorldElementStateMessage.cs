@@ -9,7 +9,7 @@ namespace Server.Shared.Messages
 {
     public class ChangeWorldElementStateMessage : MessageBase
     {
-        public MessageType MessageType => MessageType.ChangeWorldElementState;
+        public override MessageTypeEnum MessageType => MessageTypeEnum.ChangeWorldElementState;
 
         //TODO: add properties for world element state change
         public Guid ElementGUID { get; set; }

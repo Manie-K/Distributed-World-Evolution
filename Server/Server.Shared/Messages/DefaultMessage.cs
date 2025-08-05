@@ -8,7 +8,7 @@ namespace Server.Shared.Messages
 {
     public class DefaultMessage : MessageBase
     {
-        public MessageType MessageType => MessageType.DefaultMessage;
+        public override MessageTypeEnum MessageType => MessageTypeEnum.DefaultMessage;
         /// <summary>
         /// The message content.
         /// </summary>
