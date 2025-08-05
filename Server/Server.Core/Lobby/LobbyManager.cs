@@ -1,21 +1,23 @@
-﻿using Server.Shared.Logging;
+﻿using Server.Core.Logging;
 using Server.Shared.Exceptions;
 using System.Net.Sockets;
+using System.Reflection.Emit;
 
 namespace Server.Core.Lobby
 {
     internal class LobbyManager
     {
         private readonly Dictionary<int, ILobby> lobbies;
-        private ILogger logger;
         private int lobbyCounter;
 
-        public LobbyManager(ILogger logger)
+        public event EventHandler<OnLogEventArgs>? OnLog;
+
+        public LobbyManager()
         {
             lobbyCounter = 0;
             lobbies = new Dictionary<int, ILobby>();
-            this.logger = logger;
         }
+
 
         //TODO: add modules when they are implemented
         public int CreateAndInitializeLobby()
@@ -25,7 +27,7 @@ namespace Server.Core.Lobby
             lock (lobbies)
             {
                 lobbyId = lobbyCounter++;
-                lobbies[lobbyId] = new Lobby(lobbyId, new Logger());
+                lobbies[lobbyId] = new Lobby(lobbyId);
                 lobbies[lobbyId].Run();
                 Task.Factory.StartNew(() => lobbies[lobbyId].Run(), TaskCreationOptions.LongRunning);
             }
@@ -40,7 +42,7 @@ namespace Server.Core.Lobby
                 if(lobby is not null)
                 {
                     lobby.AddClient(client);
-                    logger.Log($"Client added to lobby {lobbyId}.", LogLevel.Info);
+                    Log($"Client added to lobby {lobbyId}.", LogLevelEnum.Info);
 
                     return true;
                 }
@@ -50,8 +52,20 @@ namespace Server.Core.Lobby
                 }
             }
 
-            logger.Log($"Lobby with ID {lobbyId} does not exist.", LogLevel.Warning);
+            Log($"Lobby with ID {lobbyId} does not exist.", LogLevelEnum.Warning);
             return false;
+        }
+
+        private void Log(Exception ex, LogLevelEnum level)
+        {
+            Log(ex.Message, level);
+        }
+
+        private void Log(string message, LogLevelEnum level)
+        {
+            OnLogEventArgs args = new OnLogEventArgs(message, level);
+
+            OnLog?.Invoke(this, args);
         }
     }
 }

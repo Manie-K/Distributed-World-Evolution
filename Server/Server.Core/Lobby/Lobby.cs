@@ -2,7 +2,7 @@
 using System.Net.Sockets;
 using System.Text;
 using Server.Core.Frames;
-using Server.Shared.Logging;
+using Server.Core.Logging;
 using Server.Shared.Messages;
 
 namespace Server.Core.Lobby
@@ -13,23 +13,23 @@ namespace Server.Core.Lobby
         /// <inheritdoc/>
         public int LobbyId { get; private init; }
 
-        private ILogger logger;
         private List<TcpClient> clients;
         private bool running;
+
+        public static event EventHandler<OnLogEventArgs>? OnLog;
 
         /// <summary>
         /// Default constructor for Lobby.
         /// <paramref name="id"/> Unique identifier for the lobby.
-        /// <paramref name="logger"/> Logger to log about this lobby.
         /// </summary>
-        public Lobby(int id, ILogger logger)
+        public Lobby(int id)
         {
             LobbyId = id;
-            this.logger = logger;
 
             clients = new List<TcpClient>();
             running = true;
         }
+
 
         public void AddClient(TcpClient client)
         {
@@ -43,7 +43,7 @@ namespace Server.Core.Lobby
 
         public void Run()
         {
-            logger.Log($"Lobby {LobbyId} started.", LogLevel.Info);
+            Log($"Lobby {LobbyId} started.", LogLevelEnum.Info);
 
             while (running)
             {
@@ -51,7 +51,7 @@ namespace Server.Core.Lobby
                 Thread.Sleep(10);
             }
 
-            logger.Log($"Lobby {LobbyId} closed.", LogLevel.Info);
+            Log($"Lobby {LobbyId} closed.", LogLevelEnum.Info);
         }
 
         private void Update()
@@ -105,6 +105,19 @@ namespace Server.Core.Lobby
                     SendFrameToClient(client, frame);
                 }
             }
+        }
+
+        private void Log(Exception ex, LogLevelEnum level)
+        {
+            Log(ex.Message, level);
+        }
+
+        private void Log(string message, LogLevelEnum level)
+        {
+            OnLogEventArgs args = new OnLogEventArgs
+            (message, level);
+
+            OnLog?.Invoke(this, args);
         }
     }
 }
