@@ -63,7 +63,7 @@ namespace Server.Core
                 }
                 catch (Exception ex)
                 {
-                    Log(LogLevelEnum.Error, sender: ex.Message);
+                    Log(ex.Message, LogLevelEnum.Error);
                     client.Close();
                 }
             }
@@ -79,7 +79,7 @@ namespace Server.Core
                 }
                 catch (Exception ex)
                 {
-                    Log(LogLevelEnum.Error, sender: ex.Message);
+                    Log(ex.Message, LogLevelEnum.Error);
                     client.Close();
                 }
             }
