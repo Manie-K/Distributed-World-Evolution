@@ -1,8 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Client;
-using System.Diagnostics;
+using Client.Rendering;
 
 namespace Client
 {
@@ -12,6 +10,8 @@ namespace Client
         private SpriteBatch spriteBatch;
         private SceneManager sceneManager;
         private AudioManager audioManager;
+        private ScreenSize screenSize;
+        private readonly Camera2D camera;
 
         public Game1()
         {
@@ -20,9 +20,12 @@ namespace Client
             IsMouseVisible = true;
             sceneManager = new();
             audioManager = new AudioManager(Content);
+            camera = new Camera2D(screenSize);
+            screenSize = new ScreenSize(1280, 720);
 
-            graphics.PreferredBackBufferWidth = 1280;
-            graphics.PreferredBackBufferHeight = 720;
+            graphics.PreferredBackBufferWidth = screenSize.Width;
+            graphics.PreferredBackBufferHeight = screenSize.Height;
+            camera.CenterOn(new Vector2(screenSize.Width / 2f, screenSize.Height / 2f));
         }
 
         protected override void Initialize()
@@ -53,11 +56,8 @@ namespace Client
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-
-            sceneManager.GetCurrentScene().Draw(spriteBatch);
-     
-
+            spriteBatch.Begin(transformMatrix: camera.Transform, samplerState: SamplerState.PointClamp);
+            sceneManager.GetCurrentScene().Draw(spriteBatch, camera);
             spriteBatch.End();
 
             base.Draw(gameTime);

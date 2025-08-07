@@ -2,11 +2,10 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-
+using Client.Rendering;
 
 namespace Client
 {
-
     public class MainMenuScene : IScene
     {
         private ContentManager contentManager;
@@ -25,11 +24,11 @@ namespace Client
         private Button saveButton;
         private bool playButtonClicked;
 
-        public MainMenuScene(ContentManager ContentManager, SceneManager SceneManager, Game Game, AudioManager Audiomanager)
+        public MainMenuScene(ContentManager contentManager, SceneManager sceneManager, Game game, AudioManager audiomanager)
         {
-            contentManager = ContentManager;
-            sceneManager = SceneManager;
-            game = Game;
+            this.contentManager = contentManager;
+            this.sceneManager = sceneManager;
+            this.game = game;
             mainMenuPanel= contentManager.Load<Texture2D>("UI/Scenes/MainMenuPanel");
             playButton = new Button(contentManager.Load<Texture2D>("UI/Buttons/PlayButton"), null, null, new Vector2(418, 208), 447, 100 , Color.Gold);
             settingsButton = new Button(contentManager.Load<Texture2D>("UI/Buttons/SettingsButton"), null, null, new Vector2(406, 335), 467, 95, Color.Gold);
@@ -38,7 +37,7 @@ namespace Client
             textBox = new TextBox(null, contentManager.Load<SpriteFont>("Fonts/ButtonFont"), new Vector2(445, 315), 385, 87, Color.Black);
             saveButton = new Button(contentManager.Load<Texture2D>("UI/Buttons/SubmitButton"), null, null, new Vector2(493, 446), 299, 99, Color.Gold);
             userNamePanel = contentManager.Load<Texture2D>("UI/Scenes/UsernamePanel");
-            audioManager = Audiomanager;
+            this.audioManager = audiomanager;
             playButtonClicked = false;
         }
 
@@ -96,9 +95,9 @@ namespace Client
         }
 
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, Camera2D camera)
         {
-            spriteBatch.Draw(backGround, new Rectangle(0, 0, 1280, 720), Color.White);
+            spriteBatch.Draw(backGround, new Rectangle(0, 0, camera.ScreenSize.Width, camera.ScreenSize.Height), Color.White);
 
             if (!playButtonClicked)
             {

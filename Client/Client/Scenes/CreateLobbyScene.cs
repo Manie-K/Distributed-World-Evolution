@@ -1,21 +1,15 @@
 ﻿using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 using System.Text.Json;
+using Client.Rendering;
 
 namespace Client
 {
     public class CreateLobbyScene : IScene
     {
-        private ContentManager contentManager;
         private SceneManager sceneManager;
         private SwitchPage lobbyswitchPage; //do zmienienia robienie lobby(na serwer przesylac informacje)
 
@@ -30,17 +24,16 @@ namespace Client
 
         private MouseState previousMouseState;
 
-        public CreateLobbyScene(ContentManager ContentManager, SceneManager SceneManager, SwitchPage LobbyswitchPage)
+        public CreateLobbyScene(ContentManager contentManager, SceneManager sceneManager, SwitchPage lobbyswitchPage)
         {
-            contentManager = ContentManager;
-            sceneManager = SceneManager;
+            this.sceneManager = sceneManager;
             exitButton = new Button(contentManager.Load<Texture2D>("UI/White Close 2"), contentManager.Load<SpriteFont>("Fonts/ButtonFont"), "", new Vector2(1220, 25), 35, 35, Color.Red);
             backGround = contentManager.Load<Texture2D>("UI/Scenes/Create_Lobby");
             switchPageLobby = new SwitchPageLobby( contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), new Vector2(155, 295), contentManager, 4);
             saveButton = new Button(contentManager.Load<Texture2D>("UI/Buttons/SaveButton"), null, null, new Vector2(540, 570), 211, 79, new Color(255, 255, 128));
             gameNameBox = new TextBox(null, contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"),
                                         new Vector2(340, 135), 280, 22, Color.White);
-            lobbyswitchPage = LobbyswitchPage;
+            this.lobbyswitchPage = lobbyswitchPage;
             this.switchPageParametersAnimals = new SwitchPageParameters(contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"),
                                                                  new Vector2(848, 485), contentManager, 4);
             this.switchPageParametersPlants = new SwitchPageParameters(contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"),
@@ -138,9 +131,9 @@ namespace Client
             previousMouseState = currentMouseState;
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, Camera2D camera)
         {
-            spriteBatch.Draw(backGround, new Rectangle(0, 0, 1280, 720), Color.White);
+            spriteBatch.Draw(backGround, new Rectangle(0, 0, camera.ScreenSize.Width, camera.ScreenSize.Height), Color.White);
             switchPageLobby.Draw(spriteBatch);
             saveButton.Draw(spriteBatch);
             exitButton.Draw(spriteBatch);
@@ -149,11 +142,11 @@ namespace Client
 
             if (switchPageLobby.GetSelectedRow() != -1)
             {
-                if (switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetSelectedRow()).Type == CreatureType.Animal) switchPageParametersAnimals.Draw(spriteBatch);
-                else if (switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetSelectedRow()).Type == CreatureType.Plant) switchPageParametersPlants.Draw(spriteBatch);
+                if (switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetSelectedRow()).Type == CreatureType.Animal) 
+                    switchPageParametersAnimals.Draw(spriteBatch);
+                else if (switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetSelectedRow()).Type == CreatureType.Plant) 
+                    switchPageParametersPlants.Draw(spriteBatch);
             }
-
-
         }
 
 

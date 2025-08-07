@@ -1,10 +1,8 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Client.Rendering;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Client;
-using System;
-using System.Diagnostics;
 using System.Collections.Generic;
 
 namespace Client
@@ -12,28 +10,27 @@ namespace Client
     public class GameScene : IScene
     {
         private ContentManager contentManager;
-        private Texture2D backGround;
         private SceneManager sceneManager;
         private AudioManager audioManager;
         private MouseState previousMouseState;
         private KeyboardState previousKeyboardState;
         private Player player;
-
         private List<Character> characters;
-
         private AnimationTexturesLoader animationTexturesLoader;
+        private Tilemap map;
 
-        public GameScene(ContentManager ContentManager, SceneManager SceneManager, AudioManager Audiomanager, string PlayerName)
+        public GameScene(ContentManager contentManager, SceneManager sceneManager, AudioManager audiomanager, string playerName)
         {
-            contentManager = ContentManager;
-            sceneManager = SceneManager;
-            backGround = contentManager.Load<Texture2D>("UI/BG_Forest");
+            this.contentManager = contentManager;
+            this.sceneManager = sceneManager;
             animationTexturesLoader = new AnimationTexturesLoader(contentManager);
             player = new Player(new Vector2(600, 200), Color.White,
-                                     new Text(contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), PlayerName, true, new Vector2(500, 300 - 110), 70, 40), ref this.animationTexturesLoader);
+                                     new Text(contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), playerName, true, new Vector2(500, 300 - 110), 70, 40), ref this.animationTexturesLoader);
             characters = new List<Character>();
-            audioManager = Audiomanager;
+            this.audioManager = audiomanager;
 
+            map = new Tilemap();
+            map.LoadMap("Content/Maps/map1.json", contentManager);
             LoadCharacters();
         }
 
@@ -71,9 +68,10 @@ namespace Client
             previousKeyboardState = currentKeyboardState;
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, Camera2D camera)
         {
-            spriteBatch.Draw(backGround, new Rectangle(0, 0, 1280, 720), Color.White);
+            camera.CenterOn(player.Position);
+            map.Draw(spriteBatch, camera);
             player.Draw(spriteBatch);
             foreach (Character character in characters)
             {

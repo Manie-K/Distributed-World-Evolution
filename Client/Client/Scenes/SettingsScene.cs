@@ -3,18 +3,12 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
+using Client.Rendering;
 
 namespace Client
 {
     public class SettingsScene : IScene
     {
-        private ContentManager contentManager;
         private Button exitButton;
         private SwitchButton[] switchButtons;
         private Texture2D backGround;
@@ -25,10 +19,9 @@ namespace Client
         private Text[] keyBoardKeysText;
         private KeyboardState previousKeyboardState;
 
-        public SettingsScene(ContentManager ContentManager, SceneManager SceneManager, AudioManager AudioManager)
+        public SettingsScene(ContentManager contentManager, SceneManager sceneManager, AudioManager audioManager)
         {
-            contentManager = ContentManager;
-            sceneManager = SceneManager;
+            this.sceneManager = sceneManager;
             switchButtons = new SwitchButton[2];
             keyBoardKeysImages = new Texture2D[7];
             keyBoardKeysText = new Text[4];
@@ -57,7 +50,7 @@ namespace Client
             backGround = contentManager.Load<Texture2D>("UI/BG_Settings");
 
             previousKeyboardState = Keyboard.GetState();
-            this.audioManager = AudioManager;
+            this.audioManager = audioManager;
         }
 
         public void Load()
@@ -96,9 +89,9 @@ namespace Client
             previousKeyboardState = currentKeyboardState;
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, Camera2D camera)
         {
-            spriteBatch.Draw(backGround, new Rectangle(0, 0, 1280, 720), Color.White);
+            spriteBatch.Draw(backGround, new Rectangle(0, 0, camera.ScreenSize.Width, camera.ScreenSize.Height), Color.White);
             exitButton.Draw(spriteBatch);
             switchButtons[0].Draw(spriteBatch, (int)Math.Round(audioManager.GetGlobalMusicVolume() * 100f));
             switchButtons[1].Draw(spriteBatch, (int)Math.Round(audioManager.GetGlobalEffectVolume() * 100f));
