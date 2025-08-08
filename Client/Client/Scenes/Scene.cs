@@ -1,5 +1,4 @@
-﻿using Client.Rendering;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Client
@@ -8,6 +7,6 @@ namespace Client
     {
         public void Load();
         public void Update(GameTime gametime);
-        public void Draw(SpriteBatch spriteBatch, Camera2D camera);
+        public void Draw(SpriteBatch spriteBatch);
     }
 }

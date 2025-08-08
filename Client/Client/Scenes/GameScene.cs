@@ -1,6 +1,5 @@
 ﻿using Client.Rendering;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
@@ -9,28 +8,29 @@ namespace Client
 {
     public class GameScene : IScene
     {
-        private ContentManager contentManager;
-        private SceneManager sceneManager;
-        private AudioManager audioManager;
+        private GameManager manager;
+
         private MouseState previousMouseState;
         private KeyboardState previousKeyboardState;
         private Player player;
         private List<Character> characters;
         private AnimationTexturesLoader animationTexturesLoader;
         private Tilemap map;
+        private Vector2 cameraOffset;
 
-        public GameScene(ContentManager contentManager, SceneManager sceneManager, AudioManager audiomanager, string playerName)
+        public GameScene(GameManager manager)
         {
-            this.contentManager = contentManager;
-            this.sceneManager = sceneManager;
-            animationTexturesLoader = new AnimationTexturesLoader(contentManager);
-            player = new Player(new Vector2(600, 200), Color.White,
-                                     new Text(contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), playerName, true, new Vector2(500, 300 - 110), 70, 40), ref this.animationTexturesLoader);
-            characters = new List<Character>();
-            this.audioManager = audiomanager;
+            this.manager = manager;
 
+            animationTexturesLoader = new AnimationTexturesLoader(manager.ContentManager);
+            player = new Player(new Vector2(600, 200), Color.White,
+                                     new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), manager.PlayerName, true, new Vector2(500, 300 - 110), 70, 40), ref this.animationTexturesLoader);
+            characters = new List<Character>();
+
+            cameraOffset = new Vector2(50, 100);
             map = new Tilemap();
-            map.LoadMap("Content/Maps/map1.json", contentManager);
+            map.LoadMap("Content/Maps/map1.json", manager.ContentManager);
+            manager.Camera.MapSize = new Size(map.Width * map.TileSize, map.Height * map.TileSize);
             LoadCharacters();
         }
 
@@ -53,8 +53,9 @@ namespace Client
 
             if (currentKeyboardState.IsKeyDown(Keys.Escape) && previousKeyboardState.IsKeyUp(Keys.Escape))
             {
-                sceneManager.AddScene(new SettingsScene(contentManager, sceneManager, audioManager));
-                audioManager.MuteAll();
+                manager.Camera.ResetPosition();
+                manager.SceneManager.AddScene(new SettingsScene(manager));
+                manager.AudioManager.MuteAll();
             }
 
 
@@ -68,10 +69,10 @@ namespace Client
             previousKeyboardState = currentKeyboardState;
         }
 
-        public void Draw(SpriteBatch spriteBatch, Camera2D camera)
+        public void Draw(SpriteBatch spriteBatch)
         {
-            camera.CenterOn(player.Position);
-            map.Draw(spriteBatch, camera);
+            manager.Camera.CenterOn(player.Position + cameraOffset);
+            map.Draw(spriteBatch, manager.Camera);
             player.Draw(spriteBatch);
             foreach (Character character in characters)
             {

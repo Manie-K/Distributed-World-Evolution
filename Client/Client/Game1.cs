@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Client.Rendering;
 
 namespace Client
 {
@@ -8,30 +7,20 @@ namespace Client
     {
         private GraphicsDeviceManager graphics;
         private SpriteBatch spriteBatch;
-        private SceneManager sceneManager;
-        private AudioManager audioManager;
-        private ScreenSize screenSize;
-        private readonly Camera2D camera;
+        private readonly GameManager manager;
 
         public Game1()
         {
+            manager = new GameManager(Content);
             graphics = new GraphicsDeviceManager(this);
-            Content.RootDirectory = "Content";
             IsMouseVisible = true;
-            sceneManager = new();
-            audioManager = new AudioManager(Content);
-            camera = new Camera2D(screenSize);
-            screenSize = new ScreenSize(1280, 720);
-
-            graphics.PreferredBackBufferWidth = screenSize.Width;
-            graphics.PreferredBackBufferHeight = screenSize.Height;
-            camera.CenterOn(new Vector2(screenSize.Width / 2f, screenSize.Height / 2f));
+            graphics.PreferredBackBufferWidth = manager.Camera.ScreenSize.Width;
+            graphics.PreferredBackBufferHeight = manager.Camera.ScreenSize.Height;
         }
 
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            
             base.Initialize();
         }
 
@@ -39,15 +28,14 @@ namespace Client
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use this.Content to load your game content here
-            sceneManager.AddScene(new MainMenuScene(Content, sceneManager, this, audioManager));
-            sceneManager.GetCurrentScene().Load();
+            // TODO: use manager.ContentManager to load your game content here
+            manager.SceneManager.AddScene(new MainMenuScene(manager, this));
+            manager.SceneManager.GetCurrentScene().Load();
         }
 
         protected override void Update(GameTime gameTime)
         {
-
-            sceneManager.GetCurrentScene().Update(gameTime);
+            manager.SceneManager.GetCurrentScene().Update(gameTime);
 
             base.Update(gameTime);
         }
@@ -56,8 +44,8 @@ namespace Client
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
-            spriteBatch.Begin(transformMatrix: camera.Transform, samplerState: SamplerState.PointClamp);
-            sceneManager.GetCurrentScene().Draw(spriteBatch, camera);
+            spriteBatch.Begin(transformMatrix: manager.Camera.Transform, samplerState: SamplerState.PointClamp);
+            manager.SceneManager.GetCurrentScene().Draw(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);
