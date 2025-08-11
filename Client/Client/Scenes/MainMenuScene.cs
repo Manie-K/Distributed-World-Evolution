@@ -1,51 +1,45 @@
-﻿using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
-
 namespace Client
 {
-
     public class MainMenuScene : IScene
     {
-        private ContentManager contentManager;
+        private GameManager manager;
+        private Game game;
+
         private Button playButton;
         private Button settingsButton;
         private Button quitButton;
         private Texture2D backGround;
         private Texture2D mainMenuPanel;
-        private SceneManager sceneManager;
         private MouseState previousMouseState;
-        private Game game;
-        private AudioManager audioManager;
-
         private Texture2D userNamePanel;
         private TextBox textBox;
         private Button saveButton;
         private bool playButtonClicked;
 
-        public MainMenuScene(ContentManager ContentManager, SceneManager SceneManager, Game Game, AudioManager Audiomanager)
+        public MainMenuScene(GameManager manager, Game game)
         {
-            contentManager = ContentManager;
-            sceneManager = SceneManager;
-            game = Game;
-            mainMenuPanel= contentManager.Load<Texture2D>("UI/Scenes/MainMenuPanel");
-            playButton = new Button(contentManager.Load<Texture2D>("UI/Buttons/PlayButton"), null, null, new Vector2(418, 208), 447, 100 , Color.Gold);
-            settingsButton = new Button(contentManager.Load<Texture2D>("UI/Buttons/SettingsButton"), null, null, new Vector2(406, 335), 467, 95, Color.Gold);
-            quitButton = new Button(contentManager.Load<Texture2D>("UI/Buttons/ExitButton"), null, null, new Vector2(420, 460), 445, 95, Color.Gold);
-            backGround = contentManager.Load<Texture2D>("UI/BG_Forest");
-            textBox = new TextBox(null, contentManager.Load<SpriteFont>("Fonts/ButtonFont"), new Vector2(445, 315), 385, 87, Color.Black);
-            saveButton = new Button(contentManager.Load<Texture2D>("UI/Buttons/SubmitButton"), null, null, new Vector2(493, 446), 299, 99, Color.Gold);
-            userNamePanel = contentManager.Load<Texture2D>("UI/Scenes/UsernamePanel");
-            audioManager = Audiomanager;
+            this.manager = manager;
+            this.game = game;
+
+            mainMenuPanel = manager.ContentManager.Load<Texture2D>("UI/Scenes/MainMenuPanel");
+            playButton = new Button(manager.ContentManager.Load<Texture2D>("UI/Buttons/PlayButton"), null, null, new Vector2(418, 208), 447, 100 , Color.Gold);
+            settingsButton = new Button(manager.ContentManager.Load<Texture2D>("UI/Buttons/SettingsButton"), null, null, new Vector2(406, 335), 467, 95, Color.Gold);
+            quitButton = new Button(manager.ContentManager.Load<Texture2D>("UI/Buttons/ExitButton"), null, null, new Vector2(420, 460), 445, 95, Color.Gold);
+            backGround = manager.ContentManager.Load<Texture2D>("UI/BG_Forest");
+            textBox = new TextBox(null, manager.ContentManager.Load<SpriteFont>("Fonts/ButtonFont"), new Vector2(445, 315), 385, 87, Color.Black);
+            saveButton = new Button(manager.ContentManager.Load<Texture2D>("UI/Buttons/SubmitButton"), null, null, new Vector2(493, 446), 299, 99, Color.Gold);
+            userNamePanel = manager.ContentManager.Load<Texture2D>("UI/Scenes/UsernamePanel");
             playButtonClicked = false;
         }
 
         public void Load()
         {
-            audioManager.LoadSong("MainMenuSong", "Audio/Light Ambience 1");
-            audioManager.PlaySong("MainMenuSong");
+            manager.AudioManager.LoadSong("MainMenuSong", "Audio/Light Ambience 1");
+            manager.AudioManager.PlaySong("MainMenuSong");
         }
 
 
@@ -64,8 +58,8 @@ namespace Client
                     }
                     if (settingsButton.CheckLeftClick(position))
                     {
-                        sceneManager.AddScene(new SettingsScene(contentManager, sceneManager, audioManager));
-                        audioManager.MuteAll();
+                        manager.SceneManager.AddScene(new SettingsScene(manager));
+                        manager.AudioManager.MuteAll();
                     }
                     if (quitButton.CheckLeftClick(position)) game.Exit();
                 }
@@ -74,8 +68,9 @@ namespace Client
                     textBox.CheckLeftClick(position);
                     if (saveButton.CheckLeftClick(position) && !textBox.CheckTextIfEmpty())
                     {
-                        sceneManager.AddScene(new LobbyScene(contentManager, sceneManager, audioManager, textBox.GetText()));
-                        audioManager.MuteAll();
+                        manager.PlayerName = textBox.GetText();
+                        manager.SceneManager.AddScene(new LobbyScene(manager));
+                        manager.AudioManager.MuteAll();
                     }
                 }
             }
@@ -98,7 +93,7 @@ namespace Client
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(backGround, new Rectangle(0, 0, 1280, 720), Color.White);
+            spriteBatch.Draw(backGround, new Rectangle(0, 0, manager.Camera.ScreenSize.Width, manager.Camera.ScreenSize.Height), Color.White);
 
             if (!playButtonClicked)
             {
