@@ -6,6 +6,328 @@
   "TilesetHeight": 256,
   "Width": 200,
   "Height": 200,
+  "TilesetData": [
+    {
+      "Id": 0,
+      "Type": "MapBorder",
+      "Walkable": false
+    },
+    {
+      "Id": 1,
+      "Type": "Grass",
+      "Walkable": true
+    },
+    {
+      "Id": 2,
+      "Type": "Wall",
+      "Walkable": false
+    },
+    {
+      "Id": 3,
+      "Type": "Water",
+      "Walkable": false
+    },
+    {
+      "Id": 4,
+      "Type": "Sand",
+      "Walkable": true
+    },
+    {
+      "Id": 5,
+      "Type": "Dirt",
+      "Walkable": true
+    },
+    {
+      "Id": 6,
+      "Type": "Grass",
+      "Walkable": true
+    },
+    {
+      "Id": 7,
+      "Type": "Wall",
+      "Walkable": false
+    },
+    {
+      "Id": 8,
+      "Type": "Water",
+      "Walkable": false
+    },
+    {
+      "Id": 9,
+      "Type": "Sand",
+      "Walkable": true
+    },
+    {
+      "Id": 10,
+      "Type": "Dirt",
+      "Walkable": true
+    },
+    {
+      "Id": 11,
+      "Type": "Grass",
+      "Walkable": true
+    },
+    {
+      "Id": 12,
+      "Type": "Wall",
+      "Walkable": false
+    },
+    {
+      "Id": 13,
+      "Type": "Water",
+      "Walkable": false
+    },
+    {
+      "Id": 14,
+      "Type": "Sand",
+      "Walkable": true
+    },
+    {
+      "Id": 15,
+      "Type": "Dirt",
+      "Walkable": true
+    },
+    {
+      "Id": 16,
+      "Type": "Grass",
+      "Walkable": true
+    },
+    {
+      "Id": 17,
+      "Type": "Wall",
+      "Walkable": false
+    },
+    {
+      "Id": 18,
+      "Type": "Water",
+      "Walkable": false
+    },
+    {
+      "Id": 19,
+      "Type": "Sand",
+      "Walkable": true
+    },
+    {
+      "Id": 20,
+      "Type": "Dirt",
+      "Walkable": true
+    },
+    {
+      "Id": 21,
+      "Type": "Grass",
+      "Walkable": true
+    },
+    {
+      "Id": 22,
+      "Type": "Wall",
+      "Walkable": false
+    },
+    {
+      "Id": 23,
+      "Type": "Water",
+      "Walkable": false
+    },
+    {
+      "Id": 24,
+      "Type": "Sand",
+      "Walkable": true
+    },
+    {
+      "Id": 25,
+      "Type": "Dirt",
+      "Walkable": true
+    },
+    {
+      "Id": 26,
+      "Type": "Grass",
+      "Walkable": true
+    },
+    {
+      "Id": 27,
+      "Type": "Wall",
+      "Walkable": false
+    },
+    {
+      "Id": 28,
+      "Type": "Water",
+      "Walkable": false
+    },
+    {
+      "Id": 29,
+      "Type": "Sand",
+      "Walkable": true
+    },
+    {
+      "Id": 30,
+      "Type": "Dirt",
+      "Walkable": true
+    },
+    {
+      "Id": 31,
+      "Type": "Grass",
+      "Walkable": true
+    },
+    {
+      "Id": 32,
+      "Type": "Wall",
+      "Walkable": false
+    },
+    {
+      "Id": 33,
+      "Type": "Water",
+      "Walkable": false
+    },
+    {
+      "Id": 34,
+      "Type": "Sand",
+      "Walkable": true
+    },
+    {
+      "Id": 35,
+      "Type": "Dirt",
+      "Walkable": true
+    },
+    {
+      "Id": 36,
+      "Type": "Grass",
+      "Walkable": true
+    },
+    {
+      "Id": 37,
+      "Type": "Wall",
+      "Walkable": false
+    },
+    {
+      "Id": 38,
+      "Type": "Water",
+      "Walkable": false
+    },
+    {
+      "Id": 39,
+      "Type": "Sand",
+      "Walkable": true
+    },
+    {
+      "Id": 40,
+      "Type": "Dirt",
+      "Walkable": true
+    },
+    {
+      "Id": 41,
+      "Type": "Grass",
+      "Walkable": true
+    },
+    {
+      "Id": 42,
+      "Type": "Wall",
+      "Walkable": false
+    },
+    {
+      "Id": 43,
+      "Type": "Water",
+      "Walkable": false
+    },
+    {
+      "Id": 44,
+      "Type": "Sand",
+      "Walkable": true
+    },
+    {
+      "Id": 45,
+      "Type": "Dirt",
+      "Walkable": true
+    },
+    {
+      "Id": 46,
+      "Type": "Grass",
+      "Walkable": true
+    },
+    {
+      "Id": 47,
+      "Type": "Wall",
+      "Walkable": false
+    },
+    {
+      "Id": 48,
+      "Type": "Water",
+      "Walkable": false
+    },
+    {
+      "Id": 49,
+      "Type": "Sand",
+      "Walkable": true
+    },
+    {
+      "Id": 50,
+      "Type": "Dirt",
+      "Walkable": true
+    },
+    {
+      "Id": 51,
+      "Type": "Grass",
+      "Walkable": true
+    },
+    {
+      "Id": 52,
+      "Type": "Wall",
+      "Walkable": false
+    },
+    {
+      "Id": 53,
+      "Type": "Water",
+      "Walkable": false
+    },
+    {
+      "Id": 54,
+      "Type": "Sand",
+      "Walkable": true
+    },
+    {
+      "Id": 55,
+      "Type": "Dirt",
+      "Walkable": true
+    },
+    {
+      "Id": 56,
+      "Type": "Grass",
+      "Walkable": true
+    },
+    {
+      "Id": 57,
+      "Type": "Wall",
+      "Walkable": false
+    },
+    {
+      "Id": 58,
+      "Type": "Water",
+      "Walkable": false
+    },
+    {
+      "Id": 59,
+      "Type": "Sand",
+      "Walkable": true
+    },
+    {
+      "Id": 60,
+      "Type": "Dirt",
+      "Walkable": true
+    },
+    {
+      "Id": 61,
+      "Type": "Grass",
+      "Walkable": true
+    },
+    {
+      "Id": 62,
+      "Type": "Wall",
+      "Walkable": false
+    },
+    {
+      "Id": 63,
+      "Type": "Water",
+      "Walkable": false
+    }
+  ],
   "Tiles": [
     [
       33,

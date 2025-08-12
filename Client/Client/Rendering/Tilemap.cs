@@ -2,8 +2,10 @@
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace Client.Rendering
 {
@@ -11,6 +13,7 @@ namespace Client.Rendering
     {
         private Texture2D tilesetTexture;
         private Rectangle[] tileSourceRects;
+        private JsonSerializerOptions options;
 
         public string Name { get; set; }
         public string TexturePath { get; set; }
@@ -19,7 +22,20 @@ namespace Client.Rendering
         public int TilesetHeight { get; set; }
         public int Width { get; set; }
         public int Height { get; set; }
+        public List<TileProperty> TilesetData { get; set; }
         public int[][] Tiles { get; set; }
+
+        public Tilemap()
+        { 
+            options = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                Converters =
+                {
+                    new JsonStringEnumConverter()
+                }
+            };
+        }
 
         /// <summary>
         /// Loads the tilemap from a JSON file and sets the current map data.
@@ -37,7 +53,7 @@ namespace Client.Rendering
                 }
 
                 string json = File.ReadAllText(filePath);
-                Tilemap loadedMap = JsonSerializer.Deserialize<Tilemap>(json);
+                Tilemap loadedMap = JsonSerializer.Deserialize<Tilemap>(json, options);
 
                 if (loadedMap == null)
                 {

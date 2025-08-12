@@ -22,29 +22,34 @@ namespace Client
             textColor = Color.Black;
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void Draw(SpriteBatch spriteBatch, Vector2? targetPos = null)
         {     
             Vector2 textSize = font.MeasureString(text);
             Vector2 textPosition;
-            if (isCentered)
+
+            if (targetPos != null)
             {
                 textPosition = new Vector2(
-                position.X + (bounds.Width - textSize.X) / 2,
-                position.Y + (bounds.Height - textSize.Y) / 2
-            );
+                    targetPos.Value.X + (bounds.Width - textSize.X) / 2,
+                    targetPos.Value.Y + (bounds.Height - textSize.Y) / 2
+                );
+            }
+            else if (isCentered)
+            {
+                textPosition = new Vector2(
+                    position.X + (bounds.Width - textSize.X) / 2,
+                    position.Y + (bounds.Height - textSize.Y) / 2
+                );
             }
             else
             {
                 textPosition = new Vector2(
-                                position.X,
-                                position.Y + (bounds.Height - textSize.Y) / 2
-                            );
+                    position.X,
+                    position.Y + (bounds.Height - textSize.Y) / 2
+                );
             }
 
             spriteBatch.DrawString(font, text, textPosition, textColor);
-            
-
-
         }
 
         public void SetText(string text)
