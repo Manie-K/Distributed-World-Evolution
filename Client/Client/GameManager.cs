@@ -1,0 +1,25 @@
+﻿using Client.Rendering;
+using Microsoft.Xna.Framework.Content;
+
+namespace Client
+{
+    public class GameManager
+    {
+        public SceneManager SceneManager { get; private set; }
+        public AudioManager AudioManager { get; private set; }
+        public ContentManager ContentManager {  get; private set; }
+        public Camera2D Camera { get; private set; }
+        public string PlayerName {  get; set; }
+
+        public GameManager(ContentManager content)
+        {
+            ContentManager = content;
+            ContentManager.RootDirectory = "Content";
+            SceneManager = new();
+            AudioManager = new AudioManager(ContentManager);
+            Camera = new Camera2D(new Size(1280, 720));
+            Camera.ResetPosition();
+            PlayerName = "";
+        }
+    }
+}
