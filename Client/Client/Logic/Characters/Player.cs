@@ -1,24 +1,19 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO.Compression;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace Client
 {
-
     public class Player : Character
     {
+        private Text playerName;
+        private Vector2 playerNameOffset;
 
-        private Text text;
-
-        public Player(Vector2 position, Color color, Text text, ref AnimationTexturesLoader ATL)
+        public Player(Vector2 position, Color color, Text playerName, ref AnimationTexturesLoader ATL)
             : base(position, color, 140, 108, 150f, ref ATL, 0)
         {
-            this.text = text;
-
+            this.playerName = playerName;
+            playerNameOffset = new Vector2(34, 0);
         }
 
         public override void Update(GameTime gameTime, KeyboardState currentKeyboardState, KeyboardState previousKeyboardState)
@@ -79,7 +74,7 @@ namespace Client
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(am.GetAcctualTexture(), Rect, am.GetFrame(), Color.White);
-            text.Draw(spriteBatch);
+            playerName.Draw(spriteBatch, Position + playerNameOffset);
         }
     }
 }
