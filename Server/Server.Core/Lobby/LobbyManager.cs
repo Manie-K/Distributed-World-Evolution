@@ -1,7 +1,6 @@
 ﻿using Server.Core.Logging;
 using Server.Shared.Exceptions;
 using System.Net.Sockets;
-using System.Reflection.Emit;
 
 namespace Server.Core.Lobby
 {

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Sockets;
+﻿using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
-using System.Threading.Tasks;
 
 namespace Server.Shared.Messages
 {
@@ -39,9 +35,10 @@ namespace Server.Shared.Messages
                 message = parsedMessageType switch
                 {
                     MessageTypeEnum.CreateLobby => JsonSerializer.Deserialize<CreateLobbyMessage>(json),
-                    MessageTypeEnum.ChangeWorldElementState => JsonSerializer.Deserialize<ChangeWorldElementStateMessage>(json),
+                    MessageTypeEnum.UpdateWorldEntityState => JsonSerializer.Deserialize<UpdateWorldEntityStateMessage>(json),
+                    MessageTypeEnum.RefreshWorldEntities => JsonSerializer.Deserialize<RefreshWorldEntitiesMessage>(json),
                     MessageTypeEnum.DefaultMessage => JsonSerializer.Deserialize<DefaultMessage>(json),
-                    MessageTypeEnum.ChangeUserState => JsonSerializer.Deserialize<ChangeUserStateMessage>(json),
+                    MessageTypeEnum.UpdateUserState => JsonSerializer.Deserialize<UpdateUserStateMessage>(json),
                     MessageTypeEnum.JoinLobby => JsonSerializer.Deserialize<JoinLobbyMessage>(json),
                     _ => throw new NotImplementedException(),
                 };

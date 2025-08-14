@@ -1,8 +1,4 @@
-﻿using System;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading;
-using Server.Shared.Logging;
+﻿using System.Net.Sockets;
 using Server.Shared.Messages;
 
 class Client
