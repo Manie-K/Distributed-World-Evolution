@@ -19,6 +19,7 @@ namespace Client
         private TextBox textBox;
         private Button saveButton;
         private bool playButtonClicked;
+        private KeyboardState previousKeyboardState;
 
         public MainMenuScene(GameManager manager, Game game)
         {
@@ -34,6 +35,7 @@ namespace Client
             saveButton = new Button(manager.ContentManager.Load<Texture2D>("UI/Buttons/SubmitButton"), null, null, new Vector2(493, 446), 299, 99, Color.Gold);
             userNamePanel = manager.ContentManager.Load<Texture2D>("UI/Scenes/UsernamePanel");
             playButtonClicked = false;
+            previousKeyboardState = Keyboard.GetState();
         }
 
         public void Load()
@@ -46,6 +48,7 @@ namespace Client
         public void Update(GameTime gameTime)
         {
             MouseState currentMouseState = Mouse.GetState();
+            KeyboardState currentKeyboardState = Keyboard.GetState();
             Vector2 position = new Vector2(currentMouseState.X, currentMouseState.Y);
 
             if (currentMouseState.LeftButton == ButtonState.Pressed && previousMouseState.LeftButton == ButtonState.Released)
@@ -55,11 +58,15 @@ namespace Client
                     if (playButton.CheckLeftClick(position))
                     {
                         playButtonClicked = true;
+                        if (!manager.UserSettings.PlayerName.Equals(""))
+                        {
+                            playButtonClicked = false;
+                            manager.SceneManager.AddScene(new LobbyScene(manager));
+                        }
                     }
                     if (settingsButton.CheckLeftClick(position))
                     {
                         manager.SceneManager.AddScene(new SettingsScene(manager));
-                        manager.AudioManager.MuteAll();
                     }
                     if (quitButton.CheckLeftClick(position)) game.Exit();
                 }
@@ -68,11 +75,17 @@ namespace Client
                     textBox.CheckLeftClick(position);
                     if (saveButton.CheckLeftClick(position) && !textBox.CheckTextIfEmpty())
                     {
-                        manager.PlayerName = textBox.GetText();
+                        manager.UserSettings.PlayerName = textBox.GetText();
+                        manager.UserSettings.SaveUserSettings();
+                        playButtonClicked = false;
                         manager.SceneManager.AddScene(new LobbyScene(manager));
-                        manager.AudioManager.MuteAll();
                     }
                 }
+            }
+
+            if (currentKeyboardState.IsKeyDown(Keys.Escape) && previousKeyboardState.IsKeyUp(Keys.Escape))
+            {
+                playButtonClicked = false;
             }
 
             if (playButtonClicked)
@@ -88,6 +101,7 @@ namespace Client
             }
 
             previousMouseState = currentMouseState;
+            previousKeyboardState = currentKeyboardState;
         }
 
 

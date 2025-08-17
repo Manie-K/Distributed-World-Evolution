@@ -1,11 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Client
 {
@@ -17,6 +12,7 @@ namespace Client
         private Vector2 position;
         private Rectangle bounds;
         private Color textColor;
+        private Color initTextColor;
         private Color backgroundColor;
         private KeyboardState currentKeyboardState;
         private KeyboardState previousKeyboardState;
@@ -27,10 +23,11 @@ namespace Client
         {
             backGroundTexture = BackgroundTexture;
             font = Font;
-            text = "|";
+            text = "Your Name";
             position = Position;
             bounds = new Rectangle((int)position.X, (int)position.Y, Width, Height);
             textColor = Color;
+            initTextColor = Color;
             backgroundColor = Color.White;
             onlyNumbers = Onlynumbers;
         }
@@ -59,7 +56,7 @@ namespace Client
             if (bounds.Contains(clickPosition))
             {
                 isFocused = true;
-                text = "";
+                textColor = Color.DimGray;
                 return true;
             }
             if (isFocused && onlyNumbers && string.IsNullOrWhiteSpace(text))
@@ -67,8 +64,8 @@ namespace Client
                 text = "0";
             }
             isFocused = false;
+            textColor = initTextColor;
             return false;
-
         }
 
 
@@ -85,7 +82,7 @@ namespace Client
             {
                 if (previousKeyboardState.IsKeyUp(key))
                 {
-                    string keyString = KeyToString(key);
+                    string keyString = KeyToString(key, currentKeyboardState);
                     if (!string.IsNullOrEmpty(keyString))
                     {
                         text += keyString;
@@ -119,7 +116,7 @@ namespace Client
             return string.IsNullOrEmpty(text) || text == "|";
         }
 
-        private string KeyToString(Keys key)
+        private string KeyToString(Keys key, KeyboardState state)
         {
             if (onlyNumbers)
             {
@@ -133,8 +130,17 @@ namespace Client
             }
             else
             {
+                bool shift = state.IsKeyDown(Keys.LeftShift) || state.IsKeyDown(Keys.RightShift);
+                bool capsLock = state.CapsLock;
+
                 if (key >= Keys.A && key <= Keys.Z)
+                {
+                    if ((shift && !capsLock) || (capsLock && !shift))
+                    {
+                        return key.ToString();
+                    }
                     return key.ToString().ToLower();
+                }
 
                 if (key >= Keys.D0 && key <= Keys.D9)
                     return ((char)('0' + (key - Keys.D0))).ToString();

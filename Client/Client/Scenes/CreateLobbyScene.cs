@@ -21,6 +21,7 @@ namespace Client
         private SwitchPageParameters switchPageParametersPlants;
 
         private MouseState previousMouseState;
+        private KeyboardState previousKeyboardState;
 
         public CreateLobbyScene(GameManager manager, SwitchPage lobbyswitchPage)
         {
@@ -39,6 +40,8 @@ namespace Client
 
             InitializeCreaturesRows();
             InitalizeParametersPanel();
+
+            previousKeyboardState = Keyboard.GetState();
         }
 
         public void Load()
@@ -64,10 +67,10 @@ namespace Client
         }
 
 
-
         public void Update(GameTime gameTime)
         {
             MouseState currentMouseState = Mouse.GetState();
+            KeyboardState currentKeyboardState = Keyboard.GetState();
 
             Vector2 position = new Vector2(currentMouseState.X, currentMouseState.Y);
             bool isPressed = false;
@@ -104,6 +107,11 @@ namespace Client
                 isPressed = true;
             }
 
+            if (currentKeyboardState.IsKeyDown(Keys.Escape) && previousKeyboardState.IsKeyUp(Keys.Escape))
+            {
+                manager.SceneManager.RemoveScene();
+            }
+
             exitButton.Update(position);
             saveButton.Update(position);
             gameNameBox.Update();
@@ -127,6 +135,7 @@ namespace Client
             }
 
             previousMouseState = currentMouseState;
+            previousKeyboardState = currentKeyboardState;
         }
 
         public void Draw(SpriteBatch spriteBatch)

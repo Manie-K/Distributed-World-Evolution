@@ -24,13 +24,14 @@ namespace Client
 
             animationTexturesLoader = new AnimationTexturesLoader(manager.ContentManager);
             player = new Player(new Vector2(600, 200), Color.White,
-                                     new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), manager.PlayerName, true, new Vector2(500, 300 - 110), 70, 40), ref this.animationTexturesLoader);
+                                     new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), manager.UserSettings.PlayerName, true, new Vector2(500, 300 - 110), 70, 40), ref this.animationTexturesLoader);
             characters = new List<Character>();
 
             cameraOffset = new Vector2(50, 100);
             map = new Tilemap();
             map.LoadMap("Content/Maps/map1.json", manager.ContentManager);
-            manager.Camera.MapSize = new Size(map.Width * map.TileSize, map.Height * map.TileSize);
+            manager.Camera.MapSize = new System.Drawing.Size(map.Width * map.TileSize, map.Height * map.TileSize);
+            manager.IsInGame = true;
             LoadCharacters();
         }
 
@@ -55,7 +56,6 @@ namespace Client
             {
                 manager.Camera.ResetPosition();
                 manager.SceneManager.AddScene(new SettingsScene(manager));
-                manager.AudioManager.MuteAll();
             }
 
 
