@@ -1,15 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using System.Text.Json;
 
 namespace Server.Shared.Messages
 {
-    public class ChangeUserStateMessage : MessageBase
+    public class UpdateUserStateMessage : MessageBase
     {
-        public override MessageTypeEnum MessageType => MessageTypeEnum.ChangeUserState;
+        public override MessageTypeEnum MessageType => MessageTypeEnum.UpdateUserState;
 
         //TODO: add properties for user state change
         public Guid UserGUID { get; set; }

@@ -18,9 +18,6 @@ namespace Server.Shared.Exceptions
         {
         }
 
-        protected NullLobbyException(SerializationInfo info, StreamingContext context) : base(info, context)
-        {
-        }
 
         private string GetDebuggerDisplay()
         {
