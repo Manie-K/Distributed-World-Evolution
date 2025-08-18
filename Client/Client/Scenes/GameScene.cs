@@ -54,6 +54,7 @@ namespace Client
 
             if (currentKeyboardState.IsKeyDown(Keys.Escape) && previousKeyboardState.IsKeyUp(Keys.Escape))
             {
+                manager.AudioManager.MuteAll();
                 manager.Camera.ResetPosition();
                 manager.SceneManager.AddScene(new SettingsScene(manager));
             }

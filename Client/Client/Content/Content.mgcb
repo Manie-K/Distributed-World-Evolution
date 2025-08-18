@@ -1000,6 +1000,18 @@
 /processorParam:TextureFormat=Color
 /build:UI/Button_Large_A.png
 
+#begin UI/Buttons/Back_Button.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/Buttons/Back_Button.png
+
 #begin UI/Buttons/BackToMainMenuButton.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1047,6 +1059,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:UI/Buttons/JoinButton.png
+
+#begin UI/Buttons/Lobby_Button.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/Buttons/Lobby_Button.png
 
 #begin UI/Buttons/PlayButton.png
 /importer:TextureImporter
@@ -1107,6 +1131,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:UI/Buttons/SubmitButton.png
+
+#begin UI/Buttons/Username_TextBox.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/Buttons/Username_TextBox.png
 
 #begin UI/Keyboard_keys/a.png
 /importer:TextureImporter
