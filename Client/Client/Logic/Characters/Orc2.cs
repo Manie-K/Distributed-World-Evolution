@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Client.Common;
 
 namespace Client
 {
@@ -18,27 +19,27 @@ namespace Client
 
         }
 
-        public override void Update(GameTime gameTime, KeyboardState currentKeyboardState, KeyboardState previousKeyboardState)
+        public override void Update(GameTime gameTime, InputManager inputManager)
         {
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             Vector2 movement = Vector2.Zero;
 
-            if (currentKeyboardState.IsKeyDown(Keys.W))
+            if (inputManager.CheckIfPressingKey(Keys.W))
             {
                 CurrentDirection = Direction.up;
                 movement.Y -= 1;
             }
-            if (currentKeyboardState.IsKeyDown(Keys.S))
+            if (inputManager.CheckIfPressingKey(Keys.S))
             {
                 CurrentDirection = Direction.down;
                 movement.Y += 1;
             }
-            if (currentKeyboardState.IsKeyDown(Keys.A))
+            if (inputManager.CheckIfPressingKey(Keys.A))
             {
                 CurrentDirection = Direction.left;
                 movement.X -= 1;
             }
-            if (currentKeyboardState.IsKeyDown(Keys.D))
+            if (inputManager.CheckIfPressingKey(Keys.D))
             {
                 CurrentDirection = Direction.right;
                 movement.X += 1;
@@ -56,7 +57,7 @@ namespace Client
             }
 
 
-            if (currentKeyboardState.IsKeyDown(Keys.Space))
+            if (inputManager.CheckIfPressingKey(Keys.Space))
             {
                 am.SetAnimationWithDuration(40, CurrentDirection, 2, 36, true);
             }

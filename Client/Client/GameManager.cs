@@ -12,6 +12,7 @@ namespace Client
         public ContentManager ContentManager {  get; private set; }
         public Camera2D Camera { get; private set; }
         public UserSettings UserSettings { get; private set; }
+        public InputManager InputManager { get; private set; }
         public bool IsInGame { get; set; }
 
         public GameManager(ContentManager content)
@@ -22,6 +23,7 @@ namespace Client
             ContentManager.RootDirectory = "Content";
             SceneManager = new();
             AudioManager = new AudioManager(ContentManager);
+            InputManager = new InputManager();
             AudioManager.SetGlobalMusicVolume(UserSettings.GlobalMusicVolume);
             AudioManager.SetGlobalEffectVolume(UserSettings.GlobalEffectVolume);
             Camera = new Camera2D(new Size(UserSettings.ScreenWidth, UserSettings.ScreenHeight));

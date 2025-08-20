@@ -20,9 +20,6 @@ namespace Client
         private SwitchPageParameters switchPageParametersAnimals;
         private SwitchPageParameters switchPageParametersPlants;
 
-        private MouseState previousMouseState;
-        private KeyboardState previousKeyboardState;
-
         public CreateLobbyScene(GameManager manager, SwitchPage lobbyswitchPage)
         {
             this.manager = manager;
@@ -40,8 +37,6 @@ namespace Client
 
             InitializeCreaturesRows();
             InitalizeParametersPanel();
-
-            previousKeyboardState = Keyboard.GetState();
         }
 
         public void Load()
@@ -69,20 +64,17 @@ namespace Client
 
         public void Update(GameTime gameTime)
         {
-            MouseState currentMouseState = Mouse.GetState();
-            KeyboardState currentKeyboardState = Keyboard.GetState();
-
-            Vector2 position = new Vector2(currentMouseState.X, currentMouseState.Y);
+            manager.InputManager.Update();
             bool isPressed = false;
 
-            if (currentMouseState.LeftButton == ButtonState.Pressed && previousMouseState.LeftButton == ButtonState.Released)
+            if (manager.InputManager.CheckIfLeftClick())
             {
-                switchPageLobby.CheckLeftClick(position);
-                if (exitButton.CheckLeftClick(position))
+                switchPageLobby.CheckLeftClick(manager.InputManager.GetMousePosition());
+                if (exitButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                 {
                     manager.SceneManager.RemoveScene();
                 }
-                if (saveButton.CheckLeftClick(position) && !gameNameBox.CheckTextIfEmpty())
+                if (saveButton.CheckLeftClick(manager.InputManager.GetMousePosition()) && !gameNameBox.CheckTextIfEmpty())
                 {
                     if (switchPageLobby.GetSelectedRow() != -1)
                     {
@@ -98,22 +90,22 @@ namespace Client
 
                 if (switchPageLobby.GetSelectedRow() != -1)
                 {
-                    if (switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetSelectedRow()).Type == CreatureType.Animal) switchPageParametersAnimals.CheckLeftClick(position);
-                    else if (switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetSelectedRow()).Type == CreatureType.Plant) switchPageParametersPlants.CheckLeftClick(position);
+                    if (switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetSelectedRow()).Type == CreatureType.Animal) switchPageParametersAnimals.CheckLeftClick(manager.InputManager.GetMousePosition());
+                    else if (switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetSelectedRow()).Type == CreatureType.Plant) switchPageParametersPlants.CheckLeftClick(manager.InputManager.GetMousePosition());
                 }
 
-                gameNameBox.CheckLeftClick(position);
+                gameNameBox.CheckLeftClick(manager.InputManager.GetMousePosition());
 
                 isPressed = true;
             }
 
-            if (currentKeyboardState.IsKeyDown(Keys.Escape) && previousKeyboardState.IsKeyUp(Keys.Escape))
+            if (manager.InputManager.CheckIfCanPressKey(Keys.Escape))
             {
                 manager.SceneManager.RemoveScene();
             }
 
-            exitButton.Update(position);
-            saveButton.Update(position);
+            exitButton.Update(manager.InputManager.GetMousePosition());
+            saveButton.Update(manager.InputManager.GetMousePosition());
             gameNameBox.Update();
 
             if (switchPageLobby.GetSelectedRow() != -1)
@@ -123,7 +115,7 @@ namespace Client
             }
 
 
-            if (switchPageLobby.UpdateRows(position, isPressed))
+            if (switchPageLobby.UpdateRows(manager.InputManager.GetMousePosition(), isPressed))
             {
                 if (switchPageLobby.GetPreviousRow() != -1)
                 {
@@ -134,8 +126,7 @@ namespace Client
                 SetParameters();
             }
 
-            previousMouseState = currentMouseState;
-            previousKeyboardState = currentKeyboardState;
+            manager.InputManager.SetPreviousStates();
         }
 
         public void Draw(SpriteBatch spriteBatch)

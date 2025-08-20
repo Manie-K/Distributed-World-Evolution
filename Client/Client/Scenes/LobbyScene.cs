@@ -15,8 +15,6 @@ namespace Client
         private Button joinButton;
         private Button refreshButton;
         private Button backButton;
-        private MouseState previousMouseState;
-        private KeyboardState previousKeyboardState;
 
         public LobbyScene(GameManager manager)
         {
@@ -29,8 +27,6 @@ namespace Client
             refreshButton = new Button(manager.ContentManager.Load<Texture2D>("UI/Buttons/RefreshButton"), null, null, new Vector2(953, 330), 180, 70, new Color(255, 255, 128));
             createButton = new Button(manager.ContentManager.Load<Texture2D>("UI/Buttons/CreateButton"), null, null, new Vector2(953, 420), 180, 70, new Color(255, 255, 128));
             backButton = new Button(manager.ContentManager.Load<Texture2D>("UI/Buttons/Back_Button"), null, null, new Vector2(10, 10), 120, 46, new Color(255, 255, 128));
-
-            previousKeyboardState = Keyboard.GetState();
         }
 
         public void Load()
@@ -40,28 +36,26 @@ namespace Client
 
         public void Update(GameTime gameTime)
         {
-            MouseState currentMouseState = Mouse.GetState();
-            KeyboardState currentKeyboardState = Keyboard.GetState();
-            Vector2 position = new Vector2(currentMouseState.X, currentMouseState.Y);
+            manager.InputManager.Update();
             bool isPressed = false;
-            if (currentMouseState.LeftButton == ButtonState.Pressed && previousMouseState.LeftButton == ButtonState.Released)
+            if (manager.InputManager.CheckIfLeftClick())
             {
 
-                switchPage.CheckLeftClick(position);
-                if (createButton.CheckLeftClick(position))
+                switchPage.CheckLeftClick(manager.InputManager.GetMousePosition());
+                if (createButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                 {
                     manager.SceneManager.AddScene(new CreateLobbyScene(manager, switchPage));
                 }
-                else if (joinButton.CheckLeftClick(position))
+                else if (joinButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                 {
                     manager.AudioManager.UnmuteAll();
                     manager.SceneManager.AddScene(new GameScene(manager));
                 }
-                else if (refreshButton.CheckLeftClick(position))
+                else if (refreshButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                 {
                     Debug.WriteLine("Refresh");
                 }
-                else if(backButton.CheckLeftClick(position))
+                else if(backButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                 {
                     manager.AudioManager.UnmuteAll();
                     manager.SceneManager.RemoveScene();
@@ -70,20 +64,19 @@ namespace Client
             }
 
 
-            if (currentKeyboardState.IsKeyDown(Keys.Escape) && previousKeyboardState.IsKeyUp(Keys.Escape))
+            if (manager.InputManager.CheckIfCanPressKey(Keys.Escape))
             {
                 manager.AudioManager.UnmuteAll();
                 manager.SceneManager.RemoveScene();
             }
 
-            createButton.Update(position);
-            joinButton.Update(position);
-            refreshButton.Update(position);
-            backButton.Update(position);
-            switchPage.UpdateRows(position, isPressed);
+            createButton.Update(manager.InputManager.GetMousePosition());
+            joinButton.Update(manager.InputManager.GetMousePosition());
+            refreshButton.Update(manager.InputManager.GetMousePosition());
+            backButton.Update(manager.InputManager.GetMousePosition());
+            switchPage.UpdateRows(manager.InputManager.GetMousePosition(), isPressed);
 
-            previousMouseState = currentMouseState;
-            previousKeyboardState = currentKeyboardState;
+            manager.InputManager.SetPreviousStates();
         }
         public void Draw(SpriteBatch spriteBatch)
         {

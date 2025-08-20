@@ -13,11 +13,9 @@ namespace Client
         private Button exitButton;
         private SwitchButton[] switchButtons;
         private Texture2D backGround;
-        private MouseState previousMouseState;
         private Texture2D[] keyBoardKeysImages;
         private Text[] keyBoardKeysText;
         private TextBox playerNameTextBox;
-        private KeyboardState previousKeyboardState;
 
         private Text nicknameTextBoxText;
         private Texture2D nicknameTextBoxTexture;
@@ -59,7 +57,6 @@ namespace Client
 
             backGround = manager.ContentManager.Load<Texture2D>("UI/BG_Settings");
 
-            previousKeyboardState = Keyboard.GetState();
         }
 
         public void Load()
@@ -69,39 +66,31 @@ namespace Client
 
         public void Update(GameTime gameTime)
         {
-            MouseState currentMouseState = Mouse.GetState();
-            KeyboardState currentKeyboardState = Keyboard.GetState(); 
-            Vector2 position = new Vector2(currentMouseState.X, currentMouseState.Y);
+            manager.InputManager.Update();
 
-            if (currentMouseState.LeftButton == ButtonState.Pressed && previousMouseState.LeftButton == ButtonState.Released)
+            if (manager.InputManager.CheckIfLeftClick())
             {
-                if (exitButton.CheckLeftClick(position))
+                if (exitButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                 {
                     ExitSettings();
                     manager.AudioManager.UnmuteAll();
                 }
 
-
-
-                UpdatePage(position);
-
-
+                UpdatePage(manager.InputManager.GetMousePosition());
             }
 
-            if (currentKeyboardState.IsKeyDown(Keys.Escape) && previousKeyboardState.IsKeyUp(Keys.Escape))
+
+            if (manager.InputManager.CheckIfCanPressKey(Keys.Escape))
             {
                 ExitSettings();
                 manager.AudioManager.UnmuteAll();
             }
 
-            exitButton.Update(position);
-
-
+            exitButton.Update(manager.InputManager.GetMousePosition());
             playerNameTextBox.Update();
 
 
-            previousMouseState = currentMouseState;
-            previousKeyboardState = currentKeyboardState;
+            manager.InputManager.SetPreviousStates();
         }
 
         private void ExitSettings()

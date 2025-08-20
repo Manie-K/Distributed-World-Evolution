@@ -14,12 +14,10 @@ namespace Client
         private Button quitButton;
         private Texture2D backGround;
         private Texture2D mainMenuPanel;
-        private MouseState previousMouseState;
         private Texture2D userNamePanel;
         private TextBox textBox;
         private Button saveButton;
         private bool playButtonClicked;
-        private KeyboardState previousKeyboardState;
 
         public MainMenuScene(GameManager manager, Game game)
         {
@@ -35,7 +33,6 @@ namespace Client
             saveButton = new Button(manager.ContentManager.Load<Texture2D>("UI/Buttons/SubmitButton"), null, null, new Vector2(493, 446), 299, 99, Color.Gold);
             userNamePanel = manager.ContentManager.Load<Texture2D>("UI/Scenes/UsernamePanel");
             playButtonClicked = false;
-            previousKeyboardState = Keyboard.GetState();
         }
 
         public void Load()
@@ -47,15 +44,13 @@ namespace Client
 
         public void Update(GameTime gameTime)
         {
-            MouseState currentMouseState = Mouse.GetState();
-            KeyboardState currentKeyboardState = Keyboard.GetState();
-            Vector2 position = new Vector2(currentMouseState.X, currentMouseState.Y);
+            manager.InputManager.Update();
 
-            if (currentMouseState.LeftButton == ButtonState.Pressed && previousMouseState.LeftButton == ButtonState.Released)
+            if (manager.InputManager.CheckIfLeftClick())
             {
                 if (!playButtonClicked)
                 {
-                    if (playButton.CheckLeftClick(position))
+                    if (playButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                     {
                         playButtonClicked = true;
                         if (!manager.UserSettings.PlayerName.Equals(""))
@@ -65,17 +60,17 @@ namespace Client
                             manager.SceneManager.AddScene(new LobbyScene(manager));
                         }
                     }
-                    if (settingsButton.CheckLeftClick(position))
+                    if (settingsButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                     {
                         manager.AudioManager.MuteAll();
                         manager.SceneManager.AddScene(new SettingsScene(manager));
                     }
-                    if (quitButton.CheckLeftClick(position)) game.Exit();
+                    if (quitButton.CheckLeftClick(manager.InputManager.GetMousePosition())) game.Exit();
                 }
                 else
                 {
-                    textBox.CheckLeftClick(position);
-                    if (saveButton.CheckLeftClick(position) && !textBox.CheckTextIfEmpty())
+                    textBox.CheckLeftClick(manager.InputManager.GetMousePosition());
+                    if (saveButton.CheckLeftClick(manager.InputManager.GetMousePosition()) && !textBox.CheckTextIfEmpty())
                     {
                         manager.UserSettings.PlayerName = textBox.GetText();
                         manager.UserSettings.SaveUserSettings();
@@ -85,25 +80,24 @@ namespace Client
                 }
             }
 
-            if (currentKeyboardState.IsKeyDown(Keys.Escape) && previousKeyboardState.IsKeyUp(Keys.Escape))
+            if (manager.InputManager.CheckIfCanPressKey(Keys.Escape))
             {
                 playButtonClicked = false;
             }
 
             if (playButtonClicked)
             {
-                saveButton.Update(position);
+                saveButton.Update(manager.InputManager.GetMousePosition());
                 textBox.Update();
             }
             else
             {
-                playButton.Update(position);
-                settingsButton.Update(position);
-                quitButton.Update(position);
+                playButton.Update(manager.InputManager.GetMousePosition());
+                settingsButton.Update(manager.InputManager.GetMousePosition());
+                quitButton.Update(manager.InputManager.GetMousePosition());
             }
 
-            previousMouseState = currentMouseState;
-            previousKeyboardState = currentKeyboardState;
+            manager.InputManager.SetPreviousStates();
         }
 
         public void Draw(SpriteBatch spriteBatch)

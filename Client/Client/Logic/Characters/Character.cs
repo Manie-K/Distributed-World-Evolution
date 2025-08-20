@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Client.Common;
 
 namespace Client
 {
@@ -31,7 +32,7 @@ namespace Client
             CurrentDirection = Direction.down;
         }
 
-        public virtual void Update(GameTime gameTime, KeyboardState currentKeyboardState, KeyboardState previousKeyboardState) { }
+        public virtual void Update(GameTime gameTime, InputManager inputManager) { }
  
     }
 }

@@ -12,8 +12,6 @@ namespace Client
     {
         private GameManager manager;
 
-        private MouseState previousMouseState;
-        private KeyboardState previousKeyboardState;
         private Esc_Panel escPanel;
         private Player player;
         private List<Character> characters;
@@ -46,36 +44,33 @@ namespace Client
 
         public void Update(GameTime gameTime)
         {
-            MouseState currentMouseState = Mouse.GetState();
-            Vector2 position = new Vector2(currentMouseState.X, currentMouseState.Y);
+            manager.InputManager.Update();
 
-            if (currentMouseState.LeftButton == ButtonState.Pressed && previousMouseState.LeftButton == ButtonState.Released)
+            if (manager.InputManager.CheckIfLeftClick())
             {
                 if (escPanel.isEnabled)
                 {
-                    escPanel.CheckLeftClick(position);
+                    escPanel.CheckLeftClick(manager.InputManager.GetMousePosition());
                 }
             }
 
-            KeyboardState currentKeyboardState = Keyboard.GetState();
 
-            if (currentKeyboardState.IsKeyDown(Keys.Escape) && previousKeyboardState.IsKeyUp(Keys.Escape))
+            if (manager.InputManager.CheckIfCanPressKey(Keys.Escape))
             {
                 if(!escPanel.isEnabled) escPanel.isEnabled = true;
                 else escPanel.isEnabled = false;
             }
 
 
-            player.Update(gameTime, currentKeyboardState, previousKeyboardState);
+            player.Update(gameTime, manager.InputManager);
             foreach(Character character in characters)
             {
-                character.Update(gameTime, currentKeyboardState, previousKeyboardState);
+                character.Update(gameTime, manager.InputManager);
             }
 
-            if (escPanel.isEnabled) escPanel.Update(position);
+            if (escPanel.isEnabled) escPanel.Update(manager.InputManager.GetMousePosition());
 
-            previousMouseState = currentMouseState;
-            previousKeyboardState = currentKeyboardState;
+            manager.InputManager.SetPreviousStates();
         }
 
         public void Draw(SpriteBatch spriteBatch)
