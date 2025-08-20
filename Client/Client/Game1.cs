@@ -48,6 +48,10 @@ namespace Client
             manager.SceneManager.GetCurrentScene().Draw(spriteBatch);
             spriteBatch.End();
 
+            spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            manager.SceneManager.GetCurrentScene().DrawStatic(spriteBatch);
+            spriteBatch.End();
+
             base.Draw(gameTime);
         }
     }

@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Client.Rendering;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Diagnostics;
@@ -57,6 +58,7 @@ namespace Client
                 spriteBatch.DrawString(font, text, textPosition, textColor);
             }
         }
+
 
         public void Update(Vector2 mousePosition)
         {

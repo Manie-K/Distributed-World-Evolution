@@ -19,9 +19,6 @@ namespace Client
         private TextBox playerNameTextBox;
         private KeyboardState previousKeyboardState;
 
-        private Text backToLobbyText;
-        private Button backToLobbyButton;
-
         private Text nicknameTextBoxText;
         private Texture2D nicknameTextBoxTexture;
 
@@ -56,14 +53,6 @@ namespace Client
             playerNameTextBox = new TextBox(null, manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), new Vector2(688, 564), 190, 56, Color.Black);
             playerNameTextBox.SetText(manager.UserSettings.PlayerName);
 
-            backToLobbyButton = new Button(manager.ContentManager.Load<Texture2D>("UI/Buttons/Lobby_Button"), null, null, new Vector2(378, 564), 190, 56, Color.Gold);
-            backToLobbyText = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), "Back to lobby", false, new Vector2(402, 525), 106, 40);
-
-            if (!manager.IsInGame)
-            {
-                backToLobbyButton.SetBackgroundColor(Color.Red);
-                backToLobbyButton.DisableButton();
-            }
             
             nicknameTextBoxTexture = manager.ContentManager.Load<Texture2D>("UI/Buttons/Username_TextBox");
             nicknameTextBoxText = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), "Nickname", false, new Vector2(730, 525), 106, 40);
@@ -91,14 +80,6 @@ namespace Client
                     ExitSettings();
                     manager.AudioManager.UnmuteAll();
                 }
-                if (manager.IsInGame && backToLobbyButton.CheckLeftClick(position))
-                {
-                    manager.IsInGame = false;
-                    ExitSettings();
-                    manager.AudioManager.MuteAll();
-                    manager.SceneManager.RemoveScene();
-                    // TODO: send leave lobby message to the server
-                }
 
 
 
@@ -115,10 +96,6 @@ namespace Client
 
             exitButton.Update(position);
 
-            if (manager.IsInGame)
-            {
-                backToLobbyButton.Update(position);
-            }
 
             playerNameTextBox.Update();
 
@@ -170,15 +147,15 @@ namespace Client
 
         public void Draw(SpriteBatch spriteBatch)
         {
+
+        }
+
+        public void DrawStatic(SpriteBatch spriteBatch)
+        {
             spriteBatch.Draw(backGround, new Rectangle(0, 0, manager.Camera.ScreenSize.Width, manager.Camera.ScreenSize.Height), Color.White);
             exitButton.Draw(spriteBatch);
 
-            backToLobbyText.Draw(spriteBatch);
-            backToLobbyButton.Draw(spriteBatch);
-            
-
             DrawPage(spriteBatch);
-
         }
 
         private void DrawPage(SpriteBatch spriteBatch)

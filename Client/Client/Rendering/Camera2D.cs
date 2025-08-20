@@ -46,6 +46,7 @@ namespace Client.Rendering
                 MathHelper.Clamp(Position.X, 0, Math.Max(0, maxX)),
                 MathHelper.Clamp(Position.Y, 0, Math.Max(0, maxY))
             );
+
         }
     }
 }

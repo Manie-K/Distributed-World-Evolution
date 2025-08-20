@@ -140,6 +140,12 @@ namespace Client
 
         public void Draw(SpriteBatch spriteBatch)
         {
+
+
+        }
+
+        public void DrawStatic(SpriteBatch spriteBatch)
+        {
             spriteBatch.Draw(backGround, new Rectangle(0, 0, manager.Camera.ScreenSize.Width, manager.Camera.ScreenSize.Height), Color.White);
             switchPageLobby.Draw(spriteBatch);
             saveButton.Draw(spriteBatch);

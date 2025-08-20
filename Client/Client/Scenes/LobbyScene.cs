@@ -63,6 +63,7 @@ namespace Client
                 }
                 else if(backButton.CheckLeftClick(position))
                 {
+                    manager.AudioManager.UnmuteAll();
                     manager.SceneManager.RemoveScene();
                 }
                 isPressed= true;    
@@ -84,8 +85,12 @@ namespace Client
             previousMouseState = currentMouseState;
             previousKeyboardState = currentKeyboardState;
         }
-
         public void Draw(SpriteBatch spriteBatch)
+        {
+
+        }
+
+        public void DrawStatic(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(backGround, new Rectangle(0, 0, manager.Camera.ScreenSize.Width, manager.Camera.ScreenSize.Height), Color.White);
             switchPage.Draw(spriteBatch);

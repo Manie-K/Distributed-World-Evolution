@@ -1,7 +1,9 @@
-﻿using Client.Rendering;
+﻿using Client.Panels;
+using Client.Rendering;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 
 namespace Client
@@ -12,6 +14,7 @@ namespace Client
 
         private MouseState previousMouseState;
         private KeyboardState previousKeyboardState;
+        private Esc_Panel escPanel;
         private Player player;
         private List<Character> characters;
         private AnimationTexturesLoader animationTexturesLoader;
@@ -27,6 +30,7 @@ namespace Client
                                      new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), manager.UserSettings.PlayerName, true, new Vector2(500, 300 - 110), 70, 40), ref this.animationTexturesLoader);
             characters = new List<Character>();
 
+            escPanel=new Esc_Panel(manager);
             cameraOffset = new Vector2(50, 100);
             map = new Tilemap();
             map.LoadMap("Content/Maps/map1.json", manager.ContentManager);
@@ -47,16 +51,18 @@ namespace Client
 
             if (currentMouseState.LeftButton == ButtonState.Pressed && previousMouseState.LeftButton == ButtonState.Released)
             {
-
+                if (escPanel.isEnabled)
+                {
+                    escPanel.CheckLeftClick(position);
+                }
             }
 
             KeyboardState currentKeyboardState = Keyboard.GetState();
 
             if (currentKeyboardState.IsKeyDown(Keys.Escape) && previousKeyboardState.IsKeyUp(Keys.Escape))
             {
-                manager.AudioManager.MuteAll();
-                manager.Camera.ResetPosition();
-                manager.SceneManager.AddScene(new SettingsScene(manager));
+                if(!escPanel.isEnabled) escPanel.isEnabled = true;
+                else escPanel.isEnabled = false;
             }
 
 
@@ -65,6 +71,8 @@ namespace Client
             {
                 character.Update(gameTime, currentKeyboardState, previousKeyboardState);
             }
+
+            if (escPanel.isEnabled) escPanel.Update(position);
 
             previousMouseState = currentMouseState;
             previousKeyboardState = currentKeyboardState;
@@ -79,6 +87,11 @@ namespace Client
             {
                 character.Draw(spriteBatch);
             }
+        }
+
+        public void DrawStatic(SpriteBatch spriteBatch)
+        {
+            if (escPanel.isEnabled) escPanel.Draw(spriteBatch);
         }
 
         private void LoadCharacters()
