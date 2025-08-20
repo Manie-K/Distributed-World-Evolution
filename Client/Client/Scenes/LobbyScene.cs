@@ -48,7 +48,6 @@ namespace Client
                 }
                 else if (joinButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                 {
-                    manager.AudioManager.UnmuteAll();
                     manager.SceneManager.AddScene(new GameScene(manager));
                 }
                 else if (refreshButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
@@ -57,7 +56,6 @@ namespace Client
                 }
                 else if(backButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                 {
-                    manager.AudioManager.UnmuteAll();
                     manager.SceneManager.RemoveScene();
                 }
                 isPressed= true;    
@@ -66,7 +64,6 @@ namespace Client
 
             if (manager.InputManager.CheckIfCanPressKey(Keys.Escape))
             {
-                manager.AudioManager.UnmuteAll();
                 manager.SceneManager.RemoveScene();
             }
 

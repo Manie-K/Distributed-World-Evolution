@@ -51,7 +51,6 @@ namespace Client.Panels
             if (settingsButton.CheckLeftClick(position))
             {
                 manager.Camera.ResetPosition();
-                manager.AudioManager.MuteAll();
                 manager.SceneManager.AddScene(new SettingsScene(manager));
                 isEnabled = false;
             }
@@ -59,7 +58,6 @@ namespace Client.Panels
             {
                 manager.Camera.ResetPosition();
                 manager.IsInGame = false;
-                manager.AudioManager.MuteAll();
                 manager.SceneManager.RemoveScene();
                 // TODO: send leave lobby message to the server
             }

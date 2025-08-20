@@ -56,13 +56,11 @@ namespace Client
                         if (!manager.UserSettings.PlayerName.Equals(""))
                         {
                             playButtonClicked = false;
-                            manager.AudioManager.MuteAll();
                             manager.SceneManager.AddScene(new LobbyScene(manager));
                         }
                     }
                     if (settingsButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                     {
-                        manager.AudioManager.MuteAll();
                         manager.SceneManager.AddScene(new SettingsScene(manager));
                     }
                     if (quitButton.CheckLeftClick(manager.InputManager.GetMousePosition())) game.Exit();

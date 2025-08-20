@@ -73,7 +73,6 @@ namespace Client
                 if (exitButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                 {
                     ExitSettings();
-                    manager.AudioManager.UnmuteAll();
                 }
 
                 UpdatePage(manager.InputManager.GetMousePosition());
@@ -83,7 +82,6 @@ namespace Client
             if (manager.InputManager.CheckIfCanPressKey(Keys.Escape))
             {
                 ExitSettings();
-                manager.AudioManager.UnmuteAll();
             }
 
             exitButton.Update(manager.InputManager.GetMousePosition());
