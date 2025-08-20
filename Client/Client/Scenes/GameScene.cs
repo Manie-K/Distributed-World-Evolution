@@ -1,7 +1,9 @@
-﻿using Client.Rendering;
+﻿using Client.Panels;
+using Client.Rendering;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 
 namespace Client
@@ -10,8 +12,7 @@ namespace Client
     {
         private GameManager manager;
 
-        private MouseState previousMouseState;
-        private KeyboardState previousKeyboardState;
+        private Esc_Panel escPanel;
         private Player player;
         private List<Character> characters;
         private AnimationTexturesLoader animationTexturesLoader;
@@ -24,13 +25,15 @@ namespace Client
 
             animationTexturesLoader = new AnimationTexturesLoader(manager.ContentManager);
             player = new Player(new Vector2(600, 200), Color.White,
-                                     new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), manager.PlayerName, true, new Vector2(500, 300 - 110), 70, 40), ref this.animationTexturesLoader);
+                                     new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), manager.UserSettings.PlayerName, true, new Vector2(500, 300 - 110), 70, 40), ref this.animationTexturesLoader);
             characters = new List<Character>();
 
+            escPanel=new Esc_Panel(manager);
             cameraOffset = new Vector2(50, 100);
             map = new Tilemap();
             map.LoadMap("Content/Maps/map1.json", manager.ContentManager);
-            manager.Camera.MapSize = new Size(map.Width * map.TileSize, map.Height * map.TileSize);
+            manager.Camera.MapSize = new System.Drawing.Size(map.Width * map.TileSize, map.Height * map.TileSize);
+            manager.IsInGame = true;
             LoadCharacters();
         }
 
@@ -41,32 +44,33 @@ namespace Client
 
         public void Update(GameTime gameTime)
         {
-            MouseState currentMouseState = Mouse.GetState();
-            Vector2 position = new Vector2(currentMouseState.X, currentMouseState.Y);
+            manager.InputManager.Update();
 
-            if (currentMouseState.LeftButton == ButtonState.Pressed && previousMouseState.LeftButton == ButtonState.Released)
+            if (manager.InputManager.CheckIfLeftClick())
             {
-
-            }
-
-            KeyboardState currentKeyboardState = Keyboard.GetState();
-
-            if (currentKeyboardState.IsKeyDown(Keys.Escape) && previousKeyboardState.IsKeyUp(Keys.Escape))
-            {
-                manager.Camera.ResetPosition();
-                manager.SceneManager.AddScene(new SettingsScene(manager));
-                manager.AudioManager.MuteAll();
+                if (escPanel.isEnabled)
+                {
+                    escPanel.CheckLeftClick(manager.InputManager.GetMousePosition());
+                }
             }
 
 
-            player.Update(gameTime, currentKeyboardState, previousKeyboardState);
+            if (manager.InputManager.CheckIfCanPressKey(Keys.Escape))
+            {
+                if(!escPanel.isEnabled) escPanel.isEnabled = true;
+                else escPanel.isEnabled = false;
+            }
+
+
+            player.Update(gameTime, manager.InputManager);
             foreach(Character character in characters)
             {
-                character.Update(gameTime, currentKeyboardState, previousKeyboardState);
+                character.Update(gameTime, manager.InputManager);
             }
 
-            previousMouseState = currentMouseState;
-            previousKeyboardState = currentKeyboardState;
+            if (escPanel.isEnabled) escPanel.Update(manager.InputManager.GetMousePosition());
+
+            manager.InputManager.SetPreviousStates();
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -78,6 +82,11 @@ namespace Client
             {
                 character.Draw(spriteBatch);
             }
+        }
+
+        public void DrawStatic(SpriteBatch spriteBatch)
+        {
+            if (escPanel.isEnabled) escPanel.Draw(spriteBatch);
         }
 
         private void LoadCharacters()

@@ -3,9 +3,6 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Client
 {
@@ -36,7 +33,8 @@ namespace Client
             if (pageButtons[0].CheckLeftClick(clickPosition))
             {
                 if (pageNumber > 1) pageNumber--;
-            }else if (pageButtons[1].CheckLeftClick(clickPosition))
+            }
+            else if (pageButtons[1].CheckLeftClick(clickPosition))
             {
                 pageNumber++;
                 if (GetRowsOnPage() == 0) pageNumber--;

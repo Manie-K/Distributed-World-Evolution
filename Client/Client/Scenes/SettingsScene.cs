@@ -1,6 +1,7 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+﻿using Client.UI.Settings;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 using System;
 
 namespace Client
@@ -12,10 +13,12 @@ namespace Client
         private Button exitButton;
         private SwitchButton[] switchButtons;
         private Texture2D backGround;
-        private MouseState previousMouseState;
         private Texture2D[] keyBoardKeysImages;
         private Text[] keyBoardKeysText;
-        private KeyboardState previousKeyboardState;
+        private TextBox playerNameTextBox;
+
+        private Text nicknameTextBoxText;
+        private Texture2D nicknameTextBoxTexture;
 
         public SettingsScene(GameManager manager)
         {
@@ -38,17 +41,22 @@ namespace Client
             keyBoardKeysImages[1] = manager.ContentManager.Load<Texture2D>("UI/Keyboard_keys/s");
             keyBoardKeysImages[2] = manager.ContentManager.Load<Texture2D>("UI/Keyboard_keys/a");
             keyBoardKeysImages[3] = manager.ContentManager.Load<Texture2D>("UI/Keyboard_keys/d");
-            keyBoardKeysText[0] = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), "MOVING", false, new Vector2(340, 100), 100, 60); ;
+            keyBoardKeysText[0] = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), "MOVING", false, new Vector2(340, 100), 100, 60);
             keyBoardKeysImages[4] = manager.ContentManager.Load<Texture2D>("UI/Keyboard_keys/space");
             keyBoardKeysText[1] = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), "ATTACK", false, new Vector2(340, 155), 100, 60);
             keyBoardKeysImages[5] = manager.ContentManager.Load<Texture2D>("UI/Keyboard_keys/e");
             keyBoardKeysText[2] = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), "USE", false, new Vector2(340, 210), 100, 60);
             keyBoardKeysImages[6] = manager.ContentManager.Load<Texture2D>("UI/Keyboard_keys/esc");
             keyBoardKeysText[3] = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), "MENU", false, new Vector2(700, 100), 100, 60);
+            playerNameTextBox = new TextBox(null, manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), new Vector2(688, 564), 190, 56, Color.Black);
+            playerNameTextBox.SetText(manager.UserSettings.PlayerName);
+
+            
+            nicknameTextBoxTexture = manager.ContentManager.Load<Texture2D>("UI/Buttons/Username_TextBox");
+            nicknameTextBoxText = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), "Nickname", false, new Vector2(730, 525), 106, 40);
 
             backGround = manager.ContentManager.Load<Texture2D>("UI/BG_Settings");
 
-            previousKeyboardState = Keyboard.GetState();
         }
 
         public void Load()
@@ -58,49 +66,99 @@ namespace Client
 
         public void Update(GameTime gameTime)
         {
-            MouseState currentMouseState = Mouse.GetState();
-            KeyboardState currentKeyboardState = Keyboard.GetState(); 
-            Vector2 position = new Vector2(currentMouseState.X, currentMouseState.Y);
+            manager.InputManager.Update();
 
-            if (currentMouseState.LeftButton == ButtonState.Pressed && previousMouseState.LeftButton == ButtonState.Released)
+            if (manager.InputManager.CheckIfLeftClick())
             {
-                if (exitButton.CheckLeftClick(position))
+                if (exitButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                 {
-                    manager.Camera.SetLastPosition();
-                    manager.SceneManager.RemoveScene();
-                    manager.AudioManager.UnmuteAll();
+                    ExitSettings();
                 }
-                if (switchButtons[0].GetLeftButton().CheckLeftClick(position)) manager.AudioManager.DecreaseMusicVolume();
-                if (switchButtons[0].GetRightButton().CheckLeftClick(position)) manager.AudioManager.IncreaseMusicVolume();
-                if (switchButtons[1].GetLeftButton().CheckLeftClick(position)) manager.AudioManager.DecreaseEffectVolume();
-                if (switchButtons[1].GetRightButton().CheckLeftClick(position)) manager.AudioManager.IncreaseEffectVolume();
+
+                UpdatePage(manager.InputManager.GetMousePosition());
             }
 
-            if (currentKeyboardState.IsKeyDown(Keys.Escape) && previousKeyboardState.IsKeyUp(Keys.Escape))
+
+            if (manager.InputManager.CheckIfCanPressKey(Keys.Escape))
+            {
+                ExitSettings();
+            }
+
+            exitButton.Update(manager.InputManager.GetMousePosition());
+            playerNameTextBox.Update();
+
+
+            manager.InputManager.SetPreviousStates();
+        }
+
+        private void ExitSettings()
+        {
+            if (manager.IsInGame)
             {
                 manager.Camera.SetLastPosition();
-                manager.SceneManager.RemoveScene();
-                manager.AudioManager.UnmuteAll();
             }
-
-            exitButton.Update(position);
-
-            previousMouseState = currentMouseState;
-            previousKeyboardState = currentKeyboardState;
+            
+            manager.UserSettings.PlayerName = playerNameTextBox.GetText();
+            manager.UserSettings.SaveUserSettings();
+            manager.SceneManager.RemoveScene();
         }
+
+        private void UpdatePage(Vector2 position)
+        {
+            if (switchButtons[0].GetLeftButton().CheckLeftClick(position))
+            {
+                manager.AudioManager.DecreaseMusicVolume();
+                manager.UserSettings.GlobalMusicVolume = manager.AudioManager.GetGlobalMusicVolume();
+            }
+            if (switchButtons[0].GetRightButton().CheckLeftClick(position))
+            {
+                manager.AudioManager.IncreaseMusicVolume();
+                manager.UserSettings.GlobalMusicVolume = manager.AudioManager.GetGlobalMusicVolume();
+            }
+            if (switchButtons[1].GetLeftButton().CheckLeftClick(position))
+            {
+                manager.AudioManager.DecreaseEffectVolume();
+                manager.UserSettings.GlobalEffectVolume = manager.AudioManager.GetGlobalEffectVolume();
+            }
+            if (switchButtons[1].GetRightButton().CheckLeftClick(position))
+            {
+                manager.AudioManager.IncreaseEffectVolume();
+                manager.UserSettings.GlobalEffectVolume = manager.AudioManager.GetGlobalEffectVolume();
+            }
+            if (!manager.IsInGame)
+            {
+                playerNameTextBox.CheckLeftClick(position);
+            }
+        }
+
 
         public void Draw(SpriteBatch spriteBatch)
         {
+
+        }
+
+        public void DrawStatic(SpriteBatch spriteBatch)
+        {
             spriteBatch.Draw(backGround, new Rectangle(0, 0, manager.Camera.ScreenSize.Width, manager.Camera.ScreenSize.Height), Color.White);
             exitButton.Draw(spriteBatch);
+
+            DrawPage(spriteBatch);
+        }
+
+        private void DrawPage(SpriteBatch spriteBatch)
+        {
             switchButtons[0].Draw(spriteBatch, (int)Math.Round(manager.AudioManager.GetGlobalMusicVolume() * 100f));
             switchButtons[1].Draw(spriteBatch, (int)Math.Round(manager.AudioManager.GetGlobalEffectVolume() * 100f));
 
-            for(int i = 0; i < keyBoardKeysText.Length; i++) keyBoardKeysText[i].Draw(spriteBatch);
-            for(int i = 0; i < 4; i++) spriteBatch.Draw(keyBoardKeysImages[i], new Rectangle(460 + 45 * i, 100, 60, 60), Color.White);
+            for (int i = 0; i < keyBoardKeysText.Length; i++) keyBoardKeysText[i].Draw(spriteBatch);
+            for (int i = 0; i < 4; i++) spriteBatch.Draw(keyBoardKeysImages[i], new Rectangle(460 + 45 * i, 100, 60, 60), Color.White);
             spriteBatch.Draw(keyBoardKeysImages[4], new Rectangle(467, 155, 85, 60), Color.White);
             spriteBatch.Draw(keyBoardKeysImages[5], new Rectangle(454, 210, 85, 60), Color.White);
             spriteBatch.Draw(keyBoardKeysImages[6], new Rectangle(800, 100, 85, 60), Color.White);
+
+            spriteBatch.Draw(nicknameTextBoxTexture, new Rectangle(688, 564, 190, 56), Color.White);
+            nicknameTextBoxText.Draw(spriteBatch);
+            playerNameTextBox.Draw(spriteBatch);
         }
     }
 }

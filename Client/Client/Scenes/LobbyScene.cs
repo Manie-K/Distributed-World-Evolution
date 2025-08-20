@@ -14,7 +14,7 @@ namespace Client
         private Button createButton;
         private Button joinButton;
         private Button refreshButton;
-        private MouseState previousMouseState;
+        private Button backButton;
 
         public LobbyScene(GameManager manager)
         {
@@ -26,6 +26,7 @@ namespace Client
             joinButton = new Button(manager.ContentManager.Load<Texture2D>("UI/Buttons/JoinButton"), null, null, new Vector2(953, 240), 180, 70, new Color(255, 255, 128));
             refreshButton = new Button(manager.ContentManager.Load<Texture2D>("UI/Buttons/RefreshButton"), null, null, new Vector2(953, 330), 180, 70, new Color(255, 255, 128));
             createButton = new Button(manager.ContentManager.Load<Texture2D>("UI/Buttons/CreateButton"), null, null, new Vector2(953, 420), 180, 70, new Color(255, 255, 128));
+            backButton = new Button(manager.ContentManager.Load<Texture2D>("UI/Buttons/Back_Button"), null, null, new Vector2(10, 10), 120, 46, new Color(255, 255, 128));
         }
 
         public void Load()
@@ -35,40 +36,56 @@ namespace Client
 
         public void Update(GameTime gameTime)
         {
-            MouseState currentMouseState = Mouse.GetState();
-            Vector2 position = new Vector2(currentMouseState.X, currentMouseState.Y);
+            manager.InputManager.Update();
             bool isPressed = false;
-            if (currentMouseState.LeftButton == ButtonState.Pressed && previousMouseState.LeftButton == ButtonState.Released)
+            if (manager.InputManager.CheckIfLeftClick())
             {
-                switchPage.CheckLeftClick(position);
-                if (createButton.CheckLeftClick(position))
+
+                switchPage.CheckLeftClick(manager.InputManager.GetMousePosition());
+                if (createButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                 {
                     manager.SceneManager.AddScene(new CreateLobbyScene(manager, switchPage));
                 }
-                else if (joinButton.CheckLeftClick(position))
+                else if (joinButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                 {
-                    manager.SceneManager.RemoveScene();
                     manager.SceneManager.AddScene(new GameScene(manager));
                 }
-                else if (refreshButton.CheckLeftClick(position))
+                else if (refreshButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                 {
                     Debug.WriteLine("Refresh");
+                }
+                else if(backButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
+                {
+                    manager.SceneManager.RemoveScene();
                 }
                 isPressed= true;    
             }
 
-            createButton.Update(position);
-            joinButton.Update(position);
-            refreshButton.Update(position);
-            switchPage.UpdateRows(position, isPressed);
-            previousMouseState = currentMouseState;
+
+            if (manager.InputManager.CheckIfCanPressKey(Keys.Escape))
+            {
+                manager.SceneManager.RemoveScene();
+            }
+
+            createButton.Update(manager.InputManager.GetMousePosition());
+            joinButton.Update(manager.InputManager.GetMousePosition());
+            refreshButton.Update(manager.InputManager.GetMousePosition());
+            backButton.Update(manager.InputManager.GetMousePosition());
+            switchPage.UpdateRows(manager.InputManager.GetMousePosition(), isPressed);
+
+            manager.InputManager.SetPreviousStates();
+        }
+        public void Draw(SpriteBatch spriteBatch)
+        {
+
         }
 
-        public void Draw(SpriteBatch spriteBatch)
+        public void DrawStatic(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(backGround, new Rectangle(0, 0, manager.Camera.ScreenSize.Width, manager.Camera.ScreenSize.Height), Color.White);
             switchPage.Draw(spriteBatch);
             createButton.Draw(spriteBatch);
+            backButton.Draw(spriteBatch);
             joinButton.Draw(spriteBatch);
             refreshButton.Draw(spriteBatch);  
         }

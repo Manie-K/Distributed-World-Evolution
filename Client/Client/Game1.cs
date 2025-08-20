@@ -14,8 +14,8 @@ namespace Client
             manager = new GameManager(Content);
             graphics = new GraphicsDeviceManager(this);
             IsMouseVisible = true;
-            graphics.PreferredBackBufferWidth = manager.Camera.ScreenSize.Width;
-            graphics.PreferredBackBufferHeight = manager.Camera.ScreenSize.Height;
+            graphics.PreferredBackBufferWidth = manager.UserSettings.ScreenWidth;
+            graphics.PreferredBackBufferHeight = manager.UserSettings.ScreenHeight;
         }
 
         protected override void Initialize()
@@ -46,6 +46,10 @@ namespace Client
 
             spriteBatch.Begin(transformMatrix: manager.Camera.Transform, samplerState: SamplerState.PointClamp);
             manager.SceneManager.GetCurrentScene().Draw(spriteBatch);
+            spriteBatch.End();
+
+            spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            manager.SceneManager.GetCurrentScene().DrawStatic(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);

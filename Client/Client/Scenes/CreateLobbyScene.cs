@@ -20,8 +20,6 @@ namespace Client
         private SwitchPageParameters switchPageParametersAnimals;
         private SwitchPageParameters switchPageParametersPlants;
 
-        private MouseState previousMouseState;
-
         public CreateLobbyScene(GameManager manager, SwitchPage lobbyswitchPage)
         {
             this.manager = manager;
@@ -64,22 +62,19 @@ namespace Client
         }
 
 
-
         public void Update(GameTime gameTime)
         {
-            MouseState currentMouseState = Mouse.GetState();
-
-            Vector2 position = new Vector2(currentMouseState.X, currentMouseState.Y);
+            manager.InputManager.Update();
             bool isPressed = false;
 
-            if (currentMouseState.LeftButton == ButtonState.Pressed && previousMouseState.LeftButton == ButtonState.Released)
+            if (manager.InputManager.CheckIfLeftClick())
             {
-                switchPageLobby.CheckLeftClick(position);
-                if (exitButton.CheckLeftClick(position))
+                switchPageLobby.CheckLeftClick(manager.InputManager.GetMousePosition());
+                if (exitButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                 {
                     manager.SceneManager.RemoveScene();
                 }
-                if (saveButton.CheckLeftClick(position) && !gameNameBox.CheckTextIfEmpty())
+                if (saveButton.CheckLeftClick(manager.InputManager.GetMousePosition()) && !gameNameBox.CheckTextIfEmpty())
                 {
                     if (switchPageLobby.GetSelectedRow() != -1)
                     {
@@ -95,17 +90,22 @@ namespace Client
 
                 if (switchPageLobby.GetSelectedRow() != -1)
                 {
-                    if (switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetSelectedRow()).Type == CreatureType.Animal) switchPageParametersAnimals.CheckLeftClick(position);
-                    else if (switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetSelectedRow()).Type == CreatureType.Plant) switchPageParametersPlants.CheckLeftClick(position);
+                    if (switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetSelectedRow()).Type == CreatureType.Animal) switchPageParametersAnimals.CheckLeftClick(manager.InputManager.GetMousePosition());
+                    else if (switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetSelectedRow()).Type == CreatureType.Plant) switchPageParametersPlants.CheckLeftClick(manager.InputManager.GetMousePosition());
                 }
 
-                gameNameBox.CheckLeftClick(position);
+                gameNameBox.CheckLeftClick(manager.InputManager.GetMousePosition());
 
                 isPressed = true;
             }
 
-            exitButton.Update(position);
-            saveButton.Update(position);
+            if (manager.InputManager.CheckIfCanPressKey(Keys.Escape))
+            {
+                manager.SceneManager.RemoveScene();
+            }
+
+            exitButton.Update(manager.InputManager.GetMousePosition());
+            saveButton.Update(manager.InputManager.GetMousePosition());
             gameNameBox.Update();
 
             if (switchPageLobby.GetSelectedRow() != -1)
@@ -115,7 +115,7 @@ namespace Client
             }
 
 
-            if (switchPageLobby.UpdateRows(position, isPressed))
+            if (switchPageLobby.UpdateRows(manager.InputManager.GetMousePosition(), isPressed))
             {
                 if (switchPageLobby.GetPreviousRow() != -1)
                 {
@@ -126,10 +126,16 @@ namespace Client
                 SetParameters();
             }
 
-            previousMouseState = currentMouseState;
+            manager.InputManager.SetPreviousStates();
         }
 
         public void Draw(SpriteBatch spriteBatch)
+        {
+
+
+        }
+
+        public void DrawStatic(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(backGround, new Rectangle(0, 0, manager.Camera.ScreenSize.Width, manager.Camera.ScreenSize.Height), Color.White);
             switchPageLobby.Draw(spriteBatch);
