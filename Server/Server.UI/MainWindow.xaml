@@ -7,6 +7,14 @@
         mc:Ignorable="d"
         Title="Server" Height="450" Width="800">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="30" />
+            <RowDefinition Height="*" />
+            <RowDefinition Height="120" />
+        </Grid.RowDefinitions>
 
     </Grid>
 </Window>

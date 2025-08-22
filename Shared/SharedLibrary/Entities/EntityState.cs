@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace Server.Shared
+namespace SharedLibrary
 {
     public class EntityState
     {

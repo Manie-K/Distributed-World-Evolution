@@ -1,7 +1,7 @@
 ﻿using System.Text.Json;
-using Server.Shared.Entities;
+using SharedLibrary;
 
-namespace Server.Shared.Messages
+namespace SharedLibrary
 {
     public class UpdateWorldEntityStateMessage : MessageBase
     {

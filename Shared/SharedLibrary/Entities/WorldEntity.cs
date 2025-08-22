@@ -1,6 +1,5 @@
 ﻿using System;
-
-namespace Server.Shared
+namespace SharedLibrary
 {
     public class WorldEntity
     {

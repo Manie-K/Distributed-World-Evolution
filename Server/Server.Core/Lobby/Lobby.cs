@@ -1,7 +1,6 @@
 ﻿using System.Net.Sockets;
 using Server.Core.Logging;
-using Server.Shared.Entities;
-using Server.Shared.Messages;
+using SharedLibrary;
 
 namespace Server.Core.Lobby
 {

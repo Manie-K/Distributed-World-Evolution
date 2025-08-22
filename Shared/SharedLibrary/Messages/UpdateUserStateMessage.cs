@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace Server.Shared.Messages
+namespace SharedLibrary
 {
     public class UpdateUserStateMessage : MessageBase
     {
