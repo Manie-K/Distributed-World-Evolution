@@ -1,6 +1,7 @@
 ﻿using System.Net.Sockets;
 using Server.Core.Logging;
 using SharedLibrary;
+using Server.Shared;
 
 namespace Server.Core.Lobby
 {
@@ -112,30 +113,31 @@ namespace Server.Core.Lobby
 
         private void HandleUpdateWorldEntityStateMessage(TcpClient client, UpdateWorldEntityStateMessage message)
         {
-            WorldEntity ent = message.Entity;
-            if (ent == null)
-            {
-                throw new Exception("Received null WorldEntity in UpdateWorldEntityStateMessage.");
-            }
+            //TODO
+            //WorldEntity ent = message.Entity;
+            //if (ent == null)
+            //{
+            //    throw new Exception("Received null WorldEntity in UpdateWorldEntityStateMessage.");
+            //}
 
-            WorldEntity? existingEntity = entities.Where(e => e.Id == ent.Id).First();
+            //WorldEntity? existingEntity = entities.Where(e => e.Id == ent.Id).First();
 
-            if (existingEntity == null)
-            {
-                Log($"Entity with ID {ent.Id} not found in lobby {LobbyId}.", LogLevelEnum.Error);
-                return;
-            }
-            else
-            {
-                existingEntity.UpdateState(ent.State);
-            }
+            //if (existingEntity == null)
+            //{
+            //    Log($"Entity with ID {ent.Id} not found in lobby {LobbyId}.", LogLevelEnum.Error);
+            //    return;
+            //}
+            //else
+            //{
+            //    existingEntity.UpdateState(ent.State);
+            //}
 
-            RefreshWorldEntitiesMessage refreshMessage = new RefreshWorldEntitiesMessage(entities);
-            foreach (var c in clients)
-            {
-                if(c == client) continue; // Do not send the message back to the sender
-                SendMessageToClient(c, refreshMessage);
-            }
+            //RefreshWorldEntitiesMessage refreshMessage = new RefreshWorldEntitiesMessage(entities);
+            //foreach (var c in clients)
+            //{
+            //    if(c == client) continue; // Do not send the message back to the sender
+            //    SendMessageToClient(c, refreshMessage);
+            //}
         }
 
         private void HandleRefreshWorldEntitiesMessage(TcpClient client, RefreshWorldEntitiesMessage message)

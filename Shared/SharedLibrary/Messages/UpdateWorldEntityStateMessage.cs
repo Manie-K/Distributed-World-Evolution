@@ -7,10 +7,10 @@ namespace SharedLibrary
     {
         //TODO: @FranciszekGwarek make sure the deserialization works correctly
 
-        public WorldEntity Entity { get; private set; }
+        public WorldEntityDTO Entity { get; private set; }
 
         public override MessageTypeEnum MessageType => MessageTypeEnum.UpdateWorldEntityState;
-        public UpdateWorldEntityStateMessage(WorldEntity entity) 
+        public UpdateWorldEntityStateMessage(WorldEntityDTO entity) 
         {
             Entity = entity;
         }

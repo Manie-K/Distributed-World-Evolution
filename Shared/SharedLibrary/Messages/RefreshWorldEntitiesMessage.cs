@@ -6,12 +6,12 @@ namespace SharedLibrary
     public class RefreshWorldEntitiesMessage : MessageBase
     {
         //TODO: @FranciszekGwarek make sure the deserialization works correctly
-        public IEnumerable<WorldEntity> Entities { get; private set; }
+        public IEnumerable<WorldEntityDTO> Entities { get; private set; }
 
 
         public override MessageTypeEnum MessageType => MessageTypeEnum.RefreshWorldEntities;
 
-        public RefreshWorldEntitiesMessage(IEnumerable<WorldEntity> entities)
+        public RefreshWorldEntitiesMessage(IEnumerable<WorldEntityDTO> entities)
         {
             Entities = entities;
         }
