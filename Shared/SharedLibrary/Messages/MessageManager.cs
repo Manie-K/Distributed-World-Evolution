@@ -2,7 +2,7 @@
 using System.Text;
 using System.Text.Json;
 
-namespace Server.Shared.Messages
+namespace SharedLibrary
 {
     public class MessageManager
     {
@@ -26,7 +26,7 @@ namespace Server.Shared.Messages
             string json = Encoding.UTF8.GetString(messageBuffer);
             using JsonDocument document = JsonDocument.Parse(json);
             JsonElement root = document.RootElement;
-            string messageTypeString = root.GetProperty("MessageTypeEnum")
+            string messageTypeString = root.GetProperty("MessageType")
                                      .GetString();
 
             MessageBase? message;

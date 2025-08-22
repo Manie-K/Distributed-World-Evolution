@@ -1,4 +1,4 @@
-﻿namespace Server.Shared.Messages
+﻿namespace SharedLibrary
 {
     public abstract class MessageBase
     {

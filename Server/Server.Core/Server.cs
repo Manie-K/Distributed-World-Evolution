@@ -1,7 +1,7 @@
 ﻿using System.Net.Sockets;
 using System.Net;
 using Server.Core.Lobby;
-using Server.Shared.Messages;
+using SharedLibrary;
 using Server.Core.Logging;
 using System.Drawing;
 

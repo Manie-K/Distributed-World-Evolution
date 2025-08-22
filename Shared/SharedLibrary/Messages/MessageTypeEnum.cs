@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace Server.Shared.Messages
+namespace SharedLibrary
 {
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum MessageTypeEnum

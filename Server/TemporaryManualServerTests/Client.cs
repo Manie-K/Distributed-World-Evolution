@@ -1,5 +1,5 @@
 ﻿using System.Net.Sockets;
-using Server.Shared.Messages;
+using SharedLibrary;
 
 class Client
 {

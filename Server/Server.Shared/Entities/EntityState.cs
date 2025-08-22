@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace Server.Shared.Entities
+namespace Server.Shared
 {
     public class EntityState
     {
