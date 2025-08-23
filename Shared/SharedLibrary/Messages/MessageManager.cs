@@ -35,10 +35,10 @@ namespace SharedLibrary
                 message = parsedMessageType switch
                 {
                     MessageTypeEnum.CreateLobby => JsonSerializer.Deserialize<CreateLobbyMessage>(json),
-                    MessageTypeEnum.UpdateWorldEntityState => JsonSerializer.Deserialize<UpdateWorldEntityStateMessage>(json),
-                    MessageTypeEnum.RefreshWorldEntities => JsonSerializer.Deserialize<RefreshWorldEntitiesMessage>(json),
-                    MessageTypeEnum.DefaultMessage => JsonSerializer.Deserialize<DefaultMessage>(json),
-                    MessageTypeEnum.UpdateUserState => JsonSerializer.Deserialize<UpdateUserStateMessage>(json),
+                    MessageTypeEnum.EntityState => JsonSerializer.Deserialize<EntityStateMessage>(json),
+                    MessageTypeEnum.WorldState => JsonSerializer.Deserialize<WorldStateMessage>(json),
+                    MessageTypeEnum.InfoMessage => JsonSerializer.Deserialize<InfoMessage>(json),
+                    MessageTypeEnum.UserState => JsonSerializer.Deserialize<UserStateMessage>(json),
                     MessageTypeEnum.JoinLobby => JsonSerializer.Deserialize<JoinLobbyMessage>(json),
                     _ => throw new NotImplementedException(),
                 };

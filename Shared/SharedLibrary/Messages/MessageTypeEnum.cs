@@ -6,10 +6,10 @@ namespace SharedLibrary
     public enum MessageTypeEnum
     {
         CreateLobby,
-        UpdateWorldEntityState,
-        RefreshWorldEntities,
-        UpdateUserState,
+        EntityState,
+        WorldState,
+        UserState,
         JoinLobby,
-        DefaultMessage
+        InfoMessage
     }
 }

@@ -3,14 +3,14 @@ using SharedLibrary;
 
 namespace SharedLibrary
 {
-    public class UpdateWorldEntityStateMessage : MessageBase
+    public class EntityStateMessage : MessageBase
     {
         //TODO: @FranciszekGwarek make sure the deserialization works correctly
 
         public WorldEntityDTO Entity { get; private set; }
 
-        public override MessageTypeEnum MessageType => MessageTypeEnum.UpdateWorldEntityState;
-        public UpdateWorldEntityStateMessage(WorldEntityDTO entity) 
+        public override MessageTypeEnum MessageType => MessageTypeEnum.EntityState;
+        public EntityStateMessage(WorldEntityDTO entity) 
         {
             Entity = entity;
         }

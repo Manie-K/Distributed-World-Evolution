@@ -11,6 +11,12 @@ namespace Server.Core.Lobby
         /// <inheritdoc/>
         public int LobbyId { get; private init; }
 
+
+        /// <summary>
+        /// Lobby updates per second.
+        /// </summary>
+        public const double LOBBY_UPDATES_PER_SECOND = 64;  
+
         private List<TcpClient> clients;
         private bool running;
 
@@ -29,17 +35,7 @@ namespace Server.Core.Lobby
             entities = new List<WorldEntity>();
             clients = new List<TcpClient>();
             running = true;
-        }
-
-
-        public void AddClient(TcpClient client)
-        {
-            lock (clients)
-            {
-                clients.Add(client);
-            }
-
-            MessageManager.SendMessage(client, new DefaultMessage($"You have joined lobby {LobbyId}.\n"));
+            Server.OnMessageFromClientReceived += OnMessageFromClientReceived_Delegate;
         }
 
         public void Run()
@@ -48,116 +44,99 @@ namespace Server.Core.Lobby
 
             while (running)
             {
-                Update();
-                Thread.Sleep(10);
+                Task.Delay((int)((1 / LOBBY_UPDATES_PER_SECOND) * 1000));
+                PublishWorldState();
             }
 
             Log($"Lobby {LobbyId} closed.", LogLevelEnum.Info);
         }
 
-        private void Update()
+        private void PublishWorldState()
         {
             lock (clients)
             {
                 foreach (var client in clients)
                 {
-                    if (client.Available > 0)
-                    {
-                        //Chat communication between users
-                        MessageBase message = GetMessageFromClient(client);
-
-                        if (message == null)
-                        {
-                            Log("Received null message from client.", LogLevelEnum.Warning);
-                            continue;
-                        }
-                        else
-                        {
-                            switch (message.MessageType)
-                            {
-                                case MessageTypeEnum.CreateLobby:
-                                    HandleCreateLobbyMessage(client, (CreateLobbyMessage)message);
-                                    break;
-                                case MessageTypeEnum.UpdateWorldEntityState:
-                                    HandleUpdateWorldEntityStateMessage(client, (UpdateWorldEntityStateMessage)message);
-                                    break;
-                                case MessageTypeEnum.RefreshWorldEntities:
-                                    HandleRefreshWorldEntitiesMessage(client, (RefreshWorldEntitiesMessage)message);
-                                    break;
-                                case MessageTypeEnum.UpdateUserState:
-                                    HandleUpdateUserStateMessage(client, (UpdateUserStateMessage)message);
-                                    break;
-                                case MessageTypeEnum.JoinLobby:
-                                    HandleJoinLobbyMessage(client, (JoinLobbyMessage)message);
-                                    break;
-                                case MessageTypeEnum.DefaultMessage:
-                                    HandleDefaultMessage(client, (DefaultMessage)message);
-                                    break;
-                                default:
-                                    HandleUnsupportedMessageType(client, message);
-                                    continue;
-                            }
-                        }
-                    }
+                    MessageManager.SendMessage(client, new WorldStateMessage(
+                            entities.Select(e => e.ToDTO())
+                        ));
                 }
             }
         }
+        private void UpdateState(MessageBase message, TcpClient client)
+        {
+            if (message == null)
+            {
+                Log("Received null message from client.", LogLevelEnum.Warning);
+                return;
+            }
+            else
+            {
+                switch (message.MessageType)
+                {
+                    case MessageTypeEnum.EntityState:
+                        HandleUpdateWorldEntityStateMessage(client, (EntityStateMessage)message);
+                        break;
+                    case MessageTypeEnum.UserState:
+                        HandleUpdateUserStateMessage(client, (UserStateMessage)message);
+                        break;
+                    case MessageTypeEnum.InfoMessage:
+                        HandleInfoMessage(client, (InfoMessage)message);
+                        break;
+                    default:
+                        HandleUnsupportedMessageType(client, message);
+                        break;
+                }
+            }
+                    
+        }
 
+        #region Delegates
+
+        private void OnMessageFromClientReceived_Delegate(OnMessageFromClientEventArgs args)
+        {
+            lock(clients)
+            {
+                if(!clients.Contains(args.Client))
+                {
+                    return;
+                }
+            }
+
+            UpdateState(args.Message, args.Client);
+        }
+
+        #endregion
 
         #region Handlers
 
-        private void HandleCreateLobbyMessage(TcpClient client, CreateLobbyMessage message)
+        private void HandleUpdateWorldEntityStateMessage(TcpClient client, EntityStateMessage message)
         {
-            throw new NotImplementedException("CreateLobbyMessage handling is not implemented yet.");
+            WorldEntityDTO ent = message.Entity;
+            if (ent == null)
+            {
+                throw new Exception("Received null WorldEntityDTO in EntityStateMessage.");
+            }
+
+            WorldEntity? existingEntity = entities.Where(e => e.Id == ent.Id).First();
+
+            if (existingEntity == null)
+            {
+                Log($"Entity with ID {ent.Id} not found in lobby {LobbyId}.", LogLevelEnum.Error);
+                return;
+            }
+            
+            existingEntity.UpdateStateWithDTO(ent.State);
         }
 
-        private void HandleUpdateWorldEntityStateMessage(TcpClient client, UpdateWorldEntityStateMessage message)
+        private void HandleUpdateUserStateMessage(TcpClient client, UserStateMessage message)
         {
-            //TODO
-            //WorldEntity ent = message.Entity;
-            //if (ent == null)
-            //{
-            //    throw new Exception("Received null WorldEntity in UpdateWorldEntityStateMessage.");
-            //}
-
-            //WorldEntity? existingEntity = entities.Where(e => e.Id == ent.Id).First();
-
-            //if (existingEntity == null)
-            //{
-            //    Log($"Entity with ID {ent.Id} not found in lobby {LobbyId}.", LogLevelEnum.Error);
-            //    return;
-            //}
-            //else
-            //{
-            //    existingEntity.UpdateState(ent.State);
-            //}
-
-            //RefreshWorldEntitiesMessage refreshMessage = new RefreshWorldEntitiesMessage(entities);
-            //foreach (var c in clients)
-            //{
-            //    if(c == client) continue; // Do not send the message back to the sender
-            //    SendMessageToClient(c, refreshMessage);
-            //}
+            throw new NotImplementedException("UserStateMessage handling is not implemented yet.");
         }
 
-        private void HandleRefreshWorldEntitiesMessage(TcpClient client, RefreshWorldEntitiesMessage message)
+        private void HandleInfoMessage(TcpClient client, InfoMessage message)
         {
-            throw new NotImplementedException("RefreshWorldEntitiesMessage handling is not implemented yet.");
-        }
-
-        private void HandleUpdateUserStateMessage(TcpClient client, UpdateUserStateMessage message)
-        {
-            throw new NotImplementedException("UpdateUserStateMessage handling is not implemented yet.");
-        }
-
-        private void HandleJoinLobbyMessage(TcpClient client, JoinLobbyMessage message)
-        {
-            throw new NotImplementedException("JoinLobbyMessage handling is not implemented yet.");
-        }
-
-        private void HandleDefaultMessage(TcpClient client, DefaultMessage message)
-        {
-            throw new NotImplementedException("DefaultMessage handling is not implemented yet.");
+            throw new NotImplementedException("InfoMessage handling is not implemented yet.");
         }
 
         private void HandleUnsupportedMessageType(TcpClient client, MessageBase message)
@@ -169,17 +148,16 @@ namespace Server.Core.Lobby
         #endregion
 
         #region Helpers
-        private MessageBase GetMessageFromClient(TcpClient client)
+        public void AddClient(TcpClient client)
         {
-            MessageBase message = MessageManager.ReceiveMessage(client);
+            lock (clients)
+            {
+                clients.Add(client);
+            }
 
-            return message;
+            MessageManager.SendMessage(client, new InfoMessage($"You have joined lobby {LobbyId}.\n"));
         }
 
-        private void SendMessageToClient(TcpClient client, MessageBase message)
-        {
-            MessageManager.SendMessage(client, message);
-        }
         #endregion
 
         #region Logging
