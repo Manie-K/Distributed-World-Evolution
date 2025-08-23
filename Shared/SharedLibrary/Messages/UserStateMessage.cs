@@ -2,9 +2,9 @@
 
 namespace SharedLibrary
 {
-    public class UpdateUserStateMessage : MessageBase
+    public class UserStateMessage : MessageBase
     {
-        public override MessageTypeEnum MessageType => MessageTypeEnum.UpdateUserState;
+        public override MessageTypeEnum MessageType => MessageTypeEnum.UserState;
 
         //TODO: add properties for user state change
         public Guid UserGUID { get; set; }

@@ -3,15 +3,15 @@ using SharedLibrary;
 
 namespace SharedLibrary
 {
-    public class RefreshWorldEntitiesMessage : MessageBase
+    public class WorldStateMessage : MessageBase
     {
         //TODO: @FranciszekGwarek make sure the deserialization works correctly
         public IEnumerable<WorldEntityDTO> Entities { get; private set; }
 
 
-        public override MessageTypeEnum MessageType => MessageTypeEnum.RefreshWorldEntities;
+        public override MessageTypeEnum MessageType => MessageTypeEnum.WorldState;
 
-        public RefreshWorldEntitiesMessage(IEnumerable<WorldEntityDTO> entities)
+        public WorldStateMessage(IEnumerable<WorldEntityDTO> entities)
         {
             Entities = entities;
         }

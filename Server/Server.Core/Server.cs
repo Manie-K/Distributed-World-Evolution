@@ -7,10 +7,11 @@ using System.Drawing;
 
 namespace Server.Core
 {
-    //@FranciszekGwarek
     internal class Server
     {
         private readonly LobbyManager lobbyManager;
+
+        public static event Action<OnMessageFromClientEventArgs>? OnMessageFromClientReceived;
 
         public Server()
         {
@@ -19,6 +20,7 @@ namespace Server.Core
             lobbyManager.OnLog += OnLog_Delegate;
             Lobby.Lobby.OnLog += OnLog_Delegate;
         }
+
 
         public void Start(string[] args)
         {
@@ -36,7 +38,7 @@ namespace Server.Core
                 //2. Convert it into async method
                 Task.Factory.StartNew(() => HandleClientConnection(client), TaskCreationOptions.LongRunning); //3.
                 Log("New client joined server.", LogLevelEnum.Info);
-                MessageManager.SendMessage(client, new DefaultMessage("Welcome to the server!"));
+                MessageManager.SendMessage(client, new InfoMessage("Welcome to the server!"));
             }
         }
 
@@ -44,7 +46,6 @@ namespace Server.Core
         {
             MessageBase message = MessageManager.ReceiveMessage(client);
 
-            //Creating new lobby
             if (message.MessageType == MessageTypeEnum.CreateLobby)
             {
                 CreateLobbyMessage createLobbyMessage = (CreateLobbyMessage)message;
@@ -78,7 +79,11 @@ namespace Server.Core
                 }
             }
 
-            //Else
+            else if (message.MessageType == MessageTypeEnum.EntityState) //probably other types also
+            {
+                OnMessageFromClientReceived?.Invoke(new OnMessageFromClientEventArgs(client, message));
+            }
+
             else
             {
                 client.Close();

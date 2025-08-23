@@ -1,17 +1,18 @@
 ﻿namespace SharedLibrary
 {
-    public class DefaultMessage : MessageBase
+    public class InfoMessage : MessageBase
     {
-        public override MessageTypeEnum MessageType => MessageTypeEnum.DefaultMessage;
+        public override MessageTypeEnum MessageType => MessageTypeEnum.InfoMessage;
+        
         /// <summary>
         /// The message content.
         /// </summary>
         public string MessageContent { get; set; }
 
-        public DefaultMessage()
+        public InfoMessage()
         {}
 
-        public DefaultMessage(object messageContent)
+        public InfoMessage(object messageContent)
         {
             if (messageContent == null)
                 throw new ArgumentNullException(nameof(messageContent), "Message content cannot be null.");

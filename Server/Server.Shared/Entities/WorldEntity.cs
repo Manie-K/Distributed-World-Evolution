@@ -1,4 +1,5 @@
 ﻿using System;
+using SharedLibrary;
 
 namespace Server.Shared
 {
@@ -24,13 +25,20 @@ namespace Server.Shared
             State = state ?? throw new ArgumentNullException(nameof(state), "State cannot be null.");
         }
 
-        public void UpdateState(EntityState newState)
+        public void UpdateStateWithDTO(EntityStateDTO newState)
         {
             if (newState == null)
             {
                 throw new ArgumentNullException(nameof(newState), "New state cannot be null.");
             }
-            State = newState;
+
+            //New to iterate on all props
+            State.Position = newState.Position;
+        }
+
+        public WorldEntityDTO ToDTO()
+        {
+            return new WorldEntityDTO(Id, State.ToDTO());
         }
     }
 }
