@@ -6,15 +6,39 @@
         xmlns:local="clr-namespace:Server.UI"
         mc:Ignorable="d"
         Title="Server" Height="450" Width="800">
-    <Grid>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
-        </Grid.ColumnDefinitions>
-        <Grid.RowDefinitions>
-            <RowDefinition Height="30" />
-            <RowDefinition Height="*" />
-            <RowDefinition Height="120" />
-        </Grid.RowDefinitions>
 
+    <Window.Resources>
+        <!-- ServerTemplate -->
+        <DataTemplate x:Key="ServerTemplate">
+            <StackPanel Margin="10">
+                <TextBlock Text="{Binding Info}" FontWeight="Bold" Foreground="DarkBlue"/>
+                <TextBox Text="{Binding ConsoleText, UpdateSourceTrigger=PropertyChanged}" 
+                         AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Height="300"/>
+            </StackPanel>
+        </DataTemplate>
+
+        <!-- LobbyTemplate -->
+        <DataTemplate x:Key="LobbyTemplate">
+            <StackPanel Margin="10">
+                <TextBlock Text="{Binding Info}" FontWeight="Bold" Foreground="DarkGreen"/>
+                <TextBox Text="{Binding ConsoleText, UpdateSourceTrigger=PropertyChanged}" 
+                         AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Height="300"/>
+            </StackPanel>
+        </DataTemplate>
+
+        <!-- Selector -->
+        <local:TabTemplateSelector x:Key="MyTabSelector"
+                                   ServerTemplate="{StaticResource ServerTemplate}"
+                                   LobbyTemplate="{StaticResource LobbyTemplate}"/>
+    </Window.Resources>
+
+    <Grid>
+        <TabControl ItemsSource="{Binding Tabs}" ContentTemplateSelector="{StaticResource MyTabSelector}">
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <TextBlock Text="{Binding Header}" FontWeight="Bold"/>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+        </TabControl>
     </Grid>
 </Window>
