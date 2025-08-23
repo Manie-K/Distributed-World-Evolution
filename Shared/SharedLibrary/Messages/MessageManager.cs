@@ -6,6 +6,10 @@ namespace SharedLibrary
 {
     public class MessageManager
     {
+        public static event Action<MessageBase>? MessageReceived;
+        public static event Action<bool>? MessageSended;
+
+
         public static MessageBase ReceiveMessage(TcpClient client)
         {
             NetworkStream stream = client.GetStream();
@@ -26,8 +30,7 @@ namespace SharedLibrary
             string json = Encoding.UTF8.GetString(messageBuffer);
             using JsonDocument document = JsonDocument.Parse(json);
             JsonElement root = document.RootElement;
-            string messageTypeString = root.GetProperty("MessageType")
-                                     .GetString();
+            string? messageTypeString = root.GetProperty("MessageType").GetString();
 
             MessageBase? message;
             if(Enum.TryParse(messageTypeString, out MessageTypeEnum parsedMessageType))
@@ -48,6 +51,8 @@ namespace SharedLibrary
                throw new NotSupportedException($"Undefined message type: {messageTypeString}");
             }
 
+            MessageReceived?.Invoke(message);
+
             return message ?? throw new Exception("Message null");
         }
 
@@ -65,11 +70,13 @@ namespace SharedLibrary
 
                 stream.Write(lengthPrefix, 0, lengthPrefix.Length);
                 stream.Write(messageBytes, 0, messageBytes.Length);
+                MessageSended?.Invoke(true);
 
                 return true;
             }
             catch (Exception ex)
             {
+                MessageSended?.Invoke(false);
                 return false;
             }
 
