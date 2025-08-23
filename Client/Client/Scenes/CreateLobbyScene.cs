@@ -64,28 +64,36 @@ namespace Client
 
         public void Update(GameTime gameTime)
         {
-            manager.InputManager.Update();
             bool isPressed = false;
 
             if (manager.InputManager.CheckIfLeftClick())
             {
+                
                 switchPageLobby.CheckLeftClick(manager.InputManager.GetMousePosition());
                 if (exitButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                 {
                     manager.SceneManager.RemoveScene();
                 }
-                if (saveButton.CheckLeftClick(manager.InputManager.GetMousePosition()) && !gameNameBox.CheckTextIfEmpty())
+                else if (saveButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                 {
-                    if (switchPageLobby.GetSelectedRow() != -1)
+                    if (!gameNameBox.CheckTextIfEmpty())
                     {
-                        ICreatureData tmp = switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetSelectedRow());
-                        if (tmp.Type == CreatureType.Animal) switchPageParametersAnimals.SaveAnimalParameters((AnimalData)tmp);
-                        else if (tmp.Type == CreatureType.Plant) switchPageParametersPlants.SavePlantParameters((PlantData)tmp);
-                    }
+                        if (switchPageLobby.GetSelectedRow() != -1)
+                        {
+                            ICreatureData tmp = switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetSelectedRow());
+                            if (tmp.Type == CreatureType.Animal) switchPageParametersAnimals.SaveAnimalParameters((AnimalData)tmp);
+                            else if (tmp.Type == CreatureType.Plant) switchPageParametersPlants.SavePlantParameters((PlantData)tmp);
+                        }
 
-                    LobbyInfoSerialization();
-                    lobbyswitchPage.AddRow(gameNameBox.GetText());
-                    manager.SceneManager.RemoveScene();
+                        LobbyInfoSerialization();
+                        lobbyswitchPage.AddRow(gameNameBox.GetText());
+                        manager.SceneManager.RemoveScene();
+                    }
+                    else
+                    {
+                        manager.WindowManager.Warning_Window.SetEmptyNameInformation();
+                        manager.WindowManager.EnableWarningWindow();
+                    }
                 }
 
                 if (switchPageLobby.GetSelectedRow() != -1)
@@ -103,6 +111,7 @@ namespace Client
             {
                 manager.SceneManager.RemoveScene();
             }
+
 
             exitButton.Update(manager.InputManager.GetMousePosition());
             saveButton.Update(manager.InputManager.GetMousePosition());
@@ -126,7 +135,6 @@ namespace Client
                 SetParameters();
             }
 
-            manager.InputManager.SetPreviousStates();
         }
 
         public void Draw(SpriteBatch spriteBatch)

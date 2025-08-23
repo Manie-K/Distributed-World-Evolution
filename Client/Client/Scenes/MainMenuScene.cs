@@ -44,7 +44,6 @@ namespace Client
 
         public void Update(GameTime gameTime)
         {
-            manager.InputManager.Update();
 
             if (manager.InputManager.CheckIfLeftClick())
             {
@@ -59,21 +58,29 @@ namespace Client
                             manager.SceneManager.AddScene(new LobbyScene(manager));
                         }
                     }
-                    if (settingsButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
+                    else if (settingsButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                     {
                         manager.SceneManager.AddScene(new SettingsScene(manager));
                     }
-                    if (quitButton.CheckLeftClick(manager.InputManager.GetMousePosition())) game.Exit();
+                    else if (quitButton.CheckLeftClick(manager.InputManager.GetMousePosition())) game.Exit();
                 }
                 else
                 {
                     textBox.CheckLeftClick(manager.InputManager.GetMousePosition());
-                    if (saveButton.CheckLeftClick(manager.InputManager.GetMousePosition()) && !textBox.CheckTextIfEmpty())
+                    if (saveButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                     {
-                        manager.UserSettings.PlayerName = textBox.GetText();
-                        manager.UserSettings.SaveUserSettings();
-                        playButtonClicked = false;
-                        manager.SceneManager.AddScene(new LobbyScene(manager));
+                        if (!textBox.CheckTextIfEmpty())
+                        {
+                            manager.UserSettings.PlayerName = textBox.GetText();
+                            manager.UserSettings.SaveUserSettings();
+                            playButtonClicked = false;
+                            manager.SceneManager.AddScene(new LobbyScene(manager));
+                        }
+                        else
+                        {
+                            manager.WindowManager.Warning_Window.SetEmptyNameInformation();
+                            manager.WindowManager.EnableWarningWindow();
+                        }
                     }
                 }
             }
@@ -82,6 +89,7 @@ namespace Client
             {
                 playButtonClicked = false;
             }
+
 
             if (playButtonClicked)
             {
@@ -95,7 +103,6 @@ namespace Client
                 quitButton.Update(manager.InputManager.GetMousePosition());
             }
 
-            manager.InputManager.SetPreviousStates();
         }
 
         public void Draw(SpriteBatch spriteBatch)

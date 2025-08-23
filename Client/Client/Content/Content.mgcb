@@ -940,6 +940,13 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/SettingsText.spritefont
 
+#begin Fonts/WindowTextFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/WindowTextFont.spritefont
+
 #begin Maps/Tiles/TX_Tileset_Grass.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -952,6 +959,66 @@
 /processorParam:TextureFormat=Color
 /build:Maps/Tiles/TX_Tileset_Grass.png;Maps/Tiles/TX_Tileset_Grass
 
+#begin Panels/Bestiary_Panel/Bestiary_background.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Panels/Bestiary_Panel/Bestiary_background.png
+
+#begin Panels/Bestiary_Panel/Bestiary_Exit.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Panels/Bestiary_Panel/Bestiary_Exit.png
+
+#begin Panels/Bestiary_Panel/Bestiary_Release.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Panels/Bestiary_Panel/Bestiary_Release.png
+
+#begin Panels/Error_Window/Error_Windows.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Panels/Error_Window/Error_Windows.png
+
+#begin Panels/Error_Window/OK_Button.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Panels/Error_Window/OK_Button.png
+
 #begin Panels/Esc_Panel/Exit_Button2.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -963,18 +1030,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Panels/Esc_Panel/Exit_Button2.png
-
-#begin Panels/Esc_Panel/panel_esc.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Panels/Esc_Panel/panel_esc.png
 
 #begin Panels/Esc_Panel/panel_esc.png
 /importer:TextureImporter
@@ -1011,6 +1066,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Panels/Esc_Panel/Settings_Button2.png
+
+#begin Panels/Warning_Window/OK_Button2.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Panels/Warning_Window/OK_Button2.png
+
+#begin Panels/Warning_Window/Warning_Window.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Panels/Warning_Window/Warning_Window.png
 
 #begin UI/BG_Forest.png
 /importer:TextureImporter

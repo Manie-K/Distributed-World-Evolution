@@ -36,8 +36,8 @@ namespace Client
 
         public void Update(GameTime gameTime)
         {
-            manager.InputManager.Update();
             bool isPressed = false;
+
             if (manager.InputManager.CheckIfLeftClick())
             {
 
@@ -67,13 +67,13 @@ namespace Client
                 manager.SceneManager.RemoveScene();
             }
 
+
             createButton.Update(manager.InputManager.GetMousePosition());
             joinButton.Update(manager.InputManager.GetMousePosition());
             refreshButton.Update(manager.InputManager.GetMousePosition());
             backButton.Update(manager.InputManager.GetMousePosition());
             switchPage.UpdateRows(manager.InputManager.GetMousePosition(), isPressed);
 
-            manager.InputManager.SetPreviousStates();
         }
         public void Draw(SpriteBatch spriteBatch)
         {
@@ -87,7 +87,7 @@ namespace Client
             createButton.Draw(spriteBatch);
             backButton.Draw(spriteBatch);
             joinButton.Draw(spriteBatch);
-            refreshButton.Draw(spriteBatch);  
+            refreshButton.Draw(spriteBatch);
         }
     }
 }

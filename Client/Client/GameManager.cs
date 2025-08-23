@@ -1,4 +1,5 @@
 ﻿using Client.Common;
+using Client.Panels.Windows;
 using Client.Rendering;
 using Microsoft.Xna.Framework.Content;
 using System.Drawing;
@@ -13,6 +14,7 @@ namespace Client
         public Camera2D Camera { get; private set; }
         public UserSettings UserSettings { get; private set; }
         public InputManager InputManager { get; private set; }
+        public WindowManager WindowManager { get; private set; }
         public bool IsInGame { get; set; }
 
         public GameManager(ContentManager content)
@@ -29,6 +31,11 @@ namespace Client
             Camera = new Camera2D(new Size(UserSettings.ScreenWidth, UserSettings.ScreenHeight));
             Camera.ResetPosition();
             IsInGame = false;
+        }
+
+        public void SetWindowManager()
+        {
+            WindowManager = new WindowManager(this);
         }
     }
 }

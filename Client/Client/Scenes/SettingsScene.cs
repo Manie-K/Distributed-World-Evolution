@@ -66,8 +66,6 @@ namespace Client
 
         public void Update(GameTime gameTime)
         {
-            manager.InputManager.Update();
-
             if (manager.InputManager.CheckIfLeftClick())
             {
                 if (exitButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
@@ -84,11 +82,9 @@ namespace Client
                 ExitSettings();
             }
 
+
             exitButton.Update(manager.InputManager.GetMousePosition());
             playerNameTextBox.Update();
-
-
-            manager.InputManager.SetPreviousStates();
         }
 
         private void ExitSettings()
@@ -110,21 +106,22 @@ namespace Client
                 manager.AudioManager.DecreaseMusicVolume();
                 manager.UserSettings.GlobalMusicVolume = manager.AudioManager.GetGlobalMusicVolume();
             }
-            if (switchButtons[0].GetRightButton().CheckLeftClick(position))
+            else if (switchButtons[0].GetRightButton().CheckLeftClick(position))
             {
                 manager.AudioManager.IncreaseMusicVolume();
                 manager.UserSettings.GlobalMusicVolume = manager.AudioManager.GetGlobalMusicVolume();
             }
-            if (switchButtons[1].GetLeftButton().CheckLeftClick(position))
+            else if (switchButtons[1].GetLeftButton().CheckLeftClick(position))
             {
                 manager.AudioManager.DecreaseEffectVolume();
                 manager.UserSettings.GlobalEffectVolume = manager.AudioManager.GetGlobalEffectVolume();
             }
-            if (switchButtons[1].GetRightButton().CheckLeftClick(position))
+            else if (switchButtons[1].GetRightButton().CheckLeftClick(position))
             {
                 manager.AudioManager.IncreaseEffectVolume();
                 manager.UserSettings.GlobalEffectVolume = manager.AudioManager.GetGlobalEffectVolume();
             }
+
             if (!manager.IsInGame)
             {
                 playerNameTextBox.CheckLeftClick(position);
