@@ -2,16 +2,17 @@
 using System.Net;
 using Server.Core.Lobby;
 using SharedLibrary;
-using Server.Core.Logging;
 using System.Drawing;
+using SharedLibrary.Messages;
 
 namespace Server.Core
 {
-    internal class Server
+    public class Server
     {
         private readonly LobbyManager lobbyManager;
 
         public static event Action<OnMessageFromClientEventArgs>? OnMessageFromClientReceived;
+        public TcpClient clientUI;
 
         public Server()
         {
@@ -29,20 +30,62 @@ namespace Server.Core
 
             Log("Server started...", LogLevelEnum.Info);
 
-            while(true)
+            while (true)
             {
                 TcpClient client = listener.AcceptTcpClient();
                 //Here we have a few options:
 
                 //1. ThreadPool.QueueUserWorkItem(HandleClientConnection, client);
                 //2. Convert it into async method
-                Task.Factory.StartNew(() => HandleClientConnection(client), TaskCreationOptions.LongRunning); //3.
-                Log("New client joined server.", LogLevelEnum.Info);
-                MessageManager.SendMessage(client, new InfoMessage("Welcome to the server!"));
+                //Task.Factory.StartNew(() => HandleClientConnection(client), TaskCreationOptions.LongRunning); //3.
+                _ = WaitForRoleMessageAsync(client);
             }
         }
 
-        void HandleClientConnection(TcpClient client)
+
+        private async Task WaitForRoleMessageAsync(TcpClient client)
+        {
+            try
+            {
+                while (true)
+                {
+                    MessageBase message = await Task.Run(() => MessageManager.ReceiveMessage(client));
+                    if (message is RoleMessage)
+                    {
+                        RoleMessage roleMessage = (RoleMessage)message;
+                        if (roleMessage.Role == RoleEnum.User)
+                        {
+                            Log("New client joined server - " + roleMessage.Role.ToString(), LogLevelEnum.Info);
+                            MessageManager.SendMessage(client, new InfoMessage("Welcome to the server!"));
+
+                            await Task.Factory.StartNew(() => HandleUserConnection(client), TaskCreationOptions.LongRunning);
+                            break;
+                        }
+                        else
+                        {
+                            clientUI = client;
+                            Log("New client joined server - " + roleMessage.Role.ToString(), LogLevelEnum.Info);
+                            //MessageManager.SendMessage(clientUI, new InfoMessage("Connected with server"));
+                            MessageManager.SendMessage(clientUI, new LogMessage(new OnLogEventArgs("Connected with server", LogLevelEnum.Info), this));
+                            break;
+                        }
+                    }
+                    else
+                    {
+                        //TODO: send error message to client
+                        client.Close();
+                        break;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                Log(ex.Message, LogLevelEnum.Error);
+                client.Close();
+            }
+        }
+
+        void HandleUserConnection(TcpClient client)
         {
             MessageBase message = MessageManager.ReceiveMessage(client);
 
@@ -93,6 +136,7 @@ namespace Server.Core
 
         private void OnLog_Delegate(object? sender, OnLogEventArgs e)
         {
+            MessageManager.SendMessage(clientUI, new LogMessage(e, sender));
             Log(e.Message, e.LogLevel, sender, e.Timestamp);
         }
 

@@ -1,11 +1,10 @@
 ﻿using System.Net.Sockets;
-using Server.Core.Logging;
 using SharedLibrary;
 using Server.Shared;
 
 namespace Server.Core.Lobby
 {
-    internal class Lobby : ILobby
+    public class Lobby : ILobby
     {
         //TODO: add modules when they are implemented
         /// <inheritdoc/>

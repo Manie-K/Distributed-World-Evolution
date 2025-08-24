@@ -1,4 +1,5 @@
-﻿using System.Net.Sockets;
+﻿using SharedLibrary.Messages;
+using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
 
@@ -8,7 +9,6 @@ namespace SharedLibrary
     {
         public static event Action<MessageBase>? MessageReceived;
         public static event Action<bool>? MessageSended;
-
 
         public static MessageBase ReceiveMessage(TcpClient client)
         {
@@ -43,6 +43,8 @@ namespace SharedLibrary
                     MessageTypeEnum.InfoMessage => JsonSerializer.Deserialize<InfoMessage>(json),
                     MessageTypeEnum.UserState => JsonSerializer.Deserialize<UserStateMessage>(json),
                     MessageTypeEnum.JoinLobby => JsonSerializer.Deserialize<JoinLobbyMessage>(json),
+                    MessageTypeEnum.RoleMessage => JsonSerializer.Deserialize<RoleMessage>(json),
+                    MessageTypeEnum.LogMessage => JsonSerializer.Deserialize<LogMessage>(json),
                     _ => throw new NotImplementedException(),
                 };
             }

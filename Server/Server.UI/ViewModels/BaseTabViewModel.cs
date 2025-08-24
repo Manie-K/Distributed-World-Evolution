@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
+using SharedLibrary;
 
 namespace Server.UI.ViewModels
 {
@@ -22,6 +23,11 @@ namespace Server.UI.ViewModels
                 _consoleText = value;
                 OnPropertyChanged();
             }
+        }
+
+        public void AppendLog(string message, DateTime timestamp, LogLevelEnum level)
+        {
+            ConsoleText += $"[{timestamp:HH:mm:ss}] [{level}] {message}\n";
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
