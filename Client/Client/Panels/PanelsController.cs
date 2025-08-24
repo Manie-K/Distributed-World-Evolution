@@ -11,16 +11,16 @@ namespace Client.Panels
     public class PanelsController
     {
         private GameManager gameManager;
-        public Bestiary_Panel Bestiary_Panel { get; set; }
-        public Esc_Panel Esc_Panel { get; set; }
+        public BestiaryPanel BestiaryPanel { get; set; }
+        public EscPanel EscPanel { get; set; }
         private int pickedPanel;
         private bool isBlocked;
 
         public PanelsController(GameManager gameManager) 
         {
             this.gameManager = gameManager;
-            Bestiary_Panel = new Bestiary_Panel(gameManager);
-            Esc_Panel = new Esc_Panel(gameManager);
+            BestiaryPanel = new BestiaryPanel(gameManager);
+            EscPanel = new EscPanel(gameManager);
             pickedPanel = -1;
             isBlocked = false;
         }
@@ -33,10 +33,10 @@ namespace Client.Panels
                 switch (pickedPanel)
                 {
                     case 0:
-                        if (Esc_Panel.CheckLeftClick(gameManager.InputManager.GetMousePosition())) pickedPanel = -1;
+                        if (EscPanel.CheckLeftClick(gameManager.InputManager.GetMousePosition())) pickedPanel = -1;
                         break;
                     case 1:
-                        if (Bestiary_Panel.CheckLeftClick(gameManager.InputManager.GetMousePosition())) pickedPanel = -1;
+                        if (BestiaryPanel.CheckLeftClick(gameManager.InputManager.GetMousePosition())) pickedPanel = -1;
                         break;
                 }
             }
@@ -44,14 +44,14 @@ namespace Client.Panels
             switch (pickedPanel)
             {
                 case 0:
-                    if (Esc_Panel.Update(gameManager.InputManager.GetMousePosition()))
+                    if (EscPanel.Update(gameManager.InputManager.GetMousePosition()))
                     {
                         pickedPanel = -1;
                         isBlocked = true;
                     }
                     break;
                 case 1:
-                    if (Bestiary_Panel.Update(gameManager.InputManager.GetMousePosition()))
+                    if (BestiaryPanel.Update(gameManager.InputManager.GetMousePosition()))
                     {
                         pickedPanel = -1;
                         isBlocked = true;
@@ -78,10 +78,10 @@ namespace Client.Panels
             switch (pickedPanel)
             {
                 case 0:
-                    Esc_Panel.Draw(spritebatch);
+                    EscPanel.Draw(spritebatch);
                     break;
                 case 1:
-                    Bestiary_Panel.Draw(spritebatch);
+                    BestiaryPanel.Draw(spritebatch);
                     break;
             }
         }

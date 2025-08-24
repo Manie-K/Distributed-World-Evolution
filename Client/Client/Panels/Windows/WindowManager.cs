@@ -11,36 +11,36 @@ namespace Client.Panels.Windows
     public class WindowManager
     {
         private GameManager gameManager;
-        public Error_Window Error_Window;
-        public Warning_Window Warning_Window;
+        public ErrorWindow ErrorWindow;
+        public WarningWindow WarningWindow;
 
         public WindowManager(GameManager gameManager)
         {
             this.gameManager = gameManager;
-            Error_Window = new Error_Window(gameManager);
-            Warning_Window = new Warning_Window(gameManager);
+            ErrorWindow = new ErrorWindow(gameManager);
+            WarningWindow = new WarningWindow(gameManager);
         }
 
         public bool Update()
         {
-            if (Error_Window.isEnabled)
+            if (ErrorWindow.isEnabled)
             {
                 if (gameManager.InputManager.CheckIfLeftClick())
                 {
-                    Error_Window.CheckLeftClick(gameManager.InputManager.GetMousePosition());
+                    ErrorWindow.CheckLeftClick(gameManager.InputManager.GetMousePosition());
                 }
-                Error_Window.Update(gameManager.InputManager.GetMousePosition());
+                ErrorWindow.Update(gameManager.InputManager.GetMousePosition());
 
                 return true;
             }
 
-            if (Warning_Window.isEnabled)
+            if (WarningWindow.isEnabled)
             {
                 if (gameManager.InputManager.CheckIfLeftClick())
                 {
-                    Warning_Window.CheckLeftClick(gameManager.InputManager.GetMousePosition());
+                    WarningWindow.CheckLeftClick(gameManager.InputManager.GetMousePosition());
                 }
-                Warning_Window.Update(gameManager.InputManager.GetMousePosition());
+                WarningWindow.Update(gameManager.InputManager.GetMousePosition());
 
                 return true;
             }
@@ -50,18 +50,18 @@ namespace Client.Panels.Windows
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (Warning_Window.isEnabled) Warning_Window.Draw(spriteBatch);
-            if (Error_Window.isEnabled) Error_Window.Draw(spriteBatch);
+            if (WarningWindow.isEnabled) WarningWindow.Draw(spriteBatch);
+            if (ErrorWindow.isEnabled) ErrorWindow.Draw(spriteBatch);
         }
 
         public void EnableWarningWindow()
         {
-            Warning_Window.isEnabled = true;
+            WarningWindow.isEnabled = true;
         }
 
         public void EnableErrorWindow()
         {
-            Error_Window.isEnabled = true;
+            ErrorWindow.isEnabled = true;
         }
     }
 }

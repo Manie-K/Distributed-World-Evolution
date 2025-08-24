@@ -91,7 +91,7 @@ namespace Client
                     }
                     else
                     {
-                        manager.WindowManager.Warning_Window.SetEmptyNameInformation();
+                        manager.WindowManager.WarningWindow.SetEmptyNameInformation();
                         manager.WindowManager.EnableWarningWindow();
                     }
                 }

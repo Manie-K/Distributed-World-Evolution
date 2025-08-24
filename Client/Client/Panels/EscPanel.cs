@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace Client.Panels
 {
-    public class Esc_Panel
+    public class EscPanel
     {
         private Texture2D background;
         private Button playButton;
@@ -18,7 +18,7 @@ namespace Client.Panels
         private Button exitButton;
         private GameManager manager;
 
-        public Esc_Panel(GameManager manager)
+        public EscPanel(GameManager manager)
         {
             this.manager = manager;
             background =  manager.ContentManager.Load<Texture2D>("Panels/Esc_Panel/panel_esc");

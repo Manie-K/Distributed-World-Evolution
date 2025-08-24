@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Client.Panels.Windows
 {
-    public class Warning_Window
+    public class WarningWindow
     {
         private GameManager manager;
         private Texture2D background;
@@ -17,7 +17,7 @@ namespace Client.Panels.Windows
         private Text information;
         public bool isEnabled;
 
-        public Warning_Window(GameManager manager)
+        public WarningWindow(GameManager manager)
         {
             this.manager = manager;
             background = manager.ContentManager.Load<Texture2D>("Panels/Warning_Window/Warning_Window");

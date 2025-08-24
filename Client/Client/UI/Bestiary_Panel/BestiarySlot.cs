@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Client.UI.Bestiary_Panel
 {
-    public class Bestiary_Slot
+    public class BestiarySlot
     {
         private Texture2D background;
         private Texture2D creatureTexture;
@@ -11,7 +11,7 @@ namespace Client.UI.Bestiary_Panel
         private Rectangle creatureTextureBounds;
         private Color backgroundColor;
 
-        public Bestiary_Slot(GameManager manager, Vector2 position, int type)
+        public BestiarySlot(GameManager manager, Vector2 position, int type)
         {
             SetCreatureTexture(manager, type);
             background = manager.ContentManager.Load<Texture2D>("Panels/Bestiary_Panel/Bestiary_slot");

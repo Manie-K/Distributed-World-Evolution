@@ -11,22 +11,22 @@ using System.Threading.Tasks;
 
 namespace Client.Panels
 {
-    public class Bestiary_Panel
+    public class BestiaryPanel
     {
         private GameManager manager;
         private Texture2D background;
         private Button releaseButton;
         private Button exitButton;
-        private List<Bestiary_Slot> slots;
+        private List<BestiarySlot> slots;
         private int selectedSlot;
 
-        public Bestiary_Panel(GameManager manager)
+        public BestiaryPanel(GameManager manager)
         {
             this.manager = manager;
             background = manager.ContentManager.Load<Texture2D>("Panels/Bestiary_Panel/Bestiary_background");
             exitButton = new Button(manager.ContentManager.Load<Texture2D>("Panels/Bestiary_Panel/Bestiary_Exit"), null, null, new Vector2(909, 148), 60, 42, Color.Gold);
             releaseButton = new Button(manager.ContentManager.Load<Texture2D>("Panels/Bestiary_Panel/Bestiary_Release"), null, null, new Vector2(514, 588), 253, 37, Color.Gold);
-            slots = new List<Bestiary_Slot>();
+            slots = new List<BestiarySlot>();
             selectedSlot = -1;
             SetList();
         }
@@ -107,9 +107,10 @@ namespace Client.Panels
         {
             if (slots.Count < 24)
             {
-                slots.Add(new Bestiary_Slot(manager, GetPosition(slots.Count), Type));
+                slots.Add(new BestiarySlot(manager, GetPosition(slots.Count), Type));
             }
         }
+
         private void SetList()
         {
             AddSlot(0);

@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Client.Panels.Windows
 {
-    public class Error_Window
+    public class ErrorWindow
     {
         private GameManager manager;
         private Texture2D background;
@@ -17,7 +17,7 @@ namespace Client.Panels.Windows
         private Text information;
         public bool isEnabled;
 
-        public Error_Window(GameManager manager)
+        public ErrorWindow(GameManager manager)
         {
             this.manager = manager;
             background = manager.ContentManager.Load<Texture2D>("Panels/Error_Window/Error_Windows");
