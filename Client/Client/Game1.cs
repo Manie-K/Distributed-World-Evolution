@@ -1,5 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace Client
 {
@@ -29,14 +31,21 @@ namespace Client
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use manager.ContentManager to load your game content here
+            manager.SetWindowManager();
             manager.SceneManager.AddScene(new MainMenuScene(manager, this));
             manager.SceneManager.GetCurrentScene().Load();
         }
 
         protected override void Update(GameTime gameTime)
         {
-            manager.SceneManager.GetCurrentScene().Update(gameTime);
+            manager.InputManager.Update();
 
+            if (!manager.WindowManager.Update())
+            {
+                manager.SceneManager.GetCurrentScene().Update(gameTime);
+            }
+
+            manager.InputManager.SetPreviousStates();
             base.Update(gameTime);
         }
 
@@ -50,6 +59,7 @@ namespace Client
 
             spriteBatch.Begin(samplerState: SamplerState.PointClamp);
             manager.SceneManager.GetCurrentScene().DrawStatic(spriteBatch);
+            manager.WindowManager.Draw(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);

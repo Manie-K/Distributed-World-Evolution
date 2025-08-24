@@ -10,57 +10,65 @@ using System.Threading.Tasks;
 
 namespace Client.Panels
 {
-    public class Esc_Panel
+    public class EscPanel
     {
         private Texture2D background;
         private Button playButton;
         private Button settingsButton;
         private Button exitButton;
         private GameManager manager;
-        public bool isEnabled;
 
-        public Esc_Panel(GameManager manager)
+        public EscPanel(GameManager manager)
         {
             this.manager = manager;
             background =  manager.ContentManager.Load<Texture2D>("Panels/Esc_Panel/panel_esc");
             playButton = new Button(manager.ContentManager.Load<Texture2D>("Panels/Esc_Panel/Play_Button2"), null, null, new Vector2(453, 196), 370, 89, Color.Gold);
             settingsButton = new Button(manager.ContentManager.Load<Texture2D>("Panels/Esc_Panel/Settings_Button2"), null, null, new Vector2(453, 305), 371, 91, Color.Gold);
             exitButton = new Button(manager.ContentManager.Load<Texture2D>("Panels/Esc_Panel/Exit_Button2"), null, null, new Vector2(453, 422), 370, 91, Color.Gold);
-            isEnabled = false;
 
         }
 
 
-        public void Update(Vector2 position)
+        public bool Update(Vector2 position)
         {
             playButton.Update(position);
             settingsButton.Update(position);
             exitButton.Update(position);
+
+            if (manager.InputManager.CheckIfCanPressKey(Keys.Escape))
+            {
+                return true;
+            }
+
+            return false;
         }
 
-        public void CheckLeftClick(Vector2 position)
+        public bool CheckLeftClick(Vector2 position)
         {
             if (playButton.CheckLeftClick(position))
             {
 
                 if (!manager.UserSettings.PlayerName.Equals(""))
                 {
-                    isEnabled = false;
+                    return true;
                 }
             }
-            if (settingsButton.CheckLeftClick(position))
+            else if (settingsButton.CheckLeftClick(position))
             {
                 manager.Camera.ResetPosition();
                 manager.SceneManager.AddScene(new SettingsScene(manager));
-                isEnabled = false;
+                return true;
             }
-            if (exitButton.CheckLeftClick(position))
+            else if (exitButton.CheckLeftClick(position))
             {
                 manager.Camera.ResetPosition();
                 manager.IsInGame = false;
                 manager.SceneManager.RemoveScene();
                 // TODO: send leave lobby message to the server
+                return true;
             }
+
+            return false;
         }
 
 

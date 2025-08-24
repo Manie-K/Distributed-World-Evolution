@@ -12,7 +12,8 @@ namespace Client
     {
         private GameManager manager;
 
-        private Esc_Panel escPanel;
+
+        private PanelsController panelsController;
         private Player player;
         private List<Character> characters;
         private AnimationTexturesLoader animationTexturesLoader;
@@ -28,7 +29,7 @@ namespace Client
                                      new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), manager.UserSettings.PlayerName, true, new Vector2(500, 300 - 110), 70, 40), ref this.animationTexturesLoader);
             characters = new List<Character>();
 
-            escPanel=new Esc_Panel(manager);
+            panelsController = new PanelsController(manager);
             cameraOffset = new Vector2(50, 100);
             map = new Tilemap();
             map.LoadMap("Content/Maps/map1.json", manager.ContentManager);
@@ -44,33 +45,13 @@ namespace Client
 
         public void Update(GameTime gameTime)
         {
-            manager.InputManager.Update();
-
-            if (manager.InputManager.CheckIfLeftClick())
-            {
-                if (escPanel.isEnabled)
-                {
-                    escPanel.CheckLeftClick(manager.InputManager.GetMousePosition());
-                }
-            }
-
-
-            if (manager.InputManager.CheckIfCanPressKey(Keys.Escape))
-            {
-                if(!escPanel.isEnabled) escPanel.isEnabled = true;
-                else escPanel.isEnabled = false;
-            }
-
+            panelsController.Update();
 
             player.Update(gameTime, manager.InputManager);
             foreach(Character character in characters)
             {
                 character.Update(gameTime, manager.InputManager);
             }
-
-            if (escPanel.isEnabled) escPanel.Update(manager.InputManager.GetMousePosition());
-
-            manager.InputManager.SetPreviousStates();
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -86,7 +67,7 @@ namespace Client
 
         public void DrawStatic(SpriteBatch spriteBatch)
         {
-            if (escPanel.isEnabled) escPanel.Draw(spriteBatch);
+            panelsController.Draw(spriteBatch);
         }
 
         private void LoadCharacters()
