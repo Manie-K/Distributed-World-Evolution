@@ -41,6 +41,7 @@
     <Folder Include="Content\Animations\Player\Run\" />
     <Folder Include="Content\Animations\Vampire1\" />
     <Folder Include="Content\Panels\Bestiary_Panel\" />
+    <Folder Include="Content\Panels\Bestiary_Panel\CreaturesImages\" />
     <Folder Include="Content\Panels\Esc_Panel\" />
   </ItemGroup>
   <ItemGroup>
