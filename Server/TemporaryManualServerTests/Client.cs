@@ -1,4 +1,5 @@
 ﻿using System.Net.Sockets;
+using SharedLibrary.Messages;
 using SharedLibrary;
 
 class Client
@@ -10,8 +11,9 @@ class Client
 
         try
         {
-            //Thread.Sleep(6000);
             TcpClient client = new TcpClient(serverIp, port);
+            Thread.Sleep(3000);
+            MessageManager.SendMessage(client, new RoleMessage(RoleEnum.User));
 
             //Thread receiving messages
             Thread receiveThread = new Thread(() =>
@@ -21,6 +23,8 @@ class Client
                 Console.WriteLine($"[Client] Received message: {stringMessage.MessageContent}");
             });
             receiveThread.Start();
+
+            Thread.Sleep(5000);
 
             //Sending messages
             while (true)

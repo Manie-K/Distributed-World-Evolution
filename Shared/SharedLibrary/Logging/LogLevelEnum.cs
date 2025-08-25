@@ -1,6 +1,6 @@
-﻿namespace Server.Core.Logging
+﻿namespace SharedLibrary
 {
-    internal enum LogLevelEnum
+    public enum LogLevelEnum
     {
         Debug,
         Info,
