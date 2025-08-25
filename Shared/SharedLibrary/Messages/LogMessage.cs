@@ -10,12 +10,12 @@ namespace SharedLibrary.Messages
     {
         public override MessageTypeEnum MessageType => MessageTypeEnum.LogMessage;
         public OnLogEventArgs OnLogEventArgs { get; private set; }
-        public object? Sender { get; private set; }
+        public int SenderID { get; private set; }
 
-        public LogMessage(OnLogEventArgs onLogEventArgs, object? sender)
+        public LogMessage(OnLogEventArgs onLogEventArgs, int senderID)
         {
             OnLogEventArgs = onLogEventArgs;
-            Sender = sender;
+            SenderID = senderID;
         }
 
         public override string BuildJson()
@@ -24,7 +24,7 @@ namespace SharedLibrary.Messages
             {
                 MessageType = MessageType,
                 OnLogEventArgs = OnLogEventArgs,
-                Sender = Sender?.ToString()
+                SenderID = SenderID
             };
 
             return System.Text.Json.JsonSerializer.Serialize(payload);

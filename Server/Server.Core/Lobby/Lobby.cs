@@ -56,7 +56,7 @@ namespace Server.Core.Lobby
             {
                 foreach (var client in clients)
                 {
-                    MessageManager.SendMessage(client, new WorldStateMessage(
+                    _= MessageManager.SendMessageAsync(client, new WorldStateMessage(
                             entities.Select(e => e.ToDTO())
                         ));
                 }
@@ -154,7 +154,7 @@ namespace Server.Core.Lobby
                 clients.Add(client);
             }
 
-            MessageManager.SendMessage(client, new InfoMessage($"You have joined lobby {LobbyId}.\n"));
+            _ = MessageManager.SendMessageAsync(client, new InfoMessage($"You have joined lobby {LobbyId}.\n"));
         }
 
         #endregion

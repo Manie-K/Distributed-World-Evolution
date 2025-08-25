@@ -1,33 +1,27 @@
-﻿using System;
+﻿using SharedLibrary;
+using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.ComponentModel;
 using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using SharedLibrary;
 
 namespace Server.UI.ViewModels
 {
     class BaseTabViewModel : INotifyPropertyChanged
     {
+        public ObservableCollection<OnLogEventArgs> Logs { get; } = new();
         public string Header { get; protected set; }
         public string Info { get; protected set; }
 
-        private string _consoleText;
-        public string ConsoleText
+        public void AppendLog(OnLogEventArgs e)
         {
-            get => _consoleText;
-            set
+            App.Current.Dispatcher.BeginInvoke(new Action(() =>
             {
-                _consoleText = value;
-                OnPropertyChanged();
-            }
-        }
-
-        public void AppendLog(string message, DateTime timestamp, LogLevelEnum level)
-        {
-            ConsoleText += $"[{timestamp:HH:mm:ss}] [{level}] {message}\n";
+                Logs.Add(e);
+            }), System.Windows.Threading.DispatcherPriority.Background);
         }
 
         public event PropertyChangedEventHandler PropertyChanged;

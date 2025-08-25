@@ -31,11 +31,11 @@ namespace Server.UI.ViewModels
 
         private void LoadFromServer()
         {
-            var lobbiesFromServer = new List<string> { "one", "two", "three" };
+            var lobbiesFromServer = new List<int> { 1, 2, 3 };
 
             foreach (var lobby in lobbiesFromServer)
             {
-                Tabs.Add(new LobbyViewModel("name", "info"));
+                Tabs.Add(new LobbyViewModel("name", "info", lobby));
             }
         }
 
@@ -46,30 +46,48 @@ namespace Server.UI.ViewModels
             int port = 5000;
 
             TcpClient client = new TcpClient(serverIp, port);
-            Thread.Sleep(3000);
-            MessageManager.SendMessage(client, new RoleMessage(RoleEnum.UI));
+            _ = MessageManager.SendMessageAsync(client, new RoleMessage(RoleEnum.UI));
 
             Thread receiveThread = new Thread(() =>
             {
-                MessageBase message = MessageManager.ReceiveMessage(client);
-                LogMessage log = (LogMessage)message;
-                HandleLog(log.Sender, log.OnLogEventArgs);
+                while (true)
+                {
+                    MessageBase message = MessageManager.ReceiveMessage(client);
+
+                    if (message.MessageType == MessageTypeEnum.LogMessage)
+                    {
+                        LogMessage log = (LogMessage)message;
+                        HandleLog(log.SenderID, log.OnLogEventArgs);
+                    }
+                }
+
             });
             receiveThread.Start();
         }
 
-        public void HandleLog(object? sender, OnLogEventArgs e)
+        public void HandleLog(int senderID, OnLogEventArgs e)
         {
-            if (sender is Server.Core.Server)
+            if (senderID != 0)
             {
-                ServerTab.AppendLog(e.Message, e.Timestamp, e.LogLevel);
+                LobbyViewModel? lobby = FindLobbyTabById(senderID);
+                if (lobby != null)
+                {
+                    lobby.AppendLog(e);
+                }
+                else
+                {
+                    ServerTab.AppendLog(e);
+                }
             }
-            else if (sender is Server.Core.Lobby.Lobby lobby)
+            else
             {
-                
+                ServerTab.AppendLog(e);
             }
         }
-
+        private LobbyViewModel? FindLobbyTabById(int lobbyId)
+        {
+            return Tabs.OfType<LobbyViewModel>().FirstOrDefault(tab => tab.LobbyID == lobbyId);
+        }
     }
 
 }

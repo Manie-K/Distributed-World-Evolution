@@ -11,11 +11,12 @@ namespace Server.UI.ViewModels
 {
     internal class LobbyViewModel : BaseTabViewModel
     {
-        public LobbyViewModel(string name, string info)
+        public int LobbyID { get; private set; }
+        public LobbyViewModel(string name, string info, int lobbyID)
         {
             Header = name;
             Info = info;
-            ConsoleText = "";
+            LobbyID = lobbyID;
         }
     }
 }

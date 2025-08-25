@@ -58,31 +58,33 @@ namespace SharedLibrary
             return message ?? throw new Exception("Message null");
         }
 
-        public static bool SendMessage(TcpClient client, MessageBase message)
+        public static async Task<bool> SendMessageAsync(TcpClient client, MessageBase message)
         {
             try
             {
                 if (client == null || !client.Connected) return false;
 
                 string json = message.BuildJson();
-                NetworkStream stream = client.GetStream();
-
                 byte[] messageBytes = Encoding.UTF8.GetBytes(json);
                 byte[] lengthPrefix = BitConverter.GetBytes(messageBytes.Length);
 
-                stream.Write(lengthPrefix, 0, lengthPrefix.Length);
-                stream.Write(messageBytes, 0, messageBytes.Length);
+                NetworkStream stream = client.GetStream();
+
+                await stream.WriteAsync(lengthPrefix, 0, lengthPrefix.Length);
+                await stream.WriteAsync(messageBytes, 0, messageBytes.Length);
+                await stream.FlushAsync(); // <-- upewniamy się, że wszystko wysłane
+
                 MessageSended?.Invoke(true);
 
                 return true;
             }
-            catch (Exception ex)
+            catch
             {
                 MessageSended?.Invoke(false);
                 return false;
             }
-
         }
+
 
     }
 
