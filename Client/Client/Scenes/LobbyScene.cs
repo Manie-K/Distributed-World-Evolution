@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
+using SharedLibrary;
 
 namespace Client
 { 
@@ -48,6 +49,9 @@ namespace Client
                 }
                 else if (joinButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                 {
+                    JoinLobbyMessage message = new JoinLobbyMessage();
+                    message.LobbyID = 0;
+                    MessageManager.SendMessage(manager.Client, message);
                     manager.SceneManager.AddScene(new GameScene(manager));
                 }
                 else if (refreshButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
