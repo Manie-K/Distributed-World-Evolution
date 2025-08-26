@@ -2,8 +2,6 @@
 using Client.Rendering;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
 using System.Collections.Generic;
 
 namespace Client
@@ -12,12 +10,11 @@ namespace Client
     {
         private GameManager manager;
 
-
         private PanelsController panelsController;
         private Player player;
         private List<Character> characters;
         private AnimationTexturesLoader animationTexturesLoader;
-        private Tilemap map;
+        private WorldMap map;
         private Vector2 cameraOffset;
 
         public GameScene(GameManager manager)
@@ -31,8 +28,8 @@ namespace Client
 
             panelsController = new PanelsController(manager);
             cameraOffset = new Vector2(50, 100);
-            map = new Tilemap();
-            map.LoadMap("Content/Maps/map1.json", manager.ContentManager);
+            map = new WorldMap();
+            map.InitMap("Content/Maps/map1.json", manager.ContentManager);
             manager.Camera.MapSize = new System.Drawing.Size(map.Width * map.TileSize, map.Height * map.TileSize);
             manager.IsInGame = true;
             LoadCharacters();

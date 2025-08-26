@@ -62,7 +62,11 @@ namespace Client
                     {
                         manager.SceneManager.AddScene(new SettingsScene(manager));
                     }
-                    else if (quitButton.CheckLeftClick(manager.InputManager.GetMousePosition())) game.Exit();
+                    else if (quitButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
+                    {
+                        manager.CloseClient();
+                        game.Exit();
+                    }
                 }
                 else
                 {
