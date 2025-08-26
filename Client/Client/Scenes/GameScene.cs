@@ -14,6 +14,7 @@ namespace Client
 
 
         private PanelsController panelsController;
+        private Inventory inventory;
         private Player player;
         private List<Character> characters;
         private AnimationTexturesLoader animationTexturesLoader;
@@ -31,11 +32,12 @@ namespace Client
 
             panelsController = new PanelsController(manager);
             cameraOffset = new Vector2(50, 100);
+            inventory = new Inventory(manager);
             map = new Tilemap();
             map.LoadMap("Content/Maps/map1.json", manager.ContentManager);
             manager.Camera.MapSize = new System.Drawing.Size(map.Width * map.TileSize, map.Height * map.TileSize);
             manager.IsInGame = true;
-            LoadCharacters();
+           // LoadCharacters();
         }
 
         public void Load()
@@ -67,6 +69,7 @@ namespace Client
 
         public void DrawStatic(SpriteBatch spriteBatch)
         {
+            inventory.Draw(spriteBatch);
             panelsController.Draw(spriteBatch);
         }
 
