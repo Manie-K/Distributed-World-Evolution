@@ -56,13 +56,7 @@ namespace Client
             try
             {
                 Client = new TcpClient(serverIp, port);
-
-                receiveThread = new Thread(() =>
-                {
-                    MessageBase message = MessageManager.ReceiveMessage(Client);
-                    InfoMessage stringMessage = (InfoMessage)message;
-                    Console.WriteLine($"[Client] Received message: {stringMessage.MessageContent}");
-                });
+                receiveThread = new Thread(ReceiveMessages);
                 receiveThread.Start();
             }
             catch (Exception e)
@@ -75,6 +69,33 @@ namespace Client
         {
             Client?.Close();
             receiveThread?.Join();
+        }
+
+        private void ReceiveMessages()
+        {
+            while (true)
+            {
+                MessageBase message = MessageManager.ReceiveMessage(Client);
+
+                if (message == null)
+                {
+                    Console.WriteLine("Received null message");
+                }
+                else if (message.MessageType == MessageTypeEnum.InfoMessage)
+                {
+                    InfoMessage stringMessage = (InfoMessage)message;
+                    Console.WriteLine($"[Client] Received message: {stringMessage.MessageContent}");
+                }
+                else if (message.MessageType == MessageTypeEnum.WorldState)
+                {
+                    WorldStateMessage stringMessage = (WorldStateMessage)message;
+                    //Handle world update
+                }
+                else
+                {
+                    Console.WriteLine("Received unknown message");
+                }
+            }
         }
     }
 }
