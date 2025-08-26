@@ -1,4 +1,4 @@
-﻿namespace Client.Rendering
+﻿namespace SharedLibrary
 {
     public enum TileType
     {
