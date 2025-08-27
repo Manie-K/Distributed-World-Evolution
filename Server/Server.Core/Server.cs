@@ -1,6 +1,7 @@
 ﻿using Server.Core.Lobby;
 using SharedLibrary;
 using SharedLibrary.Messages;
+using System.Collections.Concurrent;
 using System.Drawing;
 using System.Net;
 using System.Net.Sockets;
@@ -8,14 +9,20 @@ using System.Reflection.Emit;
 
 namespace Server.Core
 {
-    public class Server
+    public class Server 
     {
-        private readonly LobbyManager lobbyManager;
+        private static readonly Lazy<Server> _instance = new Lazy<Server>(() => new Server());
+        public static Server Instance => _instance.Value;
+
+
+        public readonly LobbyManager lobbyManager;
 
         public static event Action<OnMessageFromClientEventArgs>? OnMessageFromClientReceived;
-        public TcpClient clientUI;
+        
+        private TcpClient clientUI = null;
+        private ConcurrentQueue<LogMessage> logQueue = new ConcurrentQueue<LogMessage>();
 
-        public Server()
+        private Server()
         {
             lobbyManager = new LobbyManager();
 
@@ -30,6 +37,8 @@ namespace Server.Core
             listener.Start();
 
             Log("Server started...", LogLevelEnum.Info);
+            //TODO: remove
+            lobbyManager.CreateAndInitializeLobby();
 
             while (true)
             {
@@ -42,35 +51,37 @@ namespace Server.Core
         {
             try
             {
-                while (true)
-                {
-                    MessageBase message = await Task.Run(() => MessageManager.ReceiveMessage(client));
-                    if (message is RoleMessage)
-                    {
-                        RoleMessage roleMessage = (RoleMessage)message;
-                        if (roleMessage.Role == RoleEnum.User)
-                        {
-                            Log("New client joined server - " + roleMessage.Role.ToString(), LogLevelEnum.Info);
-                            _ = MessageManager.SendMessageAsync(client, new InfoMessage("Welcome to the server!"));
 
-                            await Task.Factory.StartNew(() => HandleUserConnection(client), TaskCreationOptions.LongRunning);
-                            break;
-                        }
-                        else
-                        {
-                            clientUI = client;
-                            Log("Server working...", LogLevelEnum.Info);
-                            Log("New client joined server - " + roleMessage.Role.ToString(), LogLevelEnum.Info);
-                            break;
-                        }
+                MessageBase message = MessageManager.ReceiveMessage(client);
+                if (message is RoleMessage)
+                {
+                    RoleMessage roleMessage = (RoleMessage)message;
+                    if (roleMessage.Role == RoleEnum.User)
+                    {
+                        Log("New client joined server - " + roleMessage.Role.ToString(), LogLevelEnum.Info);
+                        _ = MessageManager.SendMessageAsync(client, new InfoMessage("Welcome to the server!"));
+
+                        await Task.Factory.StartNew(() => HandleUserConnection(client), TaskCreationOptions.LongRunning);
                     }
                     else
                     {
-                        //TODO: send error message to client
-                        client.Close();
-                        break;
+                        clientUI = client;
+
+                        while (logQueue.TryDequeue(out var log))
+                        {
+                            _ = MessageManager.SendMessageAsync(clientUI, log);
+                        }
+
+                        Log("New client joined server - " + roleMessage.Role.ToString(), LogLevelEnum.Info);
+                        Log("Server working...", LogLevelEnum.Info);
                     }
                 }
+                else
+                {
+                    //TODO: send error message to client
+                    client.Close();
+                }
+
             }
             catch (Exception ex)
             {
@@ -139,14 +150,15 @@ namespace Server.Core
 
         private void Log(string message, LogLevelEnum level, object? sender = null, DateTime? timestamp = null)
         {
-            if (sender is Lobby.Lobby lobby)
+            var args = new OnLogEventArgs(message, level);
+
+            int senderID = (sender is Lobby.Lobby lobby) ? lobby.LobbyId : -1;
+            var logMessage = new LogMessage(args, senderID);
+            
+            logQueue.Enqueue(logMessage);
+            if (clientUI != null && clientUI.Connected)
             {
-                int senderID = lobby.LobbyId;
-                _ = MessageManager.SendMessageAsync(clientUI, new LogMessage(new OnLogEventArgs(message, level), senderID));
-            }
-            else
-            {
-                _ = MessageManager.SendMessageAsync(clientUI, new LogMessage(new OnLogEventArgs(message, level), 0));
+                _ = MessageManager.SendMessageAsync(clientUI, logMessage);
             }
 
             timestamp ??= DateTime.Now;
