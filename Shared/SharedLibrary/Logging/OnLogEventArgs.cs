@@ -1,6 +1,6 @@
-﻿namespace Server.Core.Logging
+﻿namespace SharedLibrary
 {
-    internal class OnLogEventArgs
+    public class OnLogEventArgs
     {
         public string Message { get; }
         public LogLevelEnum LogLevel { get; }

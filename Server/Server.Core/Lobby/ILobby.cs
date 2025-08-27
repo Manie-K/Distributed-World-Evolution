@@ -2,7 +2,7 @@
 
 namespace Server.Core.Lobby
 {
-    internal interface ILobby
+    public interface ILobby
     {
         /// <summary>
         /// Unique identifier for the lobby. Read-only after lobby creation.

@@ -8,21 +8,66 @@
         Title="Server" Height="450" Width="800">
 
     <Window.Resources>
+        <!-- LogsTemplate -->
+        <DataTemplate x:Key="LogsListTemplate">
+            <ListBox ItemsSource="{Binding Logs}" 
+             Height="300"
+             FontFamily="Consolas"
+             Background="Black"
+             BorderThickness="1"
+             ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock>
+                            <TextBlock.Text>
+                                <MultiBinding StringFormat="[{0:HH:mm:ss}] [{1}] {2}">
+                                    <Binding Path="Timestamp"/>
+                                    <Binding Path="LogLevel"/>
+                                    <Binding Path="Message"/>
+                                </MultiBinding>
+                            </TextBlock.Text>
+                            <TextBlock.Style>
+                                <Style TargetType="TextBlock">
+                                    <Setter Property="Foreground" Value="Gray"/>
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding LogLevel}" Value="Debug">
+                                            <Setter Property="Foreground" Value="BlueViolet"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding LogLevel}" Value="Info">
+                                            <Setter Property="Foreground" Value="CornflowerBlue"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding LogLevel}" Value="Warning">
+                                            <Setter Property="Foreground" Value="Orange"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding LogLevel}" Value="Error">
+                                            <Setter Property="Foreground" Value="Red"/>
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding LogLevel}" Value="Critical">
+                                            <Setter Property="Foreground" Value="DarkRed"/>
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </TextBlock.Style>
+                        </TextBlock>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
+        </DataTemplate>
+
         <!-- ServerTemplate -->
         <DataTemplate x:Key="ServerTemplate">
             <StackPanel Margin="10">
                 <TextBlock Text="{Binding Info}" FontWeight="Bold" Foreground="DarkBlue"/>
-                <TextBox Text="{Binding ConsoleText, UpdateSourceTrigger=PropertyChanged}" 
-                         AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Height="300"/>
+                <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource LogsListTemplate}"/>
             </StackPanel>
         </DataTemplate>
 
         <!-- LobbyTemplate -->
         <DataTemplate x:Key="LobbyTemplate">
             <StackPanel Margin="10">
-                <TextBlock Text="{Binding Info}" FontWeight="Bold" Foreground="DarkGreen"/>
-                <TextBox Text="{Binding ConsoleText, UpdateSourceTrigger=PropertyChanged}" 
-                         AcceptsReturn="True" VerticalScrollBarVisibility="Auto" Height="300"/>
+                <TextBlock Text="{Binding LobbyID, StringFormat=Lobby #{0}}" FontWeight="Bold" Foreground="LawnGreen"/>
+                <TextBlock Text="{Binding Info}" FontWeight="Bold" Foreground="LawnGreen"/>
+                <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource LogsListTemplate}"/>
             </StackPanel>
         </DataTemplate>
 
