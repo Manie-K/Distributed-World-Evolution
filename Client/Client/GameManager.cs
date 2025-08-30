@@ -2,7 +2,11 @@
 using Client.Panels.Windows;
 using Client.Rendering;
 using Microsoft.Xna.Framework.Content;
+using SharedLibrary;
+using System;
 using System.Drawing;
+using System.Net.Sockets;
+using System.Threading;
 
 namespace Client
 {
@@ -15,7 +19,12 @@ namespace Client
         public UserSettings UserSettings { get; private set; }
         public InputManager InputManager { get; private set; }
         public WindowManager WindowManager { get; private set; }
+        public TcpClient Client { get; private set; }
         public bool IsInGame { get; set; }
+
+        private string serverIp;
+        private int port;
+        private Thread receiveThread;
 
         public GameManager(ContentManager content)
         {
@@ -31,11 +40,62 @@ namespace Client
             Camera = new Camera2D(new Size(UserSettings.ScreenWidth, UserSettings.ScreenHeight));
             Camera.ResetPosition();
             IsInGame = false;
+
+            serverIp = "127.0.0.1";
+            port = 5000;
+            StartClient();
         }
 
         public void SetWindowManager()
         {
             WindowManager = new WindowManager(this);
+        }
+
+        private void StartClient()
+        {
+            try
+            {
+                Client = new TcpClient(serverIp, port);
+                receiveThread = new Thread(ReceiveMessages);
+                receiveThread.Start();
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine($"[Client] error: {e.Message}");
+            }
+        }
+
+        public void CloseClient()
+        {
+            Client?.Close();
+            receiveThread?.Join();
+        }
+
+        private void ReceiveMessages()
+        {
+            while (true)
+            {
+                MessageBase message = MessageManager.ReceiveMessage(Client);
+
+                if (message == null)
+                {
+                    Console.WriteLine("Received null message");
+                }
+                else if (message.MessageType == MessageTypeEnum.InfoMessage)
+                {
+                    InfoMessage stringMessage = (InfoMessage)message;
+                    Console.WriteLine($"[Client] Received message: {stringMessage.MessageContent}");
+                }
+                else if (message.MessageType == MessageTypeEnum.WorldState)
+                {
+                    WorldStateMessage stringMessage = (WorldStateMessage)message;
+                    //Handle world update
+                }
+                else
+                {
+                    Console.WriteLine("Received unknown message");
+                }
+            }
         }
     }
 }
