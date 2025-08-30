@@ -933,6 +933,13 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/SettingsNumbers.spritefont
 
+#begin Fonts/SettingsNumbers2.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/SettingsNumbers2.spritefont
+
 #begin Fonts/SettingsText.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -1271,6 +1278,42 @@
 /processorParam:TextureFormat=Color
 /build:Panels/Esc_Panel/Settings_Button2.png
 
+#begin Panels/HealthBar/HealthBar_RedArea.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Panels/HealthBar/HealthBar_RedArea.png
+
+#begin Panels/HealthBar/HealthBar.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Panels/HealthBar/HealthBar.png
+
+#begin Panels/Inventory/Inventory_slot.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Panels/Inventory/Inventory_slot.png
+
 #begin Panels/Inventory/Inventory.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1558,6 +1601,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:UI/Keyboard_keys/esc.png
+
+#begin UI/Keyboard_keys/q.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/Keyboard_keys/q.png
 
 #begin UI/Keyboard_keys/s.png
 /importer:TextureImporter

@@ -43,6 +43,7 @@
     <Folder Include="Content\Panels\Bestiary_Panel\" />
     <Folder Include="Content\Panels\Bestiary_Panel\CreaturesImages\" />
     <Folder Include="Content\Panels\Esc_Panel\" />
+    <Folder Include="Content\Panels\HealthBar\" />
     <Folder Include="Content\Panels\Inventory\" />
   </ItemGroup>
   <ItemGroup>
