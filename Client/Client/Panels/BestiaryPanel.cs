@@ -24,8 +24,8 @@ namespace Client.Panels
         {
             this.manager = manager;
             background = manager.ContentManager.Load<Texture2D>("Panels/Bestiary_Panel/Bestiary_background");
-            exitButton = new Button(manager.ContentManager.Load<Texture2D>("Panels/Bestiary_Panel/Bestiary_Exit"), null, null, new Vector2(909, 148), 60, 42, Color.Gold);
-            releaseButton = new Button(manager.ContentManager.Load<Texture2D>("Panels/Bestiary_Panel/Bestiary_Release"), null, null, new Vector2(514, 588), 253, 37, Color.Gold);
+            exitButton = new Button(manager.ContentManager.Load<Texture2D>("Panels/Bestiary_Panel/Bestiary_Exit"), null, null, new Vector2(909, 98), 60, 42, Color.Gold);
+            releaseButton = new Button(manager.ContentManager.Load<Texture2D>("Panels/Bestiary_Panel/Bestiary_Release"), null, null, new Vector2(514, 538), 253, 37, Color.Gold);
             slots = new List<BestiarySlot>();
             selectedSlot = -1;
             SetList();
@@ -93,7 +93,7 @@ namespace Client.Panels
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(background, new Rectangle(244, 89, 792, 542), Color.White);
+            spriteBatch.Draw(background, new Rectangle(244, 39, 792, 542), Color.White);
             for(int i = 0; i < slots.Count; i++)
             {
                 slots[i].Draw(spriteBatch);
@@ -163,16 +163,16 @@ namespace Client.Panels
             switch (col)
             {
                 case 0:
-                    posY = 204;
+                    posY = 154;
                     break;
                 case 1:
-                    posY = 280;
+                    posY = 230;
                     break;
                 case 2:
-                    posY = 354;
+                    posY = 304;
                     break;
                 case 3:
-                    posY = 428;
+                    posY = 378;
                     break;
             }
             return new Vector2(posX, posY);

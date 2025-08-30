@@ -32,7 +32,7 @@ namespace Client
             map.InitMap("Content/Maps/map1.json", manager.ContentManager);
             manager.Camera.MapSize = new System.Drawing.Size(map.Width * map.TileSize, map.Height * map.TileSize);
             manager.IsInGame = true;
-            LoadCharacters();
+           // LoadCharacters();
         }
 
         public void Load()
