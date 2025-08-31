@@ -23,7 +23,6 @@ namespace Client.Panels
             background = manager.ContentManager.Load<Texture2D>("Panels/Inventory/Inventory");
             slots = new List<InventorySlot>();
             selectedSlot = -1;
-            //SetList();
         }
 
         public void Update()
@@ -49,39 +48,39 @@ namespace Client.Panels
 
             else if (manager.InputManager.CheckIfCanPressKey(Keys.D1))
             {
-                pickSlot(0);
+                PickSlot(0);
             }
             else if (manager.InputManager.CheckIfCanPressKey(Keys.D2))
             {
-                pickSlot(1);
+                PickSlot(1);
             }
             else if (manager.InputManager.CheckIfCanPressKey(Keys.D3))
             {
-                pickSlot(2);
+                PickSlot(2);
             }
             else if (manager.InputManager.CheckIfCanPressKey(Keys.D4))
             {
-                pickSlot(3);
+                PickSlot(3);
             }
             else if (manager.InputManager.CheckIfCanPressKey(Keys.D5))
             {
-                pickSlot(4);
+                PickSlot(4);
             }
             else if (manager.InputManager.CheckIfCanPressKey(Keys.D6))
             {
-                pickSlot(5);
+                PickSlot(5);
             }
             else if (manager.InputManager.CheckIfCanPressKey(Keys.D7))
             {
-                pickSlot(6);
+                PickSlot(6);
             }
             else if (manager.InputManager.CheckIfCanPressKey(Keys.D8))
             {
-                pickSlot(7);
+                PickSlot(7);
             }
             else if (manager.InputManager.CheckIfCanPressKey(Keys.D9))
             {
-                pickSlot(8);
+                PickSlot(8);
             }
 
         }
@@ -96,11 +95,11 @@ namespace Client.Panels
             }
         }
 
-        public void AddSlot(int Type)
+        public void AddSlot(int type)
         {
             if (slots.Count < 9)
             {
-                slots.Add(new InventorySlot(manager, new Vector2(378 + (59 * slots.Count), 627), Type));
+                slots.Add(new InventorySlot(manager, new Vector2(378 + (59 * slots.Count), 627), type));
             }
         }
 
@@ -139,15 +138,6 @@ namespace Client.Panels
             }
         }
 
-        private void SetList()
-        {
-            AddSlot(0);
-            AddSlot(0);
-            AddSlot(0);
-            AddSlot(0);
-
-        }
-
         public void ResetSlot()
         {
             if (selectedSlot != -1)
@@ -157,7 +147,7 @@ namespace Client.Panels
             }
         }
 
-        private void pickSlot(int index)
+        private void PickSlot(int index)
         {
             if (index >= 0 && index < slots.Count)
             {
