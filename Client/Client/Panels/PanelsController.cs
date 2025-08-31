@@ -13,6 +13,10 @@ namespace Client.Panels
         private GameManager gameManager;
         public BestiaryPanel BestiaryPanel { get; set; }
         public EscPanel EscPanel { get; set; }
+        
+        private Inventory inventory;
+        private HealthBar healthBar;
+
         private int pickedPanel;
         private bool isBlocked;
 
@@ -21,6 +25,8 @@ namespace Client.Panels
             this.gameManager = gameManager;
             BestiaryPanel = new BestiaryPanel(gameManager);
             EscPanel = new EscPanel(gameManager);
+            inventory = new Inventory(gameManager);
+            healthBar = new HealthBar(gameManager);
             pickedPanel = -1;
             isBlocked = false;
         }
@@ -41,6 +47,7 @@ namespace Client.Panels
                 }
             }
 
+            healthBar.Update();
             switch (pickedPanel)
             {
                 case 0:
@@ -56,6 +63,9 @@ namespace Client.Panels
                         pickedPanel = -1;
                         isBlocked = true;
                     }
+                    break;
+                default:
+                    inventory.Update();
                     break;
             }
 
@@ -75,6 +85,8 @@ namespace Client.Panels
 
         public void Draw(SpriteBatch spritebatch)
         {
+            inventory.Draw(spritebatch);
+            healthBar.Draw(spritebatch);
             switch (pickedPanel)
             {
                 case 0:
