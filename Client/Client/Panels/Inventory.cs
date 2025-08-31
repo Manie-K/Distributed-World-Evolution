@@ -23,7 +23,7 @@ namespace Client.Panels
             background = manager.ContentManager.Load<Texture2D>("Panels/Inventory/Inventory");
             slots = new List<InventorySlot>();
             selectedSlot = -1;
-            SetList();
+            //SetList();
         }
 
         public void Update()
@@ -32,6 +32,21 @@ namespace Client.Panels
             {
                 RemoveSlot();
             }
+
+            //TODO: Delete later
+            else if (manager.InputManager.CheckIfCanPressKey(Keys.Z))
+            {
+                CollectItem(0);
+            }
+            else if (manager.InputManager.CheckIfCanPressKey(Keys.C))
+            {
+                CollectItem(1);
+            }
+            else if (manager.InputManager.CheckIfCanPressKey(Keys.X))
+            {
+                UseItem();
+            }
+
             else if (manager.InputManager.CheckIfCanPressKey(Keys.D1))
             {
                 pickSlot(0);
@@ -86,6 +101,27 @@ namespace Client.Panels
             if (slots.Count < 9)
             {
                 slots.Add(new InventorySlot(manager, new Vector2(378 + (59 * slots.Count), 627), Type));
+            }
+        }
+
+        public void CollectItem(int type)
+        {
+            foreach (var slot in slots)
+            {
+                if (slot.GetItemType() == type)
+                {
+                    slot.AddItem();
+                    return;
+                }
+            }
+            AddSlot(type);
+        }
+
+        public void UseItem()
+        {
+            if (selectedSlot != -1)
+            {
+               if(slots[selectedSlot].RemoveItem()) RemoveSlot();
             }
         }
 

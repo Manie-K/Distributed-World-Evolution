@@ -28,6 +28,7 @@ namespace Client.Panels
 
         public void Update()
         {
+            //TODO: Delete later
             if (manager.InputManager.CheckIfCanPressKey(Keys.C))
             {
                 SetRangeBar(rangeBar - 0.03f);
