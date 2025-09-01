@@ -1,14 +1,17 @@
 ﻿using Server.Core;
 using Server.UI.Models;
 using SharedLibrary;
+using SharedLibrary.LobbyDTO;
 using SharedLibrary.Messages;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Http;
 using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
+using System.Net.Http.Json;
 
 namespace Server.UI.ViewModels
 {
@@ -17,6 +20,8 @@ namespace Server.UI.ViewModels
         public ServerViewModel ServerTab { get; }
         public ObservableCollection<BaseTabViewModel> Tabs { get; } = new();
 
+        private readonly LobbyService _service = new LobbyService();
+
         public MainViewModel()
         {
             Tabs.Clear();
@@ -24,24 +29,24 @@ namespace Server.UI.ViewModels
             ServerTab = new ServerViewModel();
             Tabs.Add(ServerTab);
 
-            LoadFromServer();
+            _ = LoadDataFromServer();
 
             SubscribeToLogs();
         }
 
-        private void LoadFromServer()
+        private async Task LoadDataFromServer()
         {
-            var lobbiesFromServer = new List<int> { 1, 2, 3 };
+            List<LobbyDto> lobbies = await _service.GetLobbiesAsync();
 
-            foreach (var lobby in lobbiesFromServer)
+            foreach (var lobby in lobbies)
             {
-                Tabs.Add(new LobbyViewModel("name", "info", lobby));
+                Tabs.Add(new LobbyViewModel("TODO: name", "TODO: info", lobby.LobbyId));
             }
         }
 
         private void SubscribeToLogs()
         {
-            //TODO: change
+            //TODO: change to config
             string serverIp = "127.0.0.1";
             int port = 5000;
 
@@ -67,7 +72,7 @@ namespace Server.UI.ViewModels
 
         public void HandleLog(int senderID, OnLogEventArgs e)
         {
-            if (senderID != 0)
+            if (senderID != -1)
             {
                 LobbyViewModel? lobby = FindLobbyTabById(senderID);
                 if (lobby != null)

@@ -13,7 +13,7 @@ class Client
         {
             TcpClient client = new TcpClient(serverIp, port);
             Thread.Sleep(3000);
-            MessageManager.SendMessage(client, new RoleMessage(RoleEnum.User));
+            _ = MessageManager.SendMessageAsync(client, new RoleMessage(RoleEnum.User));
 
             //Thread receiving messages
             Thread receiveThread = new Thread(() =>

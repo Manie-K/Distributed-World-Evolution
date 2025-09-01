@@ -72,7 +72,7 @@ namespace SharedLibrary
 
                 await stream.WriteAsync(lengthPrefix, 0, lengthPrefix.Length);
                 await stream.WriteAsync(messageBytes, 0, messageBytes.Length);
-                await stream.FlushAsync(); // <-- upewniamy się, że wszystko wysłane
+                await stream.FlushAsync();
 
                 MessageSended?.Invoke(true);
 

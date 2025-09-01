@@ -1,12 +1,13 @@
-﻿using SharedLibrary;
-using Server.Shared.Exceptions;
+﻿using Server.Shared.Exceptions;
+using SharedLibrary;
+using SharedLibrary.LobbyDTO;
 using System.Net.Sockets;
 
 namespace Server.Core.Lobby
 {
-    internal class LobbyManager
+    public class LobbyManager
     {
-        private readonly Dictionary<int, ILobby> lobbies;
+        public readonly Dictionary<int, ILobby> lobbies;
         private int lobbyCounter;
 
         public event EventHandler<OnLogEventArgs>? OnLog;
@@ -17,7 +18,6 @@ namespace Server.Core.Lobby
             lobbies = new Dictionary<int, ILobby>();
         }
 
-
         //TODO: add modules when they are implemented
         public int CreateAndInitializeLobby()
         {
@@ -27,7 +27,7 @@ namespace Server.Core.Lobby
             {
                 lobbyId = lobbyCounter++;
                 lobbies[lobbyId] = new Lobby(lobbyId);
-                lobbies[lobbyId].Run();
+                //lobbies[lobbyId].Run();
                 Task.Factory.StartNew(() => lobbies[lobbyId].Run(), TaskCreationOptions.LongRunning);
             }
 
