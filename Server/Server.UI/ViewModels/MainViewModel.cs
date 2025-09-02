@@ -1,7 +1,7 @@
 ﻿using Server.Core;
 using Server.UI.Models;
 using SharedLibrary;
-using SharedLibrary.LobbyDTO;
+using SharedLibrary.Lobby;
 using SharedLibrary.Messages;
 using System;
 using System.Collections.Generic;

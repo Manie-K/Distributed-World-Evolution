@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharedLibrary.LobbyDTO
+namespace SharedLibrary.Lobby
 {
     public class LobbyDto
     {

@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SharedLibrary.LobbyDTO;
+using SharedLibrary.Lobby;
 using System;
 using System.Collections.Generic;
 using System.Linq;

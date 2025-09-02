@@ -1,5 +1,4 @@
-﻿using SharedLibrary.LobbyDTO;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
@@ -8,9 +7,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Net.Http.Json;
 
-namespace Server.UI
+namespace SharedLibrary.Lobby
 {
-    internal class LobbyService
+    public class LobbyService
     {
         private readonly HttpClient _http;
 
@@ -38,7 +37,7 @@ namespace Server.UI
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}");
+                //MessageBox.Show($"Error: {ex.Message}");
                 return new List<LobbyDto>();
             }
         }
