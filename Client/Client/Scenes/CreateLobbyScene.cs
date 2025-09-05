@@ -1,7 +1,9 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Client.UI.CreateLobby.Parameters;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SharedLibrary;
+using System;
 using System.Diagnostics;
 using System.Text.Json;
 
@@ -47,13 +49,24 @@ namespace Client
 
         public void InitializeCreaturesRows()
         {
-            switchPageLobby.AddRow(new AnimalData("wolf", 131, 220, 5, 3, 1, 25));
-            switchPageLobby.AddRow(new AnimalData("eagle",400, 300,45, 3, 10, 35));
-            switchPageLobby.AddRow(new AnimalData("mouse", 100, 400, 35, 3, 13, 65));
-            switchPageLobby.AddRow(new AnimalData("rat", 500, 2500, 5, 23, 12, 4));
-            switchPageLobby.AddRow(new AnimalData("cat", 150, 260, 5, 13, 155, 25));
-            switchPageLobby.AddRow(new PlantData("rose", 222, 10));
-            switchPageLobby.AddRow(new PlantData("mushroom", 265, 105));
+            switchPageLobby.AddRow(new AnimalData("Boar", 131, 220, 5, 3, 1, 25, true , true, true));
+            switchPageLobby.AddRow(new AnimalData("Brown Rabbit",400, 300,45, 3, 10, 35, true, true, true));
+            switchPageLobby.AddRow(new AnimalData("White Rabbit", 400, 300, 45, 3, 10, 35, true, true, true));
+            switchPageLobby.AddRow(new AnimalData("Red Plant", 100, 400, 35, 3, 13, 65, true, true, true));
+            switchPageLobby.AddRow(new AnimalData("Blue Plant", 500, 2500, 5, 23, 12, 4, true, true, true));
+            switchPageLobby.AddRow(new AnimalData("Purple Plant", 150, 260, 5, 13, 155, 25, true, true, true));
+            switchPageLobby.AddRow(new AnimalData("Orc", 100, 400, 35, 3, 13, 65, true, true, true));
+            switchPageLobby.AddRow(new AnimalData("Blue Orc", 500, 2500, 5, 23, 12, 4, true, true, true));
+            switchPageLobby.AddRow(new AnimalData("Darkgreen Orc", 150, 260, 5, 13, 155, 25, true, true, true));
+            switchPageLobby.AddRow(new AnimalData("Pig", 100, 400, 35, 3, 13, 65, true, true, true));
+            switchPageLobby.AddRow(new AnimalData("Slime", 500, 2500, 5, 23, 12, 4, true, true, true));
+            switchPageLobby.AddRow(new AnimalData("Water Slime", 150, 260, 5, 13, 155, 25, true, true, true));
+            switchPageLobby.AddRow(new AnimalData("Fire Slime", 150, 260, 5, 13, 155, 25, true, true, true));
+            switchPageLobby.AddRow(new AnimalData("Vampire", 500, 2500, 5, 23, 12, 4, true, true, true));
+            switchPageLobby.AddRow(new AnimalData("Blue Vampire", 150, 260, 5, 13, 155, 25, true, true, true));
+            switchPageLobby.AddRow(new AnimalData("Red Vampire", 150, 260, 5, 13, 155, 25, true, true, true));
+            switchPageLobby.AddRow(new PlantData("Rose", 222, 10, 20, true, true, true));
+            switchPageLobby.AddRow(new PlantData("Mushroom", 265, 105, 20, true, true, true));
         }
 
         public void InitalizeParametersPanel()
@@ -87,7 +100,7 @@ namespace Client
                         }
 
                         MessageManager.SendMessage(manager.Client, new CreateLobbyMessage());
-                        LobbyInfoSerialization();
+                        //LobbyInfoSerialization();
                         lobbyswitchPage.AddRow(gameNameBox.GetText());
                         manager.SceneManager.RemoveScene();
                     }
@@ -121,8 +134,8 @@ namespace Client
 
             if (switchPageLobby.GetSelectedRow() != -1)
             {
-                if (switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetSelectedRow()).Type == CreatureType.Animal) switchPageParametersAnimals.UpdateRows();
-                else if (switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetSelectedRow()).Type == CreatureType.Plant) switchPageParametersPlants.UpdateRows();
+                if (switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetSelectedRow()).Type == CreatureType.Animal) switchPageParametersAnimals.UpdateRows(manager.InputManager.GetMousePosition());
+                else if (switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetSelectedRow()).Type == CreatureType.Plant) switchPageParametersPlants.UpdateRows(manager.InputManager.GetMousePosition());
             }
 
 
@@ -183,7 +196,7 @@ namespace Client
                 Creatures = switchPageLobby.GetCreaturesList()
             });
 
-            Debug.WriteLine(json);
+            Console.WriteLine(json);
         }
 
     }
