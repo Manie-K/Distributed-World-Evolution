@@ -9,7 +9,7 @@ namespace Server.Core.Lobby
         /// </summary>
         public int LobbyId { get; }
 
-        public void AddClient(TcpClient client);
+        public bool AddClient(TcpClient client);
         public void Run();
     }
 }
