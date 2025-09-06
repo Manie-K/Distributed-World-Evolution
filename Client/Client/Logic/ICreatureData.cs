@@ -21,7 +21,7 @@ namespace Client
         public string Name { set; get; }
         public CreatureType Type { set; get; }
 
-        public int ReproduceCooldown { get; set; }
+        public int BreedingCooldown { get; set; }
 
     }
 }

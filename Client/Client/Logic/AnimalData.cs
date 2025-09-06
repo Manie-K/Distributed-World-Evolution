@@ -8,22 +8,28 @@ namespace Client
 {
     public class AnimalData : ICreatureData
     {
-        public int Speed { set; get; }
-        public int Health { set; get; }
-        public int Damage { set; get; }
-        public int AttackRange { set; get; }
-        public int Defense { get; set; }
+        public int Health { get; set; }
+        public int AttackPower { get; set; }
+        public int AttackRange { get; set; }
+        public int MoveSpeed { get; set; }
+        public int Armor { get; set; }
+        public bool IsAggressive { get; set; }
+        public bool IsFertile { get; set; }
+        public bool IsTamable { get; set; }
 
-        public AnimalData(string name, int health, int damage, int speed, int attackRange, int defense, int reproduceCooldown)
+        public AnimalData(string name, int health, int attack, int speed, int range, int armor, int breedingCooldown, bool aggressive, bool canReproduce, bool isTamable)
         {
             Type = CreatureType.Animal;
             Name = name;
             Health = health;
-            Damage = damage;
-            Speed = speed;
-            AttackRange = attackRange;
-            Defense = defense;
-            ReproduceCooldown = reproduceCooldown;
+            AttackPower = attack;
+            MoveSpeed = speed;
+            AttackRange = range;
+            Armor = armor;
+            BreedingCooldown = breedingCooldown;
+            IsAggressive = aggressive;
+            IsFertile = canReproduce;
+            IsTamable = isTamable;
         }
     }
 }

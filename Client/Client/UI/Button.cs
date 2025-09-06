@@ -20,16 +20,16 @@ namespace Client
         private bool isDisabled;
 
 
-        public Button(Texture2D BackgroundTexture, SpriteFont Font, string Text, Vector2 Position, int Width, int Height, Color Color)
+        public Button(Texture2D backGroundTexture, SpriteFont font, string text, Vector2 position, int width, int height, Color color)
         {
-            backGroundTexture = BackgroundTexture;
-            font = Font;
-            text = Text;
-            position = Position;
-            bounds = new Rectangle((int)position.X, (int)position.Y, Width, Height);
+            this.backGroundTexture = backGroundTexture;
+            this.font = font;
+            this.text = text;
+            this.position = position;
+            bounds = new Rectangle((int)position.X, (int)position.Y, width, height);
             textColor = Color.Black;
             backgroundColor = Color.White;
-            hoverColor = Color;
+            hoverColor = color;
             isDisabled = false;
         }
 
