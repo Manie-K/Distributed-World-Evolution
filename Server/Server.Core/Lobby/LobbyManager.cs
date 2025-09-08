@@ -1,6 +1,6 @@
 ﻿using Server.Shared.Exceptions;
 using SharedLibrary;
-using SharedLibrary.LobbyDTO;
+using SharedLibrary.Lobby;
 using System.Net.Sockets;
 
 namespace Server.Core.Lobby
