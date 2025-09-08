@@ -17,9 +17,10 @@ namespace Server.Core.Lobby
         public const double LOBBY_UPDATES_PER_SECOND = 64;  
 
         private List<TcpClient> clients;
-        private bool running;
-
         private IEnumerable<WorldEntity> entities;
+        private Dictionary<WorldEntity, FrameEntityMetadata> metadata;
+
+        private bool running;
 
         public static event EventHandler<OnLogEventArgs>? OnLog;
 
@@ -31,7 +32,8 @@ namespace Server.Core.Lobby
         {
             LobbyId = id;
 
-            entities = new List<WorldEntity>();
+            entities = new List<WorldEntity>(); //Currently no way to add them.
+            metadata = new Dictionary<WorldEntity, FrameEntityMetadata>();
             clients = new List<TcpClient>();
             running = true;
             Server.OnMessageFromClientReceived += OnMessageFromClientReceived_Delegate;
@@ -52,6 +54,14 @@ namespace Server.Core.Lobby
 
         private void PublishWorldState()
         {
+            foreach (var entity in entities)
+            {
+                if (metadata.ContainsKey(entity))
+                {
+                    metadata[entity].AlreadyChangedPosition = false;
+                }
+            }
+
             lock (clients)
             {
                 foreach (var client in clients)
@@ -90,6 +100,28 @@ namespace Server.Core.Lobby
                     
         }
 
+        private void SimulateEntityUpdate(WorldEntity entity, EntityStateDTO newState)
+        {
+            if (entity == null)
+            {
+                throw new ArgumentNullException(nameof(entity), "Entity cannot be null.");
+            }
+            if (newState == null)
+            {
+                throw new ArgumentNullException(nameof(newState), "New state cannot be null.");
+            }
+        
+            if(entity.State.Position != newState.Position && !metadata[entity].AlreadyChangedPosition)
+            {
+                if (!entities.Where(e => e.State.Position == entity.State.Position).Any())
+                {
+                    entity.State.Position = newState.Position;
+                    metadata[entity].AlreadyChangedPosition = true;
+                }
+            }
+
+        }
+
         #region Delegates
 
         private void OnMessageFromClientReceived_Delegate(OnMessageFromClientEventArgs args)
@@ -125,7 +157,7 @@ namespace Server.Core.Lobby
                 return;
             }
             
-            existingEntity.UpdateStateWithDTO(ent.State);
+            SimulateEntityUpdate(existingEntity, ent.State);
         }
 
         private void HandleUpdateUserStateMessage(TcpClient client, UserStateMessage message)
