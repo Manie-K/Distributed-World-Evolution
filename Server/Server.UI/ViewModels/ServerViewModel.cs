@@ -16,7 +16,6 @@ namespace Server.UI.Models
         {
             Header = "Server";
             Info = "Info about server";
-            ConsoleText = "";
         }
     }
 
