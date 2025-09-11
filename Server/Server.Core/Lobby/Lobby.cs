@@ -1,6 +1,7 @@
 ﻿using System.Net.Sockets;
 using SharedLibrary;
 using Server.Shared;
+using Server.Shared.Modules;
 
 namespace Server.Core.Lobby
 {
@@ -10,19 +11,20 @@ namespace Server.Core.Lobby
         /// <inheritdoc/>
         public int LobbyId { get; private init; }
 
-
+        public static event EventHandler<OnLogEventArgs>? OnLog;
+        
         /// <summary>
         /// Lobby updates per second.
         /// </summary>
         public const double LOBBY_UPDATES_PER_SECOND = 64;  
 
         private List<TcpClient> clients;
-        private IEnumerable<WorldEntity> entities;
+        private ICollection<WorldEntity> entities;
+        private ICollection<ModuleData> loadedModules;
         private Dictionary<WorldEntity, FrameEntityMetadata> metadata;
 
         private bool running;
 
-        public static event EventHandler<OnLogEventArgs>? OnLog;
 
         /// <summary>
         /// Default constructor for Lobby.
@@ -33,6 +35,7 @@ namespace Server.Core.Lobby
             LobbyId = id;
 
             entities = new List<WorldEntity>(); //Currently no way to add them.
+            loadedModules = new List<ModuleData>(); //Currently no way to add them.
             metadata = new Dictionary<WorldEntity, FrameEntityMetadata>();
             clients = new List<TcpClient>();
             running = true;
@@ -179,14 +182,92 @@ namespace Server.Core.Lobby
         #endregion
 
         #region Helpers
-        public void AddClient(TcpClient client)
+
+        public bool AddClient(TcpClient client)
         {
             lock (clients)
             {
+                if (clients.Contains(client))
+                {
+                    Log("Client already in lobby.", LogLevelEnum.Warning);
+                    return false;
+                }
                 clients.Add(client);
             }
 
             _ = MessageManager.SendMessageAsync(client, new InfoMessage($"You have joined lobby {LobbyId}.\n"));
+            return true;
+        }
+
+        public bool LoadModule(ModuleData module)
+        {
+            lock (loadedModules)
+            {
+                if (loadedModules.Contains(module))
+                {
+                    Log($"Module {module.Name} already loaded in lobby {LobbyId}.", LogLevelEnum.Warning);
+                    return false;
+                }
+                loadedModules.Add(module);
+                return true;
+            }
+        }
+
+        // What do we expect here? Just remove in future or present?
+        public bool UnloadModule(ModuleData module)
+        {
+            lock (loadedModules)
+            {
+                if (!loadedModules.Contains(module))
+                {
+                    Log($"Module {module.Name} isn't loaded in lobby {LobbyId}.", LogLevelEnum.Warning);
+                    return false;
+                }
+                loadedModules.Remove(module);
+                return true;
+            }
+        }
+
+        // We should decide how we will handle creating and destroying world entities
+        public bool AddWorldEntity(WorldEntity entity)
+        {
+            lock (entities)
+            {
+                if (entities.Contains(entity))
+                {
+                    Log($"Entity {entity.Id} already exists in lobby {LobbyId}.", LogLevelEnum.Warning);
+                    return false;
+                }
+                if(!loadedModules.Contains(entity.Module))
+                {
+                    Log($"Entity's {entity.Id} module {entity.Module.Name} is not loaded in lobby {LobbyId}.", LogLevelEnum.Warning);
+                    return false;
+                }
+                entities.Add(entity);
+                metadata.Add(entity, new FrameEntityMetadata());
+                return true;
+            }
+        }
+
+        public bool DestroyWorldEntity(WorldEntity entity)
+        {
+            lock (entities)
+            {
+                if (!entities.Contains(entity))
+                {
+                    Log($"Entity {entity.Id} does not exist in lobby {LobbyId}.", LogLevelEnum.Warning);
+                    return false;
+                }
+                entities.Remove(entity);
+                metadata.Remove(entity);
+                return true;
+            }
+        }
+
+        
+        public bool SaveWorldState()
+        {
+            throw new NotImplementedException("Saving is not implemented yet.");
         }
 
         #endregion
