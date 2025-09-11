@@ -1,19 +1,28 @@
-﻿using System.Net.Sockets;
-using System.Net;
-using Server.Core.Lobby;
+﻿using Server.Core.Lobby;
 using SharedLibrary;
-using Server.Core.Logging;
+using SharedLibrary.Messages;
+using System.Collections.Concurrent;
 using System.Drawing;
+using System.Net;
+using System.Net.Sockets;
+using System.Reflection.Emit;
 
 namespace Server.Core
 {
-    internal class Server
+    public class Server 
     {
-        private readonly LobbyManager lobbyManager;
+        private static readonly Lazy<Server> _instance = new Lazy<Server>(() => new Server());
+        public static Server Instance => _instance.Value;
+
+
+        public readonly LobbyManager lobbyManager;
 
         public static event Action<OnMessageFromClientEventArgs>? OnMessageFromClientReceived;
+        
+        private TcpClient clientUI = null;
+        private ConcurrentQueue<LogMessage> logQueue = new ConcurrentQueue<LogMessage>();
 
-        public Server()
+        private Server()
         {
             lobbyManager = new LobbyManager();
 
@@ -28,76 +37,130 @@ namespace Server.Core
             listener.Start();
 
             Log("Server started...", LogLevelEnum.Info);
+            //TODO: remove
+            lobbyManager.CreateAndInitializeLobby();
 
-            while(true)
+            while (true)
             {
                 TcpClient client = listener.AcceptTcpClient();
-                //Here we have a few options:
-
-                //1. ThreadPool.QueueUserWorkItem(HandleClientConnection, client);
-                //2. Convert it into async method
-                Task.Factory.StartNew(() => HandleClientConnection(client), TaskCreationOptions.LongRunning); //3.
-                Log("New client joined server.", LogLevelEnum.Info);
-                MessageManager.SendMessage(client, new InfoMessage("Welcome to the server!"));
+                _ = WaitForRoleMessageAsync(client);
             }
         }
 
-        void HandleClientConnection(TcpClient client)
+        private async Task WaitForRoleMessageAsync(TcpClient client)
         {
-            MessageBase message = MessageManager.ReceiveMessage(client);
-
-            if (message.MessageType == MessageTypeEnum.CreateLobby)
+            try
             {
-                CreateLobbyMessage createLobbyMessage = (CreateLobbyMessage)message;
 
-                //TODO: validate message; transfer data from message to lobby
-                int lobbyId = lobbyManager.CreateAndInitializeLobby();
-                try
+                MessageBase message = MessageManager.ReceiveMessage(client);
+                if (message is RoleMessage)
                 {
-                    lobbyManager.AddUserToLobby(lobbyId, client);
+                    RoleMessage roleMessage = (RoleMessage)message;
+                    if (roleMessage.Role == RoleEnum.User)
+                    {
+                        Log("New client joined server - " + roleMessage.Role.ToString(), LogLevelEnum.Info);
+                        _ = MessageManager.SendMessageAsync(client, new InfoMessage("Welcome to the server!"));
+
+                        await Task.Factory.StartNew(() => HandleUserConnection(client), TaskCreationOptions.LongRunning);
+                    }
+                    else
+                    {
+                        clientUI = client;
+
+                        while (logQueue.TryDequeue(out var log))
+                        {
+                            _ = MessageManager.SendMessageAsync(clientUI, log);
+                        }
+
+                        Log("New client joined server - " + roleMessage.Role.ToString(), LogLevelEnum.Info);
+                        Log("Server working...", LogLevelEnum.Info);
+                    }
                 }
-                catch (Exception ex)
+                else
                 {
-                    Log(ex.Message, LogLevelEnum.Error);
+                    //TODO: send error message to client
                     client.Close();
                 }
+
             }
-
-            //Joining existing lobby
-            else if (message.MessageType == MessageTypeEnum.JoinLobby)
+            catch (Exception ex)
             {
-                JoinLobbyMessage joinLobbyMessage = (JoinLobbyMessage)message;
-
-                try
-                {
-                    lobbyManager.AddUserToLobby(joinLobbyMessage.LobbyID, client);
-                }
-                catch (Exception ex)
-                {
-                    Log(ex.Message, LogLevelEnum.Error);
-                    client.Close();
-                }
-            }
-
-            else if (message.MessageType == MessageTypeEnum.EntityState) //probably other types also
-            {
-                OnMessageFromClientReceived?.Invoke(new OnMessageFromClientEventArgs(client, message));
-            }
-
-            else
-            {
+                Log(ex.Message, LogLevelEnum.Error);
                 client.Close();
+            }
+        }
+
+        void HandleUserConnection(TcpClient client)
+        {
+            while (true)
+            {
+                MessageBase message = MessageManager.ReceiveMessage(client);
+
+                if (message.MessageType == MessageTypeEnum.CreateLobby)
+                {
+                    CreateLobbyMessage createLobbyMessage = (CreateLobbyMessage)message;
+
+                    //TODO: validate message; transfer data from message to lobby
+                    int lobbyId = lobbyManager.CreateAndInitializeLobby();
+                    try
+                    {
+                        lobbyManager.AddUserToLobby(lobbyId, client);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log(ex.Message, LogLevelEnum.Error);
+                        client.Close();
+                    }
+                }
+
+                //Joining existing lobby
+                else if (message.MessageType == MessageTypeEnum.JoinLobby)
+                {
+                    JoinLobbyMessage joinLobbyMessage = (JoinLobbyMessage)message;
+
+                    try
+                    {
+                        lobbyManager.AddUserToLobby(joinLobbyMessage.LobbyID, client);
+                    }
+                    catch (Exception ex)
+                    {
+                        Log(ex.Message, LogLevelEnum.Error);
+                        client.Close();
+                    }
+                }
+
+                else if (message.MessageType == MessageTypeEnum.EntityState) //probably other types also
+                {
+                    OnMessageFromClientReceived?.Invoke(new OnMessageFromClientEventArgs(client, message));
+                }
+
+                else
+                {
+                    client.Close();
+                    break;
+                }
             }
 
         }
 
         private void OnLog_Delegate(object? sender, OnLogEventArgs e)
         {
-            Log(e.Message, e.LogLevel, sender, e.Timestamp);
+            Task.Run(() => Log(e.Message, e.LogLevel, sender, e.Timestamp));
         }
 
         private void Log(string message, LogLevelEnum level, object? sender = null, DateTime? timestamp = null)
         {
+            var args = new OnLogEventArgs(message, level);
+
+            int senderID = (sender is Lobby.Lobby lobby) ? lobby.LobbyId : -1;
+            var logMessage = new LogMessage(args, senderID);
+            
+            logQueue.Enqueue(logMessage);
+            if (clientUI != null && clientUI.Connected)
+            {
+                _ = MessageManager.SendMessageAsync(clientUI, logMessage);
+            }
+
             timestamp ??= DateTime.Now;
 
             var color = level switch

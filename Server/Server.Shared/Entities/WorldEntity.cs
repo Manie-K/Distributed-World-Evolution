@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Reflection.Metadata;
+using Server.Shared.Modules;
 using SharedLibrary;
 
 namespace Server.Shared
@@ -10,19 +12,21 @@ namespace Server.Shared
         public string Description { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public EntityState State { get; private set; }
+        public ModuleData Module { get; init; }
 
-        public static WorldEntity CreateWorldEntity(string? name, string? description, EntityState? initialState)
+        public static WorldEntity CreateWorldEntity(string? name, string? description, ModuleData module ,EntityState? initialState)
         {
-            return new WorldEntity(name ?? "Default name", description ?? "Default description", initialState);
+            return new WorldEntity(name ?? "Default name", description ?? "Default description", module, initialState);
         }
 
-        private WorldEntity(string name, string description, EntityState state) 
+        private WorldEntity(string name, string description, ModuleData module, EntityState state) 
         {
             Id = Guid.NewGuid();
             Name = name ?? throw new ArgumentNullException(nameof(name), "Name cannot be null.");
             Description = description ?? throw new ArgumentNullException(nameof(description), "Description cannot be null.");
             CreatedAt = DateTime.UtcNow;
             State = state ?? throw new ArgumentNullException(nameof(state), "State cannot be null.");
+            Module = module ?? throw new ArgumentNullException(nameof(module), "Module cannot be null.");
         }
 
         public void UpdateStateWithDTO(EntityStateDTO newState)

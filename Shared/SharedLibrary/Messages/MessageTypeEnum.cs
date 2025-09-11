@@ -10,6 +10,8 @@ namespace SharedLibrary
         WorldState,
         UserState,
         JoinLobby,
-        InfoMessage
+        InfoMessage,
+        RoleMessage,
+        LogMessage
     }
 }
