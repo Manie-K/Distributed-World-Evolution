@@ -64,7 +64,7 @@ namespace Client
                     }
                     else if (quitButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                     {
-                        manager.CloseClient();
+                        manager.ClientManager.CloseClient();
                         game.Exit();
                     }
                 }

@@ -2,6 +2,8 @@
 using Client.Rendering;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SharedLibrary;
+using System;
 using System.Collections.Generic;
 
 namespace Client
@@ -16,6 +18,8 @@ namespace Client
         private AnimationTexturesLoader animationTexturesLoader;
         private WorldMap map;
         private Vector2 cameraOffset;
+        private double clientUpdateTimer;
+        private double timeBetweenUpdates;
 
         public GameScene(GameManager manager)
         {
@@ -30,8 +34,10 @@ namespace Client
             cameraOffset = new Vector2(50, 100);
             map = new WorldMap();
             map.InitMap("Content/Maps/map1.json", manager.ContentManager);
-            manager.Camera.MapSize = new System.Drawing.Size(map.Width * map.TileSize, map.Height * map.TileSize);
+            manager.Camera.MapSize = new System.Drawing.Size(map.MapWidth * map.TileSize, map.MapHeight * map.TileSize);
             manager.IsInGame = true;
+            clientUpdateTimer = 0;
+            timeBetweenUpdates = 1.0 / ClientManager.CLIENT_UPDATES_PER_SECOND;
            // LoadCharacters();
         }
 
@@ -45,9 +51,25 @@ namespace Client
             panelsController.Update();
 
             player.Update(gameTime, manager.InputManager);
-            foreach(Character character in characters)
+
+            IReadOnlyDictionary<Guid, WorldEntityDTO> entities = manager.ClientManager.Entities;
+            foreach (Character character in characters)
             {
-                character.Update(gameTime, manager.InputManager);
+                //character.Update(gameTime, manager.InputManager);
+                if (entities.TryGetValue(character.Id, out WorldEntityDTO entity))
+                { 
+                    character.Position = entity.State.Position;
+                }
+            }
+
+            float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            clientUpdateTimer += delta;
+
+            if (clientUpdateTimer >= timeBetweenUpdates)
+            {
+                //EntityStateMessage message = new EntityStateMessage(new WorldEntityDTO(System.Guid.NewGuid(), new EntityStateDTO(System.Numerics.Vector2.Zero)));
+                //MessageManager.SendMessageAsync(manager.ClientManager.Client, message);
+                clientUpdateTimer -= timeBetweenUpdates;
             }
         }
 

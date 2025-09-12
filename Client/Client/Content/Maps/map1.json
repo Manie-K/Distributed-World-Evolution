@@ -2,10 +2,10 @@
   "Name": "mapa 1",
   "TexturePath": "Maps/Tiles/TX_Tileset_Grass",
   "TileSize": 32,
-  "TilesetWidth": 256,
-  "TilesetHeight": 256,
-  "Width": 200,
-  "Height": 200,
+  "TilesetTextureWidth": 256,
+  "TilesetTextureHeight": 256,
+  "MapWidth": 200,
+  "MapHeight": 200,
   "TilesetData": [
     {
       "Id": 0,

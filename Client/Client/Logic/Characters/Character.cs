@@ -1,11 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Client.Common;
 
 namespace Client
@@ -19,6 +13,8 @@ namespace Client
     }
     public class Character : ColoredSprite
     {
+        public Guid Id { get; private set; }
+
         protected float speed;
         protected AnimationManager am;
         protected Direction CurrentDirection;
