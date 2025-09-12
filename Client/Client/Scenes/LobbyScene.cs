@@ -51,7 +51,7 @@ namespace Client
                 {
                     JoinLobbyMessage message = new JoinLobbyMessage();
                     message.LobbyID = 0;
-                    MessageManager.SendMessage(manager.Client, message);
+                    MessageManager.SendMessageAsync(manager.ClientManager.Client, message);
                     manager.SceneManager.AddScene(new GameScene(manager));
                 }
                 else if (refreshButton.CheckLeftClick(manager.InputManager.GetMousePosition()))

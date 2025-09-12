@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SharedLibrary;
 using System;
-using System.Diagnostics;
 using System.Text.Json;
 
 namespace Client
@@ -99,10 +98,11 @@ namespace Client
                             else if (tmp.Type == CreatureType.Plant) switchPageParametersPlants.SavePlantParameters((PlantData)tmp);
                         }
 
-                        MessageManager.SendMessage(manager.Client, new CreateLobbyMessage());
+                        MessageManager.SendMessageAsync(manager.ClientManager.Client, new CreateLobbyMessage());
                         //LobbyInfoSerialization();
                         lobbyswitchPage.AddRow(gameNameBox.GetText());
                         manager.SceneManager.RemoveScene();
+                        manager.SceneManager.AddScene(new GameScene(manager));
                     }
                     else
                     {

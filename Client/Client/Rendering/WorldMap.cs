@@ -21,8 +21,8 @@ namespace Client.Rendering
             {
                 tilesetTexture = contentManager.Load<Texture2D>(TexturePath);
 
-                int tilesPerRow = TilesetWidth / TileSize;
-                int tilesPerColumn = TilesetHeight / TileSize;
+                int tilesPerRow = TilesetTextureWidth / TileSize;
+                int tilesPerColumn = TilesetTextureHeight / TileSize;
                 int tileCount = tilesPerRow * tilesPerColumn;
                 tileSourceRects = new Rectangle[tileCount];
 
@@ -53,7 +53,7 @@ namespace Client.Rendering
             {
                 for (int x = firstCol; x < firstCol + cols; x++)
                 {
-                    if (x < 0 || y < 0 || x >= Width || y >= Height)
+                    if (x < 0 || y < 0 || x >= MapWidth || y >= MapHeight)
                         continue;
 
                     int tileID = Tiles[y][x];

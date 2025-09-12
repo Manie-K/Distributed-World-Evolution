@@ -10,12 +10,21 @@ namespace SharedLibrary
 
         public string? Name { get; set; }
         public string? TexturePath { get; set; }
+        /// <summary>
+        /// Size of a single tile texture in pixels
+        /// </summary>
         public int TileSize { get; set; }
-        public int TilesetWidth { get; set; }
-        public int TilesetHeight { get; set; }
-        public int Width { get; set; }
-        public int Height { get; set; }
+        public int TilesetTextureWidth { get; set; } // in pixels
+        public int TilesetTextureHeight { get; set; } // in pixels
+        public int MapWidth { get; set; } // in number of tiles
+        public int MapHeight { get; set; } // in number of tiles
+        /// <summary>
+        /// Details about each tile from tileset texture, identified by the tile id
+        /// </summary>
         public List<TileProperty>? TilesetData { get; set; }
+        /// <summary>
+        /// 2D tile map representation
+        /// </summary>
         public int[][]? Tiles { get; set; }
 
         public Tilemap()
@@ -55,13 +64,13 @@ namespace SharedLibrary
                 }
 
                 Name = loadedMap.Name;
-                Width = loadedMap.Width;
-                Height = loadedMap.Height;
+                MapWidth = loadedMap.MapWidth;
+                MapHeight = loadedMap.MapHeight;
                 Tiles = loadedMap.Tiles;
                 TexturePath = loadedMap.TexturePath;
                 TileSize = loadedMap.TileSize;
-                TilesetWidth = loadedMap.TilesetWidth;
-                TilesetHeight = loadedMap.TilesetHeight;
+                TilesetTextureWidth = loadedMap.TilesetTextureWidth;
+                TilesetTextureHeight = loadedMap.TilesetTextureHeight;
                 TilesetData = loadedMap.TilesetData;
 
                 return true;
@@ -78,7 +87,7 @@ namespace SharedLibrary
             int tileX = (int)(position.X / TileSize);
             int tileY = (int)(position.Y / TileSize);
 
-            if (Tiles == null || tileX < 0 || tileY < 0 || tileX >= Width || tileY >= Height)
+            if (Tiles == null || tileX < 0 || tileY < 0 || tileX >= MapWidth || tileY >= MapHeight)
                 return -1;
 
             return Tiles[tileY][tileX];
