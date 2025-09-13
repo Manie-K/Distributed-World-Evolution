@@ -1,6 +1,4 @@
-﻿using Server.Shared;
-
-namespace Server.Core.Modules
+﻿namespace Server.Shared.Modules
 {
     public interface IAttackBehaviour : IBehaviour
     {

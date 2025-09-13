@@ -1,7 +1,7 @@
 ﻿using System.Net.Sockets;
 using SharedLibrary;
 using Server.Shared;
-using Server.Core.Modules;
+using Server.Shared.Modules;
 
 namespace Server.Core.Lobby
 {
@@ -115,13 +115,37 @@ namespace Server.Core.Lobby
                 throw new ArgumentNullException(nameof(newState), "New state cannot be null.");
             }
         
+            // If we change position, there is a possible new interaction 
             if(entity.State.Position != newState.Position && !metadata[entity].AlreadyChangedPosition)
             {
-                if (!entities.Where(e => e.State.Position == entity.State.Position).Any())
+                Type interactionType = GetInteractionType(newState);
+
+                IEnumerable<IBehaviour> retBehaviours = entity.Module.GetBehavioursOfType(interactionType);
+                IBehaviour behaviour = retBehaviours.First(); //TODO: Picking behaviour, random?
+
+                if (interactionType == typeof(IMoveBehaviour)) 
                 {
-                    entity.State.Position = newState.Position;
-                    metadata[entity].AlreadyChangedPosition = true;
+                    ((IMoveBehaviour)behaviour).Move(entity, newState.Position, new { });
                 }
+                else if(interactionType == typeof(IAttackBehaviour)) 
+                {
+                    WorldEntity target = entities.Where(e => e.State.Position == newState.Position).First();
+                    ((IAttackBehaviour)behaviour).Attack(entity, target);
+                }
+                // ...
+            }
+
+        }
+
+        private Type GetInteractionType(EntityStateDTO newState)
+        {
+            if(!entities.Any(ent => ent.State.Position == newState.Position))
+            {
+                return typeof(IMoveBehaviour);
+            }
+            else
+            {
+                return typeof(IAttackBehaviour);
             }
 
         }

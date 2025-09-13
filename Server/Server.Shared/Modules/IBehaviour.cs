@@ -1,4 +1,4 @@
-﻿namespace Server.Core.Modules
+﻿namespace Server.Shared.Modules
 {
     public interface IBehaviour
     {

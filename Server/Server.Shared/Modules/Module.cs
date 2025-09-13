@@ -1,7 +1,7 @@
-﻿using Server.Core.Helpers;
-using Server.Shared.Exceptions;
+﻿using Server.Shared.Exceptions;
+using Server.Shared.Helpers;
 
-namespace Server.Core.Modules
+namespace Server.Shared.Modules
 {
     public class Module
     {
@@ -47,9 +47,14 @@ namespace Server.Core.Modules
             behaviours[type].Add(behaviour);
         }
 
-        public IEnumerable<IBehaviour> GetBehavioursOfType<T>() where T : IBehaviour
+        public IEnumerable<IBehaviour> GetBehavioursOfType(Type type)
         {
-            behaviours.TryGetValue(typeof(T), out List<IBehaviour>? found);
+            if(!type.IsInterface || typeof(IBehaviour).IsAssignableFrom(type))
+            {
+                throw new ArgumentException("Type must be an interface that extends IBehaviour.");
+            }
+
+            behaviours.TryGetValue(type, out List<IBehaviour>? found);
             return found ?? throw new BehaviourImplementationNotFoundException();
         }
 

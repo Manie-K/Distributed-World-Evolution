@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Reflection.Metadata;
 using Server.Shared.Modules;
 using SharedLibrary;
 
@@ -12,14 +11,14 @@ namespace Server.Shared
         public string Description { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public EntityState State { get; private set; }
-        public ModuleData Module { get; init; }
+        public Module Module { get; init; }
 
-        public static WorldEntity CreateWorldEntity(string? name, string? description, ModuleData module ,EntityState? initialState)
+        public static WorldEntity CreateWorldEntity(string? name, string? description, Module module ,EntityState? initialState)
         {
             return new WorldEntity(name ?? "Default name", description ?? "Default description", module, initialState);
         }
 
-        private WorldEntity(string name, string description, ModuleData module, EntityState state) 
+        private WorldEntity(string name, string description, Module module, EntityState state) 
         {
             Id = Guid.NewGuid();
             Name = name ?? throw new ArgumentNullException(nameof(name), "Name cannot be null.");
