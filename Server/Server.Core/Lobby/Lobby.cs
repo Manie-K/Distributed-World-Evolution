@@ -1,7 +1,7 @@
 ﻿using System.Net.Sockets;
 using SharedLibrary;
 using Server.Shared;
-using Server.Shared.Modules;
+using Server.Core.Modules;
 
 namespace Server.Core.Lobby
 {
@@ -20,7 +20,7 @@ namespace Server.Core.Lobby
 
         private List<TcpClient> clients;
         private ICollection<WorldEntity> entities;
-        private ICollection<ModuleData> loadedModules;
+        private ICollection<Module> loadedModules;
         private Dictionary<WorldEntity, FrameEntityMetadata> metadata;
 
         private bool running;
@@ -35,10 +35,11 @@ namespace Server.Core.Lobby
             LobbyId = id;
 
             entities = new List<WorldEntity>(); //Currently no way to add them.
-            loadedModules = new List<ModuleData>(); //Currently no way to add them.
+            loadedModules = new List<Module>(); //Currently no way to add them.
             metadata = new Dictionary<WorldEntity, FrameEntityMetadata>();
             clients = new List<TcpClient>();
             running = true;
+
             Server.OnMessageFromClientReceived += OnMessageFromClientReceived_Delegate;
         }
 
@@ -199,7 +200,7 @@ namespace Server.Core.Lobby
             return true;
         }
 
-        public bool LoadModule(ModuleData module)
+        public bool LoadModule(Module module)
         {
             lock (loadedModules)
             {
@@ -214,7 +215,7 @@ namespace Server.Core.Lobby
         }
 
         // What do we expect here? Just remove in future or present?
-        public bool UnloadModule(ModuleData module)
+        public bool UnloadModule(Module module)
         {
             lock (loadedModules)
             {
