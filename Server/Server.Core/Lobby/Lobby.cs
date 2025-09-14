@@ -120,7 +120,9 @@ namespace Server.Core.Lobby
             {
                 Type interactionType = GetInteractionType(newState);
 
-                IEnumerable<IBehaviour> retBehaviours = entity.Module.GetBehavioursOfType(interactionType);
+                Module module = loadedModules.Where(m => m.ID == entity.ModuleID).First();
+
+                IEnumerable<IBehaviour> retBehaviours = module.GetBehavioursOfType(interactionType);
                 IBehaviour behaviour = retBehaviours.First(); //TODO: Picking behaviour, random?
 
                 if (interactionType == typeof(IMoveBehaviour)) 

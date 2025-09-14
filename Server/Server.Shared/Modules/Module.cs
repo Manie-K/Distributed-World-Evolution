@@ -6,6 +6,7 @@ namespace Server.Shared.Modules
     public class Module
     {
         // We should try to place non-dynamic data here. All the dynamic data will be stored in WorldEntity object instances.
+        public int ID => GetHashCode(); // TODO: Replace with a proper ID system.
         public string Name { get; init; }
         public string Version { get; init; }
         public string Author { get; init; }

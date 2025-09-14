@@ -4,6 +4,8 @@
     // This is not memory efficient. We will need to unload it to client somehow.
     // Another way to solve this is to make behaviours static and stateless.
     // WE NEED TO COME BACK TO THIS LATER.
+    // For now, I replaced it so each entity contains only the ID of the module it is based on.
+    // This way, we only create instances for modules loaded in lobby, not separate for each entity.
     // This is a very important design decision.
     // To accomodate it, we need to keep all implementations state/fieldless for now.
     public interface IBehaviour
