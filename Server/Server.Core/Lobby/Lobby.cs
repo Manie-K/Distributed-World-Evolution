@@ -10,6 +10,10 @@ namespace Server.Core.Lobby
         //TODO: add modules when they are implemented
         /// <inheritdoc/>
         public int LobbyId { get; private init; }
+        public string Name { get; set; }
+        public int MaxPlayers { get; set; }
+        public int MapId { get; set; }
+
 
         public static event EventHandler<OnLogEventArgs>? OnLog;
         
@@ -30,9 +34,12 @@ namespace Server.Core.Lobby
         /// Default constructor for Lobby.
         /// <paramref name="id"/> Unique identifier for the lobby.
         /// </summary>
-        public Lobby(int id)
+        public Lobby(int id, string name, int maxPlayers, int mapId)
         {
             LobbyId = id;
+            Name = name;
+            MaxPlayers = maxPlayers;
+            MapId = mapId;
 
             entities = new List<WorldEntity>(); //Currently no way to add them.
             loadedModules = new List<ModuleData>(); //Currently no way to add them.
@@ -196,6 +203,22 @@ namespace Server.Core.Lobby
             }
 
             _ = MessageManager.SendMessageAsync(client, new InfoMessage($"You have joined lobby {LobbyId}.\n"));
+            return true;
+        }
+
+        public bool RemoveClient(TcpClient client)
+        {
+            lock (clients)
+            {
+                if (!clients.Contains(client))
+                {
+                    Log("Client already not in lobby.", LogLevelEnum.Warning);
+                    return false;
+                }
+                clients.Remove(client);
+            }
+
+            _ = MessageManager.SendMessageAsync(client, new InfoMessage($"You have disjoined lobby {LobbyId}.\n"));
             return true;
         }
 

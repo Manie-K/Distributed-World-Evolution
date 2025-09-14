@@ -8,6 +8,8 @@ namespace SharedLibrary
         public string LobbyName { get; private set; }
         public int MaxPlayers { get; private set; }
 
+        public int MapID { get; private set; }
+
         public override MessageTypeEnum MessageType => MessageTypeEnum.CreateLobby;
         //TODO: change when modules are implemented
         Dictionary<string, string> Modules { get; set; } = new Dictionary<string, string>();
@@ -20,6 +22,7 @@ namespace SharedLibrary
                 MessageType = MessageType,
                 LobbyName = LobbyName,
                 MaxPlayers = MaxPlayers,
+                MapID = MapID,
                 Modules = Modules
                 //TODO: add other properties as needed
             };
