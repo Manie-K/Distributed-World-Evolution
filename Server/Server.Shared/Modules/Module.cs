@@ -12,7 +12,7 @@ namespace Server.Shared.Modules
         public object Stats { get; init; } //TODO: Define a proper structure for stats.
 
 
-        private Dictionary<Type, List<IBehaviour>> behaviours;
+        private readonly Dictionary<Type, List<IBehaviour>> behaviours;
 
         private Module(string name, string version, string author, object stats)
         {
@@ -24,7 +24,7 @@ namespace Server.Shared.Modules
             behaviours = new Dictionary<Type, List<IBehaviour>>();
         }
 
-        public void AddBehaviour(IBehaviour behaviour)
+        private void AddBehaviour(IBehaviour behaviour)
         {
             var types = InterfaceHelpers.GetDirectParentInterfaces(behaviour.GetType());
             
@@ -114,6 +114,12 @@ namespace Server.Shared.Modules
             public ModuleBuilder WithBehaviour(IBehaviour behaviour)
             {
                 behaviours.Add(behaviour);
+                return this;
+            }
+
+            public ModuleBuilder WithBehaviours(IEnumerable<IBehaviour> behaviours)
+            {
+                this.behaviours.AddRange(behaviours);
                 return this;
             }
         }
