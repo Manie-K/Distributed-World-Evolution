@@ -9,7 +9,7 @@ namespace SharedLibrary.Messages
 {
     public class DisjoinLobbyMessage : MessageBase
     {
-        public override MessageTypeEnum MessageType => MessageTypeEnum.JoinLobby;
+        public override MessageTypeEnum MessageType => MessageTypeEnum.DisjoinLobby;
 
         public int LobbyID { get; set; }
 
