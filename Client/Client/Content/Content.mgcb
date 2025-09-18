@@ -1489,6 +1489,30 @@
 /processorParam:TextureFormat=Color
 /build:UI/Buttons/Lobby_Button.png
 
+#begin UI/Buttons/MapSelection_SaveButton.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/Buttons/MapSelection_SaveButton.png
+
+#begin UI/Buttons/MapSelectionButton.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/Buttons/MapSelectionButton.png
+
 #begin UI/Buttons/PlayButton.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1704,6 +1728,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:UI/Scenes/MainMenuPanel.png
+
+#begin UI/Scenes/MapSelection_BG.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/Scenes/MapSelection_BG.png
 
 #begin UI/Scenes/UsernamePanel.png
 /importer:TextureImporter

@@ -54,9 +54,9 @@ namespace Client
             }
         }
 
-        public void AddRow(string lobbyName)
+        public void AddRow(string lobbyName, string mapName, string playersAmount)
         {
-            rows.Add(new LobbyRow(contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), lobbyName, "4/6", new Vector2(95, 153 + 68 * (rows.Count % 6)), 760, 65));
+            rows.Add(new LobbyRow(contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), lobbyName, mapName, playersAmount, new Vector2(95, 153 + 68 * (rows.Count % 6)), 760, 65));
         }
 
         public void UpdateRows(Vector2 cursorPosition, bool ispressed)

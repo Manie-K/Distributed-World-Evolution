@@ -1,4 +1,5 @@
 ﻿using Client.UI.CreateLobby.Parameters;
+using Client.UI.MapSelection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -18,6 +19,9 @@ namespace Client
         private SwitchPageLobby switchPageLobby;
         private Button saveButton;
         private TextBox gameNameBox;
+        private Button mapButton;
+        private TextBox playerAmountBox;
+        private SelectedMapData data;
 
         private SwitchPageParameters switchPageParametersAnimals;
         private SwitchPageParameters switchPageParametersPlants;
@@ -29,8 +33,14 @@ namespace Client
             backGround = manager.ContentManager.Load<Texture2D>("UI/Scenes/Create_Lobby");
             switchPageLobby = new SwitchPageLobby(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), new Vector2(155, 295), manager.ContentManager, 4);
             saveButton = new Button(manager.ContentManager.Load<Texture2D>("UI/Buttons/SaveButton"), null, null, new Vector2(540, 570), 211, 79, new Color(255, 255, 128));
+            mapButton = new Button(manager.ContentManager.Load<Texture2D>("UI/Buttons/MapSelectionButton"), null, null, new Vector2(606, 126), 42, 44, Color.Gold);
             gameNameBox = new TextBox(null, manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"),
-                                        new Vector2(340, 135), 280, 22, Color.White);
+                                        new Vector2(288, 129), 170, 36, Color.White);
+            playerAmountBox = new TextBox(null, manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"),
+                                        new Vector2(523, 129), 50, 36, Color.White, true);
+            playerAmountBox.SetText("4");
+            data = new SelectedMapData();
+
             this.lobbyswitchPage = lobbyswitchPage;
             this.switchPageParametersAnimals = new SwitchPageParameters(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"),
                                                                  new Vector2(848, 485), manager.ContentManager, 4);
@@ -81,7 +91,9 @@ namespace Client
 
             if (manager.InputManager.CheckIfLeftClick())
             {
-                
+                gameNameBox.CheckLeftClick(manager.InputManager.GetMousePosition());
+                playerAmountBox.CheckLeftClick(manager.InputManager.GetMousePosition());
+
                 switchPageLobby.CheckLeftClick(manager.InputManager.GetMousePosition());
                 if (exitButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                 {
@@ -89,7 +101,7 @@ namespace Client
                 }
                 else if (saveButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                 {
-                    if (!gameNameBox.CheckTextIfEmpty())
+                    if (!gameNameBox.CheckTextIfEmpty() && playerAmountBox.CheckText(32))
                     {
                         if (switchPageLobby.GetSelectedRow() != -1)
                         {
@@ -100,15 +112,18 @@ namespace Client
 
                         MessageManager.SendMessageAsync(manager.ClientManager.Client, new CreateLobbyMessage());
                         //LobbyInfoSerialization();
-                        lobbyswitchPage.AddRow(gameNameBox.GetText());
+                        lobbyswitchPage.AddRow(gameNameBox.GetText(), data.name, $"1/{playerAmountBox.GetText()}");
                         manager.SceneManager.RemoveScene();
                         manager.SceneManager.AddScene(new GameScene(manager));
                     }
                     else
                     {
-                        manager.WindowManager.WarningWindow.SetEmptyNameInformation();
+                        manager.WindowManager.WarningWindow.SetWrongParametersInCreateLobby();
                         manager.WindowManager.EnableWarningWindow();
                     }
+                }else if (mapButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
+                {
+                    manager.SceneManager.AddScene(new MapSelectionScene(manager, ref data));
                 }
 
                 if (switchPageLobby.GetSelectedRow() != -1)
@@ -116,8 +131,6 @@ namespace Client
                     if (switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetSelectedRow()).Type == CreatureType.Animal) switchPageParametersAnimals.CheckLeftClick(manager.InputManager.GetMousePosition());
                     else if (switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetSelectedRow()).Type == CreatureType.Plant) switchPageParametersPlants.CheckLeftClick(manager.InputManager.GetMousePosition());
                 }
-
-                gameNameBox.CheckLeftClick(manager.InputManager.GetMousePosition());
 
                 isPressed = true;
             }
@@ -130,7 +143,9 @@ namespace Client
 
             exitButton.Update(manager.InputManager.GetMousePosition());
             saveButton.Update(manager.InputManager.GetMousePosition());
+            mapButton.Update(manager.InputManager.GetMousePosition());
             gameNameBox.Update();
+            playerAmountBox.Update();
 
             if (switchPageLobby.GetSelectedRow() != -1)
             {
@@ -163,8 +178,10 @@ namespace Client
             spriteBatch.Draw(backGround, new Rectangle(0, 0, manager.Camera.ScreenSize.Width, manager.Camera.ScreenSize.Height), Color.White);
             switchPageLobby.Draw(spriteBatch);
             saveButton.Draw(spriteBatch);
+            mapButton.Draw(spriteBatch);
             exitButton.Draw(spriteBatch);
             gameNameBox.Draw(spriteBatch);
+            playerAmountBox.Draw(spriteBatch);
 
             if (switchPageLobby.GetSelectedRow() != -1)
             {

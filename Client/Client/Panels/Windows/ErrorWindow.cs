@@ -23,7 +23,7 @@ namespace Client.Panels.Windows
             background = manager.ContentManager.Load<Texture2D>("Panels/Error_Window/Error_Windows");
             okButton = new Button(manager.ContentManager.Load<Texture2D>("Panels/Error_Window/Ok_Button"), null, null, new Vector2(558, 442), 169, 52, Color.Brown);
             information = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/WindowTextFont"), "", false,
-                       new Vector2(507, 283), 150, 100);
+                       new Vector2(498, 283), 150, 160);
             isEnabled = false;
         }
 
