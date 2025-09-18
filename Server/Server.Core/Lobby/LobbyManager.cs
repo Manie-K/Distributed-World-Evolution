@@ -19,15 +19,14 @@ namespace Server.Core.Lobby
         }
 
         //TODO: add modules when they are implemented
-        public int CreateAndInitializeLobby()
+        public int CreateAndInitializeLobby(string name, int maxPlayers, int mapId)
         {
             int lobbyId;
             
             lock (lobbies)
             {
                 lobbyId = lobbyCounter++;
-                lobbies[lobbyId] = new Lobby(lobbyId);
-                //lobbies[lobbyId].Run();
+                lobbies[lobbyId] = new Lobby(lobbyId, name, maxPlayers, mapId);
                 Task.Factory.StartNew(() => lobbies[lobbyId].Run(), TaskCreationOptions.LongRunning);
             }
 
@@ -42,6 +41,27 @@ namespace Server.Core.Lobby
                 {
                     lobby.AddClient(client);
                     Log($"Client added to lobby {lobbyId}.", LogLevelEnum.Info);
+
+                    return true;
+                }
+                else
+                {
+                    throw new NullLobbyException($"Lobby with ID {lobbyId} does not exist or is null.");
+                }
+            }
+
+            Log($"Lobby with ID {lobbyId} does not exist.", LogLevelEnum.Warning);
+            return false;
+        }
+
+        public bool RemoveUserFromLobby(int lobbyId, TcpClient client)
+        {
+            if (lobbies.TryGetValue(lobbyId, out ILobby? lobby))
+            {
+                if (lobby is not null)
+                {
+                    lobby.RemoveClient(client);
+                    Log($"Client removed from lobby {lobbyId}.", LogLevelEnum.Info);
 
                     return true;
                 }

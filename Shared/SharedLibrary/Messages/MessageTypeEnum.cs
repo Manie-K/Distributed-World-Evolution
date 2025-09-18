@@ -12,6 +12,7 @@ namespace SharedLibrary
         JoinLobby,
         InfoMessage,
         RoleMessage,
-        LogMessage
+        LogMessage,
+        DisjoinLobby
     }
 }

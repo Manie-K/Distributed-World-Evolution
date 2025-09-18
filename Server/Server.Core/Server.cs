@@ -37,7 +37,7 @@ namespace Server.Core
 
             Log("Server started...", LogLevelEnum.Info);
             //TODO: remove
-            lobbyManager.CreateAndInitializeLobby();
+            lobbyManager.CreateAndInitializeLobby("TEST", 2, 1);
 
             while (true)
             {
@@ -95,12 +95,13 @@ namespace Server.Core
             {
                 MessageBase message = MessageManager.ReceiveMessage(client);
 
+                //Creating new lobby
                 if (message.MessageType == MessageTypeEnum.CreateLobby)
                 {
                     CreateLobbyMessage createLobbyMessage = (CreateLobbyMessage)message;
 
-                    //TODO: validate message; transfer data from message to lobby
-                    int lobbyId = lobbyManager.CreateAndInitializeLobby();
+                    int lobbyId = lobbyManager.CreateAndInitializeLobby(createLobbyMessage.LobbyName, createLobbyMessage.MaxPlayers,
+                        createLobbyMessage.MapID);
                     try
                     {
                         lobbyManager.AddUserToLobby(lobbyId, client);
@@ -128,15 +129,27 @@ namespace Server.Core
                     }
                 }
 
-                else if (message.MessageType == MessageTypeEnum.EntityState) //probably other types also
+                //Disjoining existing lobby
+                else if (message.MessageType == MessageTypeEnum.DisjoinLobby)
                 {
-                    OnMessageFromClientReceived?.Invoke(new OnMessageFromClientEventArgs(client, message));
+                    DisjoinLobbyMessage joinLobbyMessage = (DisjoinLobbyMessage)message;
+
+                    try
+                    {
+                        lobbyManager.RemoveUserFromLobby(joinLobbyMessage.LobbyID, client);
+                        client.Close();
+                        break;
+                    }
+                    catch (Exception ex)
+                    {
+                        Log(ex.Message, LogLevelEnum.Error);
+                        client.Close();
+                    }
                 }
 
                 else
                 {
-                    client.Close();
-                    break;
+                    OnMessageFromClientReceived?.Invoke(new OnMessageFromClientEventArgs(client, message));
                 }
             }
 
