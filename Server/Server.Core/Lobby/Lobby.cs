@@ -24,7 +24,7 @@ namespace Server.Core.Lobby
 
         private List<TcpClient> clients;
         private ICollection<WorldEntity> entities;
-        private ICollection<ModuleData> loadedModules;
+        private ICollection<Module> loadedModules;
         private Dictionary<WorldEntity, FrameEntityMetadata> metadata;
 
         private bool running;
@@ -42,10 +42,11 @@ namespace Server.Core.Lobby
             MapId = mapId;
 
             entities = new List<WorldEntity>(); //Currently no way to add them.
-            loadedModules = new List<ModuleData>(); //Currently no way to add them.
+            loadedModules = new List<Module>(); //Currently no way to add them.
             metadata = new Dictionary<WorldEntity, FrameEntityMetadata>();
             clients = new List<TcpClient>();
             running = true;
+
             Server.OnMessageFromClientReceived += OnMessageFromClientReceived_Delegate;
         }
 
@@ -121,13 +122,39 @@ namespace Server.Core.Lobby
                 throw new ArgumentNullException(nameof(newState), "New state cannot be null.");
             }
         
+            // If we change position, there is a possible new interaction 
             if(entity.State.Position != newState.Position && !metadata[entity].AlreadyChangedPosition)
             {
-                if (!entities.Where(e => e.State.Position == entity.State.Position).Any())
+                Type interactionType = GetInteractionType(newState);
+
+                Module module = loadedModules.Where(m => m.ID == entity.ModuleID).First();
+
+                IEnumerable<IBehaviour> retBehaviours = module.GetBehavioursOfType(interactionType);
+                IBehaviour behaviour = retBehaviours.First(); //TODO: Picking behaviour, random?
+
+                if (interactionType == typeof(IMoveBehaviour)) 
                 {
-                    entity.State.Position = newState.Position;
-                    metadata[entity].AlreadyChangedPosition = true;
+                    ((IMoveBehaviour)behaviour).Move(entity, newState.Position, new { });
                 }
+                else if(interactionType == typeof(IAttackBehaviour)) 
+                {
+                    WorldEntity target = entities.Where(e => e.State.Position == newState.Position).First();
+                    ((IAttackBehaviour)behaviour).Attack(entity, target);
+                }
+                // ...
+            }
+
+        }
+
+        private Type GetInteractionType(EntityStateDTO newState)
+        {
+            if(!entities.Any(ent => ent.State.Position == newState.Position))
+            {
+                return typeof(IMoveBehaviour);
+            }
+            else
+            {
+                return typeof(IAttackBehaviour);
             }
 
         }
@@ -221,8 +248,8 @@ namespace Server.Core.Lobby
             _ = MessageManager.SendMessageAsync(client, new InfoMessage($"You have disjoined lobby {LobbyId}.\n"));
             return true;
         }
-
-        public bool LoadModule(ModuleData module)
+        
+        public bool LoadModule(Module module)
         {
             lock (loadedModules)
             {
@@ -237,7 +264,7 @@ namespace Server.Core.Lobby
         }
 
         // What do we expect here? Just remove in future or present?
-        public bool UnloadModule(ModuleData module)
+        public bool UnloadModule(Module module)
         {
             lock (loadedModules)
             {
