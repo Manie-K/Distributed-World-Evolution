@@ -116,6 +116,24 @@ namespace Client
             return string.IsNullOrEmpty(text) || text == "|";
         }
 
+        public bool CheckText(int max)
+        {
+            if (!int.TryParse(text, out int number))
+            {
+                text = "4";
+                return false;
+            }
+
+            if (number < 1 || number > max)
+            {
+                text = "4";
+                return false;
+            }
+
+            text = $"{number}";
+            return true;
+        }
+
         private string KeyToString(Keys key, KeyboardState state)
         {
             if (onlyNumbers)
@@ -154,5 +172,7 @@ namespace Client
                 return "";
             }
         }
+
+
     }
 }

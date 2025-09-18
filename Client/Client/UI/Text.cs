@@ -66,5 +66,10 @@ namespace Client
         {
             this.position = position;
         }
+
+        public string GetText()
+        {
+            return text;
+        }
     }
 }
