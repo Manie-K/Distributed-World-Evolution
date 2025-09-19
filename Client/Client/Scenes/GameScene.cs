@@ -33,7 +33,7 @@ namespace Client
             panelsController = new PanelsController(manager);
             cameraOffset = new Vector2(50, 100);
             map = new WorldMap();
-            map.InitMap("Content/Maps/map1.json", manager.ContentManager);
+            map.InitMap("Content/Maps/Grassland.json", manager.ContentManager);
             manager.Camera.MapSize = new System.Drawing.Size(map.MapWidth * map.TileSize, map.MapHeight * map.TileSize);
             manager.IsInGame = true;
             clientUpdateTimer = 0;
@@ -69,7 +69,7 @@ namespace Client
             {
                 //EntityStateMessage message = new EntityStateMessage(new WorldEntityDTO(System.Guid.NewGuid(), new EntityStateDTO(System.Numerics.Vector2.Zero)));
                 //MessageManager.SendMessageAsync(manager.ClientManager.Client, message);
-                clientUpdateTimer -= timeBetweenUpdates;
+                clientUpdateTimer = 0;
             }
         }
 
