@@ -1,4 +1,4 @@
-﻿namespace Server.Shared.Modules
+﻿namespace SharedLibrary
 {
     /// <summary>
     /// Used for displaying information in Client.

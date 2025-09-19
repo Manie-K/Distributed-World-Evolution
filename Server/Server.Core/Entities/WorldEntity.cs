@@ -1,8 +1,8 @@
 ﻿using System;
-using Server.Shared.Modules;
+using Server.Core.Modules;
 using SharedLibrary;
 
-namespace Server.Shared
+namespace Server.Core
 {
     public class WorldEntity
     {
@@ -11,7 +11,7 @@ namespace Server.Shared
         public string Description { get; private set; }
         public DateTime CreatedAt { get; private set; }
         public EntityState State { get; private set; }
-        //public Module Module { get; init; }
+        public Module Module { get; init; }
         public int ModuleID { get; init; }
 
         public static WorldEntity CreateWorldEntity(string? name, string? description, Module module ,EntityState? initialState)

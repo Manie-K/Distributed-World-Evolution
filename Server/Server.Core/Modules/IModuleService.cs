@@ -1,4 +1,6 @@
-﻿namespace Server.Shared.Modules
+﻿using SharedLibrary;
+
+namespace Server.Core.Modules
 {
     public interface IModuleService 
     {

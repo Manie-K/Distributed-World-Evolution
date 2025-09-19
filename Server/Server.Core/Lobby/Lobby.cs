@@ -1,7 +1,9 @@
 ﻿using System.Net.Sockets;
 using SharedLibrary;
-using Server.Shared;
-using Server.Shared.Modules;
+using Server.Core;
+using Server.Core.Modules;
+using SharedLibrary.Logging;
+using SharedLibrary.Messages;
 
 namespace Server.Core.Lobby
 {

@@ -1,4 +1,4 @@
-﻿namespace Server.Shared.Modules
+﻿namespace SharedLibrary
 {
     public class CreateModuleDTO 
     { 

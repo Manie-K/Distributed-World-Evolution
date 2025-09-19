@@ -1,4 +1,4 @@
-﻿namespace SharedLibrary
+﻿namespace SharedLibrary.Messages
 {
     public class InfoMessage : MessageBase
     {
@@ -7,7 +7,7 @@
         /// <summary>
         /// The message content.
         /// </summary>
-        public string MessageContent { get; set; }
+        public string MessageContent { get; init; }
 
         public InfoMessage()
         {}

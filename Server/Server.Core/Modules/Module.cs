@@ -1,7 +1,7 @@
-﻿using Server.Shared.Exceptions;
-using Server.Shared.Helpers;
+﻿using Server.Core.Exceptions;
+using Server.Core.Helpers;
 
-namespace Server.Shared.Modules
+namespace Server.Core.Modules
 {
     public class Module
     {

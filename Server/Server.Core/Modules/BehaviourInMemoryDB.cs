@@ -1,6 +1,6 @@
 ﻿using System.Reflection;
 
-namespace Server.Shared.Modules
+namespace Server.Core.Modules
 {
     public class BehaviourInMemoryDB
     {

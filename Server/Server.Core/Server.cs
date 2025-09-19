@@ -1,5 +1,5 @@
 ﻿using Server.Core.Lobby;
-using SharedLibrary;
+using SharedLibrary.Logging;
 using SharedLibrary.Messages;
 using System.Collections.Concurrent;
 using System.Drawing;
