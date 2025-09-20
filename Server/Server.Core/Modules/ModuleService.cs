@@ -10,6 +10,11 @@ namespace Server.Core.Modules
             this.behaviourService = behaviourService;
         }
 
+        public Module GetModuleById(int id)
+        {
+            throw new NotImplementedException();
+        }
+
         public Module CreateModuleInstance(CreateModuleDTO dto)
         {
             var behaviours = dto.BehaviourIDs.Select(behaviourService.GetBehaviourInstanceByID).ToList();

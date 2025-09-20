@@ -11,5 +11,7 @@ namespace Server.Core.Modules
         // 3. Client saves info about which module to load
         // 4. Server gets info from db and create instance
         public Module CreateModuleInstance(CreateModuleDTO dto);
+
+        public Module GetModuleById(int id);
     }
 }

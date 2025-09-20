@@ -1,4 +1,5 @@
 ﻿using Server.Core.Exceptions;
+using Server.Core.Modules;
 using SharedLibrary;
 using SharedLibrary.Logging;
 using System.Net.Sockets;
@@ -19,14 +20,14 @@ namespace Server.Core.Lobby
         }
 
         //TODO: add modules when they are implemented
-        public int CreateAndInitializeLobby(string name, int maxPlayers, int mapId)
+        public int CreateAndInitialiseLobby(string name, int maxPlayers, int mapId, IEnumerable<int> modulesIDs)
         {
             int lobbyId;
             
             lock (lobbies)
             {
                 lobbyId = lobbyCounter++;
-                lobbies[lobbyId] = new Lobby(lobbyId, name, maxPlayers, mapId);
+                lobbies[lobbyId] = Lobby.CreateLobby(lobbyId, name, maxPlayers, mapId, modulesIDs, new ModuleService(new BehaviourService()));
                 Task.Factory.StartNew(() => lobbies[lobbyId].Run(), TaskCreationOptions.LongRunning);
             }
 

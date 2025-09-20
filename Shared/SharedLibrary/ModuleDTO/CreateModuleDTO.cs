@@ -8,5 +8,15 @@
         public string Author { get; set; }
         public object Stats { get; set; }
         public List<int> BehaviourIDs { get; set; }
+
+        public CreateModuleDTO(string name, string description, string version, string author, object stats, List<int> behaviourIDs)
+        {
+            Name = name;
+            Description = description;
+            Version = version;
+            Author = author;
+            Stats = stats;
+            BehaviourIDs = behaviourIDs;
+        }
     }
 }

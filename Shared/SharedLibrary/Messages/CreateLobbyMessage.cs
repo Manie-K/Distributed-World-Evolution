@@ -11,15 +11,15 @@ namespace SharedLibrary.Messages
         public int MapID { get; init; }
 
         public override MessageTypeEnum MessageType => MessageTypeEnum.CreateLobby;
-        //TODO: change when modules are implemented
-        Dictionary<string, string> Modules { get; init; } = new Dictionary<string, string>();
 
-        public CreateLobbyMessage(string lobbyName, int maxPlayers, int mapID, Dictionary<string, string> modules)
+        public IEnumerable<int> ModuleIDs { get; init; }
+
+        public CreateLobbyMessage(string lobbyName, int maxPlayers, int mapID, IEnumerable<int> moduleIDs)
         {
             LobbyName = lobbyName;
             MaxPlayers = maxPlayers;
             MapID = mapID;
-            Modules = modules;
+            ModuleIDs = moduleIDs;
         }
 
         public override string BuildJson()
@@ -30,7 +30,7 @@ namespace SharedLibrary.Messages
                 LobbyName = LobbyName,
                 MaxPlayers = MaxPlayers,
                 MapID = MapID,
-                Modules = Modules
+                ModuleIDs = ModuleIDs
                 //TODO: add other properties as needed
             };
 

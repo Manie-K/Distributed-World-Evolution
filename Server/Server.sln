@@ -7,8 +7,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server.Core", "Server.Core\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server.UI", "Server.UI\Server.UI.csproj", "{4A2EC0A9-DFB9-4B83-A658-6CB8519421EC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server.Shared", "Server.Shared\Server.Shared.csproj", "{F863704F-8321-467B-A173-E2292514FD2A}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server.Tests", "Server.Tests\Server.Tests.csproj", "{14886B02-C80F-4CAD-9D19-4BA2BD45B234}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemporaryManualServerTests", "TemporaryManualServerTests\TemporaryManualServerTests.csproj", "{6223273D-8A02-4A55-BDA2-DD9C252C6578}"
@@ -29,10 +27,6 @@ Global
 		{4A2EC0A9-DFB9-4B83-A658-6CB8519421EC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4A2EC0A9-DFB9-4B83-A658-6CB8519421EC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{4A2EC0A9-DFB9-4B83-A658-6CB8519421EC}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F863704F-8321-467B-A173-E2292514FD2A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F863704F-8321-467B-A173-E2292514FD2A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F863704F-8321-467B-A173-E2292514FD2A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F863704F-8321-467B-A173-E2292514FD2A}.Release|Any CPU.Build.0 = Release|Any CPU
 		{14886B02-C80F-4CAD-9D19-4BA2BD45B234}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{14886B02-C80F-4CAD-9D19-4BA2BD45B234}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14886B02-C80F-4CAD-9D19-4BA2BD45B234}.Release|Any CPU.ActiveCfg = Release|Any CPU
