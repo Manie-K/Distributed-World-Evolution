@@ -11,8 +11,12 @@ namespace SharedLibrary.Messages
     {
         public override MessageTypeEnum MessageType => MessageTypeEnum.DisjoinLobby;
 
-        public int LobbyID { get; set; }
+        public int LobbyID { get; init; }
 
+        public DisjoinLobbyMessage(int lobbyID)
+        {
+            LobbyID = lobbyID;
+        }
 
         public override string BuildJson()
         {

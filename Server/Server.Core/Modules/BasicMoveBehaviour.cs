@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace Server.Shared.Modules
+namespace Server.Core.Modules
 {
     public class BasicMoveBehaviour : IMoveBehaviour
     {

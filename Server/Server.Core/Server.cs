@@ -1,5 +1,5 @@
 ﻿using Server.Core.Lobby;
-using SharedLibrary;
+using SharedLibrary.Logging;
 using SharedLibrary.Messages;
 using System.Collections.Concurrent;
 using System.Drawing;
@@ -37,7 +37,7 @@ namespace Server.Core
 
             Log("Server started...", LogLevelEnum.Info);
             //TODO: remove
-            lobbyManager.CreateAndInitializeLobby("TEST", 2, 1);
+            lobbyManager.CreateAndInitialiseLobby("TEST", 2, 1, [] );
 
             while (true)
             {
@@ -100,8 +100,9 @@ namespace Server.Core
                 {
                     CreateLobbyMessage createLobbyMessage = (CreateLobbyMessage)message;
 
-                    int lobbyId = lobbyManager.CreateAndInitializeLobby(createLobbyMessage.LobbyName, createLobbyMessage.MaxPlayers,
-                        createLobbyMessage.MapID);
+                    int lobbyId = lobbyManager.CreateAndInitialiseLobby(createLobbyMessage.LobbyName, createLobbyMessage.MaxPlayers,
+                        createLobbyMessage.MapID, createLobbyMessage.ModuleIDs);
+
                     try
                     {
                         lobbyManager.AddUserToLobby(lobbyId, client);

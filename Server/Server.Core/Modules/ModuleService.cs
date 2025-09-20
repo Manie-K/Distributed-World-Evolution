@@ -1,4 +1,6 @@
-﻿namespace Server.Shared.Modules
+﻿using SharedLibrary;
+
+namespace Server.Core.Modules
 {
     public class ModuleService : IModuleService
     {
@@ -6,6 +8,11 @@
         public ModuleService(IBehaviourService behaviourService)
         {
             this.behaviourService = behaviourService;
+        }
+
+        public Module GetModuleById(int id)
+        {
+            throw new NotImplementedException();
         }
 
         public Module CreateModuleInstance(CreateModuleDTO dto)

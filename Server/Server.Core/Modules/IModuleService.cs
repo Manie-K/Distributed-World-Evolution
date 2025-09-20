@@ -1,4 +1,6 @@
-﻿namespace Server.Shared.Modules
+﻿using SharedLibrary;
+
+namespace Server.Core.Modules
 {
     public interface IModuleService 
     {
@@ -9,5 +11,7 @@
         // 3. Client saves info about which module to load
         // 4. Server gets info from db and create instance
         public Module CreateModuleInstance(CreateModuleDTO dto);
+
+        public Module GetModuleById(int id);
     }
 }

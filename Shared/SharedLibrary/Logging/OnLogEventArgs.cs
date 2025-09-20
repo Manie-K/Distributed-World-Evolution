@@ -1,4 +1,4 @@
-﻿namespace SharedLibrary
+﻿namespace SharedLibrary.Logging
 {
     public class OnLogEventArgs
     {

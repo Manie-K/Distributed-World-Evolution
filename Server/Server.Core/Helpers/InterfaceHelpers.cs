@@ -1,4 +1,4 @@
-﻿namespace Server.Shared.Helpers
+﻿namespace Server.Core.Helpers
 {
     public static class InterfaceHelpers
     {

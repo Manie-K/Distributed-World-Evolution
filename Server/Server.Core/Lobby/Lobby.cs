@@ -1,7 +1,9 @@
 ﻿using System.Net.Sockets;
 using SharedLibrary;
-using Server.Shared;
-using Server.Shared.Modules;
+using Server.Core;
+using Server.Core.Modules;
+using SharedLibrary.Logging;
+using SharedLibrary.Messages;
 
 namespace Server.Core.Lobby
 {
@@ -30,11 +32,24 @@ namespace Server.Core.Lobby
         private bool running;
 
 
-        /// <summary>
-        /// Default constructor for Lobby.
-        /// <paramref name="id"/> Unique identifier for the lobby.
-        /// </summary>
-        public Lobby(int id, string name, int maxPlayers, int mapId)
+        public static Lobby CreateLobby(int id, string name, int maxPlayers, int mapId, IEnumerable<int> moduleIDs, IModuleService moduleService)
+        {
+            Lobby lobby = new Lobby(id, name, maxPlayers, mapId);
+            
+            foreach(int mId in moduleIDs)
+            {
+                Module module = moduleService.GetModuleById(mId);
+                if (module == null)
+                {
+                    throw new Exception($"Module with ID {mId} not found.");
+                }
+
+                lobby.LoadModule(module);
+            }
+            return lobby;
+        }
+
+        private Lobby(int id, string name, int maxPlayers, int mapId)
         {
             LobbyId = id;
             Name = name;
@@ -42,13 +57,14 @@ namespace Server.Core.Lobby
             MapId = mapId;
 
             entities = new List<WorldEntity>(); //Currently no way to add them.
-            loadedModules = new List<Module>(); //Currently no way to add them.
+            loadedModules = new List<Module>();
             metadata = new Dictionary<WorldEntity, FrameEntityMetadata>();
             clients = new List<TcpClient>();
             running = true;
 
             Server.OnMessageFromClientReceived += OnMessageFromClientReceived_Delegate;
         }
+
 
         public void Run()
         {
@@ -288,9 +304,11 @@ namespace Server.Core.Lobby
                     Log($"Entity {entity.Id} already exists in lobby {LobbyId}.", LogLevelEnum.Warning);
                     return false;
                 }
-                if(!loadedModules.Contains(entity.Module))
+
+                bool moduleLoaded = loadedModules.Any(m => m.ID == entity.ModuleID);
+                if (!moduleLoaded)
                 {
-                    Log($"Entity's {entity.Id} module {entity.Module.Name} is not loaded in lobby {LobbyId}.", LogLevelEnum.Warning);
+                    Log($"Entity's {entity.Id} module is not loaded in lobby {LobbyId}.", LogLevelEnum.Warning);
                     return false;
                 }
                 entities.Add(entity);
