@@ -1,11 +1,10 @@
 ﻿using Server.Core.Lobby;
-using SharedLibrary;
+using SharedLibrary.Logging;
 using SharedLibrary.Messages;
 using System.Collections.Concurrent;
 using System.Drawing;
 using System.Net;
 using System.Net.Sockets;
-using System.Reflection.Emit;
 
 namespace Server.Core
 {
@@ -38,7 +37,7 @@ namespace Server.Core
 
             Log("Server started...", LogLevelEnum.Info);
             //TODO: remove
-            lobbyManager.CreateAndInitializeLobby();
+            lobbyManager.CreateAndInitialiseLobby("TEST", 2, 1, [] );
 
             while (true)
             {
@@ -96,12 +95,14 @@ namespace Server.Core
             {
                 MessageBase message = MessageManager.ReceiveMessage(client);
 
+                //Creating new lobby
                 if (message.MessageType == MessageTypeEnum.CreateLobby)
                 {
                     CreateLobbyMessage createLobbyMessage = (CreateLobbyMessage)message;
 
-                    //TODO: validate message; transfer data from message to lobby
-                    int lobbyId = lobbyManager.CreateAndInitializeLobby();
+                    int lobbyId = lobbyManager.CreateAndInitialiseLobby(createLobbyMessage.LobbyName, createLobbyMessage.MaxPlayers,
+                        createLobbyMessage.MapID, createLobbyMessage.ModuleIDs);
+
                     try
                     {
                         lobbyManager.AddUserToLobby(lobbyId, client);
@@ -129,15 +130,27 @@ namespace Server.Core
                     }
                 }
 
-                else if (message.MessageType == MessageTypeEnum.EntityState) //probably other types also
+                //Disjoining existing lobby
+                else if (message.MessageType == MessageTypeEnum.DisjoinLobby)
                 {
-                    OnMessageFromClientReceived?.Invoke(new OnMessageFromClientEventArgs(client, message));
+                    DisjoinLobbyMessage joinLobbyMessage = (DisjoinLobbyMessage)message;
+
+                    try
+                    {
+                        lobbyManager.RemoveUserFromLobby(joinLobbyMessage.LobbyID, client);
+                        client.Close();
+                        break;
+                    }
+                    catch (Exception ex)
+                    {
+                        Log(ex.Message, LogLevelEnum.Error);
+                        client.Close();
+                    }
                 }
 
                 else
                 {
-                    client.Close();
-                    break;
+                    OnMessageFromClientReceived?.Invoke(new OnMessageFromClientEventArgs(client, message));
                 }
             }
 

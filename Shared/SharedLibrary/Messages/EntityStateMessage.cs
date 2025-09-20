@@ -1,13 +1,11 @@
 ﻿using System.Text.Json;
 using SharedLibrary;
 
-namespace SharedLibrary
+namespace SharedLibrary.Messages
 {
     public class EntityStateMessage : MessageBase
     {
-        //TODO: @FranciszekGwarek make sure the deserialization works correctly
-
-        public WorldEntityDTO Entity { get; private set; }
+        public WorldEntityDTO Entity { get; init; }
 
         public override MessageTypeEnum MessageType => MessageTypeEnum.EntityState;
         public EntityStateMessage(WorldEntityDTO entity) 

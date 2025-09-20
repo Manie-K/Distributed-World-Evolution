@@ -1,14 +1,19 @@
-﻿using System.Text.Json;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Text.Json;
+using System.Threading.Tasks;
 
 namespace SharedLibrary.Messages
 {
-    public class JoinLobbyMessage : MessageBase
+    public class DisjoinLobbyMessage : MessageBase
     {
-        public override MessageTypeEnum MessageType => MessageTypeEnum.JoinLobby;
+        public override MessageTypeEnum MessageType => MessageTypeEnum.DisjoinLobby;
 
         public int LobbyID { get; init; }
 
-        public JoinLobbyMessage(int lobbyID)
+        public DisjoinLobbyMessage(int lobbyID)
         {
             LobbyID = lobbyID;
         }
@@ -24,5 +29,4 @@ namespace SharedLibrary.Messages
             return JsonSerializer.Serialize(payload);
         }
     }
-
 }

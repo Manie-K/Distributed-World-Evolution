@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Net.Http.Json;
 
-namespace SharedLibrary.Lobby
+namespace SharedLibrary
 {
     public class LobbyService
     {
@@ -28,17 +28,17 @@ namespace SharedLibrary.Lobby
             };
         }
 
-        public async Task<List<LobbyDto>> GetLobbiesAsync()
+        public async Task<List<LobbyDTO>> GetLobbiesAsync()
         {
             try
             {
-                var lobbies = await _http.GetFromJsonAsync<List<LobbyDto>>("api/lobby");
-                return lobbies ?? new List<LobbyDto>();
+                var lobbies = await _http.GetFromJsonAsync<List<LobbyDTO>>("api/lobby");
+                return lobbies ?? new List<LobbyDTO>();
             }
             catch (Exception ex)
             {
                 //MessageBox.Show($"Error: {ex.Message}");
-                return new List<LobbyDto>();
+                return new List<LobbyDTO>();
             }
         }
 

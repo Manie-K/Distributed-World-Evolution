@@ -1,12 +1,11 @@
 ﻿using SharedLibrary.Messages;
 using System.Text.Json;
 
-namespace SharedLibrary
+namespace SharedLibrary.Messages
 {
     public class RoleMessage : MessageBase
     {
-
-        public RoleEnum Role { get; private set; }
+        public RoleEnum Role { get; init; }
 
         public override MessageTypeEnum MessageType => MessageTypeEnum.RoleMessage;
 

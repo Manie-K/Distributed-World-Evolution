@@ -1,4 +1,4 @@
-﻿namespace SharedLibrary
+﻿namespace SharedLibrary.Messages
 {
     public class InfoMessage : MessageBase
     {
@@ -7,17 +7,14 @@
         /// <summary>
         /// The message content.
         /// </summary>
-        public string MessageContent { get; set; }
-
-        public InfoMessage()
-        {}
+        public string MessageContent { get; init; }
 
         public InfoMessage(object messageContent)
         {
             if (messageContent == null)
                 throw new ArgumentNullException(nameof(messageContent), "Message content cannot be null.");
 
-            MessageContent = messageContent.ToString();        
+            MessageContent = messageContent?.ToString();        
         }
 
         /// <summary>

@@ -1,15 +1,22 @@
 ﻿using System.Text.Json;
 
-namespace SharedLibrary
+namespace SharedLibrary.Messages
 {
     public class UserStateMessage : MessageBase
     {
         public override MessageTypeEnum MessageType => MessageTypeEnum.UserState;
 
         //TODO: add properties for user state change
-        public Guid UserGUID { get; set; }
-        public string UserName { get; set; }
-        public int UserHealth { get; set; }
+        public Guid UserGUID { get; init; }
+        public string UserName { get; init; }
+        public int UserHealth { get; init; }
+
+        public UserStateMessage (Guid userGUID, string userName, int userHealth)
+        {
+            UserGUID = userGUID;
+            UserName = userName;
+            UserHealth = userHealth;
+        }
 
 
         public override string BuildJson()

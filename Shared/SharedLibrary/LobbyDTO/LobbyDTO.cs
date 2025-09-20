@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharedLibrary.Lobby
+namespace SharedLibrary
 {
-    public class LobbyDto
+    public class LobbyDTO
     {
         public int LobbyId { get; set; }
     }
