@@ -1,6 +1,6 @@
 ﻿using System.Numerics;
 
-namespace SharedLibrary
+namespace SharedLibrary.DTOs.EntitiesDTO
 {
     public class EntityStateDTO
     {

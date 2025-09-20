@@ -4,10 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace SharedLibrary
+namespace SharedLibrary.DTOs.LobbyDTO
 {
     public class LobbyDTO
     {
-        public int LobbyId { get; set; }
+        public int LobbyId { get; init; }
     }
 }

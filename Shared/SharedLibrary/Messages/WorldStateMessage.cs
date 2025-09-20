@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 using SharedLibrary;
+using SharedLibrary.DTOs.EntitiesDTO;
 
 namespace SharedLibrary.Messages
 {
