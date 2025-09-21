@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Net.Http.Json;
+using SharedLibrary.DTOs.LobbyDTO;
 
 namespace SharedLibrary
 {

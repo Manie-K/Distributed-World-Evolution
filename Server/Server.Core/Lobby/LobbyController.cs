@@ -1,10 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SharedLibrary;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SharedLibrary.DTOs.LobbyDTO;
 
 namespace Server.Core.Lobby
 {

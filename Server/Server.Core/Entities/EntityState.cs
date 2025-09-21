@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 using SharedLibrary;
+using SharedLibrary.DTOs.EntitiesDTO;
 
 namespace Server.Core
 {

@@ -4,6 +4,7 @@ using Server.Core;
 using Server.Core.Modules;
 using SharedLibrary.Logging;
 using SharedLibrary.Messages;
+using SharedLibrary.DTOs.EntitiesDTO;
 
 namespace Server.Core.Lobby
 {

@@ -1,4 +1,5 @@
 ﻿using SharedLibrary;
+using SharedLibrary.DTOs.EntitiesDTO;
 
 namespace Server.Core
 {
