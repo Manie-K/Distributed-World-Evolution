@@ -12,6 +12,7 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading.Tasks;
 using System.Net.Http.Json;
+using SharedLibrary.DTOs.LobbyDTO;
 
 namespace Server.UI.ViewModels
 {

@@ -1,5 +1,5 @@
 ﻿using System;
-namespace SharedLibrary
+namespace SharedLibrary.DTOs.EntitiesDTO
 {
     public class WorldEntityDTO
     {
