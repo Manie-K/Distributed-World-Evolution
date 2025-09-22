@@ -5,6 +5,7 @@ using System.Collections.Concurrent;
 using System.Drawing;
 using System.Net;
 using System.Net.Sockets;
+using SharedLibrary;
 
 namespace Server.Core
 {
@@ -146,6 +147,43 @@ namespace Server.Core
                         Log(ex.Message, LogLevelEnum.Error);
                         client.Close();
                     }
+                }
+
+                else if (message.MessageType == MessageTypeEnum.GetMessage)
+                {
+                    GetMessage getMessage = (GetMessage)message;
+
+                    switch (getMessage.GetMessageType)
+                    {
+                        case GetMessageTypeEnum.GetAllLobbies:
+                            //TODO: removed hardcoded lobbies
+                            var lobbies = new List<LobbyDTO>();
+                            lobbies.Add(new LobbyDTO
+                            {
+                                LobbyId = 1,
+                            });
+
+                            _ = MessageManager.SendMessageAsync(client, new LobbiesMessage(lobbies));
+                            break;
+                        case GetMessageTypeEnum.GetAllModules:
+                            //TODO: removed hardcoded modules
+                            var modules = new List<ModuleDTO>();
+                            modules.Add(new ModuleDTO
+                            (1, "Test Module", "1.0", "Author", new { Description = "This is a test module." }, 
+                                new List<BehviourDTO>
+                                {
+                                    new BehviourDTO (1, "Test Behaviour", "This is a test behaviour.")
+                                }
+                            ));
+
+                            _ = MessageManager.SendMessageAsync(client, new ModulesMessage(modules));
+                            break;
+
+                        default:
+                            Log("Unknown GetMessage request: " + getMessage.GetMessageType, LogLevelEnum.Warning);
+                            break;
+                    }
+
                 }
 
                 else
