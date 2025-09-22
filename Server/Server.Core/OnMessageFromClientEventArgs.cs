@@ -1,5 +1,5 @@
 ﻿using System.Net.Sockets;
-using SharedLibrary;
+using SharedLibrary.Messages;
 
 namespace Server.Core
 {

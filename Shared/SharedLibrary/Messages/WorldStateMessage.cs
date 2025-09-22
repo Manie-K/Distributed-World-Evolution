@@ -1,13 +1,11 @@
 ﻿using System.Text.Json;
 using SharedLibrary;
 
-namespace SharedLibrary
+namespace SharedLibrary.Messages
 {
     public class WorldStateMessage : MessageBase
     {
-        //TODO: @FranciszekGwarek make sure the deserialization works correctly
-        public IEnumerable<WorldEntityDTO> Entities { get; private set; }
-
+        public IEnumerable<WorldEntityDTO> Entities { get; init; }
 
         public override MessageTypeEnum MessageType => MessageTypeEnum.WorldState;
 
@@ -21,7 +19,7 @@ namespace SharedLibrary
             var payload = new
             {
                 MessageType = MessageType,
-                Entities = this.Entities
+                Entities = Entities
             };
 
             return JsonSerializer.Serialize(payload);

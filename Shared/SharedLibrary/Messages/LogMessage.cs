@@ -3,14 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SharedLibrary.Logging;
 
 namespace SharedLibrary.Messages
 {
     public class LogMessage : MessageBase
     {
         public override MessageTypeEnum MessageType => MessageTypeEnum.LogMessage;
-        public OnLogEventArgs OnLogEventArgs { get; private set; }
-        public int SenderID { get; private set; }
+        public OnLogEventArgs OnLogEventArgs { get; init; }
+        public int SenderID { get; init; }
 
         public LogMessage(OnLogEventArgs onLogEventArgs, int senderID)
         {
