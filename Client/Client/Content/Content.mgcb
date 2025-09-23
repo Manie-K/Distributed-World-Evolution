@@ -961,6 +961,18 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/WindowTextFont.spritefont
 
+#begin Maps/Tiles/tileset_version1.1.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Maps/Tiles/tileset_version1.1.png
+
 #begin Maps/Tiles/TX_Tileset_Grass.png
 /importer:TextureImporter
 /processor:TextureProcessor
