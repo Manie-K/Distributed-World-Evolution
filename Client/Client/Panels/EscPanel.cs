@@ -1,12 +1,7 @@
-﻿using Client.Rendering;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using SharedLibrary.Messages;
 
 namespace Client.Panels
 {
@@ -28,7 +23,6 @@ namespace Client.Panels
 
         }
 
-
         public bool Update(Vector2 position)
         {
             playButton.Update(position);
@@ -47,7 +41,6 @@ namespace Client.Panels
         {
             if (playButton.CheckLeftClick(position))
             {
-
                 if (!manager.UserSettings.PlayerName.Equals(""))
                 {
                     return true;
@@ -64,7 +57,8 @@ namespace Client.Panels
                 manager.Camera.ResetPosition();
                 manager.IsInGame = false;
                 manager.SceneManager.RemoveScene();
-                // TODO: send leave lobby message to the server
+                MessageManager.SendMessageAsync(manager.ClientManager.Client, new DisjoinLobbyMessage(manager.LobbyID));
+                manager.LobbyID = -1;
                 return true;
             }
 

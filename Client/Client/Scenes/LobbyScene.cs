@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System.Diagnostics;
-using SharedLibrary;
+using SharedLibrary.Messages;
 
 namespace Client
 { 
@@ -41,7 +41,6 @@ namespace Client
 
             if (manager.InputManager.CheckIfLeftClick())
             {
-
                 switchPage.CheckLeftClick(manager.InputManager.GetMousePosition());
                 if (createButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                 {
@@ -49,9 +48,13 @@ namespace Client
                 }
                 else if (joinButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                 {
-                    JoinLobbyMessage message = new JoinLobbyMessage();
-                    message.LobbyID = 0;
-                    MessageManager.SendMessageAsync(manager.ClientManager.Client, message);
+                    if (switchPage.GetSelectedLobby() == null)
+                    { 
+                        return;
+                    }
+
+                    MessageManager.SendMessageAsync(manager.ClientManager.Client, new JoinLobbyMessage(switchPage.GetSelectedLobby().LobbyID));
+                    manager.LobbyID = switchPage.GetSelectedLobby().LobbyID;
                     manager.SceneManager.AddScene(new GameScene(manager));
                 }
                 else if (refreshButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
@@ -65,20 +68,18 @@ namespace Client
                 isPressed= true;    
             }
 
-
             if (manager.InputManager.CheckIfCanPressKey(Keys.Escape))
             {
                 manager.SceneManager.RemoveScene();
             }
-
 
             createButton.Update(manager.InputManager.GetMousePosition());
             joinButton.Update(manager.InputManager.GetMousePosition());
             refreshButton.Update(manager.InputManager.GetMousePosition());
             backButton.Update(manager.InputManager.GetMousePosition());
             switchPage.UpdateRows(manager.InputManager.GetMousePosition(), isPressed);
-
         }
+
         public void Draw(SpriteBatch spriteBatch)
         {
 
