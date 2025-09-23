@@ -1,6 +1,6 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace SharedLibrary
+namespace SharedLibrary.Messages
 {
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum MessageTypeEnum
@@ -12,6 +12,7 @@ namespace SharedLibrary
         JoinLobby,
         InfoMessage,
         RoleMessage,
-        LogMessage
+        LogMessage,
+        DisjoinLobby
     }
 }

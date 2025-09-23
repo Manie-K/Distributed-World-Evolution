@@ -1,4 +1,4 @@
-﻿namespace SharedLibrary
+﻿namespace SharedLibrary.Messages
 {
     public abstract class MessageBase
     {

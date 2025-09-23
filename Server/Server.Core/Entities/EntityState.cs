@@ -1,7 +1,7 @@
 ﻿using System.Numerics;
 using SharedLibrary;
 
-namespace Server.Shared
+namespace Server.Core
 {
     public class EntityState
     {

@@ -1,7 +1,7 @@
 ﻿using Server.Core;
 using Server.UI.Models;
 using SharedLibrary;
-using SharedLibrary.Lobby;
+using SharedLibrary.Logging;
 using SharedLibrary.Messages;
 using System;
 using System.Collections.Generic;
@@ -36,7 +36,7 @@ namespace Server.UI.ViewModels
 
         private async Task LoadDataFromServer()
         {
-            List<LobbyDto> lobbies = await _service.GetLobbiesAsync();
+            List<LobbyDTO> lobbies = await _service.GetLobbiesAsync();
 
             foreach (var lobby in lobbies)
             {

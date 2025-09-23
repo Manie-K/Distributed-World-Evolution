@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SharedLibrary.Lobby;
+using SharedLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,7 +25,7 @@ namespace Server.Core.Lobby
         {
             var lobbies = _lobbyManager.lobbies.Values
             .OfType<Lobby>()
-            .Select(l => new LobbyDto
+            .Select(l => new LobbyDTO
             {
                 LobbyId = l.LobbyId,
             });

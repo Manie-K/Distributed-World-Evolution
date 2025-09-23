@@ -1,7 +1,9 @@
 ﻿using System.Net.Sockets;
 using SharedLibrary;
-using Server.Shared;
-using Server.Shared.Modules;
+using Server.Core;
+using Server.Core.Modules;
+using SharedLibrary.Logging;
+using SharedLibrary.Messages;
 
 namespace Server.Core.Lobby
 {
@@ -10,6 +12,10 @@ namespace Server.Core.Lobby
         //TODO: add modules when they are implemented
         /// <inheritdoc/>
         public int LobbyId { get; private init; }
+        public string Name { get; set; }
+        public int MaxPlayers { get; set; }
+        public int MapId { get; set; }
+
 
         public static event EventHandler<OnLogEventArgs>? OnLog;
         
@@ -20,27 +26,45 @@ namespace Server.Core.Lobby
 
         private List<TcpClient> clients;
         private ICollection<WorldEntity> entities;
-        private ICollection<ModuleData> loadedModules;
+        private ICollection<Module> loadedModules;
         private Dictionary<WorldEntity, FrameEntityMetadata> metadata;
 
         private bool running;
 
 
-        /// <summary>
-        /// Default constructor for Lobby.
-        /// <paramref name="id"/> Unique identifier for the lobby.
-        /// </summary>
-        public Lobby(int id)
+        public static Lobby CreateLobby(int id, string name, int maxPlayers, int mapId, IEnumerable<int> moduleIDs, IModuleService moduleService)
+        {
+            Lobby lobby = new Lobby(id, name, maxPlayers, mapId);
+            
+            foreach(int mId in moduleIDs)
+            {
+                Module module = moduleService.GetModuleById(mId);
+                if (module == null)
+                {
+                    throw new Exception($"Module with ID {mId} not found.");
+                }
+
+                lobby.LoadModule(module);
+            }
+            return lobby;
+        }
+
+        private Lobby(int id, string name, int maxPlayers, int mapId)
         {
             LobbyId = id;
+            Name = name;
+            MaxPlayers = maxPlayers;
+            MapId = mapId;
 
             entities = new List<WorldEntity>(); //Currently no way to add them.
-            loadedModules = new List<ModuleData>(); //Currently no way to add them.
+            loadedModules = new List<Module>();
             metadata = new Dictionary<WorldEntity, FrameEntityMetadata>();
             clients = new List<TcpClient>();
             running = true;
+
             Server.OnMessageFromClientReceived += OnMessageFromClientReceived_Delegate;
         }
+
 
         public void Run()
         {
@@ -114,13 +138,39 @@ namespace Server.Core.Lobby
                 throw new ArgumentNullException(nameof(newState), "New state cannot be null.");
             }
         
+            // If we change position, there is a possible new interaction 
             if(entity.State.Position != newState.Position && !metadata[entity].AlreadyChangedPosition)
             {
-                if (!entities.Where(e => e.State.Position == entity.State.Position).Any())
+                Type interactionType = GetInteractionType(newState);
+
+                Module module = loadedModules.Where(m => m.ID == entity.ModuleID).First();
+
+                IEnumerable<IBehaviour> retBehaviours = module.GetBehavioursOfType(interactionType);
+                IBehaviour behaviour = retBehaviours.First(); //TODO: Picking behaviour, random?
+
+                if (interactionType == typeof(IMoveBehaviour)) 
                 {
-                    entity.State.Position = newState.Position;
-                    metadata[entity].AlreadyChangedPosition = true;
+                    ((IMoveBehaviour)behaviour).Move(entity, newState.Position, new { });
                 }
+                else if(interactionType == typeof(IAttackBehaviour)) 
+                {
+                    WorldEntity target = entities.Where(e => e.State.Position == newState.Position).First();
+                    ((IAttackBehaviour)behaviour).Attack(entity, target);
+                }
+                // ...
+            }
+
+        }
+
+        private Type GetInteractionType(EntityStateDTO newState)
+        {
+            if(!entities.Any(ent => ent.State.Position == newState.Position))
+            {
+                return typeof(IMoveBehaviour);
+            }
+            else
+            {
+                return typeof(IAttackBehaviour);
             }
 
         }
@@ -199,7 +249,23 @@ namespace Server.Core.Lobby
             return true;
         }
 
-        public bool LoadModule(ModuleData module)
+        public bool RemoveClient(TcpClient client)
+        {
+            lock (clients)
+            {
+                if (!clients.Contains(client))
+                {
+                    Log("Client already not in lobby.", LogLevelEnum.Warning);
+                    return false;
+                }
+                clients.Remove(client);
+            }
+
+            _ = MessageManager.SendMessageAsync(client, new InfoMessage($"You have disjoined lobby {LobbyId}.\n"));
+            return true;
+        }
+        
+        public bool LoadModule(Module module)
         {
             lock (loadedModules)
             {
@@ -214,7 +280,7 @@ namespace Server.Core.Lobby
         }
 
         // What do we expect here? Just remove in future or present?
-        public bool UnloadModule(ModuleData module)
+        public bool UnloadModule(Module module)
         {
             lock (loadedModules)
             {
@@ -238,9 +304,11 @@ namespace Server.Core.Lobby
                     Log($"Entity {entity.Id} already exists in lobby {LobbyId}.", LogLevelEnum.Warning);
                     return false;
                 }
-                if(!loadedModules.Contains(entity.Module))
+
+                bool moduleLoaded = loadedModules.Any(m => m.ID == entity.ModuleID);
+                if (!moduleLoaded)
                 {
-                    Log($"Entity's {entity.Id} module {entity.Module.Name} is not loaded in lobby {LobbyId}.", LogLevelEnum.Warning);
+                    Log($"Entity's {entity.Id} module is not loaded in lobby {LobbyId}.", LogLevelEnum.Warning);
                     return false;
                 }
                 entities.Add(entity);
