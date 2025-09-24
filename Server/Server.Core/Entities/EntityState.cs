@@ -20,7 +20,7 @@ namespace Server.Core
 
         public EntityStateDTO ToDTO()
         {
-            throw new NotImplementedException();
+            return new EntityStateDTO(Position, Health, Hunger);
         }
 
     }
