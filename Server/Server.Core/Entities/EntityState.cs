@@ -7,10 +7,20 @@ namespace Server.Core
     public class EntityState
     {
         public Vector2 Position { get; set; }
+        public int Health { get; set; }
+
+        /// <summary>
+        /// 100 means not hungry at all, 0 means starving
+        /// </summary>
+        public int Hunger { get; set; }
+
+        //No idea how we want this to work @PrzemekDebek/@Michał
+        //public bool Interaction { get; set; }
+
 
         public EntityStateDTO ToDTO()
         {
-            return new EntityStateDTO(Position);
+            return new EntityStateDTO(Position, Health, Hunger);
         }
 
     }
