@@ -4,18 +4,19 @@ using System.Linq;
 using System.Text;
 using System.Text.Json;
 using System.Threading.Tasks;
+using SharedLibrary.DTOs.ModuleDTO;
 
 namespace SharedLibrary.Messages
 {
-    public class LobbiesMessage : MessageBase
+    public class ModuleListMessage : MessageBase
     {
-        public override MessageTypeEnum MessageType => MessageTypeEnum.Lobbies;
+        public override MessageTypeEnum MessageType => MessageTypeEnum.ModuleList;
 
-        public IEnumerable<LobbyDTO> Lobbies { get; init; }
+        public IEnumerable<ModuleDTO> Modules { get; init; }
 
-        public LobbiesMessage(IEnumerable<LobbyDTO> lobbies)
+        public ModuleListMessage(IEnumerable<ModuleDTO> modules)
         {
-            Lobbies = lobbies;
+            Modules = modules;
         }
 
         public override string BuildJson()
@@ -23,10 +24,11 @@ namespace SharedLibrary.Messages
             var payload = new
             {
                 MessageType = MessageType,
-                Lobbies = Lobbies
+                Modules = Modules
             };
 
             return JsonSerializer.Serialize(payload);
         }
+
     }
 }
