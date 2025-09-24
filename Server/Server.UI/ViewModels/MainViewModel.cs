@@ -22,52 +22,52 @@ namespace Server.UI.ViewModels
         public ObservableCollection<BaseTabViewModel> Tabs { get; } = new();
 
         private readonly LobbyService _service = new LobbyService();
+        private TcpClient _client;
 
         public MainViewModel()
-        {
-            Tabs.Clear();
-
-            ServerTab = new ServerViewModel();
-            Tabs.Add(ServerTab);
-
-            _ = LoadDataFromServer();
-
-            SubscribeToLogs();
-        }
-
-        private async Task LoadDataFromServer()
-        {
-            List<LobbyDTO> lobbies = await _service.GetLobbiesAsync();
-
-            foreach (var lobby in lobbies)
-            {
-                Tabs.Add(new LobbyViewModel("TODO: name", "TODO: info", lobby.LobbyId));
-            }
-        }
-
-        private void SubscribeToLogs()
         {
             //TODO: change to config
             string serverIp = "127.0.0.1";
             int port = 5000;
 
-            TcpClient client = new TcpClient(serverIp, port);
-            _ = MessageManager.SendMessageAsync(client, new RoleMessage(RoleEnum.UI));
+            _client = new TcpClient(serverIp, port);
 
-            Thread receiveThread = new Thread(async () => 
-            { 
-                while (true) 
-                { 
-                    MessageBase message = await MessageManager.ReceiveMessageAsync(client); 
-                    
-                    if (message.MessageType == MessageTypeEnum.LogMessage) 
-                    { 
-                        LogMessage log = (LogMessage)message; 
-                        HandleLog(log.SenderID, log.OnLogEventArgs); 
-                    } 
-                } 
-            }); receiveThread.Start();
-        
+            Tabs.Clear();
+
+            ServerTab = new ServerViewModel();
+            Tabs.Add(ServerTab);
+
+            InitializeAsync();
+        }
+
+        private async void InitializeAsync()
+        {
+            //TODO: change!!!
+            await MessageManager.SendMessageAsync(_client, new RoleMessage(RoleEnum.UI));
+            await MessageManager.SendMessageAsync(_client, new GetMessage(GetMessageTypeEnum.GetAllLobbies));
+
+            MessageBase message = await MessageManager.ReceiveMessageAsync(_client);
+            List<LobbyDTO> lobbies = (List<LobbyDTO>)((LobbyListMessage)message).Lobbies;
+
+            foreach (LobbyDTO lobby in lobbies)
+            {
+                Tabs.Add(new LobbyViewModel(lobby.ID, lobby.Name, lobby.MaxPlayers));
+            }
+
+            _ = Task.Run(async () =>
+            {
+                while (true)
+                {
+                    MessageBase message = await MessageManager.ReceiveMessageAsync(_client);
+
+                    if (message.MessageType == MessageTypeEnum.LogMessage)
+                    {
+                        LogMessage log = (LogMessage)message;
+                        HandleLog(log.SenderID, log.OnLogEventArgs);
+                    }
+                }
+            });
+
         }
 
         public void HandleLog(int senderID, OnLogEventArgs e)
@@ -92,7 +92,7 @@ namespace Server.UI.ViewModels
 
         private LobbyViewModel? FindLobbyTabById(int lobbyId)
         {
-            return Tabs.OfType<LobbyViewModel>().FirstOrDefault(tab => tab.LobbyID == lobbyId);
+            return Tabs.OfType<LobbyViewModel>().FirstOrDefault(tab => tab.ID == lobbyId);
         }
     }
 

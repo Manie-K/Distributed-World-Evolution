@@ -22,8 +22,8 @@ namespace SharedLibrary.Messages
         {
             var payload = new
             {
-                MessageType = MessageType,
-                LobbyID = LobbyID
+                MessageType = this.MessageType,
+                LobbyID = this.LobbyID
             };
 
             return JsonSerializer.Serialize(payload);

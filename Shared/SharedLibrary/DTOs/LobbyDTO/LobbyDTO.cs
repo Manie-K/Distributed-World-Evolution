@@ -8,6 +8,8 @@ namespace SharedLibrary.DTOs.LobbyDTO
 {
     public class LobbyDTO
     {
-        public int LobbyId { get; init; }
+        public int ID { get; init; }
+        public string Name { get; init; }
+        public int MaxPlayers { get; set; }
     }
 }

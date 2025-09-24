@@ -10,13 +10,15 @@ namespace SharedLibrary.Messages
 {
     public class LobbyMessage : MessageBase
     {
+        public override MessageTypeEnum MessageType => MessageTypeEnum.LobbyData;
+
         public LobbyDTO Lobby { get; init; }
         public int LobbyID { get; init; }
 
-        public override MessageTypeEnum MessageType => MessageTypeEnum.Lobby;
 
         public LobbyMessage(LobbyDTO lobby, int lobbyID)
         {
+            Lobby = lobby;
             LobbyID = lobbyID;
         }
 
@@ -24,9 +26,9 @@ namespace SharedLibrary.Messages
         {
             var payload = new
             {
-                MessageType = MessageType,
-                Lobby = Lobby,
-                LobbyID = LobbyID
+                MessageType = this.MessageType,
+                Lobby = this.Lobby,
+                LobbyID = this.LobbyID
             };
 
             return JsonSerializer.Serialize(payload);

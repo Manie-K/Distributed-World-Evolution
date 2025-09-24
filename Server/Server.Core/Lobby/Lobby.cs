@@ -82,7 +82,7 @@ namespace Server.Core.Lobby
 
         private void PublishWorldState()
         {
-            //TODO: @FranciszekGwarek Here we need to simulate non-human entities?
+            //TODO: @FranciszekGwarek Here we need to simulate non-human entities? Yes, I think so.
 
             foreach (var entity in entities)
             {
@@ -96,7 +96,7 @@ namespace Server.Core.Lobby
             {
                 foreach (var client in clients)
                 {
-                    _= MessageManager.SendMessageAsync(client, new WorldStateMessage(
+                    _ = MessageManager.SendMessageAsync(client, new WorldStateMessage(
                             entities.Select(e => e.ToDTO())
                         ));
                 }
@@ -264,7 +264,7 @@ namespace Server.Core.Lobby
                 clients.Add(client);
             }
 
-            _ = MessageManager.SendMessageAsync(client, new InfoMessage($"You have joined lobby {LobbyId}.\n"));
+            _ = MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyJoined ,$"You have joined lobby {LobbyId}.\n"));
             return true;
         }
 
@@ -280,7 +280,7 @@ namespace Server.Core.Lobby
                 clients.Remove(client);
             }
 
-            _ = MessageManager.SendMessageAsync(client, new InfoMessage($"You have disjoined lobby {LobbyId}.\n"));
+            _ = MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyDisjoined ,$"You have disjoined lobby {LobbyId}.\n"));
             return true;
         }
         

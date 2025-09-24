@@ -2,11 +2,11 @@
 
 namespace SharedLibrary.Messages
 {
+    //TODO: Change after user state is fully implemented
     public class UserStateMessage : MessageBase
     {
         public override MessageTypeEnum MessageType => MessageTypeEnum.UserState;
 
-        //TODO: add properties for user state change
         public Guid UserGUID { get; init; }
         public string UserName { get; init; }
         public int UserHealth { get; init; }
@@ -18,20 +18,19 @@ namespace SharedLibrary.Messages
             UserHealth = userHealth;
         }
 
-
         public override string BuildJson()
         {
             var payload = new
             {
-                MessageType = MessageType,
-                UserGUID = UserGUID.ToString(),
-                UserName = UserName,
-                UserHealth = UserHealth,
-                //TODO: add other properties as needed
+                MessageType = this.MessageType,
+                UserGUID = this.UserGUID.ToString(),
+                UserName = this.UserName,
+                UserHealth = this.UserHealth,
             };
 
             return JsonSerializer.Serialize(payload);
         }
+
     }
 
 }

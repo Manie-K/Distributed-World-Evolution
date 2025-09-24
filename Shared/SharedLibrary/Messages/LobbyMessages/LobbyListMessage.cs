@@ -23,11 +23,12 @@ namespace SharedLibrary.Messages
         {
             var payload = new
             {
-                MessageType = MessageType,
-                Lobbies = Lobbies
+                MessageType = this.MessageType,
+                Lobbies = this.Lobbies
             };
 
             return JsonSerializer.Serialize(payload);
         }
+
     }
 }

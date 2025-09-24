@@ -22,7 +22,7 @@ namespace Server.Core.Lobby
             .OfType<Lobby>()
             .Select(l => new LobbyDTO
             {
-                LobbyId = l.LobbyId,
+                ID = l.LobbyId,
             });
 
             return Ok(lobbies);

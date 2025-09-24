@@ -58,10 +58,7 @@ namespace Server.Core
                     RoleMessage roleMessage = (RoleMessage)message;
                     if (roleMessage.Role == RoleEnum.User)
                     {
-                        _ = MessageManager.SendMessageAsync(client, new InfoMessage("Welcome to the server!"));
-                        Log("New client joined server - " + roleMessage.Role.ToString(), LogLevelEnum.Info);
-
-                        await HandleUserConnectionAsync(client);
+                        _ = MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.ServerConnected ,"Welcome to the server!"));
                     }
                     else
                     {
@@ -72,13 +69,16 @@ namespace Server.Core
                             _ = MessageManager.SendMessageAsync(clientUI, log);
                         }
 
-                        Log("New client joined server - " + roleMessage.Role.ToString(), LogLevelEnum.Info);
                         Log("Server working...", LogLevelEnum.Info);
                     }
+
+                    Log("New client joined server - " + roleMessage.Role.ToString(), LogLevelEnum.Info);
+
+                    await HandleUserConnectionAsync(client);
                 }
                 else
                 {
-                    _ = MessageManager.SendMessageAsync(client, new ErrorMessage("Unknown client role"));
+                    _ = MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.Error ,"Unknown client role"));
                     client.Close();
                 }
 
@@ -113,7 +113,7 @@ namespace Server.Core
                         }
                         catch (Exception ex)
                         {
-                            _ = MessageManager.SendMessageAsync(client, new ErrorMessage("Lobby error. Try again."));
+                            _ = MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotJoined ,"Lobby error. Try again."));
                             client.Close();
                         }
                     }
@@ -170,7 +170,9 @@ namespace Server.Core
                             var lobbies = new List<LobbyDTO>();
                             lobbies.Add(new LobbyDTO
                             {
-                                LobbyId = 1,
+                                ID = 1,
+                                Name = "Test Lobby",
+                                MaxPlayers = 10,
                             });
 
                             try
@@ -179,7 +181,7 @@ namespace Server.Core
                             }
                             catch (Exception ex)
                             {
-                                _ = MessageManager.SendMessageAsync(client, new ErrorMessage("Lobby list error. Try again."));
+                                _ = MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "Lobby list error. Try again."));
                                 client.Close();
                             }
                             break;
@@ -200,13 +202,13 @@ namespace Server.Core
                             }
                             catch (Exception ex)
                             {
-                                _ = MessageManager.SendMessageAsync(client, new ErrorMessage("Module list error. Try again."));
+                                _ = MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "Module list error. Try again."));
                                 client.Close();
                             }
                             break;
 
                         default:
-                            _ = MessageManager.SendMessageAsync(client, new ErrorMessage("Unknown GetMessage type."));
+                            _ = MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "Unknown GetMessage Type."));
                             break;
                     }
 

@@ -23,8 +23,8 @@ namespace SharedLibrary.Messages
         {
             var payload = new
             {
-                MessageType = MessageType,
-                Modules = Module
+                MessageType = this.MessageType,
+                Modules = this.Module
             };
 
             return JsonSerializer.Serialize(payload);
