@@ -54,21 +54,20 @@ namespace Server.UI.ViewModels
             TcpClient client = new TcpClient(serverIp, port);
             _ = MessageManager.SendMessageAsync(client, new RoleMessage(RoleEnum.UI));
 
-            Thread receiveThread = new Thread(() =>
-            {
-                while (true)
-                {
-                    MessageBase message = MessageManager.ReceiveMessage(client);
-
-                    if (message.MessageType == MessageTypeEnum.LogMessage)
-                    {
-                        LogMessage log = (LogMessage)message;
-                        HandleLog(log.SenderID, log.OnLogEventArgs);
-                    }
-                }
-
-            });
-            receiveThread.Start();
+            Thread receiveThread = new Thread(async () => 
+            { 
+                while (true) 
+                { 
+                    MessageBase message = await MessageManager.ReceiveMessageAsync(client); 
+                    
+                    if (message.MessageType == MessageTypeEnum.LogMessage) 
+                    { 
+                        LogMessage log = (LogMessage)message; 
+                        HandleLog(log.SenderID, log.OnLogEventArgs); 
+                    } 
+                } 
+            }); receiveThread.Start();
+        
         }
 
         public void HandleLog(int senderID, OnLogEventArgs e)
@@ -90,6 +89,7 @@ namespace Server.UI.ViewModels
                 ServerTab.AppendLog(e);
             }
         }
+
         private LobbyViewModel? FindLobbyTabById(int lobbyId)
         {
             return Tabs.OfType<LobbyViewModel>().FirstOrDefault(tab => tab.LobbyID == lobbyId);

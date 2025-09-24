@@ -6,6 +6,9 @@ using System.Drawing;
 using System.Net;
 using System.Net.Sockets;
 using SharedLibrary;
+using SharedLibrary.DTOs.ModuleDTO;
+using SharedLibrary.DTOs.LobbyDTO;
+using SharedLibrary.DTOs.EntitiesDTO;
 
 namespace Server.Core
 {
@@ -13,7 +16,6 @@ namespace Server.Core
     {
         private static readonly Lazy<Server> _instance = new Lazy<Server>(() => new Server());
         public static Server Instance => _instance.Value;
-
 
         public readonly LobbyManager lobbyManager;
 
@@ -29,7 +31,6 @@ namespace Server.Core
             lobbyManager.OnLog += OnLog_Delegate;
             Lobby.Lobby.OnLog += OnLog_Delegate;
         }
-
 
         public void Start(string[] args)
         {
@@ -51,17 +52,16 @@ namespace Server.Core
         {
             try
             {
-
-                MessageBase message = MessageManager.ReceiveMessage(client);
+                MessageBase message = await MessageManager.ReceiveMessageAsync(client);
                 if (message is RoleMessage)
                 {
                     RoleMessage roleMessage = (RoleMessage)message;
                     if (roleMessage.Role == RoleEnum.User)
                     {
-                        Log("New client joined server - " + roleMessage.Role.ToString(), LogLevelEnum.Info);
                         _ = MessageManager.SendMessageAsync(client, new InfoMessage("Welcome to the server!"));
+                        Log("New client joined server - " + roleMessage.Role.ToString(), LogLevelEnum.Info);
 
-                        await Task.Factory.StartNew(() => HandleUserConnection(client), TaskCreationOptions.LongRunning);
+                        await HandleUserConnectionAsync(client);
                     }
                     else
                     {
@@ -78,7 +78,7 @@ namespace Server.Core
                 }
                 else
                 {
-                    //TODO: send error message to client
+                    _ = MessageManager.SendMessageAsync(client, new ErrorMessage("Unknown client role"));
                     client.Close();
                 }
 
@@ -90,23 +90,32 @@ namespace Server.Core
             }
         }
 
-        void HandleUserConnection(TcpClient client)
+        private async Task HandleUserConnectionAsync(TcpClient client)
         {
             while (true)
             {
-                MessageBase message = MessageManager.ReceiveMessage(client);
+                MessageBase message = await MessageManager.ReceiveMessageAsync(client);
 
                 //Creating new lobby
                 if (message.MessageType == MessageTypeEnum.CreateLobby)
                 {
                     CreateLobbyMessage createLobbyMessage = (CreateLobbyMessage)message;
-
-                    int lobbyId = lobbyManager.CreateAndInitialiseLobby(createLobbyMessage.LobbyName, createLobbyMessage.MaxPlayers,
+                    int lobbyID = lobbyManager.CreateAndInitialiseLobby(createLobbyMessage.LobbyName, createLobbyMessage.MaxPlayers,
                         createLobbyMessage.MapID, createLobbyMessage.ModuleIDs);
 
                     try
                     {
-                        lobbyManager.AddUserToLobby(lobbyId, client);
+                        lobbyManager.AddUserToLobby(lobbyID, client);
+                        try
+                        {
+                            //TODO: send full lobby info
+                            await MessageManager.SendMessageAsync(client, new LobbyMessage(null, lobbyID));
+                        }
+                        catch (Exception ex)
+                        {
+                            _ = MessageManager.SendMessageAsync(client, new ErrorMessage("Lobby error. Try again."));
+                            client.Close();
+                        }
                     }
                     catch (Exception ex)
                     {
@@ -149,6 +158,7 @@ namespace Server.Core
                     }
                 }
 
+                //Get messages
                 else if (message.MessageType == MessageTypeEnum.GetMessage)
                 {
                     GetMessage getMessage = (GetMessage)message;
@@ -163,24 +173,40 @@ namespace Server.Core
                                 LobbyId = 1,
                             });
 
-                            _ = MessageManager.SendMessageAsync(client, new LobbiesMessage(lobbies));
+                            try
+                            {
+                                await MessageManager.SendMessageAsync(client, new LobbyListMessage(lobbies));
+                            }
+                            catch (Exception ex)
+                            {
+                                _ = MessageManager.SendMessageAsync(client, new ErrorMessage("Lobby list error. Try again."));
+                                client.Close();
+                            }
                             break;
                         case GetMessageTypeEnum.GetAllModules:
                             //TODO: removed hardcoded modules
                             var modules = new List<ModuleDTO>();
                             modules.Add(new ModuleDTO
-                            (1, "Test Module", "1.0", "Author", new { Description = "This is a test module." }, 
+                            (1, "Test Module", true, "Author", new { Description = "This is a test module." }, 
                                 new List<BehviourDTO>
                                 {
                                     new BehviourDTO (1, "Test Behaviour", "This is a test behaviour.")
                                 }
                             ));
 
-                            _ = MessageManager.SendMessageAsync(client, new ModulesMessage(modules));
+                            try
+                            {
+                                await MessageManager.SendMessageAsync(client, new ModuleListMessage(modules));
+                            }
+                            catch (Exception ex)
+                            {
+                                _ = MessageManager.SendMessageAsync(client, new ErrorMessage("Module list error. Try again."));
+                                client.Close();
+                            }
                             break;
 
                         default:
-                            Log("Unknown GetMessage request: " + getMessage.GetMessageType, LogLevelEnum.Warning);
+                            _ = MessageManager.SendMessageAsync(client, new ErrorMessage("Unknown GetMessage type."));
                             break;
                     }
 
@@ -224,7 +250,6 @@ namespace Server.Core
                 _ => Color.Gray,
             };
 
-            //TODO: Create GUI console with rich text support
             Console.WriteLine($"[{timestamp:HH:mm:ss}] [{level}] {message}");
         }
     }

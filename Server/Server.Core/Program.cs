@@ -7,19 +7,20 @@ namespace Server.Core
         private static void Main(string[] args)
         {
             Console.WriteLine("[DEBUG]: Debug console for Core project, independent from UI project.");
-            Task.Run(() => Server.Instance.Start(args));
+            Server.Instance.Start(args);
 
-            var builder = WebApplication.CreateBuilder(args);
+            //Task.Run(() => Server.Instance.Start(args));
+            //var builder = WebApplication.CreateBuilder(args);
 
-            builder.Services.AddControllers();
-            builder.Services.AddSingleton(Server.Instance.lobbyManager);
+            //builder.Services.AddControllers();
+            //builder.Services.AddSingleton(Server.Instance.lobbyManager);
 
-            var app = builder.Build();
+            //var app = builder.Build();
 
-            app.MapControllers();
+            //app.MapControllers();
 
-            //TODO: change to config
-            app.Run("https://localhost:5001");
+            ////TODO: change to config
+            //app.Run("https://localhost:5001");
         }
     }
 }

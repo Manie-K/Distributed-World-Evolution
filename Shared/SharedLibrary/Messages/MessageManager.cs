@@ -10,52 +10,68 @@ namespace SharedLibrary.Messages
         public static event Action<MessageBase>? MessageReceived;
         public static event Action<bool>? MessageSended;
 
-        public static MessageBase ReceiveMessage(TcpClient client)
+        public static async Task<MessageBase> ReceiveMessageAsync(TcpClient client)
         {
-            NetworkStream stream = client.GetStream();
-            byte[] lengthBuffer = new byte[4];
-            stream.Read(lengthBuffer, 0, 4);
-            int messageLength = BitConverter.ToInt32(lengthBuffer, 0);
-
-            byte[] messageBuffer = new byte[messageLength];
-            int totalRead = 0;
-            while (totalRead < messageLength)
+            try
             {
-                int read = stream.Read(messageBuffer, totalRead, messageLength - totalRead);
-                if (read == 0)
-                    throw new IOException("Connection with sender lost.");
-                totalRead += read;
-            }
+                if (client == null || !client.Connected) throw new IOException("Client is not connected.");
 
-            string json = Encoding.UTF8.GetString(messageBuffer);
-            using JsonDocument document = JsonDocument.Parse(json);
-            JsonElement root = document.RootElement;
-            string? messageTypeString = root.GetProperty("MessageType").GetString();
+                NetworkStream stream = client.GetStream();
+                byte[] lengthBuffer = new byte[4];
+                await stream.ReadAsync(lengthBuffer, 0, 4);
+                int messageLength = BitConverter.ToInt32(lengthBuffer, 0);
 
-            MessageBase? message;
-            if(Enum.TryParse(messageTypeString, out MessageTypeEnum parsedMessageType))
-            {
-                message = parsedMessageType switch
+                byte[] messageBuffer = new byte[messageLength];
+                int totalRead = 0;
+                while (totalRead < messageLength)
                 {
-                    MessageTypeEnum.CreateLobby => JsonSerializer.Deserialize<CreateLobbyMessage>(json),
-                    MessageTypeEnum.EntityState => JsonSerializer.Deserialize<EntityStateMessage>(json),
-                    MessageTypeEnum.WorldState => JsonSerializer.Deserialize<WorldStateMessage>(json),
-                    MessageTypeEnum.InfoMessage => JsonSerializer.Deserialize<InfoMessage>(json),
-                    MessageTypeEnum.UserState => JsonSerializer.Deserialize<UserStateMessage>(json),
-                    MessageTypeEnum.JoinLobby => JsonSerializer.Deserialize<JoinLobbyMessage>(json),
-                    MessageTypeEnum.RoleMessage => JsonSerializer.Deserialize<RoleMessage>(json),
-                    MessageTypeEnum.LogMessage => JsonSerializer.Deserialize<LogMessage>(json),
-                    _ => throw new NotImplementedException(),
-                };
+                    int read = await stream.ReadAsync(messageBuffer, totalRead, messageLength - totalRead);
+                    if (read == 0)
+                        throw new IOException("Connection with sender lost.");
+                    totalRead += read;
+                }
+
+                string json = Encoding.UTF8.GetString(messageBuffer);
+                using JsonDocument document = JsonDocument.Parse(json);
+                JsonElement root = document.RootElement;
+                string? messageTypeString = root.GetProperty("MessageType").GetString();
+
+                MessageBase? message;
+                if (Enum.TryParse(messageTypeString, out MessageTypeEnum parsedMessageType))
+                {
+                    message = parsedMessageType switch
+                    {
+                        MessageTypeEnum.CreateLobby => JsonSerializer.Deserialize<CreateLobbyMessage>(json),
+                        MessageTypeEnum.EntityState => JsonSerializer.Deserialize<EntityStateMessage>(json),
+                        MessageTypeEnum.WorldState => JsonSerializer.Deserialize<WorldStateMessage>(json),
+                        MessageTypeEnum.InfoMessage => JsonSerializer.Deserialize<InfoMessage>(json),
+                        MessageTypeEnum.UserState => JsonSerializer.Deserialize<UserStateMessage>(json),
+                        MessageTypeEnum.JoinLobby => JsonSerializer.Deserialize<JoinLobbyMessage>(json),
+                        MessageTypeEnum.RoleMessage => JsonSerializer.Deserialize<RoleMessage>(json),
+                        MessageTypeEnum.LogMessage => JsonSerializer.Deserialize<LogMessage>(json),
+                        MessageTypeEnum.DisjoinLobby => JsonSerializer.Deserialize<DisjoinLobbyMessage>(json),
+                        MessageTypeEnum.ModuleList => JsonSerializer.Deserialize<ModuleListMessage>(json),
+                        MessageTypeEnum.CreateModule => JsonSerializer.Deserialize<CreateModuleMessage>(json),
+                        MessageTypeEnum.LobbyList => JsonSerializer.Deserialize<LobbyListMessage>(json),
+                        MessageTypeEnum.GetMessage => JsonSerializer.Deserialize<GetMessage>(json),
+                        MessageTypeEnum.ErrorMessage => JsonSerializer.Deserialize<ErrorMessage>(json),
+                        _ => throw new NotImplementedException(),
+                    };
+                }
+                else
+                {
+                    throw new NotSupportedException($"Undefined message type: {messageTypeString}");
+                }
+
+                MessageReceived?.Invoke(message);
+                return message ?? throw new Exception("Message null");
             }
-            else
+            catch (Exception ex)
             {
-               throw new NotSupportedException($"Undefined message type: {messageTypeString}");
+                MessageReceived?.Invoke(null);
+                throw new IOException("Error checking client connection.", ex);
             }
-
-            MessageReceived?.Invoke(message);
-
-            return message ?? throw new Exception("Message null");
+            
         }
 
         public static async Task<bool> SendMessageAsync(TcpClient client, MessageBase message)
@@ -75,7 +91,6 @@ namespace SharedLibrary.Messages
                 await stream.FlushAsync();
 
                 MessageSended?.Invoke(true);
-
                 return true;
             }
             catch

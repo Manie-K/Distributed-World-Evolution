@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SharedLibrary.DTOs.LobbyDTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -7,15 +8,16 @@ using System.Threading.Tasks;
 
 namespace SharedLibrary.Messages
 {
-    public class ModulesMessage : MessageBase
+    public class LobbyMessage : MessageBase
     {
-        public override MessageTypeEnum MessageType => MessageTypeEnum.Modules;
+        public LobbyDTO Lobby { get; init; }
+        public int LobbyID { get; init; }
 
-        public IEnumerable<ModuleDTO> Modules { get; init; }
+        public override MessageTypeEnum MessageType => MessageTypeEnum.Lobby;
 
-        public ModulesMessage(IEnumerable<ModuleDTO> modules)
+        public LobbyMessage(LobbyDTO lobby, int lobbyID)
         {
-            Modules = modules;
+            LobbyID = lobbyID;
         }
 
         public override string BuildJson()
@@ -23,7 +25,8 @@ namespace SharedLibrary.Messages
             var payload = new
             {
                 MessageType = MessageType,
-                Modules = Modules
+                Lobby = Lobby,
+                LobbyID = LobbyID
             };
 
             return JsonSerializer.Serialize(payload);
