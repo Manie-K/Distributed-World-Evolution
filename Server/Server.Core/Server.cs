@@ -187,10 +187,10 @@ namespace Server.Core
                             //TODO: removed hardcoded modules
                             var modules = new List<ModuleDTO>();
                             modules.Add(new ModuleDTO
-                            (1, "Test Module", true, "Author", new { Description = "This is a test module." }, 
+                            (1, "Test Module", true, 10, 10, 10, 
                                 new List<BehviourDTO>
                                 {
-                                    new BehviourDTO (1, "Test Behaviour", "This is a test behaviour.")
+                                    new BehviourDTO (1, "This is a test behaviour.")
                                 }
                             ));
 
