@@ -5,10 +5,8 @@ using System.Collections.Concurrent;
 using System.Drawing;
 using System.Net;
 using System.Net.Sockets;
-using SharedLibrary;
 using SharedLibrary.DTOs.ModuleDTO;
 using SharedLibrary.DTOs.LobbyDTO;
-using SharedLibrary.DTOs.EntitiesDTO;
 
 namespace Server.Core
 {
@@ -20,8 +18,9 @@ namespace Server.Core
         public readonly LobbyManager lobbyManager;
 
         public static event Action<OnMessageFromClientEventArgs>? OnMessageFromClientReceived;
-        
-        private TcpClient clientUI = null;
+
+        private TcpClient clientUI;
+
         private ConcurrentQueue<LogMessage> logQueue = new ConcurrentQueue<LogMessage>();
 
         private Server()
@@ -34,12 +33,15 @@ namespace Server.Core
 
         public void Start(string[] args)
         {
+            //TODO: change to config
             TcpListener listener = new TcpListener(IPAddress.Any, 5000);
+            ////
             listener.Start();
 
             Log("Server started...", LogLevelEnum.Info);
-            //TODO: remove
+            //TODO: remove hardcoded lobby
             lobbyManager.CreateAndInitialiseLobby("TEST", 2, 1, [] );
+            ////
 
             while (true)
             {
@@ -58,7 +60,7 @@ namespace Server.Core
                     RoleMessage roleMessage = (RoleMessage)message;
                     if (roleMessage.Role == RoleEnum.User)
                     {
-                        _ = MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.ServerConnected ,"Welcome to the server!"));
+                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.ServerConnected ,"Welcome to the server!"));
                     }
                     else
                     {
@@ -78,13 +80,14 @@ namespace Server.Core
                 }
                 else
                 {
-                    _ = MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.Error ,"Unknown client role"));
+                    await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.Warning , "Unknown client role."));
                     client.Close();
                 }
 
             }
             catch (Exception ex)
             {
+                await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "Server error. Try again."));
                 Log(ex.Message, LogLevelEnum.Error);
                 client.Close();
             }
@@ -106,20 +109,15 @@ namespace Server.Core
                     try
                     {
                         lobbyManager.AddUserToLobby(lobbyID, client);
-                        try
-                        {
-                            //TODO: send full lobby info
-                            await MessageManager.SendMessageAsync(client, new LobbyMessage(null, lobbyID));
-                        }
-                        catch (Exception ex)
-                        {
-                            _ = MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotJoined ,"Lobby error. Try again."));
-                            client.Close();
-                        }
+
+                        //TODO: send full lobby info
+                        await MessageManager.SendMessageAsync(client, new LobbyMessage(null, lobbyID));
+                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyJoined, "Welcome to lobby!"));
                     }
                     catch (Exception ex)
                     {
                         Log(ex.Message, LogLevelEnum.Error);
+                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotJoined, "Lobby error. Try again."));
                         client.Close();
                     }
                 }
@@ -132,10 +130,12 @@ namespace Server.Core
                     try
                     {
                         lobbyManager.AddUserToLobby(joinLobbyMessage.LobbyID, client);
+                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyJoined, "Welcome to lobby!"));
                     }
                     catch (Exception ex)
                     {
                         Log(ex.Message, LogLevelEnum.Error);
+                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotJoined, "Lobby error. Try again."));
                         client.Close();
                     }
                 }
@@ -148,12 +148,13 @@ namespace Server.Core
                     try
                     {
                         lobbyManager.RemoveUserFromLobby(joinLobbyMessage.LobbyID, client);
+                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyDisjoined, "See you soon!"));
                         client.Close();
-                        break;
                     }
                     catch (Exception ex)
                     {
                         Log(ex.Message, LogLevelEnum.Error);
+                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotDisjoined, "Lobby error. Try again."));
                         client.Close();
                     }
                 }
@@ -174,6 +175,7 @@ namespace Server.Core
                                 Name = "Test Lobby",
                                 MaxPlayers = 10,
                             });
+                            ////
 
                             try
                             {
@@ -181,10 +183,12 @@ namespace Server.Core
                             }
                             catch (Exception ex)
                             {
-                                _ = MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "Lobby list error. Try again."));
+                                Log(ex.Message, LogLevelEnum.Error);
+                                await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "Lobby list error. Try again."));
                                 client.Close();
                             }
                             break;
+
                         case GetMessageTypeEnum.GetAllModules:
                             //TODO: removed hardcoded modules
                             var modules = new List<ModuleDTO>();
@@ -195,20 +199,22 @@ namespace Server.Core
                                     new BehviourDTO (1, "This is a test behaviour.")
                                 }
                             ));
-
+                            ////
+                            ///
                             try
                             {
                                 await MessageManager.SendMessageAsync(client, new ModuleListMessage(modules));
                             }
                             catch (Exception ex)
                             {
-                                _ = MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "Module list error. Try again."));
+                                Log(ex.Message, LogLevelEnum.Error);
+                                await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "Module list error. Try again."));
                                 client.Close();
                             }
                             break;
 
                         default:
-                            _ = MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "Unknown GetMessage Type."));
+                            await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "Unknown GetMessage Type."));
                             break;
                     }
 
@@ -218,6 +224,7 @@ namespace Server.Core
                 {
                     OnMessageFromClientReceived?.Invoke(new OnMessageFromClientEventArgs(client, message));
                 }
+
             }
 
         }
@@ -254,5 +261,6 @@ namespace Server.Core
 
             Console.WriteLine($"[{timestamp:HH:mm:ss}] [{level}] {message}");
         }
+
     }
 }

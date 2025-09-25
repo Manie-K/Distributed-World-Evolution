@@ -1,17 +1,8 @@
-﻿using Server.Core;
-using Server.UI.Models;
-using SharedLibrary;
+﻿using Server.UI.Models;
 using SharedLibrary.Logging;
 using SharedLibrary.Messages;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Net.Http;
 using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
-using System.Net.Http.Json;
 using SharedLibrary.DTOs.LobbyDTO;
 
 namespace Server.UI.ViewModels
@@ -21,7 +12,6 @@ namespace Server.UI.ViewModels
         public ServerViewModel ServerTab { get; }
         public ObservableCollection<BaseTabViewModel> Tabs { get; } = new();
 
-        private readonly LobbyService _service = new LobbyService();
         private TcpClient _client;
 
         public MainViewModel()
@@ -42,17 +32,8 @@ namespace Server.UI.ViewModels
 
         private async void InitializeAsync()
         {
-            //TODO: change!!!
             await MessageManager.SendMessageAsync(_client, new RoleMessage(RoleEnum.UI));
             await MessageManager.SendMessageAsync(_client, new GetMessage(GetMessageTypeEnum.GetAllLobbies));
-
-            MessageBase message = await MessageManager.ReceiveMessageAsync(_client);
-            List<LobbyDTO> lobbies = (List<LobbyDTO>)((LobbyListMessage)message).Lobbies;
-
-            foreach (LobbyDTO lobby in lobbies)
-            {
-                Tabs.Add(new LobbyViewModel(lobby.ID, lobby.Name, lobby.MaxPlayers));
-            }
 
             _ = Task.Run(async () =>
             {
@@ -64,6 +45,19 @@ namespace Server.UI.ViewModels
                     {
                         LogMessage log = (LogMessage)message;
                         HandleLog(log.SenderID, log.OnLogEventArgs);
+                    }
+                    else if (message.MessageType == MessageTypeEnum.LobbyList)
+                    {
+                        List<LobbyDTO> lobbies = (List<LobbyDTO>)((LobbyListMessage)message).Lobbies;
+
+                        foreach (LobbyDTO lobby in lobbies)
+                        {
+                            _ = App.Current.Dispatcher.BeginInvoke(new Action(() =>
+                            {
+                                Tabs.Add(new LobbyViewModel(lobby.ID, lobby.Name, lobby.MaxPlayers));
+                            }));
+                        }
+
                     }
                 }
             });
