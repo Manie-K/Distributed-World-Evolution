@@ -3,8 +3,9 @@ using Client.UI.MapSelection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using SharedLibrary;
+using SharedLibrary.Messages;
 using System;
+using System.Collections.Generic;
 using System.Text.Json;
 
 namespace Client
@@ -21,7 +22,7 @@ namespace Client
         private TextBox gameNameBox;
         private Button mapButton;
         private TextBox playerAmountBox;
-        private SelectedMapData data;
+        private SelectedMapData mapData;
 
         private SwitchPageParameters switchPageParametersAnimals;
         private SwitchPageParameters switchPageParametersPlants;
@@ -39,7 +40,7 @@ namespace Client
             playerAmountBox = new TextBox(null, manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"),
                                         new Vector2(523, 129), 50, 36, Color.White, true);
             playerAmountBox.SetText("4");
-            data = new SelectedMapData();
+            mapData = new SelectedMapData();
 
             this.lobbyswitchPage = lobbyswitchPage;
             this.switchPageParametersAnimals = new SwitchPageParameters(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"),
@@ -84,7 +85,6 @@ namespace Client
             switchPageParametersPlants.AddRowPlant();
         }
 
-
         public void Update(GameTime gameTime)
         {
             bool isPressed = false;
@@ -110,9 +110,11 @@ namespace Client
                             else if (tmp.Type == CreatureType.Plant) switchPageParametersPlants.SavePlantParameters((PlantData)tmp);
                         }
 
-                        MessageManager.SendMessageAsync(manager.ClientManager.Client, new CreateLobbyMessage());
+                        IEnumerable<int> modules = new List<int>() { 0 };
+                        CreateLobbyMessage message = new CreateLobbyMessage(gameNameBox.GetText(), int.Parse(playerAmountBox.GetText()), mapData.index, modules);
+                        MessageManager.SendMessageAsync(manager.ClientManager.Client, message);
                         //LobbyInfoSerialization();
-                        lobbyswitchPage.AddRow(gameNameBox.GetText(), data.name, $"1/{playerAmountBox.GetText()}");
+                        lobbyswitchPage.AddRow(gameNameBox.GetText(), mapData.name, $"1/{playerAmountBox.GetText()}");
                         manager.SceneManager.RemoveScene();
                         manager.SceneManager.AddScene(new GameScene(manager));
                     }
@@ -121,9 +123,10 @@ namespace Client
                         manager.WindowManager.WarningWindow.SetWrongParametersInCreateLobby();
                         manager.WindowManager.EnableWarningWindow();
                     }
-                }else if (mapButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
+                }
+                else if (mapButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                 {
-                    manager.SceneManager.AddScene(new MapSelectionScene(manager, ref data));
+                    manager.SceneManager.AddScene(new MapSelectionScene(manager, ref mapData));
                 }
 
                 if (switchPageLobby.GetSelectedRow() != -1)
@@ -140,7 +143,6 @@ namespace Client
                 manager.SceneManager.RemoveScene();
             }
 
-
             exitButton.Update(manager.InputManager.GetMousePosition());
             saveButton.Update(manager.InputManager.GetMousePosition());
             mapButton.Update(manager.InputManager.GetMousePosition());
@@ -153,7 +155,6 @@ namespace Client
                 else if (switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetSelectedRow()).Type == CreatureType.Plant) switchPageParametersPlants.UpdateRows(manager.InputManager.GetMousePosition());
             }
 
-
             if (switchPageLobby.UpdateRows(manager.InputManager.GetMousePosition(), isPressed))
             {
                 if (switchPageLobby.GetPreviousRow() != -1)
@@ -164,12 +165,10 @@ namespace Client
                 }
                 SetParameters();
             }
-
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-
 
         }
 
@@ -191,7 +190,6 @@ namespace Client
                     switchPageParametersPlants.Draw(spriteBatch);
             }
         }
-
 
         private void SetParameters()
         {
@@ -215,6 +213,5 @@ namespace Client
 
             Console.WriteLine(json);
         }
-
     }
 }

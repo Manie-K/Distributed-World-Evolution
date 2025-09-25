@@ -5,6 +5,8 @@ namespace Client
 {
     public class LobbyRow
     {
+        public int LobbyID;
+
         private Text gameName;
         private Text mapName;
         private Text playersText;
@@ -16,6 +18,7 @@ namespace Client
             int mapNameWidth = (int)(width * 0.38f);
             int playersWidth = (int)(width * 0.2f);
 
+            LobbyID = 0;
             gameName = new Text(font, name, true, position, nameWidth, height);
             this.mapName = new Text(font, mapName, true,
                 new Vector2(position.X + nameWidth, position.Y), mapNameWidth, height);

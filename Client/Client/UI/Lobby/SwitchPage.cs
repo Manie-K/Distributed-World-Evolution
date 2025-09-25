@@ -74,6 +74,18 @@ namespace Client
             }
         }
 
+        public LobbyRow GetSelectedLobby()
+        {
+            if (selectedRow >= 0)
+            {
+                return rows[selectedRow];
+            }
+            else
+            { 
+                return null;
+            }
+        }
+
         public int GetRowsOnPage()
         {
             int totalRows = rows.Count;

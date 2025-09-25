@@ -17,6 +17,7 @@ namespace Client
         public WindowManager WindowManager { get; private set; }
         public ClientManager ClientManager { get; private set; }
         public bool IsInGame { get; set; }
+        public int LobbyID { get; set; }
 
         public GameManager(ContentManager content)
         {
@@ -33,6 +34,7 @@ namespace Client
             Camera = new Camera2D(new Size(UserSettings.ScreenWidth, UserSettings.ScreenHeight));
             Camera.ResetPosition();
             IsInGame = false;
+            LobbyID = -1;
         }
 
         public void SetWindowManager()

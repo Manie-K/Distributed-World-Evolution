@@ -9,12 +9,9 @@
         /// </summary>
         public string MessageContent { get; init; }
 
-        public InfoMessage(object messageContent)
+        public InfoMessage(string messageContent)
         {
-            if (messageContent == null)
-                throw new ArgumentNullException(nameof(messageContent), "Message content cannot be null.");
-
-            MessageContent = messageContent?.ToString();        
+            MessageContent = messageContent;        
         }
 
         /// <summary>
