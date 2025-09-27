@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using System.Text.Json;
 using SharedLibrary.DTOs.LobbyDTO;
 
 namespace SharedLibrary.Messages
@@ -23,11 +18,12 @@ namespace SharedLibrary.Messages
         {
             var payload = new
             {
-                MessageType = MessageType,
-                Lobbies = Lobbies
+                MessageType = this.MessageType,
+                Lobbies = this.Lobbies
             };
 
             return JsonSerializer.Serialize(payload);
         }
+
     }
 }

@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using System.Text.Json;
 
 namespace SharedLibrary.Messages
 {
@@ -22,8 +17,8 @@ namespace SharedLibrary.Messages
         {
             var payload = new
             {
-                MessageType = MessageType,
-                LobbyID = LobbyID
+                MessageType = this.MessageType,
+                LobbyID = this.LobbyID
             };
 
             return JsonSerializer.Serialize(payload);

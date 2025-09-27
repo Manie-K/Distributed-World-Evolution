@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SharedLibrary.Logging;
+﻿using SharedLibrary.Logging;
+using System.Text.Json;
 
 namespace SharedLibrary.Messages
 {
@@ -28,7 +24,7 @@ namespace SharedLibrary.Messages
                 SenderID = SenderID
             };
 
-            return System.Text.Json.JsonSerializer.Serialize(payload);
+            return JsonSerializer.Serialize(payload);
         }
     }
 }

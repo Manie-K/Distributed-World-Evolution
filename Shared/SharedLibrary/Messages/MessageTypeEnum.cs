@@ -18,7 +18,6 @@ namespace SharedLibrary.Messages
         CreateModule,
         LobbyList,
         GetMessage,
-        ErrorMessage,
-        Lobby
+        LobbyData
     }
 }

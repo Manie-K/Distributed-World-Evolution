@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Text.Json;
-using System.Threading.Tasks;
+﻿using System.Text.Json;
 using SharedLibrary.DTOs.ModuleDTO;
 
 namespace SharedLibrary.Messages
@@ -23,8 +18,8 @@ namespace SharedLibrary.Messages
         {
             var payload = new
             {
-                MessageType = MessageType,
-                Modules = Module
+                MessageType = this.MessageType,
+                Modules = this.Module
             };
 
             return JsonSerializer.Serialize(payload);

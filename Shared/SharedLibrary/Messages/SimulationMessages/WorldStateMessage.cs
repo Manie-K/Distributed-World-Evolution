@@ -4,11 +4,12 @@ using SharedLibrary.DTOs.EntitiesDTO;
 
 namespace SharedLibrary.Messages
 {
+    //TODO: Change after world state is fully implemented
     public class WorldStateMessage : MessageBase
     {
-        public IEnumerable<WorldEntityDTO> Entities { get; init; }
-
         public override MessageTypeEnum MessageType => MessageTypeEnum.WorldState;
+
+        public IEnumerable<WorldEntityDTO> Entities { get; init; }
 
         public WorldStateMessage(IEnumerable<WorldEntityDTO> entities)
         {
@@ -19,8 +20,8 @@ namespace SharedLibrary.Messages
         {
             var payload = new
             {
-                MessageType = MessageType,
-                Entities = Entities
+                MessageType = this.MessageType,
+                Entities = this.Entities
             };
 
             return JsonSerializer.Serialize(payload);
