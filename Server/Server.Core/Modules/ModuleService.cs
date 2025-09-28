@@ -35,5 +35,10 @@ namespace Server.Core.Modules
 
             return module;
         }
+
+        public IEnumerable<Module> GetAllModules()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

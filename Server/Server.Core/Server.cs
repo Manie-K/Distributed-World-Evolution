@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Sockets;
 using SharedLibrary.DTOs.ModuleDTO;
 using SharedLibrary.DTOs.LobbyDTO;
+using SharedLibrary.Messages.BehaviourMessages;
 
 namespace Server.Core
 {
@@ -191,6 +192,7 @@ namespace Server.Core
 
                         case GetMessageTypeEnum.GetAllModules:
                             //TODO: removed hardcoded modules
+                            //var modules = moduleService.GetAllModules().ToList().ToDTO();
                             var modules = new List<ModuleDTO>();
                             modules.Add(new ModuleDTO
                             (1, "Test Module", true, 10, 10, 10, new List<BehviourDTO>{
@@ -208,6 +210,22 @@ namespace Server.Core
                             {
                                 Log(ex.Message, LogLevelEnum.Error);
                                 await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "Module list error. Try again."));
+                                client.Close();
+                            }
+                            break;
+
+                        case GetMessageTypeEnum.GetAllBehaviors:
+                            var behaviors = new List<BehviourDTO>();
+                            //var behaviors = behaviourService.GetAllBehaviours().ToList().ToDTO();
+                            
+                            try
+                            {
+                                await MessageManager.SendMessageAsync(client, new BehaviourListMessage(behaviors));
+                            }
+                            catch (Exception ex)
+                            {
+                                Log(ex.Message, LogLevelEnum.Error);
+                                await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "Behaviour list error. Try again."));
                                 client.Close();
                             }
                             break;

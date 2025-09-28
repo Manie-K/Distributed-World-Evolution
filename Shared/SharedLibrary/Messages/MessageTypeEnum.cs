@@ -15,6 +15,7 @@ namespace SharedLibrary.Messages
         LogMessage,
         DisjoinLobby,
         ModuleList,
+        BehaviourList,
         CreateModule,
         LobbyList,
         GetMessage,

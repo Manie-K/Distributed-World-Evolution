@@ -1,8 +1,14 @@
-﻿namespace Server.Core.Modules
+﻿
+namespace Server.Core.Modules
 {
     public partial class BehaviourService : IBehaviourService
     {
         public static IBehaviourService Instance = new BehaviourService();
+
+        public IEnumerable<IBehaviour> GetAllBehaviours()
+        {
+            throw new NotImplementedException();
+        }
 
         public IBehaviour GetBehaviourInstanceByID(int databaseID)
         {
