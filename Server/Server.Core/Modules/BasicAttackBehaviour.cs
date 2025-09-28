@@ -6,7 +6,13 @@
 
         public void Attack(WorldEntity attacker, WorldEntity target)
         {
-            Console.WriteLine($"{attacker.Name} attacks {target.Name} with a basic attack!");
+            int dmg = ModuleService.Instance.GetModuleById(attacker.ModuleID).Damage;
+            target.State.Health -= dmg;
+        }
+
+        public bool ShouldAttack(WorldEntity attacker, WorldEntity target)
+        {
+            return attacker.Id != target.Id;
         }
     }
 }

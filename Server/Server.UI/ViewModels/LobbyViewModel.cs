@@ -11,12 +11,17 @@ namespace Server.UI.ViewModels
 {
     internal class LobbyViewModel : BaseTabViewModel
     {
-        public int LobbyID { get; private set; }
-        public LobbyViewModel(string name, string info, int lobbyID)
+        public int ID { get; init; }
+        public string Name { get; init; }
+        public int MaxPlayers { get; set; }
+
+        public LobbyViewModel(int id, string name, int maxPlayers)
         {
             Header = name;
-            Info = info;
-            LobbyID = lobbyID;
+            ID = id;
+            Name = name;
+            MaxPlayers = maxPlayers;
+            Info = $"ID: {ID}, Max players: {MaxPlayers}";
         }
     }
 }

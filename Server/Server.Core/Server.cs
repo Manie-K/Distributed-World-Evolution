@@ -5,6 +5,8 @@ using System.Collections.Concurrent;
 using System.Drawing;
 using System.Net;
 using System.Net.Sockets;
+using SharedLibrary.DTOs.ModuleDTO;
+using SharedLibrary.DTOs.LobbyDTO;
 
 namespace Server.Core
 {
@@ -13,12 +15,12 @@ namespace Server.Core
         private static readonly Lazy<Server> _instance = new Lazy<Server>(() => new Server());
         public static Server Instance => _instance.Value;
 
-
         public readonly LobbyManager lobbyManager;
 
         public static event Action<OnMessageFromClientEventArgs>? OnMessageFromClientReceived;
-        
-        private TcpClient clientUI = null;
+
+        private TcpClient clientUI;
+
         private ConcurrentQueue<LogMessage> logQueue = new ConcurrentQueue<LogMessage>();
 
         private Server()
@@ -29,15 +31,17 @@ namespace Server.Core
             Lobby.Lobby.OnLog += OnLog_Delegate;
         }
 
-
         public void Start(string[] args)
         {
+            //TODO: change to config
             TcpListener listener = new TcpListener(IPAddress.Any, 5000);
+            ////
             listener.Start();
 
             Log("Server started...", LogLevelEnum.Info);
-            //TODO: remove
+            //TODO: remove hardcoded lobby
             lobbyManager.CreateAndInitialiseLobby("TEST", 2, 1, [] );
+            ////
 
             while (true)
             {
@@ -50,17 +54,13 @@ namespace Server.Core
         {
             try
             {
-
-                MessageBase message = MessageManager.ReceiveMessage(client);
+                MessageBase message = await MessageManager.ReceiveMessageAsync(client);
                 if (message is RoleMessage)
                 {
                     RoleMessage roleMessage = (RoleMessage)message;
                     if (roleMessage.Role == RoleEnum.User)
                     {
-                        Log("New client joined server - " + roleMessage.Role.ToString(), LogLevelEnum.Info);
-                        _ = MessageManager.SendMessageAsync(client, new InfoMessage("Welcome to the server!"));
-
-                        await Task.Factory.StartNew(() => HandleUserConnection(client), TaskCreationOptions.LongRunning);
+                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.ServerConnected ,"Welcome to the server!"));
                     }
                     else
                     {
@@ -71,45 +71,53 @@ namespace Server.Core
                             _ = MessageManager.SendMessageAsync(clientUI, log);
                         }
 
-                        Log("New client joined server - " + roleMessage.Role.ToString(), LogLevelEnum.Info);
                         Log("Server working...", LogLevelEnum.Info);
                     }
+
+                    Log("New client joined server - " + roleMessage.Role.ToString(), LogLevelEnum.Info);
+
+                    await HandleUserConnectionAsync(client);
                 }
                 else
                 {
-                    //TODO: send error message to client
+                    await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.Warning , "Unknown client role."));
                     client.Close();
                 }
 
             }
             catch (Exception ex)
             {
+                await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "Server error. Try again."));
                 Log(ex.Message, LogLevelEnum.Error);
                 client.Close();
             }
         }
 
-        void HandleUserConnection(TcpClient client)
+        private async Task HandleUserConnectionAsync(TcpClient client)
         {
             while (true)
             {
-                MessageBase message = MessageManager.ReceiveMessage(client);
+                MessageBase message = await MessageManager.ReceiveMessageAsync(client);
 
                 //Creating new lobby
                 if (message.MessageType == MessageTypeEnum.CreateLobby)
                 {
                     CreateLobbyMessage createLobbyMessage = (CreateLobbyMessage)message;
-
-                    int lobbyId = lobbyManager.CreateAndInitialiseLobby(createLobbyMessage.LobbyName, createLobbyMessage.MaxPlayers,
+                    int lobbyID = lobbyManager.CreateAndInitialiseLobby(createLobbyMessage.LobbyName, createLobbyMessage.MaxPlayers,
                         createLobbyMessage.MapID, createLobbyMessage.ModuleIDs);
 
                     try
                     {
-                        lobbyManager.AddUserToLobby(lobbyId, client);
+                        lobbyManager.AddUserToLobby(lobbyID, client);
+
+                        //TODO: send full lobby info
+                        await MessageManager.SendMessageAsync(client, new LobbyMessage(null, lobbyID));
+                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyJoined, "Welcome to lobby!"));
                     }
                     catch (Exception ex)
                     {
                         Log(ex.Message, LogLevelEnum.Error);
+                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotJoined, "Lobby error. Try again."));
                         client.Close();
                     }
                 }
@@ -122,10 +130,12 @@ namespace Server.Core
                     try
                     {
                         lobbyManager.AddUserToLobby(joinLobbyMessage.LobbyID, client);
+                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyJoined, "Welcome to lobby!"));
                     }
                     catch (Exception ex)
                     {
                         Log(ex.Message, LogLevelEnum.Error);
+                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotJoined, "Lobby error. Try again."));
                         client.Close();
                     }
                 }
@@ -138,20 +148,83 @@ namespace Server.Core
                     try
                     {
                         lobbyManager.RemoveUserFromLobby(joinLobbyMessage.LobbyID, client);
+                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyDisjoined, "See you soon!"));
                         client.Close();
-                        break;
                     }
                     catch (Exception ex)
                     {
                         Log(ex.Message, LogLevelEnum.Error);
+                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotDisjoined, "Lobby error. Try again."));
                         client.Close();
                     }
+                }
+
+                //Get messages
+                else if (message.MessageType == MessageTypeEnum.GetMessage)
+                {
+                    GetMessage getMessage = (GetMessage)message;
+
+                    switch (getMessage.GetMessageType)
+                    {
+                        case GetMessageTypeEnum.GetAllLobbies:
+                            //TODO: removed hardcoded lobbies
+                            var lobbies = new List<LobbyDTO>();
+                            lobbies.Add(new LobbyDTO
+                            {
+                                ID = 1,
+                                Name = "Test Lobby",
+                                MaxPlayers = 10,
+                            });
+                            ////
+
+                            try
+                            {
+                                await MessageManager.SendMessageAsync(client, new LobbyListMessage(lobbies));
+                            }
+                            catch (Exception ex)
+                            {
+                                Log(ex.Message, LogLevelEnum.Error);
+                                await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "Lobby list error. Try again."));
+                                client.Close();
+                            }
+                            break;
+
+                        case GetMessageTypeEnum.GetAllModules:
+                            //TODO: removed hardcoded modules
+                            var modules = new List<ModuleDTO>();
+                            modules.Add(new ModuleDTO
+                            (1, "Test Module", true, 10, 10, 10, 
+                                new List<BehviourDTO>
+                                {
+                                    new BehviourDTO (1, "This is a test behaviour.")
+                                }
+                            ));
+                            ////
+                            ///
+                            try
+                            {
+                                await MessageManager.SendMessageAsync(client, new ModuleListMessage(modules));
+                            }
+                            catch (Exception ex)
+                            {
+                                Log(ex.Message, LogLevelEnum.Error);
+                                await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "Module list error. Try again."));
+                                client.Close();
+                            }
+                            break;
+
+                        default:
+                            await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "Unknown GetMessage Type."));
+                            break;
+                    }
+
                 }
 
                 else
                 {
                     OnMessageFromClientReceived?.Invoke(new OnMessageFromClientEventArgs(client, message));
                 }
+
             }
 
         }
@@ -186,8 +259,8 @@ namespace Server.Core
                 _ => Color.Gray,
             };
 
-            //TODO: Create GUI console with rich text support
             Console.WriteLine($"[{timestamp:HH:mm:ss}] [{level}] {message}");
         }
+
     }
 }
