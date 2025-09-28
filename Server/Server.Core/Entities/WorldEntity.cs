@@ -7,19 +7,17 @@ namespace Server.Core
     {
         public Guid Id { get; init; }
         public int ModuleID { get; init; }
-        public EntityTypeEnum Type { get; init; }
         public EntityState State { get; init; }
 
-        public static WorldEntity CreateWorldEntity(int moduleId, EntityTypeEnum type)
+        public static WorldEntity CreateWorldEntity(int moduleId)
         {
-            return new WorldEntity(moduleId, type, null);
+            return new WorldEntity(moduleId, null);
         }
 
-        private WorldEntity(int moduleId, EntityTypeEnum type, EntityState state) 
+        private WorldEntity(int moduleId, EntityState state) 
         {
             Id = Guid.NewGuid();
             ModuleID = moduleId;
-            Type = type;
             State = state ?? throw new ArgumentNullException(nameof(state), "State cannot be null.");
         }
 

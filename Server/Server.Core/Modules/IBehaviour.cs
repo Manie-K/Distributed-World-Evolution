@@ -18,5 +18,10 @@
         {
             get;
         }
+
+        public EntityTypeEnum Type
+        {
+            get; init;
+        }
     }
 }

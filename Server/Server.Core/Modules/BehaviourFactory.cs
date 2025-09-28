@@ -4,10 +4,7 @@
     {
         public class BehaviourFactory 
         {
-            public BehaviourFactory()
-            {
-
-            } 
+            public static BehaviourFactory Instance = new BehaviourFactory();
 
             public IBehaviour CreateBehaviourOfType(Type type)
             {

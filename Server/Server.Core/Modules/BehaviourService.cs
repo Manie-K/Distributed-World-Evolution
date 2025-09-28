@@ -11,7 +11,7 @@
             Type? type = inMemoryDB.GetTypeByID(databaseID) ?? 
                 throw new ArgumentException($"No behaviour found with DatabaseID {databaseID}");
 
-            return new BehaviourFactory().CreateBehaviourOfType(type);
+            return BehaviourFactory.Instance.CreateBehaviourOfType(type);
         }
     }
 }
