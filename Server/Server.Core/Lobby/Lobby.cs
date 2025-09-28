@@ -224,9 +224,13 @@ namespace Server.Core.Lobby
                 return typeof(IGatherBehaviour);
             }
 
-            if(entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Plant)
+            if(entityType == EntityTypeEnum.Animal && (targetType == EntityTypeEnum.Plant || targetType == EntityTypeEnum.Animal))
             {
-                return typeof(IEatBehaviour);
+                IEatBehaviour eatBehaviour = (IEatBehaviour)entityModule.GetBehaviourOfType(typeof(IEatBehaviour));
+                if (eatBehaviour.CanEat(entity, entityOnPosition))
+                {
+                    return typeof(IEatBehaviour);
+                }
             }
 
             if(entityType == EntityTypeEnum.Human && targetType == EntityTypeEnum.Animal)

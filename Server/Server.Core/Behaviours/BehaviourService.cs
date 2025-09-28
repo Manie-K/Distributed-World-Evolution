@@ -1,7 +1,6 @@
-﻿
-using Server.Core.Behaviours;
+﻿using Server.Core.Behaviours;
 
-namespace Server.Core.Modules
+namespace Server.Core.Behaviours
 {
     public partial class BehaviourService : IBehaviourService
     {

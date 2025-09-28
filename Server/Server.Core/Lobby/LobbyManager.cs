@@ -1,4 +1,5 @@
-﻿using Server.Core.Exceptions;
+﻿using Server.Core.Behaviours;
+using Server.Core.Exceptions;
 using Server.Core.Modules;
 using SharedLibrary;
 using SharedLibrary.Logging;

@@ -1,6 +1,4 @@
-﻿using Server.Core.Behaviours;
-
-namespace Server.Core.Behaviours
+﻿namespace Server.Core.Behaviours
 {
     public partial class BehaviourService
     {
