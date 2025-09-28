@@ -1,5 +1,6 @@
-﻿
-namespace Server.Core.Modules
+﻿using Server.Core.Modules;
+
+namespace Server.Core.Behaviours.Implementations
 {
     public class BasicAttackBehaviour : IAttackBehaviour
     {
@@ -13,7 +14,7 @@ namespace Server.Core.Modules
             target.State.Health -= dmg;
         }
 
-        public bool ShouldAttack(WorldEntity attacker, WorldEntity target)
+        public bool CanAttack(WorldEntity attacker, WorldEntity target)
         {
             return attacker.Id != target.Id;
         }

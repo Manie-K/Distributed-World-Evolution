@@ -1,4 +1,5 @@
-﻿using SharedLibrary;
+﻿using Server.Core.Behaviours;
+using SharedLibrary;
 using SharedLibrary.DTOs.ModuleDTO;
 
 namespace Server.Core.Modules

@@ -1,4 +1,6 @@
 ﻿
+using Server.Core.Behaviours;
+
 namespace Server.Core.Modules
 {
     public partial class BehaviourService : IBehaviourService

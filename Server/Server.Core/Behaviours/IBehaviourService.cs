@@ -1,4 +1,4 @@
-﻿namespace Server.Core.Modules
+﻿namespace Server.Core.Behaviours
 {
     public interface IBehaviourService
     {
