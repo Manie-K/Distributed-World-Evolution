@@ -193,11 +193,10 @@ namespace Server.Core
                             //TODO: removed hardcoded modules
                             var modules = new List<ModuleDTO>();
                             modules.Add(new ModuleDTO
-                            (1, "Test Module", true, 10, 10, 10, 
-                                new List<BehviourDTO>
-                                {
-                                    new BehviourDTO (1, "This is a test behaviour.")
-                                }
+                            (1, "Test Module", true, 10, 10, 10, new List<BehviourDTO>{
+                                    new BehviourDTO (1, "This is a test behaviour.", EntityTypeEnum.Animal)
+                                },
+                                EntityTypeEnum.Animal
                             ));
                             ////
                             ///

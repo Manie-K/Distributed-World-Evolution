@@ -16,22 +16,21 @@ namespace Server.Core.Lobby
         public string Name { get; set; }
         public int MaxPlayers { get; set; }
 
-
         public static event EventHandler<OnLogEventArgs>? OnLog;
         
         /// <summary>
         /// Lobby updates per second.
         /// </summary>
-        public const double LOBBY_UPDATES_PER_SECOND = 64;  
+        public const double LOBBY_UPDATES_PER_SECOND = 64;
 
-        private List<TcpClient> clients;
-        private ICollection<WorldEntity> entities;
-        private ICollection<Module> loadedModules;
-        private Dictionary<WorldEntity, FrameEntityMetadata> metadata;
+        private readonly IModuleService moduleService;
+        private readonly List<TcpClient> clients;
+        private readonly ICollection<WorldEntity> entities;
+        private readonly ICollection<Module> loadedModules;
+        private readonly Dictionary<WorldEntity, FrameEntityMetadata> metadata;
         private bool[,] walkableTile;
 
         private bool running;
-
 
         public static Lobby CreateLobby(int id, string name, int maxPlayers, int mapId, IEnumerable<int> moduleIDs, IModuleService moduleService)
         {
@@ -47,6 +46,7 @@ namespace Server.Core.Lobby
 
                 lobby.LoadModule(module);
             }
+
             return lobby;
         }
 
@@ -56,6 +56,7 @@ namespace Server.Core.Lobby
             Name = name;
             MaxPlayers = maxPlayers;
             walkableTile = null; //TODO: Implement map
+            moduleService = ModuleService.Instance;
 
             entities = new List<WorldEntity>(); //Currently no way to add them.
             loadedModules = new List<Module>();
@@ -143,7 +144,7 @@ namespace Server.Core.Lobby
             }
         
             // If we change position, there is a possible new interaction 
-            if(entity.State.Position != newState.Position && !metadata[entity].AlreadyChangedPosition)
+            if(entity.State.Position != newState.Position && !metadata[entity].AlreadyChangedPosition && entity.State.InteractionFramesLeft == 0)
             {
                 Module module = loadedModules.Where(m => m.ID == entity.ModuleID).First();
                 
@@ -173,8 +174,10 @@ namespace Server.Core.Lobby
                 return typeof(IMoveBehaviour);
             }
 
-            EntityTypeEnum entityType = entity.Type;
-            EntityTypeEnum targetType = entityOnPosition.Type;
+            Module entityModule = moduleService.GetModuleById(entity.ModuleID);
+            EntityTypeEnum entityType = entityModule.Type;
+
+            EntityTypeEnum targetType = moduleService.GetModuleById(entityOnPosition.ModuleID).Type;
 
             //Here we need to establish possible interactions
             if ((entityType == EntityTypeEnum.Human && targetType == EntityTypeEnum.Human) ||
@@ -183,7 +186,6 @@ namespace Server.Core.Lobby
                 (entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Animal)
                 )
             {
-                Module entityModule = ModuleService.Instance.GetModuleById(entity.ModuleID);
                 IAttackBehaviour attackBehaviour = (IAttackBehaviour)entityModule.GetBehaviourOfType(typeof(IAttackBehaviour));
                 if (attackBehaviour.ShouldAttack(entity, entityOnPosition))
                 {

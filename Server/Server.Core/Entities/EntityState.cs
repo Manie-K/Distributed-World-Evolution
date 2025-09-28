@@ -13,14 +13,12 @@ namespace Server.Core
         /// 100 means not hungry at all, 0 means starving
         /// </summary>
         public int Hunger { get; set; }
-
-        //No idea how we want this to work @PrzemekDebek/@Michał
-        //public bool Interaction { get; set; }
+        public int InteractionFramesLeft { get; set; }
 
 
         public EntityStateDTO ToDTO()
         {
-            return new EntityStateDTO(Position, Health, Hunger);
+            return new EntityStateDTO(Position, Health, Hunger, InteractionFramesLeft);
         }
 
     }

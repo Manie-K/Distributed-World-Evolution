@@ -1,8 +1,11 @@
-﻿namespace Server.Core.Modules
+﻿
+namespace Server.Core.Modules
 {
     public class TEMP_DEMO_MoreComplicatedAttackBehaviour : IAttackBehaviour
     {
         public int DatabaseID => 666;
+        public EntityTypeEnum Type => EntityTypeEnum.Animal;
+
 
         public void Attack(WorldEntity attacker, WorldEntity target)
         {

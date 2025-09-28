@@ -1,8 +1,11 @@
-﻿namespace Server.Core.Modules
+﻿
+namespace Server.Core.Modules
 {
     public class BasicAttackBehaviour : IAttackBehaviour
     {
         public int DatabaseID => 111;
+        public EntityTypeEnum Type { get => EntityTypeEnum.Human | EntityTypeEnum.Animal; }
+
 
         public void Attack(WorldEntity attacker, WorldEntity target)
         {

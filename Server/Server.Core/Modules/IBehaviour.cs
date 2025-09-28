@@ -21,7 +21,7 @@
 
         public EntityTypeEnum Type
         {
-            get; init;
+            get;
         }
     }
 }
