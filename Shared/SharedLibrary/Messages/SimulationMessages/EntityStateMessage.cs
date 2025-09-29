@@ -1,13 +1,15 @@
 ﻿using System.Text.Json;
-using SharedLibrary;
+using SharedLibrary.DTOs.EntitiesDTO;
 
 namespace SharedLibrary.Messages
 {
+    //TODO: Change after entity is fully implemented
     public class EntityStateMessage : MessageBase
     {
+        public override MessageTypeEnum MessageType => MessageTypeEnum.EntityState;
+
         public WorldEntityDTO Entity { get; init; }
 
-        public override MessageTypeEnum MessageType => MessageTypeEnum.EntityState;
         public EntityStateMessage(WorldEntityDTO entity) 
         {
             Entity = entity;
@@ -17,11 +19,12 @@ namespace SharedLibrary.Messages
         {
             var payload = new
             {
-                MessageType = MessageType,
+                MessageType = this.MessageType,
                 Entity = this.Entity
             };
 
             return JsonSerializer.Serialize(payload);
         }
+
     }
 }

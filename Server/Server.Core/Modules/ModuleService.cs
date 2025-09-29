@@ -1,14 +1,19 @@
 ﻿using SharedLibrary;
+using SharedLibrary.DTOs.ModuleDTO;
 
 namespace Server.Core.Modules
 {
     public class ModuleService : IModuleService
     {
+        public static IModuleService Instance = new ModuleService(BehaviourService.Instance);
+
         private IBehaviourService behaviourService;
+
         public ModuleService(IBehaviourService behaviourService)
         {
             this.behaviourService = behaviourService;
         }
+
 
         public Module GetModuleById(int id)
         {
@@ -21,9 +26,10 @@ namespace Server.Core.Modules
 
             Module module = new Module.ModuleBuilder()
                                 .WithName(dto.Name)
-                                .WithAuthor(dto.Author)
-                                .WithVersion(dto.Version)
-                                .WithStats(dto.Stats)
+                                .IsOfficial(false)
+                                .WithDamage(dto.Damage)
+                                .WithAggresion(dto.Aggresion)
+                                .WithReproductionNeed(dto.ReproductionNeed)
                                 .WithBehaviours(behaviours)
                                 .Create();
 
