@@ -45,6 +45,7 @@
     <Folder Include="Content\Panels\Esc_Panel\" />
     <Folder Include="Content\Panels\HealthBar\" />
     <Folder Include="Content\Panels\Inventory\" />
+    <Folder Include="Content\UI\CreateModules\" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="SharedLibrary">
