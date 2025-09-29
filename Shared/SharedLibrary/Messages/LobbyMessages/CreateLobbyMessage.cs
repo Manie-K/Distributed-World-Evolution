@@ -2,18 +2,18 @@
 
 namespace SharedLibrary.Messages
 {
+    //TODO: Validate
     public class CreateLobbyMessage : MessageBase
     {
-
+        public override MessageTypeEnum MessageType => MessageTypeEnum.CreateLobby;
+        
         public string LobbyName { get; init; }
         public int MaxPlayers { get; init; }
 
         public int MapID { get; init; }
 
-        public override MessageTypeEnum MessageType => MessageTypeEnum.CreateLobby;
-
         public IEnumerable<int> ModuleIDs { get; init; }
-
+        
         public CreateLobbyMessage(string lobbyName, int maxPlayers, int mapID, IEnumerable<int> moduleIDs)
         {
             LobbyName = lobbyName;
@@ -26,12 +26,11 @@ namespace SharedLibrary.Messages
         {
             var payload = new
             {
-                MessageType = MessageType,
-                LobbyName = LobbyName,
-                MaxPlayers = MaxPlayers,
-                MapID = MapID,
-                ModuleIDs = ModuleIDs
-                //TODO: add other properties as needed
+                MessageType = this.MessageType,
+                LobbyName = this.LobbyName,
+                MaxPlayers = this.MaxPlayers,
+                MapID = this.MapID,
+                ModuleIDs = this.ModuleIDs
             };
 
             return JsonSerializer.Serialize(payload);

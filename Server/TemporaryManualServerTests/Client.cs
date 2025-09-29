@@ -16,9 +16,9 @@ class Client
             _ = MessageManager.SendMessageAsync(client, new RoleMessage(RoleEnum.User));
 
             //Thread receiving messages
-            Thread receiveThread = new Thread(() =>
+            Thread receiveThread = new Thread(async () =>
             {
-                MessageBase message = MessageManager.ReceiveMessage(client);
+                MessageBase message = await MessageManager.ReceiveMessageAsync(client);
                 InfoMessage stringMessage = (InfoMessage)message;
                 Console.WriteLine($"[Client] Received message: {stringMessage.MessageContent}");
             });
