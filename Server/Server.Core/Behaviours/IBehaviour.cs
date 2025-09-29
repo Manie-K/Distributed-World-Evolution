@@ -1,4 +1,4 @@
-﻿namespace Server.Core.Modules
+﻿namespace Server.Core.Behaviours
 {
     // VERY IMPORTANT TODO: Currently, each entity will require a seperate behaviour instance.
     // This is not memory efficient. We will need to unload it to client somehow.
@@ -15,6 +15,11 @@
         // We also can't change the singnature to a method or make it non-readonly.
         // Don't touch it.....................:D
         public int DatabaseID
+        {
+            get;
+        }
+
+        public EntityTypeEnum Type
         {
             get;
         }

@@ -1,8 +1,12 @@
-﻿namespace Server.Core.Modules
+﻿using Server.Core.Modules;
+
+namespace Server.Core.Behaviours.Implementations
 {
     public class TEMP_DEMO_MoreComplicatedAttackBehaviour : IAttackBehaviour
     {
         public int DatabaseID => 666;
+        public EntityTypeEnum Type => EntityTypeEnum.Animal;
+
 
         public void Attack(WorldEntity attacker, WorldEntity target)
         {
@@ -10,7 +14,7 @@
             target.State.Health -= dmg;
         }
 
-        public bool ShouldAttack(WorldEntity attacker, WorldEntity target)
+        public bool CanAttack(WorldEntity attacker, WorldEntity target)
         {
             var attackerModule = ModuleService.Instance.GetModuleById(attacker.ModuleID);
             var targetModule = ModuleService.Instance.GetModuleById(target.ModuleID);

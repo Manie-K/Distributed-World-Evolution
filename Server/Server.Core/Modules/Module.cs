@@ -1,4 +1,5 @@
 ﻿using System;
+using Server.Core.Behaviours;
 using Server.Core.Exceptions;
 using Server.Core.Helpers;
 
@@ -13,11 +14,12 @@ namespace Server.Core.Modules
         public int Damage { get; private set; }
         public int Aggresion { get; private set; }
         public int ReproductionNeed { get; private set; }
+        public EntityTypeEnum Type { get; init; }
 
 
         private readonly Dictionary<Type, IBehaviour> behaviours;
 
-        private Module(string name, bool official, int damage, int aggresion, int reproductionNeed)
+        private Module(string name, bool official, int damage, int aggresion, int reproductionNeed, EntityTypeEnum type)
         {
             ID = new Random().Next(1, int.MaxValue);
             Name = name;
@@ -25,6 +27,7 @@ namespace Server.Core.Modules
             Damage = damage;
             Aggresion = aggresion;
             ReproductionNeed = reproductionNeed;
+            Type = type;
             behaviours = new Dictionary<Type, IBehaviour>();
         }
 
@@ -73,6 +76,7 @@ namespace Server.Core.Modules
             private int aggresion;
             private int reproductionNeed;
             private List<IBehaviour> behaviours;
+            private EntityTypeEnum type;
 
             public ModuleBuilder()
             {
@@ -86,12 +90,18 @@ namespace Server.Core.Modules
 
             public Module Create()
             {
-                var module = new Module(name, official, damage, aggresion, reproductionNeed);
+                var module = new Module(name, official, damage, aggresion, reproductionNeed, type);
                 foreach (var behaviour in behaviours)
                 {
                     module.AddBehaviour(behaviour);
                 }
                 return module;
+            }
+
+            public ModuleBuilder OfType(EntityTypeEnum type)
+            {
+                this.type = type;
+                return this;
             }
 
             public ModuleBuilder WithName(string name)

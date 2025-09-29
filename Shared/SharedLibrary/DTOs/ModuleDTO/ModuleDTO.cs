@@ -1,4 +1,6 @@
-﻿namespace SharedLibrary.DTOs.ModuleDTO
+﻿using Server.Core;
+
+namespace SharedLibrary.DTOs.ModuleDTO
 {
     /// <summary>
     /// Used for displaying information in Client.
@@ -12,8 +14,9 @@
         public int Aggresion { get; private set; }
         public int ReproductionNeed { get; private set; }
         public List<BehviourDTO> Behaviours { get; init; }
+        public EntityTypeEnum Type { get; init; }
 
-        public ModuleDTO(int databaseID, string name, bool official, int damage, int aggresion, int reproductionNeed, List<BehviourDTO> behaviours)
+        public ModuleDTO(int databaseID, string name, bool official, int damage, int aggresion, int reproductionNeed, List<BehviourDTO> behaviours, EntityTypeEnum type)
         {
             DatabaseID = databaseID;
             Name = name;
@@ -22,6 +25,7 @@
             Aggresion = aggresion;
             ReproductionNeed = reproductionNeed;
             Behaviours = behaviours;
+            Type = type;
         }
     }
 }

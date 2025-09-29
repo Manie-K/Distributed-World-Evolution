@@ -1,7 +1,6 @@
 ﻿using System.Numerics;
-using Server.Core;
 
-namespace Server.Core.Modules
+namespace Server.Core.Behaviours
 {
     public interface IMoveBehaviour : IBehaviour
     {

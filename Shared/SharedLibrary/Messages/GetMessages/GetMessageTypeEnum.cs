@@ -7,6 +7,7 @@ namespace SharedLibrary.Messages
     {
         GetAllLobbies,
         GetAllModules,
-        GetWorldState
+        GetWorldState,
+        GetAllBehaviors,
     }
 }

@@ -1,8 +1,15 @@
-﻿namespace Server.Core.Modules
+﻿using Server.Core.Behaviours;
+
+namespace Server.Core.Behaviours
 {
     public partial class BehaviourService : IBehaviourService
     {
         public static IBehaviourService Instance = new BehaviourService();
+
+        public IEnumerable<IBehaviour> GetAllBehaviours()
+        {
+            throw new NotImplementedException();
+        }
 
         public IBehaviour GetBehaviourInstanceByID(int databaseID)
         {
@@ -11,7 +18,7 @@
             Type? type = inMemoryDB.GetTypeByID(databaseID) ?? 
                 throw new ArgumentException($"No behaviour found with DatabaseID {databaseID}");
 
-            return new BehaviourFactory().CreateBehaviourOfType(type);
+            return BehaviourFactory.Instance.CreateBehaviourOfType(type);
         }
     }
 }

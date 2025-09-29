@@ -1,4 +1,5 @@
-﻿using SharedLibrary;
+﻿using Server.Core.Behaviours;
+using SharedLibrary;
 using SharedLibrary.DTOs.ModuleDTO;
 
 namespace Server.Core.Modules
@@ -34,6 +35,11 @@ namespace Server.Core.Modules
                                 .Create();
 
             return module;
+        }
+
+        public IEnumerable<Module> GetAllModules()
+        {
+            throw new NotImplementedException();
         }
     }
 }

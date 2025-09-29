@@ -5,6 +5,7 @@ using Server.Core.Modules;
 using SharedLibrary.Logging;
 using SharedLibrary.Messages;
 using SharedLibrary.DTOs.EntitiesDTO;
+using Server.Core.Behaviours;
 
 namespace Server.Core.Lobby
 {
@@ -16,22 +17,21 @@ namespace Server.Core.Lobby
         public string Name { get; set; }
         public int MaxPlayers { get; set; }
 
-
         public static event EventHandler<OnLogEventArgs>? OnLog;
         
         /// <summary>
         /// Lobby updates per second.
         /// </summary>
-        public const double LOBBY_UPDATES_PER_SECOND = 64;  
+        public const double LOBBY_UPDATES_PER_SECOND = 64;
 
-        private List<TcpClient> clients;
-        private ICollection<WorldEntity> entities;
-        private ICollection<Module> loadedModules;
-        private Dictionary<WorldEntity, FrameEntityMetadata> metadata;
-        private bool[,] walkableTile;
+        private readonly IModuleService moduleService;
+        private readonly List<TcpClient> clients;
+        private readonly ICollection<WorldEntity> entities;
+        private readonly ICollection<Module> loadedModules;
+        private readonly Dictionary<WorldEntity, FrameEntityMetadata> metadata;
+        private bool[,] walkableTiles;
 
         private bool running;
-
 
         public static Lobby CreateLobby(int id, string name, int maxPlayers, int mapId, IEnumerable<int> moduleIDs, IModuleService moduleService)
         {
@@ -47,6 +47,7 @@ namespace Server.Core.Lobby
 
                 lobby.LoadModule(module);
             }
+
             return lobby;
         }
 
@@ -55,7 +56,8 @@ namespace Server.Core.Lobby
             LobbyId = id;
             Name = name;
             MaxPlayers = maxPlayers;
-            walkableTile = null; //TODO: Implement map
+            walkableTiles = null; //TODO: Implement map
+            moduleService = ModuleService.Instance;
 
             entities = new List<WorldEntity>(); //Currently no way to add them.
             loadedModules = new List<Module>();
@@ -65,7 +67,6 @@ namespace Server.Core.Lobby
 
             Server.OnMessageFromClientReceived += OnMessageFromClientReceived_Delegate;
         }
-
 
         public void Run()
         {
@@ -141,14 +142,17 @@ namespace Server.Core.Lobby
             {
                 throw new ArgumentNullException(nameof(newState), "New state cannot be null.");
             }
-        
+
+            Module entModule = moduleService.GetModuleById(entity.ModuleID);
+
             // If we change position, there is a possible new interaction 
-            if(entity.State.Position != newState.Position && !metadata[entity].AlreadyChangedPosition)
+            if (entity.State.Position != newState.Position && !metadata[entity].AlreadyChangedPosition && entity.State.InteractionFramesLeft == 0)
             {
-                Module module = loadedModules.Where(m => m.ID == entity.ModuleID).First();
-                
-                Type interactionType = GetInteractionType(entity, newState);
-                IBehaviour behaviour = module.GetBehaviourOfType(interactionType);
+                Type? interactionType = GetInteractionType(entity, newState);
+                if (interactionType is null) return;
+
+                WorldEntity targetEntity = entities.Where(e => e.State.Position == newState.Position).First();
+                IBehaviour behaviour = entModule.GetBehaviourOfType(interactionType);
 
                 if (interactionType == typeof(IMoveBehaviour)) 
                 {
@@ -156,15 +160,29 @@ namespace Server.Core.Lobby
                 }
                 else if(interactionType == typeof(IAttackBehaviour)) 
                 {
-                    WorldEntity target = entities.Where(e => e.State.Position == newState.Position).First();
-                    ((IAttackBehaviour)behaviour).Attack(entity, target);
+                    ((IAttackBehaviour)behaviour).Attack(entity, targetEntity);
                 }
-                // ...
+                else if(interactionType == typeof(IReproduceBehaviour))
+                {
+                    ((IReproduceBehaviour)behaviour).Reproduce(entity, targetEntity, walkableTiles);
+                }
+                else if(interactionType == typeof(IEatBehaviour))
+                {
+
+                }
+                else if(interactionType == typeof(IGatherBehaviour))
+                {
+
+                }
+                //else if(interactionType == typeof(ITameBaheviour)) //How would taming work?
+                {
+
+                }
             }
 
         }
 
-        private Type GetInteractionType(WorldEntity entity, EntityStateDTO newState)
+        private Type? GetInteractionType(WorldEntity entity, EntityStateDTO newState)
         {
             WorldEntity? entityOnPosition = entities.Where(ent => ent.State.Position == newState.Position).FirstOrDefault();
 
@@ -173,8 +191,10 @@ namespace Server.Core.Lobby
                 return typeof(IMoveBehaviour);
             }
 
-            EntityTypeEnum entityType = entity.Type;
-            EntityTypeEnum targetType = entityOnPosition.Type;
+            Module entityModule = moduleService.GetModuleById(entity.ModuleID);
+            EntityTypeEnum entityType = entityModule.Type;
+
+            EntityTypeEnum targetType = moduleService.GetModuleById(entityOnPosition.ModuleID).Type;
 
             //Here we need to establish possible interactions
             if ((entityType == EntityTypeEnum.Human && targetType == EntityTypeEnum.Human) ||
@@ -183,11 +203,42 @@ namespace Server.Core.Lobby
                 (entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Animal)
                 )
             {
-                Module entityModule = ModuleService.Instance.GetModuleById(entity.ModuleID);
                 IAttackBehaviour attackBehaviour = (IAttackBehaviour)entityModule.GetBehaviourOfType(typeof(IAttackBehaviour));
-                if (attackBehaviour.ShouldAttack(entity, entityOnPosition))
+                if (attackBehaviour.CanAttack(entity, entityOnPosition))
                 {
                     return typeof(IAttackBehaviour);
+                }
+            }
+
+            if(entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Animal)
+            {
+                IReproduceBehaviour reproduceBehaviour = (IReproduceBehaviour)entityModule.GetBehaviourOfType(typeof(IReproduceBehaviour));
+                if (reproduceBehaviour.CanReproduce(entity, entityOnPosition))
+                {
+                    return typeof(IReproduceBehaviour);
+                }
+            }
+
+            if (entityType == EntityTypeEnum.Human && targetType == EntityTypeEnum.Plant)
+            {
+                return typeof(IGatherBehaviour);
+            }
+
+            if(entityType == EntityTypeEnum.Animal && (targetType == EntityTypeEnum.Plant || targetType == EntityTypeEnum.Animal))
+            {
+                IEatBehaviour eatBehaviour = (IEatBehaviour)entityModule.GetBehaviourOfType(typeof(IEatBehaviour));
+                if (eatBehaviour.CanEat(entity, entityOnPosition))
+                {
+                    return typeof(IEatBehaviour);
+                }
+            }
+
+            if(entityType == EntityTypeEnum.Human && targetType == EntityTypeEnum.Animal)
+            {
+                ITameBehaviour tameBehaviour = (ITameBehaviour)entityModule.GetBehaviourOfType(typeof(ITameBehaviour));
+                if (tameBehaviour.CanTame(entity, entityOnPosition))
+                {
+                    return typeof(ITameBehaviour);
                 }
             }
 
