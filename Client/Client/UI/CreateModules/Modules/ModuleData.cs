@@ -16,22 +16,22 @@ namespace Client.UI.CreateModules.Modules
 
     public class ModuleData
     {
-        public Texture2D Texture;
-        private Rectangle Rect;
+        private Texture2D texture;
+        private Rectangle rect;
         public ModuleType type;
         public string Name;
 
         public ModuleData(Texture2D texture, string name, ModuleType type)
         {
-            Texture = texture;
-            Rect = new Rectangle(193, 210, 368, 200);
+            this.texture = texture;
+            rect = new Rectangle(193, 210, 368, 200);
             Name = name;
             this.type = type;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(Texture, Rect, Color.White);
+            spriteBatch.Draw(texture, rect, Color.White);
         }
 
     }

@@ -926,6 +926,13 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/ButtonFont.spritefont
 
+#begin Fonts/DescriptionFont.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/DescriptionFont.spritefont
+
 #begin Fonts/InvenotryNumbers.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
@@ -1609,6 +1616,18 @@
 /processorParam:TextureFormat=Color
 /build:UI/Buttons/Username_TextBox.png
 
+#begin UI/CreateModules/Behaviours/switch_Button.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/CreateModules/Behaviours/switch_Button.png
+
 #begin UI/CreateModules/Boar_Module.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -1620,6 +1639,54 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:UI/CreateModules/Boar_Module.png
+
+#begin UI/CreateModules/CheckBox/Box_Apply_Check.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/CreateModules/CheckBox/Box_Apply_Check.png
+
+#begin UI/CreateModules/CheckBox/Box_Apply.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/CreateModules/CheckBox/Box_Apply.png
+
+#begin UI/CreateModules/Create_Module_Description.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/CreateModules/Create_Module_Description.png
+
+#begin UI/CreateModules/DescriptionIcon.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/CreateModules/DescriptionIcon.png
 
 #begin UI/CreateModules/Orc1_Module.png
 /importer:TextureImporter
@@ -1764,6 +1831,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:UI/CreateModules/Slime3_Module.png
+
+#begin UI/CreateModules/Stats/box_Button.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/CreateModules/Stats/box_Button.png
 
 #begin UI/CreateModules/Vampire1_Module.png
 /importer:TextureImporter
