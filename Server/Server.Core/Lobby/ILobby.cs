@@ -10,7 +10,6 @@ namespace Server.Core.Lobby
         public int LobbyId { get; }
         public string Name { get; set; }
         public int MaxPlayers { get; set; }
-        public int MapId { get; set; }
 
 
         public bool AddClient(TcpClient client);

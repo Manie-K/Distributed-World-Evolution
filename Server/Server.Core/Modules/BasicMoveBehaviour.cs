@@ -6,9 +6,8 @@ namespace Server.Core.Modules
     {
         public int DatabaseID => 222;
 
-        public void Move(WorldEntity entity, Vector2 newPosition, object map)
+        public void Move()
         {
-            entity.State.Position = newPosition;
         }
 
     }

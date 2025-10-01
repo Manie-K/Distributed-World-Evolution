@@ -13,6 +13,11 @@ namespace SharedLibrary.Messages
         InfoMessage,
         RoleMessage,
         LogMessage,
-        DisjoinLobby
+        DisjoinLobby,
+        ModuleList,
+        CreateModule,
+        LobbyList,
+        GetMessage,
+        LobbyData
     }
 }
