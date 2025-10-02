@@ -1,8 +1,10 @@
-﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System.Diagnostics;
+using SharedLibrary.DTOs.LobbyDTO;
 using SharedLibrary.Messages;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace Client
 { 
@@ -17,6 +19,10 @@ namespace Client
         private Button refreshButton;
         private Button backButton;
 
+        private bool isLoadingLobbies;
+        private bool isJoiningLobby;
+        private double timer;
+
         public LobbyScene(GameManager manager)
         {
             this.manager = manager;
@@ -28,6 +34,12 @@ namespace Client
             refreshButton = new Button(manager.ContentManager.Load<Texture2D>("UI/Buttons/RefreshButton"), null, null, new Vector2(953, 330), 180, 70, new Color(255, 255, 128));
             createButton = new Button(manager.ContentManager.Load<Texture2D>("UI/Buttons/CreateButton"), null, null, new Vector2(953, 420), 180, 70, new Color(255, 255, 128));
             backButton = new Button(manager.ContentManager.Load<Texture2D>("UI/Buttons/Back_Button"), null, null, new Vector2(10, 10), 120, 46, new Color(255, 255, 128));
+
+            isLoadingLobbies = false;
+            isJoiningLobby = false;
+            timer = 0;
+
+            LoadLobbies();
         }
 
         public void Load()
@@ -37,6 +49,42 @@ namespace Client
 
         public void Update(GameTime gameTime)
         {
+            if (isLoadingLobbies)
+            {
+                timer += gameTime.ElapsedGameTime.TotalSeconds;
+                if (timer < 0.1) return;
+
+                if (manager.ClientManager.LobbyListReady == ActionStatus.SUCCESS)
+                {
+                    LoadLobbies();
+                    manager.ClientManager.LobbyListReady = ActionStatus.WAITING;
+                    isLoadingLobbies = false;
+                }
+
+                timer = 0;
+                return;
+            }
+            else if (isJoiningLobby)
+            {
+                timer += gameTime.ElapsedGameTime.TotalSeconds;
+                if (timer < 0.1) return;
+
+                if (manager.ClientManager.LobbyJoined == ActionStatus.SUCCESS)
+                {
+                    isJoiningLobby = false;
+                    manager.ClientManager.LobbyID = switchPage.GetSelectedLobby().LobbyID;
+                    manager.SceneManager.AddScene(new GameScene(manager));
+                }
+                else if (manager.ClientManager.LobbyJoined == ActionStatus.FAILED)
+                {
+                    isJoiningLobby = false;
+                    manager.ClientManager.LobbyJoined = ActionStatus.WAITING;
+                }
+
+                timer = 0;
+                return;
+            }
+
             bool isPressed = false;
 
             if (manager.InputManager.CheckIfLeftClick())
@@ -44,7 +92,7 @@ namespace Client
                 switchPage.CheckLeftClick(manager.InputManager.GetMousePosition());
                 if (createButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                 {
-                    manager.SceneManager.AddScene(new CreateLobbyScene(manager, switchPage));
+                    manager.SceneManager.AddScene(new CreateLobbyScene(manager));
                 }
                 else if (joinButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                 {
@@ -53,13 +101,13 @@ namespace Client
                         return;
                     }
 
-                    MessageManager.SendMessageAsync(manager.ClientManager.Client, new JoinLobbyMessage(switchPage.GetSelectedLobby().LobbyID));
-                    manager.LobbyID = switchPage.GetSelectedLobby().LobbyID;
-                    manager.SceneManager.AddScene(new GameScene(manager));
+                    _ = MessageManager.SendMessageAsync(manager.ClientManager.Client, new JoinLobbyMessage(switchPage.GetSelectedLobby().LobbyID));
+                    isJoiningLobby = true;
                 }
                 else if (refreshButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                 {
-                    Debug.WriteLine("Refresh");
+                    _ = MessageManager.SendMessageAsync(manager.ClientManager.Client, new GetMessage(GetMessageTypeEnum.GetAllLobbies));
+                    isLoadingLobbies = true;
                 }
                 else if(backButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                 {
@@ -93,6 +141,17 @@ namespace Client
             backButton.Draw(spriteBatch);
             joinButton.Draw(spriteBatch);
             refreshButton.Draw(spriteBatch);
+        }
+
+        private void LoadLobbies()
+        {
+            IReadOnlyList<LobbyDTO> lobbies = manager.ClientManager.Lobbies;
+            switchPage.ClearRows();
+
+            foreach (LobbyDTO lobby in lobbies)
+            {
+                switchPage.AddRow(lobby.Name, lobby.Name, $"1/{lobby.MaxPlayers}", lobby.ID);
+            }
         }
     }
 }

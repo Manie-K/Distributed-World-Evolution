@@ -2,7 +2,7 @@
 using Client.Rendering;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SharedLibrary;
+using SharedLibrary.DTOs.EntitiesDTO;
 using System;
 using System.Collections.Generic;
 
