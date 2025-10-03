@@ -42,14 +42,14 @@ namespace Client.UI.CreateModules.Modules.Parameters
 
         public void Update(Vector2 mousePosition)
         {
-            isHovered = bounds.Contains(mousePosition);
+            isHovered = CheckBounds(mousePosition);
         }
 
         public bool CheckLeftClick(Vector2 clickPosition)
         {
             if (bounds.Contains(clickPosition))
             {
-                value = !value;
+                ChangeValue();
                 return true;
             }
             return false;
@@ -68,6 +68,16 @@ namespace Client.UI.CreateModules.Modules.Parameters
         public void SetValue(bool val)
         {
             value = val;
+        }
+
+        public bool CheckBounds(Vector2 mousePosition)
+        {
+            return bounds.Contains(mousePosition);
+        }
+
+        public void ChangeValue()
+        {
+            value = !value;
         }
     }
 }

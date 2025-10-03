@@ -24,9 +24,10 @@ namespace Client.UI.CreateModules.Modules.Parameters
             parameterValue.SetText(value.ToString());
         }
 
-        public void CheckLeftClick(Vector2 cursorPosition)
+        public bool CheckLeftClick(Vector2 cursorPosition)
         {
-            parameterValue.CheckLeftClick(cursorPosition);
+            return parameterValue.CheckLeftClick(cursorPosition);
+
         }
 
         public void Update()
@@ -43,6 +44,11 @@ namespace Client.UI.CreateModules.Modules.Parameters
         {
             spriteBatch.Draw(textureStatsBox, rect, Color.White);
             parameterValue.Draw(spriteBatch);
+        }
+
+        public int GetParameter()
+        {
+            return int.Parse(parameterValue.GetText());
         }
     }
 }

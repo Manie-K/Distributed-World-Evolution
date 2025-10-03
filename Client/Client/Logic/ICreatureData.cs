@@ -20,7 +20,8 @@ namespace Client
 
         public string Name { set; get; }
         public CreatureType Type { set; get; }
-
+        public int GraphicIndex { set; get; }
+        public bool IsOfficial {  set; get; }
         public int BreedingCooldown { get; set; }
 
     }

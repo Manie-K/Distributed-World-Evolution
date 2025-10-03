@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using SharedLibrary;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,8 @@ namespace Client.UI.CreateModules.Modules.Parameters
         private int pageNumber;
         private int amountOfRows;
 
+        private int lastParameterClicked;
+
         public SwitchPageModulesParameters(SpriteFont fontNumbers, Vector2 position, ContentManager contentManager, int amountOfRows)
         {
             this.contentManager = contentManager;
@@ -34,15 +37,24 @@ namespace Client.UI.CreateModules.Modules.Parameters
 
         public void AddRow()
         {
-            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)),0,"Health","statystyka pierwsza jooow"));
-            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Damage", "statystyka pierwsza jooow"));
-            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Hunger", "statystyka pierwsza jooow"));
-            parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), new List<string> { "Ala", "ma", "kota" }, 0, "Aggresion", "behaviour pierwsza jooow"));
-            parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), new List<string> { "Kot", "ma", "Ale" }, 0, "Movement", "behaviour pierwsza jooow"));
-            parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), new List<string> { "Aggression", "nie ma", "psa" }, 0, "Attack", "behaviour pierwsza jooow"));
+            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)),0,"Health","statystyka pierwsza jooow1"));
+            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Damage", "statystyka pierwsza jooow2"));
+            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Hunger", "statystyka pierwsza jooow3"));
+            parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), new List<string> { "Carnivore", "Herbivore", "Omnivore" }, 1, "Consumption", "behaviour pierwsza jooow1"));
+            parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), new List<string> { "HP > X", "Enemy HP < X", "Always", "Random" }, 1, "Combat", "behaviour pierwsza jooow2"));
+            parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), new List<string> { "Same Species", "Hunger > X and Same Species", "If Reproduction Drive > random_float()" }, 1, "Breeding", "behaviour pierwsza jooow3"));
         }
 
-        public void CheckLeftClick(Vector2 clickPosition)
+        public void AddRow2()
+        {
+            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Health", "statystyka pierwsza jooow1"));
+            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Hunger", "statystyka pierwsza jooow2"));
+            parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), new List<string> { "HP > X", "Enemy HP < X", "Always", "Random" }, 1, "Combat", "behaviour pierwsza jooow1"));
+            parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), new List<string> { "Same Species", "Hunger > X and Same Species", "If Reproduction Drive > random_float()" }, 1, "Breeding", "behaviour pierwsza jooow2"));
+            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Health", "statystyka pierwsza jooow3"));
+        }
+
+        public bool CheckLeftClick(Vector2 clickPosition)
         {
             if (pageButtons[0].CheckLeftClick(clickPosition))
             {
@@ -56,10 +68,16 @@ namespace Client.UI.CreateModules.Modules.Parameters
 
             pageNumberText.SetText(pageNumber.ToString());
 
+            bool isClicked = false;
             for (int i = 0; i < GetRowsOnPage(); i++)
             {
-                parameters[(pageNumber - 1) * amountOfRows + i].CheckLeftClick(clickPosition);
+                if (parameters[(pageNumber - 1) * amountOfRows + i].CheckLeftClick(clickPosition))
+                {
+                    lastParameterClicked = (pageNumber - 1) * amountOfRows + i;
+                    isClicked = true;
+                }
             }
+            return isClicked;
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -95,7 +113,32 @@ namespace Client.UI.CreateModules.Modules.Parameters
             return Math.Min(amountOfRows, remainingRows);
         }
 
+        public string GetLastDescription()
+        {
+            return parameters[lastParameterClicked].Description;
+        }
 
+        public int GetValueOnIndex(int index)
+        {
+            return parameters[index].GetValue();
+        }
+
+        public List<Tuple<int, int>> GetBehavioursList()
+        {
+            List<Tuple<int, int>> list = new List<Tuple<int, int>>();
+            
+            for(int i=0;i< parameters.Count; i++)
+            {
+                if (parameters[i] is ModuleBehaviourParameter behaviourParam
+                    && parameters[i].Type == 1
+                    && behaviourParam.IsPicked())
+                {
+                    list.Add(new Tuple<int, int>(i, GetValueOnIndex(i)));
+                }
+            }
+
+            return list;
+        }
 
     }
 }

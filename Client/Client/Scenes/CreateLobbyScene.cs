@@ -59,24 +59,24 @@ namespace Client
 
         public void InitializeCreaturesRows()
         {
-            switchPageLobby.AddRow(new AnimalData("Boar", 131, 220, 5, 3, 1, 25, true , true, true));
-            switchPageLobby.AddRow(new AnimalData("Brown Rabbit",400, 300,45, 3, 10, 35, true, true, true));
-            switchPageLobby.AddRow(new AnimalData("White Rabbit", 400, 300, 45, 3, 10, 35, true, true, true));
-            switchPageLobby.AddRow(new AnimalData("Red Plant", 100, 400, 35, 3, 13, 65, true, true, true));
-            switchPageLobby.AddRow(new AnimalData("Blue Plant", 500, 2500, 5, 23, 12, 4, true, true, true));
-            switchPageLobby.AddRow(new AnimalData("Purple Plant", 150, 260, 5, 13, 155, 25, true, true, true));
-            switchPageLobby.AddRow(new AnimalData("Orc", 100, 400, 35, 3, 13, 65, true, true, true));
-            switchPageLobby.AddRow(new AnimalData("Blue Orc", 500, 2500, 5, 23, 12, 4, true, true, true));
-            switchPageLobby.AddRow(new AnimalData("Darkgreen Orc", 150, 260, 5, 13, 155, 25, true, true, true));
-            switchPageLobby.AddRow(new AnimalData("Pig", 100, 400, 35, 3, 13, 65, true, true, true));
-            switchPageLobby.AddRow(new AnimalData("Slime", 500, 2500, 5, 23, 12, 4, true, true, true));
-            switchPageLobby.AddRow(new AnimalData("Water Slime", 150, 260, 5, 13, 155, 25, true, true, true));
-            switchPageLobby.AddRow(new AnimalData("Fire Slime", 150, 260, 5, 13, 155, 25, true, true, true));
-            switchPageLobby.AddRow(new AnimalData("Vampire", 500, 2500, 5, 23, 12, 4, true, true, true));
-            switchPageLobby.AddRow(new AnimalData("Blue Vampire", 150, 260, 5, 13, 155, 25, true, true, true));
-            switchPageLobby.AddRow(new AnimalData("Red Vampire", 150, 260, 5, 13, 155, 25, true, true, true));
-            switchPageLobby.AddRow(new PlantData("Rose", 222, 10, 20, true, true, true));
-            switchPageLobby.AddRow(new PlantData("Mushroom", 265, 105, 20, true, true, true));
+            switchPageLobby.AddRow(new AnimalData("Boar", 131, 220, 5, 3, 1, 25, true , true, true, 1, false));
+            switchPageLobby.AddRow(new AnimalData("Brown Rabbit",400, 300,45, 3, 10, 35, true, true, true, 1, true));
+            switchPageLobby.AddRow(new AnimalData("White Rabbit", 400, 300, 45, 3, 10, 35, true, true, true, 1, true));
+            switchPageLobby.AddRow(new AnimalData("Red Plant", 100, 400, 35, 3, 13, 65, true, true, true, 1, true));
+            switchPageLobby.AddRow(new AnimalData("Blue Plant", 500, 2500, 5, 23, 12, 4, true, true, true, 1, true));
+            switchPageLobby.AddRow(new AnimalData("Purple Plant", 150, 260, 5, 13, 155, 25, true, true, true, 1, false));
+            switchPageLobby.AddRow(new AnimalData("Orc", 100, 400, 35, 3, 13, 65, true, true, true, 1, false));
+            switchPageLobby.AddRow(new AnimalData("Blue Orc", 500, 2500, 5, 23, 12, 4, true, true, true, 1, true));
+            switchPageLobby.AddRow(new AnimalData("Darkgreen Orc", 150, 260, 5, 13, 155, 25, true, true, true, 1, false));
+            switchPageLobby.AddRow(new AnimalData("Pig", 100, 400, 35, 3, 13, 65, true, true, true, 1, true));
+            switchPageLobby.AddRow(new AnimalData("Slime", 500, 2500, 5, 23, 12, 4, true, true, true, 1, false));
+            switchPageLobby.AddRow(new AnimalData("Water Slime", 150, 260, 5, 13, 155, 25, true, true, true, 1, false));
+            switchPageLobby.AddRow(new AnimalData("Fire Slime", 150, 260, 5, 13, 155, 25, true, true, true, 1, true));
+            switchPageLobby.AddRow(new AnimalData("Vampire", 500, 2500, 5, 23, 12, 4, true, true, true, 1, true));
+            switchPageLobby.AddRow(new AnimalData("Blue Vampire", 150, 260, 5, 13, 155, 25, true, true, true, 1, true));
+            switchPageLobby.AddRow(new AnimalData("Red Vampire", 150, 260, 5, 13, 155, 25, true, true, true, 1, true));
+            switchPageLobby.AddRow(new PlantData("Rose", 222, 10, 20, true, true, true, false, 1));
+            switchPageLobby.AddRow(new PlantData("Mushroom", 265, 105, 20, true, true, true, true, 1));
         }
 
         public void InitalizeParametersPanel()

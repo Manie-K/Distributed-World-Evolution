@@ -22,7 +22,9 @@ namespace Client
             int toxicityDamage,
             bool canReproduce,
             bool isToxicOnContact,
-            bool isToxicWhenEaten)
+            bool isToxicWhenEaten,
+            bool isOfficial,
+            int graphicIndex)
         {
             this.Type = CreatureType.Plant;
             this.Name = name;
@@ -32,6 +34,8 @@ namespace Client
             this.IsFertile = canReproduce;
             this.IsToxicOnContact = isToxicOnContact;
             this.IsToxicWhenEaten = isToxicWhenEaten;
+            IsOfficial = isOfficial;
+            GraphicIndex = graphicIndex;
         }
     }
 }

@@ -78,14 +78,16 @@ namespace Client
 
         public void AddRow(AnimalData animal)
         {
-            creatures.Add(new CreateLobbyRow(contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"),
-                                              animal,new Vector2(245, 283 + 58 * (creatures.Count % amountOfRows)), 438, 58));
+            creatures.Add(new CreateLobbyRow(contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), contentManager.Load<Texture2D>("UI/CreateModules/CheckBox/Box_Apply"),
+                                             contentManager.Load<Texture2D>("UI/CreateModules/CheckBox/Box_Apply_Check"), contentManager.Load<Texture2D>("UI/CreateLobby/verif_icon"),
+                                             animal,new Vector2(245, 283 + 58 * (creatures.Count % amountOfRows)), 368, 58));
         }
 
         public void AddRow(PlantData plant)
         {
-            creatures.Add(new CreateLobbyRow(contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"),
-                                              plant, new Vector2(245, 283 + 58 * (creatures.Count % amountOfRows)), 438, 58));
+            creatures.Add(new CreateLobbyRow(contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), contentManager.Load<Texture2D>("UI/CreateModules/CheckBox/Box_Apply"),
+                                             contentManager.Load<Texture2D>("UI/CreateModules/CheckBox/Box_Apply_Check"), contentManager.Load<Texture2D>("UI/CreateLobby/verif_icon"),
+                                             plant, new Vector2(245, 283 + 58 * (creatures.Count % amountOfRows)), 368, 58));
         }
 
         public bool UpdateRows(Vector2 cursorPosition, bool ispressed)
@@ -95,7 +97,7 @@ namespace Client
             {
                 if ((pageNumber - 1) * amountOfRows + i != selectedRow)
                 {
-                    if (creatures[(pageNumber - 1) * amountOfRows + i].Update(cursorPosition, false) && ispressed)
+                    if (creatures[(pageNumber - 1) * amountOfRows + i].Update(cursorPosition, ispressed, false) && ispressed)
                     {
                         previousRow = selectedRow;
                         selectedRow = (pageNumber - 1) * amountOfRows + i;
@@ -104,7 +106,7 @@ namespace Client
                 }
                 else
                 {
-                    creatures[(pageNumber - 1) * amountOfRows + i].Update(cursorPosition, true);
+                    creatures[(pageNumber - 1) * amountOfRows + i].Update(cursorPosition, ispressed, true);
                 }
             }
             return isNewSelected;

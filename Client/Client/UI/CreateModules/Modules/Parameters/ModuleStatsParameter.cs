@@ -19,21 +19,22 @@ namespace Client.UI.CreateModules.Modules.Parameters
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            checkBox.Draw(spriteBatch);
             moduleName.Draw(spriteBatch);
             statsBox.Draw(spriteBatch);
         }
 
-        public override void CheckLeftClick(Vector2 position)
+        public override bool CheckLeftClick(Vector2 position)
         {
-            checkBox.CheckLeftClick(position);
-            statsBox.CheckLeftClick(position);
+            return statsBox.CheckLeftClick(position);
         }
 
         public override void Update(Vector2 position)
         {
-            checkBox.Update(position);
             statsBox.Update();
+        }
+        public override int GetValue()
+        {
+            return statsBox.GetParameter();
         }
     }
 }

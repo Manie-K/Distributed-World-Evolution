@@ -1616,6 +1616,18 @@
 /processorParam:TextureFormat=Color
 /build:UI/Buttons/Username_TextBox.png
 
+#begin UI/CreateLobby/verif_icon.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/CreateLobby/verif_icon.png
+
 #begin UI/CreateModules/Behaviours/switch_Button.png
 /importer:TextureImporter
 /processor:TextureProcessor

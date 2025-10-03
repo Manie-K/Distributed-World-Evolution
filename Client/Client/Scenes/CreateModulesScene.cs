@@ -25,7 +25,7 @@ namespace Client
         private Button saveButton;
 
         private SwitchPageModulesParameters switchPageModulesParameters;
-
+        private SwitchPageModulesParameters switchPageModulesParameters2;
 
 
         public CreateModulesScene(GameManager manager)
@@ -40,8 +40,10 @@ namespace Client
 
             this.switchPageModulesParameters = new SwitchPageModulesParameters(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"),
                                                      new Vector2(806, 482), manager.ContentManager, 4);
-
+            this.switchPageModulesParameters2 = new SwitchPageModulesParameters(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"),
+                                                     new Vector2(806, 482), manager.ContentManager, 4);
             switchPageModulesParameters.AddRow();
+            switchPageModulesParameters2.AddRow2();
         }
 
         public void Load()
@@ -65,7 +67,8 @@ namespace Client
                 {
                     if (!moduleName.CheckTextIfEmpty())
                     {
-
+                        if (switchPageModules.GetAcctualType() == ModuleType.Animal) CreateAnimalJSON();
+                        
                         manager.SceneManager.RemoveScene();
                     }
                     else
@@ -79,7 +82,14 @@ namespace Client
                     descriptionBox.ChangeButton();
                 }
 
-                switchPageModulesParameters.CheckLeftClick(manager.InputManager.GetMousePosition());
+                if (switchPageModules.GetAcctualType() == ModuleType.Animal)
+                {
+                    if (switchPageModulesParameters.CheckLeftClick(manager.InputManager.GetMousePosition())) descriptionBox.SetDescriptionText(switchPageModulesParameters.GetLastDescription());
+                }
+                else
+                {
+                    if (switchPageModulesParameters2.CheckLeftClick(manager.InputManager.GetMousePosition())) descriptionBox.SetDescriptionText(switchPageModulesParameters2.GetLastDescription());
+                }
             }
 
             if (manager.InputManager.CheckIfCanPressKey(Keys.Escape))
@@ -87,7 +97,8 @@ namespace Client
                 manager.SceneManager.RemoveScene();
             }
 
-            switchPageModulesParameters.UpdateRows(manager.InputManager.GetMousePosition());
+            if (switchPageModules.GetAcctualType() == ModuleType.Animal) switchPageModulesParameters.UpdateRows(manager.InputManager.GetMousePosition());
+            else switchPageModulesParameters2.UpdateRows(manager.InputManager.GetMousePosition());
 
             moduleName.Update();
             exitButton.Update(manager.InputManager.GetMousePosition());
@@ -109,7 +120,25 @@ namespace Client
             descriptionBox.Draw(spriteBatch);
             switchPageModules.Draw(spriteBatch);
 
-            switchPageModulesParameters.Draw(spriteBatch);
+            if (switchPageModules.GetAcctualType() == ModuleType.Animal) switchPageModulesParameters.Draw(spriteBatch);
+            else switchPageModulesParameters2.Draw(spriteBatch);
+        }
+
+
+        public void CreateAnimalJSON()
+        {
+
+            var json = JsonSerializer.Serialize(new
+            {
+                LobbyName = moduleName.GetText(),
+                ModuleGraphics = switchPageModules.GetIndex(),
+                Health = switchPageModulesParameters.GetValueOnIndex(0),
+                Damage = switchPageModulesParameters.GetValueOnIndex(1),
+                Hunger = switchPageModulesParameters.GetValueOnIndex(2),
+                Behaviours = switchPageModulesParameters.GetBehavioursList()
+            }) ;
+
+            Console.WriteLine(json);
         }
 
     }

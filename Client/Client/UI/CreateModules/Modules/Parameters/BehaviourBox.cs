@@ -17,7 +17,7 @@ namespace Client.UI.CreateModules.Modules.Parameters
         private Button[] pageButtons;
         private Text behaviourText;
         private List<string> behaviourParameters;
-        private int selectedParameter;
+        public int selectedParameter;
 
         public BehaviourBox(Texture2D texture, SpriteFont font, List<string> values, Vector2 position)
         {
@@ -35,8 +35,9 @@ namespace Client.UI.CreateModules.Modules.Parameters
             behaviourText.SetText(values[0]);
         }
 
-        public void CheckLeftClick(Vector2 cursorPosition)
+        public bool CheckLeftClick(Vector2 cursorPosition)
         {
+            bool isClicked = true;
             if (pageButtons[0].CheckLeftClick(cursorPosition))
             {
                 if (selectedParameter > 0) selectedParameter--;
@@ -45,8 +46,11 @@ namespace Client.UI.CreateModules.Modules.Parameters
             {
                 if (selectedParameter < behaviourParameters.Count - 1) selectedParameter++;
             }
+            else isClicked = false;
+
 
             behaviourText.SetText(behaviourParameters[selectedParameter]);
+            return isClicked;
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -56,5 +60,7 @@ namespace Client.UI.CreateModules.Modules.Parameters
             pageButtons[0].Draw(spriteBatch);
             pageButtons[1].Draw(spriteBatch);
         }
+
+
     }
 }

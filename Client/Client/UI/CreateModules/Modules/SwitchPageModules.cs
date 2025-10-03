@@ -84,5 +84,15 @@ namespace Client
             modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/BG_Settings"), "Rose", ModuleType.Plant));
             modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/BG_Forest"), "Mushroom", ModuleType.Plant));
         }
+
+        public ModuleType GetAcctualType()
+        {
+            return modules[pageNumber - 1].type;
+        }
+
+        public int GetIndex()
+        {
+            return pageNumber - 1;
+        }
     }
 }

@@ -17,7 +17,7 @@ namespace Client
         public bool IsFertile { get; set; }
         public bool IsTamable { get; set; }
 
-        public AnimalData(string name, int health, int attack, int speed, int range, int armor, int breedingCooldown, bool aggressive, bool canReproduce, bool isTamable)
+        public AnimalData(string name, int health, int attack, int speed, int range, int armor, int breedingCooldown, bool aggressive, bool canReproduce, bool isTamable, int graphicIndex, bool isOfficial)
         {
             Type = CreatureType.Animal;
             Name = name;
@@ -30,6 +30,8 @@ namespace Client
             IsAggressive = aggressive;
             IsFertile = canReproduce;
             IsTamable = isTamable;
+            IsOfficial = isOfficial;
+            GraphicIndex = graphicIndex;
         }
     }
 }
