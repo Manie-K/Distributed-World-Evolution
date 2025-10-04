@@ -1,4 +1,5 @@
 ﻿using Server.Core.Behaviours;
+using Server.Core.Exceptions;
 using SharedLibrary;
 using SharedLibrary.DTOs.ModuleDTO;
 
@@ -18,7 +19,7 @@ namespace Server.Core.Modules
 
         public Module GetModuleById(int id)
         {
-            throw new NotImplementedException();
+            throw new ModuleNotFoundException();
         }
 
         public Module CreateModuleInstance(CreateModuleDTO dto)

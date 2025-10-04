@@ -2,19 +2,11 @@
 
 namespace Server.Core.Behaviours.Implementations
 {
-    public class BasicAttackBehaviour : IAttackBehaviour
+    public class BasicAttackBehaviour : AttackBehaviourBase
     {
-        public int DatabaseID => 111;
-        public EntityTypeEnum Type { get => EntityTypeEnum.Human | EntityTypeEnum.Animal; }
+        public override int DatabaseID => throw new NotImplementedException();
 
-
-        public void Attack(WorldEntity attacker, WorldEntity target)
-        {
-            int dmg = ModuleService.Instance.GetModuleById(attacker.ModuleID).Damage;
-            target.State.Health -= dmg;
-        }
-
-        public bool CanAttack(WorldEntity attacker, WorldEntity target)
+        public override bool CanExecute(WorldEntity attacker, WorldEntity target, Dictionary<string, object>? otherParams = null)
         {
             return attacker.Id != target.Id;
         }

@@ -15,8 +15,9 @@ namespace SharedLibrary.DTOs.ModuleDTO
         public int ReproductionNeed { get; private set; }
         public List<BehviourDTO> Behaviours { get; init; }
         public EntityTypeEnum Type { get; init; }
+        public int GraphicalRepresentationID { get; set; }
 
-        public ModuleDTO(int databaseID, string name, bool official, int damage, int aggresion, int reproductionNeed, List<BehviourDTO> behaviours, EntityTypeEnum type)
+        public ModuleDTO(int databaseID, string name, bool official, int damage, int aggresion, int reproductionNeed, List<BehviourDTO> behaviours, EntityTypeEnum type, int graphicalRepresentationID)
         {
             DatabaseID = databaseID;
             Name = name;
@@ -26,6 +27,7 @@ namespace SharedLibrary.DTOs.ModuleDTO
             ReproductionNeed = reproductionNeed;
             Behaviours = behaviours;
             Type = type;
+            GraphicalRepresentationID = graphicalRepresentationID;
         }
     }
 }

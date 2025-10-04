@@ -6,6 +6,7 @@ using SharedLibrary.Logging;
 using SharedLibrary.Messages;
 using SharedLibrary.DTOs.EntitiesDTO;
 using Server.Core.Behaviours;
+using Server.Core.Helpers;
 
 namespace Server.Core.Lobby
 {
@@ -154,30 +155,19 @@ namespace Server.Core.Lobby
                 WorldEntity targetEntity = entities.Where(e => e.State.Position == newState.Position).First();
                 IBehaviour behaviour = entModule.GetBehaviourOfType(interactionType);
 
-                if (interactionType == typeof(IMoveBehaviour)) 
-                {
-                    ((IMoveBehaviour)behaviour).Move();
-                }
-                else if(interactionType == typeof(IAttackBehaviour)) 
-                {
-                    ((IAttackBehaviour)behaviour).Attack(entity, targetEntity);
-                }
-                else if(interactionType == typeof(IReproduceBehaviour))
-                {
-                    ((IReproduceBehaviour)behaviour).Reproduce(entity, targetEntity, walkableTiles);
-                }
-                else if(interactionType == typeof(IEatBehaviour))
-                {
 
-                }
-                else if(interactionType == typeof(IGatherBehaviour))
+                // Check if we need to add custom params
+                if(interactionType == typeof(MoveBehaviourBase))
                 {
-
+                    behaviour.Execute(entity, null, new Dictionary<string, object>{
+                        { CustomBehaviourParams.MAP_PARAM, walkableTiles   }
+                    });
                 }
-                //else if(interactionType == typeof(ITameBaheviour)) //How would taming work?
+                else
                 {
-
+                    behaviour.Execute(entity, targetEntity);
                 }
+
             }
 
         }
@@ -188,7 +178,7 @@ namespace Server.Core.Lobby
 
             if (entityOnPosition == null)
             {
-                return typeof(IMoveBehaviour);
+                return typeof(MoveBehaviourBase);
             }
 
             Module entityModule = moduleService.GetModuleById(entity.ModuleID);
@@ -196,49 +186,57 @@ namespace Server.Core.Lobby
 
             EntityTypeEnum targetType = moduleService.GetModuleById(entityOnPosition.ModuleID).Type;
 
-            //Here we need to establish possible interactions
+            // Attack
             if ((entityType == EntityTypeEnum.Human && targetType == EntityTypeEnum.Human) ||
                 (entityType == EntityTypeEnum.Human && targetType == EntityTypeEnum.Animal) ||
                 (entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Human) ||
                 (entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Animal)
                 )
             {
-                IAttackBehaviour attackBehaviour = (IAttackBehaviour)entityModule.GetBehaviourOfType(typeof(IAttackBehaviour));
-                if (attackBehaviour.CanAttack(entity, entityOnPosition))
+                AttackBehaviourBase attackBehaviour = (AttackBehaviourBase)entityModule.GetBehaviourOfType(typeof(AttackBehaviourBase));
+                if (attackBehaviour.CanExecute(entity, entityOnPosition))
                 {
-                    return typeof(IAttackBehaviour);
+                    return typeof(AttackBehaviourBase);
                 }
             }
 
-            if(entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Animal)
+            // Reproduce
+            if (entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Animal)
             {
-                IReproduceBehaviour reproduceBehaviour = (IReproduceBehaviour)entityModule.GetBehaviourOfType(typeof(IReproduceBehaviour));
-                if (reproduceBehaviour.CanReproduce(entity, entityOnPosition))
+                ReproduceBehaviourBase reproduceBehaviour = (ReproduceBehaviourBase)entityModule.GetBehaviourOfType(typeof(ReproduceBehaviourBase));
+                if (reproduceBehaviour.CanExecute(entity, entityOnPosition))
                 {
-                    return typeof(IReproduceBehaviour);
+                    return typeof(ReproduceBehaviourBase);
                 }
             }
 
+            // Eat
+            if (entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Plant)
+            {
+                EatBehaviourBase eatBehaviour = (EatBehaviourBase)entityModule.GetBehaviourOfType(typeof(EatBehaviourBase));
+                if (eatBehaviour.CanExecute(entity, entityOnPosition))
+                {
+                    return typeof(EatBehaviourBase);
+                }
+            }
+
+            // Gather 
             if (entityType == EntityTypeEnum.Human && targetType == EntityTypeEnum.Plant)
             {
-                return typeof(IGatherBehaviour);
-            }
-
-            if(entityType == EntityTypeEnum.Animal && (targetType == EntityTypeEnum.Plant || targetType == EntityTypeEnum.Animal))
-            {
-                IEatBehaviour eatBehaviour = (IEatBehaviour)entityModule.GetBehaviourOfType(typeof(IEatBehaviour));
-                if (eatBehaviour.CanEat(entity, entityOnPosition))
+                GatherBehaviourBase gatherBehaviour = (GatherBehaviourBase)entityModule.GetBehaviourOfType(typeof(GatherBehaviourBase));
+                if (gatherBehaviour.CanExecute(entity, entityOnPosition))
                 {
-                    return typeof(IEatBehaviour);
+                    return typeof(GatherBehaviourBase);
                 }
             }
 
-            if(entityType == EntityTypeEnum.Human && targetType == EntityTypeEnum.Animal)
+            // Tame
+            if (entityType == EntityTypeEnum.Human && targetType == EntityTypeEnum.Animal)
             {
-                ITameBehaviour tameBehaviour = (ITameBehaviour)entityModule.GetBehaviourOfType(typeof(ITameBehaviour));
-                if (tameBehaviour.CanTame(entity, entityOnPosition))
+                TameBehaviourBase tameBehaviour = (TameBehaviourBase)entityModule.GetBehaviourOfType(typeof(TameBehaviourBase));
+                if (tameBehaviour.CanExecute(entity, entityOnPosition))
                 {
-                    return typeof(ITameBehaviour);
+                    return typeof(TameBehaviourBase);
                 }
             }
 
