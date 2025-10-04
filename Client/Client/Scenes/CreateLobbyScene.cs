@@ -29,6 +29,7 @@ namespace Client
         private bool isCreatingLobby;
         private bool isJoiningLobby;
         private double timer;
+        private double timeoutTimer;
 
         public CreateLobbyScene(GameManager manager)
         {
@@ -56,6 +57,7 @@ namespace Client
             isCreatingLobby = false;
             isJoiningLobby = false;
             timer = 0;
+            timeoutTimer = 0;
         }
 
         public void Load()
@@ -93,9 +95,17 @@ namespace Client
 
         public void Update(GameTime gameTime)
         {
+            if (timeoutTimer > 5)
+            {
+                isCreatingLobby = false;
+                isJoiningLobby = false;
+                timeoutTimer = 0;
+            }
+
             if (isCreatingLobby)
             {
                 timer += gameTime.ElapsedGameTime.TotalSeconds;
+                timeoutTimer += gameTime.ElapsedGameTime.TotalSeconds;
                 if (timer < 0.1) return;
 
                 if (manager.ClientManager.LobbyCreated == ActionStatus.SUCCESS)
@@ -103,11 +113,13 @@ namespace Client
                     isJoiningLobby = true;
                     isCreatingLobby = false;
                     manager.ClientManager.LobbyCreated = ActionStatus.WAITING;
+                    timeoutTimer = 0;
                 }
                 else if (manager.ClientManager.LobbyCreated == ActionStatus.FAILED)
                 {
                     isCreatingLobby = false;
                     manager.ClientManager.LobbyCreated = ActionStatus.WAITING;
+                    timeoutTimer = 0;
                 }
 
                 timer = 0;
@@ -116,15 +128,18 @@ namespace Client
             else if (isJoiningLobby)
             {
                 timer += gameTime.ElapsedGameTime.TotalSeconds;
+                timeoutTimer += gameTime.ElapsedGameTime.TotalSeconds;
                 if (timer < 0.1) return;
 
                 if (manager.ClientManager.LobbyJoined == ActionStatus.SUCCESS)
                 {
+                    timeoutTimer = 0;
                     manager.SceneManager.RemoveScene();
                     manager.SceneManager.AddScene(new GameScene(manager));
                 }
                 else if (manager.ClientManager.LobbyJoined == ActionStatus.FAILED)
                 {
+                    timeoutTimer = 0;
                     isJoiningLobby = false;
                     manager.ClientManager.LobbyJoined = ActionStatus.WAITING;
                 }

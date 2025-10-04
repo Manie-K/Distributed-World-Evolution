@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework.Input;
 using SharedLibrary.DTOs.LobbyDTO;
 using SharedLibrary.Messages;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace Client
 { 
@@ -22,6 +21,7 @@ namespace Client
         private bool isLoadingLobbies;
         private bool isJoiningLobby;
         private double timer;
+        private double timeoutTimer;
 
         public LobbyScene(GameManager manager)
         {
@@ -38,6 +38,7 @@ namespace Client
             isLoadingLobbies = false;
             isJoiningLobby = false;
             timer = 0;
+            timeoutTimer = 0;
 
             LoadLobbies();
         }
@@ -49,9 +50,17 @@ namespace Client
 
         public void Update(GameTime gameTime)
         {
+            if (timeoutTimer >= 5)
+            {
+                isLoadingLobbies = false;
+                isJoiningLobby = false;
+                timeoutTimer = 0;
+            }
+
             if (isLoadingLobbies)
             {
                 timer += gameTime.ElapsedGameTime.TotalSeconds;
+                timeoutTimer += gameTime.ElapsedGameTime.TotalSeconds;
                 if (timer < 0.1) return;
 
                 if (manager.ClientManager.LobbyListReady == ActionStatus.SUCCESS)
@@ -59,6 +68,7 @@ namespace Client
                     LoadLobbies();
                     manager.ClientManager.LobbyListReady = ActionStatus.WAITING;
                     isLoadingLobbies = false;
+                    timeoutTimer = 0;
                 }
 
                 timer = 0;
@@ -67,16 +77,19 @@ namespace Client
             else if (isJoiningLobby)
             {
                 timer += gameTime.ElapsedGameTime.TotalSeconds;
+                timeoutTimer += gameTime.ElapsedGameTime.TotalSeconds;
                 if (timer < 0.1) return;
 
                 if (manager.ClientManager.LobbyJoined == ActionStatus.SUCCESS)
                 {
+                    timeoutTimer = 0;
                     isJoiningLobby = false;
                     manager.ClientManager.LobbyID = switchPage.GetSelectedLobby().LobbyID;
                     manager.SceneManager.AddScene(new GameScene(manager));
                 }
                 else if (manager.ClientManager.LobbyJoined == ActionStatus.FAILED)
                 {
+                    timeoutTimer = 0;
                     isJoiningLobby = false;
                     manager.ClientManager.LobbyJoined = ActionStatus.WAITING;
                 }
