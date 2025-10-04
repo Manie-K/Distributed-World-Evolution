@@ -19,7 +19,6 @@ namespace Server.Core.Behaviours
             {
                 int dmg = ModuleService.Instance.GetModuleById(attacker.ModuleID).Damage;
                 target.State.Health -= dmg;
-                attacker.State.InteractionFramesLeft = 10; //TODO: make configurable
             }
             catch (ModuleNotFoundException ex)
             {

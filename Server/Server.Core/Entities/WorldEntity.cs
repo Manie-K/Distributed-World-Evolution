@@ -6,32 +6,35 @@ namespace Server.Core
     public class WorldEntity
     {
         public Guid Id { get; init; }
+        public string? Name { get; init; }
         public int ModuleID { get; init; }
         public EntityState State { get; init; }
 
-        public static WorldEntity CreateWorldEntity(int moduleId)
+        public static WorldEntity CreateWorldEntity(string name, int moduleId)
         {
-            return new WorldEntity(moduleId, null);
+            return new WorldEntity(name, moduleId, null);
         }
 
-        private WorldEntity(int moduleId, EntityState state) 
+        private WorldEntity(string? name, int moduleId, EntityState state) 
         {
+            Name = name;
             Id = Guid.NewGuid();
             ModuleID = moduleId;
             State = state ?? throw new ArgumentNullException(nameof(state), "State cannot be null.");
         }
 
-        /*
-        public void UpdateStateWithDTO(EntityStateDTO newState)
+        public void UpdateState(EntityState newState)
         {
             if (newState == null)
             {
                 throw new ArgumentNullException(nameof(newState), "New state cannot be null.");
             }
 
-            //New to iterate on all props
-            State.Position = newState.Position;
-        }*/
+            State.Health = newState.Health;
+            State.Position = new (newState.Position);
+            State.Hunger = newState.Hunger;
+            State.InteractionFramesLeft = newState.InteractionFramesLeft;
+        }
 
         public WorldEntityDTO ToDTO()
         {

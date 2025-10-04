@@ -1,15 +1,15 @@
-﻿using System.Numerics;
+﻿using SharedLibrary.Helpers;
 
 namespace SharedLibrary.DTOs.EntitiesDTO
 {
     public class EntityStateDTO
     {
-        public Vector2 Position { get; set; }
+        public Position2D Position { get; set; }
         public int Health { get; set; }
         public int Hunger { get; set; }
         public int InteractionFramesLeft { get; set; }
 
-        public EntityStateDTO(Vector2 position, int health, int hunger, int interactionFramesLeft)
+        public EntityStateDTO(Position2D position, int health, int hunger, int interactionFramesLeft)
         {
             Position = position;
             Health = health;
