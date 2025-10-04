@@ -14,14 +14,18 @@ namespace Server.UI.ViewModels
         public int ID { get; init; }
         public string Name { get; init; }
         public int MaxPlayers { get; set; }
+        public int CurrentPlayers { get; set; }
+        public int MapID { get; init; }
 
-        public LobbyViewModel(int id, string name, int maxPlayers)
+        public LobbyViewModel(int id, string name, int maxPlayers, int currentPlayer, int mapID)
         {
             Header = name;
             ID = id;
             Name = name;
             MaxPlayers = maxPlayers;
-            Info = $"ID: {ID}, Max players: {MaxPlayers}";
+            CurrentPlayers = currentPlayer;
+            MapID = mapID;
+            Info = $"ID: {ID}, Max players: {MaxPlayers}, Current Players: {CurrentPlayers}, MapID: {MapID}";
         }
     }
 }
