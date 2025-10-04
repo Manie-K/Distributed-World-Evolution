@@ -119,7 +119,7 @@ namespace Server.Core
                     catch (Exception ex)
                     {
                         Log(ex.Message, LogLevelEnum.Error);
-                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotCreated, "New lobby created!"));
+                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotCreated, "New lobby not created."));
                         await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotJoined, "Lobby error. Try again."));
                     }
                 }
