@@ -3,7 +3,7 @@ using System.Text.Json;
 
 namespace SharedLibrary.Messages
 {
-    public class LobbyMessage : MessageBase
+    public class LobbyDataMessage : MessageBase
     {
         public override MessageTypeEnum MessageType => MessageTypeEnum.LobbyData;
 
@@ -11,7 +11,7 @@ namespace SharedLibrary.Messages
         public int LobbyID { get; init; }
 
 
-        public LobbyMessage(LobbyDTO lobby, int lobbyID)
+        public LobbyDataMessage(LobbyDTO lobby, int lobbyID)
         {
             Lobby = lobby;
             LobbyID = lobbyID;

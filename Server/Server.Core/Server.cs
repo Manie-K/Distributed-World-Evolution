@@ -112,14 +112,15 @@ namespace Server.Core
                         lobbyManager.AddUserToLobby(lobbyID, client);
 
                         //TODO: send full lobby info
-                        await MessageManager.SendMessageAsync(client, new LobbyMessage(null, lobbyID));
-                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyJoined, "Welcome to lobby!"));
+                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyCreated, "New lobby created!"));
+                        await MessageManager.SendMessageAsync(client, new LobbyDataMessage(null, lobbyID));
+                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyJoined, "Welcome to the new lobby!"));
                     }
                     catch (Exception ex)
                     {
                         Log(ex.Message, LogLevelEnum.Error);
+                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotCreated, "New lobby created!"));
                         await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotJoined, "Lobby error. Try again."));
-                        client.Close();
                     }
                 }
 
@@ -137,7 +138,6 @@ namespace Server.Core
                     {
                         Log(ex.Message, LogLevelEnum.Error);
                         await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotJoined, "Lobby error. Try again."));
-                        client.Close();
                     }
                 }
 
@@ -150,13 +150,11 @@ namespace Server.Core
                     {
                         lobbyManager.RemoveUserFromLobby(joinLobbyMessage.LobbyID, client);
                         await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyDisjoined, "See you soon!"));
-                        client.Close();
                     }
                     catch (Exception ex)
                     {
                         Log(ex.Message, LogLevelEnum.Error);
                         await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotDisjoined, "Lobby error. Try again."));
-                        client.Close();
                     }
                 }
 
@@ -175,6 +173,8 @@ namespace Server.Core
                                 ID = 1,
                                 Name = "Test Lobby",
                                 MaxPlayers = 10,
+                                CurrentPlayers = 1,
+                                MapID = 1
                             });
                             ////
 

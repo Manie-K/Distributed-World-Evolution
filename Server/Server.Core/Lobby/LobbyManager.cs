@@ -48,12 +48,13 @@ namespace Server.Core.Lobby
                 }
                 else
                 {
-                    throw new NullLobbyException($"Lobby with ID {lobbyId} does not exist or is null.");
+                    Log($"Lobby with ID {lobbyId} is null.", LogLevelEnum.Error);
+                    throw new NullLobbyException($"Lobby with ID {lobbyId} is null.");
                 }
             }
 
             Log($"Lobby with ID {lobbyId} does not exist.", LogLevelEnum.Warning);
-            return false;
+            throw new NullLobbyException($"Lobby with ID {lobbyId} does not exist.");
         }
 
         public bool RemoveUserFromLobby(int lobbyId, TcpClient client)

@@ -54,6 +54,7 @@ namespace SharedLibrary.Messages
                         MessageTypeEnum.CreateModule => JsonSerializer.Deserialize<CreateModuleMessage>(json),
                         MessageTypeEnum.LobbyList => JsonSerializer.Deserialize<LobbyListMessage>(json),
                         MessageTypeEnum.GetMessage => JsonSerializer.Deserialize<GetMessage>(json),
+                        MessageTypeEnum.LobbyData => JsonSerializer.Deserialize<LobbyDataMessage>(json),
                         _ => throw new NotImplementedException(),
                     };
                 }
