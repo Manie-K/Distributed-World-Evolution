@@ -15,11 +15,11 @@ namespace Server.Core.Modules
         public int Aggresion { get; private set; }
         public int ReproductionNeed { get; private set; }
         public EntityTypeEnum Type { get; init; }
-
+        public int GraphicalRepresentationID { get; set; } // This will be used to link to graphical representation in future.
 
         private readonly Dictionary<Type, IBehaviour> behaviours;
 
-        private Module(string name, bool official, int damage, int aggresion, int reproductionNeed, EntityTypeEnum type)
+        private Module(string name, bool official, int damage, int aggresion, int reproductionNeed, EntityTypeEnum type, int graphicsId)
         {
             ID = new Random().Next(1, int.MaxValue);
             Name = name;
@@ -29,23 +29,18 @@ namespace Server.Core.Modules
             ReproductionNeed = reproductionNeed;
             Type = type;
             behaviours = new Dictionary<Type, IBehaviour>();
+            GraphicalRepresentationID = graphicsId;
         }
 
         private void AddBehaviour(IBehaviour behaviour)
         {
-            var types = InterfaceHelpers.GetDirectParentInterfaces(behaviour.GetType());
+            Type? type = TypeHelpers.GetFirstAbstractParentType(behaviour.GetType());
+
+            if (type == null)
+            {
+                throw new ArgumentException("Behaviour must extend an abstract base class.");
+            }
             
-            if(types.Count == 0)
-            {
-                throw new ArgumentException("Behaviour must implement at least one behaviour interface.");
-            }
-
-            if(types.Count > 1)
-            {
-                throw new ArgumentException("Behaviour must implement only one behaviour interface.");
-            }
-
-            var type = types[0];
             if (behaviours.ContainsKey(type))
             {
                 throw new ArgumentException($"Behaviour of type {type.Name} already added to module.");
@@ -77,6 +72,7 @@ namespace Server.Core.Modules
             private int reproductionNeed;
             private List<IBehaviour> behaviours;
             private EntityTypeEnum type;
+            private int graphicsId;
 
             public ModuleBuilder()
             {
@@ -86,11 +82,12 @@ namespace Server.Core.Modules
                 aggresion = 0;
                 reproductionNeed = 0;
                 behaviours = new List<IBehaviour>();
+                graphicsId = 0;
             }
 
             public Module Create()
             {
-                var module = new Module(name, official, damage, aggresion, reproductionNeed, type);
+                var module = new Module(name, official, damage, aggresion, reproductionNeed, type, graphicsId);
                 foreach (var behaviour in behaviours)
                 {
                     module.AddBehaviour(behaviour);
@@ -130,6 +127,12 @@ namespace Server.Core.Modules
             public ModuleBuilder WithReproductionNeed(int reproductionNeed)
             {
                 this.reproductionNeed = reproductionNeed;
+                return this;
+            }
+
+            public ModuleBuilder WithGraphicsId(int graphicsId)
+            {
+                this.graphicsId = graphicsId;
                 return this;
             }
 

@@ -1,27 +1,33 @@
 ﻿namespace Server.Core.Behaviours
 {
-    // VERY IMPORTANT TODO: Currently, each entity will require a seperate behaviour instance.
-    // This is not memory efficient. We will need to unload it to client somehow.
-    // Another way to solve this is to make behaviours static and stateless.
-    // WE NEED TO COME BACK TO THIS LATER.
-    // For now, I replaced it so each entity contains only the ID of the module it is based on.
-    // This way, we only create instances for modules loaded in lobby, not separate for each entity.
-    // This is a very important design decision.
-    // To accomodate it, we need to keep all implementations state/fieldless for now.
     public interface IBehaviour
     {
-        // IMPORTANT! If this ID is changed or duplicated it will break the module system.
-        // If the property name is changed, in memory database will collapse....
-        // We also can't change the singnature to a method or make it non-readonly.
-        // Don't touch it.....................:D
+        /// <summary>
+        /// The ID inside the database.
+        /// </summary>
         public int DatabaseID
         {
             get;
         }
 
+        /// <summary>
+        /// The type of entity this behaviour is available for.
+        /// Used for filtering behaviours on client side.
+        /// </summary>
         public EntityTypeEnum Type
         {
             get;
         }
+
+        /// <summary>
+        /// Executes the behaviour.
+        /// </summary>
+        public void Execute(WorldEntity entity, WorldEntity target, Dictionary<string, object>? otherParams = null);
+
+        /// <summary>
+        /// Checks if the behaviour can be executed.
+        /// </summary>
+        /// <returns></returns>
+        public bool CanExecute(WorldEntity entity, WorldEntity target, Dictionary<string, object>? otherParams = null);
     }
 }
