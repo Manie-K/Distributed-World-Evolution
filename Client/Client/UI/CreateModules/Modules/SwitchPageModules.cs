@@ -61,28 +61,28 @@ namespace Client
 
         public void InitializeRows()
         {
-            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Boar_Module"), "Boar", ModuleType.Animal));
-            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Rabbit_Brown_Module"), "Brown Rabbit", ModuleType.Animal));
-            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Rabbit_White_Module"), "White Rabbit", ModuleType.Animal));
-            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Plant1_Module"), "Red Plant", ModuleType.Animal));
+            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Boar_Module"), "Boar", ModuleType.Animal, 0));
+            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Pig_Module"), "Pig", ModuleType.Animal, 1));
+            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Rabbit_Brown_Module"), "Brown Rabbit", ModuleType.Animal, 2));
+            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Rabbit_White_Module"), "White Rabbit", ModuleType.Animal, 3));
 
-            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Pig_Module"), "Pig", ModuleType.Animal));
-            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Plant3_Module"), "Purple Plant", ModuleType.Animal));
-            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Orc1_Module"), "Orc", ModuleType.Animal));
-            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Orc2_Module"), "Blue Orc", ModuleType.Animal));
+            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Plant1_Module"), "Red Plant", ModuleType.Animal, 4));
+            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Plant2_Module"), "Blue Plant", ModuleType.Animal, 5));
+            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Plant3_Module"), "Purple Plant", ModuleType.Animal, 6));
+            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Slime1_Module"), "Slime", ModuleType.Animal, 7));
 
-            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Orc3_Module"), "Darkgreen Orc", ModuleType.Animal));
-            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Plant2_Module"), "Blue Plant", ModuleType.Animal));
-            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Slime1_Module"), "Slime", ModuleType.Animal));
-            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Slime2_Module"), "Water Slime", ModuleType.Animal));
+            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Slime2_Module"), "Water Slime", ModuleType.Animal, 8));
+            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Slime3_Module"), "Fire Slime", ModuleType.Animal, 9));
+            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Orc1_Module"), "Orc", ModuleType.Animal, 10));
+            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Orc2_Module"), "Blue Orc", ModuleType.Animal, 11));
 
-            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Slime3_Module"), "Fire Slime", ModuleType.Animal));
-            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Vampire1_Module"), "Vampire", ModuleType.Animal));
-            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Vampire2_Module"), "Blue Vampire", ModuleType.Animal));
-            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Vampire3_Module"), "Red Vampire", ModuleType.Animal));
+            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Orc3_Module"), "Darkgreen Orc", ModuleType.Animal, 12));
+            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Vampire1_Module"), "Vampire", ModuleType.Animal, 13));
+            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Vampire2_Module"), "Blue Vampire", ModuleType.Animal, 14));
+            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Vampire3_Module"), "Red Vampire", ModuleType.Animal, 15));
 
-            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/BG_Settings"), "Rose", ModuleType.Plant));
-            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/BG_Forest"), "Mushroom", ModuleType.Plant));
+            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/BG_Settings"), "Rose", ModuleType.Plant, 16));
+            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/BG_Forest"), "Mushroom", ModuleType.Plant, 17));
         }
 
         public ModuleType GetAcctualType()

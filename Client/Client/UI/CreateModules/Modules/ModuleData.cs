@@ -20,13 +20,15 @@ namespace Client.UI.CreateModules.Modules
         private Rectangle rect;
         public ModuleType type;
         public string Name;
+        public int GraphicIndex;
 
-        public ModuleData(Texture2D texture, string name, ModuleType type)
+        public ModuleData(Texture2D texture, string name, ModuleType type, int graphicIndex)
         {
             this.texture = texture;
             rect = new Rectangle(193, 210, 368, 200);
             Name = name;
             this.type = type;
+            GraphicIndex = graphicIndex;
         }
 
         public void Draw(SpriteBatch spriteBatch)

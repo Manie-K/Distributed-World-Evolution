@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using static System.Net.Mime.MediaTypeNames;
 using System.Xml.Linq;
+using Client.UI.CreateLobby.Parameters;
 
 namespace Client
 {
@@ -18,8 +19,7 @@ namespace Client
         private Text pageNumberText;
         private List<CreateLobbyRow> creatures;
         private int pageNumber;
-        private int selectedRow;
-        private int previousRow;
+        public int selectedRow;
         private int amountOfRows;
 
         public SwitchPageLobby(SpriteFont FontNumbers, Vector2 Position, ContentManager ContentManager, int AmountOfRows)
@@ -32,7 +32,6 @@ namespace Client
             pageNumberText.SetTextColor(Color.Gold);
             pageNumber = 1;
             creatures = new List<CreateLobbyRow>();
-            previousRow = -1;
             selectedRow = -1;
             amountOfRows = AmountOfRows;
         }
@@ -52,21 +51,6 @@ namespace Client
             pageNumberText.SetText(pageNumber.ToString());
         }
 
-        public ICreatureData GetSelectedCreatureData(int index)
-        {
-            return creatures[index].GetCreatureData();
-        }
-
-        public int GetPreviousRow()
-        {
-            return previousRow;
-        }
-
-        public int GetSelectedRow()
-        {
-            return selectedRow;
-        }
-
         public void Draw(SpriteBatch spriteBatch)
         {
             pageNumberText.Draw(spriteBatch);
@@ -76,19 +60,13 @@ namespace Client
             }
         }
 
-        public void AddRow(AnimalData animal)
+        public void AddRow(ModuleData module)
         {
             creatures.Add(new CreateLobbyRow(contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), contentManager.Load<Texture2D>("UI/CreateModules/CheckBox/Box_Apply"),
                                              contentManager.Load<Texture2D>("UI/CreateModules/CheckBox/Box_Apply_Check"), contentManager.Load<Texture2D>("UI/CreateLobby/verif_icon"),
-                                             animal,new Vector2(245, 283 + 58 * (creatures.Count % amountOfRows)), 368, 58));
+                                             module, new Vector2(245, 283 + 57 * (creatures.Count % amountOfRows)), 368, 58));
         }
 
-        public void AddRow(PlantData plant)
-        {
-            creatures.Add(new CreateLobbyRow(contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), contentManager.Load<Texture2D>("UI/CreateModules/CheckBox/Box_Apply"),
-                                             contentManager.Load<Texture2D>("UI/CreateModules/CheckBox/Box_Apply_Check"), contentManager.Load<Texture2D>("UI/CreateLobby/verif_icon"),
-                                             plant, new Vector2(245, 283 + 58 * (creatures.Count % amountOfRows)), 368, 58));
-        }
 
         public bool UpdateRows(Vector2 cursorPosition, bool ispressed)
         {
@@ -99,7 +77,6 @@ namespace Client
                 {
                     if (creatures[(pageNumber - 1) * amountOfRows + i].Update(cursorPosition, ispressed, false) && ispressed)
                     {
-                        previousRow = selectedRow;
                         selectedRow = (pageNumber - 1) * amountOfRows + i;
                         isNewSelected = true;
                     }
@@ -124,16 +101,9 @@ namespace Client
             return Math.Min(amountOfRows, remainingRows);
         }
 
-        public List<ICreatureData> GetCreaturesList()
+        public ModuleData GetPickedModule()
         {
-            List<ICreatureData> creatureDatas = new List<ICreatureData>();
-
-            for(int i=0;i< creatures.Count; i++)
-            {
-                creatureDatas.Add(creatures[i].GetCreatureData());
-            }
-
-            return creatureDatas;
+            return creatures[selectedRow].GetData();
         }
     }
 }

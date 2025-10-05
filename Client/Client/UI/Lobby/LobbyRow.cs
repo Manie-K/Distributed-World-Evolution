@@ -32,9 +32,9 @@ namespace Client
         {
             if (isSelected)
             {
-                gameName.SetTextColor(Color.HotPink);
-                mapName.SetTextColor(Color.HotPink);
-                playersText.SetTextColor(Color.HotPink);
+                gameName.SetTextColor(Color.Cyan);
+                mapName.SetTextColor(Color.Cyan);
+                playersText.SetTextColor(Color.Cyan);
             }
             else if (bounds.Contains(cursorPosition))
             {

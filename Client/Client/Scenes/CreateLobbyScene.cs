@@ -1,4 +1,5 @@
-﻿using Client.UI.CreateLobby.Parameters;
+﻿using Client.UI.CreateLobby;
+using Client.UI.CreateLobby.Parameters;
 using Client.UI.MapSelection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -23,9 +24,9 @@ namespace Client
         private Button mapButton;
         private TextBox playerAmountBox;
         private SelectedMapData mapData;
+        private ModulesImageDisplay modulesImageDisplay;
 
-        private SwitchPageParameters switchPageParametersAnimals;
-        private SwitchPageParameters switchPageParametersPlants;
+        private SwitchPageParameters switchPageParameters;
 
         public CreateLobbyScene(GameManager manager, SwitchPage lobbyswitchPage)
         {
@@ -41,15 +42,13 @@ namespace Client
                                         new Vector2(523, 129), 50, 36, Color.White, true);
             playerAmountBox.SetText("4");
             mapData = new SelectedMapData();
+            modulesImageDisplay = new ModulesImageDisplay(manager.ContentManager);
 
             this.lobbyswitchPage = lobbyswitchPage;
-            this.switchPageParametersAnimals = new SwitchPageParameters(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"),
-                                                                 new Vector2(848, 485), manager.ContentManager, 4);
-            this.switchPageParametersPlants = new SwitchPageParameters(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"),
+            this.switchPageParameters = new SwitchPageParameters(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"),
                                                                  new Vector2(848, 485), manager.ContentManager, 4);
 
             InitializeCreaturesRows();
-            InitalizeParametersPanel();
         }
 
         public void Load()
@@ -57,32 +56,27 @@ namespace Client
 
         }
 
+
         public void InitializeCreaturesRows()
         {
-            switchPageLobby.AddRow(new AnimalData("Boar", 131, 220, 5, 3, 1, 25, true , true, true, 1, false));
-            switchPageLobby.AddRow(new AnimalData("Brown Rabbit",400, 300,45, 3, 10, 35, true, true, true, 1, true));
-            switchPageLobby.AddRow(new AnimalData("White Rabbit", 400, 300, 45, 3, 10, 35, true, true, true, 1, true));
-            switchPageLobby.AddRow(new AnimalData("Red Plant", 100, 400, 35, 3, 13, 65, true, true, true, 1, true));
-            switchPageLobby.AddRow(new AnimalData("Blue Plant", 500, 2500, 5, 23, 12, 4, true, true, true, 1, true));
-            switchPageLobby.AddRow(new AnimalData("Purple Plant", 150, 260, 5, 13, 155, 25, true, true, true, 1, false));
-            switchPageLobby.AddRow(new AnimalData("Orc", 100, 400, 35, 3, 13, 65, true, true, true, 1, false));
-            switchPageLobby.AddRow(new AnimalData("Blue Orc", 500, 2500, 5, 23, 12, 4, true, true, true, 1, true));
-            switchPageLobby.AddRow(new AnimalData("Darkgreen Orc", 150, 260, 5, 13, 155, 25, true, true, true, 1, false));
-            switchPageLobby.AddRow(new AnimalData("Pig", 100, 400, 35, 3, 13, 65, true, true, true, 1, true));
-            switchPageLobby.AddRow(new AnimalData("Slime", 500, 2500, 5, 23, 12, 4, true, true, true, 1, false));
-            switchPageLobby.AddRow(new AnimalData("Water Slime", 150, 260, 5, 13, 155, 25, true, true, true, 1, false));
-            switchPageLobby.AddRow(new AnimalData("Fire Slime", 150, 260, 5, 13, 155, 25, true, true, true, 1, true));
-            switchPageLobby.AddRow(new AnimalData("Vampire", 500, 2500, 5, 23, 12, 4, true, true, true, 1, true));
-            switchPageLobby.AddRow(new AnimalData("Blue Vampire", 150, 260, 5, 13, 155, 25, true, true, true, 1, true));
-            switchPageLobby.AddRow(new AnimalData("Red Vampire", 150, 260, 5, 13, 155, 25, true, true, true, 1, true));
-            switchPageLobby.AddRow(new PlantData("Rose", 222, 10, 20, true, true, true, false, 1));
-            switchPageLobby.AddRow(new PlantData("Mushroom", 265, 105, 20, true, true, true, true, 1));
-        }
-
-        public void InitalizeParametersPanel()
-        {
-            switchPageParametersAnimals.AddRowAnimal();
-            switchPageParametersPlants.AddRowPlant();
+            switchPageLobby.AddRow(new ModuleData("Boar", 0, false, new List<ModuleParametersData> { new ModuleParametersData("Health", "200", 0), new ModuleParametersData("Damage", "300", 0), new ModuleParametersData("Hunger", "130", 1), new ModuleParametersData("Consumption", "Carnivore", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
+            switchPageLobby.AddRow(new ModuleData("Brown Rabbit", 2, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "800", 0), new ModuleParametersData("Damage", "50", 0), new ModuleParametersData("Hunger", "800", 1), new ModuleParametersData("Consumption", "Herbivore", 1), new ModuleParametersData("Combat", "Enemy HP < X", 1) }));
+            switchPageLobby.AddRow(new ModuleData("White Rabbit", 3, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "400", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "120", 1), new ModuleParametersData("Consumption", "Carnivore", 1), new ModuleParametersData("Breeding", "Same Species", 1) }));
+            switchPageLobby.AddRow(new ModuleData("Red Plant", 4, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "400", 0), new ModuleParametersData("Damage", "150", 0), new ModuleParametersData("Hunger", "130", 1), new ModuleParametersData("Consumption", "Carnivore", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
+            switchPageLobby.AddRow(new ModuleData("Blue Plant", 5, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1), new ModuleParametersData("Consumption", "Herbivore", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
+            switchPageLobby.AddRow(new ModuleData("Purple Plant", 6, false, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
+            switchPageLobby.AddRow(new ModuleData("Orc", 10, false, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1), new ModuleParametersData("Consumption", "Carnivore", 1) }));
+            switchPageLobby.AddRow(new ModuleData("Blue Orc", 11, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1) }));
+            switchPageLobby.AddRow(new ModuleData("Darkgreen Orc", 12, false, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1), new ModuleParametersData("Consumption", "Carnivore", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
+            switchPageLobby.AddRow(new ModuleData("Pig", 1, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1), new ModuleParametersData("Consumption", "Carnivore", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
+            switchPageLobby.AddRow(new ModuleData("Slime", 7, false, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
+            switchPageLobby.AddRow(new ModuleData("Water Slime", 8, false, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1), new ModuleParametersData("Consumption", "Carnivore", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
+            switchPageLobby.AddRow(new ModuleData("Fire Slime", 9, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1) }));
+            switchPageLobby.AddRow(new ModuleData("Vampire", 13, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Attack", "500", 0), new ModuleParametersData("Fertile", "100", 1) }));
+            switchPageLobby.AddRow(new ModuleData("Blue Vampire", 14, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1), new ModuleParametersData("Consumption", "Carnivore", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
+            switchPageLobby.AddRow(new ModuleData("Red Vampire", 15, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
+            switchPageLobby.AddRow(new ModuleData("Rose", 1, false, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Fertile", "100", 1) }));
+            switchPageLobby.AddRow(new ModuleData("Mushroom", 1, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0) }));
         }
 
         public void Update(GameTime gameTime)
@@ -95,6 +89,7 @@ namespace Client
                 playerAmountBox.CheckLeftClick(manager.InputManager.GetMousePosition());
 
                 switchPageLobby.CheckLeftClick(manager.InputManager.GetMousePosition());
+                switchPageParameters.CheckLeftClick(manager.InputManager.GetMousePosition());
                 if (exitButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                 {
                     manager.SceneManager.RemoveScene();
@@ -103,12 +98,6 @@ namespace Client
                 {
                     if (!gameNameBox.CheckTextIfEmpty() && playerAmountBox.CheckText(32))
                     {
-                        if (switchPageLobby.GetSelectedRow() != -1)
-                        {
-                            ICreatureData tmp = switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetSelectedRow());
-                            if (tmp.Type == CreatureType.Animal) switchPageParametersAnimals.SaveAnimalParameters((AnimalData)tmp);
-                            else if (tmp.Type == CreatureType.Plant) switchPageParametersPlants.SavePlantParameters((PlantData)tmp);
-                        }
 
                         IEnumerable<int> modules = new List<int>() { 0 };
                         CreateLobbyMessage message = new CreateLobbyMessage(gameNameBox.GetText(), int.Parse(playerAmountBox.GetText()), mapData.index, modules);
@@ -129,12 +118,6 @@ namespace Client
                     manager.SceneManager.AddScene(new MapSelectionScene(manager, ref mapData));
                 }
 
-                if (switchPageLobby.GetSelectedRow() != -1)
-                {
-                    if (switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetSelectedRow()).Type == CreatureType.Animal) switchPageParametersAnimals.CheckLeftClick(manager.InputManager.GetMousePosition());
-                    else if (switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetSelectedRow()).Type == CreatureType.Plant) switchPageParametersPlants.CheckLeftClick(manager.InputManager.GetMousePosition());
-                }
-
                 isPressed = true;
             }
 
@@ -149,21 +132,10 @@ namespace Client
             gameNameBox.Update();
             playerAmountBox.Update();
 
-            if (switchPageLobby.GetSelectedRow() != -1)
-            {
-                if (switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetSelectedRow()).Type == CreatureType.Animal) switchPageParametersAnimals.UpdateRows(manager.InputManager.GetMousePosition());
-                else if (switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetSelectedRow()).Type == CreatureType.Plant) switchPageParametersPlants.UpdateRows(manager.InputManager.GetMousePosition());
-            }
-
             if (switchPageLobby.UpdateRows(manager.InputManager.GetMousePosition(), isPressed))
             {
-                if (switchPageLobby.GetPreviousRow() != -1)
-                {
-                    ICreatureData tmp = switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetPreviousRow());
-                    if (tmp.Type == CreatureType.Animal) switchPageParametersAnimals.SaveAnimalParameters((AnimalData) tmp);
-                    else if (tmp.Type == CreatureType.Plant) switchPageParametersPlants.SavePlantParameters((PlantData) tmp);
-                }
-                SetParameters();
+                switchPageParameters.SetParameters(switchPageLobby.GetPickedModule().ModuleParameters);
+                modulesImageDisplay.SetImage(switchPageLobby.GetPickedModule().GraphicIndex);
             }
         }
 
@@ -181,25 +153,11 @@ namespace Client
             exitButton.Draw(spriteBatch);
             gameNameBox.Draw(spriteBatch);
             playerAmountBox.Draw(spriteBatch);
+            modulesImageDisplay.Draw(spriteBatch);
 
-            if (switchPageLobby.GetSelectedRow() != -1)
+            if (switchPageLobby.selectedRow != -1)
             {
-                if (switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetSelectedRow()).Type == CreatureType.Animal) 
-                    switchPageParametersAnimals.Draw(spriteBatch);
-                else if (switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetSelectedRow()).Type == CreatureType.Plant) 
-                    switchPageParametersPlants.Draw(spriteBatch);
-            }
-        }
-
-        private void SetParameters()
-        {
-            if (switchPageLobby.GetSelectedRow() != -1)
-            {
-                ICreatureData CreatureSelected = switchPageLobby.GetSelectedCreatureData(switchPageLobby.GetSelectedRow());
-                
-                if (CreatureSelected.Type == CreatureType.Animal) switchPageParametersAnimals.SetParametersCreatureData((AnimalData) CreatureSelected);               
-                else if (CreatureSelected.Type == CreatureType.Plant) switchPageParametersPlants.SetParametersCreatureData((PlantData) CreatureSelected);
-                
+                switchPageParameters.Draw(spriteBatch);
             }
         }
 
@@ -207,8 +165,7 @@ namespace Client
         {
             var json = JsonSerializer.Serialize(new
             {
-                LobbyName = gameNameBox.GetText(),
-                Creatures = switchPageLobby.GetCreaturesList()
+                LobbyName = gameNameBox.GetText()
             });
 
             Console.WriteLine(json);
