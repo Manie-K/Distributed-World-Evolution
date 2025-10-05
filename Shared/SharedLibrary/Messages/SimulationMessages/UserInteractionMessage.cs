@@ -3,14 +3,14 @@ using SharedLibrary.DTOs.EntitiesDTO;
 
 namespace SharedLibrary.Messages
 {
-    public class EntityStateMessage : MessageBase
+    public class UserInteractionMessage : MessageBase
     {
-        public override MessageTypeEnum MessageType => MessageTypeEnum.EntityState;
+        public override MessageTypeEnum MessageType => MessageTypeEnum.UserInteraction;
 
         public WorldEntityDTO HumanEntity { get; init; }
         public WorldEntityDTO? OtherEntity { get; init; }
 
-        public EntityStateMessage(WorldEntityDTO human, WorldEntityDTO? other) 
+        public UserInteractionMessage(WorldEntityDTO human, WorldEntityDTO? other) 
         {
             HumanEntity = human;
             OtherEntity = other;

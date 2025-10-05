@@ -130,8 +130,8 @@ namespace Server.Core.Lobby
             {
                 switch (message.MessageType)
                 {
-                    case MessageTypeEnum.EntityState:
-                        HandleUpdateWorldEntityStateMessage(client, (EntityStateMessage)message);
+                    case MessageTypeEnum.UserInteraction:
+                        HandleUpdateWorldEntityStateMessage(client, (UserInteractionMessage)message);
                         break;
                     case MessageTypeEnum.UserState:
                         HandleUpdateUserStateMessage(client, (UserStateMessage)message);
@@ -301,7 +301,7 @@ namespace Server.Core.Lobby
 
         #region Handlers
 
-        private void HandleUpdateWorldEntityStateMessage(TcpClient client, EntityStateMessage message)
+        private void HandleUpdateWorldEntityStateMessage(TcpClient client, UserInteractionMessage message)
         {
             WorldEntityDTO human = message.HumanEntity;
             WorldEntityDTO? other = message.OtherEntity;

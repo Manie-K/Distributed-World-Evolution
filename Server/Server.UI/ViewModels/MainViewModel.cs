@@ -33,7 +33,7 @@ namespace Server.UI.ViewModels
         private async void InitializeAsync()
         {
             await MessageManager.SendMessageAsync(_client, new RoleMessage(RoleEnum.UI));
-            await MessageManager.SendMessageAsync(_client, new GetMessage(GetMessageTypeEnum.GetAllLobbies));
+            await MessageManager.SendMessageAsync(_client, new GetMessage(GetMessageTypeEnum.LobbyList));
 
             _ = Task.Run(async () =>
             {

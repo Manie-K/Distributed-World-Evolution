@@ -120,7 +120,6 @@ namespace Server.Core
                     {
                         Log(ex.Message, LogLevelEnum.Error);
                         await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotCreated, "New lobby not created."));
-                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotJoined, "Lobby error. Try again."));
                     }
                 }
 
@@ -165,7 +164,7 @@ namespace Server.Core
 
                     switch (getMessage.GetMessageType)
                     {
-                        case GetMessageTypeEnum.GetAllLobbies:
+                        case GetMessageTypeEnum.LobbyList:
                             //TODO: removed hardcoded lobbies
                             var lobbies = new List<LobbyDTO>();
                             lobbies.Add(new LobbyDTO
@@ -190,7 +189,7 @@ namespace Server.Core
                             }
                             break;
 
-                        case GetMessageTypeEnum.GetAllModules:
+                        case GetMessageTypeEnum.ModuleList:
                             //TODO: removed hardcoded modules
                             //var modules = moduleService.GetAllModules().ToList().ToDTO();
 
@@ -198,16 +197,16 @@ namespace Server.Core
                             var modules = new List<ModuleDTO>();
                             modules.Add(new ModuleDTO
                                 (
-                                    1, 
-                                    "Test Module", 
-                                    true, 
-                                    10, 
-                                    10, 
-                                    10, 
+                                    1,
+                                    "Test Module",
+                                    true,
+                                    10,
+                                    10,
+                                    10,
                                     new List<BehviourDTO>{
                                         new BehviourDTO (1, "This is a test behaviour.", EntityTypeEnum.Animal)
                                     },
-                                    EntityTypeEnum.Animal, 
+                                    EntityTypeEnum.Animal,
                                     1
                                 )
                             );
@@ -226,10 +225,10 @@ namespace Server.Core
                             }
                             break;
 
-                        case GetMessageTypeEnum.GetAllBehaviors:
+                        case GetMessageTypeEnum.BehaviourList:
                             var behaviors = new List<BehviourDTO>();
                             //var behaviors = behaviourService.GetAllBehaviours().ToList().ToDTO();
-                            
+
                             try
                             {
                                 await MessageManager.SendMessageAsync(client, new BehaviourListMessage(behaviors));
@@ -249,6 +248,26 @@ namespace Server.Core
 
                 }
 
+                //Creating module
+                else if (message.MessageType == MessageTypeEnum.CreateModule)
+                {
+                    CreateModuleMessage createModuleMessage = (CreateModuleMessage)message;
+
+                    try
+                    {
+                        //TODO: implement module creation
+                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.ModuleNotCreated, "Module creation not implemented."));
+                    }
+                    catch (Exception ex)
+                    {
+                        Log(ex.Message, LogLevelEnum.Error);
+                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.ModuleNotCreated, "Module creation error. Try again."));
+                    }
+
+                }
+
+
+                //Forwarding message to lobby
                 else
                 {
                     OnMessageFromClientReceived?.Invoke(new OnMessageFromClientEventArgs(client, message));
