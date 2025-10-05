@@ -52,6 +52,11 @@ namespace Client
                                                                  new Vector2(848, 485), manager.ContentManager, 4);
 
             InitializeCreaturesRows();
+
+            isCreatingLobby = false;
+            isJoiningLobby = false;
+            timer = 0;
+            timeoutTimer = 0;
         }
 
         public void Load()
