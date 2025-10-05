@@ -48,12 +48,10 @@ namespace Client
             mapData = new SelectedMapData();
             modulesImageDisplay = new ModulesImageDisplay(manager.ContentManager);
 
-            this.lobbyswitchPage = lobbyswitchPage;
-            this.switchPageParametersAnimals = new SwitchPageParameters(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"),
+            this.switchPageParameters = new SwitchPageParameters(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"),
                                                                  new Vector2(848, 485), manager.ContentManager, 4);
 
             InitializeCreaturesRows();
-            InitalizeParametersPanel();
         }
 
         public void Load()
