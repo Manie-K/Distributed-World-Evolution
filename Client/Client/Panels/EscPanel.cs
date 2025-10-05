@@ -57,8 +57,9 @@ namespace Client.Panels
                 manager.Camera.ResetPosition();
                 manager.IsInGame = false;
                 manager.SceneManager.RemoveScene();
-                MessageManager.SendMessageAsync(manager.ClientManager.Client, new DisjoinLobbyMessage(manager.LobbyID));
-                manager.LobbyID = -1;
+                _ = MessageManager.SendMessageAsync(manager.ClientManager.Client, new DisjoinLobbyMessage(manager.ClientManager.LobbyID));
+                manager.ClientManager.LobbyID = -1;
+                manager.ClientManager.LobbyJoined = ActionStatus.WAITING;
                 return true;
             }
 
