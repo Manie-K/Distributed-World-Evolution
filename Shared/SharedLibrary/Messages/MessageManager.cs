@@ -1,4 +1,5 @@
 ﻿using SharedLibrary.Messages;
+using SharedLibrary.Messages.BehaviourMessages;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
@@ -42,7 +43,7 @@ namespace SharedLibrary.Messages
                     message = parsedMessageType switch
                     {
                         MessageTypeEnum.CreateLobby => JsonSerializer.Deserialize<CreateLobbyMessage>(json),
-                        MessageTypeEnum.EntityState => JsonSerializer.Deserialize<EntityStateMessage>(json),
+                        MessageTypeEnum.UserInteraction => JsonSerializer.Deserialize<UserInteractionMessage>(json),
                         MessageTypeEnum.WorldState => JsonSerializer.Deserialize<WorldStateMessage>(json),
                         MessageTypeEnum.InfoMessage => JsonSerializer.Deserialize<InfoMessage>(json),
                         MessageTypeEnum.UserState => JsonSerializer.Deserialize<UserStateMessage>(json),
@@ -55,6 +56,7 @@ namespace SharedLibrary.Messages
                         MessageTypeEnum.LobbyList => JsonSerializer.Deserialize<LobbyListMessage>(json),
                         MessageTypeEnum.GetMessage => JsonSerializer.Deserialize<GetMessage>(json),
                         MessageTypeEnum.LobbyData => JsonSerializer.Deserialize<LobbyDataMessage>(json),
+                        MessageTypeEnum.BehaviourList => JsonSerializer.Deserialize<BehaviourListMessage>(json),
                         _ => throw new NotImplementedException(),
                     };
                 }

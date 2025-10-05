@@ -6,7 +6,7 @@ namespace SharedLibrary.Messages
     public enum MessageTypeEnum
     {
         CreateLobby,
-        EntityState,
+        UserInteraction,
         WorldState,
         UserState,
         JoinLobby,
@@ -19,6 +19,6 @@ namespace SharedLibrary.Messages
         CreateModule,
         LobbyList,
         GetMessage,
-        LobbyData
+        LobbyData,
     }
 }
