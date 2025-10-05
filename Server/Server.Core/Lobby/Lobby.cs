@@ -12,7 +12,6 @@ namespace Server.Core.Lobby
 {
     public class Lobby : ILobby
     {
-        //TODO: add modules when they are implemented
         /// <inheritdoc/>
         public int LobbyId { get; private init; }
         public string Name { get; set; }
@@ -29,7 +28,6 @@ namespace Server.Core.Lobby
         private readonly List<TcpClient> clients;
         private readonly ICollection<WorldEntity> entities;
         private readonly ICollection<Module> loadedModules;
-        private readonly Dictionary<WorldEntity, FrameEntityMetadata> metadata;
         private bool[,] walkableTiles;
 
         private bool running;
@@ -62,7 +60,6 @@ namespace Server.Core.Lobby
 
             entities = new List<WorldEntity>(); //Currently no way to add them.
             loadedModules = new List<Module>();
-            metadata = new Dictionary<WorldEntity, FrameEntityMetadata>();
             clients = new List<TcpClient>();
             running = true;
 
@@ -84,14 +81,31 @@ namespace Server.Core.Lobby
 
         private void PublishWorldState()
         {
-            //TODO: @FranciszekGwarek Here we need to simulate non-human entities? Yes, I think so.
+            // Simulate all non-human entities
+            Module entModule;
+            EntityState nextState;
 
             foreach (var entity in entities)
             {
-                if (metadata.ContainsKey(entity))
+                if(entity.State.InteractionFramesLeft > 0)
                 {
-                    metadata[entity].AlreadyChangedPosition = false;
+                    continue;
                 }
+
+                entModule = moduleService.GetModuleById(entity.ModuleID);
+                if (entModule.Type == EntityTypeEnum.Human)
+                {
+                    continue;
+                }
+
+                var moveBehaviour = entModule.GetBehaviourOfType(typeof(MoveBehaviourBase));
+                nextState = new EntityState(entity.State);
+
+                (int stepX, int stepY) = ((MoveBehaviourBase)moveBehaviour).GetNextMovement(entity);
+                nextState.Position.X += stepX;
+                nextState.Position.Y += stepY;
+
+                SimulateNonHumanEntityUpdate(entity, nextState.ToDTO());
             }
 
             lock (clients)
@@ -133,7 +147,7 @@ namespace Server.Core.Lobby
                     
         }
 
-        private void SimulateEntityUpdate(WorldEntity entity, EntityStateDTO newState)
+        private void SimulateNonHumanEntityUpdate(WorldEntity entity, EntityStateDTO newState)
         {
             if (entity == null)
             {
@@ -147,7 +161,7 @@ namespace Server.Core.Lobby
             Module entModule = moduleService.GetModuleById(entity.ModuleID);
 
             // If we change position, there is a possible new interaction 
-            if (entity.State.Position != newState.Position && !metadata[entity].AlreadyChangedPosition && entity.State.InteractionFramesLeft == 0)
+            if (entity.State.Position != newState.Position && entity.State.InteractionFramesLeft == 0)
             {
                 Type? interactionType = GetInteractionType(entity, newState);
                 if (interactionType is null) return;
@@ -156,21 +170,44 @@ namespace Server.Core.Lobby
                 IBehaviour behaviour = entModule.GetBehaviourOfType(interactionType);
 
 
-                // Check if we need to add custom params
+                // In case when we need to add custom parameters
                 if(interactionType == typeof(MoveBehaviourBase))
                 {
                     behaviour.Execute(entity, null, new Dictionary<string, object>{
-                        { CustomBehaviourParams.MAP_PARAM, walkableTiles   }
+                        { CustomBehaviourParams.MAP_PARAM, walkableTiles   },
+                        { CustomBehaviourParams.NEW_POS_PARAM, newState.Position }
                     });
                 }
                 else
                 {
                     behaviour.Execute(entity, targetEntity);
+                    entity.State.InteractionFramesLeft = 10;
+                    targetEntity.State.InteractionFramesLeft = 10;
                 }
 
             }
 
         }
+        private void SimulateHumanEntityUpdate(WorldEntityDTO human, WorldEntityDTO? other)
+        {
+            WorldEntity entHuman = entities.Where(e => e.Id == human.Id).First();
+            WorldEntity entOther = entities.Where(e => e.Id == other?.Id).First();
+
+            if (entHuman == null)
+            {
+                throw new ArgumentNullException(nameof(entHuman), "Entity not found");
+            }
+
+            /// @FranciszekGwarek - sanity check please
+            if(human.State.InteractionFramesLeft > 0)
+            {
+                return;
+            }
+
+            entHuman.UpdateState(new EntityState(human.State));
+            entOther?.UpdateState(new EntityState(other.State));
+        }
+
 
         private Type? GetInteractionType(WorldEntity entity, EntityStateDTO newState)
         {
@@ -183,10 +220,12 @@ namespace Server.Core.Lobby
 
             Module entityModule = moduleService.GetModuleById(entity.ModuleID);
             EntityTypeEnum entityType = entityModule.Type;
-
             EntityTypeEnum targetType = moduleService.GetModuleById(entityOnPosition.ModuleID).Type;
 
-            // Attack
+            // We refactored this so that humans dont use this method, the send the new states in frames
+            if (entityType == EntityTypeEnum.Human) return null;
+
+            // Attack - old code, Humans wont be here
             if ((entityType == EntityTypeEnum.Human && targetType == EntityTypeEnum.Human) ||
                 (entityType == EntityTypeEnum.Human && targetType == EntityTypeEnum.Animal) ||
                 (entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Human) ||
@@ -230,7 +269,7 @@ namespace Server.Core.Lobby
                 }
             }
 
-            // Tame
+            // Tame - old code, Humans wont be here
             if (entityType == EntityTypeEnum.Human && targetType == EntityTypeEnum.Animal)
             {
                 TameBehaviourBase tameBehaviour = (TameBehaviourBase)entityModule.GetBehaviourOfType(typeof(TameBehaviourBase));
@@ -264,21 +303,21 @@ namespace Server.Core.Lobby
 
         private void HandleUpdateWorldEntityStateMessage(TcpClient client, EntityStateMessage message)
         {
-            WorldEntityDTO ent = message.Entity;
-            if (ent == null)
+            WorldEntityDTO human = message.HumanEntity;
+            WorldEntityDTO? other = message.OtherEntity;
+
+            WorldEntity? humanEntity = entities.Where(e => e.Id == human.Id).First();
+            if (humanEntity == null)
             {
-                throw new Exception("Received null WorldEntityDTO in EntityStateMessage.");
+                throw new Exception($"Human entity ({human.Id}) not found in lobby.");
             }
 
-            WorldEntity? existingEntity = entities.Where(e => e.Id == ent.Id).First();
-
-            if (existingEntity == null)
+            if (moduleService.GetModuleById(humanEntity.ModuleID).Type != EntityTypeEnum.Human)
             {
-                Log($"Entity with ID {ent.Id} not found in lobby {LobbyId}.", LogLevelEnum.Error);
-                return;
+                throw new Exception($"Entity ({human.Id}) is not a human.");
             }
-            
-            SimulateEntityUpdate(existingEntity, ent.State);
+
+            SimulateHumanEntityUpdate(human, other);
         }
 
         private void HandleUpdateUserStateMessage(TcpClient client, UserStateMessage message)
@@ -380,7 +419,6 @@ namespace Server.Core.Lobby
                     return false;
                 }
                 entities.Add(entity);
-                metadata.Add(entity, new FrameEntityMetadata());
                 return true;
             }
         }
@@ -395,7 +433,6 @@ namespace Server.Core.Lobby
                     return false;
                 }
                 entities.Remove(entity);
-                metadata.Remove(entity);
                 return true;
             }
         }

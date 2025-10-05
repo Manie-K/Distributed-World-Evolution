@@ -3,16 +3,17 @@ using SharedLibrary.DTOs.EntitiesDTO;
 
 namespace SharedLibrary.Messages
 {
-    //TODO: Change after entity is fully implemented
     public class EntityStateMessage : MessageBase
     {
         public override MessageTypeEnum MessageType => MessageTypeEnum.EntityState;
 
-        public WorldEntityDTO Entity { get; init; }
+        public WorldEntityDTO HumanEntity { get; init; }
+        public WorldEntityDTO? OtherEntity { get; init; }
 
-        public EntityStateMessage(WorldEntityDTO entity) 
+        public EntityStateMessage(WorldEntityDTO human, WorldEntityDTO? other) 
         {
-            Entity = entity;
+            HumanEntity = human;
+            OtherEntity = other;
         }
 
         public override string BuildJson()
@@ -20,7 +21,8 @@ namespace SharedLibrary.Messages
             var payload = new
             {
                 MessageType = this.MessageType,
-                Entity = this.Entity
+                HumanEntity = this.HumanEntity,
+                OtherEntity = this.OtherEntity
             };
 
             return JsonSerializer.Serialize(payload);

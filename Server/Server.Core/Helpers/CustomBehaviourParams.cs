@@ -9,5 +9,6 @@ namespace Server.Core.Helpers
     internal static class CustomBehaviourParams
     {
         public static string MAP_PARAM = "Map";
+        public static string NEW_POS_PARAM = "NewPosition";
     }
 }
