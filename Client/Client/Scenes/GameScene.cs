@@ -2,7 +2,8 @@
 using Client.Rendering;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SharedLibrary;
+using SharedLibrary.DTOs.EntitiesDTO;
+using SharedLibrary.Messages;
 using System;
 using System.Collections.Generic;
 
@@ -67,8 +68,8 @@ namespace Client
 
             if (clientUpdateTimer >= timeBetweenUpdates)
             {
-                //EntityStateMessage message = new EntityStateMessage(new WorldEntityDTO(System.Guid.NewGuid(), new EntityStateDTO(System.Numerics.Vector2.Zero)));
-                //MessageManager.SendMessageAsync(manager.ClientManager.Client, message);
+                UserStateMessage message = new UserStateMessage(System.Guid.NewGuid(), manager.UserSettings.PlayerName, 100);
+                _ = MessageManager.SendMessageAsync(manager.ClientManager.Client, message);
                 clientUpdateTimer = 0;
             }
         }

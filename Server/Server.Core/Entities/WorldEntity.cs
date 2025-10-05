@@ -1,31 +1,29 @@
 ﻿using SharedLibrary;
+using SharedLibrary.DTOs.EntitiesDTO;
 
 namespace Server.Core
 {
     public class WorldEntity
     {
-        public Guid Id { get; private set; }
-        public string Name { get; private set; }
-        public string Description { get; private set; }
-        public DateTime CreatedAt { get; private set; }
-        public EntityState State { get; private set; }
+        public Guid Id { get; init; }
         public int ModuleID { get; init; }
+        public EntityTypeEnum Type { get; init; }
+        public EntityState State { get; init; }
 
-        public static WorldEntity CreateWorldEntity(string? name, string? description, int moduleId ,EntityState? initialState)
+        public static WorldEntity CreateWorldEntity(int moduleId, EntityTypeEnum type)
         {
-            return new WorldEntity(name ?? "Default name", description ?? "Default description", moduleId, initialState);
+            return new WorldEntity(moduleId, type, null);
         }
 
-        private WorldEntity(string name, string description, int moduleId, EntityState state) 
+        private WorldEntity(int moduleId, EntityTypeEnum type, EntityState state) 
         {
             Id = Guid.NewGuid();
-            Name = name ?? throw new ArgumentNullException(nameof(name), "Name cannot be null.");
-            Description = description ?? throw new ArgumentNullException(nameof(description), "Description cannot be null.");
-            CreatedAt = DateTime.UtcNow;
-            State = state ?? throw new ArgumentNullException(nameof(state), "State cannot be null.");
             ModuleID = moduleId;
+            Type = type;
+            State = state ?? throw new ArgumentNullException(nameof(state), "State cannot be null.");
         }
 
+        /*
         public void UpdateStateWithDTO(EntityStateDTO newState)
         {
             if (newState == null)
@@ -35,11 +33,11 @@ namespace Server.Core
 
             //New to iterate on all props
             State.Position = newState.Position;
-        }
+        }*/
 
         public WorldEntityDTO ToDTO()
         {
-            return new WorldEntityDTO(Id, State.ToDTO());
+            throw new NotImplementedException();
         }
     }
 }

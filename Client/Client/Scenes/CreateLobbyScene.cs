@@ -14,7 +14,6 @@ namespace Client
     public class CreateLobbyScene : IScene
     {
         private GameManager manager;
-        private SwitchPage lobbyswitchPage; //do zmienienia robienie lobby(na serwer przesylac informacje)
 
         private Texture2D backGround;
         private Button exitButton;
@@ -28,7 +27,12 @@ namespace Client
 
         private SwitchPageParameters switchPageParameters;
 
-        public CreateLobbyScene(GameManager manager, SwitchPage lobbyswitchPage)
+        private bool isCreatingLobby;
+        private bool isJoiningLobby;
+        private double timer;
+        private double timeoutTimer;
+
+        public CreateLobbyScene(GameManager manager)
         {
             this.manager = manager;
             exitButton = new Button(manager.ContentManager.Load<Texture2D>("UI/White Close 2"), manager.ContentManager.Load<SpriteFont>("Fonts/ButtonFont"), "", new Vector2(1220, 25), 35, 35, Color.Red);
@@ -45,10 +49,11 @@ namespace Client
             modulesImageDisplay = new ModulesImageDisplay(manager.ContentManager);
 
             this.lobbyswitchPage = lobbyswitchPage;
-            this.switchPageParameters = new SwitchPageParameters(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"),
+            this.switchPageParametersAnimals = new SwitchPageParameters(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"),
                                                                  new Vector2(848, 485), manager.ContentManager, 4);
 
             InitializeCreaturesRows();
+            InitalizeParametersPanel();
         }
 
         public void Load()
@@ -81,6 +86,59 @@ namespace Client
 
         public void Update(GameTime gameTime)
         {
+            if (timeoutTimer > 5)
+            {
+                isCreatingLobby = false;
+                isJoiningLobby = false;
+                timeoutTimer = 0;
+            }
+
+            if (isCreatingLobby)
+            {
+                timer += gameTime.ElapsedGameTime.TotalSeconds;
+                timeoutTimer += gameTime.ElapsedGameTime.TotalSeconds;
+                if (timer < 0.1) return;
+
+                if (manager.ClientManager.LobbyCreated == ActionStatus.SUCCESS)
+                {
+                    isJoiningLobby = true;
+                    isCreatingLobby = false;
+                    manager.ClientManager.LobbyCreated = ActionStatus.WAITING;
+                    timeoutTimer = 0;
+                }
+                else if (manager.ClientManager.LobbyCreated == ActionStatus.FAILED)
+                {
+                    isCreatingLobby = false;
+                    manager.ClientManager.LobbyCreated = ActionStatus.WAITING;
+                    timeoutTimer = 0;
+                }
+
+                timer = 0;
+                return;
+            }
+            else if (isJoiningLobby)
+            {
+                timer += gameTime.ElapsedGameTime.TotalSeconds;
+                timeoutTimer += gameTime.ElapsedGameTime.TotalSeconds;
+                if (timer < 0.1) return;
+
+                if (manager.ClientManager.LobbyJoined == ActionStatus.SUCCESS)
+                {
+                    timeoutTimer = 0;
+                    manager.SceneManager.RemoveScene();
+                    manager.SceneManager.AddScene(new GameScene(manager));
+                }
+                else if (manager.ClientManager.LobbyJoined == ActionStatus.FAILED)
+                {
+                    timeoutTimer = 0;
+                    isJoiningLobby = false;
+                    manager.ClientManager.LobbyJoined = ActionStatus.WAITING;
+                }
+
+                timer = 0;
+                return;
+            }
+
             bool isPressed = false;
 
             if (manager.InputManager.CheckIfLeftClick())
@@ -99,13 +157,10 @@ namespace Client
                     if (!gameNameBox.CheckTextIfEmpty() && playerAmountBox.CheckText(32))
                     {
 
-                        IEnumerable<int> modules = new List<int>() { 0 };
+                        IEnumerable<int> modules = new List<int>() {};
                         CreateLobbyMessage message = new CreateLobbyMessage(gameNameBox.GetText(), int.Parse(playerAmountBox.GetText()), mapData.index, modules);
-                        MessageManager.SendMessageAsync(manager.ClientManager.Client, message);
-                        //LobbyInfoSerialization();
-                        lobbyswitchPage.AddRow(gameNameBox.GetText(), mapData.name, $"1/{playerAmountBox.GetText()}");
-                        manager.SceneManager.RemoveScene();
-                        manager.SceneManager.AddScene(new GameScene(manager));
+                        _ = MessageManager.SendMessageAsync(manager.ClientManager.Client, message);
+                        isCreatingLobby = true;
                     }
                     else
                     {

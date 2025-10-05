@@ -4,6 +4,7 @@ using Server.Core;
 using Server.Core.Modules;
 using SharedLibrary.Logging;
 using SharedLibrary.Messages;
+using SharedLibrary.DTOs.EntitiesDTO;
 
 namespace Server.Core.Lobby
 {
@@ -14,7 +15,6 @@ namespace Server.Core.Lobby
         public int LobbyId { get; private init; }
         public string Name { get; set; }
         public int MaxPlayers { get; set; }
-        public int MapId { get; set; }
 
 
         public static event EventHandler<OnLogEventArgs>? OnLog;
@@ -28,6 +28,7 @@ namespace Server.Core.Lobby
         private ICollection<WorldEntity> entities;
         private ICollection<Module> loadedModules;
         private Dictionary<WorldEntity, FrameEntityMetadata> metadata;
+        private bool[,] walkableTile;
 
         private bool running;
 
@@ -54,7 +55,7 @@ namespace Server.Core.Lobby
             LobbyId = id;
             Name = name;
             MaxPlayers = maxPlayers;
-            MapId = mapId;
+            walkableTile = null; //TODO: Implement map
 
             entities = new List<WorldEntity>(); //Currently no way to add them.
             loadedModules = new List<Module>();
@@ -81,6 +82,8 @@ namespace Server.Core.Lobby
 
         private void PublishWorldState()
         {
+            //TODO: @FranciszekGwarek Here we need to simulate non-human entities? Yes, I think so.
+
             foreach (var entity in entities)
             {
                 if (metadata.ContainsKey(entity))
@@ -93,13 +96,14 @@ namespace Server.Core.Lobby
             {
                 foreach (var client in clients)
                 {
-                    _= MessageManager.SendMessageAsync(client, new WorldStateMessage(
+                    _ = MessageManager.SendMessageAsync(client, new WorldStateMessage(
                             entities.Select(e => e.ToDTO())
                         ));
                 }
             }
         }
-        private void UpdateState(MessageBase message, TcpClient client)
+
+        private void UpdateServerState(MessageBase message, TcpClient client)
         {
             if (message == null)
             {
@@ -141,16 +145,14 @@ namespace Server.Core.Lobby
             // If we change position, there is a possible new interaction 
             if(entity.State.Position != newState.Position && !metadata[entity].AlreadyChangedPosition)
             {
-                Type interactionType = GetInteractionType(newState);
-
                 Module module = loadedModules.Where(m => m.ID == entity.ModuleID).First();
-
-                IEnumerable<IBehaviour> retBehaviours = module.GetBehavioursOfType(interactionType);
-                IBehaviour behaviour = retBehaviours.First(); //TODO: Picking behaviour, random?
+                
+                Type interactionType = GetInteractionType(entity, newState);
+                IBehaviour behaviour = module.GetBehaviourOfType(interactionType);
 
                 if (interactionType == typeof(IMoveBehaviour)) 
                 {
-                    ((IMoveBehaviour)behaviour).Move(entity, newState.Position, new { });
+                    ((IMoveBehaviour)behaviour).Move();
                 }
                 else if(interactionType == typeof(IAttackBehaviour)) 
                 {
@@ -162,17 +164,34 @@ namespace Server.Core.Lobby
 
         }
 
-        private Type GetInteractionType(EntityStateDTO newState)
+        private Type GetInteractionType(WorldEntity entity, EntityStateDTO newState)
         {
-            if(!entities.Any(ent => ent.State.Position == newState.Position))
+            WorldEntity? entityOnPosition = entities.Where(ent => ent.State.Position == newState.Position).FirstOrDefault();
+
+            if (entityOnPosition == null)
             {
                 return typeof(IMoveBehaviour);
             }
-            else
+
+            EntityTypeEnum entityType = entity.Type;
+            EntityTypeEnum targetType = entityOnPosition.Type;
+
+            //Here we need to establish possible interactions
+            if ((entityType == EntityTypeEnum.Human && targetType == EntityTypeEnum.Human) ||
+                (entityType == EntityTypeEnum.Human && targetType == EntityTypeEnum.Animal) ||
+                (entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Human) ||
+                (entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Animal)
+                )
             {
-                return typeof(IAttackBehaviour);
+                Module entityModule = ModuleService.Instance.GetModuleById(entity.ModuleID);
+                IAttackBehaviour attackBehaviour = (IAttackBehaviour)entityModule.GetBehaviourOfType(typeof(IAttackBehaviour));
+                if (attackBehaviour.ShouldAttack(entity, entityOnPosition))
+                {
+                    return typeof(IAttackBehaviour);
+                }
             }
 
+            return null;
         }
 
         #region Delegates
@@ -187,7 +206,7 @@ namespace Server.Core.Lobby
                 }
             }
 
-            UpdateState(args.Message, args.Client);
+            UpdateServerState(args.Message, args.Client);
         }
 
         #endregion
@@ -245,7 +264,7 @@ namespace Server.Core.Lobby
                 clients.Add(client);
             }
 
-            _ = MessageManager.SendMessageAsync(client, new InfoMessage($"You have joined lobby {LobbyId}.\n"));
+            _ = MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyJoined ,$"You have joined lobby {LobbyId}.\n"));
             return true;
         }
 
@@ -261,7 +280,7 @@ namespace Server.Core.Lobby
                 clients.Remove(client);
             }
 
-            _ = MessageManager.SendMessageAsync(client, new InfoMessage($"You have disjoined lobby {LobbyId}.\n"));
+            _ = MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyDisjoined ,$"You have disjoined lobby {LobbyId}.\n"));
             return true;
         }
         

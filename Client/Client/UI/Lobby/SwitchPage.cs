@@ -54,9 +54,14 @@ namespace Client
             }
         }
 
-        public void AddRow(string lobbyName, string mapName, string playersAmount)
+        public void AddRow(string lobbyName, string mapName, string playersAmount, int lobbyID)
         {
-            rows.Add(new LobbyRow(contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), lobbyName, mapName, playersAmount, new Vector2(95, 153 + 68 * (rows.Count % 6)), 760, 65));
+            rows.Add(new LobbyRow(contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), lobbyName, mapName, playersAmount, lobbyID, new Vector2(95, 153 + 68 * (rows.Count % 6)), 760, 65));
+        }
+
+        public void ClearRows()
+        { 
+            rows.Clear();
         }
 
         public void UpdateRows(Vector2 cursorPosition, bool ispressed)

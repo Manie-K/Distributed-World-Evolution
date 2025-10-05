@@ -12,13 +12,13 @@ namespace Client
         private Text playersText;
         private Rectangle bounds;
 
-        public LobbyRow(SpriteFont font, string name, string mapName, string numberOfPlayers, Vector2 position, int width, int height)
+        public LobbyRow(SpriteFont font, string name, string mapName, string numberOfPlayers, int lobbyID, Vector2 position, int width, int height)
         {
             int nameWidth = (int)(width * 0.33f);
             int mapNameWidth = (int)(width * 0.38f);
             int playersWidth = (int)(width * 0.2f);
 
-            LobbyID = 0;
+            LobbyID = lobbyID;
             gameName = new Text(font, name, true, position, nameWidth, height);
             this.mapName = new Text(font, mapName, true,
                 new Vector2(position.X + nameWidth, position.Y), mapNameWidth, height);
