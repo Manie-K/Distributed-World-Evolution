@@ -1,16 +1,16 @@
 ﻿using System.Reflection;
 
-namespace Server.Core.Modules
+namespace Server.Core.Behaviours
 {
     public class BehaviourInMemoryDB
     {
         private readonly Dictionary<int, Type> types;
-        
+
         public BehaviourInMemoryDB()
         {
             // Initialize the in-memory database with all behaviour types.
             types = new Dictionary<int, Type>();
-            
+
             List<Type> implementations = Assembly
                 .GetExecutingAssembly()
                 .GetTypes()
@@ -28,7 +28,7 @@ namespace Server.Core.Modules
 
         public Type? GetTypeByID(int id)
         {
-            types.TryGetValue(id, out Type? value); 
+            types.TryGetValue(id, out Type? value);
             return value;
         }
     }

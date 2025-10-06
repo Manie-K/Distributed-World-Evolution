@@ -5,8 +5,9 @@ namespace SharedLibrary.Messages
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum GetMessageTypeEnum
     {
-        GetAllLobbies,
-        GetAllModules,
-        GetWorldState
+        LobbyList,
+        ModuleList,
+        WorldState,
+        BehaviourList,
     }
 }

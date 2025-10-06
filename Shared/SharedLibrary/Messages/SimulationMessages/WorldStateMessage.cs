@@ -4,7 +4,6 @@ using SharedLibrary.DTOs.EntitiesDTO;
 
 namespace SharedLibrary.Messages
 {
-    //TODO: Change after world state is fully implemented
     public class WorldStateMessage : MessageBase
     {
         public override MessageTypeEnum MessageType => MessageTypeEnum.WorldState;

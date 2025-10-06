@@ -11,5 +11,7 @@ namespace SharedLibrary.DTOs.LobbyDTO
         public int ID { get; init; }
         public string Name { get; init; }
         public int MaxPlayers { get; set; }
+        public int CurrentPlayers { get; set; }
+        public int MapID { get; init; }
     }
 }

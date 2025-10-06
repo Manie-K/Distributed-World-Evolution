@@ -5,33 +5,32 @@ using Server.Core.Modules;
 using SharedLibrary.Logging;
 using SharedLibrary.Messages;
 using SharedLibrary.DTOs.EntitiesDTO;
+using Server.Core.Behaviours;
+using Server.Core.Helpers;
 
 namespace Server.Core.Lobby
 {
     public class Lobby : ILobby
     {
-        //TODO: add modules when they are implemented
         /// <inheritdoc/>
         public int LobbyId { get; private init; }
         public string Name { get; set; }
         public int MaxPlayers { get; set; }
-
 
         public static event EventHandler<OnLogEventArgs>? OnLog;
         
         /// <summary>
         /// Lobby updates per second.
         /// </summary>
-        public const double LOBBY_UPDATES_PER_SECOND = 64;  
+        public const double LOBBY_UPDATES_PER_SECOND = 64;
 
-        private List<TcpClient> clients;
-        private ICollection<WorldEntity> entities;
-        private ICollection<Module> loadedModules;
-        private Dictionary<WorldEntity, FrameEntityMetadata> metadata;
-        private bool[,] walkableTile;
+        private readonly IModuleService moduleService;
+        private readonly List<TcpClient> clients;
+        private readonly ICollection<WorldEntity> entities;
+        private readonly ICollection<Module> loadedModules;
+        private bool[,] walkableTiles;
 
         private bool running;
-
 
         public static Lobby CreateLobby(int id, string name, int maxPlayers, int mapId, IEnumerable<int> moduleIDs, IModuleService moduleService)
         {
@@ -47,6 +46,7 @@ namespace Server.Core.Lobby
 
                 lobby.LoadModule(module);
             }
+
             return lobby;
         }
 
@@ -55,17 +55,16 @@ namespace Server.Core.Lobby
             LobbyId = id;
             Name = name;
             MaxPlayers = maxPlayers;
-            walkableTile = null; //TODO: Implement map
+            walkableTiles = null; //TODO: Implement map
+            moduleService = ModuleService.Instance;
 
             entities = new List<WorldEntity>(); //Currently no way to add them.
             loadedModules = new List<Module>();
-            metadata = new Dictionary<WorldEntity, FrameEntityMetadata>();
             clients = new List<TcpClient>();
             running = true;
 
             Server.OnMessageFromClientReceived += OnMessageFromClientReceived_Delegate;
         }
-
 
         public void Run()
         {
@@ -82,14 +81,31 @@ namespace Server.Core.Lobby
 
         private void PublishWorldState()
         {
-            //TODO: @FranciszekGwarek Here we need to simulate non-human entities? Yes, I think so.
+            // Simulate all non-human entities
+            Module entModule;
+            EntityState nextState;
 
             foreach (var entity in entities)
             {
-                if (metadata.ContainsKey(entity))
+                if(entity.State.InteractionFramesLeft > 0)
                 {
-                    metadata[entity].AlreadyChangedPosition = false;
+                    continue;
                 }
+
+                entModule = moduleService.GetModuleById(entity.ModuleID);
+                if (entModule.Type == EntityTypeEnum.Human)
+                {
+                    continue;
+                }
+
+                var moveBehaviour = entModule.GetBehaviourOfType(typeof(MoveBehaviourBase));
+                nextState = new EntityState(entity.State);
+
+                (int stepX, int stepY) = ((MoveBehaviourBase)moveBehaviour).GetNextMovement(entity);
+                nextState.Position.X += stepX;
+                nextState.Position.Y += stepY;
+
+                SimulateNonHumanEntityUpdate(entity, nextState.ToDTO());
             }
 
             lock (clients)
@@ -114,8 +130,8 @@ namespace Server.Core.Lobby
             {
                 switch (message.MessageType)
                 {
-                    case MessageTypeEnum.EntityState:
-                        HandleUpdateWorldEntityStateMessage(client, (EntityStateMessage)message);
+                    case MessageTypeEnum.UserInteraction:
+                        HandleUpdateWorldEntityStateMessage(client, (UserInteractionMessage)message);
                         break;
                     case MessageTypeEnum.UserState:
                         HandleUpdateUserStateMessage(client, (UserStateMessage)message);
@@ -131,7 +147,7 @@ namespace Server.Core.Lobby
                     
         }
 
-        private void SimulateEntityUpdate(WorldEntity entity, EntityStateDTO newState)
+        private void SimulateNonHumanEntityUpdate(WorldEntity entity, EntityStateDTO newState)
         {
             if (entity == null)
             {
@@ -141,53 +157,125 @@ namespace Server.Core.Lobby
             {
                 throw new ArgumentNullException(nameof(newState), "New state cannot be null.");
             }
-        
-            // If we change position, there is a possible new interaction 
-            if(entity.State.Position != newState.Position && !metadata[entity].AlreadyChangedPosition)
-            {
-                Module module = loadedModules.Where(m => m.ID == entity.ModuleID).First();
-                
-                Type interactionType = GetInteractionType(entity, newState);
-                IBehaviour behaviour = module.GetBehaviourOfType(interactionType);
 
-                if (interactionType == typeof(IMoveBehaviour)) 
+            Module entModule = moduleService.GetModuleById(entity.ModuleID);
+
+            // If we change position, there is a possible new interaction 
+            if (entity.State.Position != newState.Position && entity.State.InteractionFramesLeft == 0)
+            {
+                Type? interactionType = GetInteractionType(entity, newState);
+                if (interactionType is null) return;
+
+                WorldEntity targetEntity = entities.Where(e => e.State.Position == newState.Position).First();
+                IBehaviour behaviour = entModule.GetBehaviourOfType(interactionType);
+
+
+                // In case when we need to add custom parameters
+                if(interactionType == typeof(MoveBehaviourBase))
                 {
-                    ((IMoveBehaviour)behaviour).Move();
+                    behaviour.Execute(entity, null, new Dictionary<string, object>{
+                        { CustomBehaviourParams.MAP_PARAM, walkableTiles   },
+                        { CustomBehaviourParams.NEW_POS_PARAM, newState.Position }
+                    });
                 }
-                else if(interactionType == typeof(IAttackBehaviour)) 
+                else
                 {
-                    WorldEntity target = entities.Where(e => e.State.Position == newState.Position).First();
-                    ((IAttackBehaviour)behaviour).Attack(entity, target);
+                    behaviour.Execute(entity, targetEntity);
+                    entity.State.InteractionFramesLeft = 10;
+                    targetEntity.State.InteractionFramesLeft = 10;
                 }
-                // ...
+
             }
 
         }
+        private void SimulateHumanEntityUpdate(WorldEntityDTO human, WorldEntityDTO? other)
+        {
+            WorldEntity entHuman = entities.Where(e => e.Id == human.Id).First();
+            WorldEntity entOther = entities.Where(e => e.Id == other?.Id).First();
 
-        private Type GetInteractionType(WorldEntity entity, EntityStateDTO newState)
+            if (entHuman == null)
+            {
+                throw new ArgumentNullException(nameof(entHuman), "Entity not found");
+            }
+
+            /// @FranciszekGwarek - sanity check please
+            if(human.State.InteractionFramesLeft > 0)
+            {
+                return;
+            }
+
+            entHuman.UpdateState(new EntityState(human.State));
+            entOther?.UpdateState(new EntityState(other.State));
+        }
+
+
+        private Type? GetInteractionType(WorldEntity entity, EntityStateDTO newState)
         {
             WorldEntity? entityOnPosition = entities.Where(ent => ent.State.Position == newState.Position).FirstOrDefault();
 
             if (entityOnPosition == null)
             {
-                return typeof(IMoveBehaviour);
+                return typeof(MoveBehaviourBase);
             }
 
-            EntityTypeEnum entityType = entity.Type;
-            EntityTypeEnum targetType = entityOnPosition.Type;
+            Module entityModule = moduleService.GetModuleById(entity.ModuleID);
+            EntityTypeEnum entityType = entityModule.Type;
+            EntityTypeEnum targetType = moduleService.GetModuleById(entityOnPosition.ModuleID).Type;
 
-            //Here we need to establish possible interactions
+            // We refactored this so that humans dont use this method, the send the new states in frames
+            if (entityType == EntityTypeEnum.Human) return null;
+
+            // Attack - old code, Humans wont be here
             if ((entityType == EntityTypeEnum.Human && targetType == EntityTypeEnum.Human) ||
                 (entityType == EntityTypeEnum.Human && targetType == EntityTypeEnum.Animal) ||
                 (entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Human) ||
                 (entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Animal)
                 )
             {
-                Module entityModule = ModuleService.Instance.GetModuleById(entity.ModuleID);
-                IAttackBehaviour attackBehaviour = (IAttackBehaviour)entityModule.GetBehaviourOfType(typeof(IAttackBehaviour));
-                if (attackBehaviour.ShouldAttack(entity, entityOnPosition))
+                AttackBehaviourBase attackBehaviour = (AttackBehaviourBase)entityModule.GetBehaviourOfType(typeof(AttackBehaviourBase));
+                if (attackBehaviour.CanExecute(entity, entityOnPosition))
                 {
-                    return typeof(IAttackBehaviour);
+                    return typeof(AttackBehaviourBase);
+                }
+            }
+
+            // Reproduce
+            if (entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Animal)
+            {
+                ReproduceBehaviourBase reproduceBehaviour = (ReproduceBehaviourBase)entityModule.GetBehaviourOfType(typeof(ReproduceBehaviourBase));
+                if (reproduceBehaviour.CanExecute(entity, entityOnPosition))
+                {
+                    return typeof(ReproduceBehaviourBase);
+                }
+            }
+
+            // Eat
+            if (entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Plant)
+            {
+                EatBehaviourBase eatBehaviour = (EatBehaviourBase)entityModule.GetBehaviourOfType(typeof(EatBehaviourBase));
+                if (eatBehaviour.CanExecute(entity, entityOnPosition))
+                {
+                    return typeof(EatBehaviourBase);
+                }
+            }
+
+            // Gather 
+            if (entityType == EntityTypeEnum.Human && targetType == EntityTypeEnum.Plant)
+            {
+                GatherBehaviourBase gatherBehaviour = (GatherBehaviourBase)entityModule.GetBehaviourOfType(typeof(GatherBehaviourBase));
+                if (gatherBehaviour.CanExecute(entity, entityOnPosition))
+                {
+                    return typeof(GatherBehaviourBase);
+                }
+            }
+
+            // Tame - old code, Humans wont be here
+            if (entityType == EntityTypeEnum.Human && targetType == EntityTypeEnum.Animal)
+            {
+                TameBehaviourBase tameBehaviour = (TameBehaviourBase)entityModule.GetBehaviourOfType(typeof(TameBehaviourBase));
+                if (tameBehaviour.CanExecute(entity, entityOnPosition))
+                {
+                    return typeof(TameBehaviourBase);
                 }
             }
 
@@ -213,23 +301,23 @@ namespace Server.Core.Lobby
 
         #region Handlers
 
-        private void HandleUpdateWorldEntityStateMessage(TcpClient client, EntityStateMessage message)
+        private void HandleUpdateWorldEntityStateMessage(TcpClient client, UserInteractionMessage message)
         {
-            WorldEntityDTO ent = message.Entity;
-            if (ent == null)
+            WorldEntityDTO human = message.HumanEntity;
+            WorldEntityDTO? other = message.OtherEntity;
+
+            WorldEntity? humanEntity = entities.Where(e => e.Id == human.Id).First();
+            if (humanEntity == null)
             {
-                throw new Exception("Received null WorldEntityDTO in EntityStateMessage.");
+                throw new Exception($"Human entity ({human.Id}) not found in lobby.");
             }
 
-            WorldEntity? existingEntity = entities.Where(e => e.Id == ent.Id).First();
-
-            if (existingEntity == null)
+            if (moduleService.GetModuleById(humanEntity.ModuleID).Type != EntityTypeEnum.Human)
             {
-                Log($"Entity with ID {ent.Id} not found in lobby {LobbyId}.", LogLevelEnum.Error);
-                return;
+                throw new Exception($"Entity ({human.Id}) is not a human.");
             }
-            
-            SimulateEntityUpdate(existingEntity, ent.State);
+
+            SimulateHumanEntityUpdate(human, other);
         }
 
         private void HandleUpdateUserStateMessage(TcpClient client, UserStateMessage message)
@@ -331,7 +419,6 @@ namespace Server.Core.Lobby
                     return false;
                 }
                 entities.Add(entity);
-                metadata.Add(entity, new FrameEntityMetadata());
                 return true;
             }
         }
@@ -346,7 +433,6 @@ namespace Server.Core.Lobby
                     return false;
                 }
                 entities.Remove(entity);
-                metadata.Remove(entity);
                 return true;
             }
         }
