@@ -12,6 +12,7 @@ namespace Client
         private Button playButton;
         private Button settingsButton;
         private Button quitButton;
+        private Button modulesButton;
         private Texture2D backGround;
         private Texture2D mainMenuPanel;
         private Texture2D userNamePanel;
@@ -25,9 +26,10 @@ namespace Client
             this.game = game;
 
             mainMenuPanel = manager.ContentManager.Load<Texture2D>("UI/Scenes/MainMenuPanel");
-            playButton = new Button(manager.ContentManager.Load<Texture2D>("UI/Buttons/PlayButton"), null, null, new Vector2(418, 208), 447, 100 , Color.Gold);
-            settingsButton = new Button(manager.ContentManager.Load<Texture2D>("UI/Buttons/SettingsButton"), null, null, new Vector2(406, 335), 467, 95, Color.Gold);
-            quitButton = new Button(manager.ContentManager.Load<Texture2D>("UI/Buttons/ExitButton"), null, null, new Vector2(420, 460), 445, 95, Color.Gold);
+            playButton = new Button(manager.ContentManager.Load<Texture2D>("UI/Buttons/PlayButton"), null, null, new Vector2(430, 201), 430, 80 , Color.Gold);
+            settingsButton = new Button(manager.ContentManager.Load<Texture2D>("UI/Buttons/SettingsButton"), null, null, new Vector2(430, 293), 430, 80, Color.Gold);
+            modulesButton = new Button(manager.ContentManager.Load<Texture2D>("UI/Buttons/ModulesButton"), null, null, new Vector2(430, 384), 430, 80, Color.Gold);
+            quitButton = new Button(manager.ContentManager.Load<Texture2D>("UI/Buttons/ExitButton"), null, null, new Vector2(430, 474), 430, 80, Color.Gold);
             backGround = manager.ContentManager.Load<Texture2D>("UI/BG_Forest");
             textBox = new TextBox(null, manager.ContentManager.Load<SpriteFont>("Fonts/ButtonFont"), new Vector2(445, 315), 385, 87, Color.Black);
             saveButton = new Button(manager.ContentManager.Load<Texture2D>("UI/Buttons/SubmitButton"), null, null, new Vector2(493, 446), 299, 99, Color.Gold);
@@ -61,6 +63,10 @@ namespace Client
                     else if (settingsButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                     {
                         manager.SceneManager.AddScene(new SettingsScene(manager));
+                    }
+                    else if (modulesButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
+                    {
+                        manager.SceneManager.AddScene(new CreateModulesScene(manager));
                     }
                     else if (quitButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                     {
@@ -104,6 +110,7 @@ namespace Client
             {
                 playButton.Update(manager.InputManager.GetMousePosition());
                 settingsButton.Update(manager.InputManager.GetMousePosition());
+                modulesButton.Update(manager.InputManager.GetMousePosition());
                 quitButton.Update(manager.InputManager.GetMousePosition());
             }
 
@@ -123,6 +130,7 @@ namespace Client
                 spriteBatch.Draw(mainMenuPanel, new Rectangle(265, 90, 750, 540), Color.White);
                 playButton.Draw(spriteBatch);
                 settingsButton.Draw(spriteBatch);
+                modulesButton.Draw(spriteBatch);
                 quitButton.Draw(spriteBatch);
             }
             else
