@@ -6,16 +6,16 @@ namespace SharedLibrary.DTOs.EntitiesDTO
     public class WorldEntityDTO
     {
         public Guid Id { get; private set; }
+        public string? Name { get; private set; }
         public EntityStateDTO State { get; private set; }
         public int ModuleID { get; set; }
-        public EntityTypeEnum Type { get; set; }
 
-        public WorldEntityDTO(Guid id, EntityStateDTO state, int moduleID, EntityTypeEnum type)
+        public WorldEntityDTO(string? name, Guid id, EntityStateDTO state, int moduleID)
         {
+            Name = name;
             Id = id;
             State = state ?? throw new ArgumentNullException(nameof(state), "State cannot be null.");
             ModuleID = moduleID;
-            Type = type;
         }
     }
 }

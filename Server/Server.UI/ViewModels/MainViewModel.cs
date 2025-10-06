@@ -33,7 +33,7 @@ namespace Server.UI.ViewModels
         private async void InitializeAsync()
         {
             await MessageManager.SendMessageAsync(_client, new RoleMessage(RoleEnum.UI));
-            await MessageManager.SendMessageAsync(_client, new GetMessage(GetMessageTypeEnum.GetAllLobbies));
+            await MessageManager.SendMessageAsync(_client, new GetMessage(GetMessageTypeEnum.LobbyList));
 
             _ = Task.Run(async () =>
             {
@@ -54,7 +54,7 @@ namespace Server.UI.ViewModels
                         {
                             _ = App.Current.Dispatcher.BeginInvoke(new Action(() =>
                             {
-                                Tabs.Add(new LobbyViewModel(lobby.ID, lobby.Name, lobby.MaxPlayers));
+                                Tabs.Add(new LobbyViewModel(lobby.ID, lobby.Name, lobby.MaxPlayers, lobby.CurrentPlayers, lobby.MapID));
                             }));
                         }
 

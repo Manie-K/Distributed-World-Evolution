@@ -17,6 +17,8 @@ namespace SharedLibrary.Messages
         ServerConnected,
         ServerNotConnected,
         ServerDisconnected,
-        ServerNotDisconnected
+        ServerNotDisconnected,
+        ModuleCreated,
+        ModuleNotCreated,
     }
 }

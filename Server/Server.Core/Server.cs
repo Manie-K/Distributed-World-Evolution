@@ -7,6 +7,7 @@ using System.Net;
 using System.Net.Sockets;
 using SharedLibrary.DTOs.ModuleDTO;
 using SharedLibrary.DTOs.LobbyDTO;
+using SharedLibrary.Messages.BehaviourMessages;
 
 namespace Server.Core
 {
@@ -111,14 +112,14 @@ namespace Server.Core
                         lobbyManager.AddUserToLobby(lobbyID, client);
 
                         //TODO: send full lobby info
-                        await MessageManager.SendMessageAsync(client, new LobbyMessage(null, lobbyID));
-                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyJoined, "Welcome to lobby!"));
+                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyCreated, "New lobby created!"));
+                        await MessageManager.SendMessageAsync(client, new LobbyDataMessage(null, lobbyID));
+                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyJoined, "Welcome to the new lobby!"));
                     }
                     catch (Exception ex)
                     {
                         Log(ex.Message, LogLevelEnum.Error);
-                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotJoined, "Lobby error. Try again."));
-                        client.Close();
+                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotCreated, "New lobby not created."));
                     }
                 }
 
@@ -136,7 +137,6 @@ namespace Server.Core
                     {
                         Log(ex.Message, LogLevelEnum.Error);
                         await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotJoined, "Lobby error. Try again."));
-                        client.Close();
                     }
                 }
 
@@ -149,13 +149,11 @@ namespace Server.Core
                     {
                         lobbyManager.RemoveUserFromLobby(joinLobbyMessage.LobbyID, client);
                         await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyDisjoined, "See you soon!"));
-                        client.Close();
                     }
                     catch (Exception ex)
                     {
                         Log(ex.Message, LogLevelEnum.Error);
                         await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotDisjoined, "Lobby error. Try again."));
-                        client.Close();
                     }
                 }
 
@@ -166,7 +164,7 @@ namespace Server.Core
 
                     switch (getMessage.GetMessageType)
                     {
-                        case GetMessageTypeEnum.GetAllLobbies:
+                        case GetMessageTypeEnum.LobbyList:
                             //TODO: removed hardcoded lobbies
                             var lobbies = new List<LobbyDTO>();
                             lobbies.Add(new LobbyDTO
@@ -174,6 +172,8 @@ namespace Server.Core
                                 ID = 1,
                                 Name = "Test Lobby",
                                 MaxPlayers = 10,
+                                CurrentPlayers = 1,
+                                MapID = 1
                             });
                             ////
 
@@ -189,18 +189,30 @@ namespace Server.Core
                             }
                             break;
 
-                        case GetMessageTypeEnum.GetAllModules:
+                        case GetMessageTypeEnum.ModuleList:
                             //TODO: removed hardcoded modules
+                            //var modules = moduleService.GetAllModules().ToList().ToDTO();
+
+                            // <temp>
                             var modules = new List<ModuleDTO>();
                             modules.Add(new ModuleDTO
-                            (1, "Test Module", true, 10, 10, 10, 
-                                new List<BehviourDTO>
-                                {
-                                    new BehviourDTO (1, "This is a test behaviour.")
-                                }
-                            ));
-                            ////
-                            ///
+                                (
+                                    1,
+                                    "Test Module",
+                                    true,
+                                    10,
+                                    10,
+                                    10,
+                                    new List<BehviourDTO>{
+                                        new BehviourDTO (1, "This is a test behaviour.", EntityTypeEnum.Animal)
+                                    },
+                                    EntityTypeEnum.Animal,
+                                    1
+                                )
+                            );
+                            // </temp>
+
+
                             try
                             {
                                 await MessageManager.SendMessageAsync(client, new ModuleListMessage(modules));
@@ -213,6 +225,22 @@ namespace Server.Core
                             }
                             break;
 
+                        case GetMessageTypeEnum.BehaviourList:
+                            var behaviors = new List<BehviourDTO>();
+                            //var behaviors = behaviourService.GetAllBehaviours().ToList().ToDTO();
+
+                            try
+                            {
+                                await MessageManager.SendMessageAsync(client, new BehaviourListMessage(behaviors));
+                            }
+                            catch (Exception ex)
+                            {
+                                Log(ex.Message, LogLevelEnum.Error);
+                                await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "Behaviour list error. Try again."));
+                                client.Close();
+                            }
+                            break;
+
                         default:
                             await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "Unknown GetMessage Type."));
                             break;
@@ -220,6 +248,26 @@ namespace Server.Core
 
                 }
 
+                //Creating module
+                else if (message.MessageType == MessageTypeEnum.CreateModule)
+                {
+                    CreateModuleMessage createModuleMessage = (CreateModuleMessage)message;
+
+                    try
+                    {
+                        //TODO: implement module creation
+                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.ModuleNotCreated, "Module creation not implemented."));
+                    }
+                    catch (Exception ex)
+                    {
+                        Log(ex.Message, LogLevelEnum.Error);
+                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.ModuleNotCreated, "Module creation error. Try again."));
+                    }
+
+                }
+
+
+                //Forwarding message to lobby
                 else
                 {
                     OnMessageFromClientReceived?.Invoke(new OnMessageFromClientEventArgs(client, message));

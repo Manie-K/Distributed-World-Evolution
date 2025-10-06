@@ -14,5 +14,7 @@ namespace Server.Core.Modules
         public Module CreateModuleInstance(CreateModuleDTO dto);
 
         public Module GetModuleById(int id);
+
+        public IEnumerable<Module> GetAllModules();
     }
 }
