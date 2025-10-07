@@ -59,7 +59,8 @@ namespace Client
                 //character.Update(gameTime, manager.InputManager);
                 if (entities.TryGetValue(character.Id, out WorldEntityDTO entity))
                 { 
-                    character.Position = entity.State.Position;
+                    character.Position.X = entity.State.Position.X;
+                    character.Position.Y = entity.State.Position.Y;
                 }
             }
 
