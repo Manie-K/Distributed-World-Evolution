@@ -156,7 +156,7 @@ namespace Client
                 }
                 else if (message.MessageType == MessageTypeEnum.LobbyData)
                 {
-                    LobbyMessage lobbyMessage = (LobbyMessage)message;
+                    LobbyDataMessage lobbyMessage = (LobbyDataMessage)message;
                     LobbyJoined = ActionStatus.SUCCESS;
                     LobbyID = lobbyMessage.LobbyID;
 

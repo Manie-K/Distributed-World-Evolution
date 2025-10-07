@@ -114,12 +114,12 @@ namespace Client
                         return;
                     }
 
-                    _ = MessageManager.SendMessageAsync(manager.ClientManager.Client, new JoinLobbyMessage(switchPage.GetSelectedLobby().LobbyID));
+                    _ = MessageManager.SendMessageAsync(manager.ClientManager.Client, new JoinLobbyMessage(switchPage.GetSelectedLobby().LobbyID, manager.UserSettings.PlayerName));
                     isJoiningLobby = true;
                 }
                 else if (refreshButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                 {
-                    _ = MessageManager.SendMessageAsync(manager.ClientManager.Client, new GetMessage(GetMessageTypeEnum.GetAllLobbies));
+                    _ = MessageManager.SendMessageAsync(manager.ClientManager.Client, new GetMessage(GetMessageTypeEnum.LobbyList));
                     isLoadingLobbies = true;
                 }
                 else if(backButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
