@@ -1,10 +1,4 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Client.Panels.Windows
 {
@@ -19,6 +13,7 @@ namespace Client.Panels.Windows
             this.gameManager = gameManager;
             ErrorWindow = new ErrorWindow(gameManager);
             WarningWindow = new WarningWindow(gameManager);
+            ClientManager.OnErrorMessageReceived += ShowServerError;
         }
 
         public bool Update()
@@ -62,6 +57,18 @@ namespace Client.Panels.Windows
         public void EnableErrorWindow()
         {
             ErrorWindow.isEnabled = true;
+        }
+
+        private void ShowServerError()
+        {
+            ErrorWindow.SetFailedConnectionInformation();
+            EnableErrorWindow();
+        }
+
+        public void ShowErrorMessage(string message)
+        {
+            ErrorWindow.SetErrorInformation(message);
+            EnableErrorWindow();
         }
     }
 }

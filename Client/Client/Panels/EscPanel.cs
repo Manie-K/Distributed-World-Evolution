@@ -59,7 +59,7 @@ namespace Client.Panels
                 manager.SceneManager.RemoveScene();
                 _ = MessageManager.SendMessageAsync(manager.ClientManager.Client, new DisjoinLobbyMessage(manager.ClientManager.LobbyID));
                 manager.ClientManager.LobbyID = -1;
-                manager.ClientManager.LobbyJoined = ActionStatus.WAITING;
+                manager.ClientManager.LobbyJoined = ActionStatus.IDLE;
                 return true;
             }
 

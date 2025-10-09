@@ -1,10 +1,7 @@
 ﻿using Client.UI.CreateLobby.Parameters;
 using Client.UI.CreateModules.Modules.Parameters;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System.Runtime.CompilerServices;
-
 
 namespace Client
 {
@@ -64,6 +61,11 @@ namespace Client
         public ModuleData GetData()
         {
             return moduleData;
+        }
+
+        public CheckBox GetCheckBox()
+        { 
+            return checkBox;
         }
     }
 }

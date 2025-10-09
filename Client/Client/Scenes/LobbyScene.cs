@@ -35,12 +35,14 @@ namespace Client
             createButton = new Button(manager.ContentManager.Load<Texture2D>("UI/Buttons/CreateButton"), null, null, new Vector2(953, 420), 180, 70, new Color(255, 255, 128));
             backButton = new Button(manager.ContentManager.Load<Texture2D>("UI/Buttons/Back_Button"), null, null, new Vector2(10, 10), 120, 46, new Color(255, 255, 128));
 
-            isLoadingLobbies = false;
             isJoiningLobby = false;
             timer = 0;
             timeoutTimer = 0;
 
             LoadLobbies();
+            _ = MessageManager.SendMessageAsync(manager.ClientManager.Client, new GetMessage(GetMessageTypeEnum.LobbyList));
+            isLoadingLobbies = true;
+            manager.ClientManager.LobbyListReady = ActionStatus.PENDING;
         }
 
         public void Load()
@@ -55,6 +57,7 @@ namespace Client
                 isLoadingLobbies = false;
                 isJoiningLobby = false;
                 timeoutTimer = 0;
+                manager.WindowManager.ShowErrorMessage("Timeout with server");
             }
 
             if (isLoadingLobbies)
@@ -66,9 +69,16 @@ namespace Client
                 if (manager.ClientManager.LobbyListReady == ActionStatus.SUCCESS)
                 {
                     LoadLobbies();
-                    manager.ClientManager.LobbyListReady = ActionStatus.WAITING;
+                    manager.ClientManager.LobbyListReady = ActionStatus.IDLE;
                     isLoadingLobbies = false;
                     timeoutTimer = 0;
+                }
+                else if (manager.ClientManager.LobbyListReady == ActionStatus.FAILED)
+                {
+                    manager.ClientManager.LobbyListReady = ActionStatus.IDLE;
+                    isLoadingLobbies = false;
+                    timeoutTimer = 0;
+                    manager.WindowManager.ShowErrorMessage("Failed to load lobbies");
                 }
 
                 timer = 0;
@@ -85,13 +95,14 @@ namespace Client
                     timeoutTimer = 0;
                     isJoiningLobby = false;
                     manager.ClientManager.LobbyID = switchPage.GetSelectedLobby().LobbyID;
-                    manager.SceneManager.AddScene(new GameScene(manager));
+                    manager.SceneManager.AddScene(new GameScene(manager, switchPage.GetSelectedLobby().MapID));
                 }
                 else if (manager.ClientManager.LobbyJoined == ActionStatus.FAILED)
                 {
                     timeoutTimer = 0;
                     isJoiningLobby = false;
-                    manager.ClientManager.LobbyJoined = ActionStatus.WAITING;
+                    manager.ClientManager.LobbyJoined = ActionStatus.IDLE;
+                    manager.WindowManager.ShowErrorMessage("Failed to join lobby");
                 }
 
                 timer = 0;
@@ -116,11 +127,13 @@ namespace Client
 
                     _ = MessageManager.SendMessageAsync(manager.ClientManager.Client, new JoinLobbyMessage(switchPage.GetSelectedLobby().LobbyID, manager.UserSettings.PlayerName));
                     isJoiningLobby = true;
+                    manager.ClientManager.LobbyJoined = ActionStatus.PENDING;
                 }
                 else if (refreshButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                 {
                     _ = MessageManager.SendMessageAsync(manager.ClientManager.Client, new GetMessage(GetMessageTypeEnum.LobbyList));
                     isLoadingLobbies = true;
+                    manager.ClientManager.LobbyListReady = ActionStatus.PENDING;
                 }
                 else if(backButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                 {
@@ -160,10 +173,17 @@ namespace Client
         {
             IReadOnlyList<LobbyDTO> lobbies = manager.ClientManager.Lobbies;
             switchPage.ClearRows();
+            string mapName;
 
             foreach (LobbyDTO lobby in lobbies)
             {
-                switchPage.AddRow(lobby.Name, lobby.Name, $"1/{lobby.MaxPlayers}", lobby.ID);
+                mapName = lobby.MapID switch
+                {
+                    0 => "Forest",
+                    _ => "Other",
+                };
+
+                switchPage.AddRow(lobby.Name, mapName, lobby.MapID, $"{lobby.CurrentPlayers}/{lobby.MaxPlayers}", lobby.ID);
             }
         }
     }

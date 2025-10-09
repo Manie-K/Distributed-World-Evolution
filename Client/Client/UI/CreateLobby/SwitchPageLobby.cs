@@ -3,11 +3,6 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using static System.Net.Mime.MediaTypeNames;
-using System.Xml.Linq;
 using Client.UI.CreateLobby.Parameters;
 
 namespace Client
@@ -104,6 +99,25 @@ namespace Client
         public ModuleData GetPickedModule()
         {
             return creatures[selectedRow].GetData();
+        }
+
+        public List<int> GetSelectedModulesIDList()
+        {
+            List<int> selectedCreatures = [];
+            foreach (CreateLobbyRow creature in creatures)
+            {
+                if (creature.GetCheckBox().GetValue())
+                { 
+                    selectedCreatures.Add(creature.GetData().ModuleID);
+                }
+            }
+
+            return selectedCreatures;
+        }
+
+        public void ClearModules()
+        { 
+            creatures.Clear();
         }
     }
 }
