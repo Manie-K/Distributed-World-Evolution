@@ -21,10 +21,10 @@ namespace SharedLibrary.Messages
         /// <summary>
         /// Constructor for UserInteractionMessage.
         /// </summary>
-        public UserInteractionMessage(WorldEntityDTO human, WorldEntityDTO? other) 
+        public UserInteractionMessage(WorldEntityDTO humanEntity, WorldEntityDTO? otherEntity) 
         {
-            HumanEntity = human;
-            OtherEntity = other;
+            HumanEntity = humanEntity;
+            OtherEntity = otherEntity;
         }
         /// <inheritdoc/>
         public override string BuildJson()

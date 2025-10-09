@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net.NetworkInformation;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace SharedLibrary.Helpers
@@ -11,6 +12,7 @@ namespace SharedLibrary.Helpers
     {
         public int X { get; set; }
         public int Y { get; set; }
+        [JsonConstructor]
         public Position2D(int x, int y)
         {
             X = x;
