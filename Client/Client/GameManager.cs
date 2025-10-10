@@ -38,6 +38,7 @@ namespace Client
         public void SetWindowManager()
         {
             WindowManager = new WindowManager(this);
+            ClientManager.StartClient();
         }
     }
 }

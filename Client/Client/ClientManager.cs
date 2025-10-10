@@ -1,5 +1,6 @@
 ﻿using SharedLibrary.DTOs.EntitiesDTO;
 using SharedLibrary.DTOs.LobbyDTO;
+using SharedLibrary.DTOs.ModuleDTO;
 using SharedLibrary.Messages;
 using System;
 using System.Collections.Generic;
@@ -12,9 +13,10 @@ namespace Client
 {
     public static class ActionStatus
     {
-        public const int WAITING = 0;
-        public const int FAILED = 1;
-        public const int SUCCESS = 2;
+        public const int IDLE = 0;
+        public const int PENDING = 1;
+        public const int FAILED = 2;
+        public const int SUCCESS = 3;
     }
 
     public class ClientManager
@@ -25,6 +27,8 @@ namespace Client
         private string serverIp;
         private int port;
         private Thread receiveThread;
+
+        public static event Action OnErrorMessageReceived;
 
         #region Game variables
 
@@ -56,6 +60,13 @@ namespace Client
             set => Interlocked.Exchange(ref lobbyListReady, value);
         }
 
+        private int moduleListReady;
+        public int ModuleListReady
+        {
+            get => Interlocked.CompareExchange(ref moduleListReady, 0, 0);
+            set => Interlocked.Exchange(ref moduleListReady, value);
+        }
+
         private readonly object entitiesLock = new object();
         private Dictionary<Guid, WorldEntityDTO> entities = new Dictionary<Guid, WorldEntityDTO>();
         public IReadOnlyDictionary<Guid, WorldEntityDTO> Entities
@@ -82,20 +93,33 @@ namespace Client
             }
         }
 
+        private readonly object modulesLock = new object();
+        private List<ModuleDTO> modules = new List<ModuleDTO>();
+        public IReadOnlyList<ModuleDTO> Modules
+        {
+            get
+            {
+                lock (modulesLock)
+                {
+                    return modules;
+                }
+            }
+        }
+
         #endregion
 
         public ClientManager()
         {
-            lobbyCreated = ActionStatus.WAITING;
-            lobbyJoined = ActionStatus.WAITING;
-            lobbyListReady = ActionStatus.WAITING;
+            lobbyCreated = ActionStatus.IDLE;
+            lobbyJoined = ActionStatus.IDLE;
+            lobbyListReady = ActionStatus.IDLE;
+            moduleListReady = ActionStatus.IDLE;
             lobbyID = -1;
             serverIp = "127.0.0.1";
             port = 5000;
-            StartClient();
         }
 
-        private void StartClient()
+        public void StartClient()
         {
             try
             {
@@ -110,6 +134,7 @@ namespace Client
             catch (Exception e)
             {
                 Console.WriteLine($"[Client] error: {e.Message}");
+                OnErrorMessageReceived?.Invoke();
             }
         }
 
@@ -121,9 +146,19 @@ namespace Client
 
         private async Task ReceiveMessagesAsync()
         {
+            MessageBase message = null;
+
             while (Client.Connected)
             {
-                MessageBase message = await MessageManager.ReceiveMessageAsync(Client);
+                try
+                {
+                    message = await MessageManager.ReceiveMessageAsync(Client);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine("Error: " + ex.Message);
+                    continue;
+                }
 
                 if (message == null)
                 {
@@ -146,6 +181,16 @@ namespace Client
                             break;
                         case InfoMessageTypeEnum.LobbyNotJoined:
                             LobbyJoined = ActionStatus.FAILED;
+                            break;
+                        case InfoMessageTypeEnum.Error:
+                            if (LobbyListReady == ActionStatus.PENDING)
+                            { 
+                                LobbyListReady = ActionStatus.FAILED;
+                            }
+                            if (ModuleListReady == ActionStatus.PENDING)
+                            {
+                                ModuleListReady = ActionStatus.FAILED;
+                            }
                             break;
 
                         default:
@@ -172,6 +217,17 @@ namespace Client
                     }
 
                     Console.WriteLine("Received lobby list");
+                }
+                else if (message.MessageType == MessageTypeEnum.ModuleList)
+                {
+                    ModuleListMessage moduleListMessage = (ModuleListMessage)message;
+                    ModuleListReady = ActionStatus.SUCCESS;
+                    lock (modulesLock)
+                    {
+                        modules = moduleListMessage.Modules.ToList();
+                    }
+
+                    Console.WriteLine("Received module list");
                 }
                 else if (message.MessageType == MessageTypeEnum.WorldState)
                 {

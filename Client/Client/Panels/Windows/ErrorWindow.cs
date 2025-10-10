@@ -1,11 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Client.Panels.Windows
 {
@@ -55,6 +49,11 @@ namespace Client.Panels.Windows
         public void SetFailedConnectionInformation()
         {
             information.SetText("Failed connection to\nthe server.");
+        }
+
+        public void SetErrorInformation(string message)
+        {
+            information.SetText(message);
         }
     }
 }

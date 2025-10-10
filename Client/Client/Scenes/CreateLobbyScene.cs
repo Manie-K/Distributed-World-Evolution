@@ -4,6 +4,7 @@ using Client.UI.MapSelection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using SharedLibrary.DTOs.ModuleDTO;
 using SharedLibrary.Messages;
 using System;
 using System.Collections.Generic;
@@ -29,6 +30,7 @@ namespace Client
 
         private bool isCreatingLobby;
         private bool isJoiningLobby;
+        private bool isLoadingModules;
         private double timer;
         private double timeoutTimer;
 
@@ -51,12 +53,15 @@ namespace Client
             this.switchPageParameters = new SwitchPageParameters(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"),
                                                                  new Vector2(848, 485), manager.ContentManager, 4);
 
-            InitializeCreaturesRows();
-
             isCreatingLobby = false;
             isJoiningLobby = false;
             timer = 0;
             timeoutTimer = 0;
+
+            InitializeCreaturesRows();
+            _ = MessageManager.SendMessageAsync(manager.ClientManager.Client, new GetMessage(GetMessageTypeEnum.ModuleList));
+            isLoadingModules = true;
+            manager.ClientManager.ModuleListReady = ActionStatus.PENDING;
         }
 
         public void Load()
@@ -67,24 +72,34 @@ namespace Client
 
         public void InitializeCreaturesRows()
         {
-            switchPageLobby.AddRow(new ModuleData("Boar", 0, false, new List<ModuleParametersData> { new ModuleParametersData("Health", "200", 0), new ModuleParametersData("Damage", "300", 0), new ModuleParametersData("Hunger", "130", 1), new ModuleParametersData("Consumption", "Carnivore", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
-            switchPageLobby.AddRow(new ModuleData("Brown Rabbit", 2, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "800", 0), new ModuleParametersData("Damage", "50", 0), new ModuleParametersData("Hunger", "800", 1), new ModuleParametersData("Consumption", "Herbivore", 1), new ModuleParametersData("Combat", "Enemy HP < X", 1) }));
-            switchPageLobby.AddRow(new ModuleData("White Rabbit", 3, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "400", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "120", 1), new ModuleParametersData("Consumption", "Carnivore", 1), new ModuleParametersData("Breeding", "Same Species", 1) }));
-            switchPageLobby.AddRow(new ModuleData("Red Plant", 4, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "400", 0), new ModuleParametersData("Damage", "150", 0), new ModuleParametersData("Hunger", "130", 1), new ModuleParametersData("Consumption", "Carnivore", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
-            switchPageLobby.AddRow(new ModuleData("Blue Plant", 5, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1), new ModuleParametersData("Consumption", "Herbivore", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
-            switchPageLobby.AddRow(new ModuleData("Purple Plant", 6, false, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
-            switchPageLobby.AddRow(new ModuleData("Orc", 10, false, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1), new ModuleParametersData("Consumption", "Carnivore", 1) }));
-            switchPageLobby.AddRow(new ModuleData("Blue Orc", 11, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1) }));
-            switchPageLobby.AddRow(new ModuleData("Darkgreen Orc", 12, false, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1), new ModuleParametersData("Consumption", "Carnivore", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
-            switchPageLobby.AddRow(new ModuleData("Pig", 1, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1), new ModuleParametersData("Consumption", "Carnivore", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
-            switchPageLobby.AddRow(new ModuleData("Slime", 7, false, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
-            switchPageLobby.AddRow(new ModuleData("Water Slime", 8, false, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1), new ModuleParametersData("Consumption", "Carnivore", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
-            switchPageLobby.AddRow(new ModuleData("Fire Slime", 9, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1) }));
-            switchPageLobby.AddRow(new ModuleData("Vampire", 13, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Attack", "500", 0), new ModuleParametersData("Fertile", "100", 1) }));
-            switchPageLobby.AddRow(new ModuleData("Blue Vampire", 14, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1), new ModuleParametersData("Consumption", "Carnivore", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
-            switchPageLobby.AddRow(new ModuleData("Red Vampire", 15, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
-            switchPageLobby.AddRow(new ModuleData("Rose", 1, false, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Fertile", "100", 1) }));
-            switchPageLobby.AddRow(new ModuleData("Mushroom", 1, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0) }));
+            IReadOnlyList<ModuleDTO> modules = manager.ClientManager.Modules;
+            switchPageLobby.ClearModules();
+
+            foreach (ModuleDTO module in modules)
+            {
+                switchPageLobby.AddRow(new ModuleData(module.Name, module.DatabaseID, module.GraphicalRepresentationID, module.IsOfficialModule, new List<ModuleParametersData> { new ModuleParametersData("Health", "200", 0), new ModuleParametersData("Damage", module.Damage.ToString(), 0), new ModuleParametersData("Hunger", "130", 1), new ModuleParametersData("Consumption", "Carnivore", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
+            }
+
+            /*
+            switchPageLobby.AddRow(new ModuleData("Boar", 0, 0, false, new List<ModuleParametersData> { new ModuleParametersData("Health", "200", 0), new ModuleParametersData("Damage", "300", 0), new ModuleParametersData("Hunger", "130", 1), new ModuleParametersData("Consumption", "Carnivore", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
+            switchPageLobby.AddRow(new ModuleData("Brown Rabbit", 1, 2, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "800", 0), new ModuleParametersData("Damage", "50", 0), new ModuleParametersData("Hunger", "800", 1), new ModuleParametersData("Consumption", "Herbivore", 1), new ModuleParametersData("Combat", "Enemy HP < X", 1) }));
+            switchPageLobby.AddRow(new ModuleData("White Rabbit", 2, 3, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "400", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "120", 1), new ModuleParametersData("Consumption", "Carnivore", 1), new ModuleParametersData("Breeding", "Same Species", 1) }));
+            switchPageLobby.AddRow(new ModuleData("Red Plant", 3, 4, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "400", 0), new ModuleParametersData("Damage", "150", 0), new ModuleParametersData("Hunger", "130", 1), new ModuleParametersData("Consumption", "Carnivore", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
+            switchPageLobby.AddRow(new ModuleData("Blue Plant", 4, 5, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1), new ModuleParametersData("Consumption", "Herbivore", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
+            switchPageLobby.AddRow(new ModuleData("Purple Plant", 5, 6, false, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
+            switchPageLobby.AddRow(new ModuleData("Orc", 6, 10, false, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1), new ModuleParametersData("Consumption", "Carnivore", 1) }));
+            switchPageLobby.AddRow(new ModuleData("Blue Orc", 7, 11, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1) }));
+            switchPageLobby.AddRow(new ModuleData("Darkgreen Orc", 8, 12, false, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1), new ModuleParametersData("Consumption", "Carnivore", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
+            switchPageLobby.AddRow(new ModuleData("Pig", 9, 1, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1), new ModuleParametersData("Consumption", "Carnivore", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
+            switchPageLobby.AddRow(new ModuleData("Slime", 10, 7, false, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
+            switchPageLobby.AddRow(new ModuleData("Water Slime", 11, 8, false, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1), new ModuleParametersData("Consumption", "Carnivore", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
+            switchPageLobby.AddRow(new ModuleData("Fire Slime", 12, 9, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1) }));
+            switchPageLobby.AddRow(new ModuleData("Vampire", 13, 13, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Attack", "500", 0), new ModuleParametersData("Fertile", "100", 1) }));
+            switchPageLobby.AddRow(new ModuleData("Blue Vampire", 14, 14, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1), new ModuleParametersData("Consumption", "Carnivore", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
+            switchPageLobby.AddRow(new ModuleData("Red Vampire", 15, 15, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
+            switchPageLobby.AddRow(new ModuleData("Rose", 16, 1, false, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Fertile", "100", 1) }));
+            switchPageLobby.AddRow(new ModuleData("Mushroom", 17, 1, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0) }));
+            */
         }
 
         public void Update(GameTime gameTime)
@@ -93,7 +108,9 @@ namespace Client
             {
                 isCreatingLobby = false;
                 isJoiningLobby = false;
+                isLoadingModules = false;
                 timeoutTimer = 0;
+                manager.WindowManager.ShowErrorMessage("Timeout with server");
             }
 
             if (isCreatingLobby)
@@ -106,14 +123,16 @@ namespace Client
                 {
                     isJoiningLobby = true;
                     isCreatingLobby = false;
-                    manager.ClientManager.LobbyCreated = ActionStatus.WAITING;
+                    manager.ClientManager.LobbyCreated = ActionStatus.IDLE;
+                    manager.ClientManager.LobbyJoined = ActionStatus.PENDING;
                     timeoutTimer = 0;
                 }
                 else if (manager.ClientManager.LobbyCreated == ActionStatus.FAILED)
                 {
                     isCreatingLobby = false;
-                    manager.ClientManager.LobbyCreated = ActionStatus.WAITING;
+                    manager.ClientManager.LobbyCreated = ActionStatus.IDLE;
                     timeoutTimer = 0;
+                    manager.WindowManager.ShowErrorMessage("Failed to create lobby");
                 }
 
                 timer = 0;
@@ -129,13 +148,38 @@ namespace Client
                 {
                     timeoutTimer = 0;
                     manager.SceneManager.RemoveScene();
-                    manager.SceneManager.AddScene(new GameScene(manager));
+                    manager.SceneManager.AddScene(new GameScene(manager, mapData.index));
                 }
                 else if (manager.ClientManager.LobbyJoined == ActionStatus.FAILED)
                 {
                     timeoutTimer = 0;
                     isJoiningLobby = false;
-                    manager.ClientManager.LobbyJoined = ActionStatus.WAITING;
+                    manager.ClientManager.LobbyJoined = ActionStatus.IDLE;
+                    manager.WindowManager.ShowErrorMessage("Failed to join lobby");
+                }
+
+                timer = 0;
+                return;
+            }
+            else if (isLoadingModules)
+            {
+                timer += gameTime.ElapsedGameTime.TotalSeconds;
+                timeoutTimer += gameTime.ElapsedGameTime.TotalSeconds;
+                if (timer < 0.1) return;
+
+                if (manager.ClientManager.ModuleListReady == ActionStatus.SUCCESS)
+                {
+                    InitializeCreaturesRows();
+                    manager.ClientManager.ModuleListReady = ActionStatus.IDLE;
+                    isLoadingModules = false;
+                    timeoutTimer = 0;
+                }
+                else if (manager.ClientManager.ModuleListReady == ActionStatus.FAILED)
+                {
+                    isLoadingModules = false;
+                    manager.ClientManager.ModuleListReady = ActionStatus.IDLE;
+                    timeoutTimer = 0;
+                    manager.WindowManager.ShowErrorMessage("Failed to load modules");
                 }
 
                 timer = 0;
@@ -159,11 +203,11 @@ namespace Client
                 {
                     if (!gameNameBox.CheckTextIfEmpty() && playerAmountBox.CheckText(32))
                     {
-
-                        IEnumerable<int> modules = new List<int>() {};
+                        IEnumerable<int> modules = switchPageLobby.GetSelectedModulesIDList();
                         CreateLobbyMessage message = new CreateLobbyMessage(gameNameBox.GetText(), int.Parse(playerAmountBox.GetText()), mapData.index, modules);
                         _ = MessageManager.SendMessageAsync(manager.ClientManager.Client, message);
                         isCreatingLobby = true;
+                        manager.ClientManager.LobbyCreated = ActionStatus.PENDING;
                     }
                     else
                     {
