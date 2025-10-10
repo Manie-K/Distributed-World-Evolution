@@ -17,14 +17,9 @@ namespace SharedLibrary.Messages
         /// <summary>
         /// Lobby ID.
         /// </summary>
-        public int LobbyID { get; init; }
-        /// <summary>
-        /// Constructor for LobbyDataMessage.
-        /// </summary>
-        public LobbyDataMessage(LobbyDTO lobby, int lobbyID)
+        public LobbyDataMessage(LobbyDTO lobby)
         {
             Lobby = lobby;
-            LobbyID = lobbyID;
         }
         /// <inheritdoc/>
         public override string BuildJson()
@@ -32,8 +27,7 @@ namespace SharedLibrary.Messages
             var payload = new
             {
                 MessageType = this.MessageType,
-                Lobby = this.Lobby,
-                LobbyID = this.LobbyID
+                Lobby = this.Lobby
             };
 
             return JsonSerializer.Serialize(payload);

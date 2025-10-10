@@ -17,11 +17,11 @@ namespace SharedLibrary.DTOs.ModuleDTO
         public EntityTypeEnum Type { get; init; }
         public int GraphicalRepresentationID { get; set; }
 
-        public ModuleDTO(int databaseID, string name, bool official, int damage, int aggresion, int reproductionNeed, List<BehviourDTO> behaviours, EntityTypeEnum type, int graphicalRepresentationID)
+        public ModuleDTO(int databaseID, string name, bool isOfficialModule, int damage, int aggresion, int reproductionNeed, List<BehviourDTO> behaviours, EntityTypeEnum type, int graphicalRepresentationID)
         {
             DatabaseID = databaseID;
             Name = name;
-            IsOfficialModule = official;
+            IsOfficialModule = isOfficialModule;
             Damage = damage;
             Aggresion = aggresion;
             ReproductionNeed = reproductionNeed;

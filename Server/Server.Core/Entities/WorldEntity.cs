@@ -38,7 +38,8 @@ namespace Server.Core
 
         public WorldEntityDTO ToDTO()
         {
-            throw new NotImplementedException();
+            return new WorldEntityDTO (this.Name, this.Id, this.State.ToDTO(), this.ModuleID);
         }
+
     }
 }
