@@ -1,17 +1,21 @@
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 # The context is set to the root of the repository
-WORKDIR /app
+WORKDIR /src
 
-COPY ./Server/Server.Core/*.csproj ./
-COPY ./Shared/SharedLibrary/*.csproj ./Shared/SharedLibrary/
-RUN dotnet restore Server.Core.csproj
+COPY Server/Server.Core/*.csproj ./Server/Server.Core/
+COPY Shared/SharedLibrary/*.csproj ./Shared/SharedLibrary/
 
+RUN dotnet restore Server/Server.Core/Server.Core.csproj
+
+#COPY Server/* ./Server/
+#COPY Shared/* ./Shared/
 COPY . ./
-RUN dotnet publish Server.Core.csproj -c Release -o out
+
+RUN dotnet publish Server/Server.Core/Server.Core.csproj -c Release -o out
 
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS runtime
-WORKDIR /app
-COPY --from=build /app/out ./
+WORKDIR /src
+COPY --from=build /src/out ./
 
 EXPOSE 5000
 
