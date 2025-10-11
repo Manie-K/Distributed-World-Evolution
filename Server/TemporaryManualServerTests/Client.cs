@@ -21,6 +21,10 @@ class Client
                 MessageBase message = await MessageManager.ReceiveMessageAsync(client);
                 InfoMessage stringMessage = (InfoMessage)message;
                 Console.WriteLine($"[Client] Received message: {stringMessage.MessageContent}");
+                
+                _ = MessageManager.SendMessageAsync(client, new GetMessage(GetMessageTypeEnum.ModuleList));
+                message = await MessageManager.ReceiveMessageAsync(client);
+                ModuleListMessage moduleListMessage = (ModuleListMessage)message;
             });
             receiveThread.Start();
 
@@ -33,7 +37,7 @@ class Client
                 //string message = Console.ReadLine();
                 //if (message == "exit") break;
 
-                //MessageManager.SendMessage(client, new StringMessage(message));
+                //MessageManager.SendMessageAsync(client, new GetMessage(GetMessageTypeEnum.ModuleList));
             }
 
             client.Close();
