@@ -6,11 +6,23 @@ using System.Text.Json;
 
 namespace SharedLibrary.Messages
 {
+    /// <summary>
+    /// Class for managing sending and receiving messages over TCP.
+    /// </summary>
     public class MessageManager
     {
+        /// <summary>
+        /// Invoked when a message is received.
+        /// </summary>
         public static event Action<MessageBase>? MessageReceived;
+        /// <summary>
+        /// Invoked when a message is sent.
+        /// </summary>
         public static event Action<bool>? MessageSended;
 
+        /// <summary>
+        /// Receives a message from the specified TCP client asynchronously.
+        /// </summary>
         public static async Task<MessageBase> ReceiveMessageAsync(TcpClient client)
         {
             try
@@ -76,6 +88,9 @@ namespace SharedLibrary.Messages
             
         }
 
+        /// <summary>
+        /// Sends a message to the specified TCP client asynchronously.
+        /// </summary>
         public static async Task<bool> SendMessageAsync(TcpClient client, MessageBase message)
         {
             try
