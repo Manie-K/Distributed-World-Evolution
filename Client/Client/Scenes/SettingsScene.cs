@@ -41,17 +41,17 @@ namespace Client
             keyBoardKeysImages[1] = manager.ContentManager.Load<Texture2D>("UI/Keyboard_keys/s");
             keyBoardKeysImages[2] = manager.ContentManager.Load<Texture2D>("UI/Keyboard_keys/a");
             keyBoardKeysImages[3] = manager.ContentManager.Load<Texture2D>("UI/Keyboard_keys/d");
-            keyBoardKeysText[0] = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers2"), "MOVING", false, new Vector2(340, 100), 100, 60);
+            keyBoardKeysText[0] = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers2"), "MOVING", true, new Vector2(340, 100), 100, 60);
             keyBoardKeysImages[4] = manager.ContentManager.Load<Texture2D>("UI/Keyboard_keys/space");
-            keyBoardKeysText[1] = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers2"), "ATTACK", false, new Vector2(340, 155), 100, 60);
+            keyBoardKeysText[1] = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers2"), "ATTACK", true, new Vector2(340, 155), 100, 60);
             keyBoardKeysImages[5] = manager.ContentManager.Load<Texture2D>("UI/Keyboard_keys/e");
-            keyBoardKeysText[2] = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers2"), "USE", false, new Vector2(340, 210), 100, 60);
+            keyBoardKeysText[2] = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers2"), "USE", true, new Vector2(340, 210), 100, 60);
             keyBoardKeysImages[6] = manager.ContentManager.Load<Texture2D>("UI/Keyboard_keys/esc");
-            keyBoardKeysText[3] = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers2"), "MENU", false, new Vector2(690, 100), 100, 60);
+            keyBoardKeysText[3] = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers2"), "MENU", true, new Vector2(690, 100), 100, 60);
             keyBoardKeysImages[7] = manager.ContentManager.Load<Texture2D>("UI/Keyboard_keys/b");
-            keyBoardKeysText[4] = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers2"), "BESTIARY", false, new Vector2(690, 155), 100, 60);
+            keyBoardKeysText[4] = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers2"), "BESTIARY", true, new Vector2(690, 155), 100, 60);
             keyBoardKeysImages[8] = manager.ContentManager.Load<Texture2D>("UI/Keyboard_keys/q");
-            keyBoardKeysText[5] = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers2"), "DROP ITEM", false, new Vector2(690, 210), 100, 60);
+            keyBoardKeysText[5] = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers2"), "DROP ITEM", true, new Vector2(690, 210), 100, 60);
             playerNameTextBox = new TextBox(null, manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), new Vector2(688, 564), 190, 56, Color.Black);
             playerNameTextBox.SetText(manager.UserSettings.PlayerName);
 

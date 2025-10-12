@@ -17,9 +17,9 @@ namespace Client.Panels
         {
             this.manager = manager;
             background =  manager.ContentManager.Load<Texture2D>("Panels/Esc_Panel/panel_esc");
-            playButton = new Button(manager.ContentManager.Load<Texture2D>("Panels/Esc_Panel/Play_Button2"), null, null, new Vector2(453, 156), 370, 89, Color.Gold);
-            settingsButton = new Button(manager.ContentManager.Load<Texture2D>("Panels/Esc_Panel/Settings_Button2"), null, null, new Vector2(453, 265), 371, 91, Color.Gold);
-            exitButton = new Button(manager.ContentManager.Load<Texture2D>("Panels/Esc_Panel/Exit_Button2"), null, null, new Vector2(453, 382), 370, 91, Color.Gold);
+            playButton = new Button(manager.ContentManager.Load<Texture2D>("Panels/Esc_Panel/Play_Button2"), null, null, new Vector2(485, 196), 309, 68, Color.Gold);
+            settingsButton = new Button(manager.ContentManager.Load<Texture2D>("Panels/Esc_Panel/Settings_Button2"), null, null, new Vector2(485, 277), 309, 65, Color.Gold);
+            exitButton = new Button(manager.ContentManager.Load<Texture2D>("Panels/Esc_Panel/Exit_Button2"), null, null, new Vector2(485, 356), 309, 66, Color.Gold);
 
         }
 
@@ -69,7 +69,7 @@ namespace Client.Panels
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(background, new Rectangle(380, 25, 520, 590), Color.White);
+            spriteBatch.Draw(background, new Rectangle(376, 100, 530, 398), Color.White);
             playButton.Draw(spriteBatch);
             settingsButton.Draw(spriteBatch);
             exitButton.Draw(spriteBatch);
