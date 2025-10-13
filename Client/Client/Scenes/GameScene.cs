@@ -6,6 +6,7 @@ using SharedLibrary.DTOs.EntitiesDTO;
 using SharedLibrary.Messages;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace Client
 {
@@ -21,7 +22,6 @@ namespace Client
         private Vector2 cameraOffset;
         private double clientUpdateTimer;
         private double timeBetweenUpdates;
-        private EntityStateDTO playerStateDTO;
         private WorldEntityDTO playerDTO;
 
         public GameScene(GameManager manager, int mapID)
@@ -29,25 +29,25 @@ namespace Client
             this.manager = manager;
 
             animationTexturesLoader = new AnimationTexturesLoader(manager.ContentManager);
-            player = new Player(new Vector2(600, 200), Color.White,
-                                     new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), manager.UserSettings.PlayerName, true, new Vector2(500, 300 - 110), 70, 40), ref this.animationTexturesLoader);
             characters = [];
 
             panelsController = new PanelsController(manager);
-            cameraOffset = new Vector2(50, 100);
+            cameraOffset = new Vector2(0, 70);
             map = new WorldMap();
             if (!map.InitMap($"Content/Maps/{GetMapFileName(mapID)}", manager.ContentManager))
             {
                 throw new Exception("Could not load the map " + GetMapFileName(mapID));
             }
+            player = new Player(new Vector2(600, 200), Color.White, new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), 
+                manager.UserSettings.PlayerName, true, new Vector2(500, 300 - 110), 70, 40), ref this.animationTexturesLoader, map, manager.ClientManager);
+
             manager.Camera.MapSize = new System.Drawing.Size(map.MapWidth * map.TileSize, map.MapHeight * map.TileSize);
             manager.IsInGame = true;
             clientUpdateTimer = 0;
             timeBetweenUpdates = 1.0 / ClientManager.CLIENT_UPDATES_PER_SECOND;
 
-            playerStateDTO = new EntityStateDTO(new SharedLibrary.Helpers.Position2D(15, 15), 100, 100, 0);
-            playerDTO = new WorldEntityDTO(manager.UserSettings.PlayerName, System.Guid.NewGuid(), playerStateDTO, 0);
-            // LoadCharacters();
+            EntityStateDTO playerStateDTO = new EntityStateDTO(map.GetTilePosition2D(player.Position.X, player.Position.Y), 100, 100, 0);
+            playerDTO = new WorldEntityDTO(manager.UserSettings.PlayerName, new Guid("3f2504e0-4f89-11d3-9a0c-0305e82c3301"), playerStateDTO, 0);
         }
 
         public void Load()
@@ -77,8 +77,7 @@ namespace Client
                 if (characters.TryGetValue(entity.Id, out Character character))
                 {
                     //character.Update(gameTime, manager.InputManager);
-                    character.Position.X = entity.State.Position.X;
-                    character.Position.Y = entity.State.Position.Y;
+                    character.Position = GetWorldPosition(entity);
                 }
                 else
                 {
@@ -93,9 +92,11 @@ namespace Client
 
             if (clientUpdateTimer >= timeBetweenUpdates)
             {
-                UserInteractionMessage message = new UserInteractionMessage(playerDTO, null);
+                playerDTO.State.Position = map.GetTilePosition2D(player.Position.X, player.Position.Y);
+                UserInteractionMessage message = new UserInteractionMessage(playerDTO, player.TargetEntity);
                 _ = MessageManager.SendMessageAsync(manager.ClientManager.Client, message);
                 clientUpdateTimer = 0;
+                player.TargetEntity = null;
             }
         }
 
@@ -138,24 +139,31 @@ namespace Client
             */
         }
 
-        // TODO: switch based on graphicID; add all cases
         private void LoadCharacter(WorldEntityDTO entity)
         {
-            Vector2 position = new Vector2(entity.State.Position.X, entity.State.Position.Y);
+            int graphicID = manager.ClientManager.LobbyData.Modules.FirstOrDefault(m => m.DatabaseID == entity.ModuleID)?.GraphicalRepresentationID ?? -1;
+            Vector2 position = GetWorldPosition(entity);
 
-            switch (entity.ModuleID)
-            {
-                case 0:
-                    characters.Add(entity.Id, new EnemyPlant1(position, Color.White, ref this.animationTexturesLoader));
-                    break;
-                case 1:
-                    characters.Add(entity.Id, new EnemyPlant2(position, Color.White, ref this.animationTexturesLoader));
-                    break;
-
-                default:
-                    characters.Add(entity.Id, new EnemyPlant1(position, Color.White, ref this.animationTexturesLoader));
-                    break;
-            }
+            characters.Add(entity.Id, graphicID switch
+            { 
+                0 => new EnemyPlant1(position, Color.White, ref this.animationTexturesLoader),
+                1 => new EnemyPlant2(position, Color.White, ref this.animationTexturesLoader),
+                2 => new Pig(position, Color.White, ref this.animationTexturesLoader),
+                3 => new Boar(position, Color.White, ref this.animationTexturesLoader),
+                4 => new WhiteRabbit(position, Color.White, ref this.animationTexturesLoader),
+                5 => new BrownRabbit(position, Color.White, ref this.animationTexturesLoader),
+                6 => new EnemyPlant3(position, Color.White, ref this.animationTexturesLoader),
+                7 => new Slime1(position, Color.White, ref this.animationTexturesLoader),
+                8 => new Slime2(position, Color.White, ref this.animationTexturesLoader),
+                9 => new Slime3(position, Color.White, ref this.animationTexturesLoader),
+                10 => new Orc1(position, Color.White, ref this.animationTexturesLoader),
+                11 => new Orc2(position, Color.White, ref this.animationTexturesLoader),
+                12 => new Orc3(position, Color.White, ref this.animationTexturesLoader),
+                13 => new Vampire1(position, Color.White, ref this.animationTexturesLoader),
+                14 => new Vampire2(position, Color.White, ref this.animationTexturesLoader),
+                15 => new Vampire3(position, Color.White, ref this.animationTexturesLoader),
+                _ => new EnemyPlant1(position, Color.White, ref this.animationTexturesLoader)
+            });
         }
 
         private string GetMapFileName(int mapID)
@@ -167,6 +175,11 @@ namespace Client
             };
 
             return mapName;
+        }
+
+        private Vector2 GetWorldPosition(WorldEntityDTO entity)
+        {
+            return new Vector2(entity.State.Position.X * map.TileSize, entity.State.Position.Y * map.TileSize);
         }
     }
 }

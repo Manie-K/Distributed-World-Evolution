@@ -94,7 +94,6 @@ namespace Client
                 {
                     timeoutTimer = 0;
                     isJoiningLobby = false;
-                    manager.ClientManager.LobbyID = switchPage.GetSelectedLobby().LobbyID;
                     manager.SceneManager.AddScene(new GameScene(manager, switchPage.GetSelectedLobby().MapID));
                 }
                 else if (manager.ClientManager.LobbyJoined == ActionStatus.FAILED)

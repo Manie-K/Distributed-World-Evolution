@@ -25,7 +25,6 @@ namespace Client
         private TextBox playerAmountBox;
         private SelectedMapData mapData;
         private ModulesImageDisplay modulesImageDisplay;
-
         private SwitchPageParameters switchPageParameters;
 
         private bool isCreatingLobby;
@@ -124,7 +123,7 @@ namespace Client
                     isJoiningLobby = true;
                     isCreatingLobby = false;
                     manager.ClientManager.LobbyCreated = ActionStatus.IDLE;
-                    manager.ClientManager.LobbyJoined = ActionStatus.PENDING;
+                    manager.ClientManager.SetPendingLobbyJoined();
                     timeoutTimer = 0;
                 }
                 else if (manager.ClientManager.LobbyCreated == ActionStatus.FAILED)
