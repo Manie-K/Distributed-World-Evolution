@@ -21,9 +21,9 @@ namespace Client.Panels.Windows
         {
             this.manager = manager;
             background = manager.ContentManager.Load<Texture2D>("Panels/Warning_Window/Warning_Window");
-            okButton = new Button(manager.ContentManager.Load<Texture2D>("Panels/Warning_Window/OK_Button2"), null, null, new Vector2(553, 438), 175, 54, Color.Gold);
-            information = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/WindowTextFont"), "", false,
-                                   new Vector2(498, 273), 150, 160);
+            okButton = new Button(manager.ContentManager.Load<Texture2D>("Panels/Warning_Window/OK_Button2"), null, null, new Vector2(563, 427), 155, 65, Color.Gold);
+            information = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/WindowTextFont"), "", true,
+                                   new Vector2(488, 308), 307, 84); 
             isEnabled = false;
         }
 
@@ -45,7 +45,7 @@ namespace Client.Panels.Windows
         public void Draw(SpriteBatch spriteBatch)
         {
 
-            spriteBatch.Draw(background, new Rectangle(460, 210, 361, 299), Color.White);
+            spriteBatch.Draw(background, new Rectangle(415, 189, 452, 341), Color.White);
             okButton.Draw(spriteBatch);
             information.Draw(spriteBatch);
 
@@ -53,12 +53,12 @@ namespace Client.Panels.Windows
 
         public void SetEmptyNameInformation()
         {
-            information.SetText("        Name is empty.");
+            information.SetText("Name is empty.");
         }
 
         public void SetWrongParametersInCreateLobby()
         {
-            information.SetText("Invalid name or incorrect\nnumber of players(max 32).");
+            information.SetText("  Invalid name or incorrect\nnumber of players (max 32).");
         }
 
 

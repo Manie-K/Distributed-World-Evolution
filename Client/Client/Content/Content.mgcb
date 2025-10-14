@@ -1232,7 +1232,7 @@
 /processorParam:TextureFormat=Color
 /build:Panels/Bestiary_Panel/CreaturesImages/Bestiary_Vampire3.png
 
-#begin Panels/Error_Window/Error_Windows.png
+#begin Panels/Error_Window/Error_Window.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -1242,19 +1242,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Panels/Error_Window/Error_Windows.png
-
-#begin Panels/Error_Window/OK_Button.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Panels/Error_Window/OK_Button.png
+/build:Panels/Error_Window/Error_Window.png
 
 #begin Panels/Esc_Panel/Exit_Button2.png
 /importer:TextureImporter
@@ -1363,6 +1351,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Panels/Inventory/Invetory_amount.png
+
+#begin Panels/LoadingWindow/Loading_Window.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Panels/LoadingWindow/Loading_Window.png
 
 #begin Panels/Warning_Window/OK_Button2.png
 /importer:TextureImporter

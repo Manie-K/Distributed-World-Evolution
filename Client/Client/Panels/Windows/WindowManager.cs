@@ -7,12 +7,14 @@ namespace Client.Panels.Windows
         private GameManager gameManager;
         public ErrorWindow ErrorWindow;
         public WarningWindow WarningWindow;
+        public LoadingWindow LoadingWindow;
 
         public WindowManager(GameManager gameManager)
         {
             this.gameManager = gameManager;
             ErrorWindow = new ErrorWindow(gameManager);
             WarningWindow = new WarningWindow(gameManager);
+            LoadingWindow = new LoadingWindow(gameManager);
             ClientManager.OnErrorMessageReceived += ShowServerError;
         }
 
@@ -47,6 +49,7 @@ namespace Client.Panels.Windows
         {
             if (WarningWindow.isEnabled) WarningWindow.Draw(spriteBatch);
             if (ErrorWindow.isEnabled) ErrorWindow.Draw(spriteBatch);
+            if (LoadingWindow.IsEnabled) LoadingWindow.Draw(spriteBatch);
         }
 
         public void EnableWarningWindow()
@@ -57,6 +60,13 @@ namespace Client.Panels.Windows
         public void EnableErrorWindow()
         {
             ErrorWindow.isEnabled = true;
+        }
+
+        public void EnableLoadingWindow(string loadinginformation)
+        {
+            LoadingWindow.IsEnabled = true;
+            LoadingWindow.SetLoadingInformation(loadinginformation);
+            LoadingWindow.StartTimer();
         }
 
         private void ShowServerError()
