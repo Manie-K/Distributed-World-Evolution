@@ -109,8 +109,25 @@ namespace Client
                 isCreatingLobby = false;
                 isJoiningLobby = false;
                 isLoadingModules = false;
+                manager.WindowManager.LoadingWindow.IsEnabled = false;
                 timeoutTimer = 0;
                 manager.WindowManager.ShowErrorMessage("Timeout with server");
+            }
+
+            if(timeoutTimer > 1 && !manager.WindowManager.LoadingWindow.IsEnabled)
+            {
+                if(isCreatingLobby)
+                {
+                    manager.WindowManager.EnableLoadingWindow("Creating lobby");
+                }
+                else if(isJoiningLobby)
+                {
+                    manager.WindowManager.EnableLoadingWindow("Joining lobby");
+                }
+                else if(isLoadingModules)
+                {
+                    manager.WindowManager.EnableLoadingWindow("Loading modules");
+                }
             }
 
             if (isCreatingLobby)
@@ -123,6 +140,7 @@ namespace Client
                 {
                     isJoiningLobby = true;
                     isCreatingLobby = false;
+                    manager.WindowManager.LoadingWindow.IsEnabled = false;
                     manager.ClientManager.LobbyCreated = ActionStatus.IDLE;
                     manager.ClientManager.LobbyJoined = ActionStatus.PENDING;
                     timeoutTimer = 0;
@@ -130,6 +148,7 @@ namespace Client
                 else if (manager.ClientManager.LobbyCreated == ActionStatus.FAILED)
                 {
                     isCreatingLobby = false;
+                    manager.WindowManager.LoadingWindow.IsEnabled = false;
                     manager.ClientManager.LobbyCreated = ActionStatus.IDLE;
                     timeoutTimer = 0;
                     manager.WindowManager.ShowErrorMessage("Failed to create lobby");
@@ -147,6 +166,7 @@ namespace Client
                 if (manager.ClientManager.LobbyJoined == ActionStatus.SUCCESS)
                 {
                     timeoutTimer = 0;
+                    manager.WindowManager.LoadingWindow.IsEnabled = false;
                     manager.SceneManager.RemoveScene();
                     manager.SceneManager.AddScene(new GameScene(manager, mapData.index));
                 }
@@ -154,6 +174,7 @@ namespace Client
                 {
                     timeoutTimer = 0;
                     isJoiningLobby = false;
+                    manager.WindowManager.LoadingWindow.IsEnabled = false;
                     manager.ClientManager.LobbyJoined = ActionStatus.IDLE;
                     manager.WindowManager.ShowErrorMessage("Failed to join lobby");
                 }
@@ -172,11 +193,13 @@ namespace Client
                     InitializeCreaturesRows();
                     manager.ClientManager.ModuleListReady = ActionStatus.IDLE;
                     isLoadingModules = false;
+                    manager.WindowManager.LoadingWindow.IsEnabled = false;
                     timeoutTimer = 0;
                 }
                 else if (manager.ClientManager.ModuleListReady == ActionStatus.FAILED)
                 {
                     isLoadingModules = false;
+                    manager.WindowManager.LoadingWindow.IsEnabled = false;
                     manager.ClientManager.ModuleListReady = ActionStatus.IDLE;
                     timeoutTimer = 0;
                     manager.WindowManager.ShowErrorMessage("Failed to load modules");

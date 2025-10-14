@@ -57,7 +57,21 @@ namespace Client
                 isLoadingLobbies = false;
                 isJoiningLobby = false;
                 timeoutTimer = 0;
+                manager.WindowManager.LoadingWindow.IsEnabled = false;
                 manager.WindowManager.ShowErrorMessage("Timeout with server");
+                
+            }
+
+            if (timeoutTimer > 1 && !manager.WindowManager.LoadingWindow.IsEnabled)
+            {
+                if (isLoadingLobbies)
+                {
+                    manager.WindowManager.EnableLoadingWindow("Loading lobbies");
+                }
+                else if (isJoiningLobby)
+                {
+                    manager.WindowManager.EnableLoadingWindow("Joining lobby");
+                }
             }
 
             if (isLoadingLobbies)
@@ -71,12 +85,14 @@ namespace Client
                     LoadLobbies();
                     manager.ClientManager.LobbyListReady = ActionStatus.IDLE;
                     isLoadingLobbies = false;
+                    manager.WindowManager.LoadingWindow.IsEnabled = false;
                     timeoutTimer = 0;
                 }
                 else if (manager.ClientManager.LobbyListReady == ActionStatus.FAILED)
                 {
                     manager.ClientManager.LobbyListReady = ActionStatus.IDLE;
                     isLoadingLobbies = false;
+                    manager.WindowManager.LoadingWindow.IsEnabled = false;
                     timeoutTimer = 0;
                     manager.WindowManager.ShowErrorMessage("Failed to load lobbies");
                 }
@@ -94,6 +110,7 @@ namespace Client
                 {
                     timeoutTimer = 0;
                     isJoiningLobby = false;
+                    manager.WindowManager.LoadingWindow.IsEnabled = false;
                     manager.ClientManager.LobbyID = switchPage.GetSelectedLobby().LobbyID;
                     manager.SceneManager.AddScene(new GameScene(manager, switchPage.GetSelectedLobby().MapID));
                 }
@@ -101,6 +118,7 @@ namespace Client
                 {
                     timeoutTimer = 0;
                     isJoiningLobby = false;
+                    manager.WindowManager.LoadingWindow.IsEnabled = false;
                     manager.ClientManager.LobbyJoined = ActionStatus.IDLE;
                     manager.WindowManager.ShowErrorMessage("Failed to join lobby");
                 }
