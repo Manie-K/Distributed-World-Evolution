@@ -1,20 +1,14 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Client.Common;
 
 namespace Client
 {
     public class EnemyPlant2 : Character
     {
-
         public EnemyPlant2(Vector2 position, Color color, ref AnimationTexturesLoader ATL)
-            : base(position, color, 100, 100, 150f, ref ATL, 18)
+            : base(position, color, 100, 100, 150f, ref ATL, 18, new Vector2(-32, -47))
         {
 
         }

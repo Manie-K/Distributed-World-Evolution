@@ -1,21 +1,14 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Client.Common;
 
 namespace Client
 {
     public class Vampire1 : Character
     {
-
-
         public Vampire1(Vector2 position, Color color, ref AnimationTexturesLoader ATL)
-            : base(position, color, 110, 110, 150f, ref ATL, 50)
+            : base(position, color, 110, 110, 150f, ref ATL, 50, new Vector2(-37, -48))
         {
 
         }

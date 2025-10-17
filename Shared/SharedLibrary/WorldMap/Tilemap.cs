@@ -1,4 +1,4 @@
-﻿using System.Numerics;
+﻿using SharedLibrary.Helpers;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -82,15 +82,46 @@ namespace SharedLibrary
             }
         }
 
-        public int GetTileIdAtPosition(Vector2 position)
+        /// <summary>
+        /// Gets ID of a tile on given x,y map position
+        /// </summary>
+        /// <returns>TilesetData ID of a tile</returns>
+        public int GetTileIdAtPosition(float x, float y)
         {
-            int tileX = (int)(position.X / TileSize);
-            int tileY = (int)(position.Y / TileSize);
+            int tileX = (int)(x / TileSize);
+            int tileY = (int)(y / TileSize);
 
             if (Tiles == null || tileX < 0 || tileY < 0 || tileX >= MapWidth || tileY >= MapHeight)
                 return -1;
 
             return Tiles[tileY][tileX];
+        }
+
+        /// <summary>
+        /// Gets ID of a tile on given x,y tile
+        /// </summary>
+        /// <returns>TilesetData ID of a tile</returns>
+        public int GetTileIdAtPosition2D(int x, int y)
+        {
+            if (Tiles == null || x < 0 || y < 0 || x >= MapWidth || y >= MapHeight)
+                return -1;
+
+            return Tiles[y][x];
+        }
+
+        /// <summary>
+        /// Gets x,y tile based on given x,y map position
+        /// </summary>
+        /// <returns>Tile's x,y</returns>
+        public Position2D GetTilePosition2D(float x, float y)
+        {
+            int tileX = (int)(x / TileSize);
+            int tileY = (int)(y / TileSize);
+
+            if (Tiles == null || tileX < 0 || tileY < 0 || tileX >= MapWidth || tileY >= MapHeight)
+                return new Position2D(-1, -1);
+
+            return new Position2D(tileX, tileY);
         }
     }
 }

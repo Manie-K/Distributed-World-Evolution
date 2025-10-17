@@ -1,20 +1,14 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Client.Common;
 
 namespace Client
 {
     public class Boar : Character
     {
-
         public Boar(Vector2 position, Color color, ref AnimationTexturesLoader ATL)
-            : base(position, color, 160, 160, 150f, ref ATL, 9)
+            : base(position, color, 160, 160, 150f, ref ATL, 9, new Vector2(-65, -75))
         {
 
         }

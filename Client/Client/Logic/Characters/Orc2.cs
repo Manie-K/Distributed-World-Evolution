@@ -1,20 +1,14 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Client.Common;
 
 namespace Client
 {
     public class Orc2 : Character
     {
-
         public Orc2(Vector2 position, Color color, ref AnimationTexturesLoader ATL)
-            : base(position, color, 100, 100, 150f, ref ATL, 42)
+            : base(position, color, 100, 100, 150f, ref ATL, 42, new Vector2(-35, -37))
         {
 
         }

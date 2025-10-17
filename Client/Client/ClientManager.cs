@@ -32,13 +32,6 @@ namespace Client
 
         #region Game variables
 
-        private int lobbyID;
-        public int LobbyID
-        {
-            get => Interlocked.CompareExchange(ref lobbyID, 0, 0);
-            set => Interlocked.Exchange(ref lobbyID, value);
-        }
-
         private int lobbyCreated;
         public int LobbyCreated
         {
@@ -51,6 +44,10 @@ namespace Client
         {
             get => Interlocked.CompareExchange(ref lobbyJoined, 0, 0);
             set => Interlocked.Exchange(ref lobbyJoined, value);
+        }
+        public void SetPendingLobbyJoined()
+        {
+            Interlocked.CompareExchange(ref lobbyJoined, ActionStatus.PENDING, ActionStatus.IDLE);
         }
 
         private int lobbyListReady;
@@ -106,6 +103,19 @@ namespace Client
             }
         }
 
+        private readonly object lobbyDataLock = new object();
+        private LobbyDTO lobbyData = new LobbyDTO(-1, "", 0, 0, 0, []);
+        public LobbyDTO LobbyData
+        {
+            get
+            {
+                lock (lobbyDataLock)
+                {
+                    return lobbyData;
+                }
+            }
+        }
+
         #endregion
 
         public ClientManager()
@@ -114,7 +124,6 @@ namespace Client
             lobbyJoined = ActionStatus.IDLE;
             lobbyListReady = ActionStatus.IDLE;
             moduleListReady = ActionStatus.IDLE;
-            lobbyID = -1;
             serverIp = "127.0.0.1";
             port = 5000;
         }
@@ -202,8 +211,10 @@ namespace Client
                 else if (message.MessageType == MessageTypeEnum.LobbyData)
                 {
                     LobbyDataMessage lobbyMessage = (LobbyDataMessage)message;
-                    LobbyJoined = ActionStatus.SUCCESS;
-                    LobbyID = lobbyMessage.LobbyID;
+                    lock (lobbyDataLock)
+                    {
+                        lobbyData = lobbyMessage.Lobby;
+                    }
 
                     Console.WriteLine("Received lobby data");
                 }

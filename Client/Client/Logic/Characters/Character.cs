@@ -11,6 +11,7 @@ namespace Client
         down,
         left
     }
+
     public class Character : ColoredSprite
     {
         public Guid Id { get; private set; }
@@ -20,8 +21,8 @@ namespace Client
         protected Direction CurrentDirection;
         protected Rectangle CharacterSize; // postacie wyswietlaja sie na wiekszych rozmiarach niz naprawde sa i lepiej dla kazdej postaci ustalic ich size zeby lepiej wykrywac kolizje pozniej
 
-        public Character(Vector2 position, Color color, int width, int height, float speed, ref AnimationTexturesLoader ATL, int DefaultAnimationIndex)
-            : base(null, position, width, height, color)
+        public Character(Vector2 position, Color color, int width, int height, float speed, ref AnimationTexturesLoader ATL, int DefaultAnimationIndex, Vector2 spriteDrawingOffset = default)
+            : base(null, position, width, height, color, spriteDrawingOffset)
         {
             this.speed = speed;
             am = new AnimationManager(ref ATL, DefaultAnimationIndex);

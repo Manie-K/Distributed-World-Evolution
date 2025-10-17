@@ -1,20 +1,14 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Client.Common;
 
 namespace Client
 {
     public class BrownRabbit : Character
     {
-
         public BrownRabbit(Vector2 position, Color color, ref AnimationTexturesLoader ATL)
-            : base(position, color, 192, 192, 150f, ref ATL, 14)
+            : base(position, color, 192, 192, 150f, ref ATL, 14, new Vector2(-80, -100))
         {
 
         }
