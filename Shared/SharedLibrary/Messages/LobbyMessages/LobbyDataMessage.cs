@@ -17,9 +17,16 @@ namespace SharedLibrary.Messages
         /// <summary>
         /// Lobby ID.
         /// </summary>
-        public LobbyDataMessage(LobbyDTO lobby)
+
+        /// <summary>
+        /// Guid of the user entity.
+        /// </summary>
+        public Guid UserEntityID { get; init; }
+
+        public LobbyDataMessage(LobbyDTO lobby, Guid userEntityId)
         {
             Lobby = lobby;
+            UserEntityID = userEntityId;
         }
         /// <inheritdoc/>
         public override string BuildJson()
@@ -27,7 +34,8 @@ namespace SharedLibrary.Messages
             var payload = new
             {
                 MessageType = this.MessageType,
-                Lobby = this.Lobby
+                Lobby = this.Lobby,
+                UserEntityID = this.UserEntityID
             };
 
             return JsonSerializer.Serialize(payload);

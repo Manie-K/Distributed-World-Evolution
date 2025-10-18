@@ -340,20 +340,23 @@ namespace Server.Core.Lobby
 
         #region Helpers
 
-        public bool AddClient(TcpClient client)
+        /// <inheritdoc/>
+        public Guid AddClient(TcpClient client, string username)
         {
             lock (clients)
             {
                 if (clients.Contains(client))
                 {
                     Log("Client already in lobby.", LogLevelEnum.Warning);
-                    return false;
+                    return Guid.Empty;
                 }
                 clients.Add(client);
             }
 
-            _ = MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyJoined ,$"You have joined lobby {LobbyId}.\n"));
-            return true;
+            WorldEntity userEntity = WorldEntity.CreateWorldEntity(username, 0, new EntityState(new SharedLibrary.Helpers.Position2D(0, 0))); //TODO: Add moduleID for human entity.
+            AddWorldEntity(userEntity);
+
+            return userEntity.Id;
         }
 
         public bool RemoveClient(TcpClient client)
@@ -368,7 +371,6 @@ namespace Server.Core.Lobby
                 clients.Remove(client);
             }
 
-            _ = MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyDisjoined ,$"You have disjoined lobby {LobbyId}.\n"));
             return true;
         }
         
@@ -435,12 +437,6 @@ namespace Server.Core.Lobby
                 entities.Remove(entity);
                 return true;
             }
-        }
-
-        
-        public bool SaveWorldState()
-        {
-            throw new NotImplementedException("Saving is not implemented yet.");
         }
 
         #endregion
