@@ -35,15 +35,15 @@ namespace Server.Core.Lobby
             return lobbyId;
         }
 
-        public bool AddUserToLobby(int lobbyId, TcpClient client, string username, out Guid userEntityID)
+        public bool AddUserToLobby(int lobbyId, TcpClient client)
         {
-            userEntityID = Guid.Empty;
             if (lobbies.TryGetValue(lobbyId, out ILobby? lobby))
             {
                 if(lobby is not null)
                 {
-                    userEntityID = lobby.AddClient(client, username);
+                    lobby.AddClient(client);
                     Log($"Client added to lobby {lobbyId}.", LogLevelEnum.Info);
+
                     return true;
                 }
                 else
