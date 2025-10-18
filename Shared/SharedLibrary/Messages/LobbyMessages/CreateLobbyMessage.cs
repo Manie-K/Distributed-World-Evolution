@@ -9,28 +9,40 @@ namespace SharedLibrary.Messages
     {
         /// <inheritdoc/>
         public override MessageTypeEnum MessageType => MessageTypeEnum.CreateLobby;
+
+        /// <summary>
+        /// Username of the player creating the lobby.
+        /// </summary>
+        public string UserName { get; init; }
+
         /// <summary>
         /// Lobby name to be created.
         /// </summary>
         public string LobbyName { get; init; }
+        
         /// <summary>
         /// Maximum number of players allowed in the lobby.
         /// </summary>
         public int MaxPlayers { get; init; }
+        
         /// <summary>
         /// Map ID for the lobby.
         /// </summary>
         public int MapID { get; init; }
+        
         /// <summary>
         /// IDs of modules to be included in the lobby.
         /// </summary>
         public IEnumerable<int> ModuleIDs { get; init; }
+        
+        
         /// <summary>
         /// Constructor for CreateLobbyMessage.
-        /// </summary>
-        public CreateLobbyMessage(string lobbyName, int maxPlayers, int mapID, IEnumerable<int> moduleIDs)
+        /// </summary
+        public CreateLobbyMessage(string lobbyName, string username, int maxPlayers, int mapID, IEnumerable<int> moduleIDs)
         {
             LobbyName = lobbyName;
+            UserName = username;
             MaxPlayers = maxPlayers;
             MapID = mapID;
             ModuleIDs = moduleIDs;
@@ -41,6 +53,7 @@ namespace SharedLibrary.Messages
             var payload = new
             {
                 MessageType = this.MessageType,
+                UserName = this.UserName,
                 LobbyName = this.LobbyName,
                 MaxPlayers = this.MaxPlayers,
                 MapID = this.MapID,

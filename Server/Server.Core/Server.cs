@@ -23,7 +23,7 @@ namespace Server.Core
 
         private TcpClient clientUI;
 
-        private ConcurrentQueue<LogMessage> logQueue = new ConcurrentQueue<LogMessage>();
+        private readonly ConcurrentQueue<LogMessage> logQueue = new ConcurrentQueue<LogMessage>();
 
         private Server()
         {
@@ -133,16 +133,16 @@ namespace Server.Core
 
                     try
                     {
-                        lobbyManager.AddUserToLobby(lobbyID, client);
+                        lobbyManager.AddUserToLobby(lobbyID, client, createLobbyMessage.UserName, out Guid userEntityID);
 
                         await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyCreated, "New lobby created!"));
-                        await MessageManager.SendMessageAsync(client, new LobbyDataMessage(lobby));
+                        await MessageManager.SendMessageAsync(client, new LobbyDataMessage(lobby, userEntityID));
                         await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyJoined, "Welcome to the new lobby!"));
                     }
                     catch (Exception ex)
                     {
                         Log(ex.Message, LogLevelEnum.Error);
-                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotCreated, "New lobby not created."));
+                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotCreated, "New lobby NOT created."));
                     }
                 }
 
@@ -153,8 +153,9 @@ namespace Server.Core
 
                     try
                     {
-                        lobbyManager.AddUserToLobby(joinLobbyMessage.LobbyID, client);
-                        await MessageManager.SendMessageAsync(client, new LobbyDataMessage(lobby));
+                        lobbyManager.AddUserToLobby(joinLobbyMessage.LobbyID, client, joinLobbyMessage.UserName, out Guid userEntityID);
+
+                        await MessageManager.SendMessageAsync(client, new LobbyDataMessage(lobby, userEntityID));
                         await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyJoined, "Welcome to lobby!"));
                     }
                     catch (Exception ex)
