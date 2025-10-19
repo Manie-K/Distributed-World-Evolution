@@ -10,7 +10,7 @@ namespace Server.Core.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            var moduleEntity = modelBuilder.Entity<ModuleDBEntity>();
+            var moduleEntity = modelBuilder.Entity<ModuleDBEntity>().ToTable("Modules");
 
             moduleEntity.HasKey(m => m.ID);
             moduleEntity.Property(m => m.ID).ValueGeneratedOnAdd();
@@ -18,7 +18,10 @@ namespace Server.Core.Data
             moduleEntity.Property(m => m.Type).IsRequired();
 
             moduleEntity.HasData(
-                new ModuleDBEntity(true, "Human module", 5, 5, 5, EntityTypeEnum.Human, 1, new List<int> { })
+                new ModuleDBEntity(true, "Human module", 5, 5, 5, EntityTypeEnum.Human, 1, new int[] { })
+                {
+                    ID = -1 // Seed data with negative ID to avoid conflicts
+                }
             );
 
             base.OnModelCreating(modelBuilder);
@@ -26,8 +29,8 @@ namespace Server.Core.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            string? connectionString = Environment.GetEnvironmentVariable("Co tu wpisujemy? Pamietajcie ze to publiczne jest!!!!");
-            
+            string? connectionString = Environment.GetEnvironmentVariable("MODULES_DATABASE_CONNECTION_STRING");
+
             if (String.IsNullOrEmpty(connectionString))
             {
                 connectionString = "Host=localhost;Database=appdb;Username=appuser;Password=apppassword";

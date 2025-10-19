@@ -85,7 +85,6 @@ namespace Server.Core.Lobby
         private void InitializeWorldEntities()
         {
             Log("Initializing world entities...", LogLevelEnum.Info);
-            throw new NotImplementedException();
         }
 
         private void PublishWorldState()

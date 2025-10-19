@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Server.Core.Data;
 
 namespace Server.Core
 {
@@ -8,9 +9,20 @@ namespace Server.Core
         {
             Console.WriteLine("[DEBUG]: Debug console for Core project, independent from UI project.");
 
-            using(var dbContext = new Data.ApplicationDBContext())
+            bool dbReady = false;
+            while (!dbReady)
             {
-                dbContext.Database.Migrate();
+                try
+                {
+                    using var context = new ApplicationDBContext();
+                    context.Database.Migrate();
+                    dbReady = true;
+                }
+                catch (Npgsql.NpgsqlException)
+                {
+                    Console.WriteLine("[INFO]: Waiting for database...");
+                    Thread.Sleep(2000);
+                }
             }
 
             Server.Instance.Start(args);
