@@ -27,7 +27,7 @@ namespace Server.Core.Lobby
         private readonly IModuleService moduleService;
         private readonly List<TcpClient> clients;
         private readonly ICollection<WorldEntity> entities;
-        private readonly ICollection<Module> loadedModules;
+        private readonly ICollection<int> loadedModulesIDs;
         private bool[,] walkableTiles;
 
         private bool running;
@@ -38,13 +38,13 @@ namespace Server.Core.Lobby
             
             foreach(int mId in moduleIDs)
             {
-                Module module = moduleService.GetModuleById(mId);
+                Module? module = moduleService.GetModuleById(mId);
                 if (module == null)
                 {
                     throw new Exception($"Module with ID {mId} not found.");
                 }
 
-                lobby.LoadModule(module);
+                lobby.LoadModule(mId);
             }
 
             return lobby;
@@ -59,7 +59,7 @@ namespace Server.Core.Lobby
             moduleService = ModuleService.Instance;
 
             entities = new List<WorldEntity>(); //Currently no way to add them.
-            loadedModules = new List<Module>();
+            loadedModulesIDs = new List<int>();
             clients = new List<TcpClient>();
             running = true;
 
@@ -374,31 +374,33 @@ namespace Server.Core.Lobby
             return true;
         }
         
-        public bool LoadModule(Module module)
+        public bool LoadModule(int moduleId)
         {
-            lock (loadedModules)
+            Module? module = moduleService.GetModuleById(moduleId);
+            lock (loadedModulesIDs)
             {
-                if (loadedModules.Contains(module))
+                if (loadedModulesIDs.Contains(moduleId))
                 {
-                    Log($"Module {module.Name} already loaded in lobby {LobbyId}.", LogLevelEnum.Warning);
+                    Log($"Module {module?.Name} already loaded in lobby {LobbyId}.", LogLevelEnum.Warning);
                     return false;
                 }
-                loadedModules.Add(module);
+                loadedModulesIDs.Add(moduleId);
                 return true;
             }
         }
 
         // What do we expect here? Just remove in future or present?
-        public bool UnloadModule(Module module)
+        public bool UnloadModule(int moduleId)
         {
-            lock (loadedModules)
+            Module? module = moduleService.GetModuleById(moduleId);
+            lock (loadedModulesIDs)
             {
-                if (!loadedModules.Contains(module))
+                if (!loadedModulesIDs.Contains(moduleId))
                 {
-                    Log($"Module {module.Name} isn't loaded in lobby {LobbyId}.", LogLevelEnum.Warning);
+                    Log($"Module {module?.Name} isn't loaded in lobby {LobbyId}.", LogLevelEnum.Warning);
                     return false;
                 }
-                loadedModules.Remove(module);
+                loadedModulesIDs.Remove(moduleId);
                 return true;
             }
         }
@@ -414,7 +416,7 @@ namespace Server.Core.Lobby
                     return false;
                 }
 
-                bool moduleLoaded = loadedModules.Any(m => m.ID == entity.ModuleID);
+                bool moduleLoaded = loadedModulesIDs.Any(id => (id == entity.ModuleID));
                 if (!moduleLoaded)
                 {
                     Log($"Entity's {entity.Id} module is not loaded in lobby {LobbyId}.", LogLevelEnum.Warning);
