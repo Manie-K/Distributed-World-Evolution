@@ -1,9 +1,8 @@
-﻿using SharedLibrary;
-using SharedLibrary.DTOs.ModuleDTO;
+﻿using Server.Core.Modules;
 
-namespace Server.Core.Modules
+namespace Server.Core.Services
 {
-    public interface IModuleService 
+    public interface IModuleService
     {
         // TODO: We need to add db.
         // Workflow could be as follow:
@@ -11,9 +10,9 @@ namespace Server.Core.Modules
         // 2. Server saves it to db
         // 3. Client saves info about which module to load
         // 4. Server gets info from db and create instance
-        public Module CreateModuleInstance(CreateModuleDTO dto);
+        //public Module CreateModuleInstance(CreateModuleDTO dto);
 
-        public Module GetModuleById(int id);
+        public Module? GetModuleById(int id);
 
         public IEnumerable<Module> GetAllModules();
     }

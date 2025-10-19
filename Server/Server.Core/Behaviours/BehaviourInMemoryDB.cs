@@ -2,6 +2,7 @@
 
 namespace Server.Core.Behaviours
 {
+    //<deprecated> This class is deprecated and will be removed in future versions. </deprecated>
     public class BehaviourInMemoryDB
     {
         private readonly Dictionary<int, Type> types;

@@ -1,17 +1,17 @@
-﻿using Server.Core.Behaviours;
+﻿using Server.Core.Services;
 
 namespace Server.Core.Behaviours
 {
     public partial class BehaviourService : IBehaviourService
     {
-        public static IBehaviourService Instance = new BehaviourService();
+        public static IBehaviourService Instance = new BehaviourService(); //TODO: Dependency Injection
 
         public IEnumerable<IBehaviour> GetAllBehaviours()
         {
             throw new NotImplementedException();
         }
 
-        public IBehaviour GetBehaviourInstanceByID(int databaseID)
+        /*public IBehaviour GetBehaviourInstanceByID(int databaseID)
         {
             //Here we will connect to database, for now we will have dictionary in memory.
             var inMemoryDB = new BehaviourInMemoryDB();
@@ -19,6 +19,6 @@ namespace Server.Core.Behaviours
                 throw new ArgumentException($"No behaviour found with DatabaseID {databaseID}");
 
             return BehaviourFactory.Instance.CreateBehaviourOfType(type);
-        }
+        }*/
     }
 }

@@ -1,5 +1,5 @@
 ﻿using Server.Core.Exceptions;
-using Server.Core.Modules;
+using Server.Core.Services;
 
 namespace Server.Core.Behaviours.Implementations
 {

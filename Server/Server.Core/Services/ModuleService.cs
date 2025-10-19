@@ -1,9 +1,8 @@
 ﻿using Server.Core.Behaviours;
 using Server.Core.Exceptions;
-using SharedLibrary;
-using SharedLibrary.DTOs.ModuleDTO;
+using Server.Core.Modules;
 
-namespace Server.Core.Modules
+namespace Server.Core.Services
 {
     public class ModuleService : IModuleService
     {
@@ -17,12 +16,12 @@ namespace Server.Core.Modules
         }
 
 
-        public Module GetModuleById(int id)
+        public Module? GetModuleById(int id)
         {
             throw new ModuleNotFoundException();
         }
 
-        public Module CreateModuleInstance(CreateModuleDTO dto)
+        /*public Module CreateModuleInstance(CreateModuleDTO dto)
         {
             var behaviours = dto.BehaviourIDs.Select(behaviourService.GetBehaviourInstanceByID).ToList();
 
@@ -36,7 +35,7 @@ namespace Server.Core.Modules
                                 .Create();
 
             return module;
-        }
+        }*/
 
         public IEnumerable<Module> GetAllModules()
         {

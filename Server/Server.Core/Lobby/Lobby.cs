@@ -7,6 +7,7 @@ using SharedLibrary.Messages;
 using SharedLibrary.DTOs.EntitiesDTO;
 using Server.Core.Behaviours;
 using Server.Core.Helpers;
+using Server.Core.Services;
 
 namespace Server.Core.Lobby
 {
@@ -47,6 +48,8 @@ namespace Server.Core.Lobby
                 lobby.LoadModule(mId);
             }
 
+            lobby.InitializeWorldEntities();
+
             return lobby;
         }
 
@@ -79,10 +82,16 @@ namespace Server.Core.Lobby
             Log($"Lobby {LobbyId} closed.", LogLevelEnum.Info);
         }
 
+        private void InitializeWorldEntities()
+        {
+            Log("Initializing world entities...", LogLevelEnum.Info);
+            throw new NotImplementedException();
+        }
+
         private void PublishWorldState()
         {
             // Simulate all non-human entities
-            Module entModule;
+            Module? entModule;
             EntityState nextState;
 
             foreach (var entity in entities)
@@ -93,6 +102,12 @@ namespace Server.Core.Lobby
                 }
 
                 entModule = moduleService.GetModuleById(entity.ModuleID);
+                if(entModule == null)
+                {
+                    Log($"Entity's {entity.Id} module not found in lobby {LobbyId}.", LogLevelEnum.Warning);
+                    continue;
+                }
+
                 if (entModule.Type == EntityTypeEnum.Human)
                 {
                     continue;
