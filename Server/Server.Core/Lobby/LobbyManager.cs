@@ -1,6 +1,7 @@
 ﻿using Server.Core.Behaviours;
 using Server.Core.Exceptions;
 using Server.Core.Modules;
+using Server.Core.Services;
 using SharedLibrary;
 using SharedLibrary.Logging;
 using System.Net.Sockets;
@@ -28,7 +29,7 @@ namespace Server.Core.Lobby
             lock (lobbies)
             {
                 lobbyId = lobbyCounter++;
-                lobbies[lobbyId] = Lobby.CreateLobby(lobbyId, name, maxPlayers, mapId, modulesIDs, new ModuleService(new BehaviourService()));
+                lobbies[lobbyId] = Lobby.CreateLobby(lobbyId, name, maxPlayers, mapId, modulesIDs, ModuleService.Instance);
                 Task.Factory.StartNew(() => lobbies[lobbyId].Run(), TaskCreationOptions.LongRunning);
             }
 

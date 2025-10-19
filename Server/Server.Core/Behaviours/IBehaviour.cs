@@ -1,4 +1,6 @@
-﻿namespace Server.Core.Behaviours
+﻿using SharedLibrary.DTOs.ModuleDTO;
+
+namespace Server.Core.Behaviours
 {
     public interface IBehaviour
     {
@@ -19,6 +21,16 @@
             get;
         }
 
+
+        /// <summary>
+        /// Will be displayed on client side to describe the behaviour.
+        /// </summary>
+        public string Description
+        {
+            get;
+        }
+
+
         /// <summary>
         /// Executes the behaviour.
         /// </summary>
@@ -29,5 +41,10 @@
         /// </summary>
         /// <returns></returns>
         public bool CanExecute(WorldEntity entity, WorldEntity target, Dictionary<string, object>? otherParams = null);
+
+        /// <summary>
+        /// Converts the behaviour to a DTO.
+        /// </summary>
+        public BehviourDTO ToDTO();
     }
 }
