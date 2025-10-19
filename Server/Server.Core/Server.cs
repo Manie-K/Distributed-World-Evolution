@@ -1,4 +1,5 @@
 ﻿using Server.Core.Lobby;
+using Server.Core.Modules;
 using SharedLibrary.DTOs.LobbyDTO;
 using SharedLibrary.DTOs.ModuleDTO;
 using SharedLibrary.Logging;
@@ -101,26 +102,9 @@ namespace Server.Core
             {
                 MessageBase message = await MessageManager.ReceiveMessageAsync(client);
 
-                //TODO: removed hardcoded modules and lobbies
-                var modules = new List<ModuleDTO>();
-                modules.Add(new ModuleDTO
-                    (
-                        1,
-                        "Test Module",
-                        true,
-                        10,
-                        10,
-                        10,
-                        new List<BehviourDTO>{
-                                        new BehviourDTO (1, "This is a test behaviour.", EntityTypeEnum.Animal)
-                        },
-                        EntityTypeEnum.Animal,
-                        1
-                    )
-                );
-
+                //TODO: Remove
                 var lobbies = new List<LobbyDTO>();
-                var lobby = new LobbyDTO(1, "Test Lobby", 10, 1, 1, modules);
+                var lobby = new LobbyDTO(1, "Test Lobby", 10, 1, 1, null);
                 lobbies.Add(lobby);
 
 
@@ -205,23 +189,22 @@ namespace Server.Core
                         case GetMessageTypeEnum.ModuleList:
                             try
                             {
-                                await MessageManager.SendMessageAsync(client, new ModuleListMessage(modules));
+                                List<ModuleDTO> moduleDTOs = Services.ModuleService.Instance.GetAllModules().Select(m => m.ToDTO()).ToList();
+                                await MessageManager.SendMessageAsync(client, new ModuleListMessage(moduleDTOs));
                             }
                             catch (Exception ex)
                             {
                                 Log(ex.Message, LogLevelEnum.Error);
-                                await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "Module list error. Try again."));
+                                await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "ModuleDTO list error. Try again."));
                                 client.Close();
                             }
                             break;
 
                         case GetMessageTypeEnum.BehaviourList:
-                            var behaviors = new List<BehviourDTO>();
-                            //var behaviors = behaviourService.GetAllBehaviours().ToList().ToDTO();
-
                             try
                             {
-                                await MessageManager.SendMessageAsync(client, new BehaviourListMessage(behaviors));
+                                var behaviorDTOs = Services.BehaviourService.Instance.GetAllBehaviours().Select(b => b.ToDTO()).ToList();
+                                await MessageManager.SendMessageAsync(client, new BehaviourListMessage(behaviorDTOs));
                             }
                             catch (Exception ex)
                             {
@@ -246,16 +229,16 @@ namespace Server.Core
                     try
                     {
                         //TODO: implement module creation
-                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.ModuleNotCreated, "Module creation not implemented."));
+                        Services.ModuleService.Instance.CreateModule(createModuleMessage.ModuleDTO);
+                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.ModuleNotCreated, "ModuleDTO creation not implemented.")); //TODO: @FranciszekGwarek change this
                     }
                     catch (Exception ex)
                     {
                         Log(ex.Message, LogLevelEnum.Error);
-                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.ModuleNotCreated, "Module creation error. Try again."));
+                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.ModuleNotCreated, "ModuleDTO creation error. Try again."));
                     }
 
                 }
-
 
                 //Forwarding message to lobby
                 else

@@ -28,24 +28,24 @@ namespace Server.Core.Lobby
         private readonly IModuleService moduleService;
         private readonly List<TcpClient> clients;
         private readonly ICollection<WorldEntity> entities;
-        private readonly ICollection<int> loadedModulesIDs;
+        private readonly ICollection<int> allowedModulesIDs;
         private bool[,] walkableTiles;
 
         private bool running;
 
         public static Lobby CreateLobby(int id, string name, int maxPlayers, int mapId, IEnumerable<int> moduleIDs, IModuleService moduleService)
         {
-            Lobby lobby = new Lobby(id, name, maxPlayers, mapId);
+            Lobby lobby = new Lobby(id, name, maxPlayers, mapId, moduleService);
             
             foreach(int mId in moduleIDs)
             {
                 Module? module = moduleService.GetModuleById(mId);
                 if (module == null)
                 {
-                    throw new Exception($"Module with ID {mId} not found.");
+                    throw new Exception($"ModuleDTO with ID {mId} not found.");
                 }
 
-                lobby.LoadModule(mId);
+                lobby.AddAllowedModule(mId);
             }
 
             lobby.InitializeWorldEntities();
@@ -53,16 +53,16 @@ namespace Server.Core.Lobby
             return lobby;
         }
 
-        private Lobby(int id, string name, int maxPlayers, int mapId)
+        private Lobby(int id, string name, int maxPlayers, int mapId, IModuleService moduleService)
         {
             LobbyId = id;
             Name = name;
             MaxPlayers = maxPlayers;
             walkableTiles = null; //TODO: Implement map
-            moduleService = ModuleService.Instance;
+            this.moduleService = moduleService;
 
             entities = new List<WorldEntity>(); //Currently no way to add them.
-            loadedModulesIDs = new List<int>();
+            allowedModulesIDs = new List<int>();
             clients = new List<TcpClient>();
             running = true;
 
@@ -173,7 +173,8 @@ namespace Server.Core.Lobby
                 throw new ArgumentNullException(nameof(newState), "New state cannot be null.");
             }
 
-            Module entModule = moduleService.GetModuleById(entity.ModuleID);
+            Module? entModule = moduleService.GetModuleById(entity.ModuleID)
+                ?? throw new Exception($"Entity's {entity.Id} module not found.");
 
             // If we change position, there is a possible new interaction 
             if (entity.State.Position != newState.Position && entity.State.InteractionFramesLeft == 0)
@@ -389,36 +390,36 @@ namespace Server.Core.Lobby
             return true;
         }
         
-        public bool LoadModule(int moduleId)
+        public bool AddAllowedModule(int moduleId)
         {
             Module? module = moduleService.GetModuleById(moduleId);
-            lock (loadedModulesIDs)
+            lock (allowedModulesIDs)
             {
-                if (loadedModulesIDs.Contains(moduleId))
+                if (allowedModulesIDs.Contains(moduleId))
                 {
-                    Log($"Module {module?.Name} already loaded in lobby {LobbyId}.", LogLevelEnum.Warning);
+                    Log($"ModuleDTO {module?.Name} already allowed in lobby {LobbyId}.", LogLevelEnum.Warning);
                     return false;
                 }
-                loadedModulesIDs.Add(moduleId);
+                allowedModulesIDs.Add(moduleId);
                 return true;
             }
         }
 
-        // What do we expect here? Just remove in future or present?
-        public bool UnloadModule(int moduleId)
+        /*// What do we expect here? Just remove in future or present?
+        public bool RemoveAllowedModule(int moduleId)
         {
-            Module? module = moduleService.GetModuleById(moduleId);
-            lock (loadedModulesIDs)
+            ModuleDTO? module = moduleService.GetModuleById(moduleId);
+            lock (allowedModulesIDs)
             {
-                if (!loadedModulesIDs.Contains(moduleId))
+                if (!allowedModulesIDs.Contains(moduleId))
                 {
-                    Log($"Module {module?.Name} isn't loaded in lobby {LobbyId}.", LogLevelEnum.Warning);
+                    Log($"ModuleDTO {module?.Name} already isn't allowed in lobby {LobbyId}.", LogLevelEnum.Warning);
                     return false;
                 }
-                loadedModulesIDs.Remove(moduleId);
+                allowedModulesIDs.Remove(moduleId);
                 return true;
             }
-        }
+        }*/
 
         // We should decide how we will handle creating and destroying world entities
         public bool AddWorldEntity(WorldEntity entity)
@@ -431,10 +432,10 @@ namespace Server.Core.Lobby
                     return false;
                 }
 
-                bool moduleLoaded = loadedModulesIDs.Any(id => (id == entity.ModuleID));
+                bool moduleLoaded = allowedModulesIDs.Any(id => (id == entity.ModuleID));
                 if (!moduleLoaded)
                 {
-                    Log($"Entity's {entity.Id} module is not loaded in lobby {LobbyId}.", LogLevelEnum.Warning);
+                    Log($"Entity's {entity.Id} module is not allowed in lobby {LobbyId}.", LogLevelEnum.Warning);
                     return false;
                 }
                 entities.Add(entity);

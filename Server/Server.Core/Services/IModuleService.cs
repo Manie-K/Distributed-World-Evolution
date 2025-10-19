@@ -1,19 +1,14 @@
 ﻿using Server.Core.Modules;
+using SharedLibrary.DTOs.ModuleDTO;
 
 namespace Server.Core.Services
 {
     public interface IModuleService
     {
-        // TODO: We need to add db.
-        // Workflow could be as follow:
-        // 1. Send dto from client to server with info about new module
-        // 2. Server saves it to db
-        // 3. Client saves info about which module to load
-        // 4. Server gets info from db and create instance
-        //public Module CreateModuleInstance(CreateModuleDTO dto);
-
         public Module? GetModuleById(int id);
 
         public IEnumerable<Module> GetAllModules();
+
+        public void CreateModule(CreateModuleDTO dto);
     }
 }

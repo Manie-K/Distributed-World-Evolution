@@ -1,10 +1,19 @@
-﻿namespace Server.Core
+﻿using Microsoft.EntityFrameworkCore;
+
+namespace Server.Core
 {
     internal class Program
     {
         private static void Main(string[] args)
         {
             Console.WriteLine("[DEBUG]: Debug console for Core project, independent from UI project.");
+
+            using(var dbContext = new Data.ApplicationDBContext())
+            {
+                dbContext.Database.EnsureCreated();
+                dbContext.Database.Migrate();
+            }
+
             Server.Instance.Start(args);
         }
     }

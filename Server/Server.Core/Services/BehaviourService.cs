@@ -1,24 +1,31 @@
-﻿using Server.Core.Services;
+﻿using Server.Core.Behaviours;
+using Server.Core.Services;
 
-namespace Server.Core.Behaviours
+namespace Server.Core.Services
 {
-    public partial class BehaviourService : IBehaviourService
+    public class BehaviourService : IBehaviourService
     {
         public static IBehaviourService Instance = new BehaviourService(); //TODO: Dependency Injection
 
         public IEnumerable<IBehaviour> GetAllBehaviours()
         {
-            throw new NotImplementedException();
+            IEnumerable<IBehaviour> behaviours = new List<IBehaviour>();
+
+            BehaviourInMemoryDB.Instance.GetAllTypes().ForEach(type =>
+            {
+                IBehaviour behaviour = BehaviourFactory.Instance.CreateBehaviourOfType(type);
+                behaviours = behaviours.Append(behaviour);
+            });
+
+            return behaviours;
         }
 
-        /*public IBehaviour GetBehaviourInstanceByID(int databaseID)
+        public IBehaviour GetBehaviourInstanceByID(int id)
         {
-            //Here we will connect to database, for now we will have dictionary in memory.
-            var inMemoryDB = new BehaviourInMemoryDB();
-            Type? type = inMemoryDB.GetTypeByID(databaseID) ?? 
-                throw new ArgumentException($"No behaviour found with DatabaseID {databaseID}");
+            Type? type = BehaviourInMemoryDB.Instance.GetTypeByID(id) ?? 
+                throw new ArgumentException($"No behaviour found with ID {id}");
 
             return BehaviourFactory.Instance.CreateBehaviourOfType(type);
-        }*/
+        }
     }
 }
