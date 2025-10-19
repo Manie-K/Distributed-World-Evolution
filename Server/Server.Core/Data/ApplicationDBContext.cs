@@ -17,6 +17,10 @@ namespace Server.Core.Data
             moduleEntity.Property(m => m.Name).IsRequired();
             moduleEntity.Property(m => m.Type).IsRequired();
 
+            moduleEntity.HasData(
+                new ModuleDBEntity(true, "Human module", 5, 5, 5, EntityTypeEnum.Human, 1, new List<int> { })
+            );
+
             base.OnModelCreating(modelBuilder);
         }
 

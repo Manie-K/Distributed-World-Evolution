@@ -369,7 +369,7 @@ namespace Server.Core.Lobby
                 clients.Add(client);
             }
 
-            WorldEntity userEntity = WorldEntity.CreateWorldEntity(username, 0, new EntityState(new SharedLibrary.Helpers.Position2D(0, 0))); //TODO: Add moduleID for human entity.
+            WorldEntity userEntity = WorldEntity.CreateWorldEntity(username, moduleService.GetHumanModuleId(), new EntityState(new SharedLibrary.Helpers.Position2D(0, 0))); //TODO: Add moduleID for human entity.
             AddWorldEntity(userEntity);
 
             return userEntity.Id;

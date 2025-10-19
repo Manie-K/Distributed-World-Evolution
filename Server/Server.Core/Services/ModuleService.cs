@@ -90,5 +90,23 @@ namespace Server.Core.Services
                 dbContext.SaveChanges();
             }
         }
+
+        public int GetHumanModuleId()
+        {
+            using (var dbContext = new ApplicationDBContext())
+            {
+                var modules = dbContext.Modules.Where(m => m.Type == EntityTypeEnum.Human);
+                if (modules.Count() == 0)
+                {
+                    throw new Exception("Human module not found");
+                }
+                if(modules.Count() > 1)
+                {
+                    throw new Exception("Multiple human modules found");
+                }
+
+                return modules.First().ID;
+            }
+        }
     }
 }

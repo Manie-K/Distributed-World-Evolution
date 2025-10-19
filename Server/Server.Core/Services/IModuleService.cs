@@ -10,5 +10,7 @@ namespace Server.Core.Services
         public IEnumerable<Module> GetAllModules();
 
         public void CreateModule(CreateModuleDTO dto);
+
+        public int GetHumanModuleId();
     }
 }
