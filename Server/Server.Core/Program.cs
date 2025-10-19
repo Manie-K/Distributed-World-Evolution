@@ -10,7 +10,6 @@ namespace Server.Core
 
             using(var dbContext = new Data.ApplicationDBContext())
             {
-                dbContext.Database.EnsureCreated();
                 dbContext.Database.Migrate();
             }
 

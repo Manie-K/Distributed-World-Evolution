@@ -1,10 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using Microsoft.EntityFrameworkCore;
-using Server.Core.Modules;
 
 namespace Server.Core.Data
 {
@@ -26,7 +22,13 @@ namespace Server.Core.Data
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            var connectionString = "abc"; // Example for PostgreSQL
+            string? connectionString = Environment.GetEnvironmentVariable("Co tu wpisujemy? Pamietajcie ze to publiczne jest!!!!");
+            
+            if (String.IsNullOrEmpty(connectionString))
+            {
+                connectionString = "Host=localhost;Database=appdb;Username=appuser;Password=apppassword";
+            }
+
             optionsBuilder.UseNpgsql(connectionString);
 
             base.OnConfiguring(optionsBuilder);

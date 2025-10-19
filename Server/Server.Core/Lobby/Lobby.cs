@@ -75,7 +75,7 @@ namespace Server.Core.Lobby
 
             while (running)
             {
-                Task.Delay((int)((1 / LOBBY_UPDATES_PER_SECOND) * 1000));
+                Task.Delay((int)((1 / LOBBY_UPDATES_PER_SECOND) * 1000)).Wait();
                 PublishWorldState();
             }
 
@@ -207,7 +207,7 @@ namespace Server.Core.Lobby
         private void SimulateHumanEntityUpdate(WorldEntityDTO human, WorldEntityDTO? other)
         {
             WorldEntity entHuman = entities.Where(e => e.Id == human.Id).First();
-            WorldEntity entOther = entities.Where(e => e.Id == other?.Id).First();
+            WorldEntity? entOther = entities.Where(e => e.Id == other?.Id).FirstOrDefault();
 
             if (entHuman == null)
             {
@@ -221,7 +221,7 @@ namespace Server.Core.Lobby
             }
 
             entHuman.UpdateState(new EntityState(human.State));
-            entOther?.UpdateState(new EntityState(other.State));
+            entOther?.UpdateState(new EntityState(other!.State)); //If entityOther isn't null, then it's dto also isn't.
         }
 
 
@@ -234,9 +234,9 @@ namespace Server.Core.Lobby
                 return typeof(MoveBehaviourBase);
             }
 
-            Module entityModule = moduleService.GetModuleById(entity.ModuleID);
+            Module entityModule = moduleService.GetModuleById(entity.ModuleID) ?? throw new Exception($"Module with ID={entity.ModuleID} not found");
             EntityTypeEnum entityType = entityModule.Type;
-            EntityTypeEnum targetType = moduleService.GetModuleById(entityOnPosition.ModuleID).Type;
+            EntityTypeEnum targetType = moduleService.GetModuleById(entityOnPosition.ModuleID)?.Type ?? throw new Exception($"Module with ID={entity.ModuleID} not found"); ;
 
             // We refactored this so that humans dont use this method, the send the new states in frames
             if (entityType == EntityTypeEnum.Human) return null;
@@ -322,13 +322,13 @@ namespace Server.Core.Lobby
             WorldEntityDTO human = message.HumanEntity;
             WorldEntityDTO? other = message.OtherEntity;
 
-            WorldEntity? humanEntity = entities.Where(e => e.Id == human.Id).First();
+            WorldEntity? humanEntity = entities.Where(e => e.Id == human.Id).FirstOrDefault();
             if (humanEntity == null)
             {
                 throw new Exception($"Human entity ({human.Id}) not found in lobby.");
             }
 
-            if (moduleService.GetModuleById(humanEntity.ModuleID).Type != EntityTypeEnum.Human)
+            if (moduleService.GetModuleById(humanEntity.ModuleID)?.Type != EntityTypeEnum.Human)
             {
                 throw new Exception($"Entity ({human.Id}) is not a human.");
             }

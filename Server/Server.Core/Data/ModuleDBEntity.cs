@@ -22,15 +22,15 @@ namespace Server.Core.Data
         public int GraphicalRepresentationID { get; set; }
         public List<int> BehaviourIDs { get; set; }
 
-        public ModuleDBEntity(bool official, string name, int damage, int aggresion, int reproductionNeed, EntityTypeEnum type, int graphicsId, List<int> behaviourIDs)
+        public ModuleDBEntity(bool official, string name, int damage, int agression, int reproductionNeed, EntityTypeEnum type, int graphicalRepresentationID, List<int> behaviourIDs)
         {
             Official = official;
             Name = name;
             Damage = damage;
-            Agression = aggresion;
+            Agression = agression;
             ReproductionNeed = reproductionNeed;
             Type = type;
-            GraphicalRepresentationID = graphicsId;
+            GraphicalRepresentationID = graphicalRepresentationID;
             BehaviourIDs = behaviourIDs;
         }
     }
