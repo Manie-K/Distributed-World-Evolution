@@ -1,5 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
 using Client.Common;
 
 namespace Client
@@ -14,8 +13,6 @@ namespace Client
 
     public class Character : ColoredSprite
     {
-        public Guid Id { get; private set; }
-
         protected float speed;
         protected AnimationManager am;
         protected Direction CurrentDirection;
@@ -30,6 +27,5 @@ namespace Client
         }
 
         public virtual void Update(GameTime gameTime, InputManager inputManager) { }
- 
     }
 }

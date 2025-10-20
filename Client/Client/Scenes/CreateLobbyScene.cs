@@ -226,7 +226,7 @@ namespace Client
                     if (!gameNameBox.CheckTextIfEmpty() && playerAmountBox.CheckText(32))
                     {
                         IEnumerable<int> modules = switchPageLobby.GetSelectedModulesIDList();
-                        CreateLobbyMessage message = new CreateLobbyMessage(gameNameBox.GetText(), int.Parse(playerAmountBox.GetText()), mapData.index, modules);
+                        CreateLobbyMessage message = new CreateLobbyMessage(gameNameBox.GetText(), manager.UserSettings.PlayerName, int.Parse(playerAmountBox.GetText()), mapData.index, modules);
                         _ = MessageManager.SendMessageAsync(manager.ClientManager.Client, message);
                         isCreatingLobby = true;
                         manager.ClientManager.LobbyCreated = ActionStatus.PENDING;
