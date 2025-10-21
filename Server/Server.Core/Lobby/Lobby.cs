@@ -86,6 +86,18 @@ namespace Server.Core.Lobby
         private void InitializeWorldEntities()
         {
             Log("Initializing world entities...", LogLevelEnum.Info);
+
+            // For testing purposes, we create some entities here.
+            for (int i = 0; i < 10; i++)
+            {
+                WorldEntity ent = WorldEntity.CreateWorldEntity(
+                    $"Animal_{i}",
+                    -2, //Hard-coded seed data
+                    new EntityState(new SharedLibrary.Helpers.Position2D(i*10 + 3, i*10 + 15))
+                    );
+
+                AddWorldEntity(ent);
+            }
         }
 
         private void PublishWorldState()
