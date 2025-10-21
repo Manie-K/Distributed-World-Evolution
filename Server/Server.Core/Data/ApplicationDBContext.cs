@@ -20,7 +20,11 @@ namespace Server.Core.Data
             moduleEntity.HasData(
                 new ModuleDBEntity(true, "Human module", 5, 5, 5, EntityTypeEnum.Human, 1, new int[] { })
                 {
-                    ID = -1 // Seed data with negative ID to avoid conflicts
+                    ID = -1
+                },
+                new ModuleDBEntity(true, "Default module", 3, 7, 4, EntityTypeEnum.Animal, 2, new int[] { 3, 2, 69 })
+                {
+                    ID = -2
                 }
             );
 

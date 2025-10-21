@@ -1,13 +1,14 @@
-﻿using Server.Core.Lobby;
+﻿using Server.Core.Helpers;
+using Server.Core.Lobby;
 using SharedLibrary.Helpers;
 
 namespace Server.Core.Behaviours.Implementations
 {
     public class BasicReproduceBehaviour : ReproduceBehaviourBase
     {
-        public override int DatabaseID => throw new NotImplementedException();
+        public override int DatabaseID => 69;
 
-        public override string Description => throw new NotImplementedException();
+        public override string Description => "Basic reproduction behaviour that creates a child entity";
 
         public override bool CanExecute(WorldEntity entity, WorldEntity target, Dictionary<string, object>? otherParams = null)
         {
@@ -27,7 +28,7 @@ namespace Server.Core.Behaviours.Implementations
                 )
             );
 
-            ILobby lobby = otherParams != null && otherParams.TryGetValue(otherParams.LOBBY_PARAM, out object? lobbyObj) && lobbyObj is ILobby l ? l : throw new ArgumentNullException("Lobby parameter is required for reproduction behaviour.");
+            ILobby lobby = otherParams != null && otherParams.TryGetValue(CustomBehaviourParams.LOBBY_PARAM, out object? lobbyObj) && lobbyObj is ILobby l ? l : throw new ArgumentNullException("Lobby parameter is required for reproduction behaviour.");
 
             lobby.AddWorldEntity(child);
         }
