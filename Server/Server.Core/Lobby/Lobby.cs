@@ -14,9 +14,10 @@ namespace Server.Core.Lobby
     public class Lobby : ILobby
     {
         /// <inheritdoc/>
-        public int LobbyId { get; private init; }
-        public string Name { get; set; }
-        public int MaxPlayers { get; set; }
+        public int LobbyId { get; init; }
+        public string Name { get; init; }
+        public int MapID{ get; init; }
+        public int MaxPlayers { get; init; }
 
         public static event EventHandler<OnLogEventArgs>? OnLog;
         
@@ -27,15 +28,15 @@ namespace Server.Core.Lobby
 
         private readonly IModuleService moduleService;
         private readonly List<TcpClient> clients;
-        private readonly ICollection<WorldEntity> entities;
-        private readonly ICollection<int> allowedModulesIDs;
-        private bool[,] walkableTiles;
+        private readonly List<WorldEntity> entities;
+        private readonly List<int> allowedModulesIDs;
+        private readonly bool[,] walkableTiles;
 
         private bool running;
 
-        public static Lobby CreateLobby(int id, string name, int maxPlayers, int mapId, IEnumerable<int> moduleIDs, IModuleService moduleService)
+        public static Lobby CreateLobby(int id, string name, int maxPlayers, int mapId, bool[,] walkableTiles, IEnumerable<int> moduleIDs, IModuleService moduleService)
         {
-            Lobby lobby = new Lobby(id, name, maxPlayers, mapId, moduleService);
+            Lobby lobby = new Lobby(id, name, maxPlayers, mapId, walkableTiles, moduleService);
             
             foreach(int mId in moduleIDs)
             {
@@ -53,15 +54,15 @@ namespace Server.Core.Lobby
             return lobby;
         }
 
-        private Lobby(int id, string name, int maxPlayers, int mapId, IModuleService moduleService)
+        private Lobby(int id, string name, int maxPlayers, int mapId, bool[,] tiles, IModuleService moduleService)
         {
             LobbyId = id;
             Name = name;
             MaxPlayers = maxPlayers;
-            walkableTiles = null; //TODO: Implement map
+            walkableTiles = tiles; 
             this.moduleService = moduleService;
 
-            entities = new List<WorldEntity>(); //Currently no way to add them.
+            entities = new List<WorldEntity>();
             allowedModulesIDs = new List<int>();
             clients = new List<TcpClient>();
             running = true;
@@ -85,6 +86,18 @@ namespace Server.Core.Lobby
         private void InitializeWorldEntities()
         {
             Log("Initializing world entities...", LogLevelEnum.Info);
+
+            // For testing purposes, we create some entities here.
+            for (int i = 0; i < 10; i++)
+            {
+                WorldEntity ent = WorldEntity.CreateWorldEntity(
+                    $"Animal_{i}",
+                    -2, //Hard-coded seed data
+                    new EntityState(new SharedLibrary.Helpers.Position2D(i*10 + 3, i*10 + 15))
+                    );
+
+                AddWorldEntity(ent);
+            }
         }
 
         private void PublishWorldState()
@@ -186,12 +199,22 @@ namespace Server.Core.Lobby
 
 
                 // In case when we need to add custom parameters
-                if(interactionType == typeof(MoveBehaviourBase))
+                if (interactionType == typeof(MoveBehaviourBase))
                 {
                     behaviour.Execute(entity, null, new Dictionary<string, object>{
                         { CustomBehaviourParams.MAP_PARAM, walkableTiles   },
                         { CustomBehaviourParams.NEW_POS_PARAM, newState.Position }
                     });
+
+                    entity.State.InteractionFramesLeft = 10;
+                }
+                else if (interactionType == typeof(ReproduceBehaviourBase))
+                {
+                    behaviour.Execute(entity, targetEntity, new Dictionary<string, object>{
+                        { CustomBehaviourParams.LOBBY_PARAM, this }
+                    });
+                    entity.State.InteractionFramesLeft = 8;
+                    targetEntity.State.InteractionFramesLeft = 8;
                 }
                 else
                 {
@@ -222,7 +245,6 @@ namespace Server.Core.Lobby
             entHuman.UpdateState(new EntityState(human.State));
             entOther?.UpdateState(new EntityState(other!.State)); //If entityOther isn't null, then it's dto also isn't.
         }
-
 
         private Type? GetInteractionType(WorldEntity entity, EntityStateDTO newState)
         {

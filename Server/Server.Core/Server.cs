@@ -43,7 +43,7 @@ namespace Server.Core
 
             Log("Server started...", LogLevelEnum.Info);
             //TODO: remove hardcoded lobby
-            lobbyManager.CreateAndInitialiseLobby("TEST", 2, 1, [] );
+            lobbyManager.CreateAndInitialiseLobby("TEST", 2, 1, new bool[1,1], []);
             ////
 
             while (true)
@@ -113,7 +113,7 @@ namespace Server.Core
                 {
                     CreateLobbyMessage createLobbyMessage = (CreateLobbyMessage)message;
                     int lobbyID = lobbyManager.CreateAndInitialiseLobby(createLobbyMessage.LobbyName, createLobbyMessage.MaxPlayers,
-                        createLobbyMessage.MapID, createLobbyMessage.ModuleIDs);
+                        createLobbyMessage.MapID, createLobbyMessage.WalkableTiles, createLobbyMessage.ModuleIDs);
 
                     try
                     {

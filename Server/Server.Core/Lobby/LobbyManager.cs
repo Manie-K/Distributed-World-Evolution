@@ -22,14 +22,14 @@ namespace Server.Core.Lobby
         }
 
         //TODO: add modules when they are implemented
-        public int CreateAndInitialiseLobby(string name, int maxPlayers, int mapId, IEnumerable<int> modulesIDs)
+        public int CreateAndInitialiseLobby(string name, int maxPlayers, int mapId, bool[,] walkableTiles, IEnumerable<int> modulesIDs)
         {
             int lobbyId;
             
             lock (lobbies)
             {
                 lobbyId = lobbyCounter++;
-                lobbies[lobbyId] = Lobby.CreateLobby(lobbyId, name, maxPlayers, mapId, modulesIDs, ModuleService.Instance);
+                lobbies[lobbyId] = Lobby.CreateLobby(lobbyId, name, maxPlayers, mapId, walkableTiles, modulesIDs, ModuleService.Instance);
                 Task.Factory.StartNew(() => lobbies[lobbyId].Run(), TaskCreationOptions.LongRunning);
             }
 
