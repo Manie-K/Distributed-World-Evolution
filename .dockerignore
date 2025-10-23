@@ -1,0 +1,9 @@
+*/bin/
+*/obj/
+./git
+scripts/*
+.vs/
+*log
+Client/*
+docs/*
+.github/*

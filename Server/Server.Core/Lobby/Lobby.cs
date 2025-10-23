@@ -7,15 +7,17 @@ using SharedLibrary.Messages;
 using SharedLibrary.DTOs.EntitiesDTO;
 using Server.Core.Behaviours;
 using Server.Core.Helpers;
+using Server.Core.Services;
 
 namespace Server.Core.Lobby
 {
     public class Lobby : ILobby
     {
         /// <inheritdoc/>
-        public int LobbyId { get; private init; }
-        public string Name { get; set; }
-        public int MaxPlayers { get; set; }
+        public int LobbyId { get; init; }
+        public string Name { get; init; }
+        public int MapID{ get; init; }
+        public int MaxPlayers { get; init; }
 
         public static event EventHandler<OnLogEventArgs>? OnLog;
         
@@ -26,40 +28,42 @@ namespace Server.Core.Lobby
 
         private readonly IModuleService moduleService;
         private readonly List<TcpClient> clients;
-        private readonly ICollection<WorldEntity> entities;
-        private readonly ICollection<Module> loadedModules;
-        private bool[,] walkableTiles;
+        private readonly List<WorldEntity> entities;
+        private readonly List<int> allowedModulesIDs;
+        private readonly bool[,] walkableTiles;
 
         private bool running;
 
-        public static Lobby CreateLobby(int id, string name, int maxPlayers, int mapId, IEnumerable<int> moduleIDs, IModuleService moduleService)
+        public static Lobby CreateLobby(int id, string name, int maxPlayers, int mapId, bool[,] walkableTiles, IEnumerable<int> moduleIDs, IModuleService moduleService)
         {
-            Lobby lobby = new Lobby(id, name, maxPlayers, mapId);
+            Lobby lobby = new Lobby(id, name, maxPlayers, mapId, walkableTiles, moduleService);
             
             foreach(int mId in moduleIDs)
             {
-                Module module = moduleService.GetModuleById(mId);
+                Module? module = moduleService.GetModuleById(mId);
                 if (module == null)
                 {
-                    throw new Exception($"Module with ID {mId} not found.");
+                    throw new Exception($"ModuleDTO with ID {mId} not found.");
                 }
 
-                lobby.LoadModule(module);
+                lobby.AddAllowedModule(mId);
             }
+
+            lobby.InitializeWorldEntities();
 
             return lobby;
         }
 
-        private Lobby(int id, string name, int maxPlayers, int mapId)
+        private Lobby(int id, string name, int maxPlayers, int mapId, bool[,] tiles, IModuleService moduleService)
         {
             LobbyId = id;
             Name = name;
             MaxPlayers = maxPlayers;
-            walkableTiles = null; //TODO: Implement map
-            moduleService = ModuleService.Instance;
+            walkableTiles = tiles; 
+            this.moduleService = moduleService;
 
-            entities = new List<WorldEntity>(); //Currently no way to add them.
-            loadedModules = new List<Module>();
+            entities = new List<WorldEntity>();
+            allowedModulesIDs = new List<int>();
             clients = new List<TcpClient>();
             running = true;
 
@@ -72,17 +76,34 @@ namespace Server.Core.Lobby
 
             while (running)
             {
-                Task.Delay((int)((1 / LOBBY_UPDATES_PER_SECOND) * 1000));
+                Task.Delay((int)((1 / LOBBY_UPDATES_PER_SECOND) * 1000)).Wait();
                 PublishWorldState();
             }
 
             Log($"Lobby {LobbyId} closed.", LogLevelEnum.Info);
         }
 
+        private void InitializeWorldEntities()
+        {
+            Log("Initializing world entities...", LogLevelEnum.Info);
+
+            // For testing purposes, we create some entities here.
+            for (int i = 0; i < 10; i++)
+            {
+                WorldEntity ent = WorldEntity.CreateWorldEntity(
+                    $"Animal_{i}",
+                    -2, //Hard-coded seed data
+                    new EntityState(new SharedLibrary.Helpers.Position2D(i*10 + 3, i*10 + 15))
+                    );
+
+                AddWorldEntity(ent);
+            }
+        }
+
         private void PublishWorldState()
         {
             // Simulate all non-human entities
-            Module entModule;
+            Module? entModule;
             EntityState nextState;
 
             foreach (var entity in entities)
@@ -93,6 +114,12 @@ namespace Server.Core.Lobby
                 }
 
                 entModule = moduleService.GetModuleById(entity.ModuleID);
+                if(entModule == null)
+                {
+                    Log($"Entity's {entity.Id} module not found in lobby {LobbyId}.", LogLevelEnum.Warning);
+                    continue;
+                }
+
                 if (entModule.Type == EntityTypeEnum.Human)
                 {
                     continue;
@@ -158,7 +185,8 @@ namespace Server.Core.Lobby
                 throw new ArgumentNullException(nameof(newState), "New state cannot be null.");
             }
 
-            Module entModule = moduleService.GetModuleById(entity.ModuleID);
+            Module? entModule = moduleService.GetModuleById(entity.ModuleID)
+                ?? throw new Exception($"Entity's {entity.Id} module not found.");
 
             // If we change position, there is a possible new interaction 
             if (entity.State.Position != newState.Position && entity.State.InteractionFramesLeft == 0)
@@ -171,12 +199,22 @@ namespace Server.Core.Lobby
 
 
                 // In case when we need to add custom parameters
-                if(interactionType == typeof(MoveBehaviourBase))
+                if (interactionType == typeof(MoveBehaviourBase))
                 {
                     behaviour.Execute(entity, null, new Dictionary<string, object>{
                         { CustomBehaviourParams.MAP_PARAM, walkableTiles   },
                         { CustomBehaviourParams.NEW_POS_PARAM, newState.Position }
                     });
+
+                    entity.State.InteractionFramesLeft = 10;
+                }
+                else if (interactionType == typeof(ReproduceBehaviourBase))
+                {
+                    behaviour.Execute(entity, targetEntity, new Dictionary<string, object>{
+                        { CustomBehaviourParams.LOBBY_PARAM, this }
+                    });
+                    entity.State.InteractionFramesLeft = 8;
+                    targetEntity.State.InteractionFramesLeft = 8;
                 }
                 else
                 {
@@ -191,7 +229,7 @@ namespace Server.Core.Lobby
         private void SimulateHumanEntityUpdate(WorldEntityDTO human, WorldEntityDTO? other)
         {
             WorldEntity entHuman = entities.Where(e => e.Id == human.Id).First();
-            WorldEntity entOther = entities.Where(e => e.Id == other?.Id).First();
+            WorldEntity? entOther = entities.Where(e => e.Id == other?.Id).FirstOrDefault();
 
             if (entHuman == null)
             {
@@ -205,9 +243,8 @@ namespace Server.Core.Lobby
             }
 
             entHuman.UpdateState(new EntityState(human.State));
-            entOther?.UpdateState(new EntityState(other.State));
+            entOther?.UpdateState(new EntityState(other!.State)); //If entityOther isn't null, then it's dto also isn't.
         }
-
 
         private Type? GetInteractionType(WorldEntity entity, EntityStateDTO newState)
         {
@@ -218,9 +255,9 @@ namespace Server.Core.Lobby
                 return typeof(MoveBehaviourBase);
             }
 
-            Module entityModule = moduleService.GetModuleById(entity.ModuleID);
+            Module entityModule = moduleService.GetModuleById(entity.ModuleID) ?? throw new Exception($"Module with ID={entity.ModuleID} not found");
             EntityTypeEnum entityType = entityModule.Type;
-            EntityTypeEnum targetType = moduleService.GetModuleById(entityOnPosition.ModuleID).Type;
+            EntityTypeEnum targetType = moduleService.GetModuleById(entityOnPosition.ModuleID)?.Type ?? throw new Exception($"Module with ID={entity.ModuleID} not found"); ;
 
             // We refactored this so that humans dont use this method, the send the new states in frames
             if (entityType == EntityTypeEnum.Human) return null;
@@ -306,13 +343,13 @@ namespace Server.Core.Lobby
             WorldEntityDTO human = message.HumanEntity;
             WorldEntityDTO? other = message.OtherEntity;
 
-            WorldEntity? humanEntity = entities.Where(e => e.Id == human.Id).First();
+            WorldEntity? humanEntity = entities.Where(e => e.Id == human.Id).FirstOrDefault();
             if (humanEntity == null)
             {
                 throw new Exception($"Human entity ({human.Id}) not found in lobby.");
             }
 
-            if (moduleService.GetModuleById(humanEntity.ModuleID).Type != EntityTypeEnum.Human)
+            if (moduleService.GetModuleById(humanEntity.ModuleID)?.Type != EntityTypeEnum.Human)
             {
                 throw new Exception($"Entity ({human.Id}) is not a human.");
             }
@@ -353,7 +390,7 @@ namespace Server.Core.Lobby
                 clients.Add(client);
             }
 
-            WorldEntity userEntity = WorldEntity.CreateWorldEntity(username, 0, new EntityState(new SharedLibrary.Helpers.Position2D(0, 0))); //TODO: Add moduleID for human entity.
+            WorldEntity userEntity = WorldEntity.CreateWorldEntity(username, moduleService.GetHumanModuleId(), new EntityState(new SharedLibrary.Helpers.Position2D(0, 0))); //TODO: Add moduleID for human entity.
             AddWorldEntity(userEntity);
 
             return userEntity.Id;
@@ -374,34 +411,36 @@ namespace Server.Core.Lobby
             return true;
         }
         
-        public bool LoadModule(Module module)
+        public bool AddAllowedModule(int moduleId)
         {
-            lock (loadedModules)
+            Module? module = moduleService.GetModuleById(moduleId);
+            lock (allowedModulesIDs)
             {
-                if (loadedModules.Contains(module))
+                if (allowedModulesIDs.Contains(moduleId))
                 {
-                    Log($"Module {module.Name} already loaded in lobby {LobbyId}.", LogLevelEnum.Warning);
+                    Log($"ModuleDTO {module?.Name} already allowed in lobby {LobbyId}.", LogLevelEnum.Warning);
                     return false;
                 }
-                loadedModules.Add(module);
+                allowedModulesIDs.Add(moduleId);
                 return true;
             }
         }
 
-        // What do we expect here? Just remove in future or present?
-        public bool UnloadModule(Module module)
+        /*// What do we expect here? Just remove in future or present?
+        public bool RemoveAllowedModule(int moduleId)
         {
-            lock (loadedModules)
+            ModuleDTO? module = moduleService.GetModuleById(moduleId);
+            lock (allowedModulesIDs)
             {
-                if (!loadedModules.Contains(module))
+                if (!allowedModulesIDs.Contains(moduleId))
                 {
-                    Log($"Module {module.Name} isn't loaded in lobby {LobbyId}.", LogLevelEnum.Warning);
+                    Log($"ModuleDTO {module?.Name} already isn't allowed in lobby {LobbyId}.", LogLevelEnum.Warning);
                     return false;
                 }
-                loadedModules.Remove(module);
+                allowedModulesIDs.Remove(moduleId);
                 return true;
             }
-        }
+        }*/
 
         // We should decide how we will handle creating and destroying world entities
         public bool AddWorldEntity(WorldEntity entity)
@@ -414,10 +453,10 @@ namespace Server.Core.Lobby
                     return false;
                 }
 
-                bool moduleLoaded = loadedModules.Any(m => m.ID == entity.ModuleID);
+                bool moduleLoaded = allowedModulesIDs.Any(id => (id == entity.ModuleID));
                 if (!moduleLoaded)
                 {
-                    Log($"Entity's {entity.Id} module is not loaded in lobby {LobbyId}.", LogLevelEnum.Warning);
+                    Log($"Entity's {entity.Id} module is not allowed in lobby {LobbyId}.", LogLevelEnum.Warning);
                     return false;
                 }
                 entities.Add(entity);

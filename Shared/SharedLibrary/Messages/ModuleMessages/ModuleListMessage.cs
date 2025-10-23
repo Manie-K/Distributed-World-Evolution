@@ -11,7 +11,7 @@ namespace SharedLibrary.Messages
         /// <inheritdoc/>
         public override MessageTypeEnum MessageType => MessageTypeEnum.ModuleList;
         /// <summary>
-        /// Module list.
+        /// ModuleDTO list.
         /// </summary>
         public IEnumerable<ModuleDTO> Modules { get; init; }
         /// <summary>

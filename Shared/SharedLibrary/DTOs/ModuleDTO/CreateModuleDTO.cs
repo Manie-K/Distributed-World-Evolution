@@ -5,22 +5,24 @@ namespace SharedLibrary.DTOs.ModuleDTO
     public class CreateModuleDTO
     {
         public string Name { get; init; }
-        public string Description { get; init; }
+        public bool Official { get; init; }
         public int Damage { get; private set; }
-        public int Aggresion { get; private set; }
+        public int Agression { get; private set; }
         public int ReproductionNeed { get; private set; }
-        public List<int> BehaviourIDs { get; init; }
         public EntityTypeEnum Type { get; init; }
+        public int GraphicalRepresentationID { get; set; }
+        public List<int> BehaviourIDs { get; init; }
 
-        public CreateModuleDTO(string name, string description, int damage, int aggresion, int reproductionNeed, List<int> behaviourIDs, EntityTypeEnum type)
+        public CreateModuleDTO(string name, bool official, int damage, int aggresion, int reproductionNeed, EntityTypeEnum type, int graphicsID, List<int> behaviourIDs)
         {
             Name = name;
-            Description = description;
+            Official = official;
             Damage = damage;
-            Aggresion = aggresion;
+            Agression = aggresion;
             ReproductionNeed = reproductionNeed;
-            BehaviourIDs = behaviourIDs;
             Type = type;
+            GraphicalRepresentationID = graphicsID;
+            BehaviourIDs = behaviourIDs;
         }
     }
 }

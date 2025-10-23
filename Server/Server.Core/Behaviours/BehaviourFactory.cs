@@ -1,16 +1,17 @@
 ﻿namespace Server.Core.Behaviours
 {
-    public partial class BehaviourService
+    public class BehaviourFactory 
     {
-        public class BehaviourFactory 
-        {
-            public static BehaviourFactory Instance = new BehaviourFactory();
+        public static BehaviourFactory Instance = new BehaviourFactory();
 
-            public IBehaviour CreateBehaviourOfType(Type type)
-            {
-                return Activator.CreateInstance(type) as IBehaviour ??
-                    throw new Exception($"Type {type.FullName} doesn't cast to IBehaviour");
-            }
+        private BehaviourFactory()
+        {
+        }
+
+        public IBehaviour CreateBehaviourOfType(Type type)
+        {
+            return Activator.CreateInstance(type) as IBehaviour ??
+                throw new Exception($"Type {type.FullName} doesn't cast to IBehaviour");
         }
     }
 }
