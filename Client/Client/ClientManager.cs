@@ -116,6 +116,19 @@ namespace Client
             }
         }
 
+        private readonly object playerGuidLock = new object();
+        private Guid playerGuid = Guid.Empty;
+        public Guid PlayerGuid
+        {
+            get
+            {
+                lock (playerGuidLock)
+                {
+                    return playerGuid;
+                }
+            }
+        }
+
         #endregion
 
         public ClientManager()
@@ -211,6 +224,10 @@ namespace Client
                 else if (message.MessageType == MessageTypeEnum.LobbyData)
                 {
                     LobbyDataMessage lobbyMessage = (LobbyDataMessage)message;
+                    lock (playerGuidLock)
+                    {
+                        playerGuid = lobbyMessage.UserEntityID;
+                    }
                     lock (lobbyDataLock)
                     {
                         lobbyData = lobbyMessage.Lobby;
