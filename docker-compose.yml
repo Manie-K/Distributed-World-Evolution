@@ -1,0 +1,32 @@
+services:
+  servercore:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: servercore
+    environment:
+      - OUTSIDE_PORT=8080
+      - MODULES_DATABASE_CONNECTION_STRING=Host=modulesdb;Database=modulesdb;Username=admin;Password=adminpassword
+    ports:
+      - "8080:5000" #TODO: Add env variable for port
+    restart: unless-stopped
+    depends_on:
+      - modules_db
+    networks:
+      - server-network
+  modules_db:
+    image: postgres:15
+    container_name: modulesdb
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=adminpassword
+      - POSTGRES_DB=modulesdb
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
+    networks:
+      - server-network
+
+networks:
+  server-network:
+    driver: bridge

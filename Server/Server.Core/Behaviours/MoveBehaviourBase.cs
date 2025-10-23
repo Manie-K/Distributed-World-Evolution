@@ -1,4 +1,5 @@
 ﻿using Server.Core.Helpers;
+using SharedLibrary.DTOs.ModuleDTO;
 using SharedLibrary.Helpers;
 
 namespace Server.Core.Behaviours
@@ -10,6 +11,9 @@ namespace Server.Core.Behaviours
 
         /// <inheritdoc/>
         public virtual EntityTypeEnum Type => EntityTypeEnum.Animal | EntityTypeEnum.Human;
+
+        /// <inheritdoc/>
+        public abstract string Description { get; }
 
 
         /// <inheritdoc/>
@@ -25,5 +29,11 @@ namespace Server.Core.Behaviours
         public abstract bool CanExecute(WorldEntity entity, WorldEntity target, Dictionary<string, object>? otherParams = null);
 
         public abstract (int, int) GetNextMovement(WorldEntity entity);
+
+        /// <inheritdoc/>
+        public BehviourDTO ToDTO()
+        {
+            return new BehviourDTO(this.DatabaseID, this.Description, this.Type);
+        }
     }
 }

@@ -18,7 +18,7 @@ namespace Server.UI.ViewModels
         {
             //TODO: change to config
             string serverIp = "127.0.0.1";
-            int port = 5000;
+            int port = 8080;
 
             _client = new TcpClient(serverIp, port);
 

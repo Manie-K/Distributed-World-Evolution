@@ -10,5 +10,6 @@ namespace Server.Core.Helpers
     {
         public static string MAP_PARAM = "Map";
         public static string NEW_POS_PARAM = "NewPosition";
+        public static string LOBBY_PARAM = "Lobby";
     }
 }

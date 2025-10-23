@@ -1,5 +1,6 @@
 ﻿using Server.Core.Exceptions;
-using Server.Core.Modules;
+using Server.Core.Services;
+using SharedLibrary.DTOs.ModuleDTO;
 
 namespace Server.Core.Behaviours
 {
@@ -9,7 +10,11 @@ namespace Server.Core.Behaviours
         public abstract int DatabaseID { get; }
 
         /// <inheritdoc/>
-        public virtual EntityTypeEnum Type => EntityTypeEnum.Human | EntityTypeEnum.Animal;
+        public virtual EntityTypeEnum Type => EntityTypeEnum.Human | EntityTypeEnum.Animal;        
+        
+        /// <inheritdoc/>
+        public abstract string Description { get; }
+
 
 
         /// <inheritdoc/>
@@ -28,5 +33,11 @@ namespace Server.Core.Behaviours
 
         /// <inheritdoc/>
         public abstract bool CanExecute(WorldEntity attacker, WorldEntity target, Dictionary<string, object>? otherParams = null);
+
+        /// <inheritdoc/>
+        public BehviourDTO ToDTO()
+        {
+            return new BehviourDTO(this.DatabaseID, this.Description, this.Type);
+        }
     }
 }
