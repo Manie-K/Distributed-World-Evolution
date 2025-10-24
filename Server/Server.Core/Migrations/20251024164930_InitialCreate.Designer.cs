@@ -11,7 +11,7 @@ using Server.Core.Data;
 namespace Server.Core.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20251019152941_InitialCreate")]
+    [Migration("20251024164930_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -74,6 +74,18 @@ namespace Server.Core.Migrations
                             Official = true,
                             ReproductionNeed = 5,
                             Type = 1
+                        },
+                        new
+                        {
+                            ID = -2,
+                            Agression = 7,
+                            BehaviourIDs = new[] { 3, 2, 69 },
+                            Damage = 3,
+                            GraphicalRepresentationID = 2,
+                            Name = "Default module",
+                            Official = true,
+                            ReproductionNeed = 4,
+                            Type = 2
                         });
                 });
 #pragma warning restore 612, 618
