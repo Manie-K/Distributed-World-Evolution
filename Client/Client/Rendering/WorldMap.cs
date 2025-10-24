@@ -15,9 +15,9 @@ namespace Client.Rendering
         /// </summary>
         /// <param name="filePath">The path to the JSON file containing the map data.</param>
         /// <returns>True if the map was loaded successfully; otherwise, false.</returns>
-        public bool InitMap(string filePath, ContentManager contentManager)
+        public bool InitMap(string filePath, int mapID, ContentManager contentManager)
         {
-            if (LoadMap(filePath))
+            if (LoadMap(filePath, mapID))
             {
                 tilesetTexture = contentManager.Load<Texture2D>(TexturePath);
 

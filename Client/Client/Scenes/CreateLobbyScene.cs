@@ -4,6 +4,7 @@ using Client.UI.MapSelection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using SharedLibrary;
 using SharedLibrary.DTOs.ModuleDTO;
 using SharedLibrary.Messages;
 using System;
@@ -225,8 +226,14 @@ namespace Client
                 {
                     if (!gameNameBox.CheckTextIfEmpty() && playerAmountBox.CheckText(32))
                     {
+                        Tilemap map = new Tilemap();
+                        if (!map.LoadMap($"Content/Maps/", mapData.index))
+                        {
+                            throw new Exception("Could not load the map " + Tilemap.GetMapFileName(mapData.index));
+                        }
                         IEnumerable<int> modules = switchPageLobby.GetSelectedModulesIDList();
-                        CreateLobbyMessage message = new CreateLobbyMessage(gameNameBox.GetText(), manager.UserSettings.PlayerName, int.Parse(playerAmountBox.GetText()), mapData.index, modules);
+                        CreateLobbyMessage message = new CreateLobbyMessage(gameNameBox.GetText(), manager.UserSettings.PlayerName,
+                            int.Parse(playerAmountBox.GetText()), mapData.index, modules, map.GetWalkableTiles());
                         _ = MessageManager.SendMessageAsync(manager.ClientManager.Client, message);
                         isCreatingLobby = true;
                         manager.ClientManager.LobbyCreated = ActionStatus.PENDING;
