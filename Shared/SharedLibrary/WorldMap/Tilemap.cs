@@ -23,7 +23,7 @@ namespace SharedLibrary
         /// </summary>
         public List<TileProperty>? TilesetData { get; set; }
         /// <summary>
-        /// 2D tile map representation
+        /// 2D tile map representation with tile ids
         /// </summary>
         public int[][]? Tiles { get; set; }
 
@@ -44,8 +44,10 @@ namespace SharedLibrary
         /// </summary>
         /// <param name="filePath">The path to the JSON file containing the map data.</param>
         /// <returns>True if the map was loaded successfully; otherwise, false.</returns>
-        public bool LoadMap(string filePath)
+        public bool LoadMap(string filePath, int mapID)
         {
+            filePath += GetMapFileName(mapID);
+
             try
             {
                 if (!File.Exists(filePath))
@@ -122,6 +124,34 @@ namespace SharedLibrary
                 return new Position2D(-1, -1);
 
             return new Position2D(tileX, tileY);
+        }
+
+        public bool[,] GetWalkableTiles()
+        {
+            if (Tiles == null || TilesetData == null) return new bool[1, 1] { { false } };
+
+            bool[,] walkableTiles = new bool[MapHeight, MapWidth];
+
+            for (int y = 0; y < MapHeight; y++)
+            {
+                for (int x = 0; x < MapWidth; x++)
+                {
+                    walkableTiles[y,x] = TilesetData.First(data => data.Id == Tiles[y][x]).Walkable;
+                }
+            }
+
+            return walkableTiles;
+        }
+
+        public static string GetMapFileName(int mapID)
+        {
+            string mapName = mapID switch
+            {
+                0 => "Grassland.json",
+                _ => "null.json",
+            };
+
+            return mapName;
         }
     }
 }

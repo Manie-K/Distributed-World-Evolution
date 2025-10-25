@@ -2,6 +2,7 @@
 using Client.Rendering;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SharedLibrary;
 using SharedLibrary.DTOs.EntitiesDTO;
 using SharedLibrary.Messages;
 using System;
@@ -34,9 +35,9 @@ namespace Client
             panelsController = new PanelsController(manager);
             cameraOffset = new Vector2(0, 70);
             map = new WorldMap();
-            if (!map.InitMap($"Content/Maps/{GetMapFileName(mapID)}", manager.ContentManager))
+            if (!map.InitMap($"Content/Maps/", mapID, manager.ContentManager))
             {
-                throw new Exception("Could not load the map " + GetMapFileName(mapID));
+                throw new Exception("Could not load the map " + Tilemap.GetMapFileName(mapID));
             }
             player = new Player(new Vector2(600, 200), Color.White, new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), 
                 manager.UserSettings.PlayerName, true, new Vector2(500, 300 - 110), 70, 40), ref this.animationTexturesLoader, new Vector2(-68, -77), map, manager.ClientManager);
@@ -170,17 +171,6 @@ namespace Client
                 ref this.animationTexturesLoader, new Vector2(-53, -50)),
                 _ => new EnemyPlant1(position, Color.White, ref this.animationTexturesLoader)
             });
-        }
-
-        private string GetMapFileName(int mapID)
-        {
-            string mapName = mapID switch
-            {
-                0 => "Grassland.json",
-                _ => "null.json",
-            };
-
-            return mapName;
         }
 
         private Vector2 GetWorldPosition(WorldEntityDTO entity)
