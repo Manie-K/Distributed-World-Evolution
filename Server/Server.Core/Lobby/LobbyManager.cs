@@ -22,7 +22,7 @@ namespace Server.Core.Lobby
         }
 
         //TODO: add modules when they are implemented
-        public int CreateAndInitialiseLobby(string name, int maxPlayers, int mapId, bool[,] walkableTiles, IEnumerable<int> modulesIDs)
+        public int CreateAndInitializeLobby(string name, int maxPlayers, int mapId, bool[,] walkableTiles, IEnumerable<int> modulesIDs)
         {
             int lobbyId;
             

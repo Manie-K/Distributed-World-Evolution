@@ -21,8 +21,11 @@ namespace Server.Core.Behaviours
 
             foreach (var implementation in implementations)
             {
-                int id = implementation.GetProperty("DatabaseID", BindingFlags.Public)?.GetValue(null) as int?
-                         ?? throw new Exception($"Behaviour {implementation.FullName} does not have a valid static DatabaseID.");
+                var instance = Activator.CreateInstance(implementation);
+                var id = (int?)implementation
+                    .GetProperty("DatabaseID", BindingFlags.Public | BindingFlags.Instance)?
+                    .GetValue(instance)
+                    ?? throw new Exception($"Behaviour {implementation.FullName} does not have a valid DatabaseID.");
 
                 types.Add(id, implementation);
             }
