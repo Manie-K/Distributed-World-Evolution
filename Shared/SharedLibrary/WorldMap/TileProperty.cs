@@ -8,6 +8,10 @@
         Water,
         Sand,
         Dirt,
+        DarkGrass,
+        Snow,
+        Bridge,
+        Null
     }
 
     public class TileProperty
