@@ -10,6 +10,10 @@ namespace Server.Core.Behaviours.Implementations
 
         public override string Description => "Basic reproduction behaviour that creates a child entity";
 
+        public BasicReproduceBehaviour()
+        {
+        }
+
         public override bool CanExecute(WorldEntity entity, WorldEntity target, Dictionary<string, object>? otherParams = null)
         {
             return target != null && entity.ModuleID == target.ModuleID && target != entity;

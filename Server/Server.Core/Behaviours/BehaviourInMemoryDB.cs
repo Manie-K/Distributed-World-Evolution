@@ -23,7 +23,7 @@ namespace Server.Core.Behaviours
             {
                 try
                 {
-                    IBehaviour behaviourInstance = BehaviourFactory.Instance.CreateBehaviourOfType(implementation.GetType());
+                    IBehaviour behaviourInstance = BehaviourFactory.Instance.CreateBehaviourOfType(implementation);
                     int id = (int?)implementation
                         .GetProperty("DatabaseID", BindingFlags.Public | BindingFlags.Instance)?
                         .GetValue(behaviourInstance)
