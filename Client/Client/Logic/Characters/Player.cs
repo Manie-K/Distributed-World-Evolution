@@ -17,11 +17,11 @@ namespace Client
         private readonly WorldMap map;
         private readonly ClientManager clientManager;
 
-        public Player(Vector2 position, Color color, Text playerName, ref AnimationTexturesLoader ATL, WorldMap map = null, ClientManager clientManager = null)
-            : base(position, color, 140, 108, 150f, ref ATL, 0, new Vector2(-68, -77))
+        public Player(Vector2 position, Color color, Text playerName, ref AnimationTexturesLoader ATL, Vector2 spriteDrawingOffset, WorldMap map = null, ClientManager clientManager = null)
+            : base(position, color, 140, 108, 150f, ref ATL, 0, spriteDrawingOffset)
         {
             this.playerName = playerName;
-            playerNameOffset = new Vector2(-33, -80);
+            playerNameOffset = new Vector2(35 + spriteDrawingOffset.X, -3 + spriteDrawingOffset.Y);
             this.map = map;
             this.clientManager = clientManager;
             TargetEntity = null;

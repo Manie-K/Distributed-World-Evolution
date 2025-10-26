@@ -10,24 +10,27 @@ namespace SharedLibrary.Messages
     {
         /// <inheritdoc/>
         public override MessageTypeEnum MessageType => MessageTypeEnum.CreateModule;
+
         /// <summary>
-        /// Module information to be created.
+        /// ModuleDTO information to be created.
         /// </summary>
-        public ModuleDTO Module { get; init; }
+        public CreateModuleDTO ModuleDTO { get; init; }
+
         /// <summary>
         /// Constructor for CreateModuleMessage.
         /// </summary>
-        public CreateModuleMessage(ModuleDTO module)
+        public CreateModuleMessage(CreateModuleDTO module)
         {
-            Module = module;
+            ModuleDTO = module;
         }
+
         /// <inheritdoc/>
         public override string BuildJson()
         {
             var payload = new
             {
                 MessageType = this.MessageType,
-                Module = this.Module
+                ModuleDTO = this.ModuleDTO
             };
 
             return JsonSerializer.Serialize(payload);

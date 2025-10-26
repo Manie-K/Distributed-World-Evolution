@@ -4,9 +4,11 @@ namespace Server.Core.Behaviours
 {
     public class BehaviourInMemoryDB
     {
+        public static BehaviourInMemoryDB Instance = new BehaviourInMemoryDB();
+
         private readonly Dictionary<int, Type> types;
 
-        public BehaviourInMemoryDB()
+        private BehaviourInMemoryDB()
         {
             // Initialize the in-memory database with all behaviour types.
             types = new Dictionary<int, Type>();
@@ -19,10 +21,20 @@ namespace Server.Core.Behaviours
 
             foreach (var implementation in implementations)
             {
-                int id = implementation.GetProperty("DatabaseID", BindingFlags.Public)?.GetValue(null) as int?
-                         ?? throw new Exception($"Behaviour {implementation.FullName} does not have a valid static DatabaseID.");
+                try
+                {
+                    IBehaviour behaviourInstance = BehaviourFactory.Instance.CreateBehaviourOfType(implementation.GetType());
+                    int id = (int?)implementation
+                        .GetProperty("DatabaseID", BindingFlags.Public | BindingFlags.Instance)?
+                        .GetValue(behaviourInstance)
+                        ?? throw new Exception($"Behaviour {implementation.FullName} does not have a valid DatabaseID.");
 
-                types.Add(id, implementation);
+                    types.Add(id, implementation);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error initializing behaviour type {implementation.FullName}: {ex.Message}");
+                }
             }
         }
 
@@ -30,6 +42,11 @@ namespace Server.Core.Behaviours
         {
             types.TryGetValue(id, out Type? value);
             return value;
+        }
+
+        public List<Type> GetAllTypes() 
+        {
+            return types.Values.ToList();
         }
     }
 }

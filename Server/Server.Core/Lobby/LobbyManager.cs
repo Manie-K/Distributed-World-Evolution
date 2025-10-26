@@ -1,6 +1,7 @@
 ﻿using Server.Core.Behaviours;
 using Server.Core.Exceptions;
 using Server.Core.Modules;
+using Server.Core.Services;
 using SharedLibrary;
 using SharedLibrary.Logging;
 using System.Net.Sockets;
@@ -21,29 +22,29 @@ namespace Server.Core.Lobby
         }
 
         //TODO: add modules when they are implemented
-        public int CreateAndInitialiseLobby(string name, int maxPlayers, int mapId, IEnumerable<int> modulesIDs)
+        public int CreateAndInitializeLobby(string name, int maxPlayers, int mapId, bool[,] walkableTiles, IEnumerable<int> modulesIDs)
         {
             int lobbyId;
             
             lock (lobbies)
             {
                 lobbyId = lobbyCounter++;
-                lobbies[lobbyId] = Lobby.CreateLobby(lobbyId, name, maxPlayers, mapId, modulesIDs, new ModuleService(new BehaviourService()));
+                lobbies[lobbyId] = Lobby.CreateLobby(lobbyId, name, maxPlayers, mapId, walkableTiles, modulesIDs, ModuleService.Instance);
                 Task.Factory.StartNew(() => lobbies[lobbyId].Run(), TaskCreationOptions.LongRunning);
             }
 
             return lobbyId;
         }
 
-        public bool AddUserToLobby(int lobbyId, TcpClient client)
+        public bool AddUserToLobby(int lobbyId, TcpClient client, string username, out Guid userEntityID)
         {
+            userEntityID = Guid.Empty;
             if (lobbies.TryGetValue(lobbyId, out ILobby? lobby))
             {
                 if(lobby is not null)
                 {
-                    lobby.AddClient(client);
+                    userEntityID = lobby.AddClient(client, username);
                     Log($"Client added to lobby {lobbyId}.", LogLevelEnum.Info);
-
                     return true;
                 }
                 else

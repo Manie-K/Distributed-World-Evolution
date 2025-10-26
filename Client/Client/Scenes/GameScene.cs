@@ -2,6 +2,7 @@
 using Client.Rendering;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using SharedLibrary;
 using SharedLibrary.DTOs.EntitiesDTO;
 using SharedLibrary.Messages;
 using System;
@@ -34,20 +35,18 @@ namespace Client
             panelsController = new PanelsController(manager);
             cameraOffset = new Vector2(0, 70);
             map = new WorldMap();
-            if (!map.InitMap($"Content/Maps/{GetMapFileName(mapID)}", manager.ContentManager))
+            if (!map.InitMap($"Content/Maps/", mapID, manager.ContentManager))
             {
-                throw new Exception("Could not load the map " + GetMapFileName(mapID));
+                throw new Exception("Could not load the map " + Tilemap.GetMapFileName(mapID));
             }
             player = new Player(new Vector2(600, 200), Color.White, new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), 
-                manager.UserSettings.PlayerName, true, new Vector2(500, 300 - 110), 70, 40), ref this.animationTexturesLoader, map, manager.ClientManager);
+                manager.UserSettings.PlayerName, true, new Vector2(500, 300 - 110), 70, 40), ref this.animationTexturesLoader, new Vector2(-68, -77), map, manager.ClientManager);
+            playerDTO = null;
 
             manager.Camera.MapSize = new System.Drawing.Size(map.MapWidth * map.TileSize, map.MapHeight * map.TileSize);
             manager.IsInGame = true;
             clientUpdateTimer = 0;
             timeBetweenUpdates = 1.0 / ClientManager.CLIENT_UPDATES_PER_SECOND;
-
-            EntityStateDTO playerStateDTO = new EntityStateDTO(map.GetTilePosition2D(player.Position.X, player.Position.Y), 100, 100, 0);
-            playerDTO = new WorldEntityDTO(manager.UserSettings.PlayerName, new Guid("3f2504e0-4f89-11d3-9a0c-0305e82c3301"), playerStateDTO, 0);
         }
 
         public void Load()
@@ -62,11 +61,11 @@ namespace Client
             IReadOnlyDictionary<Guid, WorldEntityDTO> entities = manager.ClientManager.Entities;
             Dictionary<Guid, Character> newCharacterList = [];
 
-            foreach (Character character in characters.Values)
+            foreach (Guid guid in characters.Keys)
             {
-                if (entities.ContainsKey(character.Id))
+                if (entities.ContainsKey(guid))
                 {
-                    newCharacterList.Add(character.Id, character);
+                    newCharacterList.Add(guid, characters[guid]);
                 }
             }
 
@@ -74,6 +73,12 @@ namespace Client
 
             foreach (WorldEntityDTO entity in entities.Values)
             {
+                if (entity.Id.Equals(manager.ClientManager.PlayerGuid))
+                {
+                    playerDTO ??= entity;
+                    continue;
+                }
+
                 if (characters.TryGetValue(entity.Id, out Character character))
                 {
                     //character.Update(gameTime, manager.InputManager);
@@ -90,7 +95,7 @@ namespace Client
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             clientUpdateTimer += delta;
 
-            if (clientUpdateTimer >= timeBetweenUpdates)
+            if (clientUpdateTimer >= timeBetweenUpdates && playerDTO != null)
             {
                 playerDTO.State.Position = map.GetTilePosition2D(player.Position.X, player.Position.Y);
                 UserInteractionMessage message = new UserInteractionMessage(playerDTO, player.TargetEntity);
@@ -162,6 +167,8 @@ namespace Client
                 13 => new Vampire1(position, Color.White, ref this.animationTexturesLoader),
                 14 => new Vampire2(position, Color.White, ref this.animationTexturesLoader),
                 15 => new Vampire3(position, Color.White, ref this.animationTexturesLoader),
+                16 => new Player(position, Color.White, new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), entity.Name, true, new Vector2(500, 300 - 110), 70, 40), 
+                ref this.animationTexturesLoader, new Vector2(-53, -50)),
                 _ => new EnemyPlant1(position, Color.White, ref this.animationTexturesLoader)
             });
         }

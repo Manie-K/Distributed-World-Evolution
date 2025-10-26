@@ -1,31 +1,30 @@
-﻿using System;
-using Server.Core.Behaviours;
+﻿using Server.Core.Behaviours;
 using Server.Core.Exceptions;
 using Server.Core.Helpers;
+using SharedLibrary.DTOs.ModuleDTO;
 
 namespace Server.Core.Modules
 {
     public class Module
     {
         // We should try to place non-dynamic data here. All the dynamic data will be stored in WorldEntity object instances.
-        public int ID { get; init; } // TODO: Replace with a proper ID system
+
         public bool Official { get; init; }
         public string Name { get; init; }
         public int Damage { get; private set; }
-        public int Aggresion { get; private set; }
+        public int Agression { get; private set; }
         public int ReproductionNeed { get; private set; }
         public EntityTypeEnum Type { get; init; }
-        public int GraphicalRepresentationID { get; set; } // This will be used to link to graphical representation in future.
+        public int GraphicalRepresentationID { get; private set; }
 
         private readonly Dictionary<Type, IBehaviour> behaviours;
 
         private Module(string name, bool official, int damage, int aggresion, int reproductionNeed, EntityTypeEnum type, int graphicsId)
         {
-            ID = new Random().Next(1, int.MaxValue);
             Name = name;
             Official = official;
             Damage = damage;
-            Aggresion = aggresion;
+            Agression = aggresion;
             ReproductionNeed = reproductionNeed;
             Type = type;
             behaviours = new Dictionary<Type, IBehaviour>();
@@ -40,7 +39,7 @@ namespace Server.Core.Modules
             {
                 throw new ArgumentException("Behaviour must extend an abstract base class.");
             }
-            
+
             if (behaviours.ContainsKey(type))
             {
                 throw new ArgumentException($"Behaviour of type {type.Name} already added to module.");
@@ -51,7 +50,7 @@ namespace Server.Core.Modules
 
         public IBehaviour GetBehaviourOfType(Type type)
         {
-            if(!type.IsInterface || typeof(IBehaviour).IsAssignableFrom(type))
+            if (!type.IsInterface || typeof(IBehaviour).IsAssignableFrom(type))
             {
                 throw new ArgumentException("Type must be an interface that extends IBehaviour.");
             }
@@ -60,6 +59,10 @@ namespace Server.Core.Modules
             return found ?? throw new BehaviourImplementationNotFoundException();
         }
 
+        public ModuleDTO ToDTO()
+        {
+            return new ModuleDTO(0, Name, Official, Damage, Agression, ReproductionNeed, null, Type, GraphicalRepresentationID);
+        }
 
         #region BUILDER
 
@@ -70,18 +73,19 @@ namespace Server.Core.Modules
             private int damage;
             private int aggresion;
             private int reproductionNeed;
-            private List<IBehaviour> behaviours;
+            private readonly List<IBehaviour> behaviours;
             private EntityTypeEnum type;
             private int graphicsId;
 
             public ModuleBuilder()
             {
-                name = "Default Module";
+                name = "Default ModuleDTO";
                 official = false;
                 damage = 0;
                 aggresion = 0;
                 reproductionNeed = 0;
                 behaviours = new List<IBehaviour>();
+                type = EntityTypeEnum.Animal;
                 graphicsId = 0;
             }
 
@@ -118,7 +122,7 @@ namespace Server.Core.Modules
                 this.damage = damage;
                 return this;
             }
-            public ModuleBuilder WithAggresion(int aggresion)
+            public ModuleBuilder WithAgression(int aggresion)
             {
                 this.aggresion = aggresion;
                 return this;

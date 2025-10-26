@@ -1,4 +1,6 @@
 ﻿
+using SharedLibrary.DTOs.ModuleDTO;
+
 namespace Server.Core.Behaviours
 {
     public abstract class GatherBehaviourBase : IBehaviour
@@ -9,11 +11,20 @@ namespace Server.Core.Behaviours
         /// <inheritdoc/>
         public virtual EntityTypeEnum Type => EntityTypeEnum.Human;
 
+        /// <inheritdoc/>
+        public abstract string Description { get; }
+
 
         /// <inheritdoc/>
         public abstract void Execute(WorldEntity entity, WorldEntity target, Dictionary<string, object>? otherParams = null);
 
         /// <inheritdoc/>
         public abstract bool CanExecute(WorldEntity entity, WorldEntity target, Dictionary<string, object>? otherParams = null);
+
+        /// <inheritdoc/>
+        public BehviourDTO ToDTO()
+        {
+            return new BehviourDTO(this.DatabaseID, this.Description, this.Type);
+        }
     }
 }

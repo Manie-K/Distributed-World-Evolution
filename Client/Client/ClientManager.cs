@@ -116,6 +116,19 @@ namespace Client
             }
         }
 
+        private readonly object playerGuidLock = new object();
+        private Guid playerGuid = Guid.Empty;
+        public Guid PlayerGuid
+        {
+            get
+            {
+                lock (playerGuidLock)
+                {
+                    return playerGuid;
+                }
+            }
+        }
+
         #endregion
 
         public ClientManager()
@@ -125,7 +138,7 @@ namespace Client
             lobbyListReady = ActionStatus.IDLE;
             moduleListReady = ActionStatus.IDLE;
             serverIp = "127.0.0.1";
-            port = 5000;
+            port = 8080;
         }
 
         public void StartClient()
@@ -211,6 +224,10 @@ namespace Client
                 else if (message.MessageType == MessageTypeEnum.LobbyData)
                 {
                     LobbyDataMessage lobbyMessage = (LobbyDataMessage)message;
+                    lock (playerGuidLock)
+                    {
+                        playerGuid = lobbyMessage.UserEntityID;
+                    }
                     lock (lobbyDataLock)
                     {
                         lobbyData = lobbyMessage.Lobby;

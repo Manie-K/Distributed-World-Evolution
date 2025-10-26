@@ -8,7 +8,7 @@ using System.Collections.Concurrent;
 using System.Drawing;
 using System.Net;
 using System.Net.Sockets;
-using System.Xml.Linq;
+using Microsoft.Extensions.Configuration;
 
 namespace Server.Core
 {
@@ -23,7 +23,7 @@ namespace Server.Core
 
         private TcpClient clientUI;
 
-        private ConcurrentQueue<LogMessage> logQueue = new ConcurrentQueue<LogMessage>();
+        private readonly ConcurrentQueue<LogMessage> logQueue = new ConcurrentQueue<LogMessage>();
 
         private Server()
         {
@@ -35,14 +35,21 @@ namespace Server.Core
 
         public void Start(string[] args)
         {
-            //TODO: change to config
-            TcpListener listener = new TcpListener(IPAddress.Any, 5000);
-            ////
+            var config = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .Build();
+
+            string host = config["TcpSettings:Host"];
+            int port = int.Parse(config["TcpSettings:Port"]);
+
+            IPAddress address = host == "0.0.0.0" ? IPAddress.Any : IPAddress.Parse(host);
+
+            TcpListener listener = new TcpListener(address, port);
             listener.Start();
 
             Log("Server started...", LogLevelEnum.Info);
             //TODO: remove hardcoded lobby
-            lobbyManager.CreateAndInitialiseLobby("TEST", 2, 1, [] );
+            lobbyManager.CreateAndInitializeLobby("TEST", 2, 1, new bool[1,1], []);
             ////
 
             while (true)
@@ -101,26 +108,9 @@ namespace Server.Core
             {
                 MessageBase message = await MessageManager.ReceiveMessageAsync(client);
 
-                //TODO: removed hardcoded modules and lobbies
-                var modules = new List<ModuleDTO>();
-                modules.Add(new ModuleDTO
-                    (
-                        1,
-                        "Test Module",
-                        true,
-                        10,
-                        10,
-                        10,
-                        new List<BehviourDTO>{
-                                        new BehviourDTO (1, "This is a test behaviour.", EntityTypeEnum.Animal)
-                        },
-                        EntityTypeEnum.Animal,
-                        1
-                    )
-                );
-
+                //TODO: Remove
                 var lobbies = new List<LobbyDTO>();
-                var lobby = new LobbyDTO(1, "Test Lobby", 10, 1, 1, modules);
+                var lobby = new LobbyDTO(1, "Test Lobby", 10, 1, 1, null);
                 lobbies.Add(lobby);
 
 
@@ -128,21 +118,21 @@ namespace Server.Core
                 if (message.MessageType == MessageTypeEnum.CreateLobby)
                 {
                     CreateLobbyMessage createLobbyMessage = (CreateLobbyMessage)message;
-                    int lobbyID = lobbyManager.CreateAndInitialiseLobby(createLobbyMessage.LobbyName, createLobbyMessage.MaxPlayers,
-                        createLobbyMessage.MapID, createLobbyMessage.ModuleIDs);
+                    int lobbyID = lobbyManager.CreateAndInitializeLobby(createLobbyMessage.LobbyName, createLobbyMessage.MaxPlayers,
+                        createLobbyMessage.MapID, createLobbyMessage.WalkableTiles, createLobbyMessage.ModuleIDs);
 
                     try
                     {
-                        lobbyManager.AddUserToLobby(lobbyID, client);
+                        lobbyManager.AddUserToLobby(lobbyID, client, createLobbyMessage.UserName, out Guid userEntityID);
 
                         await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyCreated, "New lobby created!"));
-                        await MessageManager.SendMessageAsync(client, new LobbyDataMessage(lobby));
+                        await MessageManager.SendMessageAsync(client, new LobbyDataMessage(lobby, userEntityID));
                         await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyJoined, "Welcome to the new lobby!"));
                     }
                     catch (Exception ex)
                     {
                         Log(ex.Message, LogLevelEnum.Error);
-                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotCreated, "New lobby not created."));
+                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotCreated, "New lobby NOT created."));
                     }
                 }
 
@@ -153,8 +143,9 @@ namespace Server.Core
 
                     try
                     {
-                        lobbyManager.AddUserToLobby(joinLobbyMessage.LobbyID, client);
-                        await MessageManager.SendMessageAsync(client, new LobbyDataMessage(lobby));
+                        lobbyManager.AddUserToLobby(joinLobbyMessage.LobbyID, client, joinLobbyMessage.UserName, out Guid userEntityID);
+
+                        await MessageManager.SendMessageAsync(client, new LobbyDataMessage(lobby, userEntityID));
                         await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyJoined, "Welcome to lobby!"));
                     }
                     catch (Exception ex)
@@ -204,7 +195,8 @@ namespace Server.Core
                         case GetMessageTypeEnum.ModuleList:
                             try
                             {
-                                await MessageManager.SendMessageAsync(client, new ModuleListMessage(modules));
+                                List<ModuleDTO> moduleDTOs = Services.ModuleService.Instance.GetAllModules().Select(m => m.ToDTO()).ToList();
+                                await MessageManager.SendMessageAsync(client, new ModuleListMessage(moduleDTOs));
                             }
                             catch (Exception ex)
                             {
@@ -215,12 +207,10 @@ namespace Server.Core
                             break;
 
                         case GetMessageTypeEnum.BehaviourList:
-                            var behaviors = new List<BehviourDTO>();
-                            //var behaviors = behaviourService.GetAllBehaviours().ToList().ToDTO();
-
                             try
                             {
-                                await MessageManager.SendMessageAsync(client, new BehaviourListMessage(behaviors));
+                                var behaviorDTOs = Services.BehaviourService.Instance.GetAllBehaviours().Select(b => b.ToDTO()).ToList();
+                                await MessageManager.SendMessageAsync(client, new BehaviourListMessage(behaviorDTOs));
                             }
                             catch (Exception ex)
                             {
@@ -245,16 +235,16 @@ namespace Server.Core
                     try
                     {
                         //TODO: implement module creation
-                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.ModuleNotCreated, "Module creation not implemented."));
+                        Services.ModuleService.Instance.CreateModule(createModuleMessage.ModuleDTO);
+                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.ModuleNotCreated, "ModuleDTO creation not implemented.")); //TODO: @FranciszekGwarek change this
                     }
                     catch (Exception ex)
                     {
                         Log(ex.Message, LogLevelEnum.Error);
-                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.ModuleNotCreated, "Module creation error. Try again."));
+                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.ModuleNotCreated, "ModuleDTO creation error. Try again."));
                     }
 
                 }
-
 
                 //Forwarding message to lobby
                 else
