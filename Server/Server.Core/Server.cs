@@ -1,5 +1,4 @@
 ﻿using Server.Core.Lobby;
-using Server.Core.Modules;
 using SharedLibrary.DTOs.LobbyDTO;
 using SharedLibrary.DTOs.ModuleDTO;
 using SharedLibrary.Logging;
@@ -9,7 +8,7 @@ using System.Collections.Concurrent;
 using System.Drawing;
 using System.Net;
 using System.Net.Sockets;
-using System.Xml.Linq;
+using Microsoft.Extensions.Configuration;
 
 namespace Server.Core
 {
@@ -36,14 +35,21 @@ namespace Server.Core
 
         public void Start(string[] args)
         {
-            //TODO: change to config
-            TcpListener listener = new TcpListener(IPAddress.Any, 5000);
-            ////
+            var config = new ConfigurationBuilder()
+                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+                .Build();
+
+            string host = config["TcpSettings:Host"];
+            int port = int.Parse(config["TcpSettings:Port"]);
+
+            IPAddress address = host == "0.0.0.0" ? IPAddress.Any : IPAddress.Parse(host);
+
+            TcpListener listener = new TcpListener(address, port);
             listener.Start();
 
             Log("Server started...", LogLevelEnum.Info);
             //TODO: remove hardcoded lobby
-            lobbyManager.CreateAndInitialiseLobby("TEST", 2, 1, new bool[1,1], []);
+            lobbyManager.CreateAndInitializeLobby("TEST", 2, 1, new bool[1,1], []);
             ////
 
             while (true)
@@ -112,7 +118,7 @@ namespace Server.Core
                 if (message.MessageType == MessageTypeEnum.CreateLobby)
                 {
                     CreateLobbyMessage createLobbyMessage = (CreateLobbyMessage)message;
-                    int lobbyID = lobbyManager.CreateAndInitialiseLobby(createLobbyMessage.LobbyName, createLobbyMessage.MaxPlayers,
+                    int lobbyID = lobbyManager.CreateAndInitializeLobby(createLobbyMessage.LobbyName, createLobbyMessage.MaxPlayers,
                         createLobbyMessage.MapID, createLobbyMessage.WalkableTiles, createLobbyMessage.ModuleIDs);
 
                     try
@@ -195,7 +201,7 @@ namespace Server.Core
                             catch (Exception ex)
                             {
                                 Log(ex.Message, LogLevelEnum.Error);
-                                await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "ModuleDTO list error. Try again."));
+                                await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "Module list error. Try again."));
                                 client.Close();
                             }
                             break;
