@@ -21,13 +21,20 @@ namespace Server.Core.Behaviours
 
             foreach (var implementation in implementations)
             {
-                var instance = Activator.CreateInstance(implementation);
-                var id = (int?)implementation
-                    .GetProperty("DatabaseID", BindingFlags.Public | BindingFlags.Instance)?
-                    .GetValue(instance)
-                    ?? throw new Exception($"Behaviour {implementation.FullName} does not have a valid DatabaseID.");
+                try
+                {
+                    IBehaviour behaviourInstance = BehaviourFactory.Instance.CreateBehaviourOfType(implementation.GetType());
+                    int id = (int?)implementation
+                        .GetProperty("DatabaseID", BindingFlags.Public | BindingFlags.Instance)?
+                        .GetValue(behaviourInstance)
+                        ?? throw new Exception($"Behaviour {implementation.FullName} does not have a valid DatabaseID.");
 
-                types.Add(id, implementation);
+                    types.Add(id, implementation);
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error initializing behaviour type {implementation.FullName}: {ex.Message}");
+                }
             }
         }
 
