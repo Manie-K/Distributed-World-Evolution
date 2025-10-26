@@ -1,13 +1,14 @@
 ﻿using System.Net.Sockets;
 using SharedLibrary.Messages;
 using SharedLibrary;
+using SharedLibrary.Messages.BehaviourMessages;
 
 class Client
 {
     static void Main()
     {
         string serverIp = "127.0.0.1";
-        int port = 5000;
+        int port = 8080;
 
         try
         {
