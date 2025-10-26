@@ -173,19 +173,6 @@ namespace Client
             });
         }
 
-        private string GetMapFileName(int mapID)
-        {
-            string mapName = mapID switch
-            {
-                0 => "Grassland.json",
-                1 => "Standard.json",
-                2 => "TwoBridges.json",
-                _ => "null.json",
-            };
-
-            return mapName;
-        }
-
         private Vector2 GetWorldPosition(WorldEntityDTO entity)
         {
             return new Vector2(entity.State.Position.X * map.TileSize, entity.State.Position.Y * map.TileSize);

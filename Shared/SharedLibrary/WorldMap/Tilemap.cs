@@ -148,6 +148,8 @@ namespace SharedLibrary
             string mapName = mapID switch
             {
                 0 => "Grassland.json",
+                1 => "Standard.json",
+                2 => "TwoBridges.json",
                 _ => "null.json",
             };
 
