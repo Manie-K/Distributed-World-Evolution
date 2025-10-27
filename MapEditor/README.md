@@ -27,3 +27,31 @@ Palette on the right – clicking sets selected paint tile
 - Set `SAVE_FILENAME` and `LOAD_FILENAME` - those files are also stored in the root folder next to this script
 - Start the editor `python map_editor.py` (run it inside the script directory!)
 - After finished and saved work, copy the content of the save file into the `Tiles` array in your map.json
+
+## Adding a new map to the client
+The structure of a json map is as follows:
+
+`Name` - name of the map
+
+`TexturePath` - path to the tileset texture, with the root being the `Content` folder
+
+`TileSize` - size in pixels of a single tile from the tileset texture
+
+`TilesetTextureWidth` - total width in pixels of the tileset texture
+
+`TilesetTextureHeight` - total height in pixels of the tileset texture
+
+`MapWidth` - desired total map width, in number of tiles
+
+`MapHeight` - desired total map height, in number of tiles
+
+`TilesetData` - data about each tile in the tileset texture; contains `id` of a tile (starting from 0, at the top-left of the texture), `Type` from the TileProperty.cs enum (you can add new ones if needed), and `Walkable` which is set to true if entities can walk on the given tile
+
+`Tiles` - 2D array of tile ids representing playable map
+
+When the map json is ready:
+- Place it inside `SharedLibrary/WorldMap/Maps`, set the file parameter `CopyToOutputDirectory` to `PreserveNewest`
+- Add a file link reference inside `Client/Content/Maps` to your json file, set the file parameter `CopyToOutputDirectory` to `PreserveNewest`
+- Add the tileset texture to `Client/Content/Maps/Tiles` and include the new image using `Content.mgcb`
+- In the client, add a new option in the `InitializeRows` function in `SwitchPageMapSelection.cs`
+- In the shared library, add a new case in the `GetMapFileName` function in `Tilemap.cs`, the string must match the json filename
