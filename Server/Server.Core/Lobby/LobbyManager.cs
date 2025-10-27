@@ -79,6 +79,22 @@ namespace Server.Core.Lobby
             return false;
         }
 
+        public Lobby GetLobby(int lobbyId)
+        {
+            if (lobbies.TryGetValue(lobbyId, out ILobby? lobby))
+            {
+                if (lobby is not null)
+                {
+                    return (Lobby)lobby;
+                }
+                else
+                {
+                    throw new NullLobbyException($"Lobby with ID {lobbyId} does not exist or is null.");
+                }
+            }
+            throw new NullLobbyException($"Lobby with ID {lobbyId} does not exist.");
+        }
+
         private void Log(Exception ex, LogLevelEnum level)
         {
             Log(ex.Message, level);

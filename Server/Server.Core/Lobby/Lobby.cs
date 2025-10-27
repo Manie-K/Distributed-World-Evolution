@@ -8,6 +8,7 @@ using SharedLibrary.DTOs.EntitiesDTO;
 using Server.Core.Behaviours;
 using Server.Core.Helpers;
 using Server.Core.Services;
+using SharedLibrary.DTOs.LobbyDTO;
 
 namespace Server.Core.Lobby
 {
@@ -476,6 +477,19 @@ namespace Server.Core.Lobby
                 entities.Remove(entity);
                 return true;
             }
+        }
+
+        public LobbyDTO ToDTO()
+        {
+            return new LobbyDTO
+            (
+                LobbyId,
+                Name,
+                MaxPlayers,
+                currentPlayers: clients.Count,
+                MapID,
+                allowedModulesIDs
+            );
         }
 
         #endregion

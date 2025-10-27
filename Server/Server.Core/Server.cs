@@ -1,6 +1,6 @@
 ﻿using Server.Core.Lobby;
 using SharedLibrary.DTOs.LobbyDTO;
-using SharedLibrary.DTOs.ModuleDTO;
+using Server.Core.Services;
 using SharedLibrary.Logging;
 using SharedLibrary.Messages;
 using SharedLibrary.Messages.BehaviourMessages;
@@ -12,281 +12,300 @@ using Microsoft.Extensions.Configuration;
 
 namespace Server.Core
 {
+    /// <summary>
+    /// Singleton class representing the server
+    /// </summary>
     public class Server 
     {
-        private static readonly Lazy<Server> _instance = new Lazy<Server>(() => new Server());
-        public static Server Instance => _instance.Value;
-
-        public readonly LobbyManager lobbyManager;
-
+        //TODO: dependency injection
+        /// <summary>
+        /// Singleton instance of the Server class
+        /// </summary>
+        public static Server Instance = new Server();
+        /// <summary>
+        /// Lobby manager instance
+        /// </summary>
+        private readonly LobbyManager lobbyManager =  new LobbyManager();
+        /// <summary>
+        /// OnMessageFromClientReceived event
+        /// </summary>
         public static event Action<OnMessageFromClientEventArgs>? OnMessageFromClientReceived;
-
-        private TcpClient clientUI;
-
-        private readonly ConcurrentQueue<LogMessage> logQueue = new ConcurrentQueue<LogMessage>();
-
+        /// <summary>
+        /// Logger service instance
+        /// </summary>
+        private LoggerService loggerService = new LoggerService();
+        /// <summary>
+        /// Constructor for the Server class
+        /// </summary>
         private Server()
         {
-            lobbyManager = new LobbyManager();
-
             lobbyManager.OnLog += OnLog_Delegate;
             Lobby.Lobby.OnLog += OnLog_Delegate;
         }
+        /// <summary>
+        /// Starts the server
+        /// </summary>
+        public async Task StartAsync(string[] args)
+        {
+            loggerService.Log("Server started...", LogLevelEnum.Info);
 
-        public void Start(string[] args)
+            //TODO: remove hardcoded lobby
+            lobbyManager.CreateAndInitializeLobby("TEST", 2, 1, new bool[1, 1], []);
+
+            await StartAcceptingClientsAsync();
+        }
+
+        #region Client Handling
+
+        private async Task StartAcceptingClientsAsync()
         {
             var config = new ConfigurationBuilder()
-                .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-                .Build();
+              .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+              .Build();
 
-            string host = config["TcpSettings:Host"];
-            int port = int.Parse(config["TcpSettings:Port"]);
+            string host = config["TcpSettings:Host"]!;
+            int port = int.Parse(config["TcpSettings:Port"]!);
 
             IPAddress address = host == "0.0.0.0" ? IPAddress.Any : IPAddress.Parse(host);
 
             TcpListener listener = new TcpListener(address, port);
             listener.Start();
 
-            Log("Server started...", LogLevelEnum.Info);
-            //TODO: remove hardcoded lobby
-            lobbyManager.CreateAndInitializeLobby("TEST", 2, 1, new bool[1,1], []);
-            ////
-
             while (true)
             {
-                TcpClient client = listener.AcceptTcpClient();
-                _ = WaitForRoleMessageAsync(client);
+                TcpClient client = await listener.AcceptTcpClientAsync();
+                _ = HandleClientAsync(client);
             }
         }
-
-        private async Task WaitForRoleMessageAsync(TcpClient client)
+        
+        private async Task HandleClientAsync(TcpClient client)
         {
             try
             {
                 MessageBase message = await MessageManager.ReceiveMessageAsync(client);
-                if (message is RoleMessage)
+
+                if (message is not RoleMessage roleMessage)
                 {
-                    RoleMessage roleMessage = (RoleMessage)message;
-                    if (roleMessage.Role == RoleEnum.User)
-                    {
-                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.ServerConnected ,"Welcome to the server!"));
-                    }
-                    else
-                    {
-                        clientUI = client;
-
-                        while (logQueue.TryDequeue(out var log))
-                        {
-                            _ = MessageManager.SendMessageAsync(clientUI, log);
-                        }
-
-                        Log("Server working...", LogLevelEnum.Info);
-                    }
-
-                    Log("New client joined server - " + roleMessage.Role.ToString(), LogLevelEnum.Info);
-
-                    await HandleUserConnectionAsync(client);
-                }
-                else
-                {
-                    await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.Warning , "Unknown client role."));
-                    client.Close();
+                    await SendAndCloseAsync(client, new InfoMessage(InfoMessageTypeEnum.Warning, "Unknown client role."));
+                    return;
                 }
 
+                loggerService.Log($"New client joined server - {roleMessage.Role}", LogLevelEnum.Info);
+
+                _ = HandleClientByRoleAsync(client, roleMessage.Role);
             }
             catch (Exception ex)
             {
-                await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "Server error. Try again."));
-                Log(ex.Message, LogLevelEnum.Error);
+                loggerService.Log($"Error while handling client: {ex.Message}", LogLevelEnum.Error);
+                await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "Server error. Try again."));
                 client.Close();
             }
         }
 
+        private async Task HandleClientByRoleAsync(TcpClient client, RoleEnum role)
+        {
+            switch (role)
+            {
+                case RoleEnum.User:
+                    await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.ServerConnected, "Welcome to the server!"));
+                    _ = HandleUserConnectionAsync(client);
+                    break;
+
+                case RoleEnum.UI:
+                    loggerService.ClientUI= client;
+                    break;
+
+                default:
+                    await SendAndCloseAsync(client, new InfoMessage(InfoMessageTypeEnum.Warning, "Unsupported role."));
+                    break;
+            }
+        }
+        #endregion
+
+        #region User Handling
         private async Task HandleUserConnectionAsync(TcpClient client)
         {
-            while (true)
+            try
             {
-                MessageBase message = await MessageManager.ReceiveMessageAsync(client);
-
-                //TODO: Remove
-                var lobbies = new List<LobbyDTO>();
-                var lobby = new LobbyDTO(1, "Test Lobby", 10, 1, 1, null);
-                lobbies.Add(lobby);
-
-
-                //Creating new lobby
-                if (message.MessageType == MessageTypeEnum.CreateLobby)
+                while (true)
                 {
-                    CreateLobbyMessage createLobbyMessage = (CreateLobbyMessage)message;
-                    int lobbyID = lobbyManager.CreateAndInitializeLobby(createLobbyMessage.LobbyName, createLobbyMessage.MaxPlayers,
-                        createLobbyMessage.MapID, createLobbyMessage.WalkableTiles, createLobbyMessage.ModuleIDs);
-
-                    try
-                    {
-                        lobbyManager.AddUserToLobby(lobbyID, client, createLobbyMessage.UserName, out Guid userEntityID);
-
-                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyCreated, "New lobby created!"));
-                        await MessageManager.SendMessageAsync(client, new LobbyDataMessage(lobby, userEntityID));
-                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyJoined, "Welcome to the new lobby!"));
-                    }
-                    catch (Exception ex)
-                    {
-                        Log(ex.Message, LogLevelEnum.Error);
-                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotCreated, "New lobby NOT created."));
-                    }
+                    MessageBase message = await MessageManager.ReceiveMessageAsync(client);
+                    _ = HandleMessageAsync(client, message);
                 }
-
-                //Joining existing lobby
-                else if (message.MessageType == MessageTypeEnum.JoinLobby)
-                {
-                    JoinLobbyMessage joinLobbyMessage = (JoinLobbyMessage)message;
-
-                    try
-                    {
-                        lobbyManager.AddUserToLobby(joinLobbyMessage.LobbyID, client, joinLobbyMessage.UserName, out Guid userEntityID);
-
-                        await MessageManager.SendMessageAsync(client, new LobbyDataMessage(lobby, userEntityID));
-                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyJoined, "Welcome to lobby!"));
-                    }
-                    catch (Exception ex)
-                    {
-                        Log(ex.Message, LogLevelEnum.Error);
-                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotJoined, "Lobby error. Try again."));
-                    }
-                }
-
-                //Disjoining existing lobby
-                else if (message.MessageType == MessageTypeEnum.DisjoinLobby)
-                {
-                    DisjoinLobbyMessage joinLobbyMessage = (DisjoinLobbyMessage)message;
-
-                    try
-                    {
-                        lobbyManager.RemoveUserFromLobby(joinLobbyMessage.LobbyID, client);
-                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyDisjoined, "See you soon!"));
-                    }
-                    catch (Exception ex)
-                    {
-                        Log(ex.Message, LogLevelEnum.Error);
-                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotDisjoined, "Lobby error. Try again."));
-                    }
-                }
-
-                //Get messages
-                else if (message.MessageType == MessageTypeEnum.GetMessage)
-                {
-                    GetMessage getMessage = (GetMessage)message;
-
-                    switch (getMessage.GetMessageType)
-                    {
-                        case GetMessageTypeEnum.LobbyList:
-                            try
-                            {
-                                await MessageManager.SendMessageAsync(client, new LobbyListMessage(lobbies));
-                            }
-                            catch (Exception ex)
-                            {
-                                Log(ex.Message, LogLevelEnum.Error);
-                                await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "Lobby list error. Try again."));
-                                client.Close();
-                            }
-                            break;
-
-                        case GetMessageTypeEnum.ModuleList:
-                            try
-                            {
-                                List<ModuleDTO> moduleDTOs = Services.ModuleService.Instance.GetAllModules().Select(m => m.ToDTO()).ToList();
-                                await MessageManager.SendMessageAsync(client, new ModuleListMessage(moduleDTOs));
-                            }
-                            catch (Exception ex)
-                            {
-                                Log(ex.Message, LogLevelEnum.Error);
-                                await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "Module list error. Try again."));
-                                client.Close();
-                            }
-                            break;
-
-                        case GetMessageTypeEnum.BehaviourList:
-                            try
-                            {
-                                var behaviorDTOs = Services.BehaviourService.Instance.GetAllBehaviours().Select(b => b.ToDTO()).ToList();
-                                await MessageManager.SendMessageAsync(client, new BehaviourListMessage(behaviorDTOs));
-                            }
-                            catch (Exception ex)
-                            {
-                                Log(ex.Message, LogLevelEnum.Error);
-                                await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "Behaviour list error. Try again."));
-                                client.Close();
-                            }
-                            break;
-
-                        default:
-                            await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "Unknown GetMessage Type."));
-                            break;
-                    }
-
-                }
-
-                //Creating module
-                else if (message.MessageType == MessageTypeEnum.CreateModule)
-                {
-                    CreateModuleMessage createModuleMessage = (CreateModuleMessage)message;
-
-                    try
-                    {
-                        //TODO: implement module creation
-                        Services.ModuleService.Instance.CreateModule(createModuleMessage.ModuleDTO);
-                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.ModuleNotCreated, "ModuleDTO creation not implemented.")); //TODO: @FranciszekGwarek change this
-                    }
-                    catch (Exception ex)
-                    {
-                        Log(ex.Message, LogLevelEnum.Error);
-                        await MessageManager.SendMessageAsync(client, new InfoMessage(InfoMessageTypeEnum.ModuleNotCreated, "ModuleDTO creation error. Try again."));
-                    }
-
-                }
-
-                //Forwarding message to lobby
-                else
-                {
-                    OnMessageFromClientReceived?.Invoke(new OnMessageFromClientEventArgs(client, message));
-                }
-
             }
+            catch (IOException)
+            {
+                loggerService.Log("Client disconnected.", LogLevelEnum.Info);
+                client.Close();
+            }
+            catch (Exception ex)
+            {
+                loggerService.Log($"Error while handling client: {ex.Message}", LogLevelEnum.Error);
+                await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "Internal server error."));
+                client.Close();
+            }
+        }
 
+        private async Task HandleMessageAsync(TcpClient client, MessageBase message)
+        {
+            switch (message.MessageType)
+            {
+                case MessageTypeEnum.CreateLobby:
+                    await HandleCreateLobbyAsync(client, (CreateLobbyMessage)message);
+                    break;
+
+                case MessageTypeEnum.JoinLobby:
+                    await HandleJoinLobbyAsync(client, (JoinLobbyMessage)message);
+                    break;
+
+                case MessageTypeEnum.DisjoinLobby:
+                    await HandleDisjoinLobbyAsync(client, (DisjoinLobbyMessage)message);
+                    break;
+
+                case MessageTypeEnum.GetMessage:
+                    await HandleGetMessageAsync(client, (GetMessage)message);
+                    break;
+
+                case MessageTypeEnum.CreateModule:
+                    await HandleCreateModuleAsync(client, (CreateModuleMessage)message);
+                    break;
+
+                default:
+                    OnMessageFromClientReceived?.Invoke(new OnMessageFromClientEventArgs(client, message));
+                    break;
+            }
+        }
+
+        private async Task HandleCreateLobbyAsync(TcpClient client, CreateLobbyMessage msg)
+        {
+            try
+            {
+                int lobbyID = lobbyManager.CreateAndInitializeLobby(
+                    msg.LobbyName, msg.MaxPlayers, msg.MapID, msg.WalkableTiles, msg.ModuleIDs);
+
+                lobbyManager.AddUserToLobby(lobbyID, client, msg.UserName, out Guid userEntityID);
+                Lobby.Lobby lobby = lobbyManager.GetLobby(lobbyID);
+
+                await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyCreated, "New lobby created!"));
+                await SafeSendAsync(client, new LobbyDataMessage(lobby.ToDTO(), userEntityID));
+                await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyJoined, "Welcome to the new lobby!"));
+            }
+            catch (Exception ex)
+            {
+                loggerService.Log(ex.Message, LogLevelEnum.Error);
+                await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotCreated, "Lobby creation failed."));
+            }
+        }
+
+        private async Task HandleJoinLobbyAsync(TcpClient client, JoinLobbyMessage msg)
+        {
+            try
+            {
+                lobbyManager.AddUserToLobby(msg.LobbyID, client, msg.UserName, out Guid userEntityID);
+                Lobby.Lobby lobby = lobbyManager.GetLobby(msg.LobbyID);
+
+                await SafeSendAsync(client, new LobbyDataMessage(lobby.ToDTO(), userEntityID));
+                await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyJoined, "Welcome to lobby!"));
+            }
+            catch (Exception ex)
+            {
+                loggerService.Log(ex.Message, LogLevelEnum.Error);
+                await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotJoined, "Lobby join failed."));
+            }
+        }
+
+        private async Task HandleDisjoinLobbyAsync(TcpClient client, DisjoinLobbyMessage msg)
+        {
+            try
+            {
+                lobbyManager.RemoveUserFromLobby(msg.LobbyID, client);
+                await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyDisjoined, "See you soon!"));
+            }
+            catch (Exception ex)
+            {
+                loggerService.Log(ex.Message, LogLevelEnum.Error);
+                await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotDisjoined, "Error leaving lobby."));
+            }
+        }
+
+        private async Task HandleGetMessageAsync(TcpClient client, GetMessage msg)
+        {
+            try
+            {
+                switch (msg.GetMessageType)
+                {
+                    case GetMessageTypeEnum.LobbyList:
+                        await SafeSendAsync(client, new LobbyListMessage(GetDummyLobbies()));
+                        break;
+
+                    case GetMessageTypeEnum.ModuleList:
+                        var modules = Services.ModuleService.Instance.GetAllModules().Select(m => m.ToDTO()).ToList();
+                        await SafeSendAsync(client, new ModuleListMessage(modules));
+                        break;
+
+                    case GetMessageTypeEnum.BehaviourList:
+                        var behaviours = Services.BehaviourService.Instance.GetAllBehaviours().Select(b => b.ToDTO()).ToList();
+                        await SafeSendAsync(client, new BehaviourListMessage(behaviours));
+                        break;
+
+                    default:
+                        await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "Unknown GetMessage Type."));
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+               loggerService.Log(ex.Message, LogLevelEnum.Error);
+                await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "Error while fetching data."));
+            }
+        }
+
+        private async Task HandleCreateModuleAsync(TcpClient client, CreateModuleMessage msg)
+        {
+            try
+            {
+                Services.ModuleService.Instance.CreateModule(msg.ModuleDTO);
+                await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.ModuleCreated, "Module created successfully."));
+            }
+            catch (Exception ex)
+            {
+                loggerService.Log(ex.Message, LogLevelEnum.Error);
+                await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.ModuleNotCreated, "Module creation failed."));
+            }
+        }
+        #endregion
+
+        #region Message Sending Helpers
+        private async Task SendAndCloseAsync(TcpClient client, InfoMessage message)
+        {
+            await SafeSendAsync(client, message);
+            client.Close();
+        }
+
+        private async Task SafeSendAsync(TcpClient client, MessageBase message)
+        {
+            try
+            {
+                await MessageManager.SendMessageAsync(client, message);
+            }
+            catch (Exception ex)
+            {
+                loggerService.Log($"Failed to send message to client: {ex.Message}", LogLevelEnum.Error);
+            }
+        }
+        #endregion
+
+        private List<LobbyDTO> GetDummyLobbies()
+        {
+            return new List<LobbyDTO>
+                {
+                    new LobbyDTO(1, "Test Lobby", 10, 1, 1, null)
+                };
         }
 
         private void OnLog_Delegate(object? sender, OnLogEventArgs e)
         {
-            Task.Run(() => Log(e.Message, e.LogLevel, sender, e.Timestamp));
-        }
-
-        private void Log(string message, LogLevelEnum level, object? sender = null, DateTime? timestamp = null)
-        {
-            var args = new OnLogEventArgs(message, level);
-
-            int senderID = (sender is Lobby.Lobby lobby) ? lobby.LobbyId : -1;
-            var logMessage = new LogMessage(args, senderID);
-            
-            logQueue.Enqueue(logMessage);
-            if (clientUI != null && clientUI.Connected)
-            {
-                _ = MessageManager.SendMessageAsync(clientUI, logMessage);
-            }
-
-            timestamp ??= DateTime.Now;
-
-            var color = level switch
-            {
-                LogLevelEnum.Debug => Color.White,
-                LogLevelEnum.Info => Color.Green,
-                LogLevelEnum.Warning => Color.Yellow,
-                LogLevelEnum.Error => Color.OrangeRed,
-                LogLevelEnum.Critical => Color.Red,
-                _ => Color.Gray,
-            };
-
-            Console.WriteLine($"[{timestamp:HH:mm:ss}] [{level}] {message}");
+            loggerService.Log(e.Message, e.LogLevel, sender);
         }
 
     }
