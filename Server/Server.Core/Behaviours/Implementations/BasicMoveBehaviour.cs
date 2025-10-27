@@ -8,8 +8,12 @@ namespace Server.Core.Behaviours.Implementations
     {
         public override int DatabaseID => 2;
         public override EntityTypeEnum Type => EntityTypeEnum.Animal;
-
         public override string Description => "Basic move behaviour";
+
+        public BasicMoveBehaviour()
+        {
+        }
+
 
         public override bool CanExecute(WorldEntity entity, WorldEntity target, Dictionary<string, object>? otherParams = null)
         {

@@ -10,8 +10,16 @@
 
         public IBehaviour CreateBehaviourOfType(Type type)
         {
-            return Activator.CreateInstance(type) as IBehaviour ??
-                throw new Exception($"Type {type.FullName} doesn't cast to IBehaviour");
+            try
+            {
+                var instance = Activator.CreateInstance(type) as IBehaviour ?? throw new Exception($"Type {type.FullName} doesn't cast to IBehaviour");
+                return instance;
+            }
+            catch(Exception ex)
+            {
+                Console.WriteLine($"Error creating behaviour of type {type.FullName}: {ex.Message}");
+                throw;
+            }
         }
     }
 }
