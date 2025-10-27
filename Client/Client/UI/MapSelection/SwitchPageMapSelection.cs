@@ -61,8 +61,8 @@ namespace Client
 
         public void InitializeRows()
         {
-            maps.Add(new MapData(contentManager.Load<Texture2D>("UI/BG_Forest"), "Day Forest"));
-            maps.Add(new MapData(contentManager.Load<Texture2D>("UI/BG_Settings"), "Night Forest"));
+            maps.Add(new MapData(contentManager.Load<Texture2D>("UI/MapSelection/Standard"), "Standard"));
+            maps.Add(new MapData(contentManager.Load<Texture2D>("UI/MapSelection/TwoBridges"), "Two Bridges"));
         }
 
         public void SetSelectedData(ref SelectedMapData data)

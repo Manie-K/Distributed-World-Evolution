@@ -968,6 +968,18 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/WindowTextFont.spritefont
 
+#begin Maps/Tiles/MapTileset.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Maps/Tiles/MapTileset.png
+
 #begin Maps/Tiles/tileset_version1.1.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -2203,6 +2215,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:UI/Keyboard_keys/w.png
+
+#begin UI/MapSelection/Standard.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/MapSelection/Standard.png
+
+#begin UI/MapSelection/TwoBridges.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/MapSelection/TwoBridges.png
 
 #begin UI/Scenes/Create_Lobby.png
 /importer:TextureImporter
