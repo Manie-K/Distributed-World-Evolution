@@ -5,7 +5,7 @@ namespace Server.Core
 {
     internal class Program
     {
-        private static void Main(string[] args)
+        private static async Task Main(string[] args)
         {
             Console.WriteLine("[DEBUG]: Debug console for Core project, independent from UI project.");
 
@@ -25,7 +25,7 @@ namespace Server.Core
                 }
             }
 
-            Server.Instance.Start(args);
+            await Server.Instance.StartAsync(args);
         }
     }
 }

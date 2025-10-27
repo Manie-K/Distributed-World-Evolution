@@ -23,9 +23,9 @@ class Client
                 InfoMessage stringMessage = (InfoMessage)message;
                 Console.WriteLine($"[Client] Received message: {stringMessage.MessageContent}");
                 
-                _ = MessageManager.SendMessageAsync(client, new GetMessage(GetMessageTypeEnum.ModuleList));
+                _ = MessageManager.SendMessageAsync(client, new GetMessage(GetMessageTypeEnum.BehaviourList));
                 message = await MessageManager.ReceiveMessageAsync(client);
-                ModuleListMessage moduleListMessage = (ModuleListMessage)message;
+                BehaviourListMessage moduleListMessage = (BehaviourListMessage)message;
             });
             receiveThread.Start();
 
