@@ -89,8 +89,8 @@ namespace Server.Core.Modules
                 damage = 0;
                 aggresion = 0;
                 reproductionNeed = 0;
-                maxHunger = 0;
-                maxHelath = 0;
+                maxHunger = 100;
+                maxHelath = 100;
                 behaviours = new List<IBehaviour>();
                 type = EntityTypeEnum.Animal;
                 graphicsId = 0;
@@ -138,6 +138,18 @@ namespace Server.Core.Modules
             public ModuleBuilder WithReproductionNeed(int reproductionNeed)
             {
                 this.reproductionNeed = reproductionNeed;
+                return this;
+            }
+
+            public ModuleBuilder WithMaxHunger(int maxHunger)
+            {
+                this.maxHunger = maxHunger;
+                return this;
+            }
+
+            public ModuleBuilder WithMaxHealth(int maxHealth)
+            {
+                this.maxHelath = maxHealth;
                 return this;
             }
 

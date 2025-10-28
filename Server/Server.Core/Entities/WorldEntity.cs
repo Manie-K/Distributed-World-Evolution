@@ -39,7 +39,7 @@ namespace Server.Core
         public void Die()
         {
             // VERY IMPORTANT TODO
-            throw new NotImplementedException();
+            // noop for now
         }
 
         public WorldEntityDTO ToDTO()

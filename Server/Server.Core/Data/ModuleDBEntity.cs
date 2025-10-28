@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Server.Core.Data
 {
-    internal class ModuleDBEntity
+    public class ModuleDBEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]

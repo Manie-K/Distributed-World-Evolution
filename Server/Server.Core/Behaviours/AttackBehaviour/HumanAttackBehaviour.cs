@@ -3,13 +3,13 @@
 namespace Server.Core.Behaviours.AttackBehaviour
 {
     /// <inheritdoc/>
-    public class AlwaysAttackBehaviour : AttackBehaviourBase
+    public class HumanAttackBehaviour : AttackBehaviourBase
     {
         /// <inheritdoc/>
-        public override int DatabaseID => 201;
+        public override int DatabaseID => 211;
 
         /// <inheritdoc/>
-        public override string Description => "Most basic attack implementation. Always attacks other, gives Damage to target, takes rounded half of target damage back";
+        public override string Description => "Attack behaviour used by humans";
 
         /// <inheritdoc/>
         public override bool CanExecute(WorldEntity attacker, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
