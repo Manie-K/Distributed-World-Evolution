@@ -1,5 +1,6 @@
 ﻿using Server.Core.Helpers;
 using Server.Core.Modules;
+using Server.Core.Services;
 using SharedLibrary.DTOs.ModuleDTO;
 
 namespace Server.Core.Behaviours.EatBehaviour
@@ -19,11 +20,7 @@ namespace Server.Core.Behaviours.EatBehaviour
         /// <inheritdoc/>
         public void Execute(WorldEntity entity, WorldEntity target, Dictionary<string, object>? otherParams = null)
         {
-            if (otherParams == null || !otherParams.TryGetValue(CustomBehaviourParams.TARGET_MODULE_PARAM, out var moduleObj))
-                throw new ArgumentException("Missing targetModule in parameters");
-
-            var targetModule = moduleObj as Module
-                ?? throw new ArgumentException("Invalid targetModule type");
+            Module targetModule = ModuleService.Instance.GetModuleById(target.ModuleID) ?? throw new Exception($"Module with ID={target.ModuleID} not found!");
 
             if (targetModule.Damage > 0)
             {

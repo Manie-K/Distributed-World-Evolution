@@ -6,28 +6,25 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Transactions;
 
 namespace Server.Core.Behaviours.EatBehaviour
 {
-    internal class EathWhenHungryBehaviour : EatBehaviourBase
+    internal class EatWhenNotHealthyBehaviour : EatBehaviourBase
     {
         /// <inheritdoc/>
-        public override int DatabaseID => 301;
+        public override int DatabaseID => 302;
         /// <inheritdoc/>
-        public override string Description => "Eats when hunger below 25% of organism maximum hunger";
+        public override string Description => "Eats when health below 50% of organism maximum health";
         /// <inheritdoc/>
         public override bool CanExecute(WorldEntity entity, WorldEntity target, Dictionary<string, object>? otherParams = null)
         {
             Module entityModule = ModuleService.Instance.GetModuleById(entity.ModuleID) ?? throw new Exception($"Module with ID={entity.ModuleID} not found!");
 
-            if (entity.State.Hunger < 0.25 * entityModule.MaxHunger)
+            if (entity.State.Health < 0.5 * entityModule.MaxHealth)
             {
                 return true;
             }
-
             return false;
         }
-
     }
 }

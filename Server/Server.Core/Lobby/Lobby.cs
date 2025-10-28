@@ -225,15 +225,6 @@ namespace Server.Core.Lobby
                     entity.State.InteractionFramesLeft = 8;
                     targetEntity.State.InteractionFramesLeft = 8;
                 }
-                else if (interactionType == typeof(EatBehaviourBase))
-                {
-                    behaviour.Execute(entity, targetEntity, new Dictionary<string, object>
-                    {
-                        { CustomBehaviourParams.ENTITY_MODULE_PARAM, entModule }
-                    });
-                    entity.State.InteractionFramesLeft = 5;
-                    targetEntity.State.InteractionFramesLeft = 5;
-                }
                 else
                 {
                     behaviour.Execute(entity, targetEntity);
@@ -308,10 +299,7 @@ namespace Server.Core.Lobby
             if (entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Plant)
             {
                 EatBehaviourBase eatBehaviour = (EatBehaviourBase)entityModule.GetBehaviourOfType(typeof(EatBehaviourBase));
-                if (eatBehaviour.CanExecute(entity, entityOnPosition, new Dictionary<string, object> { 
-                    { CustomBehaviourParams.ENTITY_MODULE_PARAM, entityModule } 
-                }
-                ))
+                if (eatBehaviour.CanExecute(entity, entityOnPosition))
                 {
                     return typeof(EatBehaviourBase);
                 }
