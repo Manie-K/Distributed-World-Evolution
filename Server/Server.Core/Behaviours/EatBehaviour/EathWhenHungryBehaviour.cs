@@ -1,4 +1,5 @@
-﻿using Server.Core.Modules;
+﻿using Server.Core.Helpers;
+using Server.Core.Modules;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -15,7 +16,7 @@ namespace Server.Core.Behaviours.EatBehaviour
 
         public override bool CanExecute(WorldEntity entity, WorldEntity target, Dictionary<string, object>? otherParams = null)
         {
-            if (otherParams == null || !otherParams.TryGetValue("entityModule", out var moduleObj))
+            if (otherParams == null || !otherParams.TryGetValue(CustomBehaviourParams.ENTITY_MODULE_PARAM, out var moduleObj))
                 throw new ArgumentException("Missing entityModule in parameters");
 
             var entityModule = moduleObj as Module
