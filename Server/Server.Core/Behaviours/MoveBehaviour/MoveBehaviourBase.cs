@@ -2,7 +2,7 @@
 using SharedLibrary.DTOs.ModuleDTO;
 using SharedLibrary.Helpers;
 
-namespace Server.Core.Behaviours
+namespace Server.Core.Behaviours.MoveBehaviour
 {
     public abstract class MoveBehaviourBase : IBehaviour
     {
@@ -19,7 +19,7 @@ namespace Server.Core.Behaviours
         /// <inheritdoc/>
         public virtual void Execute(WorldEntity entity, WorldEntity target, Dictionary<string, object>? otherParams = null)
         {
-            if(otherParams?.TryGetValue(CustomBehaviourParams.NEW_POS_PARAM, out object? value) == true && value is Position2D nextPosition)
+            if (otherParams?.TryGetValue(CustomBehaviourParams.NEW_POS_PARAM, out object? value) == true && value is Position2D nextPosition)
             {
                 entity.State.Position = nextPosition;
             }
@@ -33,7 +33,7 @@ namespace Server.Core.Behaviours
         /// <inheritdoc/>
         public BehviourDTO ToDTO()
         {
-            return new BehviourDTO(this.DatabaseID, this.Description, this.Type);
+            return new BehviourDTO(DatabaseID, Description, Type);
         }
     }
 }

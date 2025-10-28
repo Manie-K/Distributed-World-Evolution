@@ -2,7 +2,7 @@
 using Server.Core.Lobby;
 using SharedLibrary.Helpers;
 
-namespace Server.Core.Behaviours.Implementations
+namespace Server.Core.Behaviours.ReproduceBehaviour
 {
     public class BasicReproduceBehaviour : ReproduceBehaviourBase
     {

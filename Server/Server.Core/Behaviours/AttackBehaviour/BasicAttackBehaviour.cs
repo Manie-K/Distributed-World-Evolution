@@ -1,6 +1,6 @@
 ﻿using Server.Core.Modules;
 
-namespace Server.Core.Behaviours.Implementations
+namespace Server.Core.Behaviours.AttackBehaviour
 {
     public class BasicAttackBehaviour : AttackBehaviourBase
     {

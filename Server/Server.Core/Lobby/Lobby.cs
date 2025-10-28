@@ -9,6 +9,12 @@ using Server.Core.Behaviours;
 using Server.Core.Helpers;
 using Server.Core.Services;
 using SharedLibrary.DTOs.LobbyDTO;
+using Server.Core.Behaviours.AttackBehaviour;
+using Server.Core.Behaviours.EatBehaviour;
+using Server.Core.Behaviours.GatherBehaviour;
+using Server.Core.Behaviours.MoveBehaviour;
+using Server.Core.Behaviours.TameBehaviour;
+using Server.Core.Behaviours.ReproduceBehaviour;
 
 namespace Server.Core.Lobby
 {

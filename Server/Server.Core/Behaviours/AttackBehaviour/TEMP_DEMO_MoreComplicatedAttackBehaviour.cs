@@ -1,7 +1,7 @@
 ﻿using Server.Core.Exceptions;
 using Server.Core.Services;
 
-namespace Server.Core.Behaviours.Implementations
+namespace Server.Core.Behaviours.AttackBehaviour
 {
     public class TEMPDEMOMoreComplicatedAttackBehaviour : AttackBehaviourBase
     {

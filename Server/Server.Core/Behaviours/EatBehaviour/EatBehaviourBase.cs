@@ -1,8 +1,8 @@
 ﻿using SharedLibrary.DTOs.ModuleDTO;
 
-namespace Server.Core.Behaviours
+namespace Server.Core.Behaviours.EatBehaviour
 {
-    public abstract class ReproduceBehaviourBase : IBehaviour
+    public abstract class EatBehaviourBase : IBehaviour
     {
         /// <inheritdoc/>
         public abstract int DatabaseID { get; }
@@ -23,7 +23,8 @@ namespace Server.Core.Behaviours
         /// <inheritdoc/>
         public BehviourDTO ToDTO()
         {
-            return new BehviourDTO(this.DatabaseID, this.Description, this.Type);
+            return new BehviourDTO(DatabaseID, Description, Type);
         }
+
     }
 }

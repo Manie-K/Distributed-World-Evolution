@@ -2,7 +2,7 @@
 using Server.Core.Services;
 using SharedLibrary.DTOs.ModuleDTO;
 
-namespace Server.Core.Behaviours
+namespace Server.Core.Behaviours.AttackBehaviour
 {
     public abstract class AttackBehaviourBase : IBehaviour
     {
@@ -10,8 +10,8 @@ namespace Server.Core.Behaviours
         public abstract int DatabaseID { get; }
 
         /// <inheritdoc/>
-        public virtual EntityTypeEnum Type => EntityTypeEnum.Human | EntityTypeEnum.Animal;        
-        
+        public virtual EntityTypeEnum Type => EntityTypeEnum.Human | EntityTypeEnum.Animal;
+
         /// <inheritdoc/>
         public abstract string Description { get; }
 
@@ -19,7 +19,7 @@ namespace Server.Core.Behaviours
 
         /// <inheritdoc/>
         public virtual void Execute(WorldEntity attacker, WorldEntity target, Dictionary<string, object>? otherParams = null)
-        { 
+        {
             try
             {
                 int dmg = ModuleService.Instance.GetModuleById(attacker.ModuleID).Damage;
@@ -37,7 +37,7 @@ namespace Server.Core.Behaviours
         /// <inheritdoc/>
         public BehviourDTO ToDTO()
         {
-            return new BehviourDTO(this.DatabaseID, this.Description, this.Type);
+            return new BehviourDTO(DatabaseID, Description, Type);
         }
     }
 }

@@ -2,7 +2,7 @@
 using Server.Core.Helpers;
 using SharedLibrary.Helpers;
 
-namespace Server.Core.Behaviours.Implementations
+namespace Server.Core.Behaviours.MoveBehaviour
 {
     public class BasicMoveBehaviour : MoveBehaviourBase
     {
@@ -29,7 +29,7 @@ namespace Server.Core.Behaviours.Implementations
 
         public override (int, int) GetNextMovement(WorldEntity entity)
         {
-            return (1,1);
+            return (1, 1);
         }
     }
 }
