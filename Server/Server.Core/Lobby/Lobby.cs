@@ -297,7 +297,7 @@ namespace Server.Core.Lobby
             if (entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Plant)
             {
                 EatBehaviourBase eatBehaviour = (EatBehaviourBase)entityModule.GetBehaviourOfType(typeof(EatBehaviourBase));
-                if (eatBehaviour.CanExecute(entity, entityOnPosition))
+                if (eatBehaviour.CanExecute(entity, entityOnPosition, new Dictionary<string, object> { { "entityModule", entityModule } }))
                 {
                     return typeof(EatBehaviourBase);
                 }
