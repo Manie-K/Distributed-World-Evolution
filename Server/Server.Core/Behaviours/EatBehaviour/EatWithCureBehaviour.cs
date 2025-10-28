@@ -13,17 +13,20 @@ namespace Server.Core.Behaviours.EatBehaviour
         /// <inheritdoc/>
         public override int DatabaseID => 304;
         /// <inheritdoc/>
-        public override string Description => "Eats and increase health at the same time"; 
+        public override string Description => "Eats and increase health at the same time";
         /// <inheritdoc/>
         public override void Execute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
-            base.Execute(entity, target,moduleService, otherParams);
-            
-            Module targetModule = ModuleService.Instance.GetModuleById(target.ModuleID) ?? throw new Exception($"Module with ID={target.ModuleID} not found!");
-            
-            entity.State.Health += targetModule.MaxHunger;
+            int previousHealth = entity.State.Health;
 
-            //Wouldn't it give health twice?????? See base class. @FranciszekGwarek
+            Module targetModule = ModuleService.Instance.GetModuleById(target.ModuleID) ?? throw new Exception($"Module with ID={target.ModuleID} not found!");
+
+            base.Execute(entity, target, moduleService, otherParams);
+
+            if (entity.State.Health > previousHealth)
+            {
+                entity.State.Health += targetModule.MaxHunger;
+            }
         }
         /// <inheritdoc/>
         public override bool CanExecute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)

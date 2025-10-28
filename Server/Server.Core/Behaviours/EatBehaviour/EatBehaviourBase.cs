@@ -25,10 +25,14 @@ namespace Server.Core.Behaviours.EatBehaviour
             if (targetModule.Damage > 0)
             {
                 entity.State.Health -= targetModule.Damage;
+                target.Die();
             }
             else
             {
-                entity.State.Hunger += targetModule.MaxHunger; //Why not hunger? Max hunger in plants should be not relevant? Why this way? @FranciszekGwarek
+                entity.State.Hunger += targetModule.MaxHunger;
+                target.Die();
+                //Why not hunger? Max hunger in plants should be not relevant? Why this way? @FranciszekGwarek
+                // Plant module need to have MaxHuger, otherwise how could we know the Hunger of a single entity and Hunger in plants does not decrease. @MaciejGóralczyk
             }
         }
 
