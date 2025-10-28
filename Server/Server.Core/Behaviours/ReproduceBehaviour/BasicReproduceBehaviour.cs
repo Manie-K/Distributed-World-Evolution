@@ -1,5 +1,6 @@
 ﻿using Server.Core.Helpers;
 using Server.Core.Lobby;
+using Server.Core.Services;
 using SharedLibrary.Helpers;
 
 namespace Server.Core.Behaviours.ReproduceBehaviour
@@ -14,12 +15,12 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
         {
         }
 
-        public override bool CanExecute(WorldEntity entity, WorldEntity target, Dictionary<string, object>? otherParams = null)
+        public override bool CanExecute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
             return target != null && entity.ModuleID == target.ModuleID && target != entity;
         }
 
-        public override void Execute(WorldEntity entity, WorldEntity target, Dictionary<string, object>? otherParams = null)
+        public override void Execute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
             WorldEntity child = WorldEntity.CreateWorldEntity(
                 name: $"{entity.Name}-child",

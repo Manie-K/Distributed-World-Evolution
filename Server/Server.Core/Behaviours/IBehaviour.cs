@@ -1,4 +1,5 @@
-﻿using SharedLibrary.DTOs.ModuleDTO;
+﻿using Server.Core.Services;
+using SharedLibrary.DTOs.ModuleDTO;
 
 namespace Server.Core.Behaviours
 {
@@ -34,13 +35,13 @@ namespace Server.Core.Behaviours
         /// <summary>
         /// Executes the behaviour.
         /// </summary>
-        public void Execute(WorldEntity entity, WorldEntity target, Dictionary<string, object>? otherParams = null);
+        public void Execute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null);
 
         /// <summary>
         /// Checks if the behaviour can be executed.
         /// </summary>
         /// <returns></returns>
-        public bool CanExecute(WorldEntity entity, WorldEntity target, Dictionary<string, object>? otherParams = null);
+        public bool CanExecute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null);
 
         /// <summary>
         /// Converts the behaviour to a DTO.

@@ -1,4 +1,5 @@
 ﻿using Server.Core.Helpers;
+using Server.Core.Services;
 using SharedLibrary.DTOs.ModuleDTO;
 using SharedLibrary.Helpers;
 
@@ -17,7 +18,7 @@ namespace Server.Core.Behaviours.MoveBehaviour
 
 
         /// <inheritdoc/>
-        public virtual void Execute(WorldEntity entity, WorldEntity target, Dictionary<string, object>? otherParams = null)
+        public virtual void Execute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
             if (otherParams?.TryGetValue(CustomBehaviourParams.NEW_POS_PARAM, out object? value) == true && value is Position2D nextPosition)
             {
@@ -26,7 +27,7 @@ namespace Server.Core.Behaviours.MoveBehaviour
         }
 
         /// <inheritdoc/>
-        public abstract bool CanExecute(WorldEntity entity, WorldEntity target, Dictionary<string, object>? otherParams = null);
+        public abstract bool CanExecute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null);
 
         public abstract (int, int) GetNextMovement(WorldEntity entity);
 

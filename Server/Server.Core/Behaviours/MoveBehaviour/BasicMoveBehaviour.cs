@@ -1,5 +1,6 @@
 ﻿using System.Numerics;
 using Server.Core.Helpers;
+using Server.Core.Services;
 using SharedLibrary.Helpers;
 
 namespace Server.Core.Behaviours.MoveBehaviour
@@ -10,12 +11,8 @@ namespace Server.Core.Behaviours.MoveBehaviour
         public override EntityTypeEnum Type => EntityTypeEnum.Animal;
         public override string Description => "Basic move behaviour";
 
-        public BasicMoveBehaviour()
-        {
-        }
 
-
-        public override bool CanExecute(WorldEntity entity, WorldEntity target, Dictionary<string, object>? otherParams = null)
+        public override bool CanExecute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
             Position2D nextPos = otherParams != null && otherParams.TryGetValue(CustomBehaviourParams.NEW_POS_PARAM, out object? value) && value is Position2D pos ? pos : entity.State.Position;
             bool[,] walkableTiles = otherParams != null && otherParams.TryGetValue(CustomBehaviourParams.MAP_PARAM, out object? walkableTilesObj) && walkableTilesObj is bool[,] tiles ? tiles : new bool[0, 0];

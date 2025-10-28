@@ -1,4 +1,5 @@
-﻿using SharedLibrary.DTOs.ModuleDTO;
+﻿using Server.Core.Services;
+using SharedLibrary.DTOs.ModuleDTO;
 
 namespace Server.Core.Behaviours.GatherBehaviour
 {
@@ -15,10 +16,10 @@ namespace Server.Core.Behaviours.GatherBehaviour
 
 
         /// <inheritdoc/>
-        public abstract void Execute(WorldEntity entity, WorldEntity target, Dictionary<string, object>? otherParams = null);
+        public abstract void Execute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null);
 
         /// <inheritdoc/>
-        public abstract bool CanExecute(WorldEntity entity, WorldEntity target, Dictionary<string, object>? otherParams = null);
+        public abstract bool CanExecute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null);
 
         /// <inheritdoc/>
         public BehviourDTO ToDTO()

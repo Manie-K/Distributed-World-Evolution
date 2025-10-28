@@ -210,7 +210,7 @@ namespace Server.Core.Lobby
                 // In case when we need to add custom parameters
                 if (interactionType == typeof(MoveBehaviourBase))
                 {
-                    behaviour.Execute(entity, null, new Dictionary<string, object>{
+                    behaviour.Execute(entity, null, ModuleService.Instance ,new Dictionary<string, object>{
                         { CustomBehaviourParams.MAP_PARAM, walkableTiles   },
                         { CustomBehaviourParams.NEW_POS_PARAM, newState.Position }
                     });
@@ -219,7 +219,7 @@ namespace Server.Core.Lobby
                 }
                 else if (interactionType == typeof(ReproduceBehaviourBase))
                 {
-                    behaviour.Execute(entity, targetEntity, new Dictionary<string, object>{
+                    behaviour.Execute(entity, targetEntity, ModuleService.Instance, new Dictionary<string, object>{
                         { CustomBehaviourParams.LOBBY_PARAM, this }
                     });
                     entity.State.InteractionFramesLeft = 8;
@@ -227,7 +227,7 @@ namespace Server.Core.Lobby
                 }
                 else
                 {
-                    behaviour.Execute(entity, targetEntity);
+                    behaviour.Execute(entity, targetEntity, ModuleService.Instance);
                     entity.State.InteractionFramesLeft = 10;
                     targetEntity.State.InteractionFramesLeft = 10;
                 }
@@ -279,7 +279,7 @@ namespace Server.Core.Lobby
                 )
             {
                 AttackBehaviourBase attackBehaviour = (AttackBehaviourBase)entityModule.GetBehaviourOfType(typeof(AttackBehaviourBase));
-                if (attackBehaviour.CanExecute(entity, entityOnPosition))
+                if (attackBehaviour.CanExecute(entity, entityOnPosition, ModuleService.Instance))
                 {
                     return typeof(AttackBehaviourBase);
                 }
@@ -289,7 +289,7 @@ namespace Server.Core.Lobby
             if (entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Animal)
             {
                 ReproduceBehaviourBase reproduceBehaviour = (ReproduceBehaviourBase)entityModule.GetBehaviourOfType(typeof(ReproduceBehaviourBase));
-                if (reproduceBehaviour.CanExecute(entity, entityOnPosition))
+                if (reproduceBehaviour.CanExecute(entity, entityOnPosition, ModuleService.Instance))
                 {
                     return typeof(ReproduceBehaviourBase);
                 }
@@ -299,7 +299,7 @@ namespace Server.Core.Lobby
             if (entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Plant)
             {
                 EatBehaviourBase eatBehaviour = (EatBehaviourBase)entityModule.GetBehaviourOfType(typeof(EatBehaviourBase));
-                if (eatBehaviour.CanExecute(entity, entityOnPosition))
+                if (eatBehaviour.CanExecute(entity, entityOnPosition, ModuleService.Instance))
                 {
                     return typeof(EatBehaviourBase);
                 }
@@ -309,7 +309,7 @@ namespace Server.Core.Lobby
             if (entityType == EntityTypeEnum.Human && targetType == EntityTypeEnum.Plant)
             {
                 GatherBehaviourBase gatherBehaviour = (GatherBehaviourBase)entityModule.GetBehaviourOfType(typeof(GatherBehaviourBase));
-                if (gatherBehaviour.CanExecute(entity, entityOnPosition))
+                if (gatherBehaviour.CanExecute(entity, entityOnPosition, ModuleService.Instance))
                 {
                     return typeof(GatherBehaviourBase);
                 }
@@ -319,7 +319,7 @@ namespace Server.Core.Lobby
             if (entityType == EntityTypeEnum.Human && targetType == EntityTypeEnum.Animal)
             {
                 TameBehaviourBase tameBehaviour = (TameBehaviourBase)entityModule.GetBehaviourOfType(typeof(TameBehaviourBase));
-                if (tameBehaviour.CanExecute(entity, entityOnPosition))
+                if (tameBehaviour.CanExecute(entity, entityOnPosition, ModuleService.Instance))
                 {
                     return typeof(TameBehaviourBase);
                 }

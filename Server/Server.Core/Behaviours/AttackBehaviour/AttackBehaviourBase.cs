@@ -22,12 +22,12 @@ namespace Server.Core.Behaviours.AttackBehaviour
 
         /// <inheritdoc/>
         /// Target's module will be of type Human or Animal.
-        public virtual void Execute(WorldEntity attacker, WorldEntity target, Dictionary<string, object>? otherParams = null)
+        public virtual void Execute(WorldEntity attacker, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
             try
             {
-                Module attackerModule = ModuleService.Instance.GetModuleById(attacker.ModuleID) ?? throw new Exception($"Module with ID={attacker.ModuleID} not found!");
-                Module targetModule = ModuleService.Instance.GetModuleById(target.ModuleID) ?? throw new Exception($"Module with ID={attacker.ModuleID} not found!");
+                Module attackerModule = moduleService.GetModuleById(attacker.ModuleID) ?? throw new Exception($"Module with ID={attacker.ModuleID} not found!");
+                Module targetModule = moduleService.GetModuleById(target.ModuleID) ?? throw new Exception($"Module with ID={attacker.ModuleID} not found!");
                
                 target.State.Health -= attackerModule.Damage;
                 attacker.State.Health -= (int)(targetModule.Damage * 0.5);
@@ -49,7 +49,7 @@ namespace Server.Core.Behaviours.AttackBehaviour
 
         /// <inheritdoc/>
         /// Target's module will be of type Human or Animal.
-        public abstract bool CanExecute(WorldEntity attacker, WorldEntity target, Dictionary<string, object>? otherParams = null);
+        public abstract bool CanExecute(WorldEntity attacker, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null);
 
         /// <inheritdoc/>
         public BehviourDTO ToDTO()
