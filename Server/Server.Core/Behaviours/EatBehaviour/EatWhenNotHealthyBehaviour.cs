@@ -20,10 +20,11 @@ namespace Server.Core.Behaviours.EatBehaviour
         {
             Module entityModule = ModuleService.Instance.GetModuleById(entity.ModuleID) ?? throw new Exception($"Module with ID={entity.ModuleID} not found!");
 
-            if (entity.State.Health < 0.5 * entityModule.MaxHealth)
+            if (entity.State.Health/entityModule.MaxHealth < 0.5)
             {
                 return true;
             }
+
             return false;
         }
     }

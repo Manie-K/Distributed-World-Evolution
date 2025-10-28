@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using SharedLibrary.Helpers;
 
 namespace Server.Core.Behaviours.EatBehaviour
 {
@@ -20,10 +21,11 @@ namespace Server.Core.Behaviours.EatBehaviour
         {
             Module entityModule = ModuleService.Instance.GetModuleById(entity.ModuleID) ?? throw new Exception($"Module with ID={entity.ModuleID} not found!");
 
-            if (entity.State.Hunger < entityModule.ReproductionNeed)
+            if (entity.State.Hunger/entityModule.MaxHunger < entityModule.ReproductionNeed/ModulePropertiesLimits.MAX_REPRODUCTION_NEED)
             {
                 return true;
             }
+
             return false;
         }
     }

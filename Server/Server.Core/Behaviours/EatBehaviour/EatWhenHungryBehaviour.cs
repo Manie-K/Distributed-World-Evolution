@@ -10,7 +10,7 @@ using System.Transactions;
 
 namespace Server.Core.Behaviours.EatBehaviour
 {
-    internal class EathWhenHungryBehaviour : EatBehaviourBase
+    internal class EatWhenHungryBehaviour : EatBehaviourBase
     {
         /// <inheritdoc/>
         public override int DatabaseID => 301;
@@ -21,7 +21,7 @@ namespace Server.Core.Behaviours.EatBehaviour
         {
             Module entityModule = ModuleService.Instance.GetModuleById(entity.ModuleID) ?? throw new Exception($"Module with ID={entity.ModuleID} not found!");
 
-            if (entity.State.Hunger < 0.25 * entityModule.MaxHunger)
+            if (entity.State.Hunger/entityModule.MaxHunger < 0.40)
             {
                 return true;
             }
