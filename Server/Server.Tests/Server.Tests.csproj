@@ -10,4 +10,9 @@
     <PackageReference Include="xunit" Version="2.9.3" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\..\Shared\SharedLibrary\SharedLibrary.csproj" />
+    <ProjectReference Include="..\Server.Core\Server.Core.csproj" />
+  </ItemGroup>
+
 </Project>

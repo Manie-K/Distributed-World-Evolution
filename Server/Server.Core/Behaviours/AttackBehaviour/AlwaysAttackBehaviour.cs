@@ -4,6 +4,7 @@ using Server.Core.Services;
 
 namespace Server.Core.Behaviours.AttackBehaviour
 {
+    /// <inheritdoc/>
     public class AlwaysAttackBehaviour : AttackBehaviourBase
     {
         /// <inheritdoc/>
@@ -19,6 +20,7 @@ namespace Server.Core.Behaviours.AttackBehaviour
         }
     }
 
+    /// <inheritdoc/>
     public class AlwaysAttackAnimalsBehaviour : AttackBehaviourBase
     {
         /// <inheritdoc/>
@@ -35,6 +37,7 @@ namespace Server.Core.Behaviours.AttackBehaviour
         }
     }
 
+    /// <inheritdoc/>
     public class AlwaysAttackHumanBehaviour : AttackBehaviourBase
     {
         /// <inheritdoc/>
@@ -51,6 +54,7 @@ namespace Server.Core.Behaviours.AttackBehaviour
         }
     }
 
+    /// <inheritdoc/>
     public class GreaterAggresionAttackBehaviour : AttackBehaviourBase
     {
         /// <inheritdoc/>
@@ -87,6 +91,7 @@ namespace Server.Core.Behaviours.AttackBehaviour
         }
     }
 
+    /// <inheritdoc/>
     public class Random50AttackBehaviour : AttackBehaviourBase
     {
         /// <inheritdoc/>
@@ -102,6 +107,7 @@ namespace Server.Core.Behaviours.AttackBehaviour
         }
     }
 
+    /// <inheritdoc/>
     public class Random75AttackBehaviour : AttackBehaviourBase
     {
         /// <inheritdoc/>
@@ -117,6 +123,7 @@ namespace Server.Core.Behaviours.AttackBehaviour
         }
     }
 
+    /// <inheritdoc/>
     public class Random25AttackBehaviour : AttackBehaviourBase
     {
         /// <inheritdoc/>
@@ -132,6 +139,7 @@ namespace Server.Core.Behaviours.AttackBehaviour
         }
     }
 
+    /// <inheritdoc/>
     public class EnemyLowHealthAttackBehaviour : AttackBehaviourBase
     {
         /// <inheritdoc/>
@@ -174,6 +182,7 @@ namespace Server.Core.Behaviours.AttackBehaviour
         }
     }
 
+    /// <inheritdoc/>
     public class OnlyAttackSelfSpiecesBehaviour : AttackBehaviourBase
     {
         /// <inheritdoc/>
@@ -189,6 +198,7 @@ namespace Server.Core.Behaviours.AttackBehaviour
         }
     }
 
+    /// <inheritdoc/>
     public class DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour : AttackBehaviourBase
     {
         /// <inheritdoc/>
@@ -227,6 +237,7 @@ namespace Server.Core.Behaviours.AttackBehaviour
         }
     }
 
+    /// <inheritdoc/>
     public class HumanAttackBehaviour : AttackBehaviourBase
     {
         /// <inheritdoc/>
@@ -239,6 +250,29 @@ namespace Server.Core.Behaviours.AttackBehaviour
         public override bool CanExecute(WorldEntity attacker, WorldEntity target, Dictionary<string, object>? otherParams = null)
         {
             return attacker.Id != target.Id;
+        }
+    }
+
+    /// <inheritdoc/>
+    public class NeverAttackBehaviour : AttackBehaviourBase
+    {
+        /// <inheritdoc/>
+        public override int DatabaseID => 212;
+        
+        /// <inheritdoc/>
+        public override string Description => "Does not attack ever";
+
+        /// <inheritdoc/>
+        public override void Execute(WorldEntity attacker, WorldEntity target, Dictionary<string, object>? otherParams = null)
+        {
+            //noop
+            return;
+        }
+
+        /// <inheritdoc/>
+        public override bool CanExecute(WorldEntity attacker, WorldEntity target, Dictionary<string, object>? otherParams = null)
+        {
+            return false;
         }
     }
 }

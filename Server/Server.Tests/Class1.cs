@@ -2,8 +2,6 @@
 
 namespace Server.Tests
 {
-    
-
     public class Class1
     {
         [Fact]
