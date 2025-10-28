@@ -8,6 +8,9 @@ namespace Server.Core.Behaviours.Implementations
 
         public override string Description => "Here we will hard-code descriptions";
 
+        public BasicAttackBehaviour()
+        {
+        }
 
         public override bool CanExecute(WorldEntity attacker, WorldEntity target, Dictionary<string, object>? otherParams = null)
         {
