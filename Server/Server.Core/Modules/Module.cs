@@ -13,18 +13,22 @@ namespace Server.Core.Modules
         public int Damage { get; private set; }
         public int Agression { get; private set; }
         public int ReproductionNeed { get; private set; }
+        public int MaxHunger { get; private set; }
+        public int MaxHealth { get; private set; }
         public EntityTypeEnum Type { get; init; }
         public int GraphicalRepresentationID { get; private set; }
 
         private readonly Dictionary<Type, IBehaviour> behaviours;
 
-        private Module(string name, bool official, int damage, int aggresion, int reproductionNeed, EntityTypeEnum type, int graphicsId)
+        private Module(string name, bool official, int damage, int aggresion, int reproductionNeed, int maxHunger, int maxHelath, EntityTypeEnum type, int graphicsId)
         {
             Name = name;
             Official = official;
             Damage = damage;
             Agression = aggresion;
             ReproductionNeed = reproductionNeed;
+            MaxHunger = maxHunger;
+            MaxHealth = maxHelath;
             Type = type;
             behaviours = new Dictionary<Type, IBehaviour>();
             GraphicalRepresentationID = graphicsId;
@@ -72,6 +76,8 @@ namespace Server.Core.Modules
             private int damage;
             private int aggresion;
             private int reproductionNeed;
+            private int maxHunger;
+            private int maxHelath;
             private readonly List<IBehaviour> behaviours;
             private EntityTypeEnum type;
             private int graphicsId;
@@ -83,6 +89,8 @@ namespace Server.Core.Modules
                 damage = 0;
                 aggresion = 0;
                 reproductionNeed = 0;
+                maxHunger = 0;
+                maxHelath = 0;
                 behaviours = new List<IBehaviour>();
                 type = EntityTypeEnum.Animal;
                 graphicsId = 0;
@@ -90,7 +98,7 @@ namespace Server.Core.Modules
 
             public Module Create()
             {
-                var module = new Module(name, official, damage, aggresion, reproductionNeed, type, graphicsId);
+                var module = new Module(name, official, damage, aggresion, reproductionNeed, maxHunger, maxHelath, type, graphicsId);
                 foreach (var behaviour in behaviours)
                 {
                     module.AddBehaviour(behaviour);

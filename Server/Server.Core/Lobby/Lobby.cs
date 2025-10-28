@@ -204,6 +204,8 @@ namespace Server.Core.Lobby
                 WorldEntity targetEntity = entities.Where(e => e.State.Position == newState.Position).First();
                 IBehaviour behaviour = entModule.GetBehaviourOfType(interactionType);
 
+                Module? targetModule = moduleService.GetModuleById(targetEntity.ModuleID)
+               ?? throw new Exception($"Target's {targetEntity.Id} module not found.");
 
                 // In case when we need to add custom parameters
                 if (interactionType == typeof(MoveBehaviourBase))
@@ -222,6 +224,15 @@ namespace Server.Core.Lobby
                     });
                     entity.State.InteractionFramesLeft = 8;
                     targetEntity.State.InteractionFramesLeft = 8;
+                }
+                else if (interactionType == typeof(EatBehaviourBase))
+                {
+                    behaviour.Execute(entity, targetEntity, new Dictionary<string, object>
+                    {
+                        { CustomBehaviourParams.ENTITY_MODULE_PARAM, entModule }
+                    });
+                    entity.State.InteractionFramesLeft = 5;
+                    targetEntity.State.InteractionFramesLeft = 5;
                 }
                 else
                 {
@@ -297,7 +308,10 @@ namespace Server.Core.Lobby
             if (entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Plant)
             {
                 EatBehaviourBase eatBehaviour = (EatBehaviourBase)entityModule.GetBehaviourOfType(typeof(EatBehaviourBase));
-                if (eatBehaviour.CanExecute(entity, entityOnPosition))
+                if (eatBehaviour.CanExecute(entity, entityOnPosition, new Dictionary<string, object> { 
+                    { CustomBehaviourParams.ENTITY_MODULE_PARAM, entityModule } 
+                }
+                ))
                 {
                     return typeof(EatBehaviourBase);
                 }
