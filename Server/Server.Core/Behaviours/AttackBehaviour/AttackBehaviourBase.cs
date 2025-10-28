@@ -5,6 +5,9 @@ using SharedLibrary.DTOs.ModuleDTO;
 
 namespace Server.Core.Behaviours.AttackBehaviour
 {
+    /// <summary>
+    /// Base class for attack behaviours. Implements basic attack execution logic.
+    /// </summary>
     public abstract class AttackBehaviourBase : IBehaviour
     {
         /// <inheritdoc/>
@@ -29,7 +32,14 @@ namespace Server.Core.Behaviours.AttackBehaviour
                 target.State.Health -= attackerModule.Damage;
                 attacker.State.Health -= (int)(targetModule.Damage * 0.5);
 
-
+                if(target.State.Health <= 0)
+                {
+                    target.Die();
+                }
+                if(attacker.State.Health <= 0)
+                {
+                    attacker.Die();
+                }
             }
             catch (ModuleNotFoundException ex)
             {
@@ -46,5 +56,6 @@ namespace Server.Core.Behaviours.AttackBehaviour
         {
             return new BehviourDTO(DatabaseID, Description, Type);
         }
+
     }
 }

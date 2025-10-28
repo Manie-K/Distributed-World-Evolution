@@ -8,7 +8,6 @@ namespace Server.Core.Modules
     public class Module
     {
         // We should try to place non-dynamic data here. All the dynamic data will be stored in WorldEntity object instances.
-
         public bool Official { get; init; }
         public string Name { get; init; }
         public int Damage { get; private set; }
