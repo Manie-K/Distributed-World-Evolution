@@ -1,5 +1,6 @@
 ﻿using Server.Core.Helpers;
 using Server.Core.Modules;
+using Server.Core.Services;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,20 +10,18 @@ using System.Transactions;
 
 namespace Server.Core.Behaviours.EatBehaviour
 {
-    internal class EathWhenHungryBehaviour : EatBehaviourBase
+    internal class EatWhenHungryBehaviour : EatBehaviourBase
     {
+        /// <inheritdoc/>
         public override int DatabaseID => 301;
+        /// <inheritdoc/>
         public override string Description => "Eats when hunger below 25% of organism maximum hunger";
-
+        /// <inheritdoc/>
         public override bool CanExecute(WorldEntity entity, WorldEntity target, Dictionary<string, object>? otherParams = null)
         {
-            if (otherParams == null || !otherParams.TryGetValue(CustomBehaviourParams.ENTITY_MODULE_PARAM, out var moduleObj))
-                throw new ArgumentException("Missing entityModule in parameters");
+            Module entityModule = ModuleService.Instance.GetModuleById(entity.ModuleID) ?? throw new Exception($"Module with ID={entity.ModuleID} not found!");
 
-            var entityModule = moduleObj as Module
-                ?? throw new ArgumentException("Invalid entityModule type");
-
-            if (entity.State.Hunger < 0.25 * entityModule.MaxHunger)
+            if (entity.State.Hunger/entityModule.MaxHunger < 0.40)
             {
                 return true;
             }
