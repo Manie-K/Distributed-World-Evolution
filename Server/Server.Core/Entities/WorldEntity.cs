@@ -36,6 +36,12 @@ namespace Server.Core
             State.InteractionFramesLeft = newState.InteractionFramesLeft;
         }
 
+        public void Die()
+        {
+            // VERY IMPORTANT TODO
+            throw new NotImplementedException();
+        }
+
         public WorldEntityDTO ToDTO()
         {
             return new WorldEntityDTO (this.Name, this.Id, this.State.ToDTO(), this.ModuleID);

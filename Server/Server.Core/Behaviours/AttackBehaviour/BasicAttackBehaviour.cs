@@ -4,14 +4,13 @@ namespace Server.Core.Behaviours.AttackBehaviour
 {
     public class BasicAttackBehaviour : AttackBehaviourBase
     {
-        public override int DatabaseID => 3;
+        /// <inheritdoc/>
+        public override int DatabaseID => 201;
 
-        public override string Description => "Here we will hard-code descriptions";
+        /// <inheritdoc/>
+        public override string Description => "Most basic attack implementation. Always attacks other, gives Damage to target, takes rounded half of target damage back";
 
-        public BasicAttackBehaviour()
-        {
-        }
-
+        /// <inheritdoc/>
         public override bool CanExecute(WorldEntity attacker, WorldEntity target, Dictionary<string, object>? otherParams = null)
         {
             return attacker.Id != target.Id;
