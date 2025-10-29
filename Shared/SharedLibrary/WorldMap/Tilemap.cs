@@ -126,17 +126,18 @@ namespace SharedLibrary
             return new Position2D(tileX, tileY);
         }
 
-        public bool[,] GetWalkableTiles()
+        public bool[][] GetWalkableTiles()
         {
-            if (Tiles == null || TilesetData == null) return new bool[1, 1] { { false } };
+            if (Tiles == null || TilesetData == null) return [[false]];
 
-            bool[,] walkableTiles = new bool[MapHeight, MapWidth];
+            bool[][] walkableTiles = new bool[MapWidth][];
 
-            for (int y = 0; y < MapHeight; y++)
+            for (int x = 0; x < MapWidth; x++)
             {
-                for (int x = 0; x < MapWidth; x++)
+                walkableTiles[x] = new bool[MapHeight];
+                for (int y = 0; y < MapHeight; y++)
                 {
-                    walkableTiles[y,x] = TilesetData.First(data => data.Id == Tiles[y][x]).Walkable;
+                    walkableTiles[x][y] = TilesetData.First(data => data.Id == Tiles[y][x]).Walkable;
                 }
             }
 

@@ -55,3 +55,4 @@ When the map json is ready:
 - Add the tileset texture to `Client/Content/Maps/Tiles` and include the new image using `Content.mgcb`
 - In the client, add a new option in the `InitializeRows` function in `SwitchPageMapSelection.cs`
 - In the shared library, add a new case in the `GetMapFileName` function in `Tilemap.cs`, the string must match the json filename
+- In the client, add a new case in the `LoadLobbies` function in `LobbyScene.cs`, the name of the map will be displayed in lobby menu
