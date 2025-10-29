@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Server.Core.Behaviours.EatBehaviour
 {
-    internal class EatWhenNotHealthyBehaviour : EatBehaviourBase
+    public class EatWhenNotHealthy50Behaviour : EatBehaviourBase
     {
         /// <inheritdoc/>
         public override int DatabaseID => 302;
@@ -20,7 +20,7 @@ namespace Server.Core.Behaviours.EatBehaviour
         {
             Module entityModule = moduleService.GetModuleById(entity.ModuleID) ?? throw new Exception($"Module with ID={entity.ModuleID} not found!");
 
-            if (entity.State.Health / entityModule.MaxHealth < 0.5)
+            if ((float)entity.State.Health/entityModule.MaxHealth < 0.5)
             {
                 return true;
             }

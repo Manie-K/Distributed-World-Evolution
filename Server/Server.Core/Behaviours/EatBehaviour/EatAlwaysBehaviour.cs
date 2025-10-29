@@ -7,28 +7,16 @@ using System.Threading.Tasks;
 
 namespace Server.Core.Behaviours.EatBehaviour
 {
-    internal class EatRandomlyBehaviour : EatBehaviourBase
+    public class EatAlwaysBehaviour : EatBehaviourBase
     {
         /// <inheritdoc/>
-        public override int DatabaseID => 305;
-
+        public override int DatabaseID => 307;
         /// <inheritdoc/>
-        public override string Description => "Eats randomly regardless of hunger level"; // Make more desriptive
-
+        public override string Description => "Eats always";
         /// <inheritdoc/>
         public override bool CanExecute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
-            Random rand = new Random();
-
-            double value = rand.NextDouble();
-
-            if (value <= 0.6)
-            {
-                return true;
-            }
-
-            return false;
+            return true;
         }
-
     }
 }

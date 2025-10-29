@@ -1,5 +1,4 @@
 ﻿using Server.Core.Services;
-using SharedLibrary.DTOs.ModuleDTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,21 +7,28 @@ using System.Threading.Tasks;
 
 namespace Server.Core.Behaviours.EatBehaviour
 {
-    public class EatNeverBehaviour : EatBehaviourBase
+    public class EatRandomly60Behaviour : EatBehaviourBase
     {
         /// <inheritdoc/>
-        public override int DatabaseID => 306;
+        public override int DatabaseID => 305;
+
         /// <inheritdoc/>
-        public override string Description => "Eats never";
-        /// <inheritdoc/>
-        public override void Execute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
-        {
-            return;
-        }
+        public override string Description => "Eats randomly regardless of hunger level"; // Make more desriptive
+
         /// <inheritdoc/>
         public override bool CanExecute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
+            Random rand = new Random();
+
+            double value = rand.NextDouble();
+
+            if (value <= 0.6)
+            {
+                return true;
+            }
+
             return false;
         }
+
     }
 }
