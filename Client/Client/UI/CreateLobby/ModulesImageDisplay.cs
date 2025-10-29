@@ -25,7 +25,7 @@ namespace Client.UI.CreateLobby
 
         public void InitializeImages(ContentManager contentManager)
         {
-            Images = new Texture2D[16];
+            Images = new Texture2D[28];
 
             Images[0] = contentManager.Load<Texture2D>("UI/CreateLobby/Modules_Images/Boar_Image");
             Images[1] = contentManager.Load<Texture2D>("UI/CreateLobby/Modules_Images/Pig_Image");
@@ -46,6 +46,21 @@ namespace Client.UI.CreateLobby
             Images[13] = contentManager.Load<Texture2D>("UI/CreateLobby/Modules_Images/Vampire1_Image");
             Images[14] = contentManager.Load<Texture2D>("UI/CreateLobby/Modules_Images/Vampire2_Image");
             Images[15] = contentManager.Load<Texture2D>("UI/CreateLobby/Modules_Images/Vampire3_Image");
+
+            Images[16] = contentManager.Load<Texture2D>("UI/CreateLobby/Modules_Images/Cosmo_Image");
+            Images[17] = contentManager.Load<Texture2D>("UI/CreateLobby/Modules_Images/Daffodil_Image");
+            Images[18] = contentManager.Load<Texture2D>("UI/CreateLobby/Modules_Images/Daisy_Image");
+            Images[19] = contentManager.Load<Texture2D>("UI/CreateLobby/Modules_Images/Lavender_Image");
+
+            Images[20] = contentManager.Load<Texture2D>("UI/CreateLobby/Modules_Images/Lily_Image");
+            Images[21] = contentManager.Load<Texture2D>("UI/CreateLobby/Modules_Images/LilyOfTheValley_Image");
+            Images[22] = contentManager.Load<Texture2D>("UI/CreateLobby/Modules_Images/Orchid_Image");
+            Images[23] = contentManager.Load<Texture2D>("UI/CreateLobby/Modules_Images/Pansy_Image");
+
+            Images[24] = contentManager.Load<Texture2D>("UI/CreateLobby/Modules_Images/Poppy_Image");
+            Images[25] = contentManager.Load<Texture2D>("UI/CreateLobby/Modules_Images/Rose_Image");
+            Images[26] = contentManager.Load<Texture2D>("UI/CreateLobby/Modules_Images/Sunflower_Image");
+            Images[27] = contentManager.Load<Texture2D>("UI/CreateLobby/Modules_Images/Tulip_Image");
         }
 
         public void Draw(SpriteBatch spriteBatch)
