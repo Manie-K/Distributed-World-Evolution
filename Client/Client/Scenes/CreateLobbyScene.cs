@@ -50,7 +50,7 @@ namespace Client
             mapData = new SelectedMapData();
             modulesImageDisplay = new ModulesImageDisplay(manager.ContentManager);
 
-            this.switchPageParameters = new SwitchPageParameters(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"),
+            switchPageParameters = new SwitchPageParameters(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"),
                                                                  new Vector2(848, 485), manager.ContentManager, 4);
 
             isCreatingLobby = false;
@@ -73,11 +73,22 @@ namespace Client
         public void InitializeCreaturesRows()
         {
             IReadOnlyList<ModuleDTO> modules = manager.ClientManager.Modules;
+            List<ModuleParametersData> parameters = new List<ModuleParametersData>();
             switchPageLobby.ClearModules();
 
             foreach (ModuleDTO module in modules)
             {
-                switchPageLobby.AddRow(new ModuleData(module.Name, module.DatabaseID, module.GraphicalRepresentationID, module.IsOfficialModule, new List<ModuleParametersData> { new ModuleParametersData("Health", "200", 0), new ModuleParametersData("Damage", module.Damage.ToString(), 0), new ModuleParametersData("Hunger", "130", 1), new ModuleParametersData("Consumption", "Carnivore", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
+                parameters.Clear();
+                parameters.Add(new ModuleParametersData("Damage", module.Damage.ToString(), 0));
+                parameters.Add(new ModuleParametersData("Aggresion", module.Aggresion.ToString(), 0));
+                parameters.Add(new ModuleParametersData("ReproductionNeed", module.ReproductionNeed.ToString(), 0));
+                parameters.Add(new ModuleParametersData("Type", module.Type.ToString(), 0));
+                foreach (BehviourDTO behviour in module.Behaviours)
+                {
+                    parameters.Add(new ModuleParametersData("Beh", behviour.Description, 1));
+                }
+
+                switchPageLobby.AddRow(new ModuleData(module.Name, module.DatabaseID, module.GraphicalRepresentationID, module.IsOfficialModule, parameters));
             }
 
             /*
@@ -106,106 +117,30 @@ namespace Client
         {
             if (timeoutTimer > 5)
             {
-                isCreatingLobby = false;
-                isJoiningLobby = false;
-                isLoadingModules = false;
-                manager.WindowManager.LoadingWindow.IsEnabled = false;
-                timeoutTimer = 0;
-                manager.WindowManager.ShowErrorMessage("Timeout with server");
+                ResetLoadingState();
             }
 
             if(timeoutTimer > 1 && !manager.WindowManager.LoadingWindow.IsEnabled)
             {
-                if(isCreatingLobby)
-                {
-                    manager.WindowManager.EnableLoadingWindow("Creating lobby");
-                }
-                else if(isJoiningLobby)
-                {
-                    manager.WindowManager.EnableLoadingWindow("Joining lobby");
-                }
-                else if(isLoadingModules)
-                {
-                    manager.WindowManager.EnableLoadingWindow("Loading modules");
-                }
+                ShowLoadingWindow();
             }
 
             if (isCreatingLobby)
             {
-                timer += gameTime.ElapsedGameTime.TotalSeconds;
-                timeoutTimer += gameTime.ElapsedGameTime.TotalSeconds;
-                if (timer < 0.1) return;
-
-                if (manager.ClientManager.LobbyCreated == ActionStatus.SUCCESS)
-                {
-                    isJoiningLobby = true;
-                    isCreatingLobby = false;
-                    manager.WindowManager.LoadingWindow.IsEnabled = false;
-                    manager.ClientManager.LobbyCreated = ActionStatus.IDLE;
-                    manager.ClientManager.SetPendingLobbyJoined();
-                    timeoutTimer = 0;
-                }
-                else if (manager.ClientManager.LobbyCreated == ActionStatus.FAILED)
-                {
-                    isCreatingLobby = false;
-                    manager.WindowManager.LoadingWindow.IsEnabled = false;
-                    manager.ClientManager.LobbyCreated = ActionStatus.IDLE;
-                    timeoutTimer = 0;
-                    manager.WindowManager.ShowErrorMessage("Failed to create lobby");
-                }
-
-                timer = 0;
+                if (ShouldSkipUpdate(gameTime)) return;
+                UpdateCreatingLobby();
                 return;
             }
             else if (isJoiningLobby)
             {
-                timer += gameTime.ElapsedGameTime.TotalSeconds;
-                timeoutTimer += gameTime.ElapsedGameTime.TotalSeconds;
-                if (timer < 0.1) return;
-
-                if (manager.ClientManager.LobbyJoined == ActionStatus.SUCCESS)
-                {
-                    timeoutTimer = 0;
-                    manager.WindowManager.LoadingWindow.IsEnabled = false;
-                    manager.SceneManager.RemoveScene();
-                    manager.SceneManager.AddScene(new GameScene(manager, mapData.index));
-                }
-                else if (manager.ClientManager.LobbyJoined == ActionStatus.FAILED)
-                {
-                    timeoutTimer = 0;
-                    isJoiningLobby = false;
-                    manager.WindowManager.LoadingWindow.IsEnabled = false;
-                    manager.ClientManager.LobbyJoined = ActionStatus.IDLE;
-                    manager.WindowManager.ShowErrorMessage("Failed to join lobby");
-                }
-
-                timer = 0;
+                if (ShouldSkipUpdate(gameTime)) return;
+                UpdateJoiningLobby();
                 return;
             }
             else if (isLoadingModules)
             {
-                timer += gameTime.ElapsedGameTime.TotalSeconds;
-                timeoutTimer += gameTime.ElapsedGameTime.TotalSeconds;
-                if (timer < 0.1) return;
-
-                if (manager.ClientManager.ModuleListReady == ActionStatus.SUCCESS)
-                {
-                    InitializeCreaturesRows();
-                    manager.ClientManager.ModuleListReady = ActionStatus.IDLE;
-                    isLoadingModules = false;
-                    manager.WindowManager.LoadingWindow.IsEnabled = false;
-                    timeoutTimer = 0;
-                }
-                else if (manager.ClientManager.ModuleListReady == ActionStatus.FAILED)
-                {
-                    isLoadingModules = false;
-                    manager.WindowManager.LoadingWindow.IsEnabled = false;
-                    manager.ClientManager.ModuleListReady = ActionStatus.IDLE;
-                    timeoutTimer = 0;
-                    manager.WindowManager.ShowErrorMessage("Failed to load modules");
-                }
-
-                timer = 0;
+                if (ShouldSkipUpdate(gameTime)) return;
+                UpdateLoadingModules();
                 return;
             }
 
@@ -231,6 +166,7 @@ namespace Client
                         {
                             throw new Exception("Could not load the map " + Tilemap.GetMapFileName(mapData.index));
                         }
+
                         IEnumerable<int> modules = switchPageLobby.GetSelectedModulesIDList();
                         CreateLobbyMessage message = new CreateLobbyMessage(gameNameBox.GetText(), manager.UserSettings.PlayerName,
                             int.Parse(playerAmountBox.GetText()), mapData.index, modules, map.GetWalkableTiles());
@@ -300,6 +236,103 @@ namespace Client
             });
 
             Console.WriteLine(json);
+        }
+
+        private void ResetLoadingState()
+        {
+            isCreatingLobby = false;
+            isJoiningLobby = false;
+            isLoadingModules = false;
+            manager.WindowManager.LoadingWindow.IsEnabled = false;
+            timeoutTimer = 0;
+            manager.WindowManager.ShowErrorMessage("Timeout with server");
+        }
+
+        private void ShowLoadingWindow()
+        {
+            if (isCreatingLobby)
+            {
+                manager.WindowManager.EnableLoadingWindow("Creating lobby");
+            }
+            else if (isJoiningLobby)
+            {
+                manager.WindowManager.EnableLoadingWindow("Joining lobby");
+            }
+            else if (isLoadingModules)
+            {
+                manager.WindowManager.EnableLoadingWindow("Loading modules");
+            }
+        }
+
+        private bool ShouldSkipUpdate(GameTime gameTime)
+        {
+            timer += gameTime.ElapsedGameTime.TotalSeconds;
+            timeoutTimer += gameTime.ElapsedGameTime.TotalSeconds;
+
+            if (timer < 0.1) return true;
+
+            timer = 0;
+            return false;
+        }
+
+        private void UpdateCreatingLobby()
+        {
+            if (manager.ClientManager.LobbyCreated == ActionStatus.SUCCESS)
+            {
+                isJoiningLobby = true;
+                isCreatingLobby = false;
+                manager.WindowManager.LoadingWindow.IsEnabled = false;
+                manager.ClientManager.LobbyCreated = ActionStatus.IDLE;
+                manager.ClientManager.SetPendingLobbyJoined();
+                timeoutTimer = 0;
+            }
+            else if (manager.ClientManager.LobbyCreated == ActionStatus.FAILED)
+            {
+                isCreatingLobby = false;
+                manager.WindowManager.LoadingWindow.IsEnabled = false;
+                manager.ClientManager.LobbyCreated = ActionStatus.IDLE;
+                timeoutTimer = 0;
+                manager.WindowManager.ShowErrorMessage("Failed to create lobby");
+            }
+        }
+
+        private void UpdateJoiningLobby()
+        {
+            if (manager.ClientManager.LobbyJoined == ActionStatus.SUCCESS)
+            {
+                timeoutTimer = 0;
+                manager.WindowManager.LoadingWindow.IsEnabled = false;
+                manager.SceneManager.RemoveScene();
+                manager.SceneManager.AddScene(new GameScene(manager, mapData.index));
+            }
+            else if (manager.ClientManager.LobbyJoined == ActionStatus.FAILED)
+            {
+                timeoutTimer = 0;
+                isJoiningLobby = false;
+                manager.WindowManager.LoadingWindow.IsEnabled = false;
+                manager.ClientManager.LobbyJoined = ActionStatus.IDLE;
+                manager.WindowManager.ShowErrorMessage("Failed to join lobby");
+            }
+        }
+
+        private void UpdateLoadingModules()
+        {
+            if (manager.ClientManager.ModuleListReady == ActionStatus.SUCCESS)
+            {
+                InitializeCreaturesRows();
+                manager.ClientManager.ModuleListReady = ActionStatus.IDLE;
+                isLoadingModules = false;
+                manager.WindowManager.LoadingWindow.IsEnabled = false;
+                timeoutTimer = 0;
+            }
+            else if (manager.ClientManager.ModuleListReady == ActionStatus.FAILED)
+            {
+                isLoadingModules = false;
+                manager.WindowManager.LoadingWindow.IsEnabled = false;
+                manager.ClientManager.ModuleListReady = ActionStatus.IDLE;
+                timeoutTimer = 0;
+                manager.WindowManager.ShowErrorMessage("Failed to load modules");
+            }
         }
     }
 }

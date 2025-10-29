@@ -146,7 +146,7 @@ namespace Client
 
         private void LoadCharacter(WorldEntityDTO entity)
         {
-            int graphicID = manager.ClientManager.LobbyData.Modules.FirstOrDefault(m => m.DatabaseID == entity.ModuleID)?.GraphicalRepresentationID ?? -1;
+            int graphicID = manager.ClientManager.Modules.FirstOrDefault(m => m.DatabaseID == entity.ModuleID)?.GraphicalRepresentationID ?? -1;
             Vector2 position = GetWorldPosition(entity);
 
             characters.Add(entity.Id, graphicID switch
