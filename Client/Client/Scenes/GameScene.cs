@@ -1,4 +1,5 @@
-﻿using Client.Panels;
+﻿using Client.Logic.Plants;
+using Client.Panels;
 using Client.Rendering;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -25,12 +26,15 @@ namespace Client
         private double timeBetweenUpdates;
         private WorldEntityDTO playerDTO;
 
+        private List<Plant> plants;
+
         public GameScene(GameManager manager, int mapID)
         {
             this.manager = manager;
 
             animationTexturesLoader = new AnimationTexturesLoader(manager.ContentManager);
             characters = [];
+            //plants = [];
 
             panelsController = new PanelsController(manager);
             cameraOffset = new Vector2(0, 70);
@@ -47,6 +51,8 @@ namespace Client
             manager.IsInGame = true;
             clientUpdateTimer = 0;
             timeBetweenUpdates = 1.0 / ClientManager.CLIENT_UPDATES_PER_SECOND;
+
+           // LoadPlants();
         }
 
         public void Load()
@@ -114,6 +120,11 @@ namespace Client
             {
                 character.Draw(spriteBatch);
             }
+            /*
+            foreach(Plant plant in plants)
+            {
+                plant.Draw(spriteBatch);
+            }*/
         }
 
         public void DrawStatic(SpriteBatch spriteBatch)
@@ -142,6 +153,24 @@ namespace Client
             characters.Add(new Vampire2(new Vector2(400, 500), Color.White, ref this.animationTexturesLoader));
             characters.Add(new Vampire3(new Vector2(500, 500), Color.White, ref this.animationTexturesLoader));
             */
+        }
+
+        private void LoadPlants()
+        {
+          /*  plants.Add(new Poppy(new Vector2(300, 500)));
+            plants.Add(new Cosmo(new Vector2(800, 500)));
+            plants.Add(new Daffodil(new Vector2(1300, 1500)));
+            plants.Add(new Daisy(new Vector2(1800, 1500)));
+
+            plants.Add(new Lavender(new Vector2(2300, 2500)));
+            plants.Add(new Lily(new Vector2(3800, 3500)));
+            plants.Add(new LilyOfTheValley(new Vector2(4300, 4300)));
+            plants.Add(new Orchid(new Vector2(5800, 5500)));
+
+            plants.Add(new Pansy(new Vector2(6300, 6300)));
+            plants.Add(new Rose(new Vector2(7800, 7500)));
+            plants.Add(new Sunflower(new Vector2(2300, 6300)));
+            plants.Add(new Tulip(new Vector2(7800, 3300)));*/
         }
 
         private void LoadCharacter(WorldEntityDTO entity)
