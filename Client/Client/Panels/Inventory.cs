@@ -36,10 +36,20 @@ namespace Client.Panels
             else if (manager.InputManager.CheckIfCanPressKey(Keys.Z))
             {
                 CollectItem(0);
+                CollectItem(2);
+                CollectItem(3);
+                CollectItem(4);
+                CollectItem(9);
+                CollectItem(10);
             }
             else if (manager.InputManager.CheckIfCanPressKey(Keys.C))
             {
                 CollectItem(1);
+                CollectItem(5);
+                CollectItem(6);
+                CollectItem(7);
+                CollectItem(8);
+                CollectItem(11);
             }
             else if (manager.InputManager.CheckIfCanPressKey(Keys.X))
             {
