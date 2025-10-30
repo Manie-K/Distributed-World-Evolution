@@ -16,7 +16,6 @@ namespace Server.Core.Behaviours.EatBehaviour
         /// <inheritdoc/>
         public abstract string Description { get; }
 
-
         /// <inheritdoc/>
         public virtual void Execute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {

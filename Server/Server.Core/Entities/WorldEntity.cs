@@ -10,7 +10,7 @@ namespace Server.Core
         public int ModuleID { get; init; }
         public EntityState State { get; init; }
 
-        public static WorldEntity CreateWorldEntity(string name, int moduleId, EntityState state)
+        public static WorldEntity CreateWorldEntity(string? name, int moduleId, EntityState state)
         {
             return new WorldEntity(name, moduleId, state);
         }
