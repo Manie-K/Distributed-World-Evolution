@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Client.Logic.Plants;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Client
@@ -32,6 +33,8 @@ namespace Client
             manager.SetWindowManager();
             manager.SceneManager.AddScene(new MainMenuScene(manager, this));
             manager.SceneManager.GetCurrentScene().Load();
+
+            PlantsAssetsManager.GetInstance().Load(manager.ContentManager);
         }
 
         protected override void Update(GameTime gameTime)

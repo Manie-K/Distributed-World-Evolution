@@ -59,6 +59,7 @@
     <Folder Include="Content\Panels\Inventory\" />
     <Folder Include="Content\Panels\Warning_Window\" />
     <Folder Include="Content\UI\CreateModules\" />
+    <Folder Include="Content\UI\CreateModules\PlantsAssets\" />
     <Folder Include="Content\UI\MapSelection\" />
   </ItemGroup>
   <ItemGroup>
