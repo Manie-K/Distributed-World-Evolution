@@ -15,7 +15,7 @@ using Xunit;
 namespace Server.Tests
 {
     //TODO: Check if plant is dead after Die() implementation
-    public class EatBeahvioursTests
+    public class EatBeahvioursTests : IDisposable
     {
         private readonly WorldEntity eaterEntity;
         private readonly WorldEntity normalPlantEntity;

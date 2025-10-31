@@ -1,6 +1,4 @@
 ﻿using System.Net.Sockets;
-using SharedLibrary;
-using Server.Core;
 using Server.Core.Modules;
 using SharedLibrary.Logging;
 using SharedLibrary.Messages;
@@ -35,7 +33,7 @@ namespace Server.Core.Lobby
         public const double LOBBY_UPDATES_PER_SECOND = 64;
 
         private readonly IModuleService moduleService;
-        private readonly List<TcpClient> clients;
+        private readonly Dictionary<TcpClient, WorldEntity> clients;
         private readonly List<WorldEntity> entities;
         private readonly List<int> allowedModulesIDs;
         private readonly bool[][] walkableTiles;
@@ -72,7 +70,7 @@ namespace Server.Core.Lobby
 
             entities = new List<WorldEntity>();
             allowedModulesIDs = new List<int>();
-            clients = new List<TcpClient>();
+            clients = new Dictionary<TcpClient, WorldEntity>();
             running = true;
 
             Server.OnMessageFromClientReceived += OnMessageFromClientReceived_Delegate;
@@ -147,9 +145,9 @@ namespace Server.Core.Lobby
 
             lock (clients)
             {
-                foreach (var client in clients)
+                foreach (var clientPair in clients)
                 {
-                    _ = MessageManager.SendMessageAsync(client, new WorldStateMessage(
+                    _ = MessageManager.SendMessageAsync(clientPair.Key, new WorldStateMessage(
                             entities.Select(e => e.ToDTO())
                         ));
                 }
@@ -212,7 +210,8 @@ namespace Server.Core.Lobby
                 Module? targetModule = moduleService.GetModuleById(targetEntity.ModuleID)
                     ?? throw new Exception($"Target's {targetEntity.Id} module not found.");
 
-                // In case when we need to add custom parameters
+
+                // Distinction in case when we need to add custom parameters
                 if (interactionType == typeof(MoveBehaviourBase))
                 {
                     behaviour.Execute(entity, null, ModuleService.Instance ,new Dictionary<string, object>{
@@ -227,8 +226,18 @@ namespace Server.Core.Lobby
                     behaviour.Execute(entity, targetEntity, ModuleService.Instance, new Dictionary<string, object>{
                         { CustomBehaviourParams.LOBBY_PARAM, this }
                     });
+
                     entity.State.InteractionFramesLeft = 8;
                     targetEntity.State.InteractionFramesLeft = 8;
+                }
+                else if(interactionType == typeof(AttackBehaviourBase))
+                {
+                    behaviour.Execute(entity, targetEntity, ModuleService.Instance, new Dictionary<string, object>{
+                        { CustomBehaviourParams.LOBBY_PARAM, this }
+                    });
+
+                    entity.State.InteractionFramesLeft = 15;
+                    targetEntity.State.InteractionFramesLeft = 15;
                 }
                 else
                 {
@@ -339,7 +348,7 @@ namespace Server.Core.Lobby
         {
             lock(clients)
             {
-                if(!clients.Contains(args.Client))
+                if(!clients.Keys.Contains(args.Client))
                 {
                     return;
                 }
@@ -407,17 +416,19 @@ namespace Server.Core.Lobby
         /// <inheritdoc/>
         public Guid AddClient(TcpClient client, string username)
         {
+            //TODO: Add moduleID for human entity.
+            WorldEntity userEntity = WorldEntity.CreateWorldEntity(username, moduleService.GetHumanModuleId(), new EntityState(new Position2D(0, 0)));
+            
             lock (clients)
             {
-                if (clients.Contains(client))
+                if (clients.Keys.Contains(client))
                 {
                     Log("Client already in lobby.", LogLevelEnum.Warning);
                     return Guid.Empty;
                 }
-                clients.Add(client);
+                clients.Add(client, userEntity);
             }
 
-            WorldEntity userEntity = WorldEntity.CreateWorldEntity(username, moduleService.GetHumanModuleId(), new EntityState(new SharedLibrary.Helpers.Position2D(0, 0))); //TODO: Add moduleID for human entity.
             AddWorldEntity(userEntity);
 
             return userEntity.Id;
@@ -427,13 +438,13 @@ namespace Server.Core.Lobby
         {
             lock (clients)
             {
-                if (!clients.Contains(client))
+                if (!clients.Keys.Contains(client))
                 {
                     Log("Client already not in lobby.", LogLevelEnum.Warning);
                     return false;
                 }
                 clients.Remove(client);
-                //TODO: Also remove user's entity from the lobby.
+                DestroyWorldEntity(clients[client]);
             }
 
             return true;
@@ -497,6 +508,11 @@ namespace Server.Core.Lobby
 
         public bool DestroyWorldEntity(WorldEntity entity)
         {
+            if(entity == null)
+            {
+                return false;
+            }
+
             lock (entities)
             {
                 if (!entities.Contains(entity))

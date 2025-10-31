@@ -50,7 +50,7 @@ namespace Server.Core
             loggerService.Log("Server started...", LogLevelEnum.Info);
 
             //TODO: remove hardcoded lobby
-            lobbyManager.CreateAndInitializeLobby("TEST", 2, 1, new bool[1, 1], []);
+            lobbyManager.CreateAndInitializeLobby("TEST", 2, 1, new bool[4][], []);
 
             await StartAcceptingClientsAsync();
         }
