@@ -4,11 +4,17 @@ using Server.Core.Services;
 
 namespace Server.Core.Behaviours.MoveBehaviour
 {
+
+    /// <inheritdoc>
     public class RandomWalkerMoveBehaviour : MoveBehaviourBase
     {
+        /// <inheritdoc>
         public override int DatabaseID => 101;
-        public override string Description => "Basic move behaviour, random 8-sided movement";
 
+        /// <inheritdoc>
+        public override string Description => "Basic move behaviour, random 8-sided movement";
+        
+        /// <inheritdoc>
         public override (int, int) GetNextMovement(WorldEntity entity)
         {
             int x = 0, y = 0;

@@ -5,6 +5,7 @@ using SharedLibrary.Helpers;
 
 namespace Server.Core.Behaviours.MoveBehaviour
 {
+    /// <inheritdoc>
     public abstract class MoveBehaviourBase : IBehaviour
     {
         /// <inheritdoc/>
@@ -43,6 +44,11 @@ namespace Server.Core.Behaviours.MoveBehaviour
             return walkableTiles[nextPos.X][nextPos.Y];
         }
 
+        /// <summary>
+        /// Returns the next movement vector as (x, y).
+        /// </summary>
+        /// <param name="entity"> Entity </param>
+        /// <returns> Next movement candidate vector (x,y) </returns>       
         public abstract (int, int) GetNextMovement(WorldEntity entity);
 
         /// <inheritdoc/>
