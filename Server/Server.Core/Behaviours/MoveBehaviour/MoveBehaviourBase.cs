@@ -11,7 +11,7 @@ namespace Server.Core.Behaviours.MoveBehaviour
         public abstract int DatabaseID { get; }
 
         /// <inheritdoc/>
-        public virtual EntityTypeEnum Type => EntityTypeEnum.Animal | EntityTypeEnum.Human;
+        public virtual EntityTypeEnum Type => EntityTypeEnum.Animal;
 
         /// <inheritdoc/>
         public abstract string Description { get; }
@@ -27,7 +27,21 @@ namespace Server.Core.Behaviours.MoveBehaviour
         }
 
         /// <inheritdoc/>
-        public abstract bool CanExecute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null);
+        public virtual bool CanExecute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
+        {
+            Position2D nextPos = otherParams != null && otherParams.TryGetValue(CustomBehaviourParams.NEW_POS_PARAM, out object? value) && value is Position2D pos
+                ? pos : entity.State.Position;
+
+            bool[][]? walkableTiles = otherParams != null && otherParams.TryGetValue(CustomBehaviourParams.MAP_PARAM, out object? walkableTilesObj)
+                && walkableTilesObj is bool[][] tiles ? tiles : null;
+
+            if (walkableTiles == null || nextPos.X < 0 || nextPos.Y < 0 || nextPos.X >= walkableTiles.GetLength(0) || nextPos.Y >= walkableTiles.GetLength(1))
+            {
+                return false;
+            }
+
+            return walkableTiles[nextPos.X][nextPos.Y];
+        }
 
         public abstract (int, int) GetNextMovement(WorldEntity entity);
 

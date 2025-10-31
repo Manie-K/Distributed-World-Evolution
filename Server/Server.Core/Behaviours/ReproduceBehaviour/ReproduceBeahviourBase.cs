@@ -59,8 +59,7 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
                 new EntityState(
                     position: position,
                     health: entityModule.MaxHealth,
-                    hunger: entityModule.MaxHunger,
-                    interactionFramesLeft: 5
+                    hunger: entityModule.MaxHunger
                 )
             );
 

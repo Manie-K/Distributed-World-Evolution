@@ -1,4 +1,7 @@
-﻿using SharedLibrary;
+﻿using Server.Core.Lobby;
+using Server.Core.Modules;
+using Server.Core.Services;
+using SharedLibrary;
 using SharedLibrary.DTOs.EntitiesDTO;
 
 namespace Server.Core
@@ -36,10 +39,25 @@ namespace Server.Core
             State.InteractionFramesLeft = newState.InteractionFramesLeft;
         }
 
-        public void Die()
+        public void Die(ILobby lobby)
         {
             // VERY IMPORTANT TODO
-            // noop for now
+            Module? module = ModuleService.Instance.GetModuleById(ModuleID);
+            if(module == null)
+            {
+                throw new Exception($"Module with ID {ModuleID} not found for entity {Id}");
+            }
+
+            if(module.Type == EntityTypeEnum.Human)
+            {
+                //@EVERYONE, What do we do here?
+                //noop for now
+            }
+            else
+            {
+                // Remove entity from lobby
+                lobby.DestroyWorldEntity(this);
+            }
         }
 
         public WorldEntityDTO ToDTO()
