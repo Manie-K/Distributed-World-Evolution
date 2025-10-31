@@ -25,29 +25,44 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
             Module entityModule = moduleService.GetModuleById(entity.ModuleID) ?? throw new Exception($"Module with ID={entity.ModuleID} not found!");
             EntityTypeEnum entityType = entityModule.Type;
 
-            //TODO: find position to spawn a new entity
-            Position2D position;
-            if (entityType == EntityTypeEnum.Plant)
+            ILobby lobby = otherParams != null && otherParams.TryGetValue(CustomBehaviourParams.LOBBY_PARAM, out object? lobbyObj)
+                && lobbyObj is ILobby l ? l :
+                throw new ArgumentNullException("Lobby parameter is required for reproduction behaviour.");
+
+            Position2D? position = null;
+            
+            int loopSafetyCounter = 0;
+            while (loopSafetyCounter < 100)
             {
-                position = new Position2D(entity.State.Position.X, entity.State.Position.Y);
+                loopSafetyCounter++;
+                int x = entity.State.Position.X;
+                int y = entity.State.Position.Y;
+                
+                x = new Random().Next(2) == 0 ? x + new Random().Next(4) : x - new Random().Next(4);
+                y = new Random().Next(2) == 0 ? y + new Random().Next(4) : y - new Random().Next(4);
+
+                if(lobby.IsPositionFree(new Position2D(x, y)))
+                {
+                    position = new Position2D(x, y);
+                    break;
+                }
             }
-            else
+
+            if (position == null)
             {
-                position = new Position2D(entity.State.Position.X, entity.State.Position.Y);
+                return; //We didn't find a free position, so we dont spawn a child
             }
 
             WorldEntity child = WorldEntity.CreateWorldEntity(
-                name: null,
-                moduleId: entity.ModuleID,
-                state: new EntityState(
-                    health: entityModule.MaxHealth,
+                null,
+                entity.ModuleID,
+                new EntityState(
                     position: position,
+                    health: entityModule.MaxHealth,
                     hunger: entityModule.MaxHunger,
                     interactionFramesLeft: 5
                 )
             );
-
-            ILobby lobby = otherParams != null && otherParams.TryGetValue(CustomBehaviourParams.LOBBY_PARAM, out object? lobbyObj) && lobbyObj is ILobby l ? l : throw new ArgumentNullException("Lobby parameter is required for reproduction behaviour.");
 
             lobby.AddWorldEntity(child);
         }

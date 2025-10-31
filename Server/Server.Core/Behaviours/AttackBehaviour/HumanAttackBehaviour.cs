@@ -3,6 +3,7 @@
 namespace Server.Core.Behaviours.AttackBehaviour
 {
     /// <inheritdoc/>
+    /// Don't actually know if this is needed, but here it is.
     public class HumanAttackBehaviour : AttackBehaviourBase
     {
         /// <inheritdoc/>

@@ -21,7 +21,7 @@ namespace Server.Core.Behaviours.EatBehaviour
         {
             Module entityModule = moduleService.GetModuleById(entity.ModuleID) ?? throw new Exception($"Module with ID={entity.ModuleID} not found!");
 
-            if ((float)entity.State.Hunger/entityModule.MaxHunger < (float)entityModule.ReproductionNeed/ModulePropertiesLimits.MAX_REPRODUCTION_NEED)
+            if ((float)entity.State.Hunger / entityModule.MaxHunger < (float)entityModule.ReproductionNeed/ModulePropertiesLimits.MAX_REPRODUCTION_NEED)
             {
                 return true;
             }

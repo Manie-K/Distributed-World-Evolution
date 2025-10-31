@@ -15,6 +15,7 @@ using Server.Core.Behaviours.GatherBehaviour;
 using Server.Core.Behaviours.MoveBehaviour;
 using Server.Core.Behaviours.TameBehaviour;
 using Server.Core.Behaviours.ReproduceBehaviour;
+using SharedLibrary.Helpers;
 
 namespace Server.Core.Lobby
 {
@@ -387,6 +388,19 @@ namespace Server.Core.Lobby
         #region Helpers
 
         /// <inheritdoc/>
+        public bool IsPositionFree(Position2D position)
+        {
+            foreach (var entity in entities)
+            {
+                if (entity.State.Position == position)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        /// <inheritdoc/>
         public Guid AddClient(TcpClient client, string username)
         {
             lock (clients)
@@ -415,6 +429,7 @@ namespace Server.Core.Lobby
                     return false;
                 }
                 clients.Remove(client);
+                //TODO: Also remove user's entity from the lobby.
             }
 
             return true;
@@ -468,6 +483,9 @@ namespace Server.Core.Lobby
                     Log($"Entity's {entity.Id} module is not allowed in lobby {LobbyId}.", LogLevelEnum.Warning);
                     return false;
                 }
+
+                if (!IsPositionFree(entity.State.Position)) return false;
+
                 entities.Add(entity);
                 return true;
             }
