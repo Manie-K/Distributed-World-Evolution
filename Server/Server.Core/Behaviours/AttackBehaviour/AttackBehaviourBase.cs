@@ -1,6 +1,4 @@
 ﻿using Server.Core.Exceptions;
-using Server.Core.Helpers;
-using Server.Core.Lobby;
 using Server.Core.Modules;
 using Server.Core.Services;
 using SharedLibrary.DTOs.ModuleDTO;
@@ -34,17 +32,13 @@ namespace Server.Core.Behaviours.AttackBehaviour
                 target.State.Health -= attackerModule.Damage;
                 attacker.State.Health -= (int)(targetModule.Damage * 0.5);
 
-                ILobby lobby = otherParams != null && otherParams.TryGetValue(CustomBehaviourParams.LOBBY_PARAM, out object? lobbyObj)
-                    && lobbyObj is ILobby l ? l :
-                        throw new ArgumentNullException("Lobby parameter is required for AttackBehaviourBase");
-
                 if (target.State.Health <= 0)
                 {
-                    target.Die(lobby);
+                    target.Die();
                 }
                 if(attacker.State.Health <= 0)
                 {
-                    attacker.Die(lobby);
+                    attacker.Die();
                 }
             }
             catch (ModuleNotFoundException ex)

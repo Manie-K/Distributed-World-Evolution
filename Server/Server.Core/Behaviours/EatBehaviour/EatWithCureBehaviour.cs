@@ -31,12 +31,7 @@ namespace Server.Core.Behaviours.EatBehaviour
                 entity.State.Health -= 2* targetModule.Damage;
             }
 
-
-            ILobby lobby = otherParams != null && otherParams.TryGetValue(CustomBehaviourParams.LOBBY_PARAM, out object? lobbyObj)
-                    && lobbyObj is ILobby l ? l :
-                        throw new ArgumentNullException("Lobby parameter is required for EatWithCureBehaviour");
-
-            target.Die(lobby);
+            target.Die();
         }
         /// <inheritdoc/>
         public override bool CanExecute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)

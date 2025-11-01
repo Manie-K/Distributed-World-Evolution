@@ -91,17 +91,31 @@ namespace Server.Core.Lobby
 
         private void InitializeWorldEntities()
         {
+            const int NUM_INITIAL_ENTITIES = 100;
+
+            IModuleService moduleService = ModuleService.Instance;
+            List<Module> modules = (moduleService.GetAllModules().ToList());
+            int modulesCount = modules.Count;
+
+            Module module;
+
             Log("Initializing world entities...", LogLevelEnum.Info);
 
             // For testing purposes, we create some entities here.
-            for (int i = 0; i < 10; i++)
+            for (int i = 0; i < NUM_INITIAL_ENTITIES; i++)
             {
-                WorldEntity ent = WorldEntity.CreateWorldEntity(
-                    $"Animal_{i}",
-                    -2, //Hard-coded seed data
-                    new EntityState(new SharedLibrary.Helpers.Position2D(i*10 + 3, i*10 + 15))
-                    );
+                module = modules[new Random().Next(modulesCount)];
+                int x, y;
+                do
+                {
+                    x = new Random().Next(walkableTiles.Length);
+                    y = new Random().Next(walkableTiles[0].Length);
+                } while (!walkableTiles[x][y] || !IsPositionFree(new Position2D(x, y)));
 
+                WorldEntity ent = WorldEntity.CreateWorldEntity($"[{i}]_{module.Name}", module.ID, new EntityState(
+                        new Position2D(x, y)
+                    ), this);
+                
                 AddWorldEntity(ent);
             }
         }
@@ -232,10 +246,6 @@ namespace Server.Core.Lobby
                 }
                 else if(interactionType == typeof(AttackBehaviourBase))
                 {
-                    behaviour.Execute(entity, targetEntity, ModuleService.Instance, new Dictionary<string, object>{
-                        { CustomBehaviourParams.LOBBY_PARAM, this }
-                    });
-
                     entity.State.InteractionFramesLeft = 15;
                     targetEntity.State.InteractionFramesLeft = 15;
                 }
@@ -259,14 +269,8 @@ namespace Server.Core.Lobby
                 throw new ArgumentNullException(nameof(entHuman), "Entity not found");
             }
 
-            /// @FranciszekGwarek - sanity check please
-            if(human.State.InteractionFramesLeft > 0)
-            {
-                return;
-            }
-
             entHuman.UpdateState(new EntityState(human.State));
-            entOther?.UpdateState(new EntityState(other!.State)); //If entityOther isn't null, then it's dto also isn't.
+            entOther?.UpdateState(new EntityState(other!.State));
         }
 
         private Type? GetInteractionType(WorldEntity entity, EntityState newState)
@@ -416,8 +420,8 @@ namespace Server.Core.Lobby
         /// <inheritdoc/>
         public Guid AddClient(TcpClient client, string username)
         {
-            //TODO: Add moduleID for human entity.
-            WorldEntity userEntity = WorldEntity.CreateWorldEntity(username, moduleService.GetHumanModuleId(), new EntityState(new Position2D(0, 0)));
+            WorldEntity userEntity = WorldEntity.CreateWorldEntity(username, moduleService.GetHumanModuleId(), 
+                new EntityState(new Position2D(0, 0)), this);
             
             lock (clients)
             {
@@ -532,7 +536,7 @@ namespace Server.Core.Lobby
                 LobbyId,
                 Name,
                 MaxPlayers,
-                currentPlayers: clients.Count,
+                clients.Count,
                 MapID,
                 allowedModulesIDs
             );

@@ -25,10 +25,11 @@ namespace Server.Tests
         //Run before every test
         public AttackBehaviourTests()
         {
-            attacker = WorldEntity.CreateWorldEntity("Attacker", 1, new EntityState(new SharedLibrary.Helpers.Position2D(0, 0), 100, 100, 0));
-            target = WorldEntity.CreateWorldEntity("Target", 2, new EntityState(new SharedLibrary.Helpers.Position2D(0, 0), 100, 100, 0));
-            targetSameModule = WorldEntity.CreateWorldEntity("TargetSameModule", 1, new EntityState(new SharedLibrary.Helpers.Position2D(0, 0), 100, 100, 0));
-            human = WorldEntity.CreateWorldEntity("Human", 3, new EntityState(new SharedLibrary.Helpers.Position2D(0, 0), 15, 100, 0));
+            attacker = WorldEntity.CreateWorldEntity("Attacker", 1, new EntityState(new SharedLibrary.Helpers.Position2D(0, 0), 100, 100, 0), null);
+            target = WorldEntity.CreateWorldEntity("Target", 2, new EntityState(new SharedLibrary.Helpers.Position2D(0, 0), 100, 100, 0), null);
+            targetSameModule = WorldEntity.CreateWorldEntity("TargetSameModule", 1, 
+                new EntityState(new SharedLibrary.Helpers.Position2D(0, 0), 100, 100, 0), null);
+            human = WorldEntity.CreateWorldEntity("Human", 3, new EntityState(new SharedLibrary.Helpers.Position2D(0, 0), 15, 100, 0), null);
 
             firstModule = new Module.ModuleBuilder()
                 .WithID(1)

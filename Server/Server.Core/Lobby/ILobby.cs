@@ -1,4 +1,5 @@
 ﻿using System.Net.Sockets;
+using SharedLibrary.DTOs.LobbyDTO;
 using SharedLibrary.Helpers;
 using SharedLibrary.Logging;
 
@@ -28,5 +29,7 @@ namespace Server.Core.Lobby
 
         public bool DestroyWorldEntity(WorldEntity entity);
         public void Run();
+
+        public LobbyDTO ToDTO();
     }
 }

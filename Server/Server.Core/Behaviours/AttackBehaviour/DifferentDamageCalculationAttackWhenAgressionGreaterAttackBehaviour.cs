@@ -25,14 +25,9 @@ namespace Server.Core.Behaviours.AttackBehaviour
 
                 target.State.Health -= (int)(attackerModule.Damage * ((attackerModule.Agression - targetModule.Agression) / attackerModule.Agression) );
 
-
-                ILobby lobby = otherParams != null && otherParams.TryGetValue(CustomBehaviourParams.LOBBY_PARAM, out object? lobbyObj)
-                    && lobbyObj is ILobby l ? l :
-                        throw new ArgumentNullException("Lobby parameter is required for DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour");
-
                 if (target.State.Health <= 0)
                 {
-                    target.Die(lobby);
+                    target.Die();
                 }
             }
             catch (ModuleNotFoundException ex)
