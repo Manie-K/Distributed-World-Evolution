@@ -38,7 +38,7 @@ namespace Server.Core.Migrations
                 columns: new[] { "ID", "Agression", "BehaviourIDs", "Damage", "GraphicalRepresentationID", "Name", "Official", "ReproductionNeed", "Type" },
                 values: new object[,]
                 {
-                    { -2, 70, new[] {101, 201, 307, 40 }, 30, 2, "Default module", true, 40, 2 },
+                    { -2, 70, new[] {101, 201, 307, 401 }, 30, 2, "Default module", true, 40, 2 },
                     { -1, 5, new int[0], 5, 1, "Human module", true, 5, 1 }
                 });
         }
