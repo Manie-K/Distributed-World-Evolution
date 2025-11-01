@@ -21,10 +21,20 @@ namespace Server.Core.Lobby
     {
         /// <inheritdoc/>
         public int LobbyId { get; init; }
+        
+        /// <inheritdoc/>
         public string Name { get; init; }
+        
+        /// <inheritdoc/>
         public int MapID{ get; init; }
+        
+        /// <inheritdoc/>
         public int MaxPlayers { get; init; }
 
+
+        /// <summary>
+        /// Static event for logging within the lobby.
+        /// </summary>
         public static event EventHandler<OnLogEventArgs>? OnLog;
         
         /// <summary>
@@ -68,9 +78,9 @@ namespace Server.Core.Lobby
             walkableTiles = tiles; 
             this.moduleService = moduleService;
 
-            entities = new List<WorldEntity>();
-            allowedModulesIDs = new List<int>();
-            clients = new Dictionary<TcpClient, WorldEntity>();
+            entities = new List<WorldEntity>(200);
+            allowedModulesIDs = new List<int>(20);
+            clients = new Dictionary<TcpClient, WorldEntity>(maxPlayers);
             running = true;
 
             Server.OnMessageFromClientReceived += OnMessageFromClientReceived_Delegate;
@@ -558,8 +568,7 @@ namespace Server.Core.Lobby
 
         private void Log(string message, LogLevelEnum level)
         {
-            OnLogEventArgs args = new OnLogEventArgs
-            (message, level);
+            OnLogEventArgs args = new OnLogEventArgs(message, level);
 
             OnLog?.Invoke(this, args);
         }

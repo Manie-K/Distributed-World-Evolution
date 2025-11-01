@@ -22,18 +22,22 @@ namespace Server.Core
         /// Singleton instance of the Server class
         /// </summary>
         public static Server Instance = new Server();
+
         /// <summary>
         /// Lobby manager instance
         /// </summary>
         private readonly LobbyManager lobbyManager =  new LobbyManager();
+
         /// <summary>
         /// OnMessageFromClientReceived event
         /// </summary>
         public static event Action<OnMessageFromClientEventArgs>? OnMessageFromClientReceived;
+
         /// <summary>
         /// Logger service instance
         /// </summary>
         private LoggerService loggerService = new LoggerService();
+
         /// <summary>
         /// Constructor for the Server class
         /// </summary>
@@ -42,28 +46,16 @@ namespace Server.Core
             lobbyManager.OnLog += OnLog_Delegate;
             Lobby.Lobby.OnLog += OnLog_Delegate;
         }
+
         /// <summary>
         /// Starts the server
         /// </summary>
         public async Task StartAsync(string[] args)
         {
             loggerService.Log("Server started...", LogLevelEnum.Info);
-
-            //TODO: remove hardcoded lobby
-            bool[][] walkableTilesTEMP = new bool[20][];
-            for (int x = 0; x < 20; x++)
-            {
-                walkableTilesTEMP[x] = new bool[20];
-                for (int y = 0; y < 20; y++)
-                {
-                    walkableTilesTEMP[x][y] = true;
-                }
-            }
-
-            lobbyManager.CreateAndInitializeLobby("TEST LOBBY - NOT FOR RELEASE", 2, 1, walkableTilesTEMP, [-1, -2]);
-
             await StartAcceptingClientsAsync();
         }
+
 
         #region Client Handling
 
@@ -245,9 +237,7 @@ namespace Server.Core
                 switch (msg.GetMessageType)
                 {
                     case GetMessageTypeEnum.LobbyList:
-                        //TODO: Remove this dummy lobby. Uncomment solution in the line below.
-                        await SafeSendAsync(client, new LobbyListMessage(GetDummyLobbies()));
-                        //await SafeSendAsync(client, new LobbyListMessage(lobbyManager.GetAllLobbies().Select(l => l.ToDTO()).ToList()));
+                        await SafeSendAsync(client, new LobbyListMessage(lobbyManager.GetAllLobbies().Select(l => l.ToDTO()).ToList()));
                         break;
 
                     case GetMessageTypeEnum.ModuleList:
@@ -306,14 +296,6 @@ namespace Server.Core
             }
         }
         #endregion
-
-        private List<LobbyDTO> GetDummyLobbies()
-        {
-            return new List<LobbyDTO>
-                {
-                    new LobbyDTO(1, "Test Lobby", 10, 1, 1, [-1, -2])
-                };
-        }
 
         private void OnLog_Delegate(object? sender, OnLogEventArgs e)
         {
