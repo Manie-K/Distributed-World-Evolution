@@ -115,6 +115,13 @@ namespace Server.Core.Lobby
             for (int i = 0; i < NUM_INITIAL_ENTITIES; i++)
             {
                 module = modules[new Random().Next(modulesCount)];
+                
+                if(module.Type == EntityTypeEnum.Human)
+                {
+                    i--;
+                    continue;
+                }
+
                 int x, y;
                 do
                 {
@@ -136,8 +143,11 @@ namespace Server.Core.Lobby
             Module? entityModule;
             EntityState nextState;
 
-            foreach (var entity in entities)
+            Log("Updating world entities...", LogLevelEnum.Debug);
+            for (int i = 0; i < entities.Count; i++) 
             {
+                WorldEntity entity = entities[i];
+
                 if(entity.State.InteractionFramesLeft > 0)
                 {
                     entity.State.InteractionFramesLeft--;
@@ -231,12 +241,13 @@ namespace Server.Core.Lobby
                 Type? interactionType = GetInteractionType(entity, newState);
                 if (interactionType is null) return;
 
-                WorldEntity targetEntity = entities.Where(e => e.State.Position == newState.Position).First();
+                WorldEntity? targetEntity = entities.Where(e => e.State.Position == newState.Position)?.FirstOrDefault();
+                if(targetEntity == null && interactionType != typeof(MoveBehaviourBase))
+                {
+                    return;
+                }
+
                 IBehaviour behaviour = entityModule.GetBehaviourOfType(interactionType);
-
-                Module? targetModule = moduleService.GetModuleById(targetEntity.ModuleID)
-                    ?? throw new Exception($"Target's {targetEntity.Id} module not found.");
-
 
                 // Distinction in case when we need to add custom parameters
                 if (interactionType == typeof(MoveBehaviourBase))
@@ -246,39 +257,37 @@ namespace Server.Core.Lobby
                         { CustomBehaviourParams.NEW_POS_PARAM, newState.Position }
                     });
 
-                    entity.State.InteractionFramesLeft = 12;
+                    entity.State.InteractionFramesLeft = 32;
                     entity.State.LastInteractionName = nameof(MoveBehaviourBase);
                 }
                 else if (interactionType == typeof(ReproduceBehaviourBase))
                 {
-                    behaviour.Execute(entity, targetEntity, ModuleService.Instance, new Dictionary<string, object>{
+                    behaviour.Execute(entity, targetEntity!, ModuleService.Instance, new Dictionary<string, object>{
                         { CustomBehaviourParams.LOBBY_PARAM, this }
                     });
 
-                    entity.State.InteractionFramesLeft = 8;
-                    targetEntity.State.InteractionFramesLeft = 8;
+                    entity.State.InteractionFramesLeft = 80;
+                    targetEntity!.State.InteractionFramesLeft = 80;
                     entity.State.LastInteractionName = nameof(ReproduceBehaviourBase);
                 }
                 else if(interactionType == typeof(AttackBehaviourBase))
                 {
-                    entity.State.InteractionFramesLeft = 15;
-                    targetEntity.State.InteractionFramesLeft = 15;
+                    entity.State.InteractionFramesLeft = 64;
+                    targetEntity!.State.InteractionFramesLeft = 64;
                     entity.State.LastInteractionName = nameof(AttackBehaviourBase);
                 }
                 else
                 {
-                    behaviour.Execute(entity, targetEntity, ModuleService.Instance);
-                    entity.State.InteractionFramesLeft = 10;
-                    targetEntity.State.InteractionFramesLeft = 10;
+                    behaviour.Execute(entity, targetEntity!, ModuleService.Instance);
+                    entity.State.InteractionFramesLeft = 64;
+                    targetEntity!.State.InteractionFramesLeft = 64;
                 }
-
             }
-
         }
         private void SimulateHumanEntityUpdate(WorldEntityDTO human, WorldEntityDTO? other)
         {
-            WorldEntity entHuman = entities.Where(e => e.Id == human.Id).First();
-            WorldEntity? entOther = entities.Where(e => e.Id == other?.Id).FirstOrDefault();
+            WorldEntity? entHuman = entities.Where(e => e.Id == human.Id)?.FirstOrDefault();
+            WorldEntity? entOther = entities.Where(e => e.Id == other?.Id)?.FirstOrDefault();
 
             if (entHuman == null)
             {
@@ -291,7 +300,7 @@ namespace Server.Core.Lobby
 
         private Type? GetInteractionType(WorldEntity entity, EntityState newState)
         {
-            WorldEntity? entityOnPosition = entities.Where(ent => ent.State.Position == newState.Position).FirstOrDefault();
+            WorldEntity? entityOnPosition = entities.Where(ent => ent.State.Position == newState.Position)?.FirstOrDefault();
 
             if (entityOnPosition == null)
             {
@@ -386,7 +395,7 @@ namespace Server.Core.Lobby
             WorldEntityDTO human = message.HumanEntity;
             WorldEntityDTO? other = message.OtherEntity;
 
-            WorldEntity? humanEntity = entities.Where(e => e.Id == human.Id).FirstOrDefault();
+            WorldEntity? humanEntity = entities.Where(e => e.Id == human.Id)?.FirstOrDefault();
             if (humanEntity == null)
             {
                 throw new Exception($"Human entity ({human.Id}) not found in lobby.");
