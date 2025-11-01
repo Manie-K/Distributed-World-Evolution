@@ -16,10 +16,9 @@ namespace Server.Core.Data
             moduleEntity.Property(m => m.ID).ValueGeneratedOnAdd();
             moduleEntity.Property(m => m.Name).IsRequired();
             moduleEntity.Property(m => m.Type).IsRequired().HasConversion<int>();
-            ;
 
             moduleEntity.HasData(
-                new ModuleDBEntity(true, "Human module", 5, 5, 5, 100, 100, EntityTypeEnum.Human, 1, new int[] { })
+                new ModuleDBEntity(true, "Human module", 5, 5, 5, 100, 100, EntityTypeEnum.Human, 1, new int[] {})
                 {
                     ID = -1
                 },

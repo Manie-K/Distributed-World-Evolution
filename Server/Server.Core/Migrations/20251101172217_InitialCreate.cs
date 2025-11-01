@@ -37,11 +37,11 @@ namespace Server.Core.Migrations
 
             migrationBuilder.InsertData(
                 table: "Modules",
-                columns: new[] { "ID", "Agression", "BehaviourIDs", "Damage", "GraphicalRepresentationID", "Name", "Official", "ReproductionNeed", "MaxHunger", "MaxHealth", "Type" },
+                columns: new[] { "ID", "Agression", "BehaviourIDs", "Damage", "GraphicalRepresentationID", "MaxHealth", "MaxHunger", "Name", "Official", "ReproductionNeed", "Type" },
                 values: new object[,]
                 {
-                    { -1, 5, new int[0], 5, 1, "Human module", true, 5, 100, 100, 1 },
-                    { -2, 70, new[] {101, 201, 307, 401 }, 30, 2, "Default module", true, 40, 100, 100, 2 }
+                    { -2, 70, new[] { 101, 201, 307, 401 }, 30, 2, 100, 100, "Default module", true, 40, 2 },
+                    { -1, 5, new int[0], 5, 1, 100, 100, "Human module", true, 5, 1 }
                 });
         }
 

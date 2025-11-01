@@ -11,7 +11,7 @@ using Server.Core.Data;
 namespace Server.Core.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20251025185153_InitialCreate")]
+    [Migration("20251101172217_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -45,6 +45,12 @@ namespace Server.Core.Migrations
                     b.Property<int>("GraphicalRepresentationID")
                         .HasColumnType("integer");
 
+                    b.Property<int>("MaxHealth")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("MaxHunger")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -53,12 +59,6 @@ namespace Server.Core.Migrations
                         .HasColumnType("boolean");
 
                     b.Property<int>("ReproductionNeed")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("MaxHunger")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("MaxHealth")
                         .HasColumnType("integer");
 
                     b.Property<int>("Type")
@@ -76,11 +76,11 @@ namespace Server.Core.Migrations
                             BehaviourIDs = new int[0],
                             Damage = 5,
                             GraphicalRepresentationID = 1,
+                            MaxHealth = 100,
+                            MaxHunger = 100,
                             Name = "Human module",
                             Official = true,
                             ReproductionNeed = 5,
-                            MaxHunger = 100,
-                            MaxHealth = 100,
                             Type = 1
                         },
                         new
@@ -90,11 +90,11 @@ namespace Server.Core.Migrations
                             BehaviourIDs = new[] { 101, 201, 307, 401 },
                             Damage = 30,
                             GraphicalRepresentationID = 2,
+                            MaxHealth = 100,
+                            MaxHunger = 100,
                             Name = "Default module",
                             Official = true,
                             ReproductionNeed = 40,
-                            MaxHunger = 100,
-                            MaxHealth = 100,
                             Type = 2
                         });
                 });
