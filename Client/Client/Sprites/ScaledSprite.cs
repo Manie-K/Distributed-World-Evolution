@@ -1,10 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Client
 {
@@ -17,12 +12,12 @@ namespace Client
         {
             get
             {
-                return new Rectangle((int)Position.X, (int)Position.Y, width, height);
+                return new Rectangle((int)(Position.X + SpriteDrawingOffset.X), (int)(Position.Y + SpriteDrawingOffset.Y), width, height);
             }
-
         }
 
-        public ScaledSprite(Texture2D texture, Vector2 position, int width, int height) : base(texture, position)
+        public ScaledSprite(Texture2D texture, Vector2 position, int width, int height, Vector2 spriteDrawingOffset = default) 
+            : base(texture, position, spriteDrawingOffset)
         {
             this.width = width;
             this.height = height;

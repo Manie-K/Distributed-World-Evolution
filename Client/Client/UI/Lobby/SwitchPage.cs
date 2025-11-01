@@ -3,9 +3,6 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Client
 {
@@ -36,7 +33,8 @@ namespace Client
             if (pageButtons[0].CheckLeftClick(clickPosition))
             {
                 if (pageNumber > 1) pageNumber--;
-            }else if (pageButtons[1].CheckLeftClick(clickPosition))
+            }
+            else if (pageButtons[1].CheckLeftClick(clickPosition))
             {
                 pageNumber++;
                 if (GetRowsOnPage() == 0) pageNumber--;
@@ -56,9 +54,14 @@ namespace Client
             }
         }
 
-        public void AddRow(string lobbyName)
+        public void AddRow(string lobbyName, string mapName, int mapID, string playersAmount, int lobbyID)
         {
-            rows.Add(new LobbyRow(contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), lobbyName, "4/6", new Vector2(95, 153 + 68 * (rows.Count % 6)), 760, 65));
+            rows.Add(new LobbyRow(contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), lobbyName, mapName, mapID, playersAmount, lobbyID, new Vector2(95, 153 + 68 * (rows.Count % 6)), 760, 65));
+        }
+
+        public void ClearRows()
+        { 
+            rows.Clear();
         }
 
         public void UpdateRows(Vector2 cursorPosition, bool ispressed)
@@ -73,6 +76,18 @@ namespace Client
                 {
                     rows[(pageNumber - 1) * 6 + i].Update(cursorPosition, true);
                 }
+            }
+        }
+
+        public LobbyRow GetSelectedLobby()
+        {
+            if (selectedRow >= 0)
+            {
+                return rows[selectedRow];
+            }
+            else
+            { 
+                return null;
             }
         }
 

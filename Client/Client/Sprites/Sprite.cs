@@ -1,10 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Client
 {
@@ -12,11 +7,13 @@ namespace Client
     {
         public Texture2D Texture;
         public Vector2 Position;
+        public Vector2 SpriteDrawingOffset;
 
-        public Sprite(Texture2D texture, Vector2 position)
+        public Sprite(Texture2D texture, Vector2 position, Vector2 spriteDrawingOffset = default)
         {
             Texture = texture;
             Position = position;
+            SpriteDrawingOffset = spriteDrawingOffset;
         }
 
         public virtual void Update() { }

@@ -8,5 +8,7 @@ namespace Client
         public void Load();
         public void Update(GameTime gametime);
         public void Draw(SpriteBatch spriteBatch);
+
+        public void DrawStatic(SpriteBatch spriteBatch);
     }
 }

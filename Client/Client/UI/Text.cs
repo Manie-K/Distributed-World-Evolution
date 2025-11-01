@@ -61,5 +61,15 @@ namespace Client
         {
             textColor = color;
         }
+
+        public void SetPosition(Vector2 position)
+        {
+            this.position = position;
+        }
+
+        public string GetText()
+        {
+            return text;
+        }
     }
 }

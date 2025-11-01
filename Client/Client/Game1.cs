@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Client.Logic.Plants;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 namespace Client
@@ -14,8 +15,8 @@ namespace Client
             manager = new GameManager(Content);
             graphics = new GraphicsDeviceManager(this);
             IsMouseVisible = true;
-            graphics.PreferredBackBufferWidth = manager.Camera.ScreenSize.Width;
-            graphics.PreferredBackBufferHeight = manager.Camera.ScreenSize.Height;
+            graphics.PreferredBackBufferWidth = manager.UserSettings.ScreenWidth;
+            graphics.PreferredBackBufferHeight = manager.UserSettings.ScreenHeight;
         }
 
         protected override void Initialize()
@@ -29,14 +30,23 @@ namespace Client
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // TODO: use manager.ContentManager to load your game content here
+            manager.SetWindowManager();
             manager.SceneManager.AddScene(new MainMenuScene(manager, this));
             manager.SceneManager.GetCurrentScene().Load();
+
+            PlantsAssetsManager.GetInstance().Load(manager.ContentManager);
         }
 
         protected override void Update(GameTime gameTime)
         {
-            manager.SceneManager.GetCurrentScene().Update(gameTime);
+            manager.InputManager.Update();
 
+            if (!manager.WindowManager.Update())
+            {
+                manager.SceneManager.GetCurrentScene().Update(gameTime);
+            }
+
+            manager.InputManager.SetPreviousStates();
             base.Update(gameTime);
         }
 
@@ -46,6 +56,11 @@ namespace Client
 
             spriteBatch.Begin(transformMatrix: manager.Camera.Transform, samplerState: SamplerState.PointClamp);
             manager.SceneManager.GetCurrentScene().Draw(spriteBatch);
+            spriteBatch.End();
+
+            spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+            manager.SceneManager.GetCurrentScene().DrawStatic(spriteBatch);
+            manager.WindowManager.Draw(spriteBatch);
             spriteBatch.End();
 
             base.Draw(gameTime);

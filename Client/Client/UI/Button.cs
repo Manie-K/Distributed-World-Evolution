@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Client.Rendering;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Diagnostics;
@@ -16,26 +17,34 @@ namespace Client
         private Color backgroundColor;
         private Color hoverColor;
         private bool isHovered;
+        private bool isDisabled;
 
 
-        public Button(Texture2D BackgroundTexture, SpriteFont Font, string Text, Vector2 Position, int Width, int Height, Color Color)
+        public Button(Texture2D backGroundTexture, SpriteFont font, string text, Vector2 position, int width, int height, Color color)
         {
-            backGroundTexture = BackgroundTexture;
-            font = Font;
-            text = Text;
-            position = Position;
-            bounds = new Rectangle((int)position.X, (int)position.Y, Width, Height);
+            this.backGroundTexture = backGroundTexture;
+            this.font = font;
+            this.text = text;
+            this.position = position;
+            bounds = new Rectangle((int)position.X, (int)position.Y, width, height);
             textColor = Color.Black;
             backgroundColor = Color.White;
-            hoverColor = Color;
+            hoverColor = color;
+            isDisabled = false;
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
             if (backGroundTexture != null)
             {
-                backgroundColor = isHovered ? hoverColor : Color.White;
-                spriteBatch.Draw(backGroundTexture, bounds, backgroundColor);
+                if (!isDisabled)
+                {
+                    backgroundColor = isHovered ? hoverColor : Color.White;
+                    spriteBatch.Draw(backGroundTexture, bounds, backgroundColor);
+                }else
+                {
+                    spriteBatch.Draw(backGroundTexture, bounds, backgroundColor * 0.7f);
+                }
             }
 
             if (font != null && !string.IsNullOrEmpty(text))
@@ -50,6 +59,7 @@ namespace Client
             }
         }
 
+
         public void Update(Vector2 mousePosition)
         {
             isHovered = bounds.Contains(mousePosition);
@@ -63,6 +73,16 @@ namespace Client
             }
             return false;
 
+        }
+
+        public void SetBackgroundColor(Color color)
+        {
+            backgroundColor=color;
+        }
+
+        public void DisableButton()
+        {
+            isDisabled= true;   
         }
     }
 }

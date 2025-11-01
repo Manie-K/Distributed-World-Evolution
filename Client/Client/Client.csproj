@@ -22,6 +22,17 @@
     <None Remove="Icon.bmp" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="..\..\Shared\SharedLibrary\WorldMap\Maps\Grassland.json" Link="Content\Maps\Grassland.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Shared\SharedLibrary\WorldMap\Maps\Standard.json" Link="Content\Maps\Standard.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="..\..\Shared\SharedLibrary\WorldMap\Maps\TwoBridges.json" Link="Content\Maps\TwoBridges.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+  <ItemGroup>
     <EmbeddedResource Include="Icon.ico">
       <LogicalName>Icon.ico</LogicalName>
     </EmbeddedResource>
@@ -40,6 +51,21 @@
     <Folder Include="Content\Animations\Player\Idle\" />
     <Folder Include="Content\Animations\Player\Run\" />
     <Folder Include="Content\Animations\Vampire1\" />
+    <Folder Include="Content\Panels\Bestiary_Panel\" />
+    <Folder Include="Content\Panels\Bestiary_Panel\CreaturesImages\" />
+    <Folder Include="Content\Panels\Error_Window\" />
+    <Folder Include="Content\Panels\Esc_Panel\" />
+    <Folder Include="Content\Panels\HealthBar\" />
+    <Folder Include="Content\Panels\Inventory\" />
+    <Folder Include="Content\Panels\Warning_Window\" />
+    <Folder Include="Content\UI\CreateModules\" />
+    <Folder Include="Content\UI\CreateModules\PlantsAssets\" />
+    <Folder Include="Content\UI\MapSelection\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="SharedLibrary">
+      <HintPath>..\..\Shared\SharedLibrary\bin\Debug\net8.0\SharedLibrary.dll</HintPath>
+    </Reference>
   </ItemGroup>
   <ItemGroup>
     <None Update="Content\Maps\map1.json">
