@@ -83,7 +83,7 @@ namespace Client
                 parameters.Add(new ModuleParametersData("Aggresion", module.Aggresion.ToString(), 0));
                 parameters.Add(new ModuleParametersData("ReproductionNeed", module.ReproductionNeed.ToString(), 0));
                 parameters.Add(new ModuleParametersData("Type", module.Type.ToString(), 0));
-                foreach (BehviourDTO behviour in module.Behaviours)
+                foreach (BehaviourDTO behviour in module.Behaviours)
                 {
                     parameters.Add(new ModuleParametersData("Beh", behviour.Description, 1));
                 }
