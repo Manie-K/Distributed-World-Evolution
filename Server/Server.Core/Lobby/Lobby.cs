@@ -1,6 +1,4 @@
 ﻿using System.Net.Sockets;
-using SharedLibrary;
-using Server.Core;
 using Server.Core.Modules;
 using SharedLibrary.Logging;
 using SharedLibrary.Messages;
@@ -9,6 +7,13 @@ using Server.Core.Behaviours;
 using Server.Core.Helpers;
 using Server.Core.Services;
 using SharedLibrary.DTOs.LobbyDTO;
+using Server.Core.Behaviours.AttackBehaviour;
+using Server.Core.Behaviours.EatBehaviour;
+using Server.Core.Behaviours.GatherBehaviour;
+using Server.Core.Behaviours.MoveBehaviour;
+using Server.Core.Behaviours.TameBehaviour;
+using Server.Core.Behaviours.ReproduceBehaviour;
+using SharedLibrary.Helpers;
 
 namespace Server.Core.Lobby
 {
@@ -28,14 +33,14 @@ namespace Server.Core.Lobby
         public const double LOBBY_UPDATES_PER_SECOND = 64;
 
         private readonly IModuleService moduleService;
-        private readonly List<TcpClient> clients;
+        private readonly Dictionary<TcpClient, WorldEntity> clients;
         private readonly List<WorldEntity> entities;
         private readonly List<int> allowedModulesIDs;
-        private readonly bool[,] walkableTiles;
+        private readonly bool[][] walkableTiles;
 
         private bool running;
 
-        public static Lobby CreateLobby(int id, string name, int maxPlayers, int mapId, bool[,] walkableTiles, IEnumerable<int> moduleIDs, IModuleService moduleService)
+        public static Lobby CreateLobby(int id, string name, int maxPlayers, int mapId, bool[][] walkableTiles, IEnumerable<int> moduleIDs, IModuleService moduleService)
         {
             Lobby lobby = new Lobby(id, name, maxPlayers, mapId, walkableTiles, moduleService);
             
@@ -55,7 +60,7 @@ namespace Server.Core.Lobby
             return lobby;
         }
 
-        private Lobby(int id, string name, int maxPlayers, int mapId, bool[,] tiles, IModuleService moduleService)
+        private Lobby(int id, string name, int maxPlayers, int mapId, bool[][] tiles, IModuleService moduleService)
         {
             LobbyId = id;
             Name = name;
@@ -65,7 +70,7 @@ namespace Server.Core.Lobby
 
             entities = new List<WorldEntity>();
             allowedModulesIDs = new List<int>();
-            clients = new List<TcpClient>();
+            clients = new Dictionary<TcpClient, WorldEntity>();
             running = true;
 
             Server.OnMessageFromClientReceived += OnMessageFromClientReceived_Delegate;
@@ -104,7 +109,7 @@ namespace Server.Core.Lobby
         private void PublishWorldState()
         {
             // Simulate all non-human entities
-            Module? entModule;
+            Module? entityModule;
             EntityState nextState;
 
             foreach (var entity in entities)
@@ -114,39 +119,42 @@ namespace Server.Core.Lobby
                     continue;
                 }
 
-                entModule = moduleService.GetModuleById(entity.ModuleID);
-                if(entModule == null)
+                entityModule = moduleService.GetModuleById(entity.ModuleID);
+                if(entityModule == null)
                 {
                     Log($"Entity's {entity.Id} module not found in lobby {LobbyId}.", LogLevelEnum.Warning);
                     continue;
                 }
 
-                if (entModule.Type == EntityTypeEnum.Human)
+                if (entityModule.Type == EntityTypeEnum.Human)
                 {
                     continue;
                 }
 
-                var moveBehaviour = entModule.GetBehaviourOfType(typeof(MoveBehaviourBase));
+                var moveBehaviour = entityModule.GetBehaviourOfType(typeof(MoveBehaviourBase));
                 nextState = new EntityState(entity.State);
 
                 (int stepX, int stepY) = ((MoveBehaviourBase)moveBehaviour).GetNextMovement(entity);
+                entity.State.LastMovementVector = new Position2D(stepX, stepY);
+
                 nextState.Position.X += stepX;
                 nextState.Position.Y += stepY;
 
-                SimulateNonHumanEntityUpdate(entity, nextState.ToDTO());
+                SimulateNonHumanEntityUpdate(entity, nextState);
             }
 
             lock (clients)
             {
-                foreach (var client in clients)
+                foreach (var clientPair in clients)
                 {
-                    _ = MessageManager.SendMessageAsync(client, new WorldStateMessage(
+                    _ = MessageManager.SendMessageAsync(clientPair.Key, new WorldStateMessage(
                             entities.Select(e => e.ToDTO())
                         ));
                 }
             }
         }
 
+        //@FranciszekGwarek do we need these things?
         private void UpdateServerState(MessageBase message, TcpClient client)
         {
             if (message == null)
@@ -175,7 +183,7 @@ namespace Server.Core.Lobby
                     
         }
 
-        private void SimulateNonHumanEntityUpdate(WorldEntity entity, EntityStateDTO newState)
+        private void SimulateNonHumanEntityUpdate(WorldEntity entity, EntityState newState)
         {
             if (entity == null)
             {
@@ -186,40 +194,54 @@ namespace Server.Core.Lobby
                 throw new ArgumentNullException(nameof(newState), "New state cannot be null.");
             }
 
-            Module? entModule = moduleService.GetModuleById(entity.ModuleID)
+            Module? entityModule = moduleService.GetModuleById(entity.ModuleID)
                 ?? throw new Exception($"Entity's {entity.Id} module not found.");
 
-            // If we change position, there is a possible new interaction 
-            if (entity.State.Position != newState.Position && entity.State.InteractionFramesLeft == 0)
+
+            // If we change position, there is a possible new interaction. Or we are a plant (to handle growth or other plant-specific behaviour)
+            if (entity.State.InteractionFramesLeft == 0 && (entity.State.Position != newState.Position || entityModule.Type == EntityTypeEnum.Plant))
             {
                 Type? interactionType = GetInteractionType(entity, newState);
                 if (interactionType is null) return;
 
                 WorldEntity targetEntity = entities.Where(e => e.State.Position == newState.Position).First();
-                IBehaviour behaviour = entModule.GetBehaviourOfType(interactionType);
+                IBehaviour behaviour = entityModule.GetBehaviourOfType(interactionType);
+
+                Module? targetModule = moduleService.GetModuleById(targetEntity.ModuleID)
+                    ?? throw new Exception($"Target's {targetEntity.Id} module not found.");
 
 
-                // In case when we need to add custom parameters
+                // Distinction in case when we need to add custom parameters
                 if (interactionType == typeof(MoveBehaviourBase))
                 {
-                    behaviour.Execute(entity, null, new Dictionary<string, object>{
+                    behaviour.Execute(entity, null, ModuleService.Instance ,new Dictionary<string, object>{
                         { CustomBehaviourParams.MAP_PARAM, walkableTiles   },
                         { CustomBehaviourParams.NEW_POS_PARAM, newState.Position }
                     });
 
-                    entity.State.InteractionFramesLeft = 10;
+                    entity.State.InteractionFramesLeft = 12;
                 }
                 else if (interactionType == typeof(ReproduceBehaviourBase))
                 {
-                    behaviour.Execute(entity, targetEntity, new Dictionary<string, object>{
+                    behaviour.Execute(entity, targetEntity, ModuleService.Instance, new Dictionary<string, object>{
                         { CustomBehaviourParams.LOBBY_PARAM, this }
                     });
+
                     entity.State.InteractionFramesLeft = 8;
                     targetEntity.State.InteractionFramesLeft = 8;
                 }
+                else if(interactionType == typeof(AttackBehaviourBase))
+                {
+                    behaviour.Execute(entity, targetEntity, ModuleService.Instance, new Dictionary<string, object>{
+                        { CustomBehaviourParams.LOBBY_PARAM, this }
+                    });
+
+                    entity.State.InteractionFramesLeft = 15;
+                    targetEntity.State.InteractionFramesLeft = 15;
+                }
                 else
                 {
-                    behaviour.Execute(entity, targetEntity);
+                    behaviour.Execute(entity, targetEntity, ModuleService.Instance);
                     entity.State.InteractionFramesLeft = 10;
                     targetEntity.State.InteractionFramesLeft = 10;
                 }
@@ -247,7 +269,7 @@ namespace Server.Core.Lobby
             entOther?.UpdateState(new EntityState(other!.State)); //If entityOther isn't null, then it's dto also isn't.
         }
 
-        private Type? GetInteractionType(WorldEntity entity, EntityStateDTO newState)
+        private Type? GetInteractionType(WorldEntity entity, EntityState newState)
         {
             WorldEntity? entityOnPosition = entities.Where(ent => ent.State.Position == newState.Position).FirstOrDefault();
 
@@ -271,7 +293,7 @@ namespace Server.Core.Lobby
                 )
             {
                 AttackBehaviourBase attackBehaviour = (AttackBehaviourBase)entityModule.GetBehaviourOfType(typeof(AttackBehaviourBase));
-                if (attackBehaviour.CanExecute(entity, entityOnPosition))
+                if (attackBehaviour.CanExecute(entity, entityOnPosition, ModuleService.Instance))
                 {
                     return typeof(AttackBehaviourBase);
                 }
@@ -281,7 +303,7 @@ namespace Server.Core.Lobby
             if (entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Animal)
             {
                 ReproduceBehaviourBase reproduceBehaviour = (ReproduceBehaviourBase)entityModule.GetBehaviourOfType(typeof(ReproduceBehaviourBase));
-                if (reproduceBehaviour.CanExecute(entity, entityOnPosition))
+                if (reproduceBehaviour.CanExecute(entity, entityOnPosition, ModuleService.Instance))
                 {
                     return typeof(ReproduceBehaviourBase);
                 }
@@ -291,7 +313,7 @@ namespace Server.Core.Lobby
             if (entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Plant)
             {
                 EatBehaviourBase eatBehaviour = (EatBehaviourBase)entityModule.GetBehaviourOfType(typeof(EatBehaviourBase));
-                if (eatBehaviour.CanExecute(entity, entityOnPosition))
+                if (eatBehaviour.CanExecute(entity, entityOnPosition, ModuleService.Instance))
                 {
                     return typeof(EatBehaviourBase);
                 }
@@ -301,7 +323,7 @@ namespace Server.Core.Lobby
             if (entityType == EntityTypeEnum.Human && targetType == EntityTypeEnum.Plant)
             {
                 GatherBehaviourBase gatherBehaviour = (GatherBehaviourBase)entityModule.GetBehaviourOfType(typeof(GatherBehaviourBase));
-                if (gatherBehaviour.CanExecute(entity, entityOnPosition))
+                if (gatherBehaviour.CanExecute(entity, entityOnPosition, ModuleService.Instance))
                 {
                     return typeof(GatherBehaviourBase);
                 }
@@ -311,7 +333,7 @@ namespace Server.Core.Lobby
             if (entityType == EntityTypeEnum.Human && targetType == EntityTypeEnum.Animal)
             {
                 TameBehaviourBase tameBehaviour = (TameBehaviourBase)entityModule.GetBehaviourOfType(typeof(TameBehaviourBase));
-                if (tameBehaviour.CanExecute(entity, entityOnPosition))
+                if (tameBehaviour.CanExecute(entity, entityOnPosition, ModuleService.Instance))
                 {
                     return typeof(TameBehaviourBase);
                 }
@@ -326,7 +348,7 @@ namespace Server.Core.Lobby
         {
             lock(clients)
             {
-                if(!clients.Contains(args.Client))
+                if(!clients.Keys.Contains(args.Client))
                 {
                     return;
                 }
@@ -379,19 +401,34 @@ namespace Server.Core.Lobby
         #region Helpers
 
         /// <inheritdoc/>
+        public bool IsPositionFree(Position2D position)
+        {
+            foreach (var entity in entities)
+            {
+                if (entity.State.Position == position)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        /// <inheritdoc/>
         public Guid AddClient(TcpClient client, string username)
         {
+            //TODO: Add moduleID for human entity.
+            WorldEntity userEntity = WorldEntity.CreateWorldEntity(username, moduleService.GetHumanModuleId(), new EntityState(new Position2D(0, 0)));
+            
             lock (clients)
             {
-                if (clients.Contains(client))
+                if (clients.Keys.Contains(client))
                 {
                     Log("Client already in lobby.", LogLevelEnum.Warning);
                     return Guid.Empty;
                 }
-                clients.Add(client);
+                clients.Add(client, userEntity);
             }
 
-            WorldEntity userEntity = WorldEntity.CreateWorldEntity(username, moduleService.GetHumanModuleId(), new EntityState(new SharedLibrary.Helpers.Position2D(0, 0))); //TODO: Add moduleID for human entity.
             AddWorldEntity(userEntity);
 
             return userEntity.Id;
@@ -401,12 +438,13 @@ namespace Server.Core.Lobby
         {
             lock (clients)
             {
-                if (!clients.Contains(client))
+                if (!clients.Keys.Contains(client))
                 {
                     Log("Client already not in lobby.", LogLevelEnum.Warning);
                     return false;
                 }
                 clients.Remove(client);
+                DestroyWorldEntity(clients[client]);
             }
 
             return true;
@@ -460,6 +498,9 @@ namespace Server.Core.Lobby
                     Log($"Entity's {entity.Id} module is not allowed in lobby {LobbyId}.", LogLevelEnum.Warning);
                     return false;
                 }
+
+                if (!IsPositionFree(entity.State.Position)) return false;
+
                 entities.Add(entity);
                 return true;
             }
@@ -467,6 +508,11 @@ namespace Server.Core.Lobby
 
         public bool DestroyWorldEntity(WorldEntity entity)
         {
+            if(entity == null)
+            {
+                return false;
+            }
+
             lock (entities)
             {
                 if (!entities.Contains(entity))

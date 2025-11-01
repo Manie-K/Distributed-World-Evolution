@@ -22,27 +22,13 @@ namespace Server.Core.Services
         {
             using(var dbContext = new ApplicationDBContext())
             {
-                ModuleDBEntity? moduleEntity = dbContext.Modules.Find(id);
-                if (moduleEntity == null)
+                ModuleDBEntity? moduleDBEntity = dbContext.Modules.Find(id);
+                if (moduleDBEntity == null)
                 {
                     return null;
                 }
 
-                List<IBehaviour> behaviours = moduleEntity.BehaviourIDs
-                                    .Select(behaviourService.GetBehaviourInstanceByID)
-                                    .Where(b => b != null)
-                                    .ToList();
-
-                Module module = new Module.ModuleBuilder()
-                                    .WithName(moduleEntity.Name)
-                                    .IsOfficial(moduleEntity.Official)
-                                    .OfType(moduleEntity.Type)
-                                    .WithDamage(moduleEntity.Damage)
-                                    .WithAgression(moduleEntity.Agression)
-                                    .WithReproductionNeed(moduleEntity.ReproductionNeed)
-                                    .WithGraphicsId(moduleEntity.GraphicalRepresentationID)
-                                    .WithBehaviours(behaviours)
-                                    .Create();
+                Module module = Module.CreateFromDBEntity(moduleDBEntity);
                 return module;
             }
         }
@@ -51,28 +37,7 @@ namespace Server.Core.Services
         {
             using (var dbContext = new ApplicationDBContext())
             {
-                List<Module> modules = new List<Module>();
-
-                foreach (ModuleDBEntity moduleEntity in dbContext.Modules)
-                {
-                    List<IBehaviour> behaviours = moduleEntity.BehaviourIDs
-                                        .Select(behaviourService.GetBehaviourInstanceByID)
-                                        .Where(b => b != null)
-                                        .ToList();
-
-                    Module module = new Module.ModuleBuilder()
-                                        .WithName(moduleEntity.Name)
-                                        .IsOfficial(moduleEntity.Official)
-                                        .OfType(moduleEntity.Type)
-                                        .WithDamage(moduleEntity.Damage)
-                                        .WithAgression(moduleEntity.Agression)
-                                        .WithReproductionNeed(moduleEntity.ReproductionNeed)
-                                        .WithGraphicsId(moduleEntity.GraphicalRepresentationID)
-                                        .WithBehaviours(behaviours)
-                                        .Create();
-                    modules.Add(module);
-                }
-
+                List<Module> modules = dbContext.Modules.Select(dbEnt => Module.CreateFromDBEntity(dbEnt)).ToList();
                 return modules;
             }
         }
