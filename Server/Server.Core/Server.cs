@@ -297,14 +297,6 @@ namespace Server.Core
         }
         #endregion
 
-        private List<LobbyDTO> GetDummyLobbies()
-        {
-            return new List<LobbyDTO>
-                {
-                    new LobbyDTO(1, "Test Lobby", 10, 1, 1, [-1, -2])
-                };
-        }
-
         private void OnLog_Delegate(object? sender, OnLogEventArgs e)
         {
             loggerService.Log(e.Message, e.LogLevel, sender);

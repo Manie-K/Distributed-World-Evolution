@@ -37,7 +37,7 @@ namespace Server.Core.Data
 
             if (String.IsNullOrEmpty(connectionString))
             {
-                connectionString = "Host=localhost;Database=appdb;Username=appuser;Password=apppassword";
+                connectionString = "Host=localhost:5432;Database=modulesdb;Username=admin;Password=adminpassword";
             }
 
             optionsBuilder.UseNpgsql(connectionString);

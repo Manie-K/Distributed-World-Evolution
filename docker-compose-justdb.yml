@@ -1,0 +1,11 @@
+services:
+ modules_db:
+    image: postgres:15
+    container_name: modulesdb
+    environment:
+      - POSTGRES_USER=admin
+      - POSTGRES_PASSWORD=adminpassword
+      - POSTGRES_DB=modulesdb
+    ports:
+      - "5432:5432"
+    restart: unless-stopped
