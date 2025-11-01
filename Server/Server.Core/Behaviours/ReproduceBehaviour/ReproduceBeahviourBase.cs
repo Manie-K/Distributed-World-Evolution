@@ -60,7 +60,8 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
                     position: position,
                     health: entityModule.MaxHealth,
                     hunger: entityModule.MaxHunger
-                )
+                ),
+                lobby
             );
 
             lobby.AddWorldEntity(child);

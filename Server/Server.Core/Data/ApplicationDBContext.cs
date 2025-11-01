@@ -22,7 +22,7 @@ namespace Server.Core.Data
                 {
                     ID = -1
                 },
-                new ModuleDBEntity(true, "Default module", 3, 7, 4, EntityTypeEnum.Animal, 2, new int[] { 3, 2, 69 })
+                new ModuleDBEntity(true, "Default test module", 30, 70, 40, EntityTypeEnum.Animal, 2, new int[] { 101, 201, 307, 401 })
                 {
                     ID = -2
                 }

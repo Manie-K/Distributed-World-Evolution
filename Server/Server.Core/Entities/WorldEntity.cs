@@ -12,18 +12,20 @@ namespace Server.Core
         public string? Name { get; init; }
         public int ModuleID { get; init; }
         public EntityState State { get; init; }
+        public ILobby Lobby { get; init; }
 
-        public static WorldEntity CreateWorldEntity(string? name, int moduleId, EntityState state)
+        public static WorldEntity CreateWorldEntity(string? name, int moduleId, EntityState state, ILobby lobby)
         {
-            return new WorldEntity(name, moduleId, state);
+            return new WorldEntity(name, moduleId, state, lobby);
         }
 
-        private WorldEntity(string? name, int moduleId, EntityState state) 
+        private WorldEntity(string? name, int moduleId, EntityState state, ILobby lobby) 
         {
             Name = name;
             Id = Guid.NewGuid();
             ModuleID = moduleId;
             State = state ?? throw new ArgumentNullException(nameof(state), "State cannot be null.");
+            Lobby = lobby ?? throw new ArgumentNullException(nameof(lobby), "Lobby cannot be null.");
         }
 
         public void UpdateState(EntityState newState)
@@ -37,11 +39,15 @@ namespace Server.Core
             State.Position = new (newState.Position);
             State.Hunger = newState.Hunger;
             State.InteractionFramesLeft = newState.InteractionFramesLeft;
+
+            if(State.Health <= 0)
+            {
+                Die();
+            }
         }
 
-        public void Die(ILobby lobby)
+        public void Die()
         {
-            // VERY IMPORTANT TODO
             Module? module = ModuleService.Instance.GetModuleById(ModuleID);
             if(module == null)
             {
@@ -52,11 +58,12 @@ namespace Server.Core
             {
                 //@EVERYONE, What do we do here?
                 //noop for now
+                //Client side?
             }
             else
             {
                 // Remove entity from lobby
-                lobby.DestroyWorldEntity(this);
+                Lobby.DestroyWorldEntity(this);
             }
         }
 
