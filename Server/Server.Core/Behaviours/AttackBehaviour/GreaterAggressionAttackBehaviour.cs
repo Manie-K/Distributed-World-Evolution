@@ -25,12 +25,7 @@ namespace Server.Core.Behaviours.AttackBehaviour
                 target.State.Health -= attackerModule.Damage;
                 if (target.State.Health <= 0)
                 {
-
-                    ILobby lobby = otherParams != null && otherParams.TryGetValue(CustomBehaviourParams.LOBBY_PARAM, out object? lobbyObj)
-                        && lobbyObj is ILobby l ? l :
-                            throw new ArgumentNullException("Lobby parameter is required for GreaterAggressionAttackBehaviour");
-
-                    target.Die(lobby);
+                    target.Die();
                 }
             }
             catch (ModuleNotFoundException ex)

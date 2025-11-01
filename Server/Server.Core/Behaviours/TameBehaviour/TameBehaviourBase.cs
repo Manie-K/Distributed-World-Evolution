@@ -9,7 +9,7 @@ namespace Server.Core.Behaviours.TameBehaviour
         public abstract int DatabaseID { get; }
 
         /// <inheritdoc/>
-        public virtual EntityTypeEnum Type => EntityTypeEnum.Animal;
+        public virtual EntityTypeEnum Type => EntityTypeEnum.Human;
 
         /// <inheritdoc/>
         public abstract string Description { get; }

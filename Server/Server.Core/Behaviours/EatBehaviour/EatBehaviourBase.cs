@@ -31,11 +31,7 @@ namespace Server.Core.Behaviours.EatBehaviour
                 entity.State.Hunger += targetModule.MaxHunger;
             }
 
-            ILobby lobby = otherParams != null && otherParams.TryGetValue(CustomBehaviourParams.LOBBY_PARAM, out object? lobbyObj)
-                    && lobbyObj is ILobby l ? l :
-                        throw new ArgumentNullException("Lobby parameter is required for EatBehaviourBase");
-
-            target.Die(lobby);
+            target.Die();
         }
 
         /// <inheritdoc/>
