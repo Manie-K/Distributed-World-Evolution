@@ -9,6 +9,12 @@ namespace Server.Core
         {
             Console.WriteLine("[DEBUG]: Debug console for Core project, independent from UI project.");
 
+            if (AppDomain.CurrentDomain.GetAssemblies()
+                    .Any(a => a.FullName?.StartsWith("Microsoft.EntityFrameworkCore.Design") == true))
+            {
+                return;
+            }
+
             bool dbReady = false;
             while (!dbReady)
             {

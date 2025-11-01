@@ -8,13 +8,14 @@ namespace SharedLibrary.DTOs.EntitiesDTO
         public int Health { get; set; }
         public int Hunger { get; set; }
         public int InteractionFramesLeft { get; set; }
+        public string LastInteractionName{ get; set; }
 
-        public EntityStateDTO(Position2D position, int health, int hunger, int interactionFramesLeft)
+        public EntityStateDTO(Position2D position, int health, int hunger, int interactionFramesLeft, string lastInteractionName)
         {
             Position = position;
             Health = health;
             Hunger = hunger;
-            InteractionFramesLeft = interactionFramesLeft;
+            LastInteractionName = lastInteractionName;
         }
     }
 }
