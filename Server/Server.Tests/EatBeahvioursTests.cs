@@ -30,9 +30,11 @@ namespace Server.Tests
         //Run before every test
         public EatBeahvioursTests()
         {
-            eaterEntity = WorldEntity.CreateWorldEntity("eaterEntity", 1, new EntityState(new SharedLibrary.Helpers.Position2D(0, 0), 100, 100, 0));
-            normalPlantEntity = WorldEntity.CreateWorldEntity("normalPlantEntity", 2, new EntityState(new SharedLibrary.Helpers.Position2D(0, 0), 100, 50, 0));
-            poisonousPlantEntity = WorldEntity.CreateWorldEntity("poisonousPlantEntity", 3, new EntityState(new SharedLibrary.Helpers.Position2D(0, 0), 100, 0, 0));
+            eaterEntity = WorldEntity.CreateWorldEntity("eaterEntity", 1, new EntityState(new SharedLibrary.Helpers.Position2D(0, 0), 100, 100, 0), null);
+            normalPlantEntity = WorldEntity.CreateWorldEntity("normalPlantEntity", 2, 
+                new EntityState(new SharedLibrary.Helpers.Position2D(0, 0), 100, 50, 0), null);
+            poisonousPlantEntity = WorldEntity.CreateWorldEntity("poisonousPlantEntity", 3, 
+                new EntityState(new SharedLibrary.Helpers.Position2D(0, 0), 100, 0, 0), null);
 
             eaterModule = new Module.ModuleBuilder()
                 .WithID(1)

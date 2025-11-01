@@ -94,6 +94,14 @@ namespace Server.Core.Lobby
             }
             throw new NullLobbyException($"Lobby with ID {lobbyId} does not exist.");
         }
+        
+        public List<ILobby> GetAllLobbies()
+        {
+            lock (lobbies)
+            {
+                return lobbies.Values.ToList();
+            }
+        }
 
         private void Log(Exception ex, LogLevelEnum level)
         {
