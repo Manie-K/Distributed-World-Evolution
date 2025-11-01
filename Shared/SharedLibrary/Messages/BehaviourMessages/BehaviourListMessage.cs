@@ -13,11 +13,11 @@ namespace SharedLibrary.Messages.BehaviourMessages
         /// <summary>
         /// List of behaviours available on the server.
         /// </summary>
-        public IEnumerable<BehviourDTO> Behaviours { get; init; }
+        public IEnumerable<BehaviourDTO> Behaviours { get; init; }
         /// <summary>
         /// Constructor for BehaviourListMessage.
         /// </summary>
-        public BehaviourListMessage(IEnumerable<BehviourDTO> behaviours)
+        public BehaviourListMessage(IEnumerable<BehaviourDTO> behaviours)
         {
             Behaviours = behaviours;
         }

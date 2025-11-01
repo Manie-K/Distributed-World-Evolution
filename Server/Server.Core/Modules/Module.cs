@@ -1,6 +1,10 @@
-﻿using Server.Core.Behaviours;
+﻿using System.Collections.Generic;
+using System.Reflection;
+using Server.Core.Behaviours;
+using Server.Core.Data;
 using Server.Core.Exceptions;
 using Server.Core.Helpers;
+using Server.Core.Services;
 using SharedLibrary.DTOs.ModuleDTO;
 
 namespace Server.Core.Modules
@@ -8,24 +12,51 @@ namespace Server.Core.Modules
     public class Module
     {
         // We should try to place non-dynamic data here. All the dynamic data will be stored in WorldEntity object instances.
-
+        public int ID { get; init; }
         public bool Official { get; init; }
         public string Name { get; init; }
         public int Damage { get; private set; }
         public int Agression { get; private set; }
         public int ReproductionNeed { get; private set; }
+        public int MaxHunger { get; private set; }
+        public int MaxHealth { get; private set; }
         public EntityTypeEnum Type { get; init; }
         public int GraphicalRepresentationID { get; private set; }
 
         private readonly Dictionary<Type, IBehaviour> behaviours;
 
-        private Module(string name, bool official, int damage, int aggresion, int reproductionNeed, EntityTypeEnum type, int graphicsId)
+        public static Module CreateFromDBEntity(ModuleDBEntity dbEntity)
         {
+            List<IBehaviour> behaviours = dbEntity.BehaviourIDs
+                                        .Select(BehaviourService.Instance.GetBehaviourInstanceByID)
+                                        .Where(b => b != null)
+                                        .ToList();
+
+            Module module = new Module.ModuleBuilder()
+                                .WithID(dbEntity.ID)
+                                .WithName(dbEntity.Name)
+                                .IsOfficial(dbEntity.Official)
+                                .OfType(dbEntity.Type)
+                                .WithDamage(dbEntity.Damage)
+                                .WithAgression(dbEntity.Agression)
+                                .WithReproductionNeed(dbEntity.ReproductionNeed)
+                                .WithGraphicsId(dbEntity.GraphicalRepresentationID)
+                                .WithBehaviours(behaviours)
+                                .Create();
+
+            return module;
+        }
+
+        private Module(int id, string name, bool official, int damage, int aggresion, int reproductionNeed, int maxHunger, int maxHelath, EntityTypeEnum type, int graphicsId)
+        {
+            ID = id;
             Name = name;
             Official = official;
             Damage = damage;
             Agression = aggresion;
             ReproductionNeed = reproductionNeed;
+            MaxHunger = maxHunger;
+            MaxHealth = maxHelath;
             Type = type;
             behaviours = new Dictionary<Type, IBehaviour>();
             GraphicalRepresentationID = graphicsId;
@@ -61,29 +92,41 @@ namespace Server.Core.Modules
 
         public ModuleDTO ToDTO()
         {
-            return new ModuleDTO(0, Name, Official, Damage, Agression, ReproductionNeed, null, Type, GraphicalRepresentationID);
+            List<BehaviourDTO> behaviourDTOs = new List<BehaviourDTO>();
+            foreach (var behaviour in behaviours.Values)
+            {
+                behaviourDTOs.Add(behaviour.ToDTO());
+            }
+
+            return new ModuleDTO(ID, Name, Official, Damage, Agression, ReproductionNeed, behaviourDTOs, Type, GraphicalRepresentationID);
         }
 
         #region BUILDER
 
         public class ModuleBuilder
         {
+            public int id;
             private string name;
             private bool official;
             private int damage;
             private int aggresion;
             private int reproductionNeed;
+            private int maxHunger;
+            private int maxHelath;
             private readonly List<IBehaviour> behaviours;
             private EntityTypeEnum type;
             private int graphicsId;
 
             public ModuleBuilder()
             {
+                id = -999;
                 name = "Default ModuleDTO";
                 official = false;
                 damage = 0;
                 aggresion = 0;
                 reproductionNeed = 0;
+                maxHunger = 100;
+                maxHelath = 100;
                 behaviours = new List<IBehaviour>();
                 type = EntityTypeEnum.Animal;
                 graphicsId = 0;
@@ -91,12 +134,18 @@ namespace Server.Core.Modules
 
             public Module Create()
             {
-                var module = new Module(name, official, damage, aggresion, reproductionNeed, type, graphicsId);
+                var module = new Module(id, name, official, damage, aggresion, reproductionNeed, maxHunger, maxHelath, type, graphicsId);
                 foreach (var behaviour in behaviours)
                 {
                     module.AddBehaviour(behaviour);
                 }
                 return module;
+            }
+
+            public ModuleBuilder WithID(int id)
+            {
+                this.id = id;
+                return this;
             }
 
             public ModuleBuilder OfType(EntityTypeEnum type)
@@ -131,6 +180,18 @@ namespace Server.Core.Modules
             public ModuleBuilder WithReproductionNeed(int reproductionNeed)
             {
                 this.reproductionNeed = reproductionNeed;
+                return this;
+            }
+
+            public ModuleBuilder WithMaxHunger(int maxHunger)
+            {
+                this.maxHunger = maxHunger;
+                return this;
+            }
+
+            public ModuleBuilder WithMaxHealth(int maxHealth)
+            {
+                this.maxHelath = maxHealth;
                 return this;
             }
 
