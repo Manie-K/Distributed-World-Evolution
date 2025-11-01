@@ -15,14 +15,14 @@ namespace Server.Core.Data
             moduleEntity.HasKey(m => m.ID);
             moduleEntity.Property(m => m.ID).ValueGeneratedOnAdd();
             moduleEntity.Property(m => m.Name).IsRequired();
-            moduleEntity.Property(m => m.Type).IsRequired();
+            moduleEntity.Property(m => m.Type).IsRequired().HasConversion<int>();
 
             moduleEntity.HasData(
-                new ModuleDBEntity(true, "Human module", 5, 5, 5, EntityTypeEnum.Human, 1, new int[] { })
+                new ModuleDBEntity(true, "Human module", 5, 5, 5, 100, 100, EntityTypeEnum.Human, 1, new int[] {})
                 {
                     ID = -1
                 },
-                new ModuleDBEntity(true, "Default test module", 30, 70, 40, EntityTypeEnum.Animal, 2, new int[] { 101, 201, 307, 401 })
+                new ModuleDBEntity(true, "Default module", 30, 70, 40, 100, 100, EntityTypeEnum.Animal, 2, new int[] { 101, 201, 307, 401 })
                 {
                     ID = -2
                 }

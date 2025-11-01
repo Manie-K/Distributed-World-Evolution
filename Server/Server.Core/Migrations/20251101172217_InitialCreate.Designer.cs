@@ -11,7 +11,7 @@ using Server.Core.Data;
 namespace Server.Core.Migrations
 {
     [DbContext(typeof(ApplicationDBContext))]
-    [Migration("20251025185153_InitialCreate")]
+    [Migration("20251101172217_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -45,6 +45,12 @@ namespace Server.Core.Migrations
                     b.Property<int>("GraphicalRepresentationID")
                         .HasColumnType("integer");
 
+                    b.Property<int>("MaxHealth")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("MaxHunger")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -70,6 +76,8 @@ namespace Server.Core.Migrations
                             BehaviourIDs = new int[0],
                             Damage = 5,
                             GraphicalRepresentationID = 1,
+                            MaxHealth = 100,
+                            MaxHunger = 100,
                             Name = "Human module",
                             Official = true,
                             ReproductionNeed = 5,
@@ -78,13 +86,15 @@ namespace Server.Core.Migrations
                         new
                         {
                             ID = -2,
-                            Agression = 7,
-                            BehaviourIDs = new[] { 3, 2, 69 },
-                            Damage = 3,
+                            Agression = 70,
+                            BehaviourIDs = new[] { 101, 201, 307, 401 },
+                            Damage = 30,
                             GraphicalRepresentationID = 2,
+                            MaxHealth = 100,
+                            MaxHunger = 100,
                             Name = "Default module",
                             Official = true,
-                            ReproductionNeed = 4,
+                            ReproductionNeed = 40,
                             Type = 2
                         });
                 });
