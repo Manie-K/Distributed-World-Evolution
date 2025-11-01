@@ -16,8 +16,12 @@ namespace Server.Core
         public int Hunger { get; set; }
         public int InteractionFramesLeft { get; set; }
 
+        public string LastInteractionName { get; set; } = String.Empty;
+
         //We don't persist this value, it's only for runtime use. Reset to (0,0) won't break anything.
         public Position2D LastMovementVector { get; set; } = new Position2D(0, 0);
+
+
 
         public EntityState(Position2D position, int health = 100, int hunger = 100, int interactionFramesLeft = 0)
         {
@@ -45,7 +49,7 @@ namespace Server.Core
 
         public EntityStateDTO ToDTO()
         {
-            return new EntityStateDTO(Position, Health, Hunger, InteractionFramesLeft);
+            return new EntityStateDTO(Position, Health, Hunger, InteractionFramesLeft, LastInteractionName);
         }
 
     }

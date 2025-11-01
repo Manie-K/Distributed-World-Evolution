@@ -35,6 +35,7 @@ namespace Server.Core.Behaviours.AttackBehaviour
                 if (target.State.Health <= 0)
                 {
                     target.Die();
+                    attacker.State.Hunger += 20; //Hardcoded hunger increase on kill
                 }
                 if(attacker.State.Health <= 0)
                 {

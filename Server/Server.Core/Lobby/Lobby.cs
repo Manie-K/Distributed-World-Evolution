@@ -130,8 +130,10 @@ namespace Server.Core.Lobby
             {
                 if(entity.State.InteractionFramesLeft > 0)
                 {
+                    entity.State.InteractionFramesLeft--;
                     continue;
                 }
+                entity.State.LastInteractionName = String.Empty;
 
                 entityModule = moduleService.GetModuleById(entity.ModuleID);
                 if(entityModule == null)
@@ -169,6 +171,7 @@ namespace Server.Core.Lobby
         }
 
         //@FranciszekGwarek do we need these things?
+        // ???????????????????????
         private void UpdateServerState(MessageBase message, TcpClient client)
         {
             if (message == null)
@@ -234,6 +237,7 @@ namespace Server.Core.Lobby
                     });
 
                     entity.State.InteractionFramesLeft = 12;
+                    entity.State.LastInteractionName = nameof(MoveBehaviourBase);
                 }
                 else if (interactionType == typeof(ReproduceBehaviourBase))
                 {
@@ -243,11 +247,13 @@ namespace Server.Core.Lobby
 
                     entity.State.InteractionFramesLeft = 8;
                     targetEntity.State.InteractionFramesLeft = 8;
+                    entity.State.LastInteractionName = nameof(ReproduceBehaviourBase);
                 }
                 else if(interactionType == typeof(AttackBehaviourBase))
                 {
                     entity.State.InteractionFramesLeft = 15;
                     targetEntity.State.InteractionFramesLeft = 15;
+                    entity.State.LastInteractionName = nameof(AttackBehaviourBase);
                 }
                 else
                 {
