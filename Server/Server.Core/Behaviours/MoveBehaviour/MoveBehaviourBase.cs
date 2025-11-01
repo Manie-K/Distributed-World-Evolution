@@ -52,9 +52,9 @@ namespace Server.Core.Behaviours.MoveBehaviour
         public abstract (int, int) GetNextMovement(WorldEntity entity);
 
         /// <inheritdoc/>
-        public BehviourDTO ToDTO()
+        public BehaviourDTO ToDTO()
         {
-            return new BehviourDTO(DatabaseID, Description, Type);
+            return new BehaviourDTO(DatabaseID, Description, Type);
         }
     }
 }

@@ -13,11 +13,11 @@ namespace SharedLibrary.DTOs.ModuleDTO
         public int Damage { get; private set; }
         public int Aggresion { get; private set; }
         public int ReproductionNeed { get; private set; }
-        public List<BehviourDTO> Behaviours { get; init; }
+        public List<BehaviourDTO> Behaviours { get; init; }
         public EntityTypeEnum Type { get; init; }
         public int GraphicalRepresentationID { get; set; }
 
-        public ModuleDTO(int databaseID, string name, bool isOfficialModule, int damage, int aggresion, int reproductionNeed, List<BehviourDTO> behaviours, EntityTypeEnum type, int graphicalRepresentationID)
+        public ModuleDTO(int databaseID, string name, bool isOfficialModule, int damage, int aggresion, int reproductionNeed, List<BehaviourDTO> behaviours, EntityTypeEnum type, int graphicalRepresentationID)
         {
             DatabaseID = databaseID;
             Name = name;

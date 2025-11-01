@@ -35,6 +35,7 @@ namespace Server.Tests
             poisonousPlantEntity = WorldEntity.CreateWorldEntity("poisonousPlantEntity", 3, new EntityState(new SharedLibrary.Helpers.Position2D(0, 0), 100, 0, 0));
 
             eaterModule = new Module.ModuleBuilder()
+                .WithID(1)
                 .WithName("eaterModule")
                 .WithReproductionNeed(5)
                 .WithMaxHealth(100)
@@ -43,6 +44,7 @@ namespace Server.Tests
                 .Create();
 
             normalPlantModule = new Module.ModuleBuilder()
+                .WithID(2)
                 .WithName("normalPlantModule")
                 .WithDamage(0)
                 .WithMaxHealth(100)
@@ -51,6 +53,7 @@ namespace Server.Tests
                 .Create();
 
             poisonousPlantModule = new Module.ModuleBuilder()
+                .WithID(3)
                 .WithName("poisonousPlantModule")
                 .WithDamage(10)
                 .WithMaxHealth(100)

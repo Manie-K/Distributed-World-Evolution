@@ -95,9 +95,9 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
         }
 
         /// <inheritdoc/>
-        public BehviourDTO ToDTO()
+        public BehaviourDTO ToDTO()
         {
-            return new BehviourDTO(DatabaseID, Description, Type);
+            return new BehaviourDTO(DatabaseID, Description, Type);
         }
     }
 }

@@ -31,6 +31,7 @@ namespace Server.Tests
             human = WorldEntity.CreateWorldEntity("Human", 3, new EntityState(new SharedLibrary.Helpers.Position2D(0, 0), 15, 100, 0));
 
             firstModule = new Module.ModuleBuilder()
+                .WithID(1)
                 .WithName("FirstModule")
                 .IsOfficial(false)
                 .WithDamage(30)
@@ -40,6 +41,7 @@ namespace Server.Tests
                 .Create();
 
             secondModule = new Module.ModuleBuilder()
+                .WithID(2)
                 .WithName("SecondModule")
                 .IsOfficial(false)
                 .WithDamage(30)
@@ -49,6 +51,7 @@ namespace Server.Tests
                 .Create();
 
             humanModule = new Module.ModuleBuilder()
+               .WithID(3)
                .WithName("HumanModule")
                .IsOfficial(false)
                .WithDamage(25)

@@ -46,6 +46,6 @@ namespace Server.Core.Behaviours
         /// <summary>
         /// Converts the behaviour to a DTO.
         /// </summary>
-        public BehviourDTO ToDTO();
+        public BehaviourDTO ToDTO();
     }
 }

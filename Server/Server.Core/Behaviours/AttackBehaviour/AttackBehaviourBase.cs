@@ -58,9 +58,9 @@ namespace Server.Core.Behaviours.AttackBehaviour
         public abstract bool CanExecute(WorldEntity attacker, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null);
 
         /// <inheritdoc/>
-        public BehviourDTO ToDTO()
+        public BehaviourDTO ToDTO()
         {
-            return new BehviourDTO(DatabaseID, Description, Type);
+            return new BehaviourDTO(DatabaseID, Description, Type);
         }
 
     }
