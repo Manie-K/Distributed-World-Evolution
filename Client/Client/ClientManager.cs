@@ -138,7 +138,8 @@ namespace Client
             lobbyListReady = ActionStatus.IDLE;
             moduleListReady = ActionStatus.IDLE;
             serverIp = "127.0.0.1";
-            port = 8080;
+            //port = 8080;
+            port = 5000;
         }
 
         public void StartClient()
