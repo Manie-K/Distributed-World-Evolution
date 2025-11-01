@@ -55,6 +55,12 @@ namespace Server.Core.Migrations
                     b.Property<int>("ReproductionNeed")
                         .HasColumnType("integer");
 
+                    b.Property<int>("MaxHunger")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("MaxHealth")
+                        .HasColumnType("integer");
+
                     b.Property<int>("Type")
                         .HasColumnType("integer");
 
@@ -73,18 +79,22 @@ namespace Server.Core.Migrations
                             Name = "Human module",
                             Official = true,
                             ReproductionNeed = 5,
+                            MaxHunger = 100,
+                            MaxHealth = 100,
                             Type = 1
                         },
                         new
                         {
                             ID = -2,
-                            Agression = 7,
-                            BehaviourIDs = new[] { 3, 2, 69 },
-                            Damage = 3,
+                            Agression = 70,
+                            BehaviourIDs = new[] { 101, 201, 307, 401 },
+                            Damage = 30,
                             GraphicalRepresentationID = 2,
                             Name = "Default module",
                             Official = true,
-                            ReproductionNeed = 4,
+                            ReproductionNeed = 40,
+                            MaxHunger = 100,
+                            MaxHealth = 100,
                             Type = 2
                         });
                 });
