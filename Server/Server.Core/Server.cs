@@ -50,7 +50,7 @@ namespace Server.Core
             loggerService.Log("Server started...", LogLevelEnum.Info);
 
             //TODO: remove hardcoded lobby
-            lobbyManager.CreateAndInitializeLobby("TEST", 2, 1, new bool[1, 1], []);
+            lobbyManager.CreateAndInitializeLobby("TEST", 2, 1, new bool[4][], []);
 
             await StartAcceptingClientsAsync();
         }
@@ -239,12 +239,12 @@ namespace Server.Core
                         break;
 
                     case GetMessageTypeEnum.ModuleList:
-                        var modules = Services.ModuleService.Instance.GetAllModules().Select(m => m.ToDTO()).ToList();
+                        var modules = ModuleService.Instance.GetAllModules().Select(m => m.ToDTO()).ToList();
                         await SafeSendAsync(client, new ModuleListMessage(modules));
                         break;
 
                     case GetMessageTypeEnum.BehaviourList:
-                        var behaviours = Services.BehaviourService.Instance.GetAllBehaviours().Select(b => b.ToDTO()).ToList();
+                        var behaviours = BehaviourService.Instance.GetAllBehaviours().Select(b => b.ToDTO()).ToList();
                         await SafeSendAsync(client, new BehaviourListMessage(behaviours));
                         break;
 
@@ -264,7 +264,7 @@ namespace Server.Core
         {
             try
             {
-                Services.ModuleService.Instance.CreateModule(msg.ModuleDTO);
+                ModuleService.Instance.CreateModule(msg.ModuleDTO);
                 await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.ModuleCreated, "Module created successfully."));
             }
             catch (Exception ex)
@@ -299,7 +299,7 @@ namespace Server.Core
         {
             return new List<LobbyDTO>
                 {
-                    new LobbyDTO(1, "Test Lobby", 10, 1, 1, null)
+                    new LobbyDTO(1, "Test Lobby", 10, 1, 1, [-1, -2])
                 };
         }
 

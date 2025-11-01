@@ -38,12 +38,12 @@ namespace SharedLibrary.Messages
         ///<summary>
         /// Represents world tiles.
         /// </summary>
-        public bool[,] WalkableTiles { get; init; }
+        public bool[][] WalkableTiles { get; init; }
 
         /// <summary>
         /// Constructor for CreateLobbyMessage.
         /// </summary
-        public CreateLobbyMessage(string lobbyName, string username, int maxPlayers, int mapID, IEnumerable<int> moduleIDs, bool[,] walkableTiles)
+        public CreateLobbyMessage(string lobbyName, string username, int maxPlayers, int mapID, IEnumerable<int> moduleIDs, bool[][] walkableTiles)
         {
             LobbyName = lobbyName;
             UserName = username;

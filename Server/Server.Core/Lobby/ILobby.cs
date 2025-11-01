@@ -1,4 +1,5 @@
 ﻿using System.Net.Sockets;
+using SharedLibrary.Helpers;
 using SharedLibrary.Logging;
 
 namespace Server.Core.Lobby
@@ -22,6 +23,7 @@ namespace Server.Core.Lobby
         public Guid AddClient(TcpClient client, string username);
         public bool RemoveClient(TcpClient client);
 
+        public bool IsPositionFree(Position2D position);
         public bool AddWorldEntity(WorldEntity entity);
 
         public bool DestroyWorldEntity(WorldEntity entity);

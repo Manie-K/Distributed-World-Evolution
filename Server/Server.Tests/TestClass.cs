@@ -2,9 +2,7 @@
 
 namespace Server.Tests
 {
-    
-
-    public class Class1
+    public class TestClass
     {
         [Fact]
         public void AlwaysPassingTest()

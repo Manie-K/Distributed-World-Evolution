@@ -1,4 +1,7 @@
-﻿using SharedLibrary;
+﻿using Server.Core.Lobby;
+using Server.Core.Modules;
+using Server.Core.Services;
+using SharedLibrary;
 using SharedLibrary.DTOs.EntitiesDTO;
 
 namespace Server.Core
@@ -10,7 +13,7 @@ namespace Server.Core
         public int ModuleID { get; init; }
         public EntityState State { get; init; }
 
-        public static WorldEntity CreateWorldEntity(string name, int moduleId, EntityState state)
+        public static WorldEntity CreateWorldEntity(string? name, int moduleId, EntityState state)
         {
             return new WorldEntity(name, moduleId, state);
         }
@@ -34,6 +37,27 @@ namespace Server.Core
             State.Position = new (newState.Position);
             State.Hunger = newState.Hunger;
             State.InteractionFramesLeft = newState.InteractionFramesLeft;
+        }
+
+        public void Die(ILobby lobby)
+        {
+            // VERY IMPORTANT TODO
+            Module? module = ModuleService.Instance.GetModuleById(ModuleID);
+            if(module == null)
+            {
+                throw new Exception($"Module with ID {ModuleID} not found for entity {Id}");
+            }
+
+            if(module.Type == EntityTypeEnum.Human)
+            {
+                //@EVERYONE, What do we do here?
+                //noop for now
+            }
+            else
+            {
+                // Remove entity from lobby
+                lobby.DestroyWorldEntity(this);
+            }
         }
 
         public WorldEntityDTO ToDTO()

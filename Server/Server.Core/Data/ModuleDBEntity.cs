@@ -8,7 +8,11 @@ using System.Threading.Tasks;
 
 namespace Server.Core.Data
 {
-    internal class ModuleDBEntity
+    /// <summary>
+    /// Database entity representing a Module.
+    /// Seperate class from Module.cs in case we want to change the DB schema without affecting the in-memory Module representation.
+    /// </summary>
+    public class ModuleDBEntity
     {
         [Key]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
