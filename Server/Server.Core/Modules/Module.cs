@@ -81,9 +81,9 @@ namespace Server.Core.Modules
 
         public IBehaviour GetBehaviourOfType(Type type)
         {
-            if (!type.IsInterface || typeof(IBehaviour).IsAssignableFrom(type))
+            if (type.IsInterface || !type.IsAbstract || !type.IsClass || !typeof(IBehaviour).IsAssignableFrom(type))
             {
-                throw new ArgumentException("Type must be an interface that extends IBehaviour.");
+                throw new ArgumentException("Type must be an abstract class that extends IBehaviour.");
             }
 
             behaviours.TryGetValue(type, out IBehaviour? found);
