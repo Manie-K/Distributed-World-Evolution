@@ -50,7 +50,17 @@ namespace Server.Core
             loggerService.Log("Server started...", LogLevelEnum.Info);
 
             //TODO: remove hardcoded lobby
-            lobbyManager.CreateAndInitializeLobby("TEST", 2, 1, new bool[4][], []);
+            bool[][] walkableTilesTEMP = new bool[20][];
+            for (int x = 0; x < 20; x++)
+            {
+                walkableTilesTEMP[x] = new bool[20];
+                for (int y = 0; y < 20; y++)
+                {
+                    walkableTilesTEMP[x][y] = true;
+                }
+            }
+
+            lobbyManager.CreateAndInitializeLobby("TEST LOBBY - NOT FOR RELEASE", 2, 1, walkableTilesTEMP, [-1, -2]);
 
             await StartAcceptingClientsAsync();
         }
@@ -235,7 +245,9 @@ namespace Server.Core
                 switch (msg.GetMessageType)
                 {
                     case GetMessageTypeEnum.LobbyList:
+                        //TODO: Remove this dummy lobby. Uncomment solution in the line below.
                         await SafeSendAsync(client, new LobbyListMessage(GetDummyLobbies()));
+                        //await SafeSendAsync(client, new LobbyListMessage(lobbyManager.GetAllLobbies().Select(l => l.ToDTO()).ToList()));
                         break;
 
                     case GetMessageTypeEnum.ModuleList:

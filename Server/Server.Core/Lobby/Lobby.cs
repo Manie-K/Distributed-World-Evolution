@@ -536,7 +536,7 @@ namespace Server.Core.Lobby
                 LobbyId,
                 Name,
                 MaxPlayers,
-                currentPlayers: clients.Count,
+                clients.Count,
                 MapID,
                 allowedModulesIDs
             );
