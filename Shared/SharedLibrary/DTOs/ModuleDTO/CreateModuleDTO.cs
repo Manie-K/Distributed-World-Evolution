@@ -15,7 +15,8 @@ namespace SharedLibrary.DTOs.ModuleDTO
         public int GraphicalRepresentationID { get; set; }
         public List<int> BehaviourIDs { get; init; }
 
-        public CreateModuleDTO(string name, bool official, int damage, int aggresion, int reproductionNeed, int maxHunger, int maxHealth, EntityTypeEnum type, int graphicsID, List<int> behaviourIDs)
+        public CreateModuleDTO(string name, bool official, int damage, int aggresion, int reproductionNeed, 
+            int maxHunger, int maxHealth, EntityTypeEnum type, int graphicalRepresentationID, List<int> behaviourIDs)
         {
             Name = name;
             Official = official;
@@ -25,7 +26,7 @@ namespace SharedLibrary.DTOs.ModuleDTO
             MaxHunger = maxHunger;
             MaxHealth = maxHealth;
             Type = type;
-            GraphicalRepresentationID = graphicsID;
+            GraphicalRepresentationID = graphicalRepresentationID;
             BehaviourIDs = behaviourIDs;
         }
     }

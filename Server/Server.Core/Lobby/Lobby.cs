@@ -301,14 +301,23 @@ namespace Server.Core.Lobby
         private Type? GetInteractionType(WorldEntity entity, EntityState newState)
         {
             WorldEntity? entityOnPosition = entities.Where(ent => ent.State.Position == newState.Position)?.FirstOrDefault();
+            Module entityModule = moduleService.GetModuleById(entity.ModuleID) ?? throw new Exception($"Module with ID={entity.ModuleID} not found");
+            EntityTypeEnum entityType = entityModule.Type;
 
             if (entityOnPosition == null)
             {
-                return typeof(MoveBehaviourBase);
+                if(entityModule.GetBehaviourOfType(typeof(MoveBehaviourBase))
+                    .CanExecute(entity, null, ModuleService.Instance, new Dictionary<string, object>{
+                        { CustomBehaviourParams.MAP_PARAM, walkableTiles   },
+                        { CustomBehaviourParams.NEW_POS_PARAM, newState.Position }
+                    })
+                )
+                {
+                    return typeof(MoveBehaviourBase);
+                }
+                return null;
             }
 
-            Module entityModule = moduleService.GetModuleById(entity.ModuleID) ?? throw new Exception($"Module with ID={entity.ModuleID} not found");
-            EntityTypeEnum entityType = entityModule.Type;
             EntityTypeEnum targetType = moduleService.GetModuleById(entityOnPosition.ModuleID)?.Type ?? throw new Exception($"Module with ID={entity.ModuleID} not found"); ;
 
             // We refactored this so that humans dont use this method, the send the new states in frames
