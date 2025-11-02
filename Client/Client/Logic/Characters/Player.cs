@@ -1,4 +1,5 @@
 ﻿using Client.Common;
+using Client.Logic;
 using Client.Rendering;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -17,11 +18,11 @@ namespace Client
         private readonly WorldMap map;
         private readonly ClientManager clientManager;
 
-        public Player(Vector2 position, Color color, Text playerName, ref AnimationTexturesLoader ATL, Vector2 spriteDrawingOffset, WorldMap map = null, ClientManager clientManager = null)
-            : base(position, color, 140, 108, 150f, ref ATL, 0, spriteDrawingOffset)
+        public Player(Vector2 position, Color color, Text playerName, WorldMap map = null, ClientManager clientManager = null)
+            : base(position, color, 130, 108, 150f, 8, 7)
         {
             this.playerName = playerName;
-            playerNameOffset = new Vector2(35 + spriteDrawingOffset.X, -3 + spriteDrawingOffset.Y);
+            playerNameOffset = new Vector2(35 + SpriteDrawingOffset.X, -3 + SpriteDrawingOffset.Y);
             this.map = map;
             this.clientManager = clientManager;
             TargetEntity = null;
@@ -69,41 +70,23 @@ namespace Client
                 {
                     Position = newPosition;
                 }
-
-                am.SetAnimationWithDuration(1, CurrentDirection, 1, 36, false);
-            }
-            else
-            {
-                am.SetAnimationWithDuration(0, CurrentDirection, 1, 36);
             }
 
 
-            if (inputManager.CheckIfPressingKey(Keys.Space) && am.GetAcctualAnimationIndex() != 2)
+            if (inputManager.CheckIfPressingKey(Keys.Space))
             {
                 TargetEntity = clientManager.Entities.FirstOrDefault(e => e.Value.State.Position.Equals(map.GetTilePosition2D(Position.X, Position.Y))).Value;
                 if (TargetEntity != null)
                 {
                     TargetEntity.State.Health -= 1;
-                }
-
-                am.SetAnimationWithDuration(2, CurrentDirection, 2, 36, true);               
+                }        
             }
-
-
-            if (am.GetAcctualAnimationIndex() == 2)
-            {
-                speed = 70f;
-                am.SetAnimationWithDuration(2, CurrentDirection, 2, 36, true);
-            }
-            else speed = 200f;
-            
-
             am.Update();
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(am.GetAcctualTexture(), Rect, am.GetFrame(), Color.White);
+            spriteBatch.Draw(AssetsManager.GetInstance().GetCharacterTexture(0), GetPosition(), GetSourceRectangle(), Color.White);
             playerName.Draw(spriteBatch, Position + playerNameOffset);
         }
     }

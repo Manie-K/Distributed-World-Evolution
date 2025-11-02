@@ -2,13 +2,14 @@
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using Client.Common;
+using Client.Logic;
 
 namespace Client
 {
     public class Vampire3 : Character
     {
-        public Vampire3(Vector2 position, Color color, ref AnimationTexturesLoader ATL)
-            : base(position, color, 110, 110, 150f, ref ATL, 58, new Vector2(-37, -48))
+        public Vampire3(Vector2 position, Color color)
+            : base(position, color, 110, 110, 150f, 4, 12)
         {
   
         }
@@ -43,34 +44,13 @@ namespace Client
             {
                 movement.Normalize();
                 Position += movement * speed * delta;
-                am.SetAnimationWithDuration(59, CurrentDirection, 1, 36, false);
             }
-            else
-            {
-                am.SetAnimationWithDuration(58, CurrentDirection, 1, 36);
-            }
-
-
-            if (inputManager.CheckIfPressingKey(Keys.Space))
-            {
-                am.SetAnimationWithDuration(56, CurrentDirection, 2, 36, true);
-            }
-
-
-            if (am.GetAcctualAnimationIndex() == 56)
-            {
-                speed = 70f;
-                am.SetAnimationWithDuration(56, CurrentDirection, 2, 36, true);
-            }
-            else speed = 200f;
-
-
             am.Update();
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(am.GetAcctualTexture(), Rect, am.GetFrame(), Color.White);
+            spriteBatch.Draw(AssetsManager.GetInstance().GetCharacterTexture(16), GetPosition(), GetSourceRectangle(), Color.White);
         }
     }
 }

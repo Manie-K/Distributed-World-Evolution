@@ -2,13 +2,14 @@
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using Client.Common;
+using Client.Logic;
 
 namespace Client
 {
     public class Boar : Character
     {
-        public Boar(Vector2 position, Color color, ref AnimationTexturesLoader ATL)
-            : base(position, color, 160, 160, 150f, ref ATL, 9, new Vector2(-65, -75))
+        public Boar(Vector2 position, Color color)
+            : base(position, color, 160, 160, 150f, 4, 12)
         {
 
         }
@@ -43,34 +44,14 @@ namespace Client
             {
                 movement.Normalize();
                 Position += movement * speed * delta;
-                am.SetAnimationWithDuration(10, CurrentDirection, 1, 36, false);
             }
-            else
-            {
-                am.SetAnimationWithDuration(9, CurrentDirection, 1, 36);
-            }
-
-
-            if (inputManager.CheckIfPressingKey(Keys.Space))
-            {
-                am.SetAnimationWithDuration(11, CurrentDirection, 2, 36, true);
-            }
-
-
-            if (am.GetAcctualAnimationIndex() == 11)
-            {
-                speed = 70f;
-                am.SetAnimationWithDuration(11, CurrentDirection, 2, 36, true);
-            }
-            else speed = 200f;
-
 
             am.Update();
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(am.GetAcctualTexture(), Rect, am.GetFrame(), Color.White);
+            spriteBatch.Draw(AssetsManager.GetInstance().GetCharacterTexture(1), GetPosition(), GetSourceRectangle(), Color.White);
         }
     }
 }

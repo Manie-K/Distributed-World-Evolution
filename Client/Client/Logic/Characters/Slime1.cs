@@ -2,13 +2,14 @@
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using Client.Common;
+using Client.Logic;
 
 namespace Client
 {
     public class Slime1 : Character
     {
-        public Slime1(Vector2 position, Color color, ref AnimationTexturesLoader ATL)
-            : base(position, color, 100, 100, 150f, ref ATL, 26, new Vector2(-35, -37))
+        public Slime1(Vector2 position, Color color)
+            : base(position, color, 100, 100, 150f, 6, 9)
         {
 
         }
@@ -43,34 +44,13 @@ namespace Client
             {
                 movement.Normalize();
                 Position += movement * speed * delta;
-                am.SetAnimationWithDuration(27, CurrentDirection, 1, 36, false);
             }
-            else
-            {
-                am.SetAnimationWithDuration(26, CurrentDirection, 1, 36);
-            }
-
-
-            if (inputManager.CheckIfPressingKey(Keys.Space))
-            {
-                am.SetAnimationWithDuration(24, CurrentDirection, 2, 36, true);
-            }
-
-
-            if (am.GetAcctualAnimationIndex() == 24)
-            {
-                speed = 70f;
-                am.SetAnimationWithDuration(24, CurrentDirection, 2, 36, true);
-            }
-            else speed = 200f;
-
-
             am.Update();
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(am.GetAcctualTexture(), Rect, am.GetFrame(), Color.White);
+            spriteBatch.Draw(AssetsManager.GetInstance().GetCharacterTexture(11), GetPosition(), GetSourceRectangle(), Color.White);
         }
     }
 }

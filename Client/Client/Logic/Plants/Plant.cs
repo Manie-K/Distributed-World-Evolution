@@ -16,7 +16,7 @@ namespace Client.Logic.Plants
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(PlantsAssetsManager.GetInstance().GetSpritesheet(), Position, SourceRect, Color.White);
+            spriteBatch.Draw(AssetsManager.GetInstance().GetFlowersSpritesheet(), Position, SourceRect, Color.White);
         }
     }
 }

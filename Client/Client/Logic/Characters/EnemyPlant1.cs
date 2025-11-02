@@ -2,13 +2,14 @@
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using Client.Common;
+using Client.Logic;
 
 namespace Client
 {
     public class EnemyPlant1 : Character
     {
-        public EnemyPlant1(Vector2 position, Color color, ref AnimationTexturesLoader ATL)
-            : base(position, color, 100, 100, 150f, ref ATL, 5, new Vector2(-32, -47))
+        public EnemyPlant1(Vector2 position, Color color)
+            : base(position, color, 100, 100, 150f, 4, 12)
         {
 
         }
@@ -43,34 +44,14 @@ namespace Client
             {
                 movement.Normalize();
                 Position += movement * speed * delta;
-                am.SetAnimationWithDuration(6, CurrentDirection, 1, 36, false);
+               
             }
-            else
-            {
-                am.SetAnimationWithDuration(5, CurrentDirection, 1, 36);
-            }
-
-
-            if (inputManager.CheckIfPressingKey(Keys.Space))
-            {
-                am.SetAnimationWithDuration(3, CurrentDirection, 2, 36, true);
-            }
-
-
-            if (am.GetAcctualAnimationIndex() == 3)
-            {
-                speed = 70f;
-                am.SetAnimationWithDuration(3, CurrentDirection, 2, 36, true);
-            }
-            else speed = 200f;
-
-
             am.Update();
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(am.GetAcctualTexture(), Rect, am.GetFrame(), Color.White);
+            spriteBatch.Draw(AssetsManager.GetInstance().GetCharacterTexture(6), GetPosition(), GetSourceRectangle(), Color.White);
         }
     }
 }

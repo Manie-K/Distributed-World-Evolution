@@ -26,7 +26,7 @@ namespace Client
             this.checkBox = new CheckBox(checkboxBG, checkboxApply, new Vector2(position.X + 22, position.Y + 17), 25, 24, Color.Gold);
 
             this.verifyIcon = verifyIcon;
-            iconBounds = new Rectangle((int) position.X + width + 15, (int) position.Y + 13, 33, 32);
+            iconBounds = new Rectangle((int) position.X + width + 13, (int) position.Y + 10, 35, 39);
         }
 
         public bool Update(Vector2 cursorPosition, bool isPressed, bool isSelected)

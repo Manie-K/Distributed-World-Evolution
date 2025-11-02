@@ -2,13 +2,14 @@
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using Client.Common;
+using Client.Logic;
 
 namespace Client
 {
     public class WhiteRabbit : Character
     {
-        public WhiteRabbit(Vector2 position, Color color, ref AnimationTexturesLoader ATL)
-            : base(position, color, 192, 192, 150f, ref ATL, 12, new Vector2(-80, -100))
+        public WhiteRabbit(Vector2 position, Color color)
+            : base(position, color, 192, 192, 150f, 4, 12)
         {
 
         }
@@ -43,27 +44,13 @@ namespace Client
             {
                 movement.Normalize();
                 Position += movement * speed * delta;
-                am.SetAnimationWithDuration(13, CurrentDirection, 1, 36, false);
             }
-            else
-            {
-                am.SetAnimationWithDuration(12, CurrentDirection, 1, 36);
-            }
-
-
-            if (inputManager.CheckIfPressingKey(Keys.Space))
-            {
-                speed = 70f;
-            }
-            else speed = 200f;
-
-
             am.Update();
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(am.GetAcctualTexture(), Rect, am.GetFrame(), Color.White);
+            spriteBatch.Draw(AssetsManager.GetInstance().GetCharacterTexture(10), GetPosition(), GetSourceRectangle(), Color.White);
         }
     }
 }
