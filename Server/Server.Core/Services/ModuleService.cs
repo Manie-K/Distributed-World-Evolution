@@ -48,7 +48,7 @@ namespace Server.Core.Services
             {
                 ModuleDBEntity moduleDBEntity = new ModuleDBEntity
                 (
-                    dto.Official, dto.Name, dto.Damage, dto.Agression, dto.ReproductionNeed, dto.MaxHunger, dto.MaxHealth, dto.Type, dto.GraphicalRepresentationID, dto.BehaviourIDs.ToArray()
+                    dto.Official, dto.Name, dto.Damage, dto.Aggression, dto.ReproductionNeed, dto.MaxHunger, dto.MaxHealth, dto.Type, dto.GraphicalRepresentationID, dto.BehaviourIDs.ToArray()
                 );
 
                 dbContext.Modules.Add(moduleDBEntity);
