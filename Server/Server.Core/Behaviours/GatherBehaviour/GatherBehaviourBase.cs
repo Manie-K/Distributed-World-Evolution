@@ -24,7 +24,7 @@ namespace Server.Core.Behaviours.GatherBehaviour
         /// <inheritdoc/>
         public BehaviourDTO ToDTO()
         {
-            return new BehaviourDTO(DatabaseID, Description, Type);
+            return new BehaviourDTO(DatabaseID, Description, Type, BehaviourInteractionTypeEnum.None);
         }
     }
 }
