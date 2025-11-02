@@ -133,6 +133,12 @@ namespace Server.Core.Lobby
         /// <inheritdoc/>
         public Guid AddClient(TcpClient client, string username)
         {
+            if(clients.Count >= MaxPlayers)
+            {
+                Log("Lobby is full.", LogLevelEnum.Warning);
+                return Guid.Empty;
+            }
+
             WorldEntity userEntity = WorldEntity.CreateWorldEntity(username, moduleService.GetHumanModuleId(),
                 new EntityState(new Position2D(0, 0)), this);
 
@@ -147,7 +153,6 @@ namespace Server.Core.Lobby
             }
 
             AddWorldEntity(userEntity);
-
             return userEntity.Id;
         }
 
@@ -163,6 +168,12 @@ namespace Server.Core.Lobby
                 }
                 clients.Remove(client);
                 DestroyWorldEntity(clients[client]);
+            }
+
+            if(clients.Count == 0)
+            {
+                Log("No clients left in lobby. Closing lobby.", LogLevelEnum.Info);
+                running = false;
             }
 
             return true;
