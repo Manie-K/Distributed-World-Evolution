@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
 
 namespace Client
@@ -61,6 +60,7 @@ namespace Client
 
         public void InitializeRows()
         {
+            maps.Add(new MapData(contentManager.Load<Texture2D>("UI/BG_Forest"), "Grassland"));
             maps.Add(new MapData(contentManager.Load<Texture2D>("UI/MapSelection/Standard"), "Standard"));
             maps.Add(new MapData(contentManager.Load<Texture2D>("UI/MapSelection/TwoBridges"), "Two Bridges"));
         }

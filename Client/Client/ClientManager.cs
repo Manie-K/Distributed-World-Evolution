@@ -138,8 +138,8 @@ namespace Client
             lobbyListReady = ActionStatus.IDLE;
             moduleListReady = ActionStatus.IDLE;
             serverIp = "127.0.0.1";
-            //port = 8080;
-            port = 5000;
+            port = 8080; // Docker port
+            //port = 5000; // Local port
         }
 
         public void StartClient()
