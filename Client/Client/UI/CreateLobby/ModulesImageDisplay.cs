@@ -18,14 +18,14 @@ namespace Client.UI.CreateLobby
         public ModulesImageDisplay(ContentManager contentManager)
         {
             rect = new Rectangle(583, 213, 66, 52);
-            AcctualPicked = 1;
+            AcctualPicked = 28;
 
             InitializeImages(contentManager);
         }
 
         public void InitializeImages(ContentManager contentManager)
         {
-            Images = new Texture2D[28];
+            Images = new Texture2D[29];
 
             Images[0] = contentManager.Load<Texture2D>("UI/CreateLobby/Modules_Images/Boar_Image");
             Images[1] = contentManager.Load<Texture2D>("UI/CreateLobby/Modules_Images/Pig_Image");
@@ -61,6 +61,8 @@ namespace Client.UI.CreateLobby
             Images[25] = contentManager.Load<Texture2D>("UI/CreateLobby/Modules_Images/Rose_Image");
             Images[26] = contentManager.Load<Texture2D>("UI/CreateLobby/Modules_Images/Sunflower_Image");
             Images[27] = contentManager.Load<Texture2D>("UI/CreateLobby/Modules_Images/Tulip_Image");
+
+            Images[28] = contentManager.Load<Texture2D>("UI/CreateLobby/Modules_Images/Player_Image");
         }
 
         public void Draw(SpriteBatch spriteBatch)

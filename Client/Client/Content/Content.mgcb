@@ -1136,6 +1136,18 @@
 /processorParam:TextureFormat=Color
 /build:UI/CreateLobby/Modules_Images/Plant3_Image.png
 
+#begin UI/CreateLobby/Modules_Images/Player_Image.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/CreateLobby/Modules_Images/Player_Image.png
+
 #begin UI/CreateLobby/Modules_Images/Poppy_Image.png
 /importer:TextureImporter
 /processor:TextureProcessor
