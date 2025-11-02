@@ -26,6 +26,7 @@ namespace Client
             this.map = map;
             this.clientManager = clientManager;
             TargetEntity = null;
+            am = new AnimationManager(13);
         }
 
         public override void Update(GameTime gameTime, InputManager inputManager)
@@ -58,6 +59,7 @@ namespace Client
             {
                 movement.Normalize();
                 Vector2 newPosition = Position + (movement * speed * delta);
+                SetNewAnimation(0);
 
                 if (newPosition.X < 0) newPosition.X = 0;
                 else if (newPosition.X >= map.MapWidth * map.TileSize) newPosition.X = map.MapWidth * map.TileSize - 1;
@@ -75,18 +77,25 @@ namespace Client
 
             if (inputManager.CheckIfPressingKey(Keys.Space))
             {
+                SetNewAnimation(1);
+
                 TargetEntity = clientManager.Entities.FirstOrDefault(e => e.Value.State.Position.Equals(map.GetTilePosition2D(Position.X, Position.Y))).Value;
                 if (TargetEntity != null)
                 {
                     TargetEntity.State.Health -= 1;
                 }        
             }
+
+            if (inputManager.CheckIfPressingKey(Keys.O))
+            {
+                SetNewAnimation(2);
+            }
             am.Update();
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(AssetsManager.GetInstance().GetCharacterTexture(0), GetPosition(), GetSourceRectangle(), Color.White);
+            spriteBatch.Draw(AssetsManager.GetInstance().GetCharacterTexture(am.ActiveAnimation, 13), GetPosition(), GetSourceRectangle(), Color.White);
             playerName.Draw(spriteBatch, Position + playerNameOffset);
         }
     }

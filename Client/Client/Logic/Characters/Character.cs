@@ -25,12 +25,16 @@ namespace Client
             this.speed = speed;
             SpriteDrawingOffset = new Vector2((width / 2 - 16) * -1, (height / 2 - 16) * -1);
             CurrentDirection = Direction.down;
-            am = new AnimationManager(framesAmount, interval);
         }
 
         public Rectangle GetSourceRectangle()
         {
-            return new Rectangle(width * am.ActiveFrame, height * (int)CurrentDirection, width, height);
+            return new Rectangle(width * am.GetActiveFrame(), height * (int)CurrentDirection, width, height);
+        }
+
+        public void SetNewAnimation(int type)
+        {
+            am.SetNewAnimation(type);
         }
 
         public virtual void Update(GameTime gameTime, InputManager inputManager) { }

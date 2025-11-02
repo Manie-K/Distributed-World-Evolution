@@ -11,7 +11,7 @@ namespace Client
         public Orc1(Vector2 position, Color color)
            : base(position, color, 100, 100, 150f, 4, 12)
         {
-
+            am = new AnimationManager(0);
         }
 
         public override void Update(GameTime gameTime, InputManager inputManager)
@@ -44,13 +44,23 @@ namespace Client
             {
                 movement.Normalize();
                 Position += movement * speed * delta;
+                SetNewAnimation(0);
+            }
+
+            if (inputManager.CheckIfPressingKey(Keys.Space))
+            {
+                SetNewAnimation(1);
+            }
+            if (inputManager.CheckIfPressingKey(Keys.O))
+            {
+                SetNewAnimation(2);
             }
             am.Update();
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(AssetsManager.GetInstance().GetCharacterTexture(2), GetPosition(), GetSourceRectangle(), Color.White);
+            spriteBatch.Draw(AssetsManager.GetInstance().GetCharacterTexture(am.ActiveAnimation, 0), GetPosition(), GetSourceRectangle(), Color.White);
         }
     }
 }
