@@ -55,7 +55,7 @@ namespace Server.Core.Behaviours.AttackBehaviour
         /// <inheritdoc/>
         public BehaviourDTO ToDTO()
         {
-            return new BehaviourDTO(DatabaseID, Description, Type);
+            return new BehaviourDTO(DatabaseID, Description, Type, BehaviourInteractionTypeEnum.Attack);
         }
 
     }

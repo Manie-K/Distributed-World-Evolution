@@ -98,7 +98,7 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
         /// <inheritdoc/>
         public BehaviourDTO ToDTO()
         {
-            return new BehaviourDTO(DatabaseID, Description, Type);
+            return new BehaviourDTO(DatabaseID, Description, Type, BehaviourInteractionTypeEnum.Reproduce);
         }
     }
 }

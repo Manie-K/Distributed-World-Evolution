@@ -19,9 +19,9 @@ namespace SharedLibrary.Messages
         /// <summary>
         /// Constructor for CreateModuleMessage.
         /// </summary>
-        public CreateModuleMessage(CreateModuleDTO module)
+        public CreateModuleMessage(CreateModuleDTO moduleDTO)
         {
-            ModuleDTO = module;
+            ModuleDTO = moduleDTO;
         }
 
         /// <inheritdoc/>

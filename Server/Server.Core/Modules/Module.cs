@@ -98,7 +98,7 @@ namespace Server.Core.Modules
                 behaviourDTOs.Add(behaviour.ToDTO());
             }
 
-            return new ModuleDTO(ID, Name, Official, Damage, Agression, ReproductionNeed, behaviourDTOs, Type, GraphicalRepresentationID);
+            return new ModuleDTO(ID, Name, Official, Damage, Agression, ReproductionNeed, MaxHunger, MaxHealth, behaviourDTOs, Type, GraphicalRepresentationID);
         }
 
         #region BUILDER
