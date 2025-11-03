@@ -166,8 +166,8 @@ namespace Server.Core.Lobby
                     Log("Client already not in lobby.", LogLevelEnum.Warning);
                     return false;
                 }
-                clients.Remove(client);
                 DestroyWorldEntity(clients[client]);
+                clients.Remove(client);
             }
 
             if(clients.Count == 0)
