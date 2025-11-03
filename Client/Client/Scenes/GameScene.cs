@@ -24,7 +24,6 @@ namespace Client
         private Vector2 cameraOffset;
         private double clientUpdateTimer;
         private double timeBetweenUpdates;
-        private WorldEntityDTO playerDTO;
 
         private List<Plant> plants;
 
@@ -45,7 +44,6 @@ namespace Client
             }
             player = new Player(new Vector2(600, 200), Color.White, new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), 
                 manager.UserSettings.PlayerName, true, new Vector2(500, 300 - 110), 70, 40), ref this.animationTexturesLoader, new Vector2(-68, -77), map, manager.ClientManager);
-            playerDTO = null;
 
             manager.Camera.MapSize = new System.Drawing.Size(map.MapWidth * map.TileSize, map.MapHeight * map.TileSize);
             manager.IsInGame = true;
@@ -81,7 +79,8 @@ namespace Client
             {
                 if (entity.Id.Equals(manager.ClientManager.PlayerGuid))
                 {
-                    playerDTO ??= entity;
+                    player.PlayerDTO ??= entity;
+                    player.PlayerDTO.State.Health = entity.State.Health;
                     continue;
                 }
 
@@ -101,10 +100,10 @@ namespace Client
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             clientUpdateTimer += delta;
 
-            if (clientUpdateTimer >= timeBetweenUpdates && playerDTO != null)
+            if (clientUpdateTimer >= timeBetweenUpdates && player.PlayerDTO != null)
             {
-                playerDTO.State.Position = map.GetTilePosition2D(player.Position.X, player.Position.Y);
-                UserInteractionMessage message = new UserInteractionMessage(playerDTO, player.TargetEntity);
+                player.PlayerDTO.State.Position = map.GetTilePosition2D(player.Position.X, player.Position.Y);
+                UserInteractionMessage message = new UserInteractionMessage(player.PlayerDTO, player.TargetEntity);
                 _ = MessageManager.SendMessageAsync(manager.ClientManager.Client, message);
                 clientUpdateTimer = 0;
                 player.TargetEntity = null;

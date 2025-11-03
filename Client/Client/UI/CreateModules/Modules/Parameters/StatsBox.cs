@@ -1,10 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Client.UI.CreateModules.Modules.Parameters
 {
@@ -48,7 +43,14 @@ namespace Client.UI.CreateModules.Modules.Parameters
 
         public int GetParameter()
         {
-            return int.Parse(parameterValue.GetText());
+            try
+            {
+                return int.Parse(parameterValue.GetText());
+            }
+            catch
+            { 
+                return 1;
+            }
         }
     }
 }

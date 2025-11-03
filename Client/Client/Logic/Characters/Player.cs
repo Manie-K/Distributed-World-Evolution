@@ -3,7 +3,10 @@ using Client.Rendering;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Server.Core;
 using SharedLibrary.DTOs.EntitiesDTO;
+using SharedLibrary.DTOs.ModuleDTO;
+using System;
 using System.Linq;
 
 namespace Client
@@ -11,11 +14,20 @@ namespace Client
     public class Player : Character
     {
         public WorldEntityDTO TargetEntity;
+        public WorldEntityDTO PlayerDTO;
 
         private Text playerName;
         private Vector2 playerNameOffset;
+        private ModuleDTO playerModule;
         private readonly WorldMap map;
         private readonly ClientManager clientManager;
+
+        private enum InteractionType
+        {
+            Attack,
+            Gather,
+            Tame
+        }
 
         public Player(Vector2 position, Color color, Text playerName, ref AnimationTexturesLoader ATL, Vector2 spriteDrawingOffset, WorldMap map = null, ClientManager clientManager = null)
             : base(position, color, 140, 108, 150f, ref ATL, 0, spriteDrawingOffset)
@@ -24,11 +36,25 @@ namespace Client
             playerNameOffset = new Vector2(35 + spriteDrawingOffset.X, -3 + spriteDrawingOffset.Y);
             this.map = map;
             this.clientManager = clientManager;
+            PlayerDTO = null;
             TargetEntity = null;
+            playerModule = null;
         }
 
         public override void Update(GameTime gameTime, InputManager inputManager)
         {
+            if (playerModule == null && PlayerDTO != null)
+            { 
+                playerModule = clientManager.Modules.Where(m => m.DatabaseID == PlayerDTO.ModuleID).FirstOrDefault();
+            }
+
+            if (PlayerDTO != null && PlayerDTO.State.Health <= 0)
+            {
+                Position = Vector2.One * 5;
+                UpdateAnimation();
+                return;
+            }
+
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             Vector2 movement = Vector2.Zero;
 
@@ -77,34 +103,87 @@ namespace Client
                 am.SetAnimationWithDuration(0, CurrentDirection, 1, 36);
             }
 
-
             if (inputManager.CheckIfPressingKey(Keys.Space) && am.GetAcctualAnimationIndex() != 2)
             {
-                TargetEntity = clientManager.Entities.FirstOrDefault(e => e.Value.State.Position.Equals(map.GetTilePosition2D(Position.X, Position.Y))).Value;
-                if (TargetEntity != null)
-                {
-                    TargetEntity.State.Health -= 1;
-                }
-
+                HandleInteraction(InteractionType.Attack);
                 am.SetAnimationWithDuration(2, CurrentDirection, 2, 36, true);               
             }
-
-
-            if (am.GetAcctualAnimationIndex() == 2)
+            if (inputManager.CheckIfPressingKey(Keys.E))
             {
-                speed = 70f;
-                am.SetAnimationWithDuration(2, CurrentDirection, 2, 36, true);
+                HandleInteraction(InteractionType.Gather);
             }
-            else speed = 200f;
-            
+            if (inputManager.CheckIfPressingKey(Keys.R))
+            {
+                HandleInteraction(InteractionType.Tame);
+            }
 
-            am.Update();
+            UpdateAnimation();
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(am.GetAcctualTexture(), Rect, am.GetFrame(), Color.White);
             playerName.Draw(spriteBatch, Position + playerNameOffset);
+        }
+
+        private void UpdateAnimation()
+        {
+            if (am.GetAcctualAnimationIndex() == 2)
+            {
+                speed = 70f;
+                am.SetAnimationWithDuration(2, CurrentDirection, 2, 36, true);
+            }
+            else speed = 200f;
+
+            am.Update();
+        }
+
+        private void HandleInteraction(InteractionType interactionType)
+        {
+            TargetEntity = clientManager.Entities.FirstOrDefault(e => e.Value.State.Position.Equals(map.GetTilePosition2D(Position.X, Position.Y))).Value;
+            if (TargetEntity != null && TargetEntity.ModuleID != PlayerDTO.ModuleID)
+            {
+                switch (interactionType)
+                {
+                    case InteractionType.Attack:
+                        AttackTarget();
+                        break;
+                    case InteractionType.Gather:
+                        GatherTarget();
+                        break;
+                    case InteractionType.Tame:
+                        TameTarget();
+                        break;
+                }
+            }
+        }
+
+        private void AttackTarget()
+        {
+            TargetEntity.State.Health -= playerModule.Damage;
+            Console.WriteLine("hp left: " + TargetEntity.State.Health);
+        }
+
+        private void GatherTarget()
+        {
+            EntityTypeEnum type = clientManager.Modules.Where(m => m.DatabaseID == TargetEntity.ModuleID).First().Type;
+            if (type == EntityTypeEnum.Plant)
+            {
+                TargetEntity.State.Health = 0;
+                //TODO: add to inventory targetentity
+                Console.WriteLine("Plant gathered");
+            }
+        }
+
+        private void TameTarget()
+        {
+            EntityTypeEnum type = clientManager.Modules.Where(m => m.DatabaseID == TargetEntity.ModuleID).First().Type;
+            if (type == EntityTypeEnum.Animal) //TODO: check if player has needed plant or smth
+            {
+                TargetEntity.State.Health = 0;
+                //TODO: tame animal
+                Console.WriteLine("Animal tamed");
+            }
         }
     }
 }

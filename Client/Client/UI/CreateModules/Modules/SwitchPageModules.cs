@@ -1,9 +1,7 @@
 ﻿using Client.UI.CreateModules.Modules;
-using Client.UI.MapSelection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
 
 namespace Client
@@ -61,13 +59,13 @@ namespace Client
 
         public void InitializeRows()
         {
-            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Boar_Module"), "Boar", ModuleType.Animal, 0));
-            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Pig_Module"), "Pig", ModuleType.Animal, 1));
-            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Rabbit_Brown_Module"), "Brown Rabbit", ModuleType.Animal, 2));
-            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Rabbit_White_Module"), "White Rabbit", ModuleType.Animal, 3));
+            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Boar_Module"), "Boar", ModuleType.Animal, 3));
+            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Pig_Module"), "Pig", ModuleType.Animal, 2));
+            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Rabbit_Brown_Module"), "Brown Rabbit", ModuleType.Animal, 5));
+            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Rabbit_White_Module"), "White Rabbit", ModuleType.Animal, 4));
 
-            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Plant1_Module"), "Red Plant", ModuleType.Animal, 4));
-            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Plant2_Module"), "Blue Plant", ModuleType.Animal, 5));
+            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Plant1_Module"), "Red Plant", ModuleType.Animal, 0));
+            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Plant2_Module"), "Blue Plant", ModuleType.Animal, 1));
             modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Plant3_Module"), "Purple Plant", ModuleType.Animal, 6));
             modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Slime1_Module"), "Slime", ModuleType.Animal, 7));
 
@@ -81,21 +79,21 @@ namespace Client
             modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Vampire2_Module"), "Blue Vampire", ModuleType.Animal, 14));
             modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/Vampire3_Module"), "Red Vampire", ModuleType.Animal, 15));
 
-            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/PlantsAssets/Cosmo"), "Cosmo", ModuleType.Plant, 16));
-            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/PlantsAssets/Daffodil"), "Daffodil", ModuleType.Plant, 17));
-            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/PlantsAssets/Daisy"), "Daisy", ModuleType.Plant, 18));
+            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/PlantsAssets/Cosmo"), "Cosmo", ModuleType.Plant, 17));
+            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/PlantsAssets/Daffodil"), "Daffodil", ModuleType.Plant, 18));
+            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/PlantsAssets/Daisy"), "Daisy", ModuleType.Plant, 19));
 
-            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/PlantsAssets/Lavender"), "Lavender", ModuleType.Plant, 19));
-            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/PlantsAssets/Lily"), "Lily", ModuleType.Plant, 20));
-            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/PlantsAssets/LilyOfTheValley"), "Lily of the valley", ModuleType.Plant, 21));
+            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/PlantsAssets/Lavender"), "Lavender", ModuleType.Plant, 20));
+            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/PlantsAssets/Lily"), "Lily", ModuleType.Plant, 21));
+            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/PlantsAssets/LilyOfTheValley"), "Lily of the valley", ModuleType.Plant, 22));
 
-            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/PlantsAssets/Orchid"), "Orchid", ModuleType.Plant, 22));
-            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/PlantsAssets/Pansy"), "Pansy", ModuleType.Plant, 23));
-            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/PlantsAssets/Poppy"), "Poppy", ModuleType.Plant, 24));
+            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/PlantsAssets/Orchid"), "Orchid", ModuleType.Plant, 23));
+            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/PlantsAssets/Pansy"), "Pansy", ModuleType.Plant, 24));
+            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/PlantsAssets/Poppy"), "Poppy", ModuleType.Plant, 25));
 
-            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/PlantsAssets/Rose"), "Rose", ModuleType.Plant, 25));
-            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/PlantsAssets/Sunflower"), "Sunflower", ModuleType.Plant, 26));
-            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/PlantsAssets/Tulip"), "Tulip", ModuleType.Plant, 27));
+            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/PlantsAssets/Rose"), "Rose", ModuleType.Plant, 26));
+            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/PlantsAssets/Sunflower"), "Sunflower", ModuleType.Plant, 27));
+            modules.Add(new ModuleData(contentManager.Load<Texture2D>("UI/CreateModules/PlantsAssets/Tulip"), "Tulip", ModuleType.Plant, 28));
         }
 
         public ModuleType GetAcctualType()
@@ -106,6 +104,11 @@ namespace Client
         public int GetIndex()
         {
             return pageNumber - 1;
+        }
+
+        public int GetGraphicIndex()
+        {
+            return modules[pageNumber - 1].GraphicIndex;
         }
     }
 }
