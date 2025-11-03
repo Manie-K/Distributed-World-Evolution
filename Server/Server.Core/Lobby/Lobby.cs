@@ -50,6 +50,18 @@ namespace Server.Core.Lobby
 
         private bool running;
 
+        #region Constructors
+
+        /// <summary>
+        /// Static factory method used for creating Lobby objects.
+        /// </summary>
+        /// <param name="id">ID of the lobby</param>
+        /// <param name="name">Name of the lobby</param>
+        /// <param name="maxPlayers">Max allowed number of players in lobby</param>
+        /// <param name="mapId">ID of the map used in lobby</param>
+        /// <param name="walkableTiles">Data about map</param>
+        /// <param name="moduleIDs">List of allowed modules' IDs</param>
+        /// <param name="moduleService">IModuleService instance</param>
         public static Lobby CreateLobby(int id, string name, int maxPlayers, int mapId, bool[][] walkableTiles, IEnumerable<int> moduleIDs, IModuleService moduleService)
         {
             Lobby lobby = new Lobby(id, name, maxPlayers, mapId, walkableTiles, moduleService);
@@ -86,6 +98,12 @@ namespace Server.Core.Lobby
             Server.OnMessageFromClientReceived += OnMessageFromClientReceived_Delegate;
         }
 
+        #endregion
+
+
+        #region ILooby Implementation
+
+        /// <inheritdoc/>
         public void Run()
         {
             Log($"Lobby {LobbyId} started.", LogLevelEnum.Info);
@@ -99,6 +117,168 @@ namespace Server.Core.Lobby
             Log($"Lobby {LobbyId} closed.", LogLevelEnum.Info);
         }
 
+        /// <inheritdoc/>
+        public bool IsPositionFree(Position2D position)
+        {
+            foreach (var entity in entities)
+            {
+                if (entity.State.Position == position)
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        /// <inheritdoc/>
+        public Guid AddClient(TcpClient client, string username)
+        {
+            if(clients.Count >= MaxPlayers)
+            {
+                Log("Lobby is full.", LogLevelEnum.Warning);
+                return Guid.Empty;
+            }
+
+            WorldEntity userEntity = WorldEntity.CreateWorldEntity(username, moduleService.GetHumanModuleId(),
+                new EntityState(new Position2D(0, 0)), this);
+
+            lock (clients)
+            {
+                if (clients.Keys.Contains(client))
+                {
+                    Log("Client already in lobby.", LogLevelEnum.Warning);
+                    return Guid.Empty;
+                }
+                clients.Add(client, userEntity);
+            }
+
+            AddWorldEntity(userEntity);
+            return userEntity.Id;
+        }
+
+        /// <inheritdoc/>
+        public bool RemoveClient(TcpClient client)
+        {
+            lock (clients)
+            {
+                if (!clients.Keys.Contains(client))
+                {
+                    Log("Client already not in lobby.", LogLevelEnum.Warning);
+                    return false;
+                }
+                DestroyWorldEntity(clients[client]);
+                clients.Remove(client);
+            }
+
+            if(clients.Count == 0)
+            {
+                Log("No clients left in lobby. Closing lobby.", LogLevelEnum.Info);
+                running = false;
+            }
+
+            return true;
+        }
+
+        /// <inheritdoc/>
+        public bool AddAllowedModule(int moduleId)
+        {
+            Module? module = moduleService.GetModuleById(moduleId);
+            lock (allowedModulesIDs)
+            {
+                if (allowedModulesIDs.Contains(moduleId))
+                {
+                    Log($"ModuleDTO {module?.Name} already allowed in lobby {LobbyId}.", LogLevelEnum.Warning);
+                    return false;
+                }
+                allowedModulesIDs.Add(moduleId);
+                return true;
+            }
+        }
+
+        /*// What do we expect here? Just remove in future or present?
+        public bool RemoveAllowedModule(int moduleId)
+        {
+            ModuleDTO? module = moduleService.GetModuleById(moduleId);
+            lock (allowedModulesIDs)
+            {
+                if (!allowedModulesIDs.Contains(moduleId))
+                {
+                    Log($"ModuleDTO {module?.Name} already isn't allowed in lobby {LobbyId}.", LogLevelEnum.Warning);
+                    return false;
+                }
+                allowedModulesIDs.Remove(moduleId);
+                return true;
+            }
+        }*/
+
+
+        /// <inheritdoc/>
+        public bool AddWorldEntity(WorldEntity entity)
+        {
+            lock (entities)
+            {
+                if (entities.Contains(entity))
+                {
+                    Log($"Entity {entity.Id} already exists in lobby {LobbyId}.", LogLevelEnum.Warning);
+                    return false;
+                }
+
+                bool moduleLoaded = allowedModulesIDs.Any(id => (id == entity.ModuleID));
+                if (!moduleLoaded)
+                {
+                    Log($"Entity's {entity.Id} module is not allowed in lobby {LobbyId}.", LogLevelEnum.Warning);
+                    return false;
+                }
+
+                if (!IsPositionFree(entity.State.Position)) return false;
+
+                entities.Add(entity);
+                return true;
+            }
+        }
+
+        /// <inheritdoc/>
+        public bool DestroyWorldEntity(WorldEntity entity)
+        {
+            if (entity == null)
+            {
+                return false;
+            }
+
+            lock (entities)
+            {
+                if (!entities.Contains(entity))
+                {
+                    Log($"Entity {entity.Id} does not exist in lobby {LobbyId}.", LogLevelEnum.Warning);
+                    return false;
+                }
+                entities.Remove(entity);
+                return true;
+            }
+        }
+
+        /// <inheritdoc/>
+        public LobbyDTO ToDTO()
+        {
+            return new LobbyDTO
+            (
+                LobbyId,
+                Name,
+                MaxPlayers,
+                clients.Count,
+                MapID,
+                allowedModulesIDs
+            );
+        }
+
+        #endregion
+
+
+        #region Helpers
+
+        /// <summary>
+        /// Creates initial world entities in the lobby.
+        /// </summary>
         private void InitializeWorldEntities()
         {
             const int NUM_INITIAL_ENTITIES = 100;
@@ -137,6 +317,9 @@ namespace Server.Core.Lobby
             }
         }
 
+        /// <summary>
+        /// Publishes the current world state to all connected clients.
+        /// </summary>
         private void PublishWorldState()
         {
             // Simulate all non-human entities
@@ -220,6 +403,13 @@ namespace Server.Core.Lobby
                     
         }
 
+        /// <summary>
+        /// Simulates the update of a non-human entity based on its new state (position).
+        /// </summary>
+        /// <param name="entity">Entity to be simulated</param>
+        /// <param name="newState">This entity's new state, usually with different position</param>
+        /// <exception cref="ArgumentNullException">entity and newState must not be null</exception>
+        /// <exception cref="Exception">entity module must be correct</exception>
         private void SimulateNonHumanEntityUpdate(WorldEntity entity, EntityState newState)
         {
             if (entity == null)
@@ -284,6 +474,13 @@ namespace Server.Core.Lobby
                 }
             }
         }
+
+        /// <summary>
+        /// Updates the state of a human entity and optionally another entity. Based on data received from client.
+        /// </summary>
+        /// <param name="human">Human entity to be changed</param>
+        /// <param name="other">Other entity to be changed. Optional</param>
+        /// <exception cref="ArgumentNullException">Human entity can not be null</exception>
         private void SimulateHumanEntityUpdate(WorldEntityDTO human, WorldEntityDTO? other)
         {
             WorldEntity? entHuman = entities.Where(e => e.Id == human.Id)?.FirstOrDefault();
@@ -298,17 +495,33 @@ namespace Server.Core.Lobby
             entOther?.UpdateState(new EntityState(other!.State));
         }
 
+        /// <summary>
+        /// Determines the type of interaction that will occur when an entity moves to a new state.
+        /// </summary>
+        /// <param name="entity">Entity to be checked</param>
+        /// <param name="newState">Entity's new state</param>
+        /// <returns>Type of the interaction, or null if no interaction should occur</returns>
+        /// <exception cref="Exception">Modules must be correct</exception>
         private Type? GetInteractionType(WorldEntity entity, EntityState newState)
         {
             WorldEntity? entityOnPosition = entities.Where(ent => ent.State.Position == newState.Position)?.FirstOrDefault();
+            Module entityModule = moduleService.GetModuleById(entity.ModuleID) ?? throw new Exception($"Module with ID={entity.ModuleID} not found");
+            EntityTypeEnum entityType = entityModule.Type;
 
             if (entityOnPosition == null)
             {
-                return typeof(MoveBehaviourBase);
+                if(entityModule.GetBehaviourOfType(typeof(MoveBehaviourBase))
+                    .CanExecute(entity, null, ModuleService.Instance, new Dictionary<string, object>{
+                        { CustomBehaviourParams.MAP_PARAM, walkableTiles   },
+                        { CustomBehaviourParams.NEW_POS_PARAM, newState.Position }
+                    })
+                )
+                {
+                    return typeof(MoveBehaviourBase);
+                }
+                return null;
             }
 
-            Module entityModule = moduleService.GetModuleById(entity.ModuleID) ?? throw new Exception($"Module with ID={entity.ModuleID} not found");
-            EntityTypeEnum entityType = entityModule.Type;
             EntityTypeEnum targetType = moduleService.GetModuleById(entityOnPosition.ModuleID)?.Type ?? throw new Exception($"Module with ID={entity.ModuleID} not found"); ;
 
             // We refactored this so that humans dont use this method, the send the new states in frames
@@ -371,6 +584,9 @@ namespace Server.Core.Lobby
             return null;
         }
 
+        #endregion
+
+
         #region Delegates
 
         private void OnMessageFromClientReceived_Delegate(OnMessageFromClientEventArgs args)
@@ -387,6 +603,7 @@ namespace Server.Core.Lobby
         }
 
         #endregion
+
 
         #region Handlers
 
@@ -427,147 +644,6 @@ namespace Server.Core.Lobby
 
         #endregion
 
-        #region Helpers
-
-        /// <inheritdoc/>
-        public bool IsPositionFree(Position2D position)
-        {
-            foreach (var entity in entities)
-            {
-                if (entity.State.Position == position)
-                {
-                    return false;
-                }
-            }
-            return true;
-        }
-
-        /// <inheritdoc/>
-        public Guid AddClient(TcpClient client, string username)
-        {
-            WorldEntity userEntity = WorldEntity.CreateWorldEntity(username, moduleService.GetHumanModuleId(), 
-                new EntityState(new Position2D(0, 0)), this);
-            
-            lock (clients)
-            {
-                if (clients.Keys.Contains(client))
-                {
-                    Log("Client already in lobby.", LogLevelEnum.Warning);
-                    return Guid.Empty;
-                }
-                clients.Add(client, userEntity);
-            }
-
-            AddWorldEntity(userEntity);
-
-            return userEntity.Id;
-        }
-
-        public bool RemoveClient(TcpClient client)
-        {
-            lock (clients)
-            {
-                if (!clients.Keys.Contains(client))
-                {
-                    Log("Client already not in lobby.", LogLevelEnum.Warning);
-                    return false;
-                }
-                clients.Remove(client);
-                DestroyWorldEntity(clients[client]);
-            }
-
-            return true;
-        }
-        
-        public bool AddAllowedModule(int moduleId)
-        {
-            Module? module = moduleService.GetModuleById(moduleId);
-            lock (allowedModulesIDs)
-            {
-                if (allowedModulesIDs.Contains(moduleId))
-                {
-                    Log($"ModuleDTO {module?.Name} already allowed in lobby {LobbyId}.", LogLevelEnum.Warning);
-                    return false;
-                }
-                allowedModulesIDs.Add(moduleId);
-                return true;
-            }
-        }
-
-        /*// What do we expect here? Just remove in future or present?
-        public bool RemoveAllowedModule(int moduleId)
-        {
-            ModuleDTO? module = moduleService.GetModuleById(moduleId);
-            lock (allowedModulesIDs)
-            {
-                if (!allowedModulesIDs.Contains(moduleId))
-                {
-                    Log($"ModuleDTO {module?.Name} already isn't allowed in lobby {LobbyId}.", LogLevelEnum.Warning);
-                    return false;
-                }
-                allowedModulesIDs.Remove(moduleId);
-                return true;
-            }
-        }*/
-
-        // We should decide how we will handle creating and destroying world entities
-        public bool AddWorldEntity(WorldEntity entity)
-        {
-            lock (entities)
-            {
-                if (entities.Contains(entity))
-                {
-                    Log($"Entity {entity.Id} already exists in lobby {LobbyId}.", LogLevelEnum.Warning);
-                    return false;
-                }
-
-                bool moduleLoaded = allowedModulesIDs.Any(id => (id == entity.ModuleID));
-                if (!moduleLoaded)
-                {
-                    Log($"Entity's {entity.Id} module is not allowed in lobby {LobbyId}.", LogLevelEnum.Warning);
-                    return false;
-                }
-
-                if (!IsPositionFree(entity.State.Position)) return false;
-
-                entities.Add(entity);
-                return true;
-            }
-        }
-
-        public bool DestroyWorldEntity(WorldEntity entity)
-        {
-            if(entity == null)
-            {
-                return false;
-            }
-
-            lock (entities)
-            {
-                if (!entities.Contains(entity))
-                {
-                    Log($"Entity {entity.Id} does not exist in lobby {LobbyId}.", LogLevelEnum.Warning);
-                    return false;
-                }
-                entities.Remove(entity);
-                return true;
-            }
-        }
-
-        public LobbyDTO ToDTO()
-        {
-            return new LobbyDTO
-            (
-                LobbyId,
-                Name,
-                MaxPlayers,
-                clients.Count,
-                MapID,
-                allowedModulesIDs
-            );
-        }
-
-        #endregion
 
         #region Logging
         private void Log(Exception ex, LogLevelEnum level)

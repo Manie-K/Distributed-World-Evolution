@@ -23,7 +23,6 @@ namespace Client
         private Vector2 cameraOffset;
         private double clientUpdateTimer;
         private double timeBetweenUpdates;
-        private WorldEntityDTO playerDTO;
 
         private List<Plant> plants;
 
@@ -79,7 +78,8 @@ namespace Client
             {
                 if (entity.Id.Equals(manager.ClientManager.PlayerGuid))
                 {
-                    playerDTO ??= entity;
+                    player.PlayerDTO ??= entity;
+                    player.PlayerDTO.State.Health = entity.State.Health;
                     continue;
                 }
 
@@ -99,10 +99,10 @@ namespace Client
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             clientUpdateTimer += delta;
 
-            if (clientUpdateTimer >= timeBetweenUpdates && playerDTO != null)
+            if (clientUpdateTimer >= timeBetweenUpdates && player.PlayerDTO != null)
             {
-                playerDTO.State.Position = map.GetTilePosition2D(player.Position.X, player.Position.Y);
-                UserInteractionMessage message = new UserInteractionMessage(playerDTO, player.TargetEntity);
+                player.PlayerDTO.State.Position = map.GetTilePosition2D(player.Position.X, player.Position.Y);
+                UserInteractionMessage message = new UserInteractionMessage(player.PlayerDTO, player.TargetEntity);
                 _ = MessageManager.SendMessageAsync(manager.ClientManager.Client, message);
                 clientUpdateTimer = 0;
                 player.TargetEntity = null;

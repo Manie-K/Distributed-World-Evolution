@@ -1,11 +1,8 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
+using SharedLibrary.DTOs.ModuleDTO;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Client.UI.CreateModules.Modules.Parameters
 {
@@ -14,7 +11,7 @@ namespace Client.UI.CreateModules.Modules.Parameters
         private CheckBox checkBox;
         private BehaviourBox behaviourBox;
 
-        public ModuleBehaviourParameter(ContentManager contentManager, Vector2 position, List<string> values, int type, string name, string description) : base(contentManager, position, type, name, description)
+        public ModuleBehaviourParameter(ContentManager contentManager, Vector2 position, List<BehaviourDTO> values, int type, string name, string description) : base(contentManager, position, type, name, description)
         {
             behaviourBox = new BehaviourBox(contentManager.Load<Texture2D>("UI/CreateModules/Behaviours/switch_Button"), contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"),
                                             values, position);
@@ -33,7 +30,6 @@ namespace Client.UI.CreateModules.Modules.Parameters
         {
             checkBox.CheckLeftClick(position);
             return behaviourBox.CheckLeftClick(position);
-
         }
 
         public override void Update(Vector2 position)
@@ -43,12 +39,17 @@ namespace Client.UI.CreateModules.Modules.Parameters
 
         public override int GetValue()
         {
-            return behaviourBox.selectedParameter;
+            return behaviourBox.GetSelectedBehaviourID();
         }
 
         public bool IsPicked()
         {
             return checkBox.GetValue();
+        }
+
+        public override string GetDescription()
+        { 
+            return behaviourBox.GetBehaviourDescription();
         }
     }
 }

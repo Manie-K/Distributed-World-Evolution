@@ -40,7 +40,7 @@ namespace Server.Core.Behaviours.EatBehaviour
         /// <inheritdoc/>
         public BehaviourDTO ToDTO()
         {
-            return new BehaviourDTO(DatabaseID, Description, Type);
+            return new BehaviourDTO(DatabaseID, Description, Type, BehaviourInteractionTypeEnum.Eat);
         }
 
     }

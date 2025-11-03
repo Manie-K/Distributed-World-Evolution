@@ -1,13 +1,10 @@
-﻿using Client.UI.CreateLobby.Parameters;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using SharedLibrary;
+using SharedLibrary.DTOs.ModuleDTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Client.UI.CreateModules.Modules.Parameters
 {
@@ -35,23 +32,26 @@ namespace Client.UI.CreateModules.Modules.Parameters
             this.amountOfRows = amountOfRows;
         }
 
-        public void AddRow()
+        public void AddRow(List<BehaviourDTO> behaviours)
         {
-            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)),0,"Health","statystyka pierwsza jooow1"));
-            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Damage", "statystyka pierwsza jooow2"));
-            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Hunger", "statystyka pierwsza jooow3"));
-            parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), new List<string> { "Carnivore", "Herbivore", "Omnivore" }, 1, "Consumption", "behaviour pierwsza jooow1"));
-            parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), new List<string> { "HP > X", "Enemy HP < X", "Always", "Random" }, 1, "Combat", "behaviour pierwsza jooow2"));
-            parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), new List<string> { "Same Species", "Hunger > X and Same Species", "If Reproduction Drive > random_float()" }, 1, "Breeding", "behaviour pierwsza jooow3"));
-        }
+            List<BehaviourDTO> types = [ 
+                //new(1, "Human", Server.Core.EntityTypeEnum.Human), // Do we create human modules?
+                new(2, "Animal", Server.Core.EntityTypeEnum.Animal),
+                new(4, "Plant", Server.Core.EntityTypeEnum.Plant)
+            ];
 
-        public void AddRow2()
-        {
-            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Health", "statystyka pierwsza jooow1"));
-            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Hunger", "statystyka pierwsza jooow2"));
-            parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), new List<string> { "HP > X", "Enemy HP < X", "Always", "Random" }, 1, "Combat", "behaviour pierwsza jooow1"));
-            parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), new List<string> { "Same Species", "Hunger > X and Same Species", "If Reproduction Drive > random_float()" }, 1, "Breeding", "behaviour pierwsza jooow2"));
-            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Health", "statystyka pierwsza jooow3"));
+            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Damage", "Number of the damage dealt"));
+            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Aggresion", "Number of agression"));
+            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Reproduction Need", "The need for breeding"));
+            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Max Health", "Max Health"));
+            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Max Hunger", "Max Hunger"));
+            parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), types, 1, "Type", "Type of the creature"));
+
+            //TODO: change .where() to behaviour type, not db id
+            parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), behaviours.Where(b => b.DatabaseID == 1).ToList(), 1, "Attack", "Attack behaviour"));
+            parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), behaviours.Where(b => b.DatabaseID == 2).ToList(), 1, "Eat", "Eat behaviour"));
+            parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), behaviours.Where(b => b.DatabaseID == 3).ToList(), 1, "Move", "Move behaviour"));
+            parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), behaviours.Where(b => b.DatabaseID == 4).ToList(), 1, "Reproduce", "Reproduce behaviour"));
         }
 
         public bool CheckLeftClick(Vector2 clickPosition)
@@ -115,7 +115,7 @@ namespace Client.UI.CreateModules.Modules.Parameters
 
         public string GetLastDescription()
         {
-            return parameters[lastParameterClicked].Description;
+            return parameters[lastParameterClicked].GetDescription();
         }
 
         public int GetValueOnIndex(int index)
@@ -139,6 +139,5 @@ namespace Client.UI.CreateModules.Modules.Parameters
 
             return list;
         }
-
     }
 }

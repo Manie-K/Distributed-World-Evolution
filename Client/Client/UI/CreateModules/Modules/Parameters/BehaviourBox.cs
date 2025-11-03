@@ -1,11 +1,7 @@
-﻿using Client.UI.MapSelection;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
+using SharedLibrary.DTOs.ModuleDTO;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Client.UI.CreateModules.Modules.Parameters
 {
@@ -16,10 +12,10 @@ namespace Client.UI.CreateModules.Modules.Parameters
 
         private Button[] pageButtons;
         private Text behaviourText;
-        private List<string> behaviourParameters;
+        private List<BehaviourDTO> behaviourParameters;
         public int selectedParameter;
 
-        public BehaviourBox(Texture2D texture, SpriteFont font, List<string> values, Vector2 position)
+        public BehaviourBox(Texture2D texture, SpriteFont font, List<BehaviourDTO> values, Vector2 position)
         {
             behaviourText = new Text(font,"",true, new Vector2(position.X + 290, position.Y - 2), 143, 46);
             textureBehaviourBox = texture;
@@ -32,7 +28,10 @@ namespace Client.UI.CreateModules.Modules.Parameters
             selectedParameter = 0;
 
             behaviourText.SetTextColor(Color.White);
-            behaviourText.SetText(values[0]);
+            if (values.Count > 0)
+            {
+                behaviourText.SetText(values[0].DatabaseID.ToString());
+            }
         }
 
         public bool CheckLeftClick(Vector2 cursorPosition)
@@ -48,8 +47,10 @@ namespace Client.UI.CreateModules.Modules.Parameters
             }
             else isClicked = false;
 
-
-            behaviourText.SetText(behaviourParameters[selectedParameter]);
+            if (behaviourParameters.Count > 0)
+            {
+                behaviourText.SetText(behaviourParameters[selectedParameter].DatabaseID.ToString());
+            }
             return isClicked;
         }
 
@@ -61,6 +62,28 @@ namespace Client.UI.CreateModules.Modules.Parameters
             pageButtons[1].Draw(spriteBatch);
         }
 
+        public string GetBehaviourDescription()
+        {
+            if (behaviourParameters.Count > 0)
+            {
+                return behaviourParameters[selectedParameter].Description;
+            }
+            else
+            {
+                return "";
+            }
+        }
 
+        public int GetSelectedBehaviourID()
+        {
+            if (behaviourParameters.Count > 0)
+            {
+                return behaviourParameters[selectedParameter].DatabaseID;
+            }
+            else
+            { 
+                return 0;
+            }
+        }
     }
 }

@@ -54,7 +54,7 @@ namespace Server.Core.Behaviours.MoveBehaviour
         /// <inheritdoc/>
         public BehaviourDTO ToDTO()
         {
-            return new BehaviourDTO(DatabaseID, Description, Type);
+            return new BehaviourDTO(DatabaseID, Description, Type, BehaviourInteractionTypeEnum.Move);
         }
     }
 }

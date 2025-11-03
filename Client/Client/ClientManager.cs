@@ -2,6 +2,7 @@
 using SharedLibrary.DTOs.LobbyDTO;
 using SharedLibrary.DTOs.ModuleDTO;
 using SharedLibrary.Messages;
+using SharedLibrary.Messages.BehaviourMessages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -39,6 +40,13 @@ namespace Client
             set => Interlocked.Exchange(ref lobbyCreated, value);
         }
 
+        private int moduleCreated;
+        public int ModuleCreated
+        {
+            get => Interlocked.CompareExchange(ref moduleCreated, 0, 0);
+            set => Interlocked.Exchange(ref moduleCreated, value);
+        }
+
         private int lobbyJoined;
         public int LobbyJoined
         {
@@ -62,6 +70,13 @@ namespace Client
         {
             get => Interlocked.CompareExchange(ref moduleListReady, 0, 0);
             set => Interlocked.Exchange(ref moduleListReady, value);
+        }
+
+        private int behaviourListReady;
+        public int BehaviourListReady
+        {
+            get => Interlocked.CompareExchange(ref behaviourListReady, 0, 0);
+            set => Interlocked.Exchange(ref behaviourListReady, value);
         }
 
         private readonly object entitiesLock = new object();
@@ -103,6 +118,19 @@ namespace Client
             }
         }
 
+        private readonly object behavioursLock = new object();
+        private List<BehaviourDTO> behaviours = new List<BehaviourDTO>();
+        public IReadOnlyList<BehaviourDTO> Behaviours
+        {
+            get
+            {
+                lock (behavioursLock)
+                {
+                    return behaviours;
+                }
+            }
+        }
+
         private readonly object lobbyDataLock = new object();
         private LobbyDTO lobbyData = new LobbyDTO(-1, "", 0, 0, 0, []);
         public LobbyDTO LobbyData
@@ -134,12 +162,14 @@ namespace Client
         public ClientManager()
         {
             lobbyCreated = ActionStatus.IDLE;
+            moduleCreated = ActionStatus.IDLE;
             lobbyJoined = ActionStatus.IDLE;
             lobbyListReady = ActionStatus.IDLE;
             moduleListReady = ActionStatus.IDLE;
+            behaviourListReady = ActionStatus.IDLE;
             serverIp = "127.0.0.1";
-            port = 8080;
-            //port = 5000;
+            port = 8080; // Docker port
+            //port = 5000; // Local port
         }
 
         public void StartClient()
@@ -199,6 +229,12 @@ namespace Client
                         case InfoMessageTypeEnum.LobbyNotCreated:
                             LobbyCreated = ActionStatus.FAILED;
                             break;
+                        case InfoMessageTypeEnum.ModuleCreated:
+                            ModuleCreated = ActionStatus.SUCCESS;
+                            break;
+                        case InfoMessageTypeEnum.ModuleNotCreated:
+                            ModuleCreated = ActionStatus.FAILED;
+                            break;
                         case InfoMessageTypeEnum.LobbyJoined:
                             LobbyJoined = ActionStatus.SUCCESS;
                             break;
@@ -213,6 +249,10 @@ namespace Client
                             if (ModuleListReady == ActionStatus.PENDING)
                             {
                                 ModuleListReady = ActionStatus.FAILED;
+                            }
+                            if (BehaviourListReady == ActionStatus.PENDING)
+                            {
+                                BehaviourListReady = ActionStatus.FAILED;
                             }
                             break;
 
@@ -257,6 +297,17 @@ namespace Client
                     }
 
                     Console.WriteLine("Received module list");
+                }
+                else if (message.MessageType == MessageTypeEnum.BehaviourList)
+                {
+                    BehaviourListMessage behaviourListMessage = (BehaviourListMessage)message;
+                    BehaviourListReady = ActionStatus.SUCCESS;
+                    lock (behavioursLock)
+                    {
+                        behaviours = behaviourListMessage.Behaviours.ToList();
+                    }
+
+                    Console.WriteLine("Received behaviours list");
                 }
                 else if (message.MessageType == MessageTypeEnum.WorldState)
                 {
