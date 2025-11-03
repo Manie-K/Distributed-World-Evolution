@@ -195,7 +195,7 @@ namespace Server.Core
             catch (Exception ex)
             {
                 loggerService.Log(ex.Message, LogLevelEnum.Error);
-                await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotCreated, "Lobby creation failed."));
+                await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotCreated, "Lobby creation failed. Error:" + ex));
             }
         }
 
@@ -204,6 +204,11 @@ namespace Server.Core
             try
             {
                 lobbyManager.AddUserToLobby(msg.LobbyID, client, msg.UserName, out Guid userEntityID);
+                if (userEntityID == Guid.Empty)
+                {
+                    await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotJoined, "Lobby is full. Cannot join."));
+                    return;
+                }
                 Lobby.Lobby lobby = lobbyManager.GetLobby(msg.LobbyID);
 
                 await SafeSendAsync(client, new LobbyDataMessage(lobby.ToDTO(), userEntityID));
@@ -212,7 +217,7 @@ namespace Server.Core
             catch (Exception ex)
             {
                 loggerService.Log(ex.Message, LogLevelEnum.Error);
-                await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotJoined, "Lobby join failed."));
+                await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotJoined, "Lobby join failed. Error:" + ex));
             }
         }
 
@@ -258,7 +263,7 @@ namespace Server.Core
             catch (Exception ex)
             {
                loggerService.Log(ex.Message, LogLevelEnum.Error);
-                await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "Error while fetching data."));
+                await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "Error while fetching data. Error:" + ex));
             }
         }
 
@@ -272,7 +277,7 @@ namespace Server.Core
             catch (Exception ex)
             {
                 loggerService.Log(ex.Message, LogLevelEnum.Error);
-                await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.ModuleNotCreated, "Module creation failed."));
+                await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.ModuleNotCreated, "Module creation failed. Error:" + ex));
             }
         }
         #endregion
