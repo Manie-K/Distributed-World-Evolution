@@ -33,10 +33,7 @@ namespace Client.Logic
 
         public void Update()
         {
-            if (Animations[ActiveAnimation] != null)
-            {
-                Animations[ActiveAnimation].Update();
-            }
+             Animations[ActiveAnimation].Update();   
         }
 
         public void SetAnimations(int type)

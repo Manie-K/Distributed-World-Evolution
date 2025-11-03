@@ -54,7 +54,7 @@ namespace Client
             if (PlayerDTO != null && PlayerDTO.State.Health <= 0)
             {
                 Position = Vector2.One * 5;
-                UpdateAnimation();
+                am.Update();
                 return;
             }
 
@@ -104,7 +104,7 @@ namespace Client
             if (inputManager.CheckIfPressingKey(Keys.Space))
             {
                 HandleInteraction(InteractionType.Attack);
-                 SetNewAnimation(1);         
+                SetNewAnimation(1);         
             }
             if (inputManager.CheckIfPressingKey(Keys.E))
             {
@@ -115,25 +115,13 @@ namespace Client
                 HandleInteraction(InteractionType.Tame);
             }
 
-            UpdateAnimation();
+            am.Update();
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(AssetsManager.GetInstance().GetCharacterTexture(am.ActiveAnimation, 13), GetPosition(), GetSourceRectangle(), Color.White);
             playerName.Draw(spriteBatch, Position + playerNameOffset);
-        }
-
-        private void UpdateAnimation()
-        {
-            if (am.GetAcctualAnimationIndex() == 2)
-            {
-                speed = 70f;
-                am.SetAnimationWithDuration(2, CurrentDirection, 2, 36, true);
-            }
-            else speed = 200f;
-
-            am.Update();
         }
 
         private void HandleInteraction(InteractionType interactionType)

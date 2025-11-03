@@ -82,9 +82,12 @@ namespace Client
                 parameters.Add(new ModuleParametersData("Aggresion", module.Aggresion.ToString(), 0));
                 parameters.Add(new ModuleParametersData("Reproduction Need", module.ReproductionNeed.ToString(), 0));
                 parameters.Add(new ModuleParametersData("Type", module.Type.ToString(), 0));
-                foreach (BehaviourDTO behviour in module.Behaviours)
+                if (module.Behaviours != null)
                 {
-                    parameters.Add(new ModuleParametersData(behviour.Description, behviour.Type.ToString(), 1));
+                    foreach (BehaviourDTO behviour in module.Behaviours)
+                    {
+                        parameters.Add(new ModuleParametersData(behviour.Description, behviour.Type.ToString(), 1));
+                    }
                 }
 
                 switchPageLobby.AddRow(new ModuleData(module.Name, module.DatabaseID, module.GraphicalRepresentationID, module.IsOfficialModule, parameters));

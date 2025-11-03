@@ -42,7 +42,6 @@ namespace Client
             }
             player = new Player(new Vector2(96, 96), Color.White, new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), 
                 manager.UserSettings.PlayerName, true, new Vector2(500, 300 - 110), 70, 40), map, manager.ClientManager);
-            playerDTO = null;
 
             manager.Camera.MapSize = new System.Drawing.Size(map.MapWidth * map.TileSize, map.MapHeight * map.TileSize);
             manager.IsInGame = true;
