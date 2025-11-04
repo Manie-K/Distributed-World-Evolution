@@ -34,10 +34,9 @@ namespace Client.UI.CreateModules.Modules.Parameters
 
         public void AddRow(List<BehaviourDTO> behaviours)
         {
-            List<BehaviourDTO> types = [ 
-                //new(1, "Human", Server.Core.EntityTypeEnum.Human), // Do we create human modules?
-                new(2, "Animal", Server.Core.EntityTypeEnum.Animal),
-                new(4, "Plant", Server.Core.EntityTypeEnum.Plant)
+            List<BehaviourDTO> types = [
+                new(2, "Animal", Server.Core.EntityTypeEnum.Animal, BehaviourInteractionTypeEnum.None),
+                new(4, "Plant", Server.Core.EntityTypeEnum.Plant, BehaviourInteractionTypeEnum.None)
             ];
 
             parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Damage", "Number of the damage dealt"));
@@ -47,11 +46,10 @@ namespace Client.UI.CreateModules.Modules.Parameters
             parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Max Hunger", "Max Hunger"));
             parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), types, 1, "Type", "Type of the creature"));
 
-            //TODO: change .where() to behaviour type, not db id
-            parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), behaviours.Where(b => b.DatabaseID == 1).ToList(), 1, "Attack", "Attack behaviour"));
-            parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), behaviours.Where(b => b.DatabaseID == 2).ToList(), 1, "Eat", "Eat behaviour"));
-            parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), behaviours.Where(b => b.DatabaseID == 3).ToList(), 1, "Move", "Move behaviour"));
-            parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), behaviours.Where(b => b.DatabaseID == 4).ToList(), 1, "Reproduce", "Reproduce behaviour"));
+            parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), behaviours.Where(b => b.InteractionType == BehaviourInteractionTypeEnum.Attack).ToList(), 1, "Attack", "Attack behaviour"));
+            parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), behaviours.Where(b => b.InteractionType == BehaviourInteractionTypeEnum.Eat).ToList(), 1, "Eat", "Eat behaviour"));
+            parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), behaviours.Where(b => b.InteractionType == BehaviourInteractionTypeEnum.Move).ToList(), 1, "Move", "Move behaviour"));
+            parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), behaviours.Where(b => b.InteractionType == BehaviourInteractionTypeEnum.Reproduce).ToList(), 1, "Reproduce", "Reproduce behaviour"));
         }
 
         public bool CheckLeftClick(Vector2 clickPosition)
