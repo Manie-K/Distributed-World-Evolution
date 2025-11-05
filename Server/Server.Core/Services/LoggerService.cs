@@ -40,9 +40,12 @@ namespace Server.Core.Services
 
             while (!stoppingToken.IsCancellationRequested)
             {
-                if (_logQueue.TryDequeue(out var logMessage) && ClientUI != null && ClientUI.Connected)
+                if (ClientUI != null && ClientUI.Connected)
                 {
-                    await MessageManager.SendMessageAsync(ClientUI, logMessage);
+                    if(_logQueue.TryDequeue(out var logMessage))
+                    {
+                        await MessageManager.SendMessageAsync(ClientUI, logMessage);
+                    }
                 }
                 else
                 {
