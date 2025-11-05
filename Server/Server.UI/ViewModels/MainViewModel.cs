@@ -4,6 +4,8 @@ using SharedLibrary.Messages;
 using System.Collections.ObjectModel;
 using System.Net.Sockets;
 using SharedLibrary.DTOs.LobbyDTO;
+using Microsoft.Extensions.Configuration;
+using System.Net;
 
 namespace Server.UI.ViewModels
 {
@@ -16,9 +18,12 @@ namespace Server.UI.ViewModels
 
         public MainViewModel()
         {
-            //TODO: change to config
-            string serverIp = "127.0.0.1";
-            int port = 8080;
+            var config = new ConfigurationBuilder()
+            .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+            .Build();
+
+            string serverIp = config["TcpServerConnection:Host"]!;
+            int port = int.Parse(config["TcpServerConnection:Port"]!);
 
             _client = new TcpClient(serverIp, port);
 
@@ -33,9 +38,19 @@ namespace Server.UI.ViewModels
         private async void InitializeAsync()
         {
             await MessageManager.SendMessageAsync(_client, new RoleMessage(RoleEnum.UI));
-            await MessageManager.SendMessageAsync(_client, new GetMessage(GetMessageTypeEnum.LobbyList));
+            
+            MessageBase message = await MessageManager.ReceiveMessageAsync(_client);
+            List<LobbyDTO> lobbies = (List<LobbyDTO>)((LobbyListMessage)message).Lobbies;
 
-            _ = Task.Run(async () =>
+            foreach (LobbyDTO lobby in lobbies)
+            {
+                _ = App.Current.Dispatcher.BeginInvoke(new Action(() =>
+                {
+                    Tabs.Add(new LobbyViewModel(lobby.ID, lobby.Name, lobby.MaxPlayers, lobby.CurrentPlayers, lobby.MapID));
+                }));
+            }
+
+            await Task.Run(async () =>
             {
                 while (true)
                 {
@@ -46,17 +61,15 @@ namespace Server.UI.ViewModels
                         LogMessage log = (LogMessage)message;
                         HandleLog(log.SenderID, log.OnLogEventArgs);
                     }
-                    else if (message.MessageType == MessageTypeEnum.LobbyList)
+                    else if (message.MessageType == MessageTypeEnum.LobbyData)
                     {
-                        List<LobbyDTO> lobbies = (List<LobbyDTO>)((LobbyListMessage)message).Lobbies;
+                        LobbyDataMessage lobbyData = (LobbyDataMessage)message;
+                        LobbyDTO lobby = lobbyData.Lobby;
 
-                        foreach (LobbyDTO lobby in lobbies)
-                        {
-                            _ = App.Current.Dispatcher.BeginInvoke(new Action(() =>
+                        _ = App.Current.Dispatcher.BeginInvoke(new Action(() =>
                             {
                                 Tabs.Add(new LobbyViewModel(lobby.ID, lobby.Name, lobby.MaxPlayers, lobby.CurrentPlayers, lobby.MapID));
                             }));
-                        }
 
                     }
                 }
