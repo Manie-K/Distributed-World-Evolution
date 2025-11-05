@@ -12,6 +12,7 @@ namespace Client
             : base(position, color, 100, 100, 150f, 6, 9)
         {
             am = new AnimationManager(7);
+            SpriteDrawingOffset = new Vector2(-35, -37);
         }
 
         public override void Update(GameTime gameTime, InputManager inputManager)
@@ -40,20 +41,22 @@ namespace Client
                 movement.X += 1;
             }
 
+            SetAnimation(0);
+
             if (movement != Vector2.Zero)
             {
                 movement.Normalize();
                 Position += movement * speed * delta;
-                SetNewAnimation(0);
+                SetAnimation(0);
             }
 
             if (inputManager.CheckIfPressingKey(Keys.Space))
             {
-                SetNewAnimation(1);
+                SetAnimation(1);
             }
             if (inputManager.CheckIfPressingKey(Keys.O))
             {
-                SetNewAnimation(2);
+                SetAnimation(2);
             }
             am.Update();
         }

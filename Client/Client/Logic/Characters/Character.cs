@@ -23,7 +23,6 @@ namespace Client
             : base(null, position, width, height, color)
         {
             this.speed = speed;
-            SpriteDrawingOffset = new Vector2((width / 2 - 16) * -1, (height / 2 - 16) * -1);
             CurrentDirection = Direction.down;
         }
 
@@ -32,9 +31,9 @@ namespace Client
             return new Rectangle(width * am.GetActiveFrame(), height * (int)CurrentDirection, width, height);
         }
 
-        public void SetNewAnimation(int type)
+        public void SetAnimation(int type)
         {
-            am.SetNewAnimation(type);
+            am.SetAnimation(type);
         }
 
         public virtual void Update(GameTime gameTime, InputManager inputManager) { }

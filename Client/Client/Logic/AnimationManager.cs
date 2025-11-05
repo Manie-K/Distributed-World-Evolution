@@ -17,12 +17,49 @@ namespace Client.Logic
             ActiveAnimation = 0;
         }
 
-        public void SetNewAnimation(int type)
+        public void SetAnimation(int type)
         {
-            if (Animations[type] != null && ActiveAnimation != type)
+            if(ActiveAnimation == 0)
             {
-                Animations[ActiveAnimation].Reset();
-                ActiveAnimation = type;
+                if (type == 2 && Animations[type] != null)
+                {
+                    Animations[ActiveAnimation].Reset();
+                    ActiveAnimation = type;
+                }
+                else if (type == 1 && Animations[type] != null && !Animations[type].IsBlocked)
+                {
+                    Animations[ActiveAnimation].Reset();
+                    ActiveAnimation = type;
+                }
+            }
+            else if(ActiveAnimation == 1)
+            {
+                if(type == 2 && Animations[type] != null)
+                {
+                    Animations[ActiveAnimation].Reset();
+                    ActiveAnimation = type;
+                }
+                else if (type == 1 && Animations[ActiveAnimation].IsAnimationEnded)
+                {
+                    Animations[ActiveAnimation].Reset();
+                    Animations[ActiveAnimation].BlockAnimation();
+                    ActiveAnimation = 0;
+                }
+                else if (type == 0 && Animations[ActiveAnimation].IsAnimationEnded)
+                {
+                    Animations[ActiveAnimation].Reset();
+                    Animations[ActiveAnimation].BlockAnimation();
+                    ActiveAnimation = 0;
+                }
+
+            }
+            else if (ActiveAnimation == 2)
+            {
+                if((type == 0 || type == 1) && Animations[type] != null && Animations[ActiveAnimation].IsAnimationEnded)
+                {
+                    Animations[ActiveAnimation].Reset();
+                    ActiveAnimation = type;
+                }
             }
         }
 
@@ -34,6 +71,8 @@ namespace Client.Logic
         public void Update()
         {
              Animations[ActiveAnimation].Update();   
+
+             if (Animations[1] != null && Animations[1].IsBlocked) Animations[1].UpdateBlock();    
         }
 
         public void SetAnimations(int type)

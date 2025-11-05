@@ -35,6 +35,7 @@ namespace Client
             : base(position, color, 130, 108, 150f, 8, 7)
         {
             this.playerName = playerName;
+            SpriteDrawingOffset = new Vector2(-68, -77);
             playerNameOffset = new Vector2(35 + SpriteDrawingOffset.X, -3 + SpriteDrawingOffset.Y);
             this.map = map;
             this.clientManager = clientManager;
@@ -82,11 +83,13 @@ namespace Client
                 movement.X += 1;
             }
 
+            SetAnimation(0);
+
             if (movement != Vector2.Zero)
             {
                 movement.Normalize();
                 Vector2 newPosition = Position + (movement * speed * delta);
-                SetNewAnimation(0);
+                SetAnimation(0);
 
                 if (newPosition.X < 0) newPosition.X = 0;
                 else if (newPosition.X >= map.MapWidth * map.TileSize) newPosition.X = map.MapWidth * map.TileSize - 1;
@@ -104,8 +107,9 @@ namespace Client
             if (inputManager.CheckIfPressingKey(Keys.Space))
             {
                 HandleInteraction(InteractionType.Attack);
-                SetNewAnimation(1);         
+                SetAnimation(1);
             }
+
             if (inputManager.CheckIfPressingKey(Keys.E))
             {
                 HandleInteraction(InteractionType.Gather);

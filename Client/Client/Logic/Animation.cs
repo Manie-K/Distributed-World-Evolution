@@ -14,13 +14,20 @@ namespace Client.Logic
         public int ActiveFrame;
         private int counter;
 
+        public bool IsAnimationEnded;
 
+        public int BlockDelayCounter;
+        public bool IsBlocked;
         public Animation(int framesAmount, int interval)
         {
             this.framesAmount = framesAmount;
-            ActiveFrame = 0;
             this.interval = interval;
+
+            IsAnimationEnded = false;
+            IsBlocked = false;
+            ActiveFrame = 0;
             counter = 0;
+            BlockDelayCounter = 0;
         }
 
         public void Update()
@@ -30,19 +37,40 @@ namespace Client.Logic
             {
                 counter = 0;
                 ActiveFrame++;
+                IsAnimationEnded = false;
 
                 if (ActiveFrame >= framesAmount)
                 {
                     ActiveFrame = 0;
+                    IsAnimationEnded = true;
                 }
 
             }
+        }
+
+        public void UpdateBlock()
+        {
+            BlockDelayCounter++;
+            if (BlockDelayCounter > 60) UnBlockAnimation();   
         }
 
         public void Reset()
         {
             counter = 0;
             ActiveFrame = 0;
+            IsAnimationEnded = false;
+        }
+
+        public void BlockAnimation()
+        {
+            IsBlocked = true;
+            BlockDelayCounter = 0;
+        }
+
+        public void UnBlockAnimation()
+        {
+            IsBlocked = false;
+            BlockDelayCounter = 0;
         }
     }
 }

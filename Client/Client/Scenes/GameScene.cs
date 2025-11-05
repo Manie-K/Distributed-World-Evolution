@@ -40,7 +40,7 @@ namespace Client
             {
                 throw new Exception("Could not load the map " + Tilemap.GetMapFileName(mapID));
             }
-            player = new Player(new Vector2(96, 96), Color.White, new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), 
+            player = new Player(new Vector2(288, 32), Color.White, new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), 
                 manager.UserSettings.PlayerName, true, new Vector2(500, 300 - 110), 70, 40), map, manager.ClientManager);
 
             manager.Camera.MapSize = new System.Drawing.Size(map.MapWidth * map.TileSize, map.MapHeight * map.TileSize);
@@ -59,7 +59,7 @@ namespace Client
         public void Update(GameTime gameTime)
         {
             panelsController.Update();
-
+            
             IReadOnlyDictionary<Guid, WorldEntityDTO> entities = manager.ClientManager.Entities;
             Dictionary<Guid, Character> newCharacterList = [];
 
