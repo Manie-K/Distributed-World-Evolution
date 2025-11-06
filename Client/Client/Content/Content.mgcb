@@ -556,6 +556,13 @@
 /processorParam:TextureFormat=Compressed
 /build:Fonts/InvenotryNumbers.spritefont
 
+#begin Fonts/PlayerName.spritefont
+/importer:FontDescriptionImporter
+/processor:FontDescriptionProcessor
+/processorParam:PremultiplyAlpha=True
+/processorParam:TextureFormat=Compressed
+/build:Fonts/PlayerName.spritefont
+
 #begin Fonts/SettingsNumbers.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor

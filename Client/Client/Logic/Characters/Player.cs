@@ -36,7 +36,7 @@ namespace Client
         {
             this.playerName = playerName;
             SpriteDrawingOffset = new Vector2(-68, -77);
-            playerNameOffset = new Vector2(35 + SpriteDrawingOffset.X, -3 + SpriteDrawingOffset.Y);
+            playerNameOffset = new Vector2(29 + SpriteDrawingOffset.X, -3 + SpriteDrawingOffset.Y);
             this.map = map;
             this.clientManager = clientManager;
             PlayerDTO = null;
