@@ -31,11 +31,11 @@ namespace Client
             Tame
         }
 
-        public Player(Vector2 position, Color color, Text playerName, WorldMap map = null, ClientManager clientManager = null)
+        public Player(Vector2 position, Color color, Text playerName, Vector2 spriteDrawingOffset, WorldMap map = null, ClientManager clientManager = null)
             : base(position, color, 130, 108, 150f, 8, 7)
         {
             this.playerName = playerName;
-            SpriteDrawingOffset = new Vector2(-68, -77);
+            SpriteDrawingOffset = spriteDrawingOffset;
             playerNameOffset = new Vector2(29 + SpriteDrawingOffset.X, -3 + SpriteDrawingOffset.Y);
             this.map = map;
             this.clientManager = clientManager;
