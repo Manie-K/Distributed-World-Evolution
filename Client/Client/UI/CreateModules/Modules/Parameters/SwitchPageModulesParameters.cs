@@ -36,8 +36,8 @@ namespace Client.UI.CreateModules.Modules.Parameters
         {
             List<BehaviourDTO> types = [ 
                 //new(1, "Human", Server.Core.EntityTypeEnum.Human), // Do we create human modules?
-                new(2, "Animal", Server.Core.EntityTypeEnum.Animal),
-                new(4, "Plant", Server.Core.EntityTypeEnum.Plant)
+                new(2, "Animal", Server.Core.EntityTypeEnum.Animal, SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum.None),
+                new(4, "Plant", Server.Core.EntityTypeEnum.Plant, SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum.None)
             ];
 
             parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Damage", "Number of the damage dealt"));
@@ -130,8 +130,7 @@ namespace Client.UI.CreateModules.Modules.Parameters
             for(int i=0;i< parameters.Count; i++)
             {
                 if (parameters[i] is ModuleBehaviourParameter behaviourParam
-                    && parameters[i].Type == 1
-                    && behaviourParam.IsPicked())
+                    && parameters[i].Type == 1)
                 {
                     list.Add(new Tuple<int, int>(i, GetValueOnIndex(i)));
                 }

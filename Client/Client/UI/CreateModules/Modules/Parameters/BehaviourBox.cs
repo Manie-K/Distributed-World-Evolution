@@ -17,14 +17,14 @@ namespace Client.UI.CreateModules.Modules.Parameters
 
         public BehaviourBox(Texture2D texture, SpriteFont font, List<BehaviourDTO> values, Vector2 position)
         {
-            behaviourText = new Text(font,"",true, new Vector2(position.X + 290, position.Y - 2), 143, 46);
+            behaviourText = new Text(font,"",true, new Vector2(position.X + 280, position.Y - 2), 143, 46);
             textureBehaviourBox = texture;
-            rect = new Rectangle((int)position.X + 255, (int)position.Y - 2, 213, 46);
+            rect = new Rectangle((int)position.X + 245, (int)position.Y - 2, 213, 46);
             behaviourParameters = values;
 
             pageButtons = new Button[2];
-            pageButtons[0] = new Button(null, null, "", new Vector2(position.X +255, position.Y-2), 35, 46, Color.White);
-            pageButtons[1] = new Button(null, null, "", new Vector2(position.X + 431, position.Y-2), 35, 46, Color.White);
+            pageButtons[0] = new Button(null, null, "", new Vector2(position.X +245, position.Y-2), 35, 46, Color.White);
+            pageButtons[1] = new Button(null, null, "", new Vector2(position.X + 421, position.Y-2), 35, 46, Color.White);
             selectedParameter = 0;
 
             behaviourText.SetTextColor(Color.White);

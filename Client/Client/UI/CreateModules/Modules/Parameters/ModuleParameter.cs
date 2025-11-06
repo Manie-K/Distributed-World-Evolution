@@ -13,10 +13,7 @@ namespace Client.UI.CreateModules.Modules.Parameters
         public ModuleParameter(ContentManager contentManager, Vector2 position, int type, string name, string description)
         {
             this.Type = type;
-            this.Description = description;
-            this.moduleName = new Text(contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), name, true, new Vector2(position.X + 85, position.Y), 160, 43);
-          
-            moduleName.SetTextColor(Color.White);
+            this.Description = description;      
         }
 
         public abstract void Update(Vector2 position);

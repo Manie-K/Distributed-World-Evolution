@@ -11,9 +11,9 @@ namespace Client.UI.CreateModules.Modules.Parameters
 
         public StatsBox(Texture2D texture, SpriteFont font, int value, Vector2 position)
         {
-            parameterValue = new TextBox(null, font, new Vector2(position.X + 318, position.Y-2), 86, 46, Color.White, true);
+            parameterValue = new TextBox(null, font, new Vector2(position.X + 338, position.Y-2), 86, 46, Color.White, true);
             textureStatsBox = texture;
-            rect = new Rectangle((int) position.X+318, (int) position.Y-2, 86, 46);
+            rect = new Rectangle((int) position.X+338, (int) position.Y-2, 86, 46);
             parameterValue.SetTextColor(Color.White);
 
             parameterValue.SetText(value.ToString());

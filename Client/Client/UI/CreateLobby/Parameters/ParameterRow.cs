@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Client.UI.CreateModules.Modules.Parameters;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -13,25 +14,27 @@ namespace Client.UI.CreateLobby.Parameters
     {
         private Text parameterName;
         private Text parameterValue;
+        public string Description;
 
         private Texture2D background;
         private Rectangle rect;
 
-        public ParameterRow(ContentManager contentManager, string name, string value, Vector2 position, int type)
+        public ParameterRow(ContentManager contentManager, string name, string value, string description, Vector2 position, int type)
         {
             parameterName = new Text(contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), name, true, position, 190, 46);
+            Description = description;
 
             if(type==0)
             {
                 background = contentManager.Load<Texture2D>("UI/CreateModules/Stats/box_Button");
-                rect = new Rectangle((int)position.X + 229, (int)position.Y, 86, 46);
-                parameterValue = new Text(contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), value, true, new Vector2(position.X + 229, position.Y), 86, 46);
+                rect = new Rectangle((int)position.X + 220, (int)position.Y, 86, 46);
+                parameterValue = new Text(contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), value, true, new Vector2(position.X + 220, position.Y), 86, 46);
             }
             else if (type==1)
             {
                 background = contentManager.Load<Texture2D>("UI/CreateLobby/Text_Box");
-                rect = new Rectangle((int)position.X + 202, (int)position.Y, 141, 46);
-                parameterValue = new Text(contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), value, true, new Vector2(position.X + 202, position.Y), 141, 46);
+                rect = new Rectangle((int)position.X + 193, (int)position.Y, 141, 46);
+                parameterValue = new Text(contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), value, true, new Vector2(position.X + 193, position.Y), 141, 46);
             }
 
             parameterValue.SetTextColor(Color.White);
@@ -46,5 +49,13 @@ namespace Client.UI.CreateLobby.Parameters
             parameterValue.Draw(spriteBatch);
         }
 
+        public bool CheckLeftClick(Vector2 position)
+        {
+            return rect.Contains(position);
+        }
+        public string GetDescription()
+        {
+            return Description;
+        }
     }
 }
