@@ -2,15 +2,17 @@
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using Client.Common;
+using Client.Logic;
 
 namespace Client
 {
     public class Orc2 : Character
     {
-        public Orc2(Vector2 position, Color color, ref AnimationTexturesLoader ATL)
-            : base(position, color, 100, 100, 150f, ref ATL, 42, new Vector2(-35, -37))
+        public Orc2(Vector2 position, Color color)
+            : base(position, color, 100, 100, 150f, 4, 12)
         {
-
+            am = new AnimationManager(1);
+            SpriteDrawingOffset = new Vector2(-35, -37);
         }
 
         public override void Update(GameTime gameTime, InputManager inputManager)
@@ -43,34 +45,25 @@ namespace Client
             {
                 movement.Normalize();
                 Position += movement * speed * delta;
-                am.SetAnimationWithDuration(43, CurrentDirection, 1, 36, false);
-            }
-            else
-            {
-                am.SetAnimationWithDuration(42, CurrentDirection, 1, 36);
+                SetAnimation(0);
             }
 
+            SetAnimation(0);
 
             if (inputManager.CheckIfPressingKey(Keys.Space))
             {
-                am.SetAnimationWithDuration(40, CurrentDirection, 2, 36, true);
+                SetAnimation(1);
             }
-
-
-            if (am.GetAcctualAnimationIndex() == 40)
+            if (inputManager.CheckIfPressingKey(Keys.O))
             {
-                speed = 70f;
-                am.SetAnimationWithDuration(40, CurrentDirection, 2, 36, true);
+                SetAnimation(2);
             }
-            else speed = 200f;
-
-
             am.Update();
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(am.GetAcctualTexture(), Rect, am.GetFrame(), Color.White);
+            spriteBatch.Draw(AssetsManager.GetInstance().GetCharacterTexture(am.ActiveAnimation, 1), GetPosition(), GetSourceRectangle(), Color.White);
         }
     }
 }

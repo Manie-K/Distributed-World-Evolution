@@ -37,258 +37,6 @@
 /processorParam:TextureFormat=Color
 /build:Animations/Boar/Boar_Idle.png
 
-#begin Animations/Boar/Boar_Move.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Animations/Boar/Boar_Move.png
-
-#begin Animations/BrownRabbit/Rabbit_Brown_Idle.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Animations/BrownRabbit/Rabbit_Brown_Idle.png
-
-#begin Animations/BrownRabbit/Rabbit_Brown_Move.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Animations/BrownRabbit/Rabbit_Brown_Move.png
-
-#begin Animations/EnemyPlant1/Plant1_Attack_full.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Animations/EnemyPlant1/Plant1_Attack_full.png
-
-#begin Animations/EnemyPlant1/Plant1_Death_full.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Animations/EnemyPlant1/Plant1_Death_full.png
-
-#begin Animations/EnemyPlant1/Plant1_Hurt_full.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Animations/EnemyPlant1/Plant1_Hurt_full.png
-
-#begin Animations/EnemyPlant1/Plant1_Idle_full.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Animations/EnemyPlant1/Plant1_Idle_full.png
-
-#begin Animations/EnemyPlant1/Plant1_Run_full.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Animations/EnemyPlant1/Plant1_Run_full.png
-
-#begin Animations/EnemyPlant1/Plant1_Walk_full.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Animations/EnemyPlant1/Plant1_Walk_full.png
-
-#begin Animations/EnemyPlant2/Plant2_Attack_full.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Animations/EnemyPlant2/Plant2_Attack_full.png
-
-#begin Animations/EnemyPlant2/Plant2_Death_full.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Animations/EnemyPlant2/Plant2_Death_full.png
-
-#begin Animations/EnemyPlant2/Plant2_Hurt_full.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Animations/EnemyPlant2/Plant2_Hurt_full.png
-
-#begin Animations/EnemyPlant2/Plant2_Idle_full.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Animations/EnemyPlant2/Plant2_Idle_full.png
-
-#begin Animations/EnemyPlant2/Plant2_Run_full.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Animations/EnemyPlant2/Plant2_Run_full.png
-
-#begin Animations/EnemyPlant2/Plant2_Walk_full.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Animations/EnemyPlant2/Plant2_Walk_full.png
-
-#begin Animations/EnemyPlant3/Plant3_Attack_full.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Animations/EnemyPlant3/Plant3_Attack_full.png
-
-#begin Animations/EnemyPlant3/Plant3_Death_full.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Animations/EnemyPlant3/Plant3_Death_full.png
-
-#begin Animations/EnemyPlant3/Plant3_Hurt_full.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Animations/EnemyPlant3/Plant3_Hurt_full.png
-
-#begin Animations/EnemyPlant3/Plant3_Idle_full.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Animations/EnemyPlant3/Plant3_Idle_full.png
-
-#begin Animations/EnemyPlant3/Plant3_Run_full.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Animations/EnemyPlant3/Plant3_Run_full.png
-
-#begin Animations/EnemyPlant3/Plant3_Walk_full.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Animations/EnemyPlant3/Plant3_Walk_full.png
-
 #begin Animations/Orc1/orc1_attack_full.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -324,18 +72,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Animations/Orc1/orc1_idle_full.png
-
-#begin Animations/Orc1/orc1_run_full.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Animations/Orc1/orc1_run_full.png
 
 #begin Animations/Orc2/orc2_attack_full.png
 /importer:TextureImporter
@@ -373,18 +109,6 @@
 /processorParam:TextureFormat=Color
 /build:Animations/Orc2/orc2_idle_full.png
 
-#begin Animations/Orc2/orc2_run_full.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Animations/Orc2/orc2_run_full.png
-
 #begin Animations/Orc3/orc3_attack_full.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -421,18 +145,6 @@
 /processorParam:TextureFormat=Color
 /build:Animations/Orc3/orc3_idle_full.png
 
-#begin Animations/Orc3/orc3_run_full.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Animations/Orc3/orc3_run_full.png
-
 #begin Animations/Pig/Pig_Idle.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -445,7 +157,7 @@
 /processorParam:TextureFormat=Color
 /build:Animations/Pig/Pig_Idle.png
 
-#begin Animations/Pig/Pig_Move.png
+#begin Animations/Plant1/Plant1_Attack_full.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -455,9 +167,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Animations/Pig/Pig_Move.png
+/build:Animations/Plant1/Plant1_Attack_full.png
 
-#begin Animations/Player/Attack/attack1_down.png
+#begin Animations/Plant1/Plant1_Death_full.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -467,9 +179,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Animations/Player/Attack/attack1_down.png
+/build:Animations/Plant1/Plant1_Death_full.png
 
-#begin Animations/Player/Attack/attack1_left.png
+#begin Animations/Plant1/Plant1_Idle_full.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -479,9 +191,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Animations/Player/Attack/attack1_left.png
+/build:Animations/Plant1/Plant1_Idle_full.png
 
-#begin Animations/Player/Attack/attack1_right.png
+#begin Animations/Plant2/Plant2_Attack_full.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -491,9 +203,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Animations/Player/Attack/attack1_right.png
+/build:Animations/Plant2/Plant2_Attack_full.png
 
-#begin Animations/Player/Attack/attack1_up.png
+#begin Animations/Plant2/Plant2_Death_full.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -503,9 +215,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Animations/Player/Attack/attack1_up.png
+/build:Animations/Plant2/Plant2_Death_full.png
 
-#begin Animations/Player/Idle/idle_down.png
+#begin Animations/Plant2/Plant2_Idle_full.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -515,9 +227,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Animations/Player/Idle/idle_down.png
+/build:Animations/Plant2/Plant2_Idle_full.png
 
-#begin Animations/Player/Idle/idle_left.png
+#begin Animations/Plant3/Plant3_Attack_full.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -527,9 +239,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Animations/Player/Idle/idle_left.png
+/build:Animations/Plant3/Plant3_Attack_full.png
 
-#begin Animations/Player/Idle/idle_right.png
+#begin Animations/Plant3/Plant3_Death_full.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -539,9 +251,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Animations/Player/Idle/idle_right.png
+/build:Animations/Plant3/Plant3_Death_full.png
 
-#begin Animations/Player/Idle/idle_up.png
+#begin Animations/Plant3/Plant3_Idle_full.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -551,9 +263,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Animations/Player/Idle/idle_up.png
+/build:Animations/Plant3/Plant3_Idle_full.png
 
-#begin Animations/Player/Run/run_down.png
+#begin Animations/Player/Player_Attack.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -563,9 +275,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Animations/Player/Run/run_down.png
+/build:Animations/Player/Player_Attack.png
 
-#begin Animations/Player/Run/run_left.png
+#begin Animations/Player/Player_Idle.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -575,9 +287,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Animations/Player/Run/run_left.png
+/build:Animations/Player/Player_Idle.png
 
-#begin Animations/Player/Run/run_right.png
+#begin Animations/RabbitBrown/Rabbit_Brown_Idle.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -587,9 +299,9 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Animations/Player/Run/run_right.png
+/build:Animations/RabbitBrown/Rabbit_Brown_Idle.png
 
-#begin Animations/Player/Run/run_up.png
+#begin Animations/RabbitWhite/Rabbit_Horned_Idle.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255
@@ -599,7 +311,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:Animations/Player/Run/run_up.png
+/build:Animations/RabbitWhite/Rabbit_Horned_Idle.png
 
 #begin Animations/Slime1/Slime1_Attack_full.png
 /importer:TextureImporter
@@ -637,18 +349,6 @@
 /processorParam:TextureFormat=Color
 /build:Animations/Slime1/Slime1_Idle_full.png
 
-#begin Animations/Slime1/Slime1_Run_full.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Animations/Slime1/Slime1_Run_full.png
-
 #begin Animations/Slime2/Slime2_Attack_full.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -684,18 +384,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Animations/Slime2/Slime2_Idle_full.png
-
-#begin Animations/Slime2/Slime2_Run_full.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Animations/Slime2/Slime2_Run_full.png
 
 #begin Animations/Slime3/Slime3_Attack_full.png
 /importer:TextureImporter
@@ -733,18 +421,6 @@
 /processorParam:TextureFormat=Color
 /build:Animations/Slime3/Slime3_Idle_full.png
 
-#begin Animations/Slime3/Slime3_Run_full.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Animations/Slime3/Slime3_Run_full.png
-
 #begin Animations/Vampire1/Vampires1_Attack_full.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -780,18 +456,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Animations/Vampire1/Vampires1_Idle_full.png
-
-#begin Animations/Vampire1/Vampires1_Run_full.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Animations/Vampire1/Vampires1_Run_full.png
 
 #begin Animations/Vampire2/Vampires2_Attack_full.png
 /importer:TextureImporter
@@ -829,18 +493,6 @@
 /processorParam:TextureFormat=Color
 /build:Animations/Vampire2/Vampires2_Idle_full.png
 
-#begin Animations/Vampire2/Vampires2_Run_full.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Animations/Vampire2/Vampires2_Run_full.png
-
 #begin Animations/Vampire3/Vampires3_Attack_full.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -876,42 +528,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Animations/Vampire3/Vampires3_Idle_full.png
-
-#begin Animations/Vampire3/Vampires3_Run_full.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Animations/Vampire3/Vampires3_Run_full.png
-
-#begin Animations/WhiteRabbit/Rabbit_Horned_Idle.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Animations/WhiteRabbit/Rabbit_Horned_Idle.png
-
-#begin Animations/WhiteRabbit/Rabbit_Horned_Move.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Animations/WhiteRabbit/Rabbit_Horned_Move.png
 
 #begin Audio/Light Ambience 1.mp3
 /importer:Mp3Importer
@@ -1831,6 +1447,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:UI/CreateLobby/Modules_Images/Plant3_Image.png
+
+#begin UI/CreateLobby/Modules_Images/Player_Image.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/CreateLobby/Modules_Images/Player_Image.png
 
 #begin UI/CreateLobby/Modules_Images/Poppy_Image.png
 /importer:TextureImporter

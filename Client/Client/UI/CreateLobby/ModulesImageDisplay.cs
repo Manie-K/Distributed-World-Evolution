@@ -13,7 +13,7 @@ namespace Client.UI.CreateLobby
         public ModulesImageDisplay(ContentManager contentManager)
         {
             rect = new Rectangle(583, 213, 66, 52);
-            AcctualPicked = 1;
+            AcctualPicked = 16;
 
             InitializeImages(contentManager);
         }
@@ -42,8 +42,7 @@ namespace Client.UI.CreateLobby
             Images[14] = contentManager.Load<Texture2D>("UI/CreateLobby/Modules_Images/Vampire2_Image");
             Images[15] = contentManager.Load<Texture2D>("UI/CreateLobby/Modules_Images/Vampire3_Image");
 
-            Images[16] = Images[15]; //DELETE
-            //Images[16] = contentManager.Load<Texture2D>("UI/CreateLobby/Modules_Images/Player_Image");
+            Images[16] = contentManager.Load<Texture2D>("UI/CreateLobby/Modules_Images/Player_Image");
 
             Images[17] = contentManager.Load<Texture2D>("UI/CreateLobby/Modules_Images/Cosmo_Image");
             Images[18] = contentManager.Load<Texture2D>("UI/CreateLobby/Modules_Images/Daffodil_Image");
