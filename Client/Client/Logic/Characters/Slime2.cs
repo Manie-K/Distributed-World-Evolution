@@ -2,15 +2,17 @@
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using Client.Common;
+using Client.Logic;
 
 namespace Client
 {
     public class Slime2 : Character
     {
-        public Slime2(Vector2 position, Color color, ref AnimationTexturesLoader ATL)
-            : base(position, color, 100, 100, 150f, ref ATL, 30, new Vector2(-35, -37))
+        public Slime2(Vector2 position, Color color)
+            : base(position, color, 100, 100, 150f, 6, 9)
         {
-
+            am = new AnimationManager(7);
+            SpriteDrawingOffset = new Vector2(-35, -37);
         }
 
         public override void Update(GameTime gameTime, InputManager inputManager)
@@ -39,38 +41,29 @@ namespace Client
                 movement.X += 1;
             }
 
+            SetAnimation(0);
+
             if (movement != Vector2.Zero)
             {
                 movement.Normalize();
                 Position += movement * speed * delta;
-                am.SetAnimationWithDuration(31, CurrentDirection, 1, 36, false);
+                SetAnimation(0);
             }
-            else
-            {
-                am.SetAnimationWithDuration(30, CurrentDirection, 1, 36);
-            }
-
 
             if (inputManager.CheckIfPressingKey(Keys.Space))
             {
-                am.SetAnimationWithDuration(28, CurrentDirection, 2, 36, true);
+                SetAnimation(1);
             }
-
-
-            if (am.GetAcctualAnimationIndex() == 28)
+            if (inputManager.CheckIfPressingKey(Keys.O))
             {
-                speed = 70f;
-                am.SetAnimationWithDuration(28, CurrentDirection, 2, 36, true);
+                SetAnimation(2);
             }
-            else speed = 200f;
-
-
             am.Update();
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(am.GetAcctualTexture(), Rect, am.GetFrame(), Color.White);
+            spriteBatch.Draw(AssetsManager.GetInstance().GetCharacterTexture(am.ActiveAnimation, 7), GetPosition(), GetSourceRectangle(), Color.White);
         }
     }
 }

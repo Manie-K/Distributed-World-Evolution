@@ -1,4 +1,5 @@
-﻿using Client.Logic.Plants;
+﻿using Client.Logic;
+using Client.Logic.Plants;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SharedLibrary.Helpers;
@@ -40,7 +41,7 @@ namespace Client.UI.Bestiary_Panel
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(background, backgroundBounds, backgroundColor);
-            spriteBatch.Draw(PlantsAssetsManager.GetInstance().GetSpritesheet(), position, slotBounds, Color.White);
+            spriteBatch.Draw(AssetsManager.GetInstance().GetFlowersSpritesheet(), position, slotBounds, Color.White);
             spriteBatch.Draw(slotAmount, slotAmountBounds, Color.White);
             textAmount.Draw(spriteBatch);
         }

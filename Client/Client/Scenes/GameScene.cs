@@ -19,7 +19,6 @@ namespace Client
         private PanelsController panelsController;
         private Player player;
         private Dictionary<Guid, Character> characters;
-        private AnimationTexturesLoader animationTexturesLoader;
         private WorldMap map;
         private Vector2 cameraOffset;
         private double clientUpdateTimer;
@@ -31,7 +30,6 @@ namespace Client
         {
             this.manager = manager;
 
-            animationTexturesLoader = new AnimationTexturesLoader(manager.ContentManager);
             characters = [];
             //plants = [];
 
@@ -42,15 +40,15 @@ namespace Client
             {
                 throw new Exception("Could not load the map " + Tilemap.GetMapFileName(mapID));
             }
-            player = new Player(new Vector2(600, 200), Color.White, new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), 
-                manager.UserSettings.PlayerName, true, new Vector2(500, 300 - 110), 70, 40), ref this.animationTexturesLoader, new Vector2(-68, -77), map, manager.ClientManager);
+            player = new Player(new Vector2(288, 32), Color.White, new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), 
+                manager.UserSettings.PlayerName, true, new Vector2(500, 300 - 110), 70, 40), map, manager.ClientManager);
 
             manager.Camera.MapSize = new System.Drawing.Size(map.MapWidth * map.TileSize, map.MapHeight * map.TileSize);
             manager.IsInGame = true;
             clientUpdateTimer = 0;
             timeBetweenUpdates = 1.0 / ClientManager.CLIENT_UPDATES_PER_SECOND;
 
-           // LoadPlants();
+            // LoadPlants();
         }
 
         public void Load()
@@ -61,7 +59,7 @@ namespace Client
         public void Update(GameTime gameTime)
         {
             panelsController.Update();
-
+            
             IReadOnlyDictionary<Guid, WorldEntityDTO> entities = manager.ClientManager.Entities;
             Dictionary<Guid, Character> newCharacterList = [];
 
@@ -133,25 +131,25 @@ namespace Client
 
         private void LoadCharacters()
         {
-            /*
-            characters.Add(new EnemyPlant1(new Vector2(200, 200), Color.White, ref this.animationTexturesLoader));
-            characters.Add(new EnemyPlant2(new Vector2(300, 200), Color.White, ref this.animationTexturesLoader));
-            characters.Add(new Pig(new Vector2(400, 200), Color.White, ref this.animationTexturesLoader));
-            characters.Add(new Boar(new Vector2(500, 200), Color.White, ref this.animationTexturesLoader));
-            characters.Add(new WhiteRabbit(new Vector2(700, 200), Color.White, ref this.animationTexturesLoader));
-            characters.Add(new BrownRabbit(new Vector2(800, 200), Color.White, ref this.animationTexturesLoader));
-            characters.Add(new EnemyPlant3(new Vector2(200, 350), Color.White, ref this.animationTexturesLoader));
-            characters.Add(new Slime1(new Vector2(300, 350), Color.White, ref this.animationTexturesLoader));
-            characters.Add(new Slime2(new Vector2(400, 350), Color.White, ref this.animationTexturesLoader));
+            
+            characters.Add(new Guid(), new EnemyPlant1(new Vector2(32, 32), Color.White));
+            characters.Add(new Guid("11111111-1111-1111-1111-111111111111"), new EnemyPlant2(new Vector2(64, 32), Color.White));
+            characters.Add(new Guid("11111111-1111-1111-1111-111111121111"), new Pig(new Vector2(96, 32), Color.White));
+            characters.Add(new Guid("11111311-1111-1111-1111-111111111111"), new Boar(new Vector2(128, 32), Color.White));
+            characters.Add(new Guid("11141111-1111-1111-1111-111111111111"), new WhiteRabbit(new Vector2(160, 32), Color.White));
+            characters.Add(new Guid("11511111-1111-1111-1111-111111111111"), new BrownRabbit(new Vector2(192, 32), Color.White));
+            characters.Add(new Guid("11611111-1111-1111-1111-111111111111"), new EnemyPlant3(new Vector2(224, 32), Color.White));
+            characters.Add(new Guid("11211111-1111-1111-1111-111111111111"), new Slime1(new Vector2(256, 32), Color.White));
+            characters.Add(new Guid("11111111-1111-1311-1111-111111111111"), new Slime2(new Vector2(288, 32), Color.White));
 
-            characters.Add(new Slime3(new Vector2(500, 350), Color.White, ref this.animationTexturesLoader));
-            characters.Add(new Orc1(new Vector2(600, 350), Color.White, ref this.animationTexturesLoader));
-            characters.Add(new Orc2(new Vector2(700, 350), Color.White, ref this.animationTexturesLoader));
-            characters.Add(new Orc3(new Vector2(200, 500), Color.White, ref this.animationTexturesLoader));
-            characters.Add(new Vampire1(new Vector2(300, 500), Color.White, ref this.animationTexturesLoader));
-            characters.Add(new Vampire2(new Vector2(400, 500), Color.White, ref this.animationTexturesLoader));
-            characters.Add(new Vampire3(new Vector2(500, 500), Color.White, ref this.animationTexturesLoader));
-            */
+            characters.Add(new Guid("11111111-1311-1111-1111-111111111111"), new Slime3(new Vector2(320, 32), Color.White));
+            characters.Add(new Guid("11511411-1111-1111-1111-111111111111"), new Orc1(new Vector2(32, 64), Color.White));
+            characters.Add(new Guid("11121111-1111-1111-1111-111111111111"), new Orc2(new Vector2(64, 64), Color.White));
+            characters.Add(new Guid("11211111-1111-1111-1211-111111111111"), new Orc3(new Vector2(96, 64), Color.White));
+            characters.Add(new Guid("11111111-1111-1111-1411-111111111111"), new Vampire1(new Vector2(128, 64), Color.White));
+            characters.Add(new Guid("11111111-1111-1111-1511-111111111111"), new Vampire2(new Vector2(160, 64), Color.White));
+            characters.Add(new Guid("11111111-1111-1111-1611-111111111111"), new Vampire3(new Vector2(192, 64), Color.White));
+         
         }
 
         private void LoadPlants()
@@ -179,25 +177,25 @@ namespace Client
 
             characters.Add(entity.Id, graphicID switch
             { 
-                0 => new EnemyPlant1(position, Color.White, ref this.animationTexturesLoader),
-                1 => new EnemyPlant2(position, Color.White, ref this.animationTexturesLoader),
-                2 => new Pig(position, Color.White, ref this.animationTexturesLoader),
-                3 => new Boar(position, Color.White, ref this.animationTexturesLoader),
-                4 => new WhiteRabbit(position, Color.White, ref this.animationTexturesLoader),
-                5 => new BrownRabbit(position, Color.White, ref this.animationTexturesLoader),
-                6 => new EnemyPlant3(position, Color.White, ref this.animationTexturesLoader),
-                7 => new Slime1(position, Color.White, ref this.animationTexturesLoader),
-                8 => new Slime2(position, Color.White, ref this.animationTexturesLoader),
-                9 => new Slime3(position, Color.White, ref this.animationTexturesLoader),
-                10 => new Orc1(position, Color.White, ref this.animationTexturesLoader),
-                11 => new Orc2(position, Color.White, ref this.animationTexturesLoader),
-                12 => new Orc3(position, Color.White, ref this.animationTexturesLoader),
-                13 => new Vampire1(position, Color.White, ref this.animationTexturesLoader),
-                14 => new Vampire2(position, Color.White, ref this.animationTexturesLoader),
-                15 => new Vampire3(position, Color.White, ref this.animationTexturesLoader),
-                16 => new Player(position, Color.White, new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), entity.Name, true, new Vector2(500, 300 - 110), 70, 40), 
-                ref this.animationTexturesLoader, new Vector2(-53, -50)),
-                _ => new EnemyPlant1(position, Color.White, ref this.animationTexturesLoader)
+                0 => new EnemyPlant1(position, Color.White),
+                1 => new EnemyPlant2(position, Color.White),
+                2 => new Pig(position, Color.White),
+                3 => new Boar(position, Color.White),
+                4 => new WhiteRabbit(position, Color.White),
+                5 => new BrownRabbit(position, Color.White),
+                6 => new EnemyPlant3(position, Color.White),
+                7 => new Slime1(position, Color.White),
+                8 => new Slime2(position, Color.White),
+                9 => new Slime3(position, Color.White),
+                10 => new Orc1(position, Color.White),
+                11 => new Orc2(position, Color.White),
+                12 => new Orc3(position, Color.White),
+                13 => new Vampire1(position, Color.White),
+                14 => new Vampire2(position, Color.White),
+                15 => new Vampire3(position, Color.White),
+                16 => new Player(position, Color.White, new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), entity.Name, 
+                true, new Vector2(500, 300 - 110), 70, 40)),
+                _ => new EnemyPlant1(position, Color.White)
             });
         }
 

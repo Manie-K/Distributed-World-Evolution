@@ -2,15 +2,17 @@
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using Client.Common;
+using Client.Logic;
 
 namespace Client
 {
     public class BrownRabbit : Character
     {
-        public BrownRabbit(Vector2 position, Color color, ref AnimationTexturesLoader ATL)
-            : base(position, color, 192, 192, 150f, ref ATL, 14, new Vector2(-80, -100))
+        public BrownRabbit(Vector2 position, Color color)
+            : base(position, color, 192, 192, 150f, 4, 12)
         {
-
+            am = new AnimationManager(15);
+            SpriteDrawingOffset = new Vector2(-80, -100);
         }
 
         public override void Update(GameTime gameTime, InputManager inputManager)
@@ -39,31 +41,29 @@ namespace Client
                 movement.X += 1;
             }
 
+            SetAnimation(0);
+
             if (movement != Vector2.Zero)
             {
                 movement.Normalize();
                 Position += movement * speed * delta;
-                am.SetAnimationWithDuration(15, CurrentDirection, 1, 36, false);
+                SetAnimation(0);
             }
-            else
-            {
-                am.SetAnimationWithDuration(14, CurrentDirection, 1, 36);
-            }
-
 
             if (inputManager.CheckIfPressingKey(Keys.Space))
             {
-                speed = 70f;
+                SetAnimation(1);
             }
-            else speed = 200f;
-
-
+            if (inputManager.CheckIfPressingKey(Keys.O))
+            {
+                SetAnimation(2);
+            }
             am.Update();
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(am.GetAcctualTexture(), Rect, am.GetFrame(), Color.White);
+            spriteBatch.Draw(AssetsManager.GetInstance().GetCharacterTexture(am.ActiveAnimation, 15), GetPosition(), GetSourceRectangle(), Color.White);
         }
     }
 }

@@ -21,9 +21,9 @@ namespace Client.UI.CreateLobby.Parameters
 
         public ParameterRow(ContentManager contentManager, string name, string value, string description, Vector2 position, int type)
         {
-            parameterName = new Text(contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), name, true, position, 190, 46);
+            parameterName = new Text(contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), name, true, position, 196, 46);
             Description = description;
-
+            
             if(type==0)
             {
                 background = contentManager.Load<Texture2D>("UI/CreateModules/Stats/box_Button");

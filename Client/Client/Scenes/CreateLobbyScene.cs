@@ -86,6 +86,9 @@ namespace Client
                 parameters.Add(new ModuleParametersData("Damage", module.Damage.ToString(), 0));
                 parameters.Add(new ModuleParametersData("Aggresion", module.Aggresion.ToString(), 0));
                 parameters.Add(new ModuleParametersData("Reproduction Need", module.ReproductionNeed.ToString(), 0));
+                parameters.Add(new ModuleParametersData("Max Health", module.MaxHealth.ToString(), 0));
+                parameters.Add(new ModuleParametersData("Max Hunger", module.MaxHunger.ToString(), 0));
+                
                 parameters.Add(new ModuleParametersData("Type", module.Type.ToString(), 1));
                 if (module.Behaviours != null)
                 {

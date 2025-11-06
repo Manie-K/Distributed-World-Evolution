@@ -1,4 +1,5 @@
 ﻿using Client.Common;
+using Client.Logic;
 using Client.Rendering;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -22,6 +23,7 @@ namespace Client
         private readonly WorldMap map;
         private readonly ClientManager clientManager;
 
+
         private enum InteractionType
         {
             Attack,
@@ -29,15 +31,17 @@ namespace Client
             Tame
         }
 
-        public Player(Vector2 position, Color color, Text playerName, ref AnimationTexturesLoader ATL, Vector2 spriteDrawingOffset, WorldMap map = null, ClientManager clientManager = null)
-            : base(position, color, 140, 108, 150f, ref ATL, 0, spriteDrawingOffset)
+        public Player(Vector2 position, Color color, Text playerName, WorldMap map = null, ClientManager clientManager = null)
+            : base(position, color, 130, 108, 150f, 8, 7)
         {
             this.playerName = playerName;
-            playerNameOffset = new Vector2(35 + spriteDrawingOffset.X, -3 + spriteDrawingOffset.Y);
+            SpriteDrawingOffset = new Vector2(-68, -77);
+            playerNameOffset = new Vector2(35 + SpriteDrawingOffset.X, -3 + SpriteDrawingOffset.Y);
             this.map = map;
             this.clientManager = clientManager;
             PlayerDTO = null;
             TargetEntity = null;
+            am = new AnimationManager(13);
             playerModule = null;
         }
 
@@ -51,7 +55,7 @@ namespace Client
             if (PlayerDTO != null && PlayerDTO.State.Health <= 0)
             {
                 Position = Vector2.One * 5;
-                UpdateAnimation();
+                am.Update();
                 return;
             }
 
@@ -79,10 +83,13 @@ namespace Client
                 movement.X += 1;
             }
 
+            SetAnimation(0);
+
             if (movement != Vector2.Zero)
             {
                 movement.Normalize();
                 Vector2 newPosition = Position + (movement * speed * delta);
+                SetAnimation(0);
 
                 if (newPosition.X < 0) newPosition.X = 0;
                 else if (newPosition.X >= map.MapWidth * map.TileSize) newPosition.X = map.MapWidth * map.TileSize - 1;
@@ -95,19 +102,14 @@ namespace Client
                 {
                     Position = newPosition;
                 }
-
-                am.SetAnimationWithDuration(1, CurrentDirection, 1, 36, false);
-            }
-            else
-            {
-                am.SetAnimationWithDuration(0, CurrentDirection, 1, 36);
             }
 
-            if (inputManager.CheckIfPressingKey(Keys.Space) && am.GetAcctualAnimationIndex() != 2)
+            if (inputManager.CheckIfPressingKey(Keys.Space))
             {
                 HandleInteraction(InteractionType.Attack);
-                am.SetAnimationWithDuration(2, CurrentDirection, 2, 36, true);               
+                SetAnimation(1);
             }
+
             if (inputManager.CheckIfPressingKey(Keys.E))
             {
                 HandleInteraction(InteractionType.Gather);
@@ -117,25 +119,13 @@ namespace Client
                 HandleInteraction(InteractionType.Tame);
             }
 
-            UpdateAnimation();
+            am.Update();
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(am.GetAcctualTexture(), Rect, am.GetFrame(), Color.White);
+            spriteBatch.Draw(AssetsManager.GetInstance().GetCharacterTexture(am.ActiveAnimation, 13), GetPosition(), GetSourceRectangle(), Color.White);
             playerName.Draw(spriteBatch, Position + playerNameOffset);
-        }
-
-        private void UpdateAnimation()
-        {
-            if (am.GetAcctualAnimationIndex() == 2)
-            {
-                speed = 70f;
-                am.SetAnimationWithDuration(2, CurrentDirection, 2, 36, true);
-            }
-            else speed = 200f;
-
-            am.Update();
         }
 
         private void HandleInteraction(InteractionType interactionType)

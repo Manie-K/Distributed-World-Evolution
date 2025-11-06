@@ -2,15 +2,17 @@
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
 using Client.Common;
+using Client.Logic;
 
 namespace Client
 {
     public class Pig : Character
     {
-        public Pig(Vector2 position, Color color, ref AnimationTexturesLoader ATL)
-            : base(position, color, 173, 173, 150f, ref ATL, 7, new Vector2(-72, -80))
+        public Pig(Vector2 position, Color color)
+            : base(position, color, 173, 173, 150f, 4, 12)
         {
-
+            am = new AnimationManager(14);
+            SpriteDrawingOffset = new Vector2(-72, -80);
         }
 
         public override void Update(GameTime gameTime, InputManager inputManager)
@@ -39,31 +41,29 @@ namespace Client
                 movement.X += 1;
             }
 
+            SetAnimation(0);
+
             if (movement != Vector2.Zero)
             {
                 movement.Normalize();
                 Position += movement * speed * delta;
-                am.SetAnimationWithDuration(8, CurrentDirection, 1, 36, false);
+                SetAnimation(0);
             }
-            else
-            {
-                am.SetAnimationWithDuration(7, CurrentDirection, 1, 36);
-            }
-
 
             if (inputManager.CheckIfPressingKey(Keys.Space))
             {
-                speed = 70f;
+                SetAnimation(1);
             }
-            else speed = 200f;
-
-
+            if (inputManager.CheckIfPressingKey(Keys.O))
+            {
+                SetAnimation(2);
+            }
             am.Update();
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(am.GetAcctualTexture(), Rect, am.GetFrame(), Color.White);
+            spriteBatch.Draw(AssetsManager.GetInstance().GetCharacterTexture(am.ActiveAnimation, 14), GetPosition(), GetSourceRectangle(), Color.White);
         }
     }
 }
