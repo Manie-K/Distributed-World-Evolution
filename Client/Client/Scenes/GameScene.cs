@@ -40,8 +40,8 @@ namespace Client
             {
                 throw new Exception("Could not load the map " + Tilemap.GetMapFileName(mapID));
             }
-            player = new Player(new Vector2(288, 32), Color.White, new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), 
-                manager.UserSettings.PlayerName, true, new Vector2(500, 300 - 110), 70, 40), map, manager.ClientManager);
+            player = new Player(new Vector2(288, 32), Color.White, new Text(manager.ContentManager.Load<SpriteFont>("Fonts/PlayerName"), 
+                manager.UserSettings.PlayerName, true, new Vector2(500, 300 - 110), 70, 40), new Vector2(-68, -77), map, manager.ClientManager);
 
             manager.Camera.MapSize = new System.Drawing.Size(map.MapWidth * map.TileSize, map.MapHeight * map.TileSize);
             manager.IsInGame = true;
@@ -193,8 +193,8 @@ namespace Client
                 13 => new Vampire1(position, Color.White),
                 14 => new Vampire2(position, Color.White),
                 15 => new Vampire3(position, Color.White),
-                16 => new Player(position, Color.White, new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), entity.Name, 
-                true, new Vector2(500, 300 - 110), 70, 40)),
+                16 => new Player(position, Color.White, new Text(manager.ContentManager.Load<SpriteFont>("Fonts/PlayerName"), entity.Name, 
+                true, new Vector2(500, 300 - 110), 70, 40), new Vector2(-53, -50)),
                 _ => new EnemyPlant1(position, Color.White)
             });
         }

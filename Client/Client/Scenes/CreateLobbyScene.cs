@@ -1,5 +1,7 @@
 ﻿using Client.UI.CreateLobby;
 using Client.UI.CreateLobby.Parameters;
+using Client.UI.CreateModules.Modules;
+using Client.UI.CreateModules.Modules.Parameters;
 using Client.UI.MapSelection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -28,6 +30,8 @@ namespace Client
         private ModulesImageDisplay modulesImageDisplay;
         private SwitchPageParameters switchPageParameters;
 
+        private DescriptionBox descriptionBox;
+
         private bool isCreatingLobby;
         private bool isJoiningLobby;
         private bool isLoadingModules;
@@ -52,6 +56,7 @@ namespace Client
 
             switchPageParameters = new SwitchPageParameters(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"),
                                                                  new Vector2(848, 485), manager.ContentManager, 4);
+            descriptionBox = new DescriptionBox(manager.ContentManager.Load<SpriteFont>("Fonts/DescriptionFont"), 26, manager.ContentManager);
 
             isCreatingLobby = false;
             isJoiningLobby = false;
@@ -83,7 +88,8 @@ namespace Client
                 parameters.Add(new ModuleParametersData("Reproduction Need", module.ReproductionNeed.ToString(), 0));
                 parameters.Add(new ModuleParametersData("Max Health", module.MaxHealth.ToString(), 0));
                 parameters.Add(new ModuleParametersData("Max Hunger", module.MaxHunger.ToString(), 0));
-                parameters.Add(new ModuleParametersData("Type", module.Type.ToString(), 0));
+                
+                parameters.Add(new ModuleParametersData("Type", module.Type.ToString(), 1));
                 if (module.Behaviours != null)
                 {
                     foreach (BehaviourDTO behviour in module.Behaviours)
@@ -92,7 +98,7 @@ namespace Client
                     }
                 }
 
-                switchPageLobby.AddRow(new ModuleData(module.Name, module.DatabaseID, module.GraphicalRepresentationID, module.IsOfficialModule, parameters));
+                switchPageLobby.AddRow(new UI.CreateLobby.Parameters.ModuleData(module.Name, module.DatabaseID, module.GraphicalRepresentationID, module.IsOfficialModule, parameters));
             }
 
             /*
@@ -188,6 +194,15 @@ namespace Client
                 {
                     manager.SceneManager.AddScene(new MapSelectionScene(manager, ref mapData));
                 }
+                else if (descriptionBox.DescriptionButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
+                {
+                    descriptionBox.ChangeButton();
+                }
+
+                if (switchPageParameters.CheckLeftClick(manager.InputManager.GetMousePosition()))
+                {
+                    descriptionBox.SetDescriptionText(switchPageParameters.GetLastDescription());
+                }
 
                 isPressed = true;
             }
@@ -202,6 +217,7 @@ namespace Client
             mapButton.Update(manager.InputManager.GetMousePosition());
             gameNameBox.Update();
             playerAmountBox.Update();
+            descriptionBox.DescriptionButton.Update(manager.InputManager.GetMousePosition());
 
             if (switchPageLobby.UpdateRows(manager.InputManager.GetMousePosition(), isPressed))
             {
@@ -225,6 +241,7 @@ namespace Client
             gameNameBox.Draw(spriteBatch);
             playerAmountBox.Draw(spriteBatch);
             modulesImageDisplay.Draw(spriteBatch);
+            descriptionBox.Draw(spriteBatch);
 
             if (switchPageLobby.selectedRow != -1)
             {

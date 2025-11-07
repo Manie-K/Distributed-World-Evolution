@@ -19,12 +19,12 @@ namespace Client.UI.CreateModules.Modules
 
 
         //example of description text "The monster instantly reacts to any move-\nment, hurling itself at its prey with sa-\nvage fury. It slashes with claws and fangs."
-        public DescriptionBox(SpriteFont fontNumbers, ContentManager contentManager)
+        public DescriptionBox(SpriteFont fontNumbers, int offset, ContentManager contentManager)
         {
-            DescriptionButton= new Button(contentManager.Load<Texture2D>("UI/CreateModules/DescriptionIcon"), null, "", new Vector2(1120,484), 19, 37, Color.Lime);
-            descitpionText= new Text(fontNumbers, "", true, new Vector2(740, 548), 389, 100);
+            DescriptionButton= new Button(contentManager.Load<Texture2D>("UI/CreateModules/DescriptionIcon"), null, "", new Vector2(1120, 484), 19, 37, Color.Lime);
+            descitpionText= new Text(fontNumbers, "", true, new Vector2(740 + offset, 548), 389, 100);
             descriptionBackground = contentManager.Load<Texture2D>("UI/CreateModules/Create_Module_Description");
-            rect = new Rectangle(740, 554, 389, 100);
+            rect = new Rectangle(740 + offset, 554, 389, 100);
             IsClickedButton = false;
 
             descitpionText.SetTextColor(Color.White);

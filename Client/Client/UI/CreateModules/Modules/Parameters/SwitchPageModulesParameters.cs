@@ -129,8 +129,7 @@ namespace Client.UI.CreateModules.Modules.Parameters
             for(int i=0;i< parameters.Count; i++)
             {
                 if (parameters[i] is ModuleBehaviourParameter behaviourParam
-                    && parameters[i].Type == 1
-                    && behaviourParam.IsPicked())
+                    && parameters[i].Type == 1)
                 {
                     list.Add(new Tuple<int, int>(i, GetValueOnIndex(i)));
                 }
