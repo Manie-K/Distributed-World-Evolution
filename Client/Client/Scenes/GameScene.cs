@@ -19,19 +19,18 @@ namespace Client
         private PanelsController panelsController;
         private Player player;
         private Dictionary<Guid, Character> characters;
+        private Dictionary<Guid, Plant> plants;
         private WorldMap map;
         private Vector2 cameraOffset;
         private double clientUpdateTimer;
         private double timeBetweenUpdates;
-
-        private List<Plant> plants;
 
         public GameScene(GameManager manager, int mapID)
         {
             this.manager = manager;
 
             characters = [];
-            //plants = [];
+            plants = [];
 
             panelsController = new PanelsController(manager);
             cameraOffset = new Vector2(0, 70);
@@ -47,13 +46,11 @@ namespace Client
             manager.IsInGame = true;
             clientUpdateTimer = 0;
             timeBetweenUpdates = 1.0 / ClientManager.CLIENT_UPDATES_PER_SECOND;
-
-            // LoadPlants();
         }
 
         public void Load()
         {
-            // Możesz tu wrzucić dodatkowe dane do załadowania jeśli chcesz
+
         }
 
         public void Update(GameTime gameTime)
@@ -62,7 +59,9 @@ namespace Client
             
             IReadOnlyDictionary<Guid, WorldEntityDTO> entities = manager.ClientManager.Entities;
             Dictionary<Guid, Character> newCharacterList = [];
+            Dictionary<Guid, Plant> newPlantList = [];
 
+            // Remove dead creatures
             foreach (Guid guid in characters.Keys)
             {
                 if (entities.ContainsKey(guid))
@@ -70,8 +69,17 @@ namespace Client
                     newCharacterList.Add(guid, characters[guid]);
                 }
             }
-
             characters = newCharacterList;
+
+            // Remove dead plants
+            foreach (Guid guid in plants.Keys)
+            {
+                if (entities.ContainsKey(guid))
+                {
+                    newPlantList.Add(guid, plants[guid]);
+                }
+            }
+            plants = newPlantList;
 
             foreach (WorldEntityDTO entity in entities.Values)
             {
@@ -84,12 +92,16 @@ namespace Client
 
                 if (characters.TryGetValue(entity.Id, out Character character))
                 {
-                    //character.Update(gameTime, manager.InputManager);
+                    character.Update(gameTime, manager.InputManager);
                     character.Position = GetWorldPosition(entity);
+                }
+                else if (plants.TryGetValue(entity.Id, out Plant plant))
+                {
+                    plant.Position = GetWorldPosition(entity);
                 }
                 else
                 {
-                    LoadCharacter(entity);
+                    LoadEntity(entity);
                 }
             }
 
@@ -117,11 +129,11 @@ namespace Client
             {
                 character.Draw(spriteBatch);
             }
-            /*
-            foreach(Plant plant in plants)
+            
+            foreach(Plant plant in plants.Values)
             {
                 plant.Draw(spriteBatch);
-            }*/
+            }
         }
 
         public void DrawStatic(SpriteBatch spriteBatch)
@@ -131,7 +143,7 @@ namespace Client
 
         private void LoadCharacters()
         {
-            
+
             characters.Add(new Guid(), new EnemyPlant1(new Vector2(32, 32), Color.White));
             characters.Add(new Guid("11111111-1111-1111-1111-111111111111"), new EnemyPlant2(new Vector2(64, 32), Color.White));
             characters.Add(new Guid("11111111-1111-1111-1111-111111121111"), new Pig(new Vector2(96, 32), Color.White));
@@ -149,54 +161,76 @@ namespace Client
             characters.Add(new Guid("11111111-1111-1111-1411-111111111111"), new Vampire1(new Vector2(128, 64), Color.White));
             characters.Add(new Guid("11111111-1111-1111-1511-111111111111"), new Vampire2(new Vector2(160, 64), Color.White));
             characters.Add(new Guid("11111111-1111-1111-1611-111111111111"), new Vampire3(new Vector2(192, 64), Color.White));
-         
+
         }
 
         private void LoadPlants()
         {
-          /*  plants.Add(new Poppy(new Vector2(300, 500)));
-            plants.Add(new Cosmo(new Vector2(800, 500)));
-            plants.Add(new Daffodil(new Vector2(1300, 1500)));
-            plants.Add(new Daisy(new Vector2(1800, 1500)));
+            /*  plants.Add(new Poppy(new Vector2(300, 500)));
+              plants.Add(new Cosmo(new Vector2(800, 500)));
+              plants.Add(new Daffodil(new Vector2(1300, 1500)));
+              plants.Add(new Daisy(new Vector2(1800, 1500)));
 
-            plants.Add(new Lavender(new Vector2(2300, 2500)));
-            plants.Add(new Lily(new Vector2(3800, 3500)));
-            plants.Add(new LilyOfTheValley(new Vector2(4300, 4300)));
-            plants.Add(new Orchid(new Vector2(5800, 5500)));
+              plants.Add(new Lavender(new Vector2(2300, 2500)));
+              plants.Add(new Lily(new Vector2(3800, 3500)));
+              plants.Add(new LilyOfTheValley(new Vector2(4300, 4300)));
+              plants.Add(new Orchid(new Vector2(5800, 5500)));
 
-            plants.Add(new Pansy(new Vector2(6300, 6300)));
-            plants.Add(new Rose(new Vector2(7800, 7500)));
-            plants.Add(new Sunflower(new Vector2(2300, 6300)));
-            plants.Add(new Tulip(new Vector2(7800, 3300)));*/
+              plants.Add(new Pansy(new Vector2(6300, 6300)));
+              plants.Add(new Rose(new Vector2(7800, 7500)));
+              plants.Add(new Sunflower(new Vector2(2300, 6300)));
+              plants.Add(new Tulip(new Vector2(7800, 3300)));*/
         }
 
-        private void LoadCharacter(WorldEntityDTO entity)
+        private void LoadEntity(WorldEntityDTO entity)
         {
             int graphicID = manager.ClientManager.Modules.FirstOrDefault(m => m.DatabaseID == entity.ModuleID)?.GraphicalRepresentationID ?? -1;
             Vector2 position = GetWorldPosition(entity);
 
-            characters.Add(entity.Id, graphicID switch
-            { 
-                0 => new EnemyPlant1(position, Color.White),
-                1 => new EnemyPlant2(position, Color.White),
-                2 => new Pig(position, Color.White),
-                3 => new Boar(position, Color.White),
-                4 => new WhiteRabbit(position, Color.White),
-                5 => new BrownRabbit(position, Color.White),
-                6 => new EnemyPlant3(position, Color.White),
-                7 => new Slime1(position, Color.White),
-                8 => new Slime2(position, Color.White),
-                9 => new Slime3(position, Color.White),
-                10 => new Orc1(position, Color.White),
-                11 => new Orc2(position, Color.White),
-                12 => new Orc3(position, Color.White),
-                13 => new Vampire1(position, Color.White),
-                14 => new Vampire2(position, Color.White),
-                15 => new Vampire3(position, Color.White),
-                16 => new Player(position, Color.White, new Text(manager.ContentManager.Load<SpriteFont>("Fonts/PlayerName"), entity.Name, 
-                true, new Vector2(500, 300 - 110), 70, 40), new Vector2(-53, -50)),
-                _ => new EnemyPlant1(position, Color.White)
-            });
+            if (graphicID <= 16)
+            {
+                characters.Add(entity.Id, graphicID switch
+                {
+                    0 => new EnemyPlant1(position, Color.White),
+                    1 => new EnemyPlant2(position, Color.White),
+                    2 => new Pig(position, Color.White),
+                    3 => new Boar(position, Color.White),
+                    4 => new WhiteRabbit(position, Color.White),
+                    5 => new BrownRabbit(position, Color.White),
+                    6 => new EnemyPlant3(position, Color.White),
+                    7 => new Slime1(position, Color.White),
+                    8 => new Slime2(position, Color.White),
+                    9 => new Slime3(position, Color.White),
+                    10 => new Orc1(position, Color.White),
+                    11 => new Orc2(position, Color.White),
+                    12 => new Orc3(position, Color.White),
+                    13 => new Vampire1(position, Color.White),
+                    14 => new Vampire2(position, Color.White),
+                    15 => new Vampire3(position, Color.White),
+                    16 => new Player(position, Color.White, new Text(manager.ContentManager.Load<SpriteFont>("Fonts/PlayerName"), entity.Name,
+                    true, new Vector2(500, 300 - 110), 70, 40), new Vector2(-53, -50)),
+                    _ => new EnemyPlant1(position, Color.White)
+                });
+            }
+            else
+            {
+                plants.Add(entity.Id, graphicID switch
+                {
+                    17 => new Cosmo(position),
+                    18 => new Daffodil(position),
+                    19 => new Daisy(position),
+                    20 => new Lavender(position),
+                    21 => new Lily(position),
+                    22 => new LilyOfTheValley(position),
+                    23 => new Orchid(position),
+                    24 => new Pansy(position),
+                    25 => new Poppy(position),
+                    26 => new Rose(position),
+                    27 => new Sunflower(position),
+                    28 => new Tulip(position),
+                    _ => new Cosmo(position)
+                });
+            }
         }
 
         private Vector2 GetWorldPosition(WorldEntityDTO entity)

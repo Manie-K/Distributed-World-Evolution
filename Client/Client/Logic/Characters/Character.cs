@@ -36,6 +36,20 @@ namespace Client
             am.SetAnimation(type);
         }
 
-        public virtual void Update(GameTime gameTime, InputManager inputManager) { }
+        public virtual void Update(GameTime gameTime, InputManager inputManager) 
+        {
+            SetAnimation(0);
+
+            if (false)
+            {
+                SetAnimation(1);
+            }
+            if (false)
+            {
+                SetAnimation(2);
+            }
+
+            am.Update();
+        }
     }
 }

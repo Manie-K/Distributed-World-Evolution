@@ -3,9 +3,6 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Client.UI.CreateLobby.Parameters
 {
@@ -65,7 +62,7 @@ namespace Client.UI.CreateLobby.Parameters
 
             foreach(ModuleParametersData moduleParameter in moduleParameters)
             {
-                parameters.Add(new ParameterRow(contentManager, moduleParameter.Name, moduleParameter.Value, moduleParameter.Name/*TODO: change to description*/, new Vector2(800, 183 + 76 * (parameters.Count % amountOfRows)), moduleParameter.Type));
+                parameters.Add(new ParameterRow(contentManager, moduleParameter.Name, moduleParameter.Value, moduleParameter.AdditionalDescription, new Vector2(800, 183 + 76 * (parameters.Count % amountOfRows)), moduleParameter.Type));
             }
 
             pageNumber = 1;
@@ -94,10 +91,10 @@ namespace Client.UI.CreateLobby.Parameters
             int remainingRows = totalRows - startIndex;
             return Math.Min(amountOfRows, remainingRows);
         }
+
         public string GetLastDescription()
         {
             return parameters[lastParameterClicked].GetDescription();
         }
-
     }
 }
