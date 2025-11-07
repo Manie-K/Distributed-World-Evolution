@@ -1,7 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
-using Client.Common;
 using Client.Logic;
 
 namespace Client
@@ -13,52 +11,6 @@ namespace Client
         {
             am = new AnimationManager(3);
             SpriteDrawingOffset = new Vector2(-32, -47);
-        }
-
-        public override void Update(GameTime gameTime, InputManager inputManager)
-        {
-            float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            Vector2 movement = Vector2.Zero;
-
-            if (inputManager.CheckIfPressingKey(Keys.W))
-            {
-                CurrentDirection = Direction.up;
-                movement.Y -= 1;
-            }
-            if (inputManager.CheckIfPressingKey(Keys.S))
-            {
-                CurrentDirection = Direction.down;
-                movement.Y += 1;
-            }
-            if (inputManager.CheckIfPressingKey(Keys.A))
-            {
-                CurrentDirection = Direction.left;
-                movement.X -= 1;
-            }
-            if (inputManager.CheckIfPressingKey(Keys.D))
-            {
-                CurrentDirection = Direction.right;
-                movement.X += 1;
-            }
-
-            SetAnimation(0);
-
-            if (movement != Vector2.Zero)
-            {
-                movement.Normalize();
-                Position += movement * speed * delta;
-                SetAnimation(0);
-            }
-
-            if (inputManager.CheckIfPressingKey(Keys.Space))
-            {
-                SetAnimation(1);
-            }
-            if (inputManager.CheckIfPressingKey(Keys.O))
-            {
-                SetAnimation(2);
-            }
-            am.Update();
         }
 
         public override void Draw(SpriteBatch spriteBatch)

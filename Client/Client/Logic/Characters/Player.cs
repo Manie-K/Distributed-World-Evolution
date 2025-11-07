@@ -14,6 +14,8 @@ namespace Client
 {
     public class Player : Character
     {
+        private const float PLAYER_ACTION_COOLDOWN = 2.0f;
+
         public WorldEntityDTO TargetEntity;
         public WorldEntityDTO PlayerDTO;
 
@@ -22,7 +24,7 @@ namespace Client
         private ModuleDTO playerModule;
         private readonly WorldMap map;
         private readonly ClientManager clientManager;
-
+        private float actionCooldown;
 
         private enum InteractionType
         {
@@ -43,12 +45,25 @@ namespace Client
             TargetEntity = null;
             am = new AnimationManager(13);
             playerModule = null;
+            actionCooldown = 0;
         }
 
         public override void Update(GameTime gameTime, InputManager inputManager)
         {
+            if (map == null)
+            {
+                base.Update(gameTime, inputManager);
+            }
+            else
+            {
+                UpdatePlayer(gameTime, inputManager);
+            }
+        }
+
+        private void UpdatePlayer(GameTime gameTime, InputManager inputManager)
+        {
             if (playerModule == null && PlayerDTO != null)
-            { 
+            {
                 playerModule = clientManager.Modules.Where(m => m.DatabaseID == PlayerDTO.ModuleID).FirstOrDefault();
             }
 
@@ -60,6 +75,10 @@ namespace Client
             }
 
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (actionCooldown > 0)
+            {
+                actionCooldown -= delta;
+            }
             Vector2 movement = Vector2.Zero;
 
             if (inputManager.CheckIfPressingKey(Keys.W))
@@ -109,7 +128,6 @@ namespace Client
                 HandleInteraction(InteractionType.Attack);
                 SetAnimation(1);
             }
-
             if (inputManager.CheckIfPressingKey(Keys.E))
             {
                 HandleInteraction(InteractionType.Gather);
@@ -130,6 +148,8 @@ namespace Client
 
         private void HandleInteraction(InteractionType interactionType)
         {
+            if (actionCooldown > 0) return;
+
             TargetEntity = clientManager.Entities.FirstOrDefault(e => e.Value.State.Position.Equals(map.GetTilePosition2D(Position.X, Position.Y))).Value;
             if (TargetEntity != null && TargetEntity.ModuleID != PlayerDTO.ModuleID)
             {
@@ -146,6 +166,7 @@ namespace Client
                         break;
                 }
             }
+            actionCooldown = PLAYER_ACTION_COOLDOWN;
         }
 
         private void AttackTarget()
