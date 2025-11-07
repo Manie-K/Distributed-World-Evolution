@@ -11,11 +11,14 @@ namespace Client.UI.Bestiary_Panel
         private Rectangle creatureTextureBounds;
         private Color backgroundColor;
 
+        public int Type;
+
         public BestiarySlot(GameManager manager, Vector2 position, int type)
         {
             SetCreatureTexture(manager, type);
             background = manager.ContentManager.Load<Texture2D>("Panels/Bestiary_Panel/Bestiary_slot");
             SetPosition(position);
+            Type = type;
             backgroundColor = Color.White;
         }
 

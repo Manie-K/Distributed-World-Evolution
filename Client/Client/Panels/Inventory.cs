@@ -32,30 +32,6 @@ namespace Client.Panels
                 RemoveSlot();
             }
 
-            //TODO: Delete later
-            else if (manager.InputManager.CheckIfCanPressKey(Keys.Z))
-            {
-                CollectItem(0);
-                CollectItem(2);
-                CollectItem(3);
-                CollectItem(4);
-                CollectItem(9);
-                CollectItem(10);
-            }
-            else if (manager.InputManager.CheckIfCanPressKey(Keys.C))
-            {
-                CollectItem(1);
-                CollectItem(5);
-                CollectItem(6);
-                CollectItem(7);
-                CollectItem(8);
-                CollectItem(11);
-            }
-            else if (manager.InputManager.CheckIfCanPressKey(Keys.X))
-            {
-                UseItem();
-            }
-
             else if (manager.InputManager.CheckIfCanPressKey(Keys.D1))
             {
                 PickSlot(0);
@@ -105,33 +81,44 @@ namespace Client.Panels
             }
         }
 
-        public void AddSlot(int type)
+        public bool AddSlot(int type)
         {
             if (slots.Count < 9)
             {
                 slots.Add(new InventorySlot(manager, new Vector2(378 + (59 * slots.Count), 627), type));
+                return true;
             }
+            return false;
         }
 
-        public void CollectItem(int type)
+        public bool CollectItem(int type)
         {
             foreach (var slot in slots)
             {
                 if (slot.GetItemType() == type)
                 {
                     slot.AddItem();
-                    return;
+                    return true;
                 }
             }
-            AddSlot(type);
+            if (AddSlot(type)) return true;
+            
+            return false;
         }
 
-        public void UseItem()
+        public bool UseItem(int type)
         {
-            if (selectedSlot != -1)
+            int counter = 0;
+            foreach (var slot in slots)
             {
-               if(slots[selectedSlot].RemoveItem()) RemoveSlot();
+                if (slot.GetItemType() == type)
+                {
+                    if (slot.RemoveItem()) RemoveSlot(counter);
+                    return true;
+                }
+                counter++;
             }
+            return false;
         }
 
         public void RemoveSlot()
@@ -145,6 +132,17 @@ namespace Client.Panels
                 {
                     slots[i].SetPosition(new Vector2(378 + (59 * i), 627));
                 }
+            }
+        }
+
+        public void RemoveSlot(int slotIndex)
+        {
+            slots.RemoveAt(slotIndex);
+            selectedSlot = -1;
+
+            for (int i = 0; i < slots.Count; i++)
+            {
+                slots[i].SetPosition(new Vector2(378 + (59 * i), 627));
             }
         }
 
@@ -173,8 +171,6 @@ namespace Client.Panels
                 }
             }
         }
-
-
     }
 }
 
