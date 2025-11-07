@@ -24,7 +24,6 @@ namespace Client.Panels
             background = manager.ContentManager.Load<Texture2D>("Panels/Bestiary_Panel/Bestiary_background");
             exitButton = new Button(manager.ContentManager.Load<Texture2D>("Panels/Bestiary_Panel/Bestiary_Exit"), null, null, new Vector2(909, 98), 60, 42, Color.Gold);
             slots = new List<BestiarySlot>();
-            SetList();
         }
 
 
@@ -65,32 +64,26 @@ namespace Client.Panels
             exitButton.Draw(spriteBatch);
         }
 
-        public void AddSlot(int Type)
+        public bool AddSlot(int type)
         {
-            if (slots.Count < 24)
+            if (slots.Count < 24 && !CheckIfExist(type))
             {
-                slots.Add(new BestiarySlot(manager, GetPosition(slots.Count), Type));
+                slots.Add(new BestiarySlot(manager, GetPosition(slots.Count), type));
+                return true;
             }
+            return false;
         }
 
-        private void SetList()
+        public bool CheckIfExist(int type)
         {
-            AddSlot(0);
-            AddSlot(1);
-            AddSlot(2);
-            AddSlot(3);
-            AddSlot(4);
-            AddSlot(5);
-            AddSlot(6);
-            AddSlot(7);
-            AddSlot(8);
-            AddSlot(9);
-            AddSlot(10);
-            AddSlot(11);
-            AddSlot(12);
-            AddSlot(13);
-            AddSlot(14);
-            AddSlot(15);
+            foreach(BestiarySlot slot in slots)
+            {
+                if(slot.Type == type)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         private Vector2 GetPosition(int index)
