@@ -15,19 +15,15 @@ namespace Client.Panels
     {
         private GameManager manager;
         private Texture2D background;
-        private Button releaseButton;
         private Button exitButton;
         private List<BestiarySlot> slots;
-        private int selectedSlot;
 
         public BestiaryPanel(GameManager manager)
         {
             this.manager = manager;
             background = manager.ContentManager.Load<Texture2D>("Panels/Bestiary_Panel/Bestiary_background");
             exitButton = new Button(manager.ContentManager.Load<Texture2D>("Panels/Bestiary_Panel/Bestiary_Exit"), null, null, new Vector2(909, 98), 60, 42, Color.Gold);
-            releaseButton = new Button(manager.ContentManager.Load<Texture2D>("Panels/Bestiary_Panel/Bestiary_Release"), null, null, new Vector2(514, 538), 253, 37, Color.Gold);
             slots = new List<BestiarySlot>();
-            selectedSlot = -1;
             SetList();
         }
 
@@ -35,16 +31,13 @@ namespace Client.Panels
         public bool Update(Vector2 position)
         {
             exitButton.Update(position);
-            releaseButton.Update(position);
 
             if (manager.InputManager.CheckIfCanPressKey(Keys.Escape))
             {
-                ResetSlot();
                 return true;
             }
             else if (manager.InputManager.CheckIfCanPressKey(Keys.B))
             {
-                ResetSlot();
                 return true;
             }
 
@@ -53,38 +46,8 @@ namespace Client.Panels
 
         public bool CheckLeftClick(Vector2 position)
         {
-            for(int i = 0; i < slots.Count; i++)
+            if (exitButton.CheckLeftClick(position))
             {
-                if (slots[i].CheckLeftClick(position))
-                {
-                    if (selectedSlot != -1 && selectedSlot != i)
-                    {
-                        slots[selectedSlot].ResetColor();
-                        selectedSlot = i;
-                    }
-                    else selectedSlot = i;
-                    
-                    break;
-                }
-            }
-
-
-            if (releaseButton.CheckLeftClick(position))
-            {
-                if (selectedSlot != -1)
-                {
-                    slots.RemoveAt(selectedSlot);
-                    selectedSlot = -1;
-
-                    for (int i = 0; i < slots.Count; i++)
-                    {
-                        slots[i].SetPosition(GetPosition(i));
-                    }
-                }
-            }
-            else if (exitButton.CheckLeftClick(position))
-            {
-                ResetSlot();
                 return true;
             }
             return false;
@@ -99,7 +62,6 @@ namespace Client.Panels
                 slots[i].Draw(spriteBatch);
             }           
 
-            releaseButton.Draw(spriteBatch);
             exitButton.Draw(spriteBatch);
         }
 
@@ -176,15 +138,6 @@ namespace Client.Panels
                     break;
             }
             return new Vector2(posX, posY);
-        }
-
-        public void ResetSlot()
-        {
-            if (selectedSlot != -1)
-            {
-                slots[selectedSlot].ResetColor();
-                selectedSlot = -1;
-            }
         }
     }
 }
