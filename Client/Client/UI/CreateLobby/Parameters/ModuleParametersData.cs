@@ -1,23 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Client.UI.CreateLobby.Parameters
+﻿namespace Client.UI.CreateLobby.Parameters
 {
     public class ModuleParametersData
     {
-
         public string Name;
         public string Value;
         public int Type;
+        public string AdditionalDescription;
 
-        public ModuleParametersData(string name, string value, int type)
+        public ModuleParametersData(string name, string value, int type, string additionalDescription = "")
         {
             Name = name;
             Value = value;
             Type = type;
+            AdditionalDescription = additionalDescription;
         }
     }
 }
