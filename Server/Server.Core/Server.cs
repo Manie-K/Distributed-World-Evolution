@@ -114,7 +114,10 @@ namespace Server.Core
                     break;
 
                 case RoleEnum.UI:
-                    loggerService.ClientUI= client;
+                    loggerService.ClientUI = client;
+                    await SafeSendAsync(client, new LobbyListMessage(lobbyManager.GetAllLobbies().Select(l => l.ToDTO()).ToList()));
+                    Task.Delay(2000).Wait();
+                    _ = loggerService.StartAsync(CancellationToken.None);
                     break;
 
                 default:
