@@ -36,7 +36,10 @@ namespace Server.Core.Lobby
         /// Static event for logging within the lobby.
         /// </summary>
         public static event EventHandler<OnLogEventArgs>? OnLog;
-        
+
+        /// <inheritdoc/>
+        public event Action OnLobbyClosed = delegate { };
+
         /// <summary>
         /// Lobby updates per second.
         /// </summary>
@@ -114,6 +117,7 @@ namespace Server.Core.Lobby
                 PublishWorldState();
             }
 
+            OnLobbyClosed?.Invoke();
             Log($"Lobby {LobbyId} closed.", LogLevelEnum.Info);
         }
 
@@ -194,23 +198,6 @@ namespace Server.Core.Lobby
                 return true;
             }
         }
-
-        /*// What do we expect here? Just remove in future or present?
-        public bool RemoveAllowedModule(int moduleId)
-        {
-            ModuleDTO? module = moduleService.GetModuleById(moduleId);
-            lock (allowedModulesIDs)
-            {
-                if (!allowedModulesIDs.Contains(moduleId))
-                {
-                    Log($"ModuleDTO {module?.Name} already isn't allowed in lobby {LobbyId}.", LogLevelEnum.Warning);
-                    return false;
-                }
-                allowedModulesIDs.Remove(moduleId);
-                return true;
-            }
-        }*/
-
 
         /// <inheritdoc/>
         public bool AddWorldEntity(WorldEntity entity)
@@ -471,6 +458,7 @@ namespace Server.Core.Lobby
                     behaviour.Execute(entity, targetEntity!, ModuleService.Instance);
                     entity.State.InteractionFramesLeft = 64;
                     targetEntity!.State.InteractionFramesLeft = 64;
+                    entity.State.LastInteractionName = "Undefined interaction";
                 }
             }
         }
@@ -513,7 +501,8 @@ namespace Server.Core.Lobby
                 if(entityModule.GetBehaviourOfType(typeof(MoveBehaviourBase))
                     .CanExecute(entity, null, ModuleService.Instance, new Dictionary<string, object>{
                         { CustomBehaviourParams.MAP_PARAM, walkableTiles   },
-                        { CustomBehaviourParams.NEW_POS_PARAM, newState.Position }
+                        { CustomBehaviourParams.NEW_POS_PARAM, newState.Position },
+                        { CustomBehaviourParams.LOBBY_PARAM, this }
                     })
                 )
                 {
