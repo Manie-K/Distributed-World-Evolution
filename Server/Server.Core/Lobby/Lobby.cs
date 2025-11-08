@@ -50,6 +50,7 @@ namespace Server.Core.Lobby
         private readonly List<WorldEntity> entities;
         private readonly List<int> allowedModulesIDs;
         private readonly bool[][] walkableTiles;
+        private readonly bool[][] fertileTiles;
 
         private bool running;
 
@@ -62,12 +63,13 @@ namespace Server.Core.Lobby
         /// <param name="name">Name of the lobby</param>
         /// <param name="maxPlayers">Max allowed number of players in lobby</param>
         /// <param name="mapId">ID of the map used in lobby</param>
-        /// <param name="walkableTiles">Data about map</param>
+        /// <param name="walkableTiles">Water walkableTiles</param>
+        /// <param name="fertileTiles">Fertile walkableTiles for plants</param>
         /// <param name="moduleIDs">List of allowed modules' IDs</param>
         /// <param name="moduleService">IModuleService instance</param>
-        public static Lobby CreateLobby(int id, string name, int maxPlayers, int mapId, bool[][] walkableTiles, IEnumerable<int> moduleIDs, IModuleService moduleService)
+        public static Lobby CreateLobby(int id, string name, int maxPlayers, int mapId, bool[][] walkableTiles, bool[][] fertileTiles, IEnumerable<int> moduleIDs, IModuleService moduleService)
         {
-            Lobby lobby = new Lobby(id, name, maxPlayers, mapId, walkableTiles, moduleService);
+            Lobby lobby = new Lobby(id, name, maxPlayers, mapId, walkableTiles, fertileTiles, moduleService);
             
             foreach(int mId in moduleIDs)
             {
@@ -85,12 +87,15 @@ namespace Server.Core.Lobby
             return lobby;
         }
 
-        private Lobby(int id, string name, int maxPlayers, int mapId, bool[][] tiles, IModuleService moduleService)
+        private Lobby(int id, string name, int maxPlayers, int mapId, bool[][] walkableTiles, bool[][] fertileTiles, IModuleService moduleService)
         {
             LobbyId = id;
             Name = name;
             MaxPlayers = maxPlayers;
-            walkableTiles = tiles; 
+            MapID = mapId;
+
+            this.walkableTiles = walkableTiles; 
+            this.fertileTiles = fertileTiles; 
             this.moduleService = moduleService;
 
             entities = new List<WorldEntity>(200);
@@ -313,7 +318,6 @@ namespace Server.Core.Lobby
             Module? entityModule;
             EntityState nextState;
 
-            Log("Updating world entities...", LogLevelEnum.Debug);
             for (int i = 0; i < entities.Count; i++) 
             {
                 WorldEntity entity = entities[i];
@@ -430,7 +434,7 @@ namespace Server.Core.Lobby
                 if (interactionType == typeof(MoveBehaviourBase))
                 {
                     behaviour.Execute(entity, null, ModuleService.Instance ,new Dictionary<string, object>{
-                        { CustomBehaviourParams.MAP_PARAM, walkableTiles   },
+                        { CustomBehaviourParams.MAP_WALKABLE_PARAM, walkableTiles   },
                         { CustomBehaviourParams.NEW_POS_PARAM, newState.Position }
                     });
 
@@ -500,7 +504,7 @@ namespace Server.Core.Lobby
             {
                 if(entityModule.GetBehaviourOfType(typeof(MoveBehaviourBase))
                     .CanExecute(entity, null, ModuleService.Instance, new Dictionary<string, object>{
-                        { CustomBehaviourParams.MAP_PARAM, walkableTiles   },
+                        { CustomBehaviourParams.MAP_WALKABLE_PARAM, walkableTiles   },
                         { CustomBehaviourParams.NEW_POS_PARAM, newState.Position },
                         { CustomBehaviourParams.LOBBY_PARAM, this }
                     })

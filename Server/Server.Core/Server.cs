@@ -186,7 +186,7 @@ namespace Server.Core
             try
             {
                 int lobbyID = lobbyManager.CreateAndInitializeLobby(
-                    msg.LobbyName, msg.MaxPlayers, msg.MapID, msg.WalkableTiles, msg.ModuleIDs);
+                    msg.LobbyName, msg.MaxPlayers, msg.MapID, msg.WalkableTiles, msg.FertileTiles, msg.ModuleIDs);
 
                 lobbyManager.AddUserToLobby(lobbyID, client, msg.UserName, out Guid userEntityID);
                 Lobby.Lobby lobby = lobbyManager.GetLobby(lobbyID);

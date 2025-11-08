@@ -33,7 +33,7 @@ namespace Server.Core.Behaviours.MoveBehaviour
             Position2D nextPos = otherParams != null && otherParams.TryGetValue(CustomBehaviourParams.NEW_POS_PARAM, out object? value) && value is Position2D pos
                 ? pos : entity.State.Position;
 
-            bool[][]? walkableTiles = otherParams != null && otherParams.TryGetValue(CustomBehaviourParams.MAP_PARAM, out object? walkableTilesObj)
+            bool[][]? walkableTiles = otherParams != null && otherParams.TryGetValue(CustomBehaviourParams.MAP_WALKABLE_PARAM, out object? walkableTilesObj)
                 && walkableTilesObj is bool[][] tiles ? tiles : null;
 
             if (walkableTiles == null || nextPos.X < 0 || nextPos.Y < 0 || nextPos.X >= walkableTiles.Length || nextPos.Y >= walkableTiles[nextPos.X].Length)

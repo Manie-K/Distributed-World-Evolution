@@ -1,15 +1,8 @@
 ﻿using Moq;
 using Server.Core;
-using Server.Core.Behaviours.AttackBehaviour;
 using Server.Core.Behaviours.EatBehaviour;
 using Server.Core.Modules;
 using Server.Core.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
-using System.Threading.Tasks;
 using Xunit;
 
 namespace Server.Tests
