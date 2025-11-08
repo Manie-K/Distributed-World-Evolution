@@ -36,7 +36,7 @@ namespace Server.Core.Behaviours.MoveBehaviour
             bool[][]? walkableTiles = otherParams != null && otherParams.TryGetValue(CustomBehaviourParams.MAP_PARAM, out object? walkableTilesObj)
                 && walkableTilesObj is bool[][] tiles ? tiles : null;
 
-            if (walkableTiles == null || nextPos.X < 0 || nextPos.Y < 0 || nextPos.X >= walkableTiles.GetLength(0) || nextPos.Y >= walkableTiles.GetLength(1))
+            if (walkableTiles == null || nextPos.X < 0 || nextPos.Y < 0 || nextPos.X >= walkableTiles.Length || nextPos.Y >= walkableTiles[nextPos.X].Length)
             {
                 return false;
             }

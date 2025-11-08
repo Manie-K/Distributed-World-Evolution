@@ -21,7 +21,7 @@ namespace Server.Core.Lobby
             lobbies = new Dictionary<int, ILobby>();
         }
 
-        //TODO: add modules when they are implemented
+
         public int CreateAndInitializeLobby(string name, int maxPlayers, int mapId, bool[][] walkableTiles, IEnumerable<int> modulesIDs)
         {
             int lobbyId;
@@ -30,6 +30,15 @@ namespace Server.Core.Lobby
             {
                 lobbyId = lobbyCounter++;
                 lobbies[lobbyId] = Lobby.CreateLobby(lobbyId, name, maxPlayers, mapId, walkableTiles, modulesIDs, ModuleService.Instance);
+                lobbies[lobbyId].OnLobbyClosed += () =>
+                {
+                    lock (lobbies)
+                    {
+                        lobbies.Remove(lobbyId);
+                        Log($"Lobby {lobbyId} closed and removed from LobbyManager.", LogLevelEnum.Info);
+                    }
+                };
+
                 Task.Factory.StartNew(() => lobbies[lobbyId].Run(), TaskCreationOptions.LongRunning);
             }
 

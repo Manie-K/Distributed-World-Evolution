@@ -29,6 +29,12 @@ namespace Server.Core.Lobby
 
 
         /// <summary>
+        /// Event triggered when the lobby is closed.
+        /// </summary>
+        public event Action OnLobbyClosed;
+
+
+        /// <summary>
         /// Adds a client to the lobby and returns a unique identifier for the user world entity.
         /// </summary>
         /// <param name="client">TCP client to be added.</param>
