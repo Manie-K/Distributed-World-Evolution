@@ -1,22 +1,16 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Client.Panels
 {
     public class PanelsController
     {
         private GameManager gameManager;
-        public BestiaryPanel BestiaryPanel { get; set; }
+        public BestiaryPanel BestiaryPanel;
         public EscPanel EscPanel { get; set; }
-        
-        private Inventory inventory;
-        private HealthBar healthBar;
+        public Inventory Inventory;
 
+        private HealthBar healthBar;
         private int pickedPanel;
         private bool isBlocked;
 
@@ -25,7 +19,7 @@ namespace Client.Panels
             this.gameManager = gameManager;
             BestiaryPanel = new BestiaryPanel(gameManager);
             EscPanel = new EscPanel(gameManager);
-            inventory = new Inventory(gameManager);
+            Inventory = new Inventory(gameManager);
             healthBar = new HealthBar(gameManager);
             pickedPanel = -1;
             isBlocked = false;
@@ -65,7 +59,7 @@ namespace Client.Panels
                     }
                     break;
                 default:
-                    inventory.Update();
+                    Inventory.Update();
                     break;
             }
 
@@ -85,7 +79,7 @@ namespace Client.Panels
 
         public void Draw(SpriteBatch spritebatch)
         {
-            inventory.Draw(spritebatch);
+            Inventory.Draw(spritebatch);
             healthBar.Draw(spritebatch);
             switch (pickedPanel)
             {

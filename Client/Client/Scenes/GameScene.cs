@@ -40,7 +40,8 @@ namespace Client
                 throw new Exception("Could not load the map " + Tilemap.GetMapFileName(mapID));
             }
             player = new Player(new Vector2(288, 32), Color.White, new Text(manager.ContentManager.Load<SpriteFont>("Fonts/PlayerName"), 
-                manager.UserSettings.PlayerName, true, new Vector2(500, 300 - 110), 70, 40), new Vector2(-68, -77), map, manager.ClientManager);
+                manager.UserSettings.PlayerName, true, new Vector2(500, 300 - 110), 70, 40), new Vector2(-68, -77),
+                ref panelsController.BestiaryPanel, ref panelsController.Inventory, map, manager.ClientManager);
 
             manager.Camera.MapSize = new System.Drawing.Size(map.MapWidth * map.TileSize, map.MapHeight * map.TileSize);
             manager.IsInGame = true;
@@ -92,7 +93,7 @@ namespace Client
 
                 if (characters.TryGetValue(entity.Id, out Character character))
                 {
-                    character.Update(gameTime, manager.InputManager);
+                    character.Update(gameTime, manager.InputManager, entity.State);
                     character.Position = GetWorldPosition(entity);
                 }
                 else if (plants.TryGetValue(entity.Id, out Plant plant))
@@ -208,7 +209,7 @@ namespace Client
                     14 => new Vampire2(position, Color.White),
                     15 => new Vampire3(position, Color.White),
                     16 => new Player(position, Color.White, new Text(manager.ContentManager.Load<SpriteFont>("Fonts/PlayerName"), entity.Name,
-                    true, new Vector2(500, 300 - 110), 70, 40), new Vector2(-53, -50)),
+                    true, new Vector2(500, 300 - 110), 70, 40), new Vector2(-53, -50), ref panelsController.BestiaryPanel, ref panelsController.Inventory),
                     _ => new EnemyPlant1(position, Color.White)
                 });
             }
