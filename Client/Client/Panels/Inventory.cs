@@ -2,11 +2,7 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Client.Panels
 {
@@ -117,6 +113,16 @@ namespace Client.Panels
                     return true;
                 }
                 counter++;
+            }
+            return false;
+        }
+
+        public bool RemoveOneItem()
+        {
+            foreach (var slot in slots)
+            {
+                if (slot.RemoveItem()) RemoveSlot(0);
+                return true;
             }
             return false;
         }

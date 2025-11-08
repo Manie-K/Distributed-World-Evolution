@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Client.Common;
 using Client.Logic;
+using SharedLibrary.DTOs.EntitiesDTO;
 
 namespace Client
 {
@@ -36,17 +37,17 @@ namespace Client
             am.SetAnimation(type);
         }
 
-        public virtual void Update(GameTime gameTime, InputManager inputManager) 
+        public virtual void Update(GameTime gameTime, InputManager inputManager, EntityStateDTO state) 
         {
             SetAnimation(0);
 
-            if (false)
-            {
-                SetAnimation(1);
-            }
-            if (false)
+            if (state.Health <= 0)
             {
                 SetAnimation(2);
+            }
+            else if (state.LastInteractionName.Equals("attack"))
+            {
+                SetAnimation(1);
             }
 
             am.Update();

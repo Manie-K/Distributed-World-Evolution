@@ -1,10 +1,10 @@
 ﻿using Client.Common;
 using Client.Logic;
+using Client.Panels;
 using Client.Rendering;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Server.Core;
 using SharedLibrary.DTOs.EntitiesDTO;
 using SharedLibrary.DTOs.ModuleDTO;
 using System;
@@ -19,6 +19,8 @@ namespace Client
         public WorldEntityDTO TargetEntity;
         public WorldEntityDTO PlayerDTO;
 
+        private BestiaryPanel bestiaryPanel;
+        private Inventory inventory;
         private Text playerName;
         private Vector2 playerNameOffset;
         private ModuleDTO playerModule;
@@ -33,7 +35,8 @@ namespace Client
             Tame
         }
 
-        public Player(Vector2 position, Color color, Text playerName, Vector2 spriteDrawingOffset, WorldMap map = null, ClientManager clientManager = null)
+        public Player(Vector2 position, Color color, Text playerName, Vector2 spriteDrawingOffset, ref BestiaryPanel bestiaryPanel,
+            ref Inventory inventory, WorldMap map = null, ClientManager clientManager = null)
             : base(position, color, 130, 108, 150f, 8, 7)
         {
             this.playerName = playerName;
@@ -46,13 +49,15 @@ namespace Client
             am = new AnimationManager(13);
             playerModule = null;
             actionCooldown = 0;
+            this.bestiaryPanel = bestiaryPanel;
+            this.inventory = inventory;
         }
 
-        public override void Update(GameTime gameTime, InputManager inputManager)
+        public override void Update(GameTime gameTime, InputManager inputManager, EntityStateDTO state = null)
         {
             if (map == null)
             {
-                base.Update(gameTime, inputManager);
+                base.Update(gameTime, inputManager, state);
             }
             else
             {
@@ -123,10 +128,11 @@ namespace Client
                 }
             }
 
-            if (inputManager.CheckIfPressingKey(Keys.Space))
+            if (inputManager.CheckIfPressingKey(Keys.Space) && actionCooldown <= 0)
             {
                 HandleInteraction(InteractionType.Attack);
                 SetAnimation(1);
+                actionCooldown = PLAYER_ACTION_COOLDOWN;
             }
             if (inputManager.CheckIfPressingKey(Keys.E))
             {
@@ -148,8 +154,6 @@ namespace Client
 
         private void HandleInteraction(InteractionType interactionType)
         {
-            if (actionCooldown > 0) return;
-
             TargetEntity = clientManager.Entities.FirstOrDefault(e => e.Value.State.Position.Equals(map.GetTilePosition2D(Position.X, Position.Y))).Value;
             if (TargetEntity != null && TargetEntity.ModuleID != PlayerDTO.ModuleID)
             {
@@ -166,7 +170,6 @@ namespace Client
                         break;
                 }
             }
-            actionCooldown = PLAYER_ACTION_COOLDOWN;
         }
 
         private void AttackTarget()
@@ -177,22 +180,20 @@ namespace Client
 
         private void GatherTarget()
         {
-            EntityTypeEnum type = clientManager.Modules.Where(m => m.DatabaseID == TargetEntity.ModuleID).First().Type;
-            if (type == EntityTypeEnum.Plant)
+            int graphicID = clientManager.Modules.Where(m => m.DatabaseID == TargetEntity.ModuleID).First().GraphicalRepresentationID;
+            if (graphicID - 17 >= 0 && inventory.CollectItem(graphicID - 17))
             {
                 TargetEntity.State.Health = 0;
-                //TODO: add to inventory targetentity
                 Console.WriteLine("Plant gathered");
             }
         }
 
         private void TameTarget()
         {
-            EntityTypeEnum type = clientManager.Modules.Where(m => m.DatabaseID == TargetEntity.ModuleID).First().Type;
-            if (type == EntityTypeEnum.Animal) //TODO: check if player has needed plant or smth
+            int graphicID = clientManager.Modules.Where(m => m.DatabaseID == TargetEntity.ModuleID).First().GraphicalRepresentationID;
+            if (graphicID < 16 && inventory.RemoveOneItem() && bestiaryPanel.AddSlot(graphicID))
             {
                 TargetEntity.State.Health = 0;
-                //TODO: tame animal
                 Console.WriteLine("Animal tamed");
             }
         }
