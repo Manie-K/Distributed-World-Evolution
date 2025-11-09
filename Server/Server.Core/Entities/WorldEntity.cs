@@ -55,8 +55,17 @@ namespace Server.Core
                 throw new Exception($"Module with ID {ModuleID} not found for entity {Id}");
             }
 
-            // Remove entity from lobby
-            Lobby.DestroyWorldEntity(this);
+            if (module.Type == EntityTypeEnum.Human)
+            {
+                //@EVERYONE, What do we do here?
+                //noop for now
+                //Client side?
+            }
+            else
+            {
+                // Remove entity from lobby
+                Lobby.DestroyWorldEntity(this);
+            }
         }
 
         public WorldEntityDTO ToDTO()

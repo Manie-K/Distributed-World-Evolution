@@ -444,8 +444,6 @@ namespace Server.Core.Lobby
                 }
                 else if(interactionType == typeof(AttackBehaviourBase))
                 {
-                    behaviour.Execute(entity, targetEntity!, ModuleService.Instance);
-
                     entity.State.InteractionFramesLeft = 64;
                     targetEntity!.State.InteractionFramesLeft = 64;
                     entity.State.LastInteractionName = nameof(AttackBehaviourBase);
@@ -513,9 +511,12 @@ namespace Server.Core.Lobby
             // We refactored this so that humans dont use this method, the send the new states in frames
             if (entityType == EntityTypeEnum.Human) return null;
 
-            // Attack
-            if ((entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Human) ||
-                (entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Animal))
+            // Attack - old code, Humans wont be here
+            if ((entityType == EntityTypeEnum.Human && targetType == EntityTypeEnum.Human) ||
+                (entityType == EntityTypeEnum.Human && targetType == EntityTypeEnum.Animal) ||
+                (entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Human) ||
+                (entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Animal)
+                )
             {
                 AttackBehaviourBase attackBehaviour = (AttackBehaviourBase)entityModule.GetBehaviourOfType(typeof(AttackBehaviourBase));
                 if (attackBehaviour.CanExecute(entity, entityOnPosition, ModuleService.Instance))
@@ -525,8 +526,7 @@ namespace Server.Core.Lobby
             }
 
             // Reproduce
-            if (entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Animal
-                || entityType == EntityTypeEnum.Plant)
+            if (entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Animal)
             {
                 ReproduceBehaviourBase reproduceBehaviour = (ReproduceBehaviourBase)entityModule.GetBehaviourOfType(typeof(ReproduceBehaviourBase));
                 if (reproduceBehaviour.CanExecute(entity, entityOnPosition, ModuleService.Instance))

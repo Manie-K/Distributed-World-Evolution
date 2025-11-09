@@ -14,7 +14,7 @@ namespace Server.Core.Behaviours.AttackBehaviour
         public abstract int DatabaseID { get; }
 
         /// <inheritdoc/>
-        public virtual EntityTypeEnum Type => EntityTypeEnum.Animal | EntityTypeEnum.Human;
+        public virtual EntityTypeEnum Type => EntityTypeEnum.Animal | EntityTypeEnum.Human; //Human part - old code
 
         /// <inheritdoc/>
         public abstract string Description { get; }

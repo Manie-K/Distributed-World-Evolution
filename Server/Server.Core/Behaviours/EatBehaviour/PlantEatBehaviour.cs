@@ -14,7 +14,7 @@ namespace Server.Core.Behaviours.EatBehaviour
         /// <inheritdoc/>
         public override EntityTypeEnum Type => EntityTypeEnum.Plant;
         /// <inheritdoc/>
-        public override string Description => "Plants eath behaviour.";
+        public override string Description => "Plants eat behaviour.";
         /// <inheritdoc/>
         public override void Execute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
