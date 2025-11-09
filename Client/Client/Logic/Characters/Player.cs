@@ -14,6 +14,7 @@ namespace Client
 {
     public class Player : Character
     {
+        private const float PLAYER_ACTION_COOLDOWN = 1.5f;
 
         public WorldEntityDTO TargetEntity;
         public WorldEntityDTO PlayerDTO;
@@ -25,6 +26,7 @@ namespace Client
         private ModuleDTO playerModule;
         private readonly WorldMap map;
         private readonly ClientManager clientManager;
+        private float actionCooldown;
 
         private enum InteractionType
         {
@@ -44,8 +46,9 @@ namespace Client
             this.clientManager = clientManager;
             PlayerDTO = null;
             TargetEntity = null;
-            am = new AnimationManager(13, 1.5f);
+            am = new AnimationManager(13);
             playerModule = null;
+            actionCooldown = 0;
             this.bestiaryPanel = bestiaryPanel;
             this.inventory = inventory;
         }
@@ -77,7 +80,10 @@ namespace Client
             }
 
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-
+            if (actionCooldown > 0)
+            {
+                actionCooldown -= delta;
+            }
             Vector2 movement = Vector2.Zero;
 
             if (inputManager.CheckIfPressingKey(Keys.W))
@@ -122,7 +128,7 @@ namespace Client
                 }
             }
 
-            if (inputManager.CheckIfPressingKey(Keys.Space) && !am.AttackIsBlocked())
+            if (inputManager.CheckIfPressingKey(Keys.Space))
             {
                 HandleInteraction(InteractionType.Attack);
                 SetAnimation(1);
