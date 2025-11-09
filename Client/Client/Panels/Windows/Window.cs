@@ -15,7 +15,7 @@ namespace Client.Panels.Windows
             SetBackground(manager, type);
             okButton = new Button(manager.ContentManager.Load<Texture2D>("Panels/Warning_Window/OK_Button2"), null, null, new Vector2(563, 427), 155, 65, Color.Gold);
             information = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/WindowTextFont"), "", true,
-                                   new Vector2(488, 308), 307, 84);
+                                   new Vector2(486, 305), 317, 93);
             isEnabled = false;
         }
 
@@ -59,8 +59,27 @@ namespace Client.Panels.Windows
 
         public void SetInformation(string message)
         {
-            information.SetText(message);
+            information.SetText(FormatText(message));
             isEnabled = true;
+        }
+
+        private string FormatText(string text)
+        {
+            string output = "";
+            int sumWordsInLine = 0;
+
+            foreach (string word in text.Split(" "))
+            {
+                if (sumWordsInLine + word.Length > 31)
+                {
+                    output += "\n";
+                    sumWordsInLine = 0;
+                }
+                output += word + " ";
+                sumWordsInLine += word.Length + 1;
+            }
+
+            return output;
         }
     }
 }

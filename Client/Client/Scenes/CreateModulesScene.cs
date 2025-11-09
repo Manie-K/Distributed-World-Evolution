@@ -9,6 +9,7 @@ using SharedLibrary.Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 
 namespace Client
@@ -95,23 +96,31 @@ namespace Client
                 {
                     if (!moduleName.CheckTextIfEmpty() && switchPageModulesParameters.GetBehavioursList().Count > 0)
                     {
-                        EntityTypeEnum newEntityType = (EntityTypeEnum)switchPageModulesParameters.GetBehavioursList().Where(e => e.Item1 == 5).First().Item2;
-                        List<int> newBehaviours = new List<int>();
-                        foreach (Tuple<int, int> beh in switchPageModulesParameters.GetBehavioursList())
+                        string statsParametersInformation = switchPageModulesParameters.CheckParametersLimits();
+                        if (statsParametersInformation == null)
                         {
-                            if (beh.Item1 == 5) continue;
+                            EntityTypeEnum newEntityType = (EntityTypeEnum)switchPageModulesParameters.GetBehavioursList().Where(e => e.Item1 == 5).First().Item2;
+                            List<int> newBehaviours = new List<int>();
+                            foreach (Tuple<int, int> beh in switchPageModulesParameters.GetBehavioursList())
+                            {
+                                if (beh.Item1 == 5) continue;
 
-                            newBehaviours.Add(beh.Item2);
+                                newBehaviours.Add(beh.Item2);
+                            }
+
+                            CreateModuleDTO newModule = new CreateModuleDTO(moduleName.GetText(), false, switchPageModulesParameters.GetValueOnIndex(0),
+                                switchPageModulesParameters.GetValueOnIndex(1), switchPageModulesParameters.GetValueOnIndex(2),
+                                switchPageModulesParameters.GetValueOnIndex(4), switchPageModulesParameters.GetValueOnIndex(3),
+                                newEntityType, switchPageModules.GetGraphicIndex(), newBehaviours);
+
+                            _ = MessageManager.SendMessageAsync(manager.ClientManager.Client, new CreateModuleMessage(newModule));
+                            isCreatingModule = true;
+                            manager.ClientManager.ModuleCreated = ActionStatus.PENDING;
                         }
-
-                        CreateModuleDTO newModule = new CreateModuleDTO(moduleName.GetText(), false, switchPageModulesParameters.GetValueOnIndex(0),
-                            switchPageModulesParameters.GetValueOnIndex(1), switchPageModulesParameters.GetValueOnIndex(2),
-                            switchPageModulesParameters.GetValueOnIndex(4), switchPageModulesParameters.GetValueOnIndex(3),
-                            newEntityType, switchPageModules.GetGraphicIndex(), newBehaviours);
-
-                        _ = MessageManager.SendMessageAsync(manager.ClientManager.Client, new CreateModuleMessage(newModule));
-                        isCreatingModule = true;
-                        manager.ClientManager.ModuleCreated = ActionStatus.PENDING;
+                        else
+                        {
+                            manager.WindowManager.ShowWarningWindow(statsParametersInformation);
+                        }
                     }
                     else
                     {

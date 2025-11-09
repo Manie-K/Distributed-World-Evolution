@@ -45,6 +45,10 @@ namespace Client.UI.CreateModules.Modules.Parameters
             {
                 if (selectedParameter < behaviourParameters.Count - 1) selectedParameter++;
             }
+            else if (rect.Contains(cursorPosition))
+            {
+
+            }
             else isClicked = false;
 
             if (behaviourParameters.Count > 0)
