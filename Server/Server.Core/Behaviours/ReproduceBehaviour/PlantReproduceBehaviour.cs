@@ -6,7 +6,8 @@ using System.Threading.Tasks;
 
 namespace Server.Core.Behaviours.ReproduceBehaviour
 {
-    internal class PlantReproduceBehaviour : ReproduceBehaviourBase
+    //TODO: Implement plant-specific reproduction logic here (fertile tiles).
+    public class PlantReproduceBehaviour : ReproduceBehaviourBase
     {
         //<inheritdoc/>
         public override EntityTypeEnum Type => EntityTypeEnum.Plant;
