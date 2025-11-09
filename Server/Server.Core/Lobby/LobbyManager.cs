@@ -22,14 +22,14 @@ namespace Server.Core.Lobby
         }
 
 
-        public int CreateAndInitializeLobby(string name, int maxPlayers, int mapId, bool[][] walkableTiles, IEnumerable<int> modulesIDs)
+        public int CreateAndInitializeLobby(string name, int maxPlayers, int mapId, bool[][] walkableTiles, bool[][] fertileTiles, IEnumerable<int> modulesIDs)
         {
             int lobbyId;
             
             lock (lobbies)
             {
                 lobbyId = lobbyCounter++;
-                lobbies[lobbyId] = Lobby.CreateLobby(lobbyId, name, maxPlayers, mapId, walkableTiles, modulesIDs, ModuleService.Instance);
+                lobbies[lobbyId] = Lobby.CreateLobby(lobbyId, name, maxPlayers, mapId, walkableTiles, fertileTiles, modulesIDs, ModuleService.Instance);
                 lobbies[lobbyId].OnLobbyClosed += () =>
                 {
                     lock (lobbies)

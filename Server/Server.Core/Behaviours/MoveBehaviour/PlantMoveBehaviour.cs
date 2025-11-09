@@ -1,4 +1,5 @@
-﻿using Server.Core.Services;
+﻿using System.Collections.Immutable;
+using Server.Core.Services;
 
 namespace Server.Core.Behaviours.MoveBehaviour
 {
@@ -25,7 +26,7 @@ namespace Server.Core.Behaviours.MoveBehaviour
         }
 
         /// <inheritdoc>
-        public override (int, int) GetNextMovement(WorldEntity entity)
+        public override (int, int) GetNextMovement(WorldEntity entity, ImmutableList<WorldEntity> otherEntites)
         {
             return (0, 0);
         }

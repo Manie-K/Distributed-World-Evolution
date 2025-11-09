@@ -1,4 +1,5 @@
-﻿using System.Numerics;
+﻿using System.Collections.Immutable;
+using System.Numerics;
 using Server.Core.Helpers;
 using Server.Core.Services;
 
@@ -15,7 +16,7 @@ namespace Server.Core.Behaviours.MoveBehaviour
         public override string Description => "Basic move behaviour, random 8-sided movement";
         
         /// <inheritdoc>
-        public override (int, int) GetNextMovement(WorldEntity entity)
+        public override (int, int) GetNextMovement(WorldEntity entity, ImmutableList<WorldEntity> otherEntites)
         {
             int x = 0, y = 0;
             while (x == 0 && y == 0)
