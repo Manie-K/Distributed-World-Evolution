@@ -445,7 +445,8 @@ namespace Server.Core.Lobby
                 else if (interactionType == typeof(ReproduceBehaviourBase))
                 {
                     behaviour.Execute(entity, targetEntity!, ModuleService.Instance, new Dictionary<string, object>{
-                        { CustomBehaviourParams.LOBBY_PARAM, this }
+                        { CustomBehaviourParams.LOBBY_PARAM, this },
+                        { CustomBehaviourParams.MAP_FERTILE_PARAM, fertileTiles }
                     });
 
                     entity.State.InteractionFramesLeft = 80;
@@ -535,11 +536,13 @@ namespace Server.Core.Lobby
                 }
             }
 
-            // Reproduce
-            if (entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Animal)
+            // Reproduce - animals with animals, or plants by themselves
+            if ((entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Animal) || entityType == EntityTypeEnum.Plant)
             {
                 ReproduceBehaviourBase reproduceBehaviour = (ReproduceBehaviourBase)entityModule.GetBehaviourOfType(typeof(ReproduceBehaviourBase));
-                if (reproduceBehaviour.CanExecute(entity, entityOnPosition, ModuleService.Instance))
+                if (reproduceBehaviour.CanExecute(entity, entityOnPosition, ModuleService.Instance, new Dictionary<string, object>{
+                        { CustomBehaviourParams.MAP_FERTILE_PARAM, fertileTiles }
+                    }))
                 {
                     return typeof(ReproduceBehaviourBase);
                 }
@@ -555,7 +558,7 @@ namespace Server.Core.Lobby
                 }
             }
 
-            // Gather 
+            // Gather - old code, Humans won't be here
             if (entityType == EntityTypeEnum.Human && targetType == EntityTypeEnum.Plant)
             {
                 GatherBehaviourBase gatherBehaviour = (GatherBehaviourBase)entityModule.GetBehaviourOfType(typeof(GatherBehaviourBase));
@@ -565,7 +568,7 @@ namespace Server.Core.Lobby
                 }
             }
 
-            // Tame - old code, Humans wont be here
+            // Tame - old code, Humans won't be here
             if (entityType == EntityTypeEnum.Human && targetType == EntityTypeEnum.Animal)
             {
                 TameBehaviourBase tameBehaviour = (TameBehaviourBase)entityModule.GetBehaviourOfType(typeof(TameBehaviourBase));
