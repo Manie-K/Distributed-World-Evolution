@@ -446,7 +446,8 @@ namespace Server.Core.Lobby
                 {
                     behaviour.Execute(entity, targetEntity!, ModuleService.Instance, new Dictionary<string, object>{
                         { CustomBehaviourParams.LOBBY_PARAM, this },
-                        { CustomBehaviourParams.MAP_FERTILE_PARAM, fertileTiles }
+                        { CustomBehaviourParams.MAP_FERTILE_PARAM, fertileTiles },
+                        { CustomBehaviourParams.MAP_WALKABLE_PARAM, walkableTiles   }
                     });
 
                     entity.State.InteractionFramesLeft = 80;
