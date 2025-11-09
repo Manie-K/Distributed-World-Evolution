@@ -2,7 +2,6 @@
 
 namespace SharedLibrary.Messages
 {
-    // TODO: Change properties to match client-server communication needs
     /// <summary>
     /// Contains the state of a user.
     /// </summary>

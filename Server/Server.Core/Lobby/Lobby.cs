@@ -14,6 +14,7 @@ using Server.Core.Behaviours.MoveBehaviour;
 using Server.Core.Behaviours.TameBehaviour;
 using Server.Core.Behaviours.ReproduceBehaviour;
 using SharedLibrary.Helpers;
+using System.Collections.Immutable;
 
 namespace Server.Core.Lobby
 {
@@ -344,7 +345,7 @@ namespace Server.Core.Lobby
                 var moveBehaviour = entityModule.GetBehaviourOfType(typeof(MoveBehaviourBase));
                 nextState = new EntityState(entity.State);
 
-                (int stepX, int stepY) = ((MoveBehaviourBase)moveBehaviour).GetNextMovement(entity);
+                (int stepX, int stepY) = ((MoveBehaviourBase)moveBehaviour).GetNextMovement(entity, ImmutableList.Create(entities.ToArray()));
                 entity.State.LastMovementVector = new Position2D(stepX, stepY);
 
                 nextState.Position.X += stepX;

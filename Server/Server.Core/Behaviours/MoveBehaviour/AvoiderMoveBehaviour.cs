@@ -1,4 +1,5 @@
-﻿using Server.Core.Helpers;
+﻿using System.Collections.Immutable;
+using Server.Core.Helpers;
 using Server.Core.Lobby;
 using Server.Core.Services;
 using SharedLibrary.Helpers;
@@ -35,7 +36,7 @@ namespace Server.Core.Behaviours.MoveBehaviour
         }
 
         /// <inheritdoc>
-        public override (int, int) GetNextMovement(WorldEntity entity)
+        public override (int, int) GetNextMovement(WorldEntity entity, ImmutableList<WorldEntity> otherEntites)
         {
             int x = new Random().Next(3) - 1; // -1, 0, 1
             int y = new Random().Next(3) - 1; // -1, 0, 1
