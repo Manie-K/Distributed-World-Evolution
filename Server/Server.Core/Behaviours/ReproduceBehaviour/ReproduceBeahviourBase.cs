@@ -29,6 +29,10 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
                 && lobbyObj is ILobby l ? l :
                 throw new ArgumentNullException("Lobby parameter is required for reproduction behaviour.");
 
+            bool[][] walkableTiles = otherParams != null && otherParams.TryGetValue(CustomBehaviourParams.MAP_WALKABLE_PARAM, out object? walkableTilesObj)
+                && walkableTilesObj is bool[][] wt ? wt :
+                throw new ArgumentNullException("Walkable tiles parameter is required for reproduction behaviour.");
+
             Position2D? position = null;
             
             int loopSafetyCounter = 0;
@@ -37,7 +41,12 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
                 loopSafetyCounter++;
                 int x = entity.State.Position.X;
                 int y = entity.State.Position.Y;
-                
+
+                if (walkableTiles[x][y] == false)
+                {
+                    continue; //Entity is on a non-walkable tile, we skip reproduction attempt
+                }
+
                 x = new Random().Next(2) == 0 ? x + new Random().Next(4) : x - new Random().Next(4);
                 y = new Random().Next(2) == 0 ? y + new Random().Next(4) : y - new Random().Next(4);
 
