@@ -27,7 +27,7 @@ namespace Server.Core.Behaviours.AttackBehaviour
 
                 if (target.State.Health <= 0)
                 {
-                    target.Die();
+                    target.Die(moduleService);
                 }
             }
             catch (ModuleNotFoundException ex)

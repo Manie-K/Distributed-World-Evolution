@@ -1,9 +1,11 @@
-﻿using Xunit;
-using Server.Core.Behaviours.AttackBehaviour;
+﻿using Moq;
 using Server.Core;
+using Server.Core.Behaviours.AttackBehaviour;
+using Server.Core.Data;
+using Server.Core.Lobby;
 using Server.Core.Modules;
 using Server.Core.Services;
-using Moq;
+using Xunit;
 
 namespace Server.Tests
 {
@@ -19,16 +21,26 @@ namespace Server.Tests
         private readonly Module humanModule;
 
         private readonly Mock<IModuleService> mockService;
-
+        private readonly Mock<ILobby> mockLobby;
 
         //Run before every test
         public AttackBehaviourTests()
         {
-            attacker = WorldEntity.CreateWorldEntity("Attacker", 1, new EntityState(new SharedLibrary.Helpers.Position2D(0, 0), 100, 100, 0), null);
-            target = WorldEntity.CreateWorldEntity("Target", 2, new EntityState(new SharedLibrary.Helpers.Position2D(0, 0), 100, 100, 0), null);
+            mockLobby = new Mock<ILobby>();
+
+            mockLobby
+                .Setup(l => l.DestroyWorldEntity(It.IsAny<WorldEntity>()))
+                .Callback<WorldEntity>(e =>
+                {
+                    e = null!;
+                })
+                .Returns(true);
+
+            attacker = WorldEntity.CreateWorldEntity("Attacker", 1, new EntityState(new SharedLibrary.Helpers.Position2D(0, 0), 100, 100, 0), mockLobby.Object);
+            target = WorldEntity.CreateWorldEntity("Target", 2, new EntityState(new SharedLibrary.Helpers.Position2D(0, 0), 100, 100, 0), mockLobby.Object);
             targetSameModule = WorldEntity.CreateWorldEntity("TargetSameModule", 1, 
-                new EntityState(new SharedLibrary.Helpers.Position2D(0, 0), 100, 100, 0), null);
-            human = WorldEntity.CreateWorldEntity("Human", 3, new EntityState(new SharedLibrary.Helpers.Position2D(0, 0), 15, 100, 0), null);
+                new EntityState(new SharedLibrary.Helpers.Position2D(0, 0), 100, 100, 0), mockLobby.Object);
+            human = WorldEntity.CreateWorldEntity("Human", 3, new EntityState(new SharedLibrary.Helpers.Position2D(0, 0), 15, 100, 0), mockLobby.Object);
 
             firstModule = new Module.ModuleBuilder()
                 .WithID(1)

@@ -24,7 +24,7 @@ namespace SharedLibrary.Messages
         /// <summary>
         /// Constructor for UserStateMessage.
         /// </summary>
-        public UserStateMessage (Guid userGUID, string userName, int userHealth)
+        public UserStateMessage(Guid userGUID, string userName, int userHealth)
         {
             UserGUID = userGUID;
             UserName = userName;

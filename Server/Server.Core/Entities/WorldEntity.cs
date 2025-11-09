@@ -3,6 +3,7 @@ using Server.Core.Modules;
 using Server.Core.Services;
 using SharedLibrary;
 using SharedLibrary.DTOs.EntitiesDTO;
+using SharedLibrary.Messages;
 
 namespace Server.Core
 {
@@ -42,19 +43,19 @@ namespace Server.Core
 
             if(State.Health <= 0)
             {
-                Die();
+                Die(ModuleService.Instance);
             }
         }
 
-        public void Die()
+        public void Die(IModuleService moduleService)
         {
-            Module? module = ModuleService.Instance.GetModuleById(ModuleID);
+            Module? module = moduleService.GetModuleById(ModuleID);
             if(module == null)
             {
                 throw new Exception($"Module with ID {ModuleID} not found for entity {Id}");
             }
 
-            if(module.Type == EntityTypeEnum.Human)
+            if (module.Type == EntityTypeEnum.Human)
             {
                 //@EVERYONE, What do we do here?
                 //noop for now

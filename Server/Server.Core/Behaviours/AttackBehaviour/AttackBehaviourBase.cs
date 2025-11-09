@@ -34,12 +34,12 @@ namespace Server.Core.Behaviours.AttackBehaviour
 
                 if (target.State.Health <= 0)
                 {
-                    target.Die();
+                    target.Die(moduleService);
                     attacker.State.Hunger += 20; //Hardcoded hunger increase on kill
                 }
                 if(attacker.State.Health <= 0)
                 {
-                    attacker.Die();
+                    attacker.Die(moduleService);
                 }
             }
             catch (ModuleNotFoundException ex)

@@ -21,17 +21,17 @@ namespace Server.Core.Behaviours.EatBehaviour
         {
             Module targetModule = moduleService.GetModuleById(target.ModuleID) ?? throw new Exception($"Module with ID={target.ModuleID} not found!");
 
-            if (targetModule.MaxHunger > 0)
+            if (targetModule.Damage > 0)
+            {
+                entity.State.Health -= 2 * targetModule.Damage;
+            }
+            else
             {
                 entity.State.Hunger += targetModule.MaxHunger;
                 entity.State.Health += targetModule.MaxHunger;
             }
-            else
-            {
-                entity.State.Health -= 2* targetModule.Damage;
-            }
 
-            target.Die();
+            target.Die(moduleService);
         }
         /// <inheritdoc/>
         public override bool CanExecute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)

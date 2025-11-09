@@ -9,6 +9,9 @@ namespace Server.Core.Behaviours.MoveBehaviour
         /// <inheritdoc>
         public override int DatabaseID => 104;
 
+        /// <inheritdoc/>
+        public override EntityTypeEnum Type => EntityTypeEnum.Plant;
+
         /// <inheritdoc>
         public override string Description => "Plants do not move";
 

@@ -150,7 +150,7 @@ namespace Server.Core.Lobby
             }
 
             WorldEntity userEntity = WorldEntity.CreateWorldEntity(username, moduleService.GetHumanModuleId(),
-                new EntityState(new Position2D(0, 0)), this);
+                new EntityState(new Position2D(0, 0), ModulePropertiesLimits.MAX_MAX_HEALTH, ModulePropertiesLimits.MAX_MAX_HUNGER), this);
 
             lock (clients)
             {
@@ -274,8 +274,6 @@ namespace Server.Core.Lobby
         /// </summary>
         private void InitializeWorldEntities()
         {
-            const int NUM_INITIAL_ENTITIES = 100;
-
             IModuleService moduleService = ModuleService.Instance;
             List<Module> modules = (moduleService.GetAllModules().ToList());
             int modulesCount = modules.Count;
@@ -285,7 +283,8 @@ namespace Server.Core.Lobby
             Log("Initializing world entities...", LogLevelEnum.Info);
 
             // For testing purposes, we create some entities here.
-            for (int i = 0; i < NUM_INITIAL_ENTITIES; i++)
+
+            for (int i = 0; i < LobbyParams.NUM_INITIAL_ENTITIES; i++)
             {
                 module = modules[new Random().Next(modulesCount)];
                 
@@ -303,7 +302,7 @@ namespace Server.Core.Lobby
                 } while (!walkableTiles[x][y] || !IsPositionFree(new Position2D(x, y)));
 
                 WorldEntity ent = WorldEntity.CreateWorldEntity($"[{i}]_{module.Name}", module.ID, new EntityState(
-                        new Position2D(x, y)
+                        new Position2D(x, y) , module.MaxHealth, module.MaxHunger
                     ), this);
                 
                 AddWorldEntity(ent);
@@ -365,8 +364,6 @@ namespace Server.Core.Lobby
             }
         }
 
-        //@FranciszekGwarek do we need these things?
-        // ???????????????????????
         private void UpdateServerState(MessageBase message, TcpClient client)
         {
             if (message == null)
@@ -380,9 +377,6 @@ namespace Server.Core.Lobby
                 {
                     case MessageTypeEnum.UserInteraction:
                         HandleUpdateWorldEntityStateMessage(client, (UserInteractionMessage)message);
-                        break;
-                    case MessageTypeEnum.UserState:
-                        HandleUpdateUserStateMessage(client, (UserStateMessage)message);
                         break;
                     case MessageTypeEnum.InfoMessage:
                         HandleInfoMessage(client, (InfoMessage)message);
@@ -622,11 +616,6 @@ namespace Server.Core.Lobby
             }
 
             SimulateHumanEntityUpdate(human, other);
-        }
-
-        private void HandleUpdateUserStateMessage(TcpClient client, UserStateMessage message)
-        {
-            throw new NotImplementedException("UserStateMessage handling is not implemented yet.");
         }
 
         private void HandleInfoMessage(TcpClient client, InfoMessage message)
