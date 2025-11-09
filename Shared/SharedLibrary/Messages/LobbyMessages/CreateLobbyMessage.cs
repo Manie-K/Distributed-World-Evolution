@@ -35,15 +35,21 @@ namespace SharedLibrary.Messages
         /// </summary>
         public IEnumerable<int> ModuleIDs { get; init; }
 
-        ///<summary>
-        /// Represents world tiles.
+        /// <summary>
+        /// Represents world tiles' walking availability.
         /// </summary>
         public bool[][] WalkableTiles { get; init; }
 
         /// <summary>
+        /// Represents world tiles' plant availability.
+        /// </summary>
+        public bool[][] FertileTiles { get; init; }
+
+        /// <summary>
         /// Constructor for CreateLobbyMessage.
         /// </summary
-        public CreateLobbyMessage(string lobbyName, string username, int maxPlayers, int mapID, IEnumerable<int> moduleIDs, bool[][] walkableTiles)
+        public CreateLobbyMessage(string lobbyName, string username, int maxPlayers, int mapID, 
+            IEnumerable<int> moduleIDs, bool[][] walkableTiles, bool[][] fertileTiles)
         {
             LobbyName = lobbyName;
             UserName = username;
@@ -51,6 +57,7 @@ namespace SharedLibrary.Messages
             MapID = mapID;
             ModuleIDs = moduleIDs;
             WalkableTiles = walkableTiles;
+            FertileTiles = fertileTiles;
         }
         /// <inheritdoc/>
         public override string BuildJson()
@@ -63,7 +70,8 @@ namespace SharedLibrary.Messages
                 MaxPlayers = this.MaxPlayers,
                 MapID = this.MapID,
                 ModuleIDs = this.ModuleIDs,
-                WalkableTiles = this.WalkableTiles
+                WalkableTiles = this.WalkableTiles,
+                FertileTiles = this.FertileTiles
             };
 
             return JsonSerializer.Serialize(payload);
