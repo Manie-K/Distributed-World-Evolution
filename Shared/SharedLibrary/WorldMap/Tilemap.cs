@@ -144,6 +144,25 @@ namespace SharedLibrary
             return walkableTiles;
         }
 
+        public bool[][] GetFertileTiles()
+        {
+            if (Tiles == null || TilesetData == null) return [[false]];
+
+            bool[][] fertileTiles = new bool[MapWidth][];
+
+            for (int x = 0; x < MapWidth; x++)
+            {
+                fertileTiles[x] = new bool[MapHeight];
+                for (int y = 0; y < MapHeight; y++)
+                {
+                    TileProperty tile = TilesetData.First(data => data.Id == Tiles[y][x]);
+                    fertileTiles[x][y] = tile.IsFertile();
+                }
+            }
+
+            return fertileTiles;
+        }
+
         public static string GetMapFileName(int mapID)
         {
             string mapName = mapID switch

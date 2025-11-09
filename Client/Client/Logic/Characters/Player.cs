@@ -128,11 +128,10 @@ namespace Client
                 }
             }
 
-            if (inputManager.CheckIfPressingKey(Keys.Space) && actionCooldown <= 0)
+            if (inputManager.CheckIfPressingKey(Keys.Space))
             {
                 HandleInteraction(InteractionType.Attack);
                 SetAnimation(1);
-                actionCooldown = PLAYER_ACTION_COOLDOWN;
             }
             if (inputManager.CheckIfPressingKey(Keys.E))
             {
@@ -152,8 +151,22 @@ namespace Client
             playerName.Draw(spriteBatch, Position + playerNameOffset);
         }
 
+        public float GetPlayerMaxHealth()
+        {
+            if (playerModule != null)
+            {
+                return playerModule.MaxHealth;
+            }
+            else
+            {
+                return 1.0f;
+            }
+        }
+
         private void HandleInteraction(InteractionType interactionType)
         {
+            if (actionCooldown > 0) return;
+
             TargetEntity = clientManager.Entities.FirstOrDefault(e => e.Value.State.Position.Equals(map.GetTilePosition2D(Position.X, Position.Y))).Value;
             if (TargetEntity != null && TargetEntity.ModuleID != PlayerDTO.ModuleID)
             {
@@ -170,6 +183,8 @@ namespace Client
                         break;
                 }
             }
+
+            actionCooldown = PLAYER_ACTION_COOLDOWN;
         }
 
         private void AttackTarget()

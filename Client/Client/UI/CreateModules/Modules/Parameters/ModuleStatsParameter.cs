@@ -1,17 +1,25 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Server.Core;
 
 namespace Client.UI.CreateModules.Modules.Parameters
 {
     public class ModuleStatsParameter : ModuleParameter
     {
+        public EntityTypeEnum CreatureType;
+
         private StatsBox statsBox;
-        public ModuleStatsParameter(ContentManager contentManager, Vector2 position, int type, string name, string description) : base(contentManager, position, type, name, description)
+        private bool canEdit;
+
+        public ModuleStatsParameter(ContentManager contentManager, Vector2 position, int type, string name, string description, bool canEdit = true)
+            : base(contentManager, position, type, name, description)
         {
             statsBox = new StatsBox(contentManager.Load<Texture2D>("UI/CreateModules/Stats/box_Button"), contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), 100, position);
             moduleName = new Text(contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), name, true, new Vector2(position.X + 80, position.Y), 205, 43);
             moduleName.SetTextColor(Color.White);
+            this.canEdit = canEdit;
+            CreatureType = EntityTypeEnum.Animal;
         }
 
         public override void Draw(SpriteBatch spriteBatch)
@@ -27,7 +35,7 @@ namespace Client.UI.CreateModules.Modules.Parameters
 
         public override void Update(Vector2 position)
         {
-            statsBox.Update();
+            if (canEdit) statsBox.Update();
         }
 
         public override int GetValue()
@@ -38,6 +46,11 @@ namespace Client.UI.CreateModules.Modules.Parameters
         public override string GetDescription()
         { 
             return Description;
+        }
+
+        public void SetStatsBoxText(string text)
+        { 
+            statsBox.SetParameter(text);
         }
     }
 }
