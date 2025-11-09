@@ -14,7 +14,7 @@ namespace Server.Core.Behaviours.AttackBehaviour
         public abstract int DatabaseID { get; }
 
         /// <inheritdoc/>
-        public virtual EntityTypeEnum Type => EntityTypeEnum.Animal | EntityTypeEnum.Human; //Human part - old code
+        public virtual EntityTypeEnum Type => EntityTypeEnum.Animal | EntityTypeEnum.Human;
 
         /// <inheritdoc/>
         public abstract string Description { get; }
@@ -34,12 +34,12 @@ namespace Server.Core.Behaviours.AttackBehaviour
 
                 if (target.State.Health <= 0)
                 {
-                    target.Die();
+                    target.Die(moduleService);
                     attacker.State.Hunger += 20; //Hardcoded hunger increase on kill
                 }
                 if(attacker.State.Health <= 0)
                 {
-                    attacker.Die();
+                    attacker.Die(moduleService);
                 }
             }
             catch (ModuleNotFoundException ex)

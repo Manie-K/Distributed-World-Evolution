@@ -2,6 +2,7 @@
 using Server.Core;
 using Server.Core.Behaviours.AttackBehaviour;
 using Server.Core.Behaviours.EatBehaviour;
+using Server.Core.Lobby;
 using Server.Core.Modules;
 using Server.Core.Services;
 using System;
@@ -26,15 +27,28 @@ namespace Server.Tests
         private readonly Module poisonousPlantModule;
 
         private readonly Mock<IModuleService> mockService;
+        private readonly Mock<ILobby> mockLobby;
 
         //Run before every test
         public EatBeahvioursTests()
         {
-            eaterEntity = WorldEntity.CreateWorldEntity("eaterEntity", 1, new EntityState(new SharedLibrary.Helpers.Position2D(0, 0), 100, 100, 0), null);
+            mockLobby = new Mock<ILobby>();
+
+            mockLobby
+                .Setup(l => l.DestroyWorldEntity(It.IsAny<WorldEntity>()))
+                .Callback<WorldEntity>(e =>
+                    {
+                        e = null!;
+                    })
+                .Returns(true);
+
+            eaterEntity = WorldEntity.CreateWorldEntity("eaterEntity", 1, 
+                new EntityState(new SharedLibrary.Helpers.Position2D(0, 0), 100, 100, 0), mockLobby.Object);
             normalPlantEntity = WorldEntity.CreateWorldEntity("normalPlantEntity", 2, 
-                new EntityState(new SharedLibrary.Helpers.Position2D(0, 0), 100, 50, 0), null);
+                new EntityState(new SharedLibrary.Helpers.Position2D(0, 0), 100, 50, 0), mockLobby.Object);
             poisonousPlantEntity = WorldEntity.CreateWorldEntity("poisonousPlantEntity", 3, 
-                new EntityState(new SharedLibrary.Helpers.Position2D(0, 0), 100, 0, 0), null);
+                new EntityState(new SharedLibrary.Helpers.Position2D(0, 0), 100, 0, 0), mockLobby.Object);
+
 
             eaterModule = new Module.ModuleBuilder()
                 .WithID(1)
@@ -101,7 +115,7 @@ namespace Server.Tests
         }
 
         [Fact]
-        public void BaseAttackBehaviour_Execute_Test()
+        public void BaseEatBehaviour_Execute_Test()
         {
             //Arrange
             EatBehaviourBase behaviour = new EatAlwaysBehaviour();
@@ -163,17 +177,17 @@ namespace Server.Tests
         }
 
         [Fact]
-        public void EatWhenHungry25Behaviour_CanExecute_Test()
+        public void EatWhenHungry50Behaviour_CanExecute_Test()
         {
             //Arrange, Act & Assert when hunger is not below 25% of organism maximum hunger
-            EatWhenHungry25Behaviour behaviour = new EatWhenHungry25Behaviour();
+            EatWhenHungry50Behaviour behaviour = new EatWhenHungry50Behaviour();
             
-            eaterEntity.State.Hunger = 25;
+            eaterEntity.State.Hunger = 50;
 
             Assert.False(behaviour.CanExecute(eaterEntity, normalPlantEntity, mockService.Object), "EatWhenHungry25Behaviour should return false for CanExecute when hunger is not below 25% of organism maximum hunger.");
 
             //Arrange, Act & Assert when hunger is below 25% of organism maximum hunger
-            eaterEntity.State.Hunger = 24;
+            eaterEntity.State.Hunger = 49;
 
             Assert.True(behaviour.CanExecute(eaterEntity, normalPlantEntity, mockService.Object), "EatWhenHungry25Behaviour should return true for CanExecute when hunger is below 25% of organism maximum hunger.");
         }
@@ -266,6 +280,33 @@ namespace Server.Tests
             //Act & Assert
             Assert.True(behaviour.CanExecute(eaterEntity, normalPlantEntity, mockService.Object), "EatIfNotPoisonous should return true for CanExecute if plant is not poisonous.");
             Assert.False(behaviour.CanExecute(eaterEntity, poisonousPlantEntity, mockService.Object), "EatIfNotPoisonous should return false for CanExecute if plant is poisonous.");
+        }
+
+        [Fact]
+        public void PlantEatBehaviour_CanExecute_Test()
+        {
+            //Arrange
+            PlantEatBehaviour behaviour = new PlantEatBehaviour();
+
+            //Act & Assert
+            Assert.False(behaviour.CanExecute(normalPlantEntity, poisonousPlantEntity, mockService.Object), "PlantEatBehaviour should return false for CanExecute always.");
+        }
+
+        [Fact]
+        public void PlantEatBehaviour_Execute_Test()
+        {
+            //Arrange
+            PlantEatBehaviour behaviour = new PlantEatBehaviour();
+
+            int initialPlantHealth = normalPlantEntity.State.Health;
+
+            int expectedPlantHealth = initialPlantHealth;
+
+            //Act
+            behaviour.Execute(normalPlantEntity, poisonousPlantEntity, mockService.Object);
+
+            //Assert
+            Assert.Equal(expectedPlantHealth, eaterEntity.State.Health);
         }
 
     }

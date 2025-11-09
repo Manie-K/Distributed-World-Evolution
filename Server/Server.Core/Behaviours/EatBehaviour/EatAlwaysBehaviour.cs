@@ -16,6 +16,7 @@ namespace Server.Core.Behaviours.EatBehaviour
         /// <inheritdoc/>
         public override bool CanExecute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
+            
             return true;
         }
     }

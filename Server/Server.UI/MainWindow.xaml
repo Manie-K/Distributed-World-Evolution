@@ -65,8 +65,8 @@
         <!-- LobbyTemplate -->
         <DataTemplate x:Key="LobbyTemplate">
             <StackPanel Margin="10">
-                <TextBlock Text="{Binding LobbyID, StringFormat=Lobby #{0}}" FontWeight="Bold" Foreground="LawnGreen"/>
-                <TextBlock Text="{Binding Info}" FontWeight="Bold" Foreground="LawnGreen"/>
+                <TextBlock Text="{Binding LobbyID, StringFormat=Lobby #{0}}" FontWeight="Bold" Foreground="Blue"/>
+                <TextBlock Text="{Binding Info}" FontWeight="Bold" Foreground="Blue"/>
                 <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource LogsListTemplate}"/>
             </StackPanel>
         </DataTemplate>

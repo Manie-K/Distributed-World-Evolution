@@ -31,7 +31,7 @@ namespace Server.Core.Behaviours.EatBehaviour
                 entity.State.Hunger += targetModule.MaxHunger;
             }
 
-            target.Die();
+            target.Die(moduleService);
         }
 
         /// <inheritdoc/>

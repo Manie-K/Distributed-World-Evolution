@@ -1,36 +1,29 @@
 ﻿using Server.Core.Services;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
-namespace Server.Core.Behaviours.MoveBehaviour
+namespace Server.Core.Behaviours.EatBehaviour
 {
-    /// <inheritdoc>
-    public class PlantMoveBehaviour : MoveBehaviourBase
+    public class PlantEatBehaviour : EatBehaviourBase
     {
-        /// <inheritdoc>
-        public override int DatabaseID => 104;
-
+        /// <inheritdoc/>
+        public override int DatabaseID => 309;
         /// <inheritdoc/>
         public override EntityTypeEnum Type => EntityTypeEnum.Plant;
-
-        /// <inheritdoc>
-        public override string Description => "Plants do not move";
-
-        /// <inheritdoc>
+        /// <inheritdoc/>
+        public override string Description => "Plants eath behaviour.";
+        /// <inheritdoc/>
         public override void Execute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
-            //noop
             return;
         }
-
-        /// <inheritdoc>
+        /// <inheritdoc/>
         public override bool CanExecute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
             return false;
-        }
-
-        /// <inheritdoc>
-        public override (int, int) GetNextMovement(WorldEntity entity)
-        {
-            return (0, 0);
         }
     }
 }

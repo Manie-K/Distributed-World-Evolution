@@ -90,6 +90,7 @@ namespace Server.Core.Lobby
             LobbyId = id;
             Name = name;
             MaxPlayers = maxPlayers;
+            MapID = mapId;
             walkableTiles = tiles; 
             this.moduleService = moduleService;
 
@@ -144,7 +145,7 @@ namespace Server.Core.Lobby
             }
 
             WorldEntity userEntity = WorldEntity.CreateWorldEntity(username, moduleService.GetHumanModuleId(),
-                new EntityState(new Position2D(0, 0)), this);
+                new EntityState(new Position2D(0, 0), ModulePropertiesLimits.MAX_MAX_HEALTH, ModulePropertiesLimits.MAX_MAX_HUNGER), this);
 
             lock (clients)
             {
@@ -268,8 +269,6 @@ namespace Server.Core.Lobby
         /// </summary>
         private void InitializeWorldEntities()
         {
-            const int NUM_INITIAL_ENTITIES = 100;
-
             IModuleService moduleService = ModuleService.Instance;
             List<Module> modules = (moduleService.GetAllModules().ToList());
             int modulesCount = modules.Count;
@@ -279,7 +278,8 @@ namespace Server.Core.Lobby
             Log("Initializing world entities...", LogLevelEnum.Info);
 
             // For testing purposes, we create some entities here.
-            for (int i = 0; i < NUM_INITIAL_ENTITIES; i++)
+
+            for (int i = 0; i < LobbyParams.NUM_INITIAL_ENTITIES; i++)
             {
                 module = modules[new Random().Next(modulesCount)];
                 
@@ -297,7 +297,7 @@ namespace Server.Core.Lobby
                 } while (!walkableTiles[x][y] || !IsPositionFree(new Position2D(x, y)));
 
                 WorldEntity ent = WorldEntity.CreateWorldEntity($"[{i}]_{module.Name}", module.ID, new EntityState(
-                        new Position2D(x, y)
+                        new Position2D(x, y) , module.MaxHealth, module.MaxHunger
                     ), this);
                 
                 AddWorldEntity(ent);
@@ -313,7 +313,7 @@ namespace Server.Core.Lobby
             Module? entityModule;
             EntityState nextState;
 
-            Log("Updating world entities...", LogLevelEnum.Debug);
+            //Log("Updating world entities...", LogLevelEnum.Debug);
             for (int i = 0; i < entities.Count; i++) 
             {
                 WorldEntity entity = entities[i];
@@ -360,8 +360,6 @@ namespace Server.Core.Lobby
             }
         }
 
-        //@FranciszekGwarek do we need these things?
-        // ???????????????????????
         private void UpdateServerState(MessageBase message, TcpClient client)
         {
             if (message == null)
@@ -375,9 +373,6 @@ namespace Server.Core.Lobby
                 {
                     case MessageTypeEnum.UserInteraction:
                         HandleUpdateWorldEntityStateMessage(client, (UserInteractionMessage)message);
-                        break;
-                    case MessageTypeEnum.UserState:
-                        HandleUpdateUserStateMessage(client, (UserStateMessage)message);
                         break;
                     case MessageTypeEnum.InfoMessage:
                         HandleInfoMessage(client, (InfoMessage)message);
@@ -449,6 +444,8 @@ namespace Server.Core.Lobby
                 }
                 else if(interactionType == typeof(AttackBehaviourBase))
                 {
+                    behaviour.Execute(entity, targetEntity!, ModuleService.Instance);
+
                     entity.State.InteractionFramesLeft = 64;
                     targetEntity!.State.InteractionFramesLeft = 64;
                     entity.State.LastInteractionName = nameof(AttackBehaviourBase);
@@ -516,12 +513,9 @@ namespace Server.Core.Lobby
             // We refactored this so that humans dont use this method, the send the new states in frames
             if (entityType == EntityTypeEnum.Human) return null;
 
-            // Attack - old code, Humans wont be here
-            if ((entityType == EntityTypeEnum.Human && targetType == EntityTypeEnum.Human) ||
-                (entityType == EntityTypeEnum.Human && targetType == EntityTypeEnum.Animal) ||
-                (entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Human) ||
-                (entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Animal)
-                )
+            // Attack
+            if ((entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Human) ||
+                (entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Animal))
             {
                 AttackBehaviourBase attackBehaviour = (AttackBehaviourBase)entityModule.GetBehaviourOfType(typeof(AttackBehaviourBase));
                 if (attackBehaviour.CanExecute(entity, entityOnPosition, ModuleService.Instance))
@@ -531,7 +525,8 @@ namespace Server.Core.Lobby
             }
 
             // Reproduce
-            if (entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Animal)
+            if (entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Animal
+                || entityType == EntityTypeEnum.Plant)
             {
                 ReproduceBehaviourBase reproduceBehaviour = (ReproduceBehaviourBase)entityModule.GetBehaviourOfType(typeof(ReproduceBehaviourBase));
                 if (reproduceBehaviour.CanExecute(entity, entityOnPosition, ModuleService.Instance))
@@ -613,11 +608,6 @@ namespace Server.Core.Lobby
             }
 
             SimulateHumanEntityUpdate(human, other);
-        }
-
-        private void HandleUpdateUserStateMessage(TcpClient client, UserStateMessage message)
-        {
-            throw new NotImplementedException("UserStateMessage handling is not implemented yet.");
         }
 
         private void HandleInfoMessage(TcpClient client, InfoMessage message)
