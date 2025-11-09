@@ -50,7 +50,7 @@ namespace Client
                 SetAnimation(1);
             }
 
-            am.Update();
+            am.Update(gameTime);
         }
     }
 }

@@ -14,7 +14,6 @@ namespace Client
 {
     public class Player : Character
     {
-        private const float PLAYER_ACTION_COOLDOWN = 2.0f;
 
         public WorldEntityDTO TargetEntity;
         public WorldEntityDTO PlayerDTO;
@@ -26,7 +25,6 @@ namespace Client
         private ModuleDTO playerModule;
         private readonly WorldMap map;
         private readonly ClientManager clientManager;
-        private float actionCooldown;
 
         private enum InteractionType
         {
@@ -46,9 +44,8 @@ namespace Client
             this.clientManager = clientManager;
             PlayerDTO = null;
             TargetEntity = null;
-            am = new AnimationManager(13);
+            am = new AnimationManager(13, 1.5f);
             playerModule = null;
-            actionCooldown = 0;
             this.bestiaryPanel = bestiaryPanel;
             this.inventory = inventory;
         }
@@ -75,15 +72,12 @@ namespace Client
             if (PlayerDTO != null && PlayerDTO.State.Health <= 0)
             {
                 Position = Vector2.One * 5;
-                am.Update();
+                am.Update(gameTime);
                 return;
             }
 
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            if (actionCooldown > 0)
-            {
-                actionCooldown -= delta;
-            }
+
             Vector2 movement = Vector2.Zero;
 
             if (inputManager.CheckIfPressingKey(Keys.W))
@@ -128,11 +122,10 @@ namespace Client
                 }
             }
 
-            if (inputManager.CheckIfPressingKey(Keys.Space) && actionCooldown <= 0)
+            if (inputManager.CheckIfPressingKey(Keys.Space) && !am.AttackIsBlocked())
             {
                 HandleInteraction(InteractionType.Attack);
                 SetAnimation(1);
-                actionCooldown = PLAYER_ACTION_COOLDOWN;
             }
             if (inputManager.CheckIfPressingKey(Keys.E))
             {
@@ -143,7 +136,7 @@ namespace Client
                 HandleInteraction(InteractionType.Tame);
             }
 
-            am.Update();
+            am.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
