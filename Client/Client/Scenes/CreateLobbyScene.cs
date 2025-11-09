@@ -163,8 +163,7 @@ namespace Client
                     }
                     else
                     {
-                        manager.WindowManager.WarningWindow.SetWrongParametersInCreateLobby();
-                        manager.WindowManager.EnableWarningWindow();
+                        manager.WindowManager.ShowWarningWindow("  Invalid name or incorrect\nnumber of players (max 32).");
                     }
                 }
                 else if (mapButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
@@ -243,22 +242,22 @@ namespace Client
             isLoadingModules = false;
             manager.WindowManager.LoadingWindow.IsEnabled = false;
             timeoutTimer = 0;
-            manager.WindowManager.ShowErrorMessage("Timeout with server");
+            manager.WindowManager.ShowErrorWindow("Timeout with server");
         }
 
         private void ShowLoadingWindow()
         {
             if (isCreatingLobby)
             {
-                manager.WindowManager.EnableLoadingWindow("Creating lobby");
+                manager.WindowManager.ShowLoadingWindow("Creating lobby");
             }
             else if (isJoiningLobby)
             {
-                manager.WindowManager.EnableLoadingWindow("Joining lobby");
+                manager.WindowManager.ShowLoadingWindow("Joining lobby");
             }
             else if (isLoadingModules)
             {
-                manager.WindowManager.EnableLoadingWindow("Loading modules");
+                manager.WindowManager.ShowLoadingWindow("Loading modules");
             }
         }
 
@@ -290,7 +289,7 @@ namespace Client
                 manager.WindowManager.LoadingWindow.IsEnabled = false;
                 manager.ClientManager.LobbyCreated = ActionStatus.IDLE;
                 timeoutTimer = 0;
-                manager.WindowManager.ShowErrorMessage("Failed to create lobby");
+                manager.WindowManager.ShowErrorWindow("Failed to create lobby");
             }
         }
 
@@ -309,7 +308,7 @@ namespace Client
                 isJoiningLobby = false;
                 manager.WindowManager.LoadingWindow.IsEnabled = false;
                 manager.ClientManager.LobbyJoined = ActionStatus.IDLE;
-                manager.WindowManager.ShowErrorMessage("Failed to join lobby");
+                manager.WindowManager.ShowErrorWindow("Failed to join lobby");
             }
         }
 
@@ -329,7 +328,7 @@ namespace Client
                 manager.WindowManager.LoadingWindow.IsEnabled = false;
                 manager.ClientManager.ModuleListReady = ActionStatus.IDLE;
                 timeoutTimer = 0;
-                manager.WindowManager.ShowErrorMessage("Failed to load modules");
+                manager.WindowManager.ShowErrorWindow("Failed to load modules");
             }
         }
     }

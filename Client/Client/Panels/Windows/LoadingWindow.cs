@@ -11,7 +11,6 @@ namespace Client.Panels.Windows
 {
     public class LoadingWindow
     {
-        private GameManager manager;
         private Texture2D background;
         private Text information;
         private Text Timerinformation;
@@ -20,7 +19,6 @@ namespace Client.Panels.Windows
 
         public LoadingWindow(GameManager manager)
         {
-            this.manager = manager;
             background = manager.ContentManager.Load<Texture2D>("Panels/LoadingWindow/Loading_Window");
             information = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsText"), "", true,
                                    new Vector2(466, 259),353, 87);
