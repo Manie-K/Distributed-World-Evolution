@@ -14,7 +14,7 @@ namespace Client.Panels
         private int pickedPanel;
         private bool isBlocked;
 
-        public PanelsController(GameManager gameManager) 
+        public PanelsController(GameManager gameManager)
         {
             this.gameManager = gameManager;
             BestiaryPanel = new BestiaryPanel(gameManager);
@@ -76,7 +76,6 @@ namespace Client.Panels
             }
         }
 
-
         public void Draw(SpriteBatch spritebatch)
         {
             Inventory.Draw(spritebatch);
@@ -90,6 +89,11 @@ namespace Client.Panels
                     BestiaryPanel.Draw(spritebatch);
                     break;
             }
+        }
+
+        public void SetHealthBarValue(float value)
+        { 
+            healthBar.SetRangeBar(value);
         }
     }
 }

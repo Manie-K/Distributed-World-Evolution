@@ -152,6 +152,18 @@ namespace Client
             playerName.Draw(spriteBatch, Position + playerNameOffset);
         }
 
+        public float GetPlayerMaxHealth()
+        {
+            if (playerModule != null)
+            {
+                return playerModule.MaxHealth;
+            }
+            else
+            {
+                return 1.0f;
+            }
+        }
+
         private void HandleInteraction(InteractionType interactionType)
         {
             TargetEntity = clientManager.Entities.FirstOrDefault(e => e.Value.State.Position.Equals(map.GetTilePosition2D(Position.X, Position.Y))).Value;
