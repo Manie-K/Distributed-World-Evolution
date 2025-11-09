@@ -1,38 +1,24 @@
-﻿using Client.UI.Bestiary_Panel;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Client.Panels
 {
     public class HealthBar
     {
-        private GameManager manager;
         private Texture2D healthFrame;
         private Texture2D healthBar;
         private float rangeBar;
 
         public HealthBar(GameManager manager)
         {
-            this.manager = manager;
             healthFrame = manager.ContentManager.Load<Texture2D>("Panels/HealthBar/HealthBar");
             healthBar = manager.ContentManager.Load<Texture2D>("Panels/HealthBar/HealthBar_RedArea");
             rangeBar = 1.0f;
         }
 
-
         public void Update()
         {
-            //TODO: Delete later
-            if (manager.InputManager.CheckIfCanPressKey(Keys.C))
-            {
-                SetRangeBar(rangeBar - 0.03f);
-            }
+
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -50,7 +36,6 @@ namespace Client.Panels
             if (range < 0.0f) rangeBar = 0.0f;
             else if (range > 1.0f) rangeBar = 1.0f;
             else rangeBar = range;
-
         }
     }
 }

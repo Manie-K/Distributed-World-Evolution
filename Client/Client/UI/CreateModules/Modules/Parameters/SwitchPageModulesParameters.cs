@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Server.Core;
 using SharedLibrary.DTOs.ModuleDTO;
 using System;
 using System.Collections.Generic;
@@ -34,18 +35,12 @@ namespace Client.UI.CreateModules.Modules.Parameters
 
         public void AddRow(List<BehaviourDTO> behaviours)
         {
-            List<BehaviourDTO> types = [ 
-                //new(1, "Human", Server.Core.EntityTypeEnum.Human), // Do we create human modules?
-                new(2, "Animal", Server.Core.EntityTypeEnum.Animal, SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum.None),
-                new(4, "Plant", Server.Core.EntityTypeEnum.Plant, SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum.None)
-            ];
-
+            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Type", "Type of the creature", false));
             parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Damage", "Number of the damage dealt"));
             parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Aggresion", "Number of agression"));
             parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Reproduction Need", "The need for breeding"));
             parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Max Health", "Max Health"));
             parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Max Hunger", "Max Hunger"));
-            parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), types, 1, "Type", "Type of the creature"));
 
             parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), behaviours.Where(b => b.InteractionType == BehaviourInteractionTypeEnum.Attack).ToList(), 1, "Attack", "Attack behaviour"));
             parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), behaviours.Where(b => b.InteractionType == BehaviourInteractionTypeEnum.Eat).ToList(), 1, "Eat", "Eat behaviour"));
@@ -90,14 +85,12 @@ namespace Client.UI.CreateModules.Modules.Parameters
             }
         }
 
-
         public void UpdateRows(Vector2 cursorPosition)
         {
             for (int i = 0; i < GetRowsOnPage(); i++)
             {
                 parameters[(pageNumber - 1) * amountOfRows + i].Update(cursorPosition);
             }
-
         }
 
         public int GetRowsOnPage()
@@ -120,6 +113,26 @@ namespace Client.UI.CreateModules.Modules.Parameters
         public int GetValueOnIndex(int index)
         {
             return parameters[index].GetValue();
+        }
+
+        public void SetCreatureType(EntityTypeEnum type)
+        {
+            if (parameters.Count > 0)
+            {
+                ModuleStatsParameter typeParameter = (ModuleStatsParameter)parameters[0];
+                typeParameter.SetStatsBoxText(type.ToString());
+                typeParameter.CreatureType = type;
+            }
+        }
+
+        public EntityTypeEnum GetCreatureType()
+        {
+            if (parameters.Count > 0)
+            {
+                ModuleStatsParameter typeParameter = (ModuleStatsParameter)parameters[0];
+                return typeParameter.CreatureType;
+            }
+            return EntityTypeEnum.Animal;
         }
 
         public List<Tuple<int, int>> GetBehavioursList()

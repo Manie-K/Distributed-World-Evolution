@@ -17,14 +17,12 @@ namespace Client
     public class CreateModulesScene : IScene
     {
         private GameManager manager;
-
         private Texture2D backGround;
         private TextBox moduleName;
         private SwitchPageModules switchPageModules;
         private DescriptionBox descriptionBox;
         private Button exitButton;
         private Button saveButton;
-
         private SwitchPageModulesParameters switchPageModulesParameters;
 
         private bool isLoadingBehaviours;
@@ -87,6 +85,7 @@ namespace Client
             if (manager.InputManager.CheckIfLeftClick())
             {
                 switchPageModules.CheckLeftClick(manager.InputManager.GetMousePosition());
+                switchPageModulesParameters.SetCreatureType(switchPageModules.GetActualType());
                 moduleName.CheckLeftClick(manager.InputManager.GetMousePosition());
                 if (exitButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                 {
@@ -99,23 +98,21 @@ namespace Client
                         string statsParametersInformation = switchPageModulesParameters.CheckParametersLimits();
                         if (statsParametersInformation == null)
                         {
-                            EntityTypeEnum newEntityType = (EntityTypeEnum)switchPageModulesParameters.GetBehavioursList().Where(e => e.Item1 == 5).First().Item2;
-                            List<int> newBehaviours = new List<int>();
-                            foreach (Tuple<int, int> beh in switchPageModulesParameters.GetBehavioursList())
-                            {
-                                if (beh.Item1 == 5) continue;
+                        EntityTypeEnum newEntityType = switchPageModulesParameters.GetCreatureType();
+                        List<int> newBehaviours = new List<int>();
+                        foreach (Tuple<int, int> beh in switchPageModulesParameters.GetBehavioursList())
+                        {
+                            newBehaviours.Add(beh.Item2);
+                        }
 
-                                newBehaviours.Add(beh.Item2);
-                            }
+                        CreateModuleDTO newModule = new CreateModuleDTO(moduleName.GetText(), false, switchPageModulesParameters.GetValueOnIndex(1),
+                            switchPageModulesParameters.GetValueOnIndex(2), switchPageModulesParameters.GetValueOnIndex(3),
+                            switchPageModulesParameters.GetValueOnIndex(5), switchPageModulesParameters.GetValueOnIndex(4),
+                            newEntityType, switchPageModules.GetGraphicIndex(), newBehaviours);
 
-                            CreateModuleDTO newModule = new CreateModuleDTO(moduleName.GetText(), false, switchPageModulesParameters.GetValueOnIndex(0),
-                                switchPageModulesParameters.GetValueOnIndex(1), switchPageModulesParameters.GetValueOnIndex(2),
-                                switchPageModulesParameters.GetValueOnIndex(4), switchPageModulesParameters.GetValueOnIndex(3),
-                                newEntityType, switchPageModules.GetGraphicIndex(), newBehaviours);
-
-                            _ = MessageManager.SendMessageAsync(manager.ClientManager.Client, new CreateModuleMessage(newModule));
-                            isCreatingModule = true;
-                            manager.ClientManager.ModuleCreated = ActionStatus.PENDING;
+                        _ = MessageManager.SendMessageAsync(manager.ClientManager.Client, new CreateModuleMessage(newModule));
+                        isCreatingModule = true;
+                        manager.ClientManager.ModuleCreated = ActionStatus.PENDING;
                         }
                         else
                         {
@@ -219,6 +216,7 @@ namespace Client
             if (manager.ClientManager.BehaviourListReady == ActionStatus.SUCCESS)
             {
                 switchPageModulesParameters.AddRow(manager.ClientManager.Behaviours.ToList());
+                switchPageModulesParameters.SetCreatureType(switchPageModules.GetActualType());
                 manager.ClientManager.BehaviourListReady = ActionStatus.IDLE;
                 isLoadingBehaviours = false;
                 manager.WindowManager.LoadingWindow.IsEnabled = false;

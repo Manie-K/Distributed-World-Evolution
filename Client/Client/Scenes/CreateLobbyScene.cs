@@ -73,7 +73,6 @@ namespace Client
 
         }
 
-
         public void InitializeCreaturesRows()
         {
             IReadOnlyList<ModuleDTO> modules = manager.ClientManager.Modules;
@@ -82,18 +81,18 @@ namespace Client
             foreach (ModuleDTO module in modules)
             {
                 List<ModuleParametersData> parameters = new List<ModuleParametersData>();
+                parameters.Add(new ModuleParametersData("Type", module.Type.ToString(), 1, "Type of a creature"));
                 parameters.Add(new ModuleParametersData("Damage", module.Damage.ToString(), 0, "Damage"));
                 parameters.Add(new ModuleParametersData("Aggresion", module.Aggresion.ToString(), 0, "Aggresion"));
                 parameters.Add(new ModuleParametersData("Reproduction Need", module.ReproductionNeed.ToString(), 0, "Reproduction Need"));
                 parameters.Add(new ModuleParametersData("Max Health", module.MaxHealth.ToString(), 0, "Max Health"));
                 parameters.Add(new ModuleParametersData("Max Hunger", module.MaxHunger.ToString(), 0, "Max Hunger"));
-                
-                parameters.Add(new ModuleParametersData("Type", module.Type.ToString(), 1, "Type of a creature"));
+
                 if (module.Behaviours != null)
                 {
                     foreach (BehaviourDTO behaviour in module.Behaviours)
                     {
-                        parameters.Add(new ModuleParametersData(behaviour.InteractionType.ToString(), behaviour.Type.ToString(), 1, behaviour.Description));
+                        parameters.Add(new ModuleParametersData(behaviour.InteractionType.ToString(), behaviour.DatabaseID.ToString(), 1, behaviour.Description));
                     }
                 }
 
