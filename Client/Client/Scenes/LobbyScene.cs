@@ -170,22 +170,22 @@ namespace Client
             isLoadingModules = false;
             timeoutTimer = 0;
             manager.WindowManager.LoadingWindow.IsEnabled = false;
-            manager.WindowManager.ShowErrorMessage("Timeout with server");
+            manager.WindowManager.ShowErrorWindow("Timeout with server");
         }
 
         private void ShowLoadingWindow()
         {
             if (isLoadingLobbies)
             {
-                manager.WindowManager.EnableLoadingWindow("Loading lobbies");
+                manager.WindowManager.ShowLoadingWindow("Loading lobbies");
             }
             else if (isJoiningLobby)
             {
-                manager.WindowManager.EnableLoadingWindow("Joining lobby");
+                manager.WindowManager.ShowLoadingWindow("Joining lobby");
             }
             else if (isLoadingModules)
             {
-                manager.WindowManager.EnableLoadingWindow("Loading modules");
+                manager.WindowManager.ShowLoadingWindow("Loading modules");
             }
         }
 
@@ -216,7 +216,7 @@ namespace Client
                 isLoadingLobbies = false;
                 manager.WindowManager.LoadingWindow.IsEnabled = false;
                 timeoutTimer = 0;
-                manager.WindowManager.ShowErrorMessage("Failed to load lobbies");
+                manager.WindowManager.ShowErrorWindow("Failed to load lobbies");
             }
         }
 
@@ -239,7 +239,7 @@ namespace Client
                 manager.WindowManager.LoadingWindow.IsEnabled = false;
                 manager.ClientManager.ModuleListReady = ActionStatus.IDLE;
                 timeoutTimer = 0;
-                manager.WindowManager.ShowErrorMessage("Failed to load modules");
+                manager.WindowManager.ShowErrorWindow("Failed to load modules");
             }
         }
 
@@ -258,7 +258,7 @@ namespace Client
                 isJoiningLobby = false;
                 manager.WindowManager.LoadingWindow.IsEnabled = false;
                 manager.ClientManager.LobbyJoined = ActionStatus.IDLE;
-                manager.WindowManager.ShowErrorMessage("Failed to join lobby");
+                manager.WindowManager.ShowErrorWindow("Failed to join lobby");
             }
         }
     }

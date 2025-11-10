@@ -14,7 +14,7 @@ namespace Client
 {
     public class Player : Character
     {
-        private const float PLAYER_ACTION_COOLDOWN = 2.0f;
+        private const float PLAYER_ACTION_COOLDOWN = 1.5f;
 
         public WorldEntityDTO TargetEntity;
         public WorldEntityDTO PlayerDTO;
@@ -75,7 +75,7 @@ namespace Client
             if (PlayerDTO != null && PlayerDTO.State.Health <= 0)
             {
                 Position = Vector2.One * 5;
-                am.Update();
+                am.Update(gameTime);
                 return;
             }
 
@@ -142,7 +142,7 @@ namespace Client
                 HandleInteraction(InteractionType.Tame);
             }
 
-            am.Update();
+            am.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch)

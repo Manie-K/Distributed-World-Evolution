@@ -48,7 +48,26 @@ namespace Client.UI.CreateModules.Modules
 
         public void SetDescriptionText(string text)
         {
-            descitpionText.SetText(text);
+            descitpionText.SetText(FormatText(text));
+        }
+
+        private string FormatText(string text)
+        {
+            string output = "";
+            int sumWordsInLine = 0;
+
+            foreach (string word in text.Split(" "))
+            {
+                if (sumWordsInLine + word.Length > 43)
+                {
+                    output += "\n";
+                    sumWordsInLine = 0;
+                }
+                output += word + " ";
+                sumWordsInLine += word.Length + 1;
+            }
+
+            return output;
         }
     }
 }

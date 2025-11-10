@@ -88,8 +88,7 @@ namespace Client
                         }
                         else
                         {
-                            manager.WindowManager.WarningWindow.SetEmptyNameInformation();
-                            manager.WindowManager.EnableWarningWindow();
+                            manager.WindowManager.ShowWarningWindow("Name is empty.");
                         }
                     }
                 }

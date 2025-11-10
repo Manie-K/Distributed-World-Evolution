@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -16,9 +17,10 @@ namespace Client.Logic
 
         public bool IsAnimationEnded;
 
-        public int BlockDelayCounter;
+        public float BlockDelayCounter;
+        public float BlockDelay;
         public bool IsBlocked;
-        public Animation(int framesAmount, int interval)
+        public Animation(int framesAmount, int interval, float blockDelay = 1.5f)
         {
             this.framesAmount = framesAmount;
             this.interval = interval;
@@ -27,7 +29,8 @@ namespace Client.Logic
             IsBlocked = false;
             ActiveFrame = 0;
             counter = 0;
-            BlockDelayCounter = 0;
+            BlockDelay = blockDelay;
+            BlockDelayCounter = blockDelay;
         }
 
         public void Update()
@@ -48,10 +51,14 @@ namespace Client.Logic
             }
         }
 
-        public void UpdateBlock()
+        public void UpdateBlock(GameTime gameTime)
         {
-            BlockDelayCounter++;
-            if (BlockDelayCounter > 60) UnBlockAnimation();   
+            if (BlockDelayCounter > 0)
+            {
+                BlockDelayCounter -= (float)gameTime.ElapsedGameTime.TotalSeconds;
+            }
+
+            if (BlockDelayCounter <= 0) UnBlockAnimation();   
         }
 
         public void Reset()
@@ -64,13 +71,13 @@ namespace Client.Logic
         public void BlockAnimation()
         {
             IsBlocked = true;
-            BlockDelayCounter = 0;
+            BlockDelayCounter = BlockDelay;
         }
 
         public void UnBlockAnimation()
         {
             IsBlocked = false;
-            BlockDelayCounter = 0;
+            BlockDelayCounter = BlockDelay;
         }
     }
 }

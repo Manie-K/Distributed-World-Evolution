@@ -9,6 +9,7 @@ using SharedLibrary.Messages;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text.Json;
 
 namespace Client
@@ -94,6 +95,9 @@ namespace Client
                 {
                     if (!moduleName.CheckTextIfEmpty() && switchPageModulesParameters.GetBehavioursList().Count > 0)
                     {
+                        string statsParametersInformation = switchPageModulesParameters.CheckParametersLimits();
+                        if (statsParametersInformation == null)
+                        {
                         EntityTypeEnum newEntityType = switchPageModulesParameters.GetCreatureType();
                         List<int> newBehaviours = new List<int>();
                         foreach (Tuple<int, int> beh in switchPageModulesParameters.GetBehavioursList())
@@ -109,11 +113,15 @@ namespace Client
                         _ = MessageManager.SendMessageAsync(manager.ClientManager.Client, new CreateModuleMessage(newModule));
                         isCreatingModule = true;
                         manager.ClientManager.ModuleCreated = ActionStatus.PENDING;
+                        }
+                        else
+                        {
+                            manager.WindowManager.ShowWarningWindow(statsParametersInformation);
+                        }
                     }
                     else
                     {
-                        manager.WindowManager.WarningWindow.SetWrongParametersInCreateLobby();
-                        manager.WindowManager.EnableWarningWindow();
+                        manager.WindowManager.ShowWarningWindow("Name is empty.");
                     }
                 }
                 else if (descriptionBox.DescriptionButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
@@ -177,18 +185,18 @@ namespace Client
             isCreatingModule = false;
             manager.WindowManager.LoadingWindow.IsEnabled = false;
             timeoutTimer = 0;
-            manager.WindowManager.ShowErrorMessage("Timeout with server");
+            manager.WindowManager.ShowErrorWindow("Timeout with server");
         }
 
         private void ShowLoadingWindow()
         {
             if (isLoadingBehaviours)
             {
-                manager.WindowManager.EnableLoadingWindow("Loading behaviours");
+                manager.WindowManager.ShowLoadingWindow("Loading behaviours");
             }
             else if (isCreatingModule)
             {
-                manager.WindowManager.EnableLoadingWindow("Creating module");
+                manager.WindowManager.ShowLoadingWindow("Creating module");
             }
         }
 
@@ -220,7 +228,7 @@ namespace Client
                 manager.WindowManager.LoadingWindow.IsEnabled = false;
                 manager.ClientManager.BehaviourListReady = ActionStatus.IDLE;
                 timeoutTimer = 0;
-                manager.WindowManager.ShowErrorMessage("Failed to load behaviours");
+                manager.WindowManager.ShowErrorWindow("Failed to load behaviours");
             }
         }
 
@@ -232,7 +240,7 @@ namespace Client
                 manager.WindowManager.LoadingWindow.IsEnabled = false;
                 manager.ClientManager.ModuleCreated = ActionStatus.IDLE;
                 timeoutTimer = 0;
-                manager.WindowManager.ShowErrorMessage("Module created");
+                manager.WindowManager.ShowInformationWindow("Module created");
             }
             else if (manager.ClientManager.ModuleCreated == ActionStatus.FAILED)
             {
@@ -240,7 +248,7 @@ namespace Client
                 manager.WindowManager.LoadingWindow.IsEnabled = false;
                 manager.ClientManager.ModuleCreated = ActionStatus.IDLE;
                 timeoutTimer = 0;
-                manager.WindowManager.ShowErrorMessage("Failed to create module");
+                manager.WindowManager.ShowErrorWindow("Failed to create module");
             }
         }
     }

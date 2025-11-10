@@ -150,5 +150,43 @@ namespace Client.UI.CreateModules.Modules.Parameters
 
             return list;
         }
+
+        public string CheckParametersLimits()
+        {
+            bool badParameter = false;
+            string output = "Incorrect";
+            if (!(parameters[0].GetValue() <= SharedLibrary.Helpers.ModulePropertiesLimits.MAX_DAMAGE && parameters[0].GetValue() >= SharedLibrary.Helpers.ModulePropertiesLimits.MIN_DAMAGE))
+            {
+                output += " damage parameter";
+                badParameter = true;
+            }
+            if (!(parameters[1].GetValue() <= SharedLibrary.Helpers.ModulePropertiesLimits.MAX_AGGRESSION && parameters[1].GetValue() >= SharedLibrary.Helpers.ModulePropertiesLimits.MIN_AGGRESSION))
+            {
+                if (badParameter) output += ", aggression parameter";
+                else output += " aggression parameter";
+                badParameter = true;
+            }
+            if (!(parameters[2].GetValue() <= SharedLibrary.Helpers.ModulePropertiesLimits.MAX_REPRODUCTION_NEED && parameters[2].GetValue() >= SharedLibrary.Helpers.ModulePropertiesLimits.MIN_REPRODUCTION_NEED))
+            {
+                if (badParameter) output += ", reproduction parameter";
+                else output += " reproduction parameter";
+                badParameter = true;
+            }
+            if (!(parameters[3].GetValue() <= SharedLibrary.Helpers.ModulePropertiesLimits.MAX_MAX_HEALTH && parameters[3].GetValue() >= SharedLibrary.Helpers.ModulePropertiesLimits.MIN_MAX_HEALTH))
+            {
+                if (badParameter) output += ", health parameter";
+                else output += " health parameter";
+                badParameter = true;
+            }
+            if (!(parameters[4].GetValue() <= SharedLibrary.Helpers.ModulePropertiesLimits.MAX_MAX_HUNGER && parameters[4].GetValue() >= SharedLibrary.Helpers.ModulePropertiesLimits.MIN_MAX_HUNGER))
+            {
+                if (badParameter) output += ", hunger parameter";
+                else output += " hunger parameter";
+                badParameter = true;
+            }
+
+            if (badParameter) return output + ".";
+            else return null;
+        }
     }
 }
