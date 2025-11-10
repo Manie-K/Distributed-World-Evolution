@@ -74,15 +74,5 @@ namespace Client
             return false;
 
         }
-
-        public void SetBackgroundColor(Color color)
-        {
-            backgroundColor=color;
-        }
-
-        public void DisableButton()
-        {
-            isDisabled= true;   
-        }
     }
 }

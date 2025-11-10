@@ -68,11 +68,6 @@ namespace Client.Logic
             return Animations[ActiveAnimation].ActiveFrame;
         }
 
-        public bool AttackIsBlocked()
-        {
-            return Animations[1].IsBlocked;
-        }
-
         public void Update(GameTime gameTime)
         {
              Animations[ActiveAnimation].Update();   

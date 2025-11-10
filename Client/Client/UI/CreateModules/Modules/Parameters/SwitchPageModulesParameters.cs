@@ -38,7 +38,7 @@ namespace Client.UI.CreateModules.Modules.Parameters
             parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Type", "Type of the creature", false));
             parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Damage", "Number of the damage dealt"));
             parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Aggresion", "Number of agression"));
-            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Reproduction Need", "The need for breeding"));
+            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Reproduction", "The need for breeding"));
             parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Max Health", "Max Health"));
             parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Max Hunger", "Max Hunger"));
 
@@ -155,30 +155,30 @@ namespace Client.UI.CreateModules.Modules.Parameters
         {
             bool badParameter = false;
             string output = "Incorrect";
-            if (!(parameters[0].GetValue() <= SharedLibrary.Helpers.ModulePropertiesLimits.MAX_DAMAGE && parameters[0].GetValue() >= SharedLibrary.Helpers.ModulePropertiesLimits.MIN_DAMAGE))
+            if (!(parameters[1].GetValue() <= SharedLibrary.Helpers.ModulePropertiesLimits.MAX_DAMAGE && parameters[1].GetValue() >= SharedLibrary.Helpers.ModulePropertiesLimits.MIN_DAMAGE))
             {
                 output += " damage parameter";
                 badParameter = true;
             }
-            if (!(parameters[1].GetValue() <= SharedLibrary.Helpers.ModulePropertiesLimits.MAX_AGGRESSION && parameters[1].GetValue() >= SharedLibrary.Helpers.ModulePropertiesLimits.MIN_AGGRESSION))
+            if (!(parameters[2].GetValue() <= SharedLibrary.Helpers.ModulePropertiesLimits.MAX_AGGRESSION && parameters[2].GetValue() >= SharedLibrary.Helpers.ModulePropertiesLimits.MIN_AGGRESSION))
             {
                 if (badParameter) output += ", aggression parameter";
                 else output += " aggression parameter";
                 badParameter = true;
             }
-            if (!(parameters[2].GetValue() <= SharedLibrary.Helpers.ModulePropertiesLimits.MAX_REPRODUCTION_NEED && parameters[2].GetValue() >= SharedLibrary.Helpers.ModulePropertiesLimits.MIN_REPRODUCTION_NEED))
+            if (!(parameters[3].GetValue() <= SharedLibrary.Helpers.ModulePropertiesLimits.MAX_REPRODUCTION_NEED && parameters[3].GetValue() >= SharedLibrary.Helpers.ModulePropertiesLimits.MIN_REPRODUCTION_NEED))
             {
                 if (badParameter) output += ", reproduction parameter";
                 else output += " reproduction parameter";
                 badParameter = true;
             }
-            if (!(parameters[3].GetValue() <= SharedLibrary.Helpers.ModulePropertiesLimits.MAX_MAX_HEALTH && parameters[3].GetValue() >= SharedLibrary.Helpers.ModulePropertiesLimits.MIN_MAX_HEALTH))
+            if (!(parameters[4].GetValue() <= SharedLibrary.Helpers.ModulePropertiesLimits.MAX_MAX_HEALTH && parameters[4].GetValue() >= SharedLibrary.Helpers.ModulePropertiesLimits.MIN_MAX_HEALTH))
             {
                 if (badParameter) output += ", health parameter";
                 else output += " health parameter";
                 badParameter = true;
             }
-            if (!(parameters[4].GetValue() <= SharedLibrary.Helpers.ModulePropertiesLimits.MAX_MAX_HUNGER && parameters[4].GetValue() >= SharedLibrary.Helpers.ModulePropertiesLimits.MIN_MAX_HUNGER))
+            if (!(parameters[5].GetValue() <= SharedLibrary.Helpers.ModulePropertiesLimits.MAX_MAX_HUNGER && parameters[5].GetValue() >= SharedLibrary.Helpers.ModulePropertiesLimits.MIN_MAX_HUNGER))
             {
                 if (badParameter) output += ", hunger parameter";
                 else output += " hunger parameter";

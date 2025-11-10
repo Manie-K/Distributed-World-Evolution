@@ -56,10 +56,6 @@ public class AudioManager
         }
     }
 
-    public void StopSong() => MediaPlayer.Stop();
-    public void PauseSong() => MediaPlayer.Pause();
-    public void ResumeSong() => MediaPlayer.Resume();
-
     public void SetGlobalMusicVolume(float volume)
     {
         volume = MathHelper.Clamp(volume, 0f, 1f);
@@ -81,28 +77,6 @@ public class AudioManager
        else return globalMusicVolume;
     }
 
-
-    public void LoadSoundEffect(string name, string path, float baseVolume = 1.0f)
-    {
-        if (!soundEffects.ContainsKey(name))
-        {
-            SoundEffect effect = content.Load<SoundEffect>(path);
-            soundEffects[name] = new SoundEffectData(effect, baseVolume);
-        }
-    }
-
-    public void PlaySound(string name)
-    {
-        if (soundEffects.ContainsKey(name))
-        {
-            var data = soundEffects[name];
-            var instance = data.Effect.CreateInstance();
-            float finalVolume = data.BaseVolume * (isMuted ? 0f : globalEffectVolume);
-            instance.Volume = MathHelper.Clamp(finalVolume, 0f, 1f);
-            instance.Play();
-        }
-    }
-
     public void SetGlobalEffectVolume(float volume)
     {
         volume = MathHelper.Clamp(volume, 0f, 1f);
@@ -122,46 +96,7 @@ public class AudioManager
         if(isMuted) return savedEffectVolume;
         else return globalEffectVolume;
     }
-    public void SetBaseEffectVolume(string name, float baseVolume)
-    {
-        if (soundEffects.ContainsKey(name))
-        {
-            soundEffects[name].BaseVolume = MathHelper.Clamp(baseVolume, 0f, 1f);
-        }
-    }
 
-
-
-    public void MuteAll()
-    {
-        if (isMuted) return;
-
-        savedMusicVolume = globalMusicVolume;
-        savedEffectVolume = globalEffectVolume;
-
-        MediaPlayer.Volume = 0f;
-        globalEffectVolume = 0f;
-        isMuted = true;
-    }
-
-    public void UnmuteAll()
-    {
-        if (!isMuted) return;
-
-        globalMusicVolume = savedMusicVolume;
-        globalEffectVolume = savedEffectVolume;
-
-        MediaPlayer.Volume = globalMusicVolume;
-        isMuted = false;
-    }
-
-    public void ToggleMute()
-    {
-        if (isMuted)
-            UnmuteAll();
-        else
-            MuteAll();
-    }
 
     public void IncreaseMusicVolume(float step = 0.1f)
     {
@@ -186,6 +121,4 @@ public class AudioManager
         float targetVolume = (isMuted ? savedEffectVolume : globalEffectVolume) - step;
         SetGlobalEffectVolume(targetVolume);
     }
-
-    public bool IsMuted => isMuted;
 }

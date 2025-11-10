@@ -62,7 +62,7 @@ namespace Client.UI.CreateLobby.Parameters
 
             foreach(ModuleParametersData moduleParameter in moduleParameters)
             {
-                parameters.Add(new ParameterRow(contentManager, moduleParameter.Name, moduleParameter.Value, moduleParameter.AdditionalDescription, new Vector2(800, 183 + 76 * (parameters.Count % amountOfRows)), moduleParameter.Type));
+                parameters.Add(new ParameterRow(contentManager, moduleParameter.Name, moduleParameter.Value, moduleParameter.AdditionalDescription, new Vector2(785, 183 + 76 * (parameters.Count % amountOfRows)), moduleParameter.Type));
             }
 
             pageNumber = 1;

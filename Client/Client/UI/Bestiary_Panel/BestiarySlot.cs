@@ -22,30 +22,10 @@ namespace Client.UI.Bestiary_Panel
             backgroundColor = Color.White;
         }
 
-        public void Update()
-        {
-
-        }
-
-        public bool CheckLeftClick(Vector2 position)
-        {
-            if (backgroundBounds.Contains(position))
-            {
-                backgroundColor = Color.Black;
-                return true;
-            }
-            return false;
-        }
-
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(background, backgroundBounds, backgroundColor);
             spriteBatch.Draw(creatureTexture, creatureTextureBounds, Color.White);
-        }
-
-        public void ResetColor()
-        {
-            backgroundColor = Color.White;
         }
 
         public void SetPosition(Vector2 position)

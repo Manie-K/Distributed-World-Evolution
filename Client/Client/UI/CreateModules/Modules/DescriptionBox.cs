@@ -17,8 +17,6 @@ namespace Client.UI.CreateModules.Modules
         private Text descitpionText;
         public bool IsClickedButton;
 
-
-        //example of description text "The monster instantly reacts to any move-\nment, hurling itself at its prey with sa-\nvage fury. It slashes with claws and fangs."
         public DescriptionBox(SpriteFont fontNumbers, int offset, ContentManager contentManager)
         {
             DescriptionButton= new Button(contentManager.Load<Texture2D>("UI/CreateModules/DescriptionIcon"), null, "", new Vector2(1120, 484), 19, 37, Color.Lime);

@@ -84,7 +84,7 @@ namespace Client
                 parameters.Add(new ModuleParametersData("Type", module.Type.ToString(), 1, "Type of a creature"));
                 parameters.Add(new ModuleParametersData("Damage", module.Damage.ToString(), 0, "Damage"));
                 parameters.Add(new ModuleParametersData("Aggresion", module.Aggresion.ToString(), 0, "Aggresion"));
-                parameters.Add(new ModuleParametersData("Reproduction Need", module.ReproductionNeed.ToString(), 0, "Reproduction Need"));
+                parameters.Add(new ModuleParametersData("Reproduction", module.ReproductionNeed.ToString(), 0, "Reproduction Need"));
                 parameters.Add(new ModuleParametersData("Max Health", module.MaxHealth.ToString(), 0, "Max Health"));
                 parameters.Add(new ModuleParametersData("Max Hunger", module.MaxHunger.ToString(), 0, "Max Hunger"));
 
@@ -162,7 +162,7 @@ namespace Client
                     }
                     else
                     {
-                        manager.WindowManager.ShowWarningWindow("  Invalid name or incorrect\nnumber of players (max 32).");
+                        manager.WindowManager.ShowWarningWindow("Invalid name or incorrect number of players (max 32).");
                     }
                 }
                 else if (mapButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
@@ -222,16 +222,6 @@ namespace Client
             {
                 switchPageParameters.Draw(spriteBatch);
             }
-        }
-
-        private void LobbyInfoSerialization()
-        {
-            var json = JsonSerializer.Serialize(new
-            {
-                LobbyName = gameNameBox.GetText()
-            });
-
-            Console.WriteLine(json);
         }
 
         private void ResetLoadingState()

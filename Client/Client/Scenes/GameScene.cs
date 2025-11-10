@@ -143,47 +143,6 @@ namespace Client
             panelsController.Draw(spriteBatch);
         }
 
-        private void LoadCharacters()
-        {
-
-            characters.Add(new Guid(), new EnemyPlant1(new Vector2(32, 32), Color.White));
-            characters.Add(new Guid("11111111-1111-1111-1111-111111111111"), new EnemyPlant2(new Vector2(64, 32), Color.White));
-            characters.Add(new Guid("11111111-1111-1111-1111-111111121111"), new Pig(new Vector2(96, 32), Color.White));
-            characters.Add(new Guid("11111311-1111-1111-1111-111111111111"), new Boar(new Vector2(128, 32), Color.White));
-            characters.Add(new Guid("11141111-1111-1111-1111-111111111111"), new WhiteRabbit(new Vector2(160, 32), Color.White));
-            characters.Add(new Guid("11511111-1111-1111-1111-111111111111"), new BrownRabbit(new Vector2(192, 32), Color.White));
-            characters.Add(new Guid("11611111-1111-1111-1111-111111111111"), new EnemyPlant3(new Vector2(224, 32), Color.White));
-            characters.Add(new Guid("11211111-1111-1111-1111-111111111111"), new Slime1(new Vector2(256, 32), Color.White));
-            characters.Add(new Guid("11111111-1111-1311-1111-111111111111"), new Slime2(new Vector2(288, 32), Color.White));
-
-            characters.Add(new Guid("11111111-1311-1111-1111-111111111111"), new Slime3(new Vector2(320, 32), Color.White));
-            characters.Add(new Guid("11511411-1111-1111-1111-111111111111"), new Orc1(new Vector2(32, 64), Color.White));
-            characters.Add(new Guid("11121111-1111-1111-1111-111111111111"), new Orc2(new Vector2(64, 64), Color.White));
-            characters.Add(new Guid("11211111-1111-1111-1211-111111111111"), new Orc3(new Vector2(96, 64), Color.White));
-            characters.Add(new Guid("11111111-1111-1111-1411-111111111111"), new Vampire1(new Vector2(128, 64), Color.White));
-            characters.Add(new Guid("11111111-1111-1111-1511-111111111111"), new Vampire2(new Vector2(160, 64), Color.White));
-            characters.Add(new Guid("11111111-1111-1111-1611-111111111111"), new Vampire3(new Vector2(192, 64), Color.White));
-
-        }
-
-        private void LoadPlants()
-        {
-            /*  plants.Add(new Poppy(new Vector2(300, 500)));
-              plants.Add(new Cosmo(new Vector2(800, 500)));
-              plants.Add(new Daffodil(new Vector2(1300, 1500)));
-              plants.Add(new Daisy(new Vector2(1800, 1500)));
-
-              plants.Add(new Lavender(new Vector2(2300, 2500)));
-              plants.Add(new Lily(new Vector2(3800, 3500)));
-              plants.Add(new LilyOfTheValley(new Vector2(4300, 4300)));
-              plants.Add(new Orchid(new Vector2(5800, 5500)));
-
-              plants.Add(new Pansy(new Vector2(6300, 6300)));
-              plants.Add(new Rose(new Vector2(7800, 7500)));
-              plants.Add(new Sunflower(new Vector2(2300, 6300)));
-              plants.Add(new Tulip(new Vector2(7800, 3300)));*/
-        }
-
         private void LoadEntity(WorldEntityDTO entity)
         {
             int graphicID = manager.ClientManager.Modules.FirstOrDefault(m => m.DatabaseID == entity.ModuleID)?.GraphicalRepresentationID ?? -1;

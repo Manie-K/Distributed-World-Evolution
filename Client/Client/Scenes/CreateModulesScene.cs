@@ -163,22 +163,6 @@ namespace Client
             switchPageModulesParameters.Draw(spriteBatch);
         }
 
-
-        public void CreateAnimalJSON()
-        {
-            var json = JsonSerializer.Serialize(new
-            {
-                LobbyName = moduleName.GetText(),
-                ModuleGraphics = switchPageModules.GetIndex(),
-                Health = switchPageModulesParameters.GetValueOnIndex(0),
-                Damage = switchPageModulesParameters.GetValueOnIndex(1),
-                Hunger = switchPageModulesParameters.GetValueOnIndex(2),
-                Behaviours = switchPageModulesParameters.GetBehavioursList()
-            }) ;
-
-            Console.WriteLine(json);
-        }
-
         private void ResetLoadingState()
         {
             isLoadingBehaviours = false;
