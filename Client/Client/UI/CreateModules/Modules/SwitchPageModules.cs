@@ -101,11 +101,6 @@ namespace Client
             return modules[pageNumber - 1].type;
         }
 
-        public int GetIndex()
-        {
-            return pageNumber - 1;
-        }
-
         public int GetGraphicIndex()
         {
             return modules[pageNumber - 1].GraphicIndex;

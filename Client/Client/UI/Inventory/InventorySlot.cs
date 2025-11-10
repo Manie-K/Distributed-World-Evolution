@@ -33,11 +33,6 @@ namespace Client.UI.Bestiary_Panel
             itemType = type;
         }
 
-        public void Update()
-        {
-
-        }
-
         public void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(background, backgroundBounds, backgroundColor);

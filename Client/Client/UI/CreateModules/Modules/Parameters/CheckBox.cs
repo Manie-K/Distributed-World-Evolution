@@ -55,19 +55,9 @@ namespace Client.UI.CreateModules.Modules.Parameters
             return false;
         }
 
-        public void SetBackgroundColor(Color color)
-        {
-            backgroundColor = color;
-        }
-
         public bool GetValue()
         {
             return value;
-        }
-
-        public void SetValue(bool val)
-        {
-            value = val;
         }
 
         public bool CheckBounds(Vector2 mousePosition)

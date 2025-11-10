@@ -224,16 +224,6 @@ namespace Client
             }
         }
 
-        private void LobbyInfoSerialization()
-        {
-            var json = JsonSerializer.Serialize(new
-            {
-                LobbyName = gameNameBox.GetText()
-            });
-
-            Console.WriteLine(json);
-        }
-
         private void ResetLoadingState()
         {
             isCreatingLobby = false;
