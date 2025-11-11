@@ -25,6 +25,5 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
                 target.State.Hunger -= (int)0.1 * entityModule.MaxHunger;
             }
         }
-
     }
 }
