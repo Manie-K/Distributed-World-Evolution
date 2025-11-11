@@ -2,6 +2,7 @@
 using Client.Common;
 using Client.Logic;
 using SharedLibrary.DTOs.EntitiesDTO;
+using SharedLibrary.Helpers;
 
 namespace Client
 {
@@ -51,6 +52,26 @@ namespace Client
             }
 
             am.Update(gameTime);
+        }
+
+        public void SetCurrentDirection(Position2D currentPosition, Position2D newPosition)
+        {
+            if (newPosition.X > currentPosition.X)
+            {
+                CurrentDirection = Direction.right;
+            }
+            else if (newPosition.X < currentPosition.X)
+            { 
+                CurrentDirection = Direction.left;
+            }
+            else if (newPosition.Y < currentPosition.Y)
+            {
+                CurrentDirection = Direction.up;
+            }
+            else if (newPosition.Y > currentPosition.Y)
+            {
+                CurrentDirection = Direction.down;
+            }
         }
     }
 }

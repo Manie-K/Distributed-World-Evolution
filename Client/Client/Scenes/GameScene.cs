@@ -62,7 +62,7 @@ namespace Client
             Dictionary<Guid, Character> newCharacterList = [];
             Dictionary<Guid, Plant> newPlantList = [];
 
-            // Remove dead creatures
+            // Removing dead creatures
             foreach (Guid guid in characters.Keys)
             {
                 if (entities.ContainsKey(guid))
@@ -72,7 +72,7 @@ namespace Client
             }
             characters = newCharacterList;
 
-            // Remove dead plants
+            // Removing dead plants
             foreach (Guid guid in plants.Keys)
             {
                 if (entities.ContainsKey(guid))
@@ -95,6 +95,7 @@ namespace Client
                 if (characters.TryGetValue(entity.Id, out Character character))
                 {
                     character.Update(gameTime, manager.InputManager, entity.State);
+                    character.SetCurrentDirection(map.GetTilePosition2D(character.Position.X, character.Position.Y), entity.State.Position);
                     character.Position = GetWorldPosition(entity);
                 }
                 else if (plants.TryGetValue(entity.Id, out Plant plant))
