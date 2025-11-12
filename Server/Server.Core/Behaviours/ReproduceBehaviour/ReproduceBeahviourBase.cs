@@ -20,7 +20,7 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
 
 
         /// <inheritdoc/>
-        public virtual void Execute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
+        public virtual void Execute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
             Module entityModule = moduleService.GetModuleById(entity.ModuleID) ?? throw new Exception($"Module with ID={entity.ModuleID} not found!");
             EntityTypeEnum entityType = entityModule.Type;
@@ -59,7 +59,7 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
 
             if (position == null)
             {
-                return; //We didn't find a free position, so we dont spawn a child
+                return; //We didn't find a free position, so we do not spawn a child
             }
 
             WorldEntity child = WorldEntity.CreateWorldEntity(
@@ -77,24 +77,13 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
         }
 
         /// <inheritdoc/>
-        public virtual bool CanExecute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
+        public virtual bool CanExecute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
-            Module entityModule= moduleService.GetModuleById(entity.ModuleID)?? throw new Exception($"Module with ID={entity.ModuleID} not found");
-            EntityTypeEnum entityType = entityModule.Type;
+            Module entityModule = moduleService.GetModuleById(entity.ModuleID)?? throw new Exception($"Module with ID={entity.ModuleID} not found");
             
             bool canReproduce = false;
 
-            if (target == null && entityType == EntityTypeEnum.Plant)
-            {
-                canReproduce = true;
-            }
-            else if (target != null)
-            {
-                EntityTypeEnum targetType = moduleService.GetModuleById(target.ModuleID)?.Type ?? throw new Exception($"Module with ID={target.ModuleID} not found");
-                canReproduce = entity.ModuleID == target.ModuleID && target != entity;
-            }
-
-            if (canReproduce)
+            if (entity.ModuleID == target.ModuleID && target != entity)
             {
                 Random random = new Random();
                 int chance = random.Next(1, 11); 
