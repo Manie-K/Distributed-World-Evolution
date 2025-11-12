@@ -13,7 +13,7 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
         ///<inheritdoc/>
         public override int DatabaseID => 403;
         ///<inheritdoc/>
-        public override string Description => "Plant reproduce behaviour.";
+        public override string Description => "Plants reproduce behaviour according to their reproduction need.";
         ///<inheritdoc/>
         public override void Execute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {

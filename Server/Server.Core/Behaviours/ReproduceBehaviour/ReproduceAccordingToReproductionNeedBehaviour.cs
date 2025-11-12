@@ -12,6 +12,6 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
         /// <inheritdoc/>
         public override int DatabaseID => 401;
         /// <inheritdoc/>
-        public override string Description => "Reproduction depends on reproduction need";
+        public override string Description => "Reproduction depended on an animal's reproduction need.";
     }
 }

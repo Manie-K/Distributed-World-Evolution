@@ -6,20 +6,19 @@ namespace Server.Core.Behaviours.AttackBehaviour
     {
         /// <inheritdoc/>
         public override int DatabaseID => 213;
-        
         /// <inheritdoc/>
-        public override string Description => throw new NotImplementedException();
-        
+        public override EntityTypeEnum Type => EntityTypeEnum.Plant;
+        /// <inheritdoc/>
+        public override string Description => "Plants cannot fight.";
         /// <inheritdoc/>
         public override bool CanExecute(WorldEntity attacker, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
-            throw new NotImplementedException();
+            return false;
         }
-
         /// <inheritdoc/>
         public override void Execute(WorldEntity attacker, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
-            throw new NotImplementedException();
+            return;
         }
     }
 }
