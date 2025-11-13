@@ -10,11 +10,11 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
     internal class ReproduceWhenNotHungryBehaviour : ReproduceBehaviourBase
     {
         /// <inheritdoc/>
-        public override int DatabaseID => 402;
+        public override int DatabaseID => 404;
         /// <inheritdoc/>
         public override string Description => "Reproduces only when not hungry.";
         /// <inheritdoc/>
-        public override bool CanExecute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
+        public override bool CanExecute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
             if (base.CanExecute(entity, target, moduleService, otherParams))
             {
