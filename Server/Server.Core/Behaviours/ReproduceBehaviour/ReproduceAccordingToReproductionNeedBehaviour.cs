@@ -1,6 +1,4 @@
-﻿
-
-namespace Server.Core.Behaviours.ReproduceBehaviour
+﻿namespace Server.Core.Behaviours.ReproduceBehaviour
 {
     public class ReproduceAccordingToReproductionNeedBehaviour : ReproduceBehaviourBase
     {

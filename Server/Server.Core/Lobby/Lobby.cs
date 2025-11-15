@@ -15,7 +15,6 @@ using Server.Core.Behaviours.TameBehaviour;
 using Server.Core.Behaviours.ReproduceBehaviour;
 using SharedLibrary.Helpers;
 using System.Collections.Immutable;
-using System.Reflection.Metadata;
 
 namespace Server.Core.Lobby
 {
