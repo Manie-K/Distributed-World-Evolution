@@ -18,7 +18,7 @@ namespace Server.Core.Behaviours.AttackBehaviour
         /// <inheritdoc/>
         public override void Execute(WorldEntity attacker, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
-            return;
+            return; //no-op
         }
     }
 }
