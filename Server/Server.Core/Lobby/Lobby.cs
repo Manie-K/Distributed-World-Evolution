@@ -15,6 +15,7 @@ using Server.Core.Behaviours.TameBehaviour;
 using Server.Core.Behaviours.ReproduceBehaviour;
 using SharedLibrary.Helpers;
 using System.Collections.Immutable;
+using System.Reflection.Metadata;
 
 namespace Server.Core.Lobby
 {
@@ -34,7 +35,7 @@ namespace Server.Core.Lobby
 
 
         /// <summary>
-        /// Static event for logging within the lobby.
+        /// Static event used for logging within the lobby.
         /// </summary>
         public static event EventHandler<OnLogEventArgs>? OnLog;
 
@@ -326,44 +327,7 @@ namespace Server.Core.Lobby
         /// </summary>
         private void PublishWorldState()
         {
-            // Simulate all non-human entities
-            Module? entityModule;
-            EntityState nextState;
-
-            for (int i = 0; i < entities.Count; i++) 
-            {
-                WorldEntity entity = entities[i];
-
-                if(entity.State.InteractionFramesLeft > 0)
-                {
-                    entity.State.InteractionFramesLeft--;
-                    continue;
-                }
-                entity.State.LastInteractionName = String.Empty;
-
-                entityModule = moduleService.GetModuleById(entity.ModuleID);
-                if(entityModule == null)
-                {
-                    Log($"Entity's {entity.Id} module not found in lobby {LobbyId}.", LogLevelEnum.Warning);
-                    continue;
-                }
-
-                if (entityModule.Type == EntityTypeEnum.Human)
-                {
-                    continue;
-                }
-
-
-                (int stepX, int stepY) = ((MoveBehaviourBase)entityModule.GetBehaviourOfType(typeof(MoveBehaviourBase))).GetNextMovement(entity, ImmutableList.Create(entities.ToArray()));                
-                
-                nextState = new EntityState(entity.State);
-                nextState.Position.X += stepX;
-                nextState.Position.Y += stepY;
-                
-                entity.State.LastMovementVector = new Position2D(stepX, stepY);
-
-                SimulateNonHumanEntityUpdate(entity, nextState);
-            }
+            UpdateWorldState();
 
             lock (clients)
             {
@@ -373,6 +337,69 @@ namespace Server.Core.Lobby
                             entities.Select(e => e.ToDTO())
                         ));
                 }
+            }
+        }
+
+        /// <summary>
+        /// Updates the world state by simulating all non-human entities.
+        /// </summary>
+        private void UpdateWorldState()
+        {
+            const int HUNGER_CHANGE = 1;
+            const int HEALTH_CHANGE = 1;
+
+            Module? entityModule;
+            EntityState nextState;
+
+            for (int i = 0; i < entities.Count; i++)
+            {
+                WorldEntity entity = entities[i];
+                entityModule = moduleService.GetModuleById(entity.ModuleID);
+
+                if (entityModule == null)
+                {
+                    Log($"Entity's {entity.Id} module not found in lobby {LobbyId}.", LogLevelEnum.Warning);
+                    continue;
+                }
+
+
+                if (entity.State.Hunger > 0)
+                {
+                    entity.State.Hunger -= HUNGER_CHANGE;
+                }
+                else if (entity.State.Health > 0)
+                {
+                    entity.State.Health -= HEALTH_CHANGE;
+                }
+
+                if (entity.State.Hunger > 0 && entity.State.Health < entityModule.MaxHealth)
+                {
+                    entity.State.Health += HEALTH_CHANGE;
+                }
+
+
+                if (entity.State.InteractionFramesLeft > 0)
+                {
+                    entity.State.InteractionFramesLeft--;
+                    continue;
+                }
+                entity.State.LastInteractionName = String.Empty;
+
+                if (entityModule.Type == EntityTypeEnum.Human)
+                {
+                    continue;
+                }
+
+
+                (int stepX, int stepY) = ((MoveBehaviourBase)entityModule.GetBehaviourOfType(typeof(MoveBehaviourBase))).GetNextMovement(entity, ImmutableList.Create(entities.ToArray()));
+
+                nextState = new EntityState(entity.State);
+                nextState.Position.X += stepX;
+                nextState.Position.Y += stepY;
+
+                entity.State.LastMovementVector = new Position2D(stepX, stepY);
+
+                SimulateNonHumanEntityUpdate(entity, nextState);
             }
         }
 
@@ -388,7 +415,7 @@ namespace Server.Core.Lobby
                 switch (message.MessageType)
                 {
                     case MessageTypeEnum.UserInteraction:
-                        HandleUpdateWorldEntityStateMessage(client, (UserInteractionMessage)message);
+                        HandleUpdateHumanWorldEntityMessage(client, (UserInteractionMessage)message);
                         break;
                     case MessageTypeEnum.InfoMessage:
                         HandleInfoMessage(client, (InfoMessage)message);
@@ -397,8 +424,7 @@ namespace Server.Core.Lobby
                         HandleUnsupportedMessageType(client, message);
                         break;
                 }
-            }
-                    
+            }    
         }
 
         /// <summary>
@@ -642,7 +668,7 @@ namespace Server.Core.Lobby
 
         #region Handlers
 
-        private void HandleUpdateWorldEntityStateMessage(TcpClient client, UserInteractionMessage message)
+        private void HandleUpdateHumanWorldEntityMessage(TcpClient client, UserInteractionMessage message)
         {
             WorldEntityDTO human = message.HumanEntity;
             WorldEntityDTO? other = message.OtherEntity;
