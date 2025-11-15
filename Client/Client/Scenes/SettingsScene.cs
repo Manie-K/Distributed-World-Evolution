@@ -24,8 +24,8 @@ namespace Client
             this.manager = manager;
 
             switchButtons = new SwitchButton[2];
-            keyBoardKeysImages = new Texture2D[10];
-            keyBoardKeysText = new Text[7];
+            keyBoardKeysImages = new Texture2D[11];
+            keyBoardKeysText = new Text[8];
 
             exitButton = new Button(manager.ContentManager.Load<Texture2D>("UI/White Close 2"), manager.ContentManager.Load<SpriteFont>("Fonts/ButtonFont"), "", new Vector2(1180, 30), 70, 70, Color.Red);
             switchButtons[0] = new SwitchButton(manager.ContentManager.Load<Texture2D>("UI/White Left"),
@@ -53,6 +53,8 @@ namespace Client
             keyBoardKeysText[5] = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers2"), "BESTIARY", true, new Vector2(690, 130), 100, 60);
             keyBoardKeysImages[9] = manager.ContentManager.Load<Texture2D>("UI/Keyboard_keys/q");
             keyBoardKeysText[6] = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers2"), "DROP ITEM", true, new Vector2(690, 185), 100, 60);
+            keyBoardKeysImages[10] = manager.ContentManager.Load<Texture2D>("UI/Keyboard_keys/f");
+            keyBoardKeysText[7] = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers2"), "EAT", true, new Vector2(690, 240), 100, 60);
             playerNameTextBox = new TextBox(null, manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), new Vector2(688, 564), 190, 56, Color.Black);
             playerNameTextBox.SetText(manager.UserSettings.PlayerName);
 
@@ -160,6 +162,7 @@ namespace Client
             spriteBatch.Draw(keyBoardKeysImages[7], new Rectangle(812, 75, 85, 60), Color.White);
             spriteBatch.Draw(keyBoardKeysImages[8], new Rectangle(805, 130, 85, 60), Color.White);
             spriteBatch.Draw(keyBoardKeysImages[9], new Rectangle(805, 185, 85, 60), Color.White);
+            spriteBatch.Draw(keyBoardKeysImages[10], new Rectangle(805, 240, 85, 60), Color.White);
 
             spriteBatch.Draw(nicknameTextBoxTexture, new Rectangle(688, 564, 190, 56), Color.White);
             nicknameTextBoxText.Draw(spriteBatch);

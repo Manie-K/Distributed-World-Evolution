@@ -32,7 +32,8 @@ namespace Client
         {
             Attack,
             Gather,
-            Tame
+            Tame,
+            Eat
         }
 
         public Player(Vector2 position, Color color, Text playerName, Vector2 spriteDrawingOffset, ref BestiaryPanel bestiaryPanel,
@@ -137,6 +138,10 @@ namespace Client
             {
                 HandleInteraction(InteractionType.Gather);
             }
+            if (inputManager.CheckIfPressingKey(Keys.F))
+            {
+                HandleInteraction(InteractionType.Eat);
+            }
             if (inputManager.CheckIfPressingKey(Keys.R))
             {
                 HandleInteraction(InteractionType.Tame);
@@ -163,6 +168,19 @@ namespace Client
             }
         }
 
+        public float GetPlayerMaxHunger()
+        {
+            if (playerModule != null)
+            {
+                return playerModule.MaxHunger;
+            }
+            else
+            {
+                return 1.0f;
+            }
+        }
+
+
         private void HandleInteraction(InteractionType interactionType)
         {
             if (actionCooldown > 0) return;
@@ -183,8 +201,23 @@ namespace Client
                         break;
                 }
             }
+            else
+            {
+                if (interactionType == InteractionType.Eat)
+                {
+                    Eat();
+                }
+            }
 
             actionCooldown = PLAYER_ACTION_COOLDOWN;
+        }
+
+        private void Eat()
+        {
+            if (inventory.Eat())
+            {
+                PlayerDTO.State.Hunger += 5;
+            }
         }
 
         private void AttackTarget()

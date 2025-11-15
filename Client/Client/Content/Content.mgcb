@@ -915,30 +915,6 @@
 /processorParam:TextureFormat=Color
 /build:Panels/Esc_Panel/Settings_Button2.png
 
-#begin Panels/HealthBar/HealthBar_RedArea.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Panels/HealthBar/HealthBar_RedArea.png
-
-#begin Panels/HealthBar/HealthBar.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:Panels/HealthBar/HealthBar.png
-
 #begin Panels/Information_Window/Information_Window.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -998,6 +974,42 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:Panels/LoadingWindow/Loading_Window.png
+
+#begin Panels/StatsPanel/HealthBar.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Panels/StatsPanel/HealthBar.png
+
+#begin Panels/StatsPanel/HungerBar.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Panels/StatsPanel/HungerBar.png
+
+#begin Panels/StatsPanel/StatsBG.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:Panels/StatsPanel/StatsBG.png
 
 #begin Panels/Warning_Window/OK_Button2.png
 /importer:TextureImporter
@@ -2102,6 +2114,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:UI/Keyboard_keys/esc.png
+
+#begin UI/Keyboard_keys/f.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:UI/Keyboard_keys/f.png
 
 #begin UI/Keyboard_keys/q.png
 /importer:TextureImporter

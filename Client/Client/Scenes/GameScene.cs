@@ -88,7 +88,8 @@ namespace Client
                 {
                     player.PlayerDTO ??= entity;
                     player.PlayerDTO.State.Health = entity.State.Health;
-                    panelsController.SetHealthBarValue(entity.State.Health / player.GetPlayerMaxHealth());
+                    panelsController.StatsPanel.SetHealthBar(entity.State.Health / player.GetPlayerMaxHealth());
+                    panelsController.StatsPanel.SetHungerBar(entity.State.Hunger / player.GetPlayerMaxHunger());
                     continue;
                 }
 
