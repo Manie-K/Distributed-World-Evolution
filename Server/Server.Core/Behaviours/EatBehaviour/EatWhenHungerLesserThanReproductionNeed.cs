@@ -1,12 +1,6 @@
 ﻿using Server.Core.Helpers;
 using Server.Core.Modules;
 using Server.Core.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using SharedLibrary.Helpers;
 
 namespace Server.Core.Behaviours.EatBehaviour
 {

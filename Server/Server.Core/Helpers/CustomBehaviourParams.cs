@@ -1,6 +1,6 @@
 ﻿namespace Server.Core.Helpers
 {
-    internal static class CustomBehaviourParams
+    public static class CustomBehaviourParams
     {
         public static string MAP_WALKABLE_PARAM = "MapWalkable";
         public static string MAP_FERTILE_PARAM = "MapFertile";

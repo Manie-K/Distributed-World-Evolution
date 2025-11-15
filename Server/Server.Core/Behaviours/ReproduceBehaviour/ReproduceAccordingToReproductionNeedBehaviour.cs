@@ -1,11 +1,4 @@
-﻿using Server.Core.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Server.Core.Behaviours.ReproduceBehaviour
+﻿namespace Server.Core.Behaviours.ReproduceBehaviour
 {
     public class ReproduceAccordingToReproductionNeedBehaviour : ReproduceBehaviourBase
     {

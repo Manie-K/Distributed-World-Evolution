@@ -20,7 +20,7 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
 
 
         /// <inheritdoc/>
-        public virtual void Execute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
+        public virtual void Execute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
             Module entityModule = moduleService.GetModuleById(entity.ModuleID) ?? throw new Exception($"Module with ID={entity.ModuleID} not found!");
             EntityTypeEnum entityType = entityModule.Type;
@@ -38,27 +38,23 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
             int x = entity.State.Position.X;
             int y = entity.State.Position.Y;
 
-            if (walkableTiles[x][y] == false)
-            {
-                return; // Entity is on a non-walkable tile, so we skip reproduction attempt
-            }
+            const short radius = 3;
+            var possibleOffsets = new (short, short)[(radius*2 + 1) * (radius*2 + 1)]; // Looks for a free tile in an area around the entity ({radius} tile radius around entity).
 
-            var random = new Random();
-            var possibleOffsets = new List<(int dx, int dy)>();
-
-            for (int dx = -3; dx <= 3; dx++)
+            for (short dx = -radius; dx <= radius; dx++)
             {
-                for (int dy = -3; dy <= 3; dy++)
+                for (short dy = -radius; dy <= radius; dy++)
                 {
-                    if (dx == 0 && dy == 0)
-                        continue;
-                    possibleOffsets.Add((dx, dy));
+                    possibleOffsets[(dx + radius) * radius + (dy + radius)] = (dx, dy);
                 }
             }
-            possibleOffsets = possibleOffsets.OrderBy(_ => random.Next()).ToList();
 
+            possibleOffsets = possibleOffsets.OrderBy(_ => new Random().Next()).ToArray();
             foreach (var (dx, dy) in possibleOffsets)
             {
+                if(dx == 0 && dy == 0)
+                    continue; // Skip the entity's current position.
+
                 int newX = x + dx;
                 int newY = y + dy;
 
@@ -68,13 +64,13 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
                 if (walkableTiles[newX][newY] && lobby.IsPositionFree(new Position2D(newX, newY)))
                 {
                     position = new Position2D(newX, newY);
-                    break; // Found a free position
+                    break; // Found a free position.
                 }
             }
 
             if (position == null)
             {
-                return; // Not fund a free position, so we do not spawn a child
+                return; // Didn't find a free position, so we do NOT spawn a child.
             }
 
             WorldEntity child = WorldEntity.CreateWorldEntity(
@@ -92,6 +88,7 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
         }
 
         /// <inheritdoc/>
+        /// Reproduction can occur if both entities are of the same module type and based on random roll with taking reproduction need into account.
         public virtual bool CanExecute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
             Module entityModule = moduleService.GetModuleById(entity.ModuleID)?? throw new Exception($"Module with ID={entity.ModuleID} not found");
@@ -100,9 +97,16 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
 
             if (entity.ModuleID == target.ModuleID && target != entity)
             {
-                Random random = new Random();
-                int chance = random.Next(1, 11); 
-                canReproduce = chance <= entityModule.ReproductionNeed;
+                int randomRoll = new Random().Next(1, 11); 
+                canReproduce = randomRoll <= entityModule.ReproductionNeed;
+            }
+
+            bool[][]? walkableTiles = otherParams != null && otherParams.TryGetValue(CustomBehaviourParams.MAP_WALKABLE_PARAM, out object? walkableTilesObj)
+               && walkableTilesObj is bool[][] tiles ? tiles : null;
+
+            if (walkableTiles?[entity.State.Position.X][entity.State.Position.Y] == false) // It's current entity position, not next simulated one, so this should never be false, but just in case.
+            {
+                return false; // Entity is on a non-walkable tile, so we skip reproduction attempt (don't reprodue while on water .... but shouldn't be on water in first place anyway).
             }
 
             return canReproduce;

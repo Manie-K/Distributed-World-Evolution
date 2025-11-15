@@ -90,12 +90,12 @@ namespace Server.Tests
         //Run after every test
         public void Dispose()
         {
-
+            //no-op
         }
 
 
         [Fact]
-        public void AllImplementationsHaveUniqueDatabaseIDsTest()
+        public void AllImplementationsHaveUniqueDatabaseIDs_Test()
         {
             //Arrange
             var behaviourTypes = typeof(AttackBehaviourBase).Assembly.GetTypes()

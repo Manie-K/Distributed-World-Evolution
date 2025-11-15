@@ -37,30 +37,23 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
             int x = entity.State.Position.X;
             int y = entity.State.Position.Y;
 
-            //TODO: maybe better check this in CanExecute? @MaciejGórlaczyk
-            if (walkableTiles[x][y] == false || fertileTiles[x][y] == false)
-            {
-                return; // Entity is on a non-walkable tile or on a non-fertile tile, so we skip reproduction attempt
-            }
+            const short radius = 3;
+            var possibleOffsets = new (short, short)[(radius * 2 + 1) * (radius * 2 + 1)]; // Looks for a free tile in an area around the entity ({radius} tile radius around entity).
 
-            var random = new Random();
-            var possibleOffsets = new List<(int dx, int dy)>();
-
-            for (int dx = -3; dx <= 3; dx++)
+            for (short dx = -radius; dx <= radius; dx++)
             {
-                for (int dy = -3; dy <= 3; dy++)
+                for (short dy = -radius; dy <= radius; dy++)
                 {
-                    if (dx == 0 && dy == 0)
-                    {
-                        continue;
-                    }
-                    possibleOffsets.Add((dx, dy));
+                    possibleOffsets[(dx + radius) * radius + (dy + radius)] = (dx, dy);
                 }
             }
-            possibleOffsets = possibleOffsets.OrderBy(_ => random.Next()).ToList();
 
+            possibleOffsets = possibleOffsets.OrderBy(_ => new Random().Next()).ToArray();
             foreach (var (dx, dy) in possibleOffsets)
             {
+                if (dx == 0 && dy == 0)
+                    continue; // Skip the entity's current position.
+
                 int newX = x + dx;
                 int newY = y + dy;
 
@@ -70,13 +63,13 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
                 if (walkableTiles[newX][newY] && fertileTiles[newX][newY] && lobby.IsPositionFree(new Position2D(newX, newY)))
                 {
                     position = new Position2D(newX, newY);
-                    break; // Found a free position
+                    break; // Found a free position.
                 }
             }
 
             if (position == null)
             {
-                return; // Not fund a free position, so we do not spawn a child
+                return; // Didn't find a free position, so we do NOT spawn a child.
             }
 
             WorldEntity child = WorldEntity.CreateWorldEntity(
@@ -92,6 +85,7 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
 
             lobby.AddWorldEntity(child);
         }
+
         ///<inheritdoc/>
         public override bool CanExecute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
@@ -102,9 +96,8 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
 
             if (entityType == EntityTypeEnum.Plant)
             {
-                Random random = new Random();
-                int chance = random.Next(1, 11);
-                canReproduce = chance <= entityModule.ReproductionNeed;
+                int randomRoll = new Random().Next(1, 11);
+                canReproduce = randomRoll <= entityModule.ReproductionNeed;
             }
 
             return canReproduce;
