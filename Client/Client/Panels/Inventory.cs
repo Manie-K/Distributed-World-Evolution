@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using System.Diagnostics.Metrics;
 
 namespace Client.Panels
 {
@@ -150,6 +151,16 @@ namespace Client.Panels
             {
                 slots[i].SetPosition(new Vector2(378 + (59 * i), 627));
             }
+        }
+
+        public bool Eat()
+        {
+            if (selectedSlot != -1)
+            {
+                if(slots[selectedSlot].RemoveItem()) RemoveSlot(selectedSlot);
+                return true;
+            }
+            return false;
         }
 
         public void ResetSlot()

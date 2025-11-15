@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Client.Panels.Stats;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
 namespace Client.Panels
@@ -10,7 +11,7 @@ namespace Client.Panels
         public EscPanel EscPanel { get; set; }
         public Inventory Inventory;
 
-        private HealthBar healthBar;
+        public StatsPanel StatsPanel;
         private int pickedPanel;
         private bool isBlocked;
 
@@ -20,7 +21,7 @@ namespace Client.Panels
             BestiaryPanel = new BestiaryPanel(gameManager);
             EscPanel = new EscPanel(gameManager);
             Inventory = new Inventory(gameManager);
-            healthBar = new HealthBar(gameManager);
+            this.StatsPanel = new StatsPanel(gameManager, new Microsoft.Xna.Framework.Vector2(20, 20));
             pickedPanel = -1;
             isBlocked = false;
         }
@@ -41,7 +42,6 @@ namespace Client.Panels
                 }
             }
 
-            healthBar.Update();
             switch (pickedPanel)
             {
                 case 0:
@@ -79,7 +79,7 @@ namespace Client.Panels
         public void Draw(SpriteBatch spritebatch)
         {
             Inventory.Draw(spritebatch);
-            healthBar.Draw(spritebatch);
+            StatsPanel.Draw(spritebatch);
             switch (pickedPanel)
             {
                 case 0:
@@ -89,11 +89,6 @@ namespace Client.Panels
                     BestiaryPanel.Draw(spritebatch);
                     break;
             }
-        }
-
-        public void SetHealthBarValue(float value)
-        { 
-            healthBar.SetRangeBar(value);
         }
     }
 }
