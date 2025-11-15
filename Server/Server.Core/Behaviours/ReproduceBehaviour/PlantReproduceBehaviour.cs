@@ -11,9 +11,9 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
         //<inheritdoc/>
         public override EntityTypeEnum Type => EntityTypeEnum.Plant;
         ///<inheritdoc/>
-        public override int DatabaseID => 403;
+        public override int DatabaseID => 401;
         ///<inheritdoc/>
-        public override string Description => "Plant reproduce behaviour.";
+        public override string Description => "Plants reproduce behaviour according to their reproduction need.";
         ///<inheritdoc/>
         public override void Execute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
@@ -34,31 +34,49 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
 
             Position2D? position = null;
 
-            int loopSafetyCounter = 0;
-            while (loopSafetyCounter < 100)
+            int x = entity.State.Position.X;
+            int y = entity.State.Position.Y;
+
+            //TODO: maybe better check this in CanExecute? @MaciejGórlaczyk
+            if (walkableTiles[x][y] == false || fertileTiles[x][y] == false)
             {
-                loopSafetyCounter++;
-                int x = entity.State.Position.X;
-                int y = entity.State.Position.Y;
+                return; // Entity is on a non-walkable tile or on a non-fertile tile, so we skip reproduction attempt
+            }
 
-                if (walkableTiles[x][y] == false || fertileTiles[x][y] == false)
+            var random = new Random();
+            var possibleOffsets = new List<(int dx, int dy)>();
+
+            for (int dx = -3; dx <= 3; dx++)
+            {
+                for (int dy = -3; dy <= 3; dy++)
                 {
-                    continue; //Entity is on a non-walkable tile or on a non-fertile tile, we skip reproduction attempt
+                    if (dx == 0 && dy == 0)
+                    {
+                        continue;
+                    }
+                    possibleOffsets.Add((dx, dy));
                 }
+            }
+            possibleOffsets = possibleOffsets.OrderBy(_ => random.Next()).ToList();
 
-                x = new Random().Next(2) == 0 ? x + new Random().Next(4) : x - new Random().Next(4);
-                y = new Random().Next(2) == 0 ? y + new Random().Next(4) : y - new Random().Next(4);
+            foreach (var (dx, dy) in possibleOffsets)
+            {
+                int newX = x + dx;
+                int newY = y + dy;
 
-                if (lobby.IsPositionFree(new Position2D(x, y)))
+                if (newX < 0 || newY < 0 || newX >= walkableTiles.Length || newY >= walkableTiles[0].Length)
+                    continue;
+
+                if (walkableTiles[newX][newY] && fertileTiles[newX][newY] && lobby.IsPositionFree(new Position2D(newX, newY)))
                 {
-                    position = new Position2D(x, y);
-                    break;
+                    position = new Position2D(newX, newY);
+                    break; // Found a free position
                 }
             }
 
             if (position == null)
             {
-                return; //We didn't find a free position, so we do not spawn a child
+                return; // Not fund a free position, so we do not spawn a child
             }
 
             WorldEntity child = WorldEntity.CreateWorldEntity(

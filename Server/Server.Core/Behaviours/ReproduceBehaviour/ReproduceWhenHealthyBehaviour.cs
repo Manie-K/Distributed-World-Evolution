@@ -10,11 +10,11 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
     internal class ReproduceWhenHealthyBehaviour : ReproduceBehaviourBase
     {
         /// <inheritdoc/>
-        public override int DatabaseID => 404;
+        public override int DatabaseID => 403;
         /// <inheritdoc/>
         public override string Description => "Reproduces only when healthy.";
         /// <inheritdoc/>
-        public override bool CanExecute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
+        public override bool CanExecute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
             if (base.CanExecute(entity, target, moduleService, otherParams))
             {

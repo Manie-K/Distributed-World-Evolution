@@ -8,14 +8,14 @@ using System.Threading.Tasks;
 
 namespace Server.Core.Behaviours.ReproduceBehaviour
 {
-    internal class ReproduceWithDamageBehaviour : ReproduceBehaviourBase
+    internal class ReproduceCausingDamageBehaviour : ReproduceBehaviourBase
     {
         /// <inheritdoc/>
-        public override int DatabaseID => 405;
+        public override int DatabaseID => 406;
         /// <inheritdoc/>
-        public override string Description => "Reproduces with damage.";
+        public override string Description => "Reproduction cause damage.";
         /// <inheritdoc/>
-        public override void Execute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
+        public override void Execute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
             base.Execute(entity, target, moduleService, otherParams);
 
