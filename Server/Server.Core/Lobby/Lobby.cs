@@ -482,18 +482,18 @@ namespace Server.Core.Lobby
 
                     if(targetEntity != null)
                     {
-                        targetEntity.State.InteractionFramesLeft = 80;
+                        targetEntity.State.InteractionFramesLeft = 96;
                         targetEntity.State.LastInteractionName = nameof(ReproduceBehaviourBase);
                     }
-                    entity.State.InteractionFramesLeft = 80;
+                    entity.State.InteractionFramesLeft = 96;
                     entity.State.LastInteractionName = nameof(ReproduceBehaviourBase);
                 }
                 else if(interactionType == typeof(AttackBehaviourBase))
                 {
                     behaviour.Execute(entity, targetEntity!, ModuleService.Instance);
                     
-                    entity.State.InteractionFramesLeft = 64;
-                    targetEntity!.State.InteractionFramesLeft = 64;
+                    entity.State.InteractionFramesLeft = 128;
+                    targetEntity!.State.InteractionFramesLeft = 128;
                     
                     entity.State.LastInteractionName = nameof(AttackBehaviourBase);
                     targetEntity!.State.LastInteractionName = nameof(AttackBehaviourBase);
@@ -502,8 +502,8 @@ namespace Server.Core.Lobby
                 {
                     behaviour.Execute(entity, targetEntity!, ModuleService.Instance);
                     
-                    entity.State.InteractionFramesLeft = 64;
-                    targetEntity!.State.InteractionFramesLeft = 64;
+                    entity.State.InteractionFramesLeft = 128;
+                    targetEntity!.State.InteractionFramesLeft = 128;
                     
                     entity.State.LastInteractionName = "Undefined interaction";
                     targetEntity!.State.LastInteractionName = "Undefined interaction";

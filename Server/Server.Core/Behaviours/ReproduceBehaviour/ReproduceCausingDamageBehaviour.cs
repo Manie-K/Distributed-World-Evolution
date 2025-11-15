@@ -1,10 +1,5 @@
 ﻿using Server.Core.Modules;
 using Server.Core.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Server.Core.Behaviours.ReproduceBehaviour
 {
@@ -15,7 +10,7 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
         /// <inheritdoc/>
         public override string Description => "Reproduction cause damage.";
         /// <inheritdoc/>
-        public override void Execute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
+        public override void Execute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
             base.Execute(entity, target, moduleService, otherParams);
 
