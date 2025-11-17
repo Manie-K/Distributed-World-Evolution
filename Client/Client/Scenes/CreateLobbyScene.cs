@@ -155,7 +155,7 @@ namespace Client
 
                         IEnumerable<int> modules = switchPageLobby.GetSelectedModulesIDList();
                         CreateLobbyMessage message = new CreateLobbyMessage(gameNameBox.GetText(), manager.UserSettings.PlayerName,
-                            int.Parse(playerAmountBox.GetText()), mapData.index, modules, map.GetWalkableTiles());
+                            int.Parse(playerAmountBox.GetText()), mapData.index, modules, map.GetWalkableTiles(), map.GetFertileTiles());
                         _ = MessageManager.SendMessageAsync(manager.ClientManager.Client, message);
                         isCreatingLobby = true;
                         manager.ClientManager.LobbyCreated = ActionStatus.PENDING;
