@@ -45,6 +45,7 @@ namespace Server.Core.Lobby
         /// Lobby updates per second.
         /// </summary>
         public const double LOBBY_UPDATES_PER_SECOND = 64;
+        private int EntitiesHealthAndHungerUpdateCounter = 0;
 
         private readonly IModuleService moduleService;
         private readonly Dictionary<TcpClient, WorldEntity> clients;
@@ -350,6 +351,8 @@ namespace Server.Core.Lobby
             Module? entityModule;
             EntityState nextState;
 
+            EntitiesHealthAndHungerUpdateCounter++;
+
             for (int i = 0; i < entities.Count; i++)
             {
                 WorldEntity entity = entities[i];
@@ -361,19 +364,27 @@ namespace Server.Core.Lobby
                     continue;
                 }
 
+                if (EntitiesHealthAndHungerUpdateCounter >= 10 * LOBBY_UPDATES_PER_SECOND)
+                {
+                    if (entity.State.Health <= 0)
+                    {
+                        entity.Die(moduleService);
+                        i--;
+                        continue;
+                    }
+                    else if (entity.State.Hunger > 0)
+                    {
+                        entity.State.Hunger -= HUNGER_CHANGE;
+                    }
+                    else if (entity.State.Health > 0)
+                    {
+                        entity.State.Health -= HEALTH_CHANGE;
+                    }
 
-                if (entity.State.Hunger > 0)
-                {
-                    entity.State.Hunger -= HUNGER_CHANGE;
-                }
-                else if (entity.State.Health > 0)
-                {
-                    entity.State.Health -= HEALTH_CHANGE;
-                }
-
-                if (entity.State.Hunger > 0 && entity.State.Health < entityModule.MaxHealth)
-                {
-                    entity.State.Health += HEALTH_CHANGE;
+                    if (entity.State.Hunger > 0 && entity.State.Health < entityModule.MaxHealth)
+                    {
+                        entity.State.Health += HEALTH_CHANGE;
+                    }
                 }
 
 
