@@ -18,6 +18,7 @@ namespace Client
 
         public WorldEntityDTO TargetEntity;
         public WorldEntityDTO PlayerDTO;
+        public int HungerToConsume;
 
         private BestiaryPanel bestiaryPanel;
         private Inventory inventory;
@@ -52,6 +53,7 @@ namespace Client
             actionCooldown = 0;
             this.bestiaryPanel = bestiaryPanel;
             this.inventory = inventory;
+            HungerToConsume = 0;
         }
 
         public override void Update(GameTime gameTime, InputManager inputManager, EntityStateDTO state = null)
@@ -76,6 +78,8 @@ namespace Client
             if (PlayerDTO != null && PlayerDTO.State.Health <= 0)
             {
                 Position = Vector2.One * 5;
+                PlayerDTO.State.Health = playerModule.MaxHealth;
+                PlayerDTO.State.Hunger = playerModule.MaxHunger;
                 am.Update(gameTime);
                 return;
             }
@@ -216,7 +220,7 @@ namespace Client
         {
             if (inventory.Eat())
             {
-                PlayerDTO.State.Hunger += 5;
+                HungerToConsume += 20;
             }
         }
 
