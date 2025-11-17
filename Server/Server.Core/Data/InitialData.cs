@@ -71,7 +71,7 @@
 
 
 
-            new ModuleDBEntity(true, "Human", 0, 0, 0, 100, 100, EntityTypeEnum.Human, 16, new int[] {})
+            new ModuleDBEntity(true, "Human", 10, 0, 0, 100, 100, EntityTypeEnum.Human, 16, new int[] {})
             {
                 ID = -17
             },
