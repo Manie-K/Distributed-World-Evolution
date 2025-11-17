@@ -1,6 +1,4 @@
-﻿using Server.Core.Helpers;
-using Server.Core.Lobby;
-using Server.Core.Modules;
+﻿using Server.Core.Modules;
 using Server.Core.Services;
 using SharedLibrary.DTOs.ModuleDTO;
 
@@ -31,7 +29,7 @@ namespace Server.Core.Behaviours.EatBehaviour
                 entity.State.Hunger += targetModule.MaxHunger;
             }
 
-            target.Die();
+            target.Die(moduleService);
         }
 
         /// <inheritdoc/>

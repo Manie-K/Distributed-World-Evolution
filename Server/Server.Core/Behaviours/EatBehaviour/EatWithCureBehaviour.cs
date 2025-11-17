@@ -1,12 +1,5 @@
-﻿using Server.Core.Helpers;
-using Server.Core.Lobby;
-using Server.Core.Modules;
+﻿using Server.Core.Modules;
 using Server.Core.Services;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Server.Core.Behaviours.EatBehaviour
 {
@@ -21,17 +14,17 @@ namespace Server.Core.Behaviours.EatBehaviour
         {
             Module targetModule = moduleService.GetModuleById(target.ModuleID) ?? throw new Exception($"Module with ID={target.ModuleID} not found!");
 
-            if (targetModule.MaxHunger > 0)
+            if (targetModule.Damage > 0)
+            {
+                entity.State.Health -= 2 * targetModule.Damage;
+            }
+            else
             {
                 entity.State.Hunger += targetModule.MaxHunger;
                 entity.State.Health += targetModule.MaxHunger;
             }
-            else
-            {
-                entity.State.Health -= 2* targetModule.Damage;
-            }
 
-            target.Die();
+            target.Die(moduleService);
         }
         /// <inheritdoc/>
         public override bool CanExecute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)

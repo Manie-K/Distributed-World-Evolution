@@ -1,4 +1,5 @@
-﻿using SharedLibrary.Helpers;
+﻿using System.Collections.Immutable;
+using SharedLibrary.Helpers;
 
 namespace Server.Core.Behaviours.MoveBehaviour
 {
@@ -11,7 +12,7 @@ namespace Server.Core.Behaviours.MoveBehaviour
         public override string Description => "Consistent move behaviour, moves in a set direction with 80% consistency";
 
         /// <inheritdoc>
-        public override (int, int) GetNextMovement(WorldEntity entity)
+        public override (int, int) GetNextMovement(WorldEntity entity, ImmutableList<WorldEntity> otherEntites)
         {
             Position2D lastMovementVector = entity.State.LastMovementVector ?? new Position2D(0, 0);
             int x = 0, y = 0;
