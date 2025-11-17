@@ -45,7 +45,6 @@ namespace Server.Core.Lobby
         /// Lobby updates per second.
         /// </summary>
         public const double LOBBY_UPDATES_PER_SECOND = 64;
-        private int EntitiesHealthAndHungerUpdateCounter = 0;
 
         private readonly IModuleService moduleService;
         private readonly Dictionary<TcpClient, WorldEntity> clients;
@@ -54,6 +53,7 @@ namespace Server.Core.Lobby
         private readonly bool[][] walkableTiles;
         private readonly bool[][] fertileTiles;
 
+        private int entitiesHealthAndHungerUpdateCounter = 0;
         private bool running;
 
         #region Constructors
@@ -351,7 +351,8 @@ namespace Server.Core.Lobby
             Module? entityModule;
             EntityState nextState;
 
-            EntitiesHealthAndHungerUpdateCounter++;
+            entitiesHealthAndHungerUpdateCounter++;
+            bool shouldResetCounter = false;
 
             for (int i = 0; i < entities.Count; i++)
             {
@@ -364,8 +365,9 @@ namespace Server.Core.Lobby
                     continue;
                 }
 
-                if (EntitiesHealthAndHungerUpdateCounter >= 10 * LOBBY_UPDATES_PER_SECOND)
+                if (entitiesHealthAndHungerUpdateCounter >= 10 * LOBBY_UPDATES_PER_SECOND)
                 {
+                    shouldResetCounter = true;
                     if (entity.State.Health <= 0)
                     {
                         entity.Die(moduleService);
@@ -410,6 +412,11 @@ namespace Server.Core.Lobby
                 entity.State.LastMovementVector = new Position2D(stepX, stepY);
 
                 SimulateNonHumanEntityUpdate(entity, nextState);
+            }
+
+            if (shouldResetCounter)
+            {
+                entitiesHealthAndHungerUpdateCounter = 0;
             }
         }
 
