@@ -53,6 +53,7 @@ namespace Server.Core.Lobby
         private readonly bool[][] walkableTiles;
         private readonly bool[][] fertileTiles;
 
+        private int entitiesHealthAndHungerUpdateCounter = 0;
         private bool running;
 
         #region Constructors
@@ -350,6 +351,9 @@ namespace Server.Core.Lobby
             Module? entityModule;
             EntityState nextState;
 
+            entitiesHealthAndHungerUpdateCounter++;
+            bool shouldResetCounter = false;
+
             for (int i = 0; i < entities.Count; i++)
             {
                 WorldEntity entity = entities[i];
@@ -361,19 +365,28 @@ namespace Server.Core.Lobby
                     continue;
                 }
 
+                if (entitiesHealthAndHungerUpdateCounter >= 10 * LOBBY_UPDATES_PER_SECOND)
+                {
+                    shouldResetCounter = true;
+                    if (entity.State.Health <= 0)
+                    {
+                        entity.Die(moduleService);
+                        i--;
+                        continue;
+                    }
+                    else if (entity.State.Hunger > 0)
+                    {
+                        entity.State.Hunger -= HUNGER_CHANGE;
+                    }
+                    else if (entity.State.Health > 0)
+                    {
+                        entity.State.Health -= HEALTH_CHANGE;
+                    }
 
-                if (entity.State.Hunger > 0)
-                {
-                    entity.State.Hunger -= HUNGER_CHANGE;
-                }
-                else if (entity.State.Health > 0)
-                {
-                    entity.State.Health -= HEALTH_CHANGE;
-                }
-
-                if (entity.State.Hunger > 0 && entity.State.Health < entityModule.MaxHealth)
-                {
-                    entity.State.Health += HEALTH_CHANGE;
+                    if (entity.State.Hunger > 0 && entity.State.Health < entityModule.MaxHealth)
+                    {
+                        entity.State.Health += HEALTH_CHANGE;
+                    }
                 }
 
 
@@ -399,6 +412,11 @@ namespace Server.Core.Lobby
                 entity.State.LastMovementVector = new Position2D(stepX, stepY);
 
                 SimulateNonHumanEntityUpdate(entity, nextState);
+            }
+
+            if (shouldResetCounter)
+            {
+                entitiesHealthAndHungerUpdateCounter = 0;
             }
         }
 
