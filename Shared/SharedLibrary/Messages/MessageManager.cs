@@ -58,7 +58,6 @@ namespace SharedLibrary.Messages
                         MessageTypeEnum.UserInteraction => JsonSerializer.Deserialize<UserInteractionMessage>(json),
                         MessageTypeEnum.WorldState => JsonSerializer.Deserialize<WorldStateMessage>(json),
                         MessageTypeEnum.InfoMessage => JsonSerializer.Deserialize<InfoMessage>(json),
-                        MessageTypeEnum.UserState => JsonSerializer.Deserialize<UserStateMessage>(json),
                         MessageTypeEnum.JoinLobby => JsonSerializer.Deserialize<JoinLobbyMessage>(json),
                         MessageTypeEnum.RoleMessage => JsonSerializer.Deserialize<RoleMessage>(json),
                         MessageTypeEnum.LogMessage => JsonSerializer.Deserialize<LogMessage>(json),
@@ -69,6 +68,7 @@ namespace SharedLibrary.Messages
                         MessageTypeEnum.GetMessage => JsonSerializer.Deserialize<GetMessage>(json),
                         MessageTypeEnum.LobbyData => JsonSerializer.Deserialize<LobbyDataMessage>(json),
                         MessageTypeEnum.BehaviourList => JsonSerializer.Deserialize<BehaviourListMessage>(json),
+                        MessageTypeEnum.UserState => JsonSerializer.Deserialize<UserStateMessage>(json),
                         _ => throw new NotImplementedException(),
                     };
                 }

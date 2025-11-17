@@ -1,11 +1,8 @@
 ﻿using Server.Core.Lobby;
-using SharedLibrary.DTOs.LobbyDTO;
 using Server.Core.Services;
 using SharedLibrary.Logging;
 using SharedLibrary.Messages;
 using SharedLibrary.Messages.BehaviourMessages;
-using System.Collections.Concurrent;
-using System.Drawing;
 using System.Net;
 using System.Net.Sockets;
 using Microsoft.Extensions.Configuration;
@@ -17,7 +14,6 @@ namespace Server.Core
     /// </summary>
     public class Server 
     {
-        //TODO: dependency injection
         /// <summary>
         /// Singleton instance of the Server class
         /// </summary>
@@ -186,7 +182,7 @@ namespace Server.Core
             try
             {
                 int lobbyID = lobbyManager.CreateAndInitializeLobby(
-                    msg.LobbyName, msg.MaxPlayers, msg.MapID, msg.WalkableTiles, msg.ModuleIDs);
+                    msg.LobbyName, msg.MaxPlayers, msg.MapID, msg.WalkableTiles, msg.FertileTiles, msg.ModuleIDs);
 
                 lobbyManager.AddUserToLobby(lobbyID, client, msg.UserName, out Guid userEntityID);
                 Lobby.Lobby lobby = lobbyManager.GetLobby(lobbyID);

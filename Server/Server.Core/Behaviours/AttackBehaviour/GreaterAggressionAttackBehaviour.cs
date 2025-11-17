@@ -1,6 +1,4 @@
 ﻿using Server.Core.Exceptions;
-using Server.Core.Helpers;
-using Server.Core.Lobby;
 using Server.Core.Modules;
 using Server.Core.Services;
 
@@ -25,7 +23,7 @@ namespace Server.Core.Behaviours.AttackBehaviour
                 target.State.Health -= attackerModule.Damage;
                 if (target.State.Health <= 0)
                 {
-                    target.Die();
+                    target.Die(moduleService);
                 }
             }
             catch (ModuleNotFoundException ex)

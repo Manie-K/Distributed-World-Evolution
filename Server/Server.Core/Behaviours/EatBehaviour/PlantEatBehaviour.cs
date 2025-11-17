@@ -2,12 +2,14 @@
 
 namespace Server.Core.Behaviours.EatBehaviour
 {
-    public class EatNeverBehaviour : EatBehaviourBase
+    public class PlantEatBehaviour : EatBehaviourBase
     {
         /// <inheritdoc/>
-        public override int DatabaseID => 306;
+        public override int DatabaseID => 309;
         /// <inheritdoc/>
-        public override string Description => "Eats never";
+        public override EntityTypeEnum Type => EntityTypeEnum.Plant;
+        /// <inheritdoc/>
+        public override string Description => "Plants do not eat like an animals.";
         /// <inheritdoc/>
         public override void Execute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {

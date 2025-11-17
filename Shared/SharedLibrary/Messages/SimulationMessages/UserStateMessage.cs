@@ -2,7 +2,6 @@
 
 namespace SharedLibrary.Messages
 {
-    // TODO: Change properties to match client-server communication needs
     /// <summary>
     /// Contains the state of a user.
     /// </summary>
@@ -25,7 +24,7 @@ namespace SharedLibrary.Messages
         /// <summary>
         /// Constructor for UserStateMessage.
         /// </summary>
-        public UserStateMessage (Guid userGUID, string userName, int userHealth)
+        public UserStateMessage(Guid userGUID, string userName, int userHealth)
         {
             UserGUID = userGUID;
             UserName = userName;

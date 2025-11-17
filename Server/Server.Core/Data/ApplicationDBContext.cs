@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
 namespace Server.Core.Data
 {
@@ -17,16 +15,7 @@ namespace Server.Core.Data
             moduleEntity.Property(m => m.Name).IsRequired();
             moduleEntity.Property(m => m.Type).IsRequired().HasConversion<int>();
 
-            moduleEntity.HasData(
-                new ModuleDBEntity(true, "Human module", 5, 5, 5, 100, 100, EntityTypeEnum.Human, 16, new int[] {})
-                {
-                    ID = -1
-                },
-                new ModuleDBEntity(true, "Default module", 30, 70, 40, 100, 100, EntityTypeEnum.Animal, 2, new int[] { 101, 201, 307, 401 })
-                {
-                    ID = -2
-                }
-            );
+            moduleEntity.HasData(InitialData.GetInitialData());
 
             base.OnModelCreating(modelBuilder);
         }

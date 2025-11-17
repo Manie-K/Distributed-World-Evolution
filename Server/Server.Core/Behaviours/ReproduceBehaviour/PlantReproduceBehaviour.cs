@@ -2,25 +2,20 @@
 using Server.Core.Lobby;
 using Server.Core.Modules;
 using Server.Core.Services;
-using SharedLibrary.DTOs.ModuleDTO;
 using SharedLibrary.Helpers;
 
 namespace Server.Core.Behaviours.ReproduceBehaviour
 {
-    public abstract class ReproduceBehaviourBase : IBehaviour
+    public class PlantReproduceBehaviour : ReproduceBehaviourBase
     {
-        /// <inheritdoc/>
-        public abstract int DatabaseID { get; }
-
-        /// <inheritdoc/>
-        public virtual EntityTypeEnum Type => EntityTypeEnum.Animal;
-
-        /// <inheritdoc/>
-        public abstract string Description { get; }
-
-
-        /// <inheritdoc/>
-        public virtual void Execute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
+        //<inheritdoc/>
+        public override EntityTypeEnum Type => EntityTypeEnum.Plant;
+        ///<inheritdoc/>
+        public override int DatabaseID => 401;
+        ///<inheritdoc/>
+        public override string Description => "Plants reproduce behaviour according to their reproduction need.";
+        ///<inheritdoc/>
+        public override void Execute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
             Module entityModule = moduleService.GetModuleById(entity.ModuleID) ?? throw new Exception($"Module with ID={entity.ModuleID} not found!");
             EntityTypeEnum entityType = entityModule.Type;
@@ -33,13 +28,17 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
                 && walkableTilesObj is bool[][] wt ? wt :
                 throw new ArgumentNullException("Walkable tiles parameter is required for reproduction behaviour.");
 
+            bool[][] fertileTiles = otherParams != null && otherParams.TryGetValue(CustomBehaviourParams.MAP_FERTILE_PARAM, out object? fertileTilesObj)
+              && fertileTilesObj is bool[][] ft ? ft :
+              throw new ArgumentNullException("Fertile tiles parameter is required for plant reproduction behaviour.");
+
             Position2D? position = null;
-            
+
             int x = entity.State.Position.X;
             int y = entity.State.Position.Y;
 
             const short radius = 3;
-            var possibleOffsets = new (short, short)[(radius*2 + 1) * (radius*2 + 1)]; // Looks for a free tile in an area around the entity ({radius} tile radius around entity).
+            var possibleOffsets = new (short, short)[(radius * 2 + 1) * (radius * 2 + 1)]; // Looks for a free tile in an area around the entity ({radius} tile radius around entity).
 
             for (short dx = -radius; dx <= radius; dx++)
             {
@@ -52,7 +51,7 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
             possibleOffsets = possibleOffsets.OrderBy(_ => new Random().Next()).ToArray();
             foreach (var (dx, dy) in possibleOffsets)
             {
-                if(dx == 0 && dy == 0)
+                if (dx == 0 && dy == 0)
                     continue; // Skip the entity's current position.
 
                 int newX = x + dx;
@@ -61,7 +60,7 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
                 if (newX < 0 || newY < 0 || newX >= walkableTiles.Length || newY >= walkableTiles[0].Length)
                     continue;
 
-                if (walkableTiles[newX][newY] && lobby.IsPositionFree(new Position2D(newX, newY)))
+                if (walkableTiles[newX][newY] && fertileTiles[newX][newY] && lobby.IsPositionFree(new Position2D(newX, newY)))
                 {
                     position = new Position2D(newX, newY);
                     break; // Found a free position.
@@ -87,35 +86,22 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
             lobby.AddWorldEntity(child);
         }
 
-        /// <inheritdoc/>
-        /// Reproduction can occur if both entities are of the same module type and based on random roll with taking reproduction need into account.
-        public virtual bool CanExecute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
+        ///<inheritdoc/>
+        public override bool CanExecute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
-            Module entityModule = moduleService.GetModuleById(entity.ModuleID)?? throw new Exception($"Module with ID={entity.ModuleID} not found");
-            
+            Module entityModule = moduleService.GetModuleById(entity.ModuleID) ?? throw new Exception($"Module with ID={entity.ModuleID} not found");
+            EntityTypeEnum entityType = entityModule.Type;
+
             bool canReproduce = false;
 
-            if (entity.ModuleID == target.ModuleID && target != entity)
+            if (entityType == EntityTypeEnum.Plant)
             {
-                int randomRoll = new Random().Next(1, 11); 
+                int randomRoll = new Random().Next(1, 11);
                 canReproduce = randomRoll <= entityModule.ReproductionNeed;
-            }
-
-            bool[][]? walkableTiles = otherParams != null && otherParams.TryGetValue(CustomBehaviourParams.MAP_WALKABLE_PARAM, out object? walkableTilesObj)
-               && walkableTilesObj is bool[][] tiles ? tiles : null;
-
-            if (walkableTiles?[entity.State.Position.X][entity.State.Position.Y] == false) // It's current entity position, not next simulated one, so this should never be false, but just in case.
-            {
-                return false; // Entity is on a non-walkable tile, so we skip reproduction attempt (don't reprodue while on water .... but shouldn't be on water in first place anyway).
             }
 
             return canReproduce;
         }
 
-        /// <inheritdoc/>
-        public BehaviourDTO ToDTO()
-        {
-            return new BehaviourDTO(DatabaseID, Description, Type, BehaviourInteractionTypeEnum.Reproduce);
-        }
     }
 }
