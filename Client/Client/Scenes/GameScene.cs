@@ -88,6 +88,7 @@ namespace Client
                 {
                     player.PlayerDTO ??= entity;
                     player.PlayerDTO.State.Health = entity.State.Health;
+                    player.PlayerDTO.State.Hunger = entity.State.Hunger;
                     panelsController.StatsPanel.SetHealthBar(entity.State.Health / player.GetPlayerMaxHealth());
                     panelsController.StatsPanel.SetHungerBar(entity.State.Hunger / player.GetPlayerMaxHunger());
                     continue;
@@ -117,9 +118,11 @@ namespace Client
             if (clientUpdateTimer >= timeBetweenUpdates && player.PlayerDTO != null)
             {
                 player.PlayerDTO.State.Position = map.GetTilePosition2D(player.Position.X, player.Position.Y);
+                player.PlayerDTO.State.Hunger += player.HungerToConsume;
                 UserInteractionMessage message = new UserInteractionMessage(player.PlayerDTO, player.TargetEntity);
                 _ = MessageManager.SendMessageAsync(manager.ClientManager.Client, message);
                 clientUpdateTimer = 0;
+                player.HungerToConsume = 0;
                 player.TargetEntity = null;
             }
         }
