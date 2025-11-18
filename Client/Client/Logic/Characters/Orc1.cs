@@ -6,8 +6,8 @@ namespace Client
 {
     public class Orc1 : Character
     {
-        public Orc1(Vector2 position, Color color)
-           : base(position, color, 100, 100, 150f, 4, 12)
+        public Orc1(Vector2 position, int maxHealth, Color color)
+           : base(position, color, 100, 100, 150f, maxHealth)
         {
             am = new AnimationManager(0);
             SpriteDrawingOffset = new Vector2(-35, -37);

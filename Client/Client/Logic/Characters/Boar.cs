@@ -6,8 +6,8 @@ namespace Client
 {
     public class Boar : Character
     {
-        public Boar(Vector2 position, Color color)
-            : base(position, color, 160, 160, 150f, 4, 12)
+        public Boar(Vector2 position, int maxHealth, Color color)
+            : base(position, color, 160, 160, 150f, maxHealth)
         {
             am = new AnimationManager(12);
             SpriteDrawingOffset = new Vector2(-65, -75);

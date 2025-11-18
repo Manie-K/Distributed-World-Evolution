@@ -21,11 +21,13 @@ namespace Client
         protected Direction CurrentDirection;
         public AnimationManager am;
         public CharacterHealthBar HealthBar;
-       
-        public Character(Vector2 position, Color color, int width, int height, float speed, int framesAmount, int interval)
+        public int MaxHealth;
+
+        public Character(Vector2 position, Color color, int width, int height, float speed, int maxHealth)
             : base(null, position, width, height, color)
         {
             this.speed = speed;
+            MaxHealth = maxHealth;
             CurrentDirection = Direction.down;
             HealthBar = new CharacterHealthBar();
         }

@@ -6,8 +6,8 @@ namespace Client
 {
     public class EnemyPlant1 : Character
     {
-        public EnemyPlant1(Vector2 position, Color color)
-            : base(position, color, 100, 100, 150f, 4, 12)
+        public EnemyPlant1(Vector2 position, int maxHealth, Color color)
+            : base(position, color, 100, 100, 150f, maxHealth)
         {
             am = new AnimationManager(3);
             SpriteDrawingOffset = new Vector2(-32, -47);

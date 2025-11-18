@@ -6,8 +6,8 @@ namespace Client
 {
     public class Vampire2 : Character
     {
-        public Vampire2(Vector2 position, Color color)
-           : base(position, color, 110, 110, 150f, 4, 12)
+        public Vampire2(Vector2 position, int maxHealth, Color color)
+           : base(position, color, 110, 110, 150f, maxHealth)
         {
             am = new AnimationManager(10);
             SpriteDrawingOffset = new Vector2(-32, -47);

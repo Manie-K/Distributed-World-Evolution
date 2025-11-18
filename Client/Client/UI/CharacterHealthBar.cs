@@ -29,7 +29,7 @@ namespace Client.UI
         }
 
         public void SetRangeBar(float range)
-        {
+        {          
             if (range < 0.0f) rangeBar = 0.0f;
             else if (range > 1.0f) rangeBar = 1.0f;
             else rangeBar = range;
