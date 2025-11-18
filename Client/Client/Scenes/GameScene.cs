@@ -40,7 +40,7 @@ namespace Client
                 throw new Exception("Could not load the map " + Tilemap.GetMapFileName(mapID));
             }
             player = new Player(new Vector2(288, 32), Color.White, new Text(manager.ContentManager.Load<SpriteFont>("Fonts/PlayerName"), 
-                manager.UserSettings.PlayerName, true, new Vector2(500, 300 - 110), 70, 40), new Vector2(-68, -77),
+                manager.UserSettings.PlayerName, true, new Vector2(500, 300 - 110), 70, 40), new Vector2(-68, -77), -1,
                 ref panelsController.BestiaryPanel, ref panelsController.Inventory, map, manager.ClientManager);
 
             manager.Camera.MapSize = new System.Drawing.Size(map.MapWidth * map.TileSize, map.MapHeight * map.TileSize);
@@ -99,6 +99,8 @@ namespace Client
                     character.Update(gameTime, manager.InputManager, entity.State);
                     character.SetCurrentDirection(map.GetTilePosition2D(character.Position.X, character.Position.Y), entity.State.Position);
                     character.Position = GetWorldPosition(entity);
+                    character.HealthBar.SetRangeBar((float) entity.State.Health / character.MaxHealth);
+
                 }
                 else if (plants.TryGetValue(entity.Id, out Plant plant))
                 {
@@ -151,31 +153,32 @@ namespace Client
         private void LoadEntity(WorldEntityDTO entity)
         {
             int graphicID = manager.ClientManager.Modules.FirstOrDefault(m => m.DatabaseID == entity.ModuleID)?.GraphicalRepresentationID ?? -1;
+            int maxHealth = manager.ClientManager.Modules.FirstOrDefault(m => m.DatabaseID == entity.ModuleID)?.MaxHealth ?? -1;
             Vector2 position = GetWorldPosition(entity);
 
             if (graphicID <= 16)
             {
                 characters.Add(entity.Id, graphicID switch
                 {
-                    0 => new EnemyPlant1(position, Color.White),
-                    1 => new EnemyPlant2(position, Color.White),
-                    2 => new Pig(position, Color.White),
-                    3 => new Boar(position, Color.White),
-                    4 => new WhiteRabbit(position, Color.White),
-                    5 => new BrownRabbit(position, Color.White),
-                    6 => new EnemyPlant3(position, Color.White),
-                    7 => new Slime1(position, Color.White),
-                    8 => new Slime2(position, Color.White),
-                    9 => new Slime3(position, Color.White),
-                    10 => new Orc1(position, Color.White),
-                    11 => new Orc2(position, Color.White),
-                    12 => new Orc3(position, Color.White),
-                    13 => new Vampire1(position, Color.White),
-                    14 => new Vampire2(position, Color.White),
-                    15 => new Vampire3(position, Color.White),
+                    0 => new EnemyPlant1(position, maxHealth, Color.White),
+                    1 => new EnemyPlant2(position, maxHealth, Color.White),
+                    2 => new Pig(position, maxHealth, Color.White),
+                    3 => new Boar(position, maxHealth, Color.White),
+                    4 => new WhiteRabbit(position, maxHealth, Color.White),
+                    5 => new BrownRabbit(position, maxHealth, Color.White),
+                    6 => new EnemyPlant3(position, maxHealth, Color.White),
+                    7 => new Slime1(position, maxHealth, Color.White),
+                    8 => new Slime2(position, maxHealth, Color.White),
+                    9 => new Slime3(position, maxHealth, Color.White),
+                    10 => new Orc1(position, maxHealth, Color.White),
+                    11 => new Orc2(position, maxHealth, Color.White),
+                    12 => new Orc3(position, maxHealth, Color.White),
+                    13 => new Vampire1(position, maxHealth, Color.White),
+                    14 => new Vampire2(position, maxHealth, Color.White),
+                    15 => new Vampire3(position, maxHealth, Color.White),
                     16 => new Player(position, Color.White, new Text(manager.ContentManager.Load<SpriteFont>("Fonts/PlayerName"), entity.Name,
-                    true, new Vector2(500, 300 - 110), 70, 40), new Vector2(-53, -50), ref panelsController.BestiaryPanel, ref panelsController.Inventory),
-                    _ => new EnemyPlant1(position, Color.White)
+                    true, new Vector2(500, 300 - 110), 70, 40), new Vector2(-53, -50), maxHealth, ref panelsController.BestiaryPanel, ref panelsController.Inventory),
+                    _ => new EnemyPlant1(position, maxHealth, Color.White)
                 });
             }
             else

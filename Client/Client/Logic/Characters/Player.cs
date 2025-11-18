@@ -37,13 +37,16 @@ namespace Client
             Eat
         }
 
-        public Player(Vector2 position, Color color, Text playerName, Vector2 spriteDrawingOffset, ref BestiaryPanel bestiaryPanel,
+        public Player(Vector2 position, Color color, Text playerName, Vector2 spriteDrawingOffset, int maxHealth, ref BestiaryPanel bestiaryPanel,
             ref Inventory inventory, WorldMap map = null, ClientManager clientManager = null)
-            : base(position, color, 130, 108, 150f, 8, 7)
+            : base(position, color, 130, 108, 150f, maxHealth)
         {
             this.playerName = playerName;
             SpriteDrawingOffset = spriteDrawingOffset;
-            playerNameOffset = new Vector2(29 + SpriteDrawingOffset.X, -3 + SpriteDrawingOffset.Y);
+
+            if(maxHealth == -1) playerNameOffset = new Vector2(31 + SpriteDrawingOffset.X, -3 + SpriteDrawingOffset.Y);
+            else playerNameOffset = new Vector2(31 + SpriteDrawingOffset.X, -11 + SpriteDrawingOffset.Y);
+
             this.map = map;
             this.clientManager = clientManager;
             PlayerDTO = null;
@@ -158,6 +161,7 @@ namespace Client
         {
             spriteBatch.Draw(AssetsManager.GetInstance().GetCharacterTexture(am.ActiveAnimation, 13), GetPosition(), GetSourceRectangle(), Color.White);
             playerName.Draw(spriteBatch, Position + playerNameOffset);
+            if(MaxHealth != -1) HealthBar.Draw(spriteBatch, Position, -7, -29);
         }
 
         public float GetPlayerMaxHealth()

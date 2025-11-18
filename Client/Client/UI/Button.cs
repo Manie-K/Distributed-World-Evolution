@@ -18,6 +18,7 @@ namespace Client
         private Color hoverColor;
         private bool isHovered;
         private bool isDisabled;
+        public bool SwitchingValue;
 
 
         public Button(Texture2D backGroundTexture, SpriteFont font, string text, Vector2 position, int width, int height, Color color)
@@ -31,6 +32,7 @@ namespace Client
             backgroundColor = Color.White;
             hoverColor = color;
             isDisabled = false;
+            SwitchingValue = false;
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -72,7 +74,6 @@ namespace Client
                 return true;
             }
             return false;
-
         }
     }
 }

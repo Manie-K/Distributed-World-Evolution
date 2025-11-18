@@ -67,5 +67,10 @@ namespace Client
         { 
             return checkBox;
         }
+
+        public void SetCheckBoxValue(bool value)
+        {
+            checkBox.SetValue(value);
+        }
     }
 }

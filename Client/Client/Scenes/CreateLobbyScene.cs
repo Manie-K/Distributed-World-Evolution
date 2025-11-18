@@ -24,6 +24,7 @@ namespace Client
         private Button saveButton;
         private TextBox gameNameBox;
         private Button mapButton;
+        private Button CheckAllButton;
         private TextBox playerAmountBox;
         private SelectedMapData mapData;
         private ModulesImageDisplay modulesImageDisplay;
@@ -45,6 +46,7 @@ namespace Client
             switchPageLobby = new SwitchPageLobby(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), new Vector2(155, 295), manager.ContentManager, 4);
             saveButton = new Button(manager.ContentManager.Load<Texture2D>("UI/Buttons/SaveButton"), null, null, new Vector2(540, 570), 211, 79, new Color(255, 255, 128));
             mapButton = new Button(manager.ContentManager.Load<Texture2D>("UI/Buttons/MapSelectionButton"), null, null, new Vector2(606, 126), 42, 44, Color.Gold);
+            CheckAllButton = new Button(manager.ContentManager.Load<Texture2D>("UI/Buttons/AllButon"), null, null, new Vector2(155, 219), 80, 40, Color.Lime);
             gameNameBox = new TextBox(null, manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"),
                                         new Vector2(288, 129), 170, 36, Color.White);
             playerAmountBox = new TextBox(null, manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"),
@@ -169,6 +171,10 @@ namespace Client
                 {
                     manager.SceneManager.AddScene(new MapSelectionScene(manager, ref mapData));
                 }
+                else if (CheckAllButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
+                {
+                    ChangeCheckBox();
+                }
                 else if (descriptionBox.DescriptionButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                 {
                     descriptionBox.ChangeButton();
@@ -190,6 +196,7 @@ namespace Client
             exitButton.Update(manager.InputManager.GetMousePosition());
             saveButton.Update(manager.InputManager.GetMousePosition());
             mapButton.Update(manager.InputManager.GetMousePosition());
+            CheckAllButton.Update(manager.InputManager.GetMousePosition());
             gameNameBox.Update();
             playerAmountBox.Update();
             descriptionBox.DescriptionButton.Update(manager.InputManager.GetMousePosition());
@@ -212,6 +219,7 @@ namespace Client
             switchPageLobby.Draw(spriteBatch);
             saveButton.Draw(spriteBatch);
             mapButton.Draw(spriteBatch);
+            CheckAllButton.Draw(spriteBatch);
             exitButton.Draw(spriteBatch);
             gameNameBox.Draw(spriteBatch);
             playerAmountBox.Draw(spriteBatch);
@@ -222,6 +230,15 @@ namespace Client
             {
                 switchPageParameters.Draw(spriteBatch);
             }
+        }
+
+        private void ChangeCheckBox()
+        {
+            foreach(CreateLobbyRow module in switchPageLobby.GetModules())
+            {
+                module.SetCheckBoxValue(CheckAllButton.SwitchingValue);
+            }
+            CheckAllButton.SwitchingValue = !CheckAllButton.SwitchingValue;
         }
 
         private void ResetLoadingState()
