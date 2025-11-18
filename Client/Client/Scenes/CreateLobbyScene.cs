@@ -1,5 +1,6 @@
 ﻿using Client.UI.CreateLobby;
 using Client.UI.CreateLobby.Parameters;
+using Client.UI.CreateModules.Modules;
 using Client.UI.MapSelection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -28,6 +29,8 @@ namespace Client
         private ModulesImageDisplay modulesImageDisplay;
         private SwitchPageParameters switchPageParameters;
 
+        private DescriptionBox descriptionBox;
+
         private bool isCreatingLobby;
         private bool isJoiningLobby;
         private bool isLoadingModules;
@@ -52,6 +55,7 @@ namespace Client
 
             switchPageParameters = new SwitchPageParameters(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"),
                                                                  new Vector2(848, 485), manager.ContentManager, 4);
+            descriptionBox = new DescriptionBox(manager.ContentManager.Load<SpriteFont>("Fonts/DescriptionFont"), 26, manager.ContentManager);
 
             isCreatingLobby = false;
             isJoiningLobby = false;
@@ -69,48 +73,31 @@ namespace Client
 
         }
 
-
         public void InitializeCreaturesRows()
         {
             IReadOnlyList<ModuleDTO> modules = manager.ClientManager.Modules;
-            List<ModuleParametersData> parameters = new List<ModuleParametersData>();
             switchPageLobby.ClearModules();
 
             foreach (ModuleDTO module in modules)
             {
-                parameters.Clear();
-                parameters.Add(new ModuleParametersData("Damage", module.Damage.ToString(), 0));
-                parameters.Add(new ModuleParametersData("Aggresion", module.Aggresion.ToString(), 0));
-                parameters.Add(new ModuleParametersData("ReproductionNeed", module.ReproductionNeed.ToString(), 0));
-                parameters.Add(new ModuleParametersData("Type", module.Type.ToString(), 0));
-                foreach (BehaviourDTO behviour in module.Behaviours)
+                List<ModuleParametersData> parameters = new List<ModuleParametersData>();
+                parameters.Add(new ModuleParametersData("Type", module.Type.ToString(), 1, "Type of a creature"));
+                parameters.Add(new ModuleParametersData("Damage", module.Damage.ToString(), 0, "Damage"));
+                parameters.Add(new ModuleParametersData("Aggresion", module.Aggresion.ToString(), 0, "Aggresion"));
+                parameters.Add(new ModuleParametersData("Reproduction", module.ReproductionNeed.ToString(), 0, "Reproduction Need"));
+                parameters.Add(new ModuleParametersData("Max Health", module.MaxHealth.ToString(), 0, "Max Health"));
+                parameters.Add(new ModuleParametersData("Max Hunger", module.MaxHunger.ToString(), 0, "Max Hunger"));
+
+                if (module.Behaviours != null)
                 {
-                    parameters.Add(new ModuleParametersData("Beh", behviour.Description, 1));
+                    foreach (BehaviourDTO behaviour in module.Behaviours)
+                    {
+                        parameters.Add(new ModuleParametersData(behaviour.InteractionType.ToString(), behaviour.DatabaseID.ToString(), 1, behaviour.Description));
+                    }
                 }
 
-                switchPageLobby.AddRow(new ModuleData(module.Name, module.DatabaseID, module.GraphicalRepresentationID, module.IsOfficialModule, parameters));
+                switchPageLobby.AddRow(new UI.CreateLobby.Parameters.ModuleData(module.Name, module.DatabaseID, module.GraphicalRepresentationID, module.IsOfficialModule, parameters));
             }
-
-            /*
-            switchPageLobby.AddRow(new ModuleData("Boar", 0, 0, false, new List<ModuleParametersData> { new ModuleParametersData("Health", "200", 0), new ModuleParametersData("Damage", "300", 0), new ModuleParametersData("Hunger", "130", 1), new ModuleParametersData("Consumption", "Carnivore", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
-            switchPageLobby.AddRow(new ModuleData("Brown Rabbit", 1, 2, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "800", 0), new ModuleParametersData("Damage", "50", 0), new ModuleParametersData("Hunger", "800", 1), new ModuleParametersData("Consumption", "Herbivore", 1), new ModuleParametersData("Combat", "Enemy HP < X", 1) }));
-            switchPageLobby.AddRow(new ModuleData("White Rabbit", 2, 3, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "400", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "120", 1), new ModuleParametersData("Consumption", "Carnivore", 1), new ModuleParametersData("Breeding", "Same Species", 1) }));
-            switchPageLobby.AddRow(new ModuleData("Red Plant", 3, 4, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "400", 0), new ModuleParametersData("Damage", "150", 0), new ModuleParametersData("Hunger", "130", 1), new ModuleParametersData("Consumption", "Carnivore", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
-            switchPageLobby.AddRow(new ModuleData("Blue Plant", 4, 5, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1), new ModuleParametersData("Consumption", "Herbivore", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
-            switchPageLobby.AddRow(new ModuleData("Purple Plant", 5, 6, false, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
-            switchPageLobby.AddRow(new ModuleData("Orc", 6, 10, false, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1), new ModuleParametersData("Consumption", "Carnivore", 1) }));
-            switchPageLobby.AddRow(new ModuleData("Blue Orc", 7, 11, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1) }));
-            switchPageLobby.AddRow(new ModuleData("Darkgreen Orc", 8, 12, false, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1), new ModuleParametersData("Consumption", "Carnivore", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
-            switchPageLobby.AddRow(new ModuleData("Pig", 9, 1, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1), new ModuleParametersData("Consumption", "Carnivore", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
-            switchPageLobby.AddRow(new ModuleData("Slime", 10, 7, false, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
-            switchPageLobby.AddRow(new ModuleData("Water Slime", 11, 8, false, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1), new ModuleParametersData("Consumption", "Carnivore", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
-            switchPageLobby.AddRow(new ModuleData("Fire Slime", 12, 9, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1) }));
-            switchPageLobby.AddRow(new ModuleData("Vampire", 13, 13, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Attack", "500", 0), new ModuleParametersData("Fertile", "100", 1) }));
-            switchPageLobby.AddRow(new ModuleData("Blue Vampire", 14, 14, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1), new ModuleParametersData("Consumption", "Carnivore", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
-            switchPageLobby.AddRow(new ModuleData("Red Vampire", 15, 15, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Hunger", "100", 1), new ModuleParametersData("Combat", "HP > X", 1) }));
-            switchPageLobby.AddRow(new ModuleData("Rose", 16, 1, false, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0), new ModuleParametersData("Fertile", "100", 1) }));
-            switchPageLobby.AddRow(new ModuleData("Mushroom", 17, 1, true, new List<ModuleParametersData> { new ModuleParametersData("Health", "100", 0), new ModuleParametersData("Damage", "500", 0) }));
-            */
         }
 
         public void Update(GameTime gameTime)
@@ -152,7 +139,6 @@ namespace Client
                 playerAmountBox.CheckLeftClick(manager.InputManager.GetMousePosition());
 
                 switchPageLobby.CheckLeftClick(manager.InputManager.GetMousePosition());
-                switchPageParameters.CheckLeftClick(manager.InputManager.GetMousePosition());
                 if (exitButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                 {
                     manager.SceneManager.RemoveScene();
@@ -169,20 +155,28 @@ namespace Client
 
                         IEnumerable<int> modules = switchPageLobby.GetSelectedModulesIDList();
                         CreateLobbyMessage message = new CreateLobbyMessage(gameNameBox.GetText(), manager.UserSettings.PlayerName,
-                            int.Parse(playerAmountBox.GetText()), mapData.index, modules, map.GetWalkableTiles());
+                            int.Parse(playerAmountBox.GetText()), mapData.index, modules, map.GetWalkableTiles(), map.GetFertileTiles());
                         _ = MessageManager.SendMessageAsync(manager.ClientManager.Client, message);
                         isCreatingLobby = true;
                         manager.ClientManager.LobbyCreated = ActionStatus.PENDING;
                     }
                     else
                     {
-                        manager.WindowManager.WarningWindow.SetWrongParametersInCreateLobby();
-                        manager.WindowManager.EnableWarningWindow();
+                        manager.WindowManager.ShowWarningWindow("Invalid name or incorrect number of players (max 32).");
                     }
                 }
                 else if (mapButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                 {
                     manager.SceneManager.AddScene(new MapSelectionScene(manager, ref mapData));
+                }
+                else if (descriptionBox.DescriptionButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
+                {
+                    descriptionBox.ChangeButton();
+                }
+
+                if (switchPageParameters.CheckLeftClick(manager.InputManager.GetMousePosition()))
+                {
+                    descriptionBox.SetDescriptionText(switchPageParameters.GetLastDescription());
                 }
 
                 isPressed = true;
@@ -198,6 +192,7 @@ namespace Client
             mapButton.Update(manager.InputManager.GetMousePosition());
             gameNameBox.Update();
             playerAmountBox.Update();
+            descriptionBox.DescriptionButton.Update(manager.InputManager.GetMousePosition());
 
             if (switchPageLobby.UpdateRows(manager.InputManager.GetMousePosition(), isPressed))
             {
@@ -221,21 +216,12 @@ namespace Client
             gameNameBox.Draw(spriteBatch);
             playerAmountBox.Draw(spriteBatch);
             modulesImageDisplay.Draw(spriteBatch);
+            descriptionBox.Draw(spriteBatch);
 
             if (switchPageLobby.selectedRow != -1)
             {
                 switchPageParameters.Draw(spriteBatch);
             }
-        }
-
-        private void LobbyInfoSerialization()
-        {
-            var json = JsonSerializer.Serialize(new
-            {
-                LobbyName = gameNameBox.GetText()
-            });
-
-            Console.WriteLine(json);
         }
 
         private void ResetLoadingState()
@@ -245,22 +231,22 @@ namespace Client
             isLoadingModules = false;
             manager.WindowManager.LoadingWindow.IsEnabled = false;
             timeoutTimer = 0;
-            manager.WindowManager.ShowErrorMessage("Timeout with server");
+            manager.WindowManager.ShowErrorWindow("Timeout with server");
         }
 
         private void ShowLoadingWindow()
         {
             if (isCreatingLobby)
             {
-                manager.WindowManager.EnableLoadingWindow("Creating lobby");
+                manager.WindowManager.ShowLoadingWindow("Creating lobby");
             }
             else if (isJoiningLobby)
             {
-                manager.WindowManager.EnableLoadingWindow("Joining lobby");
+                manager.WindowManager.ShowLoadingWindow("Joining lobby");
             }
             else if (isLoadingModules)
             {
-                manager.WindowManager.EnableLoadingWindow("Loading modules");
+                manager.WindowManager.ShowLoadingWindow("Loading modules");
             }
         }
 
@@ -292,7 +278,7 @@ namespace Client
                 manager.WindowManager.LoadingWindow.IsEnabled = false;
                 manager.ClientManager.LobbyCreated = ActionStatus.IDLE;
                 timeoutTimer = 0;
-                manager.WindowManager.ShowErrorMessage("Failed to create lobby");
+                manager.WindowManager.ShowErrorWindow("Failed to create lobby");
             }
         }
 
@@ -311,7 +297,7 @@ namespace Client
                 isJoiningLobby = false;
                 manager.WindowManager.LoadingWindow.IsEnabled = false;
                 manager.ClientManager.LobbyJoined = ActionStatus.IDLE;
-                manager.WindowManager.ShowErrorMessage("Failed to join lobby");
+                manager.WindowManager.ShowErrorWindow("Failed to join lobby");
             }
         }
 
@@ -331,7 +317,7 @@ namespace Client
                 manager.WindowManager.LoadingWindow.IsEnabled = false;
                 manager.ClientManager.ModuleListReady = ActionStatus.IDLE;
                 timeoutTimer = 0;
-                manager.WindowManager.ShowErrorMessage("Failed to load modules");
+                manager.WindowManager.ShowErrorWindow("Failed to load modules");
             }
         }
     }

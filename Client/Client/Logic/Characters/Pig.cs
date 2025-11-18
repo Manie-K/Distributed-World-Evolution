@@ -1,69 +1,21 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
-using Client.Common;
+using Client.Logic;
 
 namespace Client
 {
     public class Pig : Character
     {
-        public Pig(Vector2 position, Color color, ref AnimationTexturesLoader ATL)
-            : base(position, color, 173, 173, 150f, ref ATL, 7, new Vector2(-72, -80))
+        public Pig(Vector2 position, Color color)
+            : base(position, color, 173, 173, 150f, 4, 12)
         {
-
-        }
-
-        public override void Update(GameTime gameTime, InputManager inputManager)
-        {
-            float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            Vector2 movement = Vector2.Zero;
-
-            if (inputManager.CheckIfPressingKey(Keys.W))
-            {
-                CurrentDirection = Direction.up;
-                movement.Y -= 1;
-            }
-            if (inputManager.CheckIfPressingKey(Keys.S))
-            {
-                CurrentDirection = Direction.down;
-                movement.Y += 1;
-            }
-            if (inputManager.CheckIfPressingKey(Keys.A))
-            {
-                CurrentDirection = Direction.left;
-                movement.X -= 1;
-            }
-            if (inputManager.CheckIfPressingKey(Keys.D))
-            {
-                CurrentDirection = Direction.right;
-                movement.X += 1;
-            }
-
-            if (movement != Vector2.Zero)
-            {
-                movement.Normalize();
-                Position += movement * speed * delta;
-                am.SetAnimationWithDuration(8, CurrentDirection, 1, 36, false);
-            }
-            else
-            {
-                am.SetAnimationWithDuration(7, CurrentDirection, 1, 36);
-            }
-
-
-            if (inputManager.CheckIfPressingKey(Keys.Space))
-            {
-                speed = 70f;
-            }
-            else speed = 200f;
-
-
-            am.Update();
+            am = new AnimationManager(14);
+            SpriteDrawingOffset = new Vector2(-72, -80);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(am.GetAcctualTexture(), Rect, am.GetFrame(), Color.White);
+            spriteBatch.Draw(AssetsManager.GetInstance().GetCharacterTexture(am.ActiveAnimation, 14), GetPosition(), GetSourceRectangle(), Color.White);
         }
     }
 }

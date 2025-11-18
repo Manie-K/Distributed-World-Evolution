@@ -45,17 +45,13 @@
     <PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.*" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Content\Animations\EnemyPlant1\" />
-    <Folder Include="Content\Animations\Pig\" />
-    <Folder Include="Content\Animations\Player\Attack\" />
-    <Folder Include="Content\Animations\Player\Idle\" />
-    <Folder Include="Content\Animations\Player\Run\" />
-    <Folder Include="Content\Animations\Vampire1\" />
+    <Folder Include="Content\Animations\" />
+    <Folder Include="Content\Animations\Boar\" />
+    <Folder Include="Content\Animations\RabbitBrown\" />
     <Folder Include="Content\Panels\Bestiary_Panel\" />
     <Folder Include="Content\Panels\Bestiary_Panel\CreaturesImages\" />
     <Folder Include="Content\Panels\Error_Window\" />
     <Folder Include="Content\Panels\Esc_Panel\" />
-    <Folder Include="Content\Panels\HealthBar\" />
     <Folder Include="Content\Panels\Inventory\" />
     <Folder Include="Content\Panels\Warning_Window\" />
     <Folder Include="Content\UI\CreateModules\" />

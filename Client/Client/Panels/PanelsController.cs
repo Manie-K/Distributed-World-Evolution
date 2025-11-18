@@ -1,32 +1,27 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Client.Panels.Stats;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Client.Panels
 {
     public class PanelsController
     {
         private GameManager gameManager;
-        public BestiaryPanel BestiaryPanel { get; set; }
+        public BestiaryPanel BestiaryPanel;
         public EscPanel EscPanel { get; set; }
-        
-        private Inventory inventory;
-        private HealthBar healthBar;
+        public Inventory Inventory;
 
+        public StatsPanel StatsPanel;
         private int pickedPanel;
         private bool isBlocked;
 
-        public PanelsController(GameManager gameManager) 
+        public PanelsController(GameManager gameManager)
         {
             this.gameManager = gameManager;
             BestiaryPanel = new BestiaryPanel(gameManager);
             EscPanel = new EscPanel(gameManager);
-            inventory = new Inventory(gameManager);
-            healthBar = new HealthBar(gameManager);
+            Inventory = new Inventory(gameManager);
+            this.StatsPanel = new StatsPanel(gameManager, new Microsoft.Xna.Framework.Vector2(20, 20));
             pickedPanel = -1;
             isBlocked = false;
         }
@@ -47,7 +42,6 @@ namespace Client.Panels
                 }
             }
 
-            healthBar.Update();
             switch (pickedPanel)
             {
                 case 0:
@@ -65,7 +59,7 @@ namespace Client.Panels
                     }
                     break;
                 default:
-                    inventory.Update();
+                    Inventory.Update();
                     break;
             }
 
@@ -82,11 +76,10 @@ namespace Client.Panels
             }
         }
 
-
         public void Draw(SpriteBatch spritebatch)
         {
-            inventory.Draw(spritebatch);
-            healthBar.Draw(spritebatch);
+            Inventory.Draw(spritebatch);
+            StatsPanel.Draw(spritebatch);
             switch (pickedPanel)
             {
                 case 0:
