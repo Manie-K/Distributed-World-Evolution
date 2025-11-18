@@ -15,6 +15,7 @@ namespace Client.Logic
         private Texture2D[] CharactersIdleSpritesheet;
         private Texture2D[] CharactersAttackSpritesheet;
         private Texture2D[] CharactersDeathSpritesheet;
+        private Texture2D[] AnimalsHealthBarTextures;
         private AssetsManager()
         {
 
@@ -96,6 +97,11 @@ namespace Client.Logic
             CharactersDeathSpritesheet[9] = content.Load<Texture2D>("Animations/Vampire1/Vampires1_Death_full");
             CharactersDeathSpritesheet[10] = content.Load<Texture2D>("Animations/Vampire2/Vampires2_Death_full");
             CharactersDeathSpritesheet[11] = content.Load<Texture2D>("Animations/Vampire3/Vampires3_Death_full");
+
+            AnimalsHealthBarTextures = new Texture2D[2];
+
+            AnimalsHealthBarTextures[0] = content.Load<Texture2D>("Animations/AnimalsHealth/Animals_Bar_Frame");
+            AnimalsHealthBarTextures[1] = content.Load<Texture2D>("Animations/AnimalsHealth/Animals_Bar_RedArea");
         }
 
         public Texture2D GetFlowersSpritesheet()
@@ -113,6 +119,19 @@ namespace Client.Logic
                     return CharactersAttackSpritesheet[index];
                 case 2:
                     return CharactersDeathSpritesheet[index];
+                default:
+                    return null;
+            }
+        }
+
+        public Texture2D GetHealthBarTexture(int index)
+        {
+            switch (index)
+            {
+                case 0:
+                    return AnimalsHealthBarTextures[0];
+                case 1:
+                    return AnimalsHealthBarTextures[1];
                 default:
                     return null;
             }

@@ -3,6 +3,7 @@ using Client.Common;
 using Client.Logic;
 using SharedLibrary.DTOs.EntitiesDTO;
 using SharedLibrary.Helpers;
+using Client.UI;
 
 namespace Client
 {
@@ -19,13 +20,14 @@ namespace Client
         protected float speed;
         protected Direction CurrentDirection;
         public AnimationManager am;
+        public CharacterHealthBar HealthBar;
        
-
         public Character(Vector2 position, Color color, int width, int height, float speed, int framesAmount, int interval)
             : base(null, position, width, height, color)
         {
             this.speed = speed;
             CurrentDirection = Direction.down;
+            HealthBar = new CharacterHealthBar();
         }
 
         public Rectangle GetSourceRectangle()
