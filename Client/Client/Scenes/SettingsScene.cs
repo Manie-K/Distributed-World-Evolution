@@ -1,5 +1,4 @@
-﻿using Client.UI.Settings;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -25,8 +24,8 @@ namespace Client
             this.manager = manager;
 
             switchButtons = new SwitchButton[2];
-            keyBoardKeysImages = new Texture2D[9];
-            keyBoardKeysText = new Text[6];
+            keyBoardKeysImages = new Texture2D[11];
+            keyBoardKeysText = new Text[8];
 
             exitButton = new Button(manager.ContentManager.Load<Texture2D>("UI/White Close 2"), manager.ContentManager.Load<SpriteFont>("Fonts/ButtonFont"), "", new Vector2(1180, 30), 70, 70, Color.Red);
             switchButtons[0] = new SwitchButton(manager.ContentManager.Load<Texture2D>("UI/White Left"),
@@ -41,17 +40,21 @@ namespace Client
             keyBoardKeysImages[1] = manager.ContentManager.Load<Texture2D>("UI/Keyboard_keys/s");
             keyBoardKeysImages[2] = manager.ContentManager.Load<Texture2D>("UI/Keyboard_keys/a");
             keyBoardKeysImages[3] = manager.ContentManager.Load<Texture2D>("UI/Keyboard_keys/d");
-            keyBoardKeysText[0] = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers2"), "MOVING", true, new Vector2(340, 100), 100, 60);
+            keyBoardKeysText[0] = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers2"), "MOVING", true, new Vector2(340, 75), 100, 60);
             keyBoardKeysImages[4] = manager.ContentManager.Load<Texture2D>("UI/Keyboard_keys/space");
-            keyBoardKeysText[1] = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers2"), "ATTACK", true, new Vector2(340, 155), 100, 60);
+            keyBoardKeysText[1] = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers2"), "ATTACK", true, new Vector2(340, 130), 100, 60);
             keyBoardKeysImages[5] = manager.ContentManager.Load<Texture2D>("UI/Keyboard_keys/e");
-            keyBoardKeysText[2] = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers2"), "USE", true, new Vector2(340, 210), 100, 60);
-            keyBoardKeysImages[6] = manager.ContentManager.Load<Texture2D>("UI/Keyboard_keys/esc");
-            keyBoardKeysText[3] = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers2"), "MENU", true, new Vector2(690, 100), 100, 60);
-            keyBoardKeysImages[7] = manager.ContentManager.Load<Texture2D>("UI/Keyboard_keys/b");
-            keyBoardKeysText[4] = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers2"), "BESTIARY", true, new Vector2(690, 155), 100, 60);
-            keyBoardKeysImages[8] = manager.ContentManager.Load<Texture2D>("UI/Keyboard_keys/q");
-            keyBoardKeysText[5] = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers2"), "DROP ITEM", true, new Vector2(690, 210), 100, 60);
+            keyBoardKeysText[2] = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers2"), "GATHER", true, new Vector2(340, 185), 100, 60);
+            keyBoardKeysImages[6] = manager.ContentManager.Load<Texture2D>("UI/Keyboard_keys/r");
+            keyBoardKeysText[3] = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers2"), "TAME", true, new Vector2(340, 240), 100, 60);
+            keyBoardKeysImages[7] = manager.ContentManager.Load<Texture2D>("UI/Keyboard_keys/esc");
+            keyBoardKeysText[4] = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers2"), "MENU", true, new Vector2(690, 75), 100, 60);
+            keyBoardKeysImages[8] = manager.ContentManager.Load<Texture2D>("UI/Keyboard_keys/b");
+            keyBoardKeysText[5] = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers2"), "BESTIARY", true, new Vector2(690, 130), 100, 60);
+            keyBoardKeysImages[9] = manager.ContentManager.Load<Texture2D>("UI/Keyboard_keys/q");
+            keyBoardKeysText[6] = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers2"), "DROP ITEM", true, new Vector2(690, 185), 100, 60);
+            keyBoardKeysImages[10] = manager.ContentManager.Load<Texture2D>("UI/Keyboard_keys/f");
+            keyBoardKeysText[7] = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers2"), "EAT", true, new Vector2(690, 240), 100, 60);
             playerNameTextBox = new TextBox(null, manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), new Vector2(688, 564), 190, 56, Color.Black);
             playerNameTextBox.SetText(manager.UserSettings.PlayerName);
 
@@ -152,12 +155,14 @@ namespace Client
             switchButtons[1].Draw(spriteBatch, (int)Math.Round(manager.AudioManager.GetGlobalEffectVolume() * 100f));
 
             for (int i = 0; i < keyBoardKeysText.Length; i++) keyBoardKeysText[i].Draw(spriteBatch);
-            for (int i = 0; i < 4; i++) spriteBatch.Draw(keyBoardKeysImages[i], new Rectangle(450 + 45 * i, 100, 60, 60), Color.White);
-            spriteBatch.Draw(keyBoardKeysImages[4], new Rectangle(457, 155, 85, 60), Color.White);
-            spriteBatch.Draw(keyBoardKeysImages[5], new Rectangle(444, 210, 85, 60), Color.White);
-            spriteBatch.Draw(keyBoardKeysImages[6], new Rectangle(812, 100, 85, 60), Color.White);
-            spriteBatch.Draw(keyBoardKeysImages[7], new Rectangle(805, 155, 85, 60), Color.White);
-            spriteBatch.Draw(keyBoardKeysImages[8], new Rectangle(805, 210, 85, 60), Color.White);
+            for (int i = 0; i < 4; i++) spriteBatch.Draw(keyBoardKeysImages[i], new Rectangle(450 + 45 * i, 75, 60, 60), Color.White);
+            spriteBatch.Draw(keyBoardKeysImages[4], new Rectangle(457, 130, 85, 60), Color.White);
+            spriteBatch.Draw(keyBoardKeysImages[5], new Rectangle(444, 185, 85, 60), Color.White);
+            spriteBatch.Draw(keyBoardKeysImages[6], new Rectangle(444, 240, 85, 60), Color.White);
+            spriteBatch.Draw(keyBoardKeysImages[7], new Rectangle(812, 75, 85, 60), Color.White);
+            spriteBatch.Draw(keyBoardKeysImages[8], new Rectangle(805, 130, 85, 60), Color.White);
+            spriteBatch.Draw(keyBoardKeysImages[9], new Rectangle(805, 185, 85, 60), Color.White);
+            spriteBatch.Draw(keyBoardKeysImages[10], new Rectangle(805, 240, 85, 60), Color.White);
 
             spriteBatch.Draw(nicknameTextBoxTexture, new Rectangle(688, 564, 190, 56), Color.White);
             nicknameTextBoxText.Draw(spriteBatch);

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Server.Core.Helpers
+namespace SharedLibrary.Helpers
 {
     public static class ModulePropertiesLimits
     {

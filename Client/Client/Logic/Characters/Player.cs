@@ -1,35 +1,94 @@
 ﻿using Client.Common;
+using Client.Logic;
+using Client.Panels;
 using Client.Rendering;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SharedLibrary.DTOs.EntitiesDTO;
+using SharedLibrary.DTOs.ModuleDTO;
+using System;
 using System.Linq;
 
 namespace Client
 {
     public class Player : Character
     {
-        public WorldEntityDTO TargetEntity;
+        private const float PLAYER_ACTION_COOLDOWN = 1.5f;
 
+        public WorldEntityDTO TargetEntity;
+        public WorldEntityDTO PlayerDTO;
+        public int HungerToConsume;
+
+        private BestiaryPanel bestiaryPanel;
+        private Inventory inventory;
         private Text playerName;
         private Vector2 playerNameOffset;
+        private ModuleDTO playerModule;
         private readonly WorldMap map;
         private readonly ClientManager clientManager;
+        private float actionCooldown;
 
-        public Player(Vector2 position, Color color, Text playerName, ref AnimationTexturesLoader ATL, Vector2 spriteDrawingOffset, WorldMap map = null, ClientManager clientManager = null)
-            : base(position, color, 140, 108, 150f, ref ATL, 0, spriteDrawingOffset)
+        private enum InteractionType
         {
-            this.playerName = playerName;
-            playerNameOffset = new Vector2(35 + spriteDrawingOffset.X, -3 + spriteDrawingOffset.Y);
-            this.map = map;
-            this.clientManager = clientManager;
-            TargetEntity = null;
+            Attack,
+            Gather,
+            Tame,
+            Eat
         }
 
-        public override void Update(GameTime gameTime, InputManager inputManager)
+        public Player(Vector2 position, Color color, Text playerName, Vector2 spriteDrawingOffset, ref BestiaryPanel bestiaryPanel,
+            ref Inventory inventory, WorldMap map = null, ClientManager clientManager = null)
+            : base(position, color, 130, 108, 150f, 8, 7)
         {
+            this.playerName = playerName;
+            SpriteDrawingOffset = spriteDrawingOffset;
+            playerNameOffset = new Vector2(29 + SpriteDrawingOffset.X, -3 + SpriteDrawingOffset.Y);
+            this.map = map;
+            this.clientManager = clientManager;
+            PlayerDTO = null;
+            TargetEntity = null;
+            am = new AnimationManager(13);
+            playerModule = null;
+            actionCooldown = 0;
+            this.bestiaryPanel = bestiaryPanel;
+            this.inventory = inventory;
+            HungerToConsume = 0;
+        }
+
+        public override void Update(GameTime gameTime, InputManager inputManager, EntityStateDTO state = null)
+        {
+            if (map == null)
+            {
+                base.Update(gameTime, inputManager, state);
+            }
+            else
+            {
+                UpdatePlayer(gameTime, inputManager);
+            }
+        }
+
+        private void UpdatePlayer(GameTime gameTime, InputManager inputManager)
+        {
+            if (playerModule == null && PlayerDTO != null)
+            {
+                playerModule = clientManager.Modules.Where(m => m.DatabaseID == PlayerDTO.ModuleID).FirstOrDefault();
+            }
+
+            if (PlayerDTO != null && PlayerDTO.State.Health <= 0)
+            {
+                Position = Vector2.One * 5;
+                PlayerDTO.State.Health = playerModule.MaxHealth;
+                PlayerDTO.State.Hunger = playerModule.MaxHunger;
+                am.Update(gameTime);
+                return;
+            }
+
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (actionCooldown > 0)
+            {
+                actionCooldown -= delta;
+            }
             Vector2 movement = Vector2.Zero;
 
             if (inputManager.CheckIfPressingKey(Keys.W))
@@ -53,10 +112,13 @@ namespace Client
                 movement.X += 1;
             }
 
+            SetAnimation(0);
+
             if (movement != Vector2.Zero)
             {
                 movement.Normalize();
                 Vector2 newPosition = Position + (movement * speed * delta);
+                SetAnimation(0);
 
                 if (newPosition.X < 0) newPosition.X = 0;
                 else if (newPosition.X >= map.MapWidth * map.TileSize) newPosition.X = map.MapWidth * map.TileSize - 1;
@@ -69,42 +131,123 @@ namespace Client
                 {
                     Position = newPosition;
                 }
-
-                am.SetAnimationWithDuration(1, CurrentDirection, 1, 36, false);
             }
-            else
+
+            if (inputManager.CheckIfPressingKey(Keys.Space))
             {
-                am.SetAnimationWithDuration(0, CurrentDirection, 1, 36);
+                HandleInteraction(InteractionType.Attack);
+                SetAnimation(1);
             }
-
-
-            if (inputManager.CheckIfPressingKey(Keys.Space) && am.GetAcctualAnimationIndex() != 2)
+            if (inputManager.CheckIfPressingKey(Keys.E))
             {
-                TargetEntity = clientManager.Entities.FirstOrDefault(e => e.Value.State.Position.Equals(map.GetTilePosition2D(Position.X, Position.Y))).Value;
-                if (TargetEntity != null)
-                {
-                    TargetEntity.State.Health -= 1;
-                }
-
-                am.SetAnimationWithDuration(2, CurrentDirection, 2, 36, true);               
+                HandleInteraction(InteractionType.Gather);
             }
-
-
-            if (am.GetAcctualAnimationIndex() == 2)
+            if (inputManager.CheckIfPressingKey(Keys.F))
             {
-                speed = 70f;
-                am.SetAnimationWithDuration(2, CurrentDirection, 2, 36, true);
+                HandleInteraction(InteractionType.Eat);
             }
-            else speed = 200f;
-            
+            if (inputManager.CheckIfPressingKey(Keys.R))
+            {
+                HandleInteraction(InteractionType.Tame);
+            }
 
-            am.Update();
+            am.Update(gameTime);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(am.GetAcctualTexture(), Rect, am.GetFrame(), Color.White);
+            spriteBatch.Draw(AssetsManager.GetInstance().GetCharacterTexture(am.ActiveAnimation, 13), GetPosition(), GetSourceRectangle(), Color.White);
             playerName.Draw(spriteBatch, Position + playerNameOffset);
+        }
+
+        public float GetPlayerMaxHealth()
+        {
+            if (playerModule != null)
+            {
+                return playerModule.MaxHealth;
+            }
+            else
+            {
+                return 1.0f;
+            }
+        }
+
+        public float GetPlayerMaxHunger()
+        {
+            if (playerModule != null)
+            {
+                return playerModule.MaxHunger;
+            }
+            else
+            {
+                return 1.0f;
+            }
+        }
+
+
+        private void HandleInteraction(InteractionType interactionType)
+        {
+            if (actionCooldown > 0) return;
+
+            TargetEntity = clientManager.Entities.FirstOrDefault(e => e.Value.State.Position.Equals(map.GetTilePosition2D(Position.X, Position.Y))).Value;
+            if (TargetEntity != null && TargetEntity.ModuleID != PlayerDTO.ModuleID)
+            {
+                switch (interactionType)
+                {
+                    case InteractionType.Attack:
+                        AttackTarget();
+                        break;
+                    case InteractionType.Gather:
+                        GatherTarget();
+                        break;
+                    case InteractionType.Tame:
+                        TameTarget();
+                        break;
+                }
+            }
+            else
+            {
+                if (interactionType == InteractionType.Eat)
+                {
+                    Eat();
+                }
+            }
+
+            actionCooldown = PLAYER_ACTION_COOLDOWN;
+        }
+
+        private void Eat()
+        {
+            if (inventory.Eat())
+            {
+                HungerToConsume += 20;
+            }
+        }
+
+        private void AttackTarget()
+        {
+            TargetEntity.State.Health -= playerModule.Damage;
+            Console.WriteLine("hp left: " + TargetEntity.State.Health);
+        }
+
+        private void GatherTarget()
+        {
+            int graphicID = clientManager.Modules.Where(m => m.DatabaseID == TargetEntity.ModuleID).First().GraphicalRepresentationID;
+            if (graphicID - 17 >= 0 && inventory.CollectItem(graphicID - 17))
+            {
+                TargetEntity.State.Health = 0;
+                Console.WriteLine("Plant gathered");
+            }
+        }
+
+        private void TameTarget()
+        {
+            int graphicID = clientManager.Modules.Where(m => m.DatabaseID == TargetEntity.ModuleID).First().GraphicalRepresentationID;
+            if (graphicID < 16 && inventory.RemoveOneItem() && bestiaryPanel.AddSlot(graphicID))
+            {
+                TargetEntity.State.Health = 0;
+                Console.WriteLine("Animal tamed");
+            }
         }
     }
 }

@@ -3,9 +3,6 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Client.UI.CreateLobby.Parameters
 {
@@ -17,6 +14,8 @@ namespace Client.UI.CreateLobby.Parameters
         private List<ParameterRow> parameters;
         private int pageNumber;
         private int amountOfRows;
+
+        private int lastParameterClicked;
 
         public SwitchPageParameters(SpriteFont fontNumbers, Vector2 position, ContentManager contentManager, int amountOfRows)
         {
@@ -31,7 +30,7 @@ namespace Client.UI.CreateLobby.Parameters
             this.amountOfRows = amountOfRows;
         }
 
-        public void CheckLeftClick(Vector2 clickPosition)
+        public bool CheckLeftClick(Vector2 clickPosition)
         {
             if (pageButtons[0].CheckLeftClick(clickPosition))
             {
@@ -44,6 +43,17 @@ namespace Client.UI.CreateLobby.Parameters
             }
 
             pageNumberText.SetText(pageNumber.ToString());
+
+            bool isClicked = false;
+            for (int i = 0; i < GetRowsOnPage(); i++)
+            {
+                if (parameters[(pageNumber - 1) * amountOfRows + i].CheckLeftClick(clickPosition))
+                {
+                    lastParameterClicked = (pageNumber - 1) * amountOfRows + i;
+                    isClicked = true;
+                }
+            }
+            return isClicked;
         }
 
         public void SetParameters(List<ModuleParametersData> moduleParameters)
@@ -52,7 +62,7 @@ namespace Client.UI.CreateLobby.Parameters
 
             foreach(ModuleParametersData moduleParameter in moduleParameters)
             {
-                parameters.Add(new ParameterRow(contentManager, moduleParameter.Name, moduleParameter.Value, new Vector2(785, 183 + 76 * (parameters.Count % amountOfRows)), moduleParameter.Type));
+                parameters.Add(new ParameterRow(contentManager, moduleParameter.Name, moduleParameter.Value, moduleParameter.AdditionalDescription, new Vector2(785, 183 + 76 * (parameters.Count % amountOfRows)), moduleParameter.Type));
             }
 
             pageNumber = 1;
@@ -82,5 +92,9 @@ namespace Client.UI.CreateLobby.Parameters
             return Math.Min(amountOfRows, remainingRows);
         }
 
+        public string GetLastDescription()
+        {
+            return parameters[lastParameterClicked].GetDescription();
+        }
     }
 }

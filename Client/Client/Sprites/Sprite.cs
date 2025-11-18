@@ -16,6 +16,11 @@ namespace Client
             SpriteDrawingOffset = spriteDrawingOffset;
         }
 
+        public Vector2 GetPosition()
+        {
+            return new Vector2((int)(Position.X + SpriteDrawingOffset.X), (int)(Position.Y + SpriteDrawingOffset.Y));
+        }
+
         public virtual void Update() { }
         
         public virtual void Draw(SpriteBatch spritebatch) { }

@@ -17,14 +17,12 @@ namespace Client.UI.CreateModules.Modules
         private Text descitpionText;
         public bool IsClickedButton;
 
-
-        //example of description text "The monster instantly reacts to any move-\nment, hurling itself at its prey with sa-\nvage fury. It slashes with claws and fangs."
-        public DescriptionBox(SpriteFont fontNumbers, ContentManager contentManager)
+        public DescriptionBox(SpriteFont fontNumbers, int offset, ContentManager contentManager)
         {
-            DescriptionButton= new Button(contentManager.Load<Texture2D>("UI/CreateModules/DescriptionIcon"), null, "", new Vector2(1120,484), 19, 37, Color.Lime);
-            descitpionText= new Text(fontNumbers, "", true, new Vector2(740, 548), 389, 100);
+            DescriptionButton= new Button(contentManager.Load<Texture2D>("UI/CreateModules/DescriptionIcon"), null, "", new Vector2(1120, 484), 19, 37, Color.Lime);
+            descitpionText= new Text(fontNumbers, "", true, new Vector2(740 + offset, 548), 389, 100);
             descriptionBackground = contentManager.Load<Texture2D>("UI/CreateModules/Create_Module_Description");
-            rect = new Rectangle(740, 554, 389, 100);
+            rect = new Rectangle(740 + offset, 554, 389, 100);
             IsClickedButton = false;
 
             descitpionText.SetTextColor(Color.White);
@@ -48,7 +46,26 @@ namespace Client.UI.CreateModules.Modules
 
         public void SetDescriptionText(string text)
         {
-            descitpionText.SetText(text);
+            descitpionText.SetText(FormatText(text));
+        }
+
+        private string FormatText(string text)
+        {
+            string output = "";
+            int sumWordsInLine = 0;
+
+            foreach (string word in text.Split(" "))
+            {
+                if (sumWordsInLine + word.Length > 43)
+                {
+                    output += "\n";
+                    sumWordsInLine = 0;
+                }
+                output += word + " ";
+                sumWordsInLine += word.Length + 1;
+            }
+
+            return output;
         }
     }
 }

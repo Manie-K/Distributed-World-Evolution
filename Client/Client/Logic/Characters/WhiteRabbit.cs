@@ -1,69 +1,21 @@
 ﻿using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
-using Client.Common;
+using Client.Logic;
 
 namespace Client
 {
     public class WhiteRabbit : Character
     {
-        public WhiteRabbit(Vector2 position, Color color, ref AnimationTexturesLoader ATL)
-            : base(position, color, 192, 192, 150f, ref ATL, 12, new Vector2(-80, -100))
+        public WhiteRabbit(Vector2 position, Color color)
+            : base(position, color, 192, 192, 150f, 4, 12)
         {
-
-        }
-
-        public override void Update(GameTime gameTime, InputManager inputManager)
-        {
-            float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            Vector2 movement = Vector2.Zero;
-
-            if (inputManager.CheckIfPressingKey(Keys.W))
-            {
-                CurrentDirection = Direction.up;
-                movement.Y -= 1;
-            }
-            if (inputManager.CheckIfPressingKey(Keys.S))
-            {
-                CurrentDirection = Direction.down;
-                movement.Y += 1;
-            }
-            if (inputManager.CheckIfPressingKey(Keys.A))
-            {
-                CurrentDirection = Direction.left;
-                movement.X -= 1;
-            }
-            if (inputManager.CheckIfPressingKey(Keys.D))
-            {
-                CurrentDirection = Direction.right;
-                movement.X += 1;
-            }
-
-            if (movement != Vector2.Zero)
-            {
-                movement.Normalize();
-                Position += movement * speed * delta;
-                am.SetAnimationWithDuration(13, CurrentDirection, 1, 36, false);
-            }
-            else
-            {
-                am.SetAnimationWithDuration(12, CurrentDirection, 1, 36);
-            }
-
-
-            if (inputManager.CheckIfPressingKey(Keys.Space))
-            {
-                speed = 70f;
-            }
-            else speed = 200f;
-
-
-            am.Update();
+            am = new AnimationManager(16);
+            SpriteDrawingOffset = new Vector2(-80, -100);
         }
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(am.GetAcctualTexture(), Rect, am.GetFrame(), Color.White);
+            spriteBatch.Draw(AssetsManager.GetInstance().GetCharacterTexture(am.ActiveAnimation, 16), GetPosition(), GetSourceRectangle(), Color.White);
         }
     }
 }

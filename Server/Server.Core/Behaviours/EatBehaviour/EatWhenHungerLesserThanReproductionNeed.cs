@@ -1,6 +1,6 @@
-﻿using Server.Core.Helpers;
-using Server.Core.Modules;
+﻿using Server.Core.Modules;
 using Server.Core.Services;
+using SharedLibrary.Helpers;
 
 namespace Server.Core.Behaviours.EatBehaviour
 {

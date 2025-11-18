@@ -1,13 +1,11 @@
-﻿using Client.UI.CreateLobby.Parameters;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using SharedLibrary;
+using Server.Core;
+using SharedLibrary.DTOs.ModuleDTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Client.UI.CreateModules.Modules.Parameters
 {
@@ -35,23 +33,19 @@ namespace Client.UI.CreateModules.Modules.Parameters
             this.amountOfRows = amountOfRows;
         }
 
-        public void AddRow()
+        public void AddRow(List<BehaviourDTO> behaviours)
         {
-            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)),0,"Health","statystyka pierwsza jooow1"));
-            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Damage", "statystyka pierwsza jooow2"));
-            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Hunger", "statystyka pierwsza jooow3"));
-            parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), new List<string> { "Carnivore", "Herbivore", "Omnivore" }, 1, "Consumption", "behaviour pierwsza jooow1"));
-            parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), new List<string> { "HP > X", "Enemy HP < X", "Always", "Random" }, 1, "Combat", "behaviour pierwsza jooow2"));
-            parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), new List<string> { "Same Species", "Hunger > X and Same Species", "If Reproduction Drive > random_float()" }, 1, "Breeding", "behaviour pierwsza jooow3"));
-        }
+            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Type", "Type of the creature", false));
+            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Damage", "Number of the damage dealt"));
+            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Aggresion", "Number of agression"));
+            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Reproduction", "The need for breeding"));
+            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Max Health", "Max Health"));
+            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Max Hunger", "Max Hunger"));
 
-        public void AddRow2()
-        {
-            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Health", "statystyka pierwsza jooow1"));
-            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Hunger", "statystyka pierwsza jooow2"));
-            parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), new List<string> { "HP > X", "Enemy HP < X", "Always", "Random" }, 1, "Combat", "behaviour pierwsza jooow1"));
-            parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), new List<string> { "Same Species", "Hunger > X and Same Species", "If Reproduction Drive > random_float()" }, 1, "Breeding", "behaviour pierwsza jooow2"));
-            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Health", "statystyka pierwsza jooow3"));
+            parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), behaviours.Where(b => b.InteractionType == BehaviourInteractionTypeEnum.Attack).ToList(), 1, "Attack", "Attack behaviour"));
+            parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), behaviours.Where(b => b.InteractionType == BehaviourInteractionTypeEnum.Eat).ToList(), 1, "Eat", "Eat behaviour"));
+            parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), behaviours.Where(b => b.InteractionType == BehaviourInteractionTypeEnum.Move).ToList(), 1, "Move", "Move behaviour"));
+            parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), behaviours.Where(b => b.InteractionType == BehaviourInteractionTypeEnum.Reproduce).ToList(), 1, "Reproduce", "Reproduce behaviour"));
         }
 
         public bool CheckLeftClick(Vector2 clickPosition)
@@ -91,14 +85,12 @@ namespace Client.UI.CreateModules.Modules.Parameters
             }
         }
 
-
         public void UpdateRows(Vector2 cursorPosition)
         {
             for (int i = 0; i < GetRowsOnPage(); i++)
             {
                 parameters[(pageNumber - 1) * amountOfRows + i].Update(cursorPosition);
             }
-
         }
 
         public int GetRowsOnPage()
@@ -115,12 +107,32 @@ namespace Client.UI.CreateModules.Modules.Parameters
 
         public string GetLastDescription()
         {
-            return parameters[lastParameterClicked].Description;
+            return parameters[lastParameterClicked].GetDescription();
         }
 
         public int GetValueOnIndex(int index)
         {
             return parameters[index].GetValue();
+        }
+
+        public void SetCreatureType(EntityTypeEnum type)
+        {
+            if (parameters.Count > 0)
+            {
+                ModuleStatsParameter typeParameter = (ModuleStatsParameter)parameters[0];
+                typeParameter.SetStatsBoxText(type.ToString());
+                typeParameter.CreatureType = type;
+            }
+        }
+
+        public EntityTypeEnum GetCreatureType()
+        {
+            if (parameters.Count > 0)
+            {
+                ModuleStatsParameter typeParameter = (ModuleStatsParameter)parameters[0];
+                return typeParameter.CreatureType;
+            }
+            return EntityTypeEnum.Animal;
         }
 
         public List<Tuple<int, int>> GetBehavioursList()
@@ -130,8 +142,7 @@ namespace Client.UI.CreateModules.Modules.Parameters
             for(int i=0;i< parameters.Count; i++)
             {
                 if (parameters[i] is ModuleBehaviourParameter behaviourParam
-                    && parameters[i].Type == 1
-                    && behaviourParam.IsPicked())
+                    && parameters[i].Type == 1)
                 {
                     list.Add(new Tuple<int, int>(i, GetValueOnIndex(i)));
                 }
@@ -140,5 +151,42 @@ namespace Client.UI.CreateModules.Modules.Parameters
             return list;
         }
 
+        public string CheckParametersLimits()
+        {
+            bool badParameter = false;
+            string output = "Incorrect";
+            if (!(parameters[1].GetValue() <= SharedLibrary.Helpers.ModulePropertiesLimits.MAX_DAMAGE && parameters[1].GetValue() >= SharedLibrary.Helpers.ModulePropertiesLimits.MIN_DAMAGE))
+            {
+                output += " damage parameter";
+                badParameter = true;
+            }
+            if (!(parameters[2].GetValue() <= SharedLibrary.Helpers.ModulePropertiesLimits.MAX_AGGRESSION && parameters[2].GetValue() >= SharedLibrary.Helpers.ModulePropertiesLimits.MIN_AGGRESSION))
+            {
+                if (badParameter) output += ", aggression parameter";
+                else output += " aggression parameter";
+                badParameter = true;
+            }
+            if (!(parameters[3].GetValue() <= SharedLibrary.Helpers.ModulePropertiesLimits.MAX_REPRODUCTION_NEED && parameters[3].GetValue() >= SharedLibrary.Helpers.ModulePropertiesLimits.MIN_REPRODUCTION_NEED))
+            {
+                if (badParameter) output += ", reproduction parameter";
+                else output += " reproduction parameter";
+                badParameter = true;
+            }
+            if (!(parameters[4].GetValue() <= SharedLibrary.Helpers.ModulePropertiesLimits.MAX_MAX_HEALTH && parameters[4].GetValue() >= SharedLibrary.Helpers.ModulePropertiesLimits.MIN_MAX_HEALTH))
+            {
+                if (badParameter) output += ", health parameter";
+                else output += " health parameter";
+                badParameter = true;
+            }
+            if (!(parameters[5].GetValue() <= SharedLibrary.Helpers.ModulePropertiesLimits.MAX_MAX_HUNGER && parameters[5].GetValue() >= SharedLibrary.Helpers.ModulePropertiesLimits.MIN_MAX_HUNGER))
+            {
+                if (badParameter) output += ", hunger parameter";
+                else output += " hunger parameter";
+                badParameter = true;
+            }
+
+            if (badParameter) return output + ".";
+            else return null;
+        }
     }
 }
