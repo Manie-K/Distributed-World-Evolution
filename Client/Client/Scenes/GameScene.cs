@@ -99,7 +99,8 @@ namespace Client
                     character.Update(gameTime, manager.InputManager, entity.State);
                     character.SetCurrentDirection(map.GetTilePosition2D(character.Position.X, character.Position.Y), entity.State.Position);
                     character.Position = GetWorldPosition(entity);
-                    character.HealthBar.SetRangeBar((float)entity.State.Health / 100);
+                    int maxHealth = manager.ClientManager.Modules.FirstOrDefault(m => m.DatabaseID == entity.ModuleID)?.MaxHealth ?? -1;
+                    character.HealthBar.SetRangeBar((float)entity.State.Health / maxHealth);
 
                 }
                 else if (plants.TryGetValue(entity.Id, out Plant plant))
