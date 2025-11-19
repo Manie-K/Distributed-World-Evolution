@@ -15,6 +15,7 @@ using Server.Core.Behaviours.TameBehaviour;
 using Server.Core.Behaviours.ReproduceBehaviour;
 using SharedLibrary.Helpers;
 using System.Collections.Immutable;
+using System.Diagnostics;
 
 namespace Server.Core.Lobby
 {
@@ -55,6 +56,8 @@ namespace Server.Core.Lobby
 
         private int entitiesHealthAndHungerUpdateCounter = 0;
         private bool running;
+
+        private long updateCounter = 0;
 
         #region Constructors
 
@@ -283,8 +286,6 @@ namespace Server.Core.Lobby
 
             Log("Initializing world entities...", LogLevelEnum.Info);
 
-            // For testing purposes, we create some entities here.
-
             for (int i = 0; i < LobbyParams.NUM_INITIAL_ENTITIES; i++)
             {
                 module = modules[new Random().Next(modulesCount)];
@@ -327,7 +328,13 @@ namespace Server.Core.Lobby
         /// </summary>
         private void PublishWorldState()
         {
+            updateCounter++;
+
+            Console.WriteLine($"[DEBUG] Update #{updateCounter}"); //DEBUG
+            var stopwatchWorld = Stopwatch.StartNew(); //DEBUG
             UpdateWorldState();
+            stopwatchWorld.Stop(); //DEBUG
+            Console.WriteLine($"[DEBUG] World state update #{updateCounter} took {stopwatchWorld.ElapsedMilliseconds}ms."); //DEBUG
 
             lock (clients)
             {
@@ -354,69 +361,72 @@ namespace Server.Core.Lobby
             entitiesHealthAndHungerUpdateCounter++;
             bool shouldResetCounter = false;
 
-            for (int i = 0; i < entities.Count; i++)
+            lock (entities)
             {
-                WorldEntity entity = entities[i];
-                entityModule = moduleService.GetModuleById(entity.ModuleID);
-
-                if (entityModule == null)
+                for (int i = 0; i < entities.Count; i++)
                 {
-                    Log($"Entity's {entity.Id} module not found in lobby {LobbyId}.", LogLevelEnum.Warning);
-                    continue;
-                }
+                    WorldEntity entity = entities[i];
+                    entityModule = moduleService.GetModuleById(entity.ModuleID);
 
-                if (entitiesHealthAndHungerUpdateCounter >= 10 * LOBBY_UPDATES_PER_SECOND)
-                {
-                    shouldResetCounter = true;
-                    if (entity.State.Health <= 0)
+                    if (entityModule == null)
                     {
-                        entity.Die(moduleService);
-                        i--;
+                        Log($"Entity's {entity.Id} module not found in lobby {LobbyId}.", LogLevelEnum.Warning);
                         continue;
                     }
-                    else if (entity.State.Hunger > 0)
+
+                    if (entitiesHealthAndHungerUpdateCounter >= 10 * LOBBY_UPDATES_PER_SECOND)
                     {
-                        entity.State.Hunger -= HUNGER_CHANGE;
-                    }
-                    else if (entity.State.Health > 0)
-                    {
-                        entity.State.Health -= HEALTH_CHANGE;
+                        shouldResetCounter = true;
+                        if (entity.State.Health <= 0)
+                        {
+                            entity.Die(moduleService);
+                            i--;
+                            continue;
+                        }
+                        else if (entity.State.Hunger > 0)
+                        {
+                            entity.State.Hunger -= HUNGER_CHANGE;
+                        }
+                        else if (entity.State.Health > 0)
+                        {
+                            entity.State.Health -= HEALTH_CHANGE;
+                        }
+
+                        if (entity.State.Hunger > 0 && entity.State.Health < entityModule.MaxHealth)
+                        {
+                            entity.State.Health += HEALTH_CHANGE;
+                        }
                     }
 
-                    if (entity.State.Hunger > 0 && entity.State.Health < entityModule.MaxHealth)
+
+                    if (entity.State.InteractionFramesLeft > 0)
                     {
-                        entity.State.Health += HEALTH_CHANGE;
+                        entity.State.InteractionFramesLeft--;
+                        continue;
                     }
+                    entity.State.LastInteractionName = String.Empty;
+
+                    if (entityModule.Type == EntityTypeEnum.Human)
+                    {
+                        continue;
+                    }
+
+
+                    (int stepX, int stepY) = ((MoveBehaviourBase)entityModule.GetBehaviourOfType(typeof(MoveBehaviourBase))).GetNextMovement(entity, ImmutableList.Create(entities.ToArray()));
+
+                    nextState = new EntityState(entity.State);
+                    nextState.Position.X += stepX;
+                    nextState.Position.Y += stepY;
+
+                    entity.State.LastMovementVector = new Position2D(stepX, stepY);
+
+                    SimulateNonHumanEntityUpdate(entity, nextState);
                 }
 
-
-                if (entity.State.InteractionFramesLeft > 0)
+                if (shouldResetCounter)
                 {
-                    entity.State.InteractionFramesLeft--;
-                    continue;
+                    entitiesHealthAndHungerUpdateCounter = 0;
                 }
-                entity.State.LastInteractionName = String.Empty;
-
-                if (entityModule.Type == EntityTypeEnum.Human)
-                {
-                    continue;
-                }
-
-
-                (int stepX, int stepY) = ((MoveBehaviourBase)entityModule.GetBehaviourOfType(typeof(MoveBehaviourBase))).GetNextMovement(entity, ImmutableList.Create(entities.ToArray()));
-
-                nextState = new EntityState(entity.State);
-                nextState.Position.X += stepX;
-                nextState.Position.Y += stepY;
-
-                entity.State.LastMovementVector = new Position2D(stepX, stepY);
-
-                SimulateNonHumanEntityUpdate(entity, nextState);
-            }
-
-            if (shouldResetCounter)
-            {
-                entitiesHealthAndHungerUpdateCounter = 0;
             }
         }
 
