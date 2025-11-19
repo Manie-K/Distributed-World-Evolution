@@ -56,7 +56,7 @@ namespace Server.Core.Behaviours.MoveBehaviour
         /// If the creation of immutable list from normal list and then traversing through all world entites will be too time consuming,
         /// we should change the data structure to something more optimized, 2d spatial map etc.Marked it as possible TODO.    
         /// </remarks>
-        public abstract (int, int) GetNextMovement(WorldEntity entity, ImmutableList<WorldEntity> otherEntites);
+        public abstract (int, int) GetNextMovement(WorldEntity entity, Span<WorldEntity> otherEntites);
 
         /// <inheritdoc/>
         public BehaviourDTO ToDTO()

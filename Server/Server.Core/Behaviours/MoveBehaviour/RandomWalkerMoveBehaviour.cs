@@ -13,7 +13,7 @@ namespace Server.Core.Behaviours.MoveBehaviour
         public override string Description => "Basic move behaviour, random 8-sided movement";
         
         /// <inheritdoc>
-        public override (int, int) GetNextMovement(WorldEntity entity, ImmutableList<WorldEntity> otherEntites)
+        public override (int, int) GetNextMovement(WorldEntity entity, Span<WorldEntity> otherEntites)
         {
             int x = 0, y = 0;
             while (x == 0 && y == 0)

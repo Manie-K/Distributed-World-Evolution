@@ -16,6 +16,7 @@ using Server.Core.Behaviours.ReproduceBehaviour;
 using SharedLibrary.Helpers;
 using System.Collections.Immutable;
 using System.Diagnostics;
+using System.Runtime.InteropServices;
 
 namespace Server.Core.Lobby
 {
@@ -412,7 +413,7 @@ namespace Server.Core.Lobby
                     }
 
 
-                    (int stepX, int stepY) = ((MoveBehaviourBase)entityModule.GetBehaviourOfType(typeof(MoveBehaviourBase))).GetNextMovement(entity, ImmutableList.Create(entities.ToArray()));
+                    (int stepX, int stepY) = ((MoveBehaviourBase)entityModule.GetBehaviourOfType(typeof(MoveBehaviourBase))).GetNextMovement(entity, CollectionsMarshal.AsSpan(entities));
 
                     nextState = new EntityState(entity.State);
                     nextState.Position.X += stepX;
