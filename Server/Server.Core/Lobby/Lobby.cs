@@ -375,6 +375,12 @@ namespace Server.Core.Lobby
             entitiesHealthAndHungerUpdateCounter++;
             bool shouldResetCounter = false;
 
+            double allOtherTime = 0.0;
+            double allSimulationTime = 0.0;
+            int allIterations = 0;
+            int allSimulationIterations = 0;
+
+
             lock (entities)
             {
                 for (int i = 0; i < entities.Count; i++)
@@ -388,6 +394,8 @@ namespace Server.Core.Lobby
                         continue;
                     }
 
+                    var stopwatch = Stopwatch.StartNew(); //DEBUG
+                    allIterations++; //DEBUG
                     if (entitiesHealthAndHungerUpdateCounter >= 10 * LOBBY_UPDATES_PER_SECOND)
                     {
                         shouldResetCounter = true;
@@ -395,6 +403,9 @@ namespace Server.Core.Lobby
                         {
                             entity.Die(moduleService);
                             i--;
+
+                            stopwatch.Stop(); //DEBUG
+                            allOtherTime += stopwatch.Elapsed.TotalMilliseconds; //DEBUG
                             continue;
                         }
                         else if (entity.State.Hunger > 0)
@@ -417,6 +428,9 @@ namespace Server.Core.Lobby
                     {
                         entity.State.InteractionFramesLeft--;
                         entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = entity;
+
+                        stopwatch.Stop(); //DEBUG
+                        allOtherTime += stopwatch.Elapsed.TotalMilliseconds; //DEBUG
                         continue;
                     }
                     entity.State.LastInteractionName = String.Empty;
@@ -424,11 +438,14 @@ namespace Server.Core.Lobby
                     if (entityModule.Type == EntityTypeEnum.Human)
                     {
                         entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = entity; //Should it be here?
+
+                        stopwatch.Stop(); //DEBUG
+                        allOtherTime += stopwatch.Elapsed.TotalMilliseconds; //DEBUG
                         continue;
                     }
 
 
-                    (int stepX, int stepY) = ((MoveBehaviourBase)entityModule.GetBehaviourOfType(typeof(MoveBehaviourBase))).GetNextMovement(entity, CollectionsMarshal.AsSpan(entities));
+                    (int stepX, int stepY) = ((MoveBehaviourBase)entityModule.GetBehaviourOfType(InteractionTypeEnum.Move)).GetNextMovement(entity, CollectionsMarshal.AsSpan(entities));
 
                     nextState = new EntityState(entity.State);
                     nextState.Position.X += stepX;
@@ -436,8 +453,18 @@ namespace Server.Core.Lobby
 
                     entity.State.LastMovementVector = new Position2D(stepX, stepY);
 
+                    stopwatch.Stop(); //DEBUG
+                    allOtherTime += stopwatch.Elapsed.TotalMilliseconds; //DEBUG
+
+                    var sw = Stopwatch.StartNew();
                     SimulateNonHumanEntityUpdate(entity, nextState);
+                    sw.Stop();
+                    allSimulationTime += sw.Elapsed.TotalMilliseconds; //DEBUG
+                    allSimulationIterations++; //DEBUG
                 }
+
+                Console.WriteLine($"[DEBUG] Time this update: Other: {allOtherTime}. Iterations: {allIterations}."); //DEBUG
+                Console.WriteLine($"[DEBUG] Time this update: Simulation: {allSimulationTime}. Iterations: {allSimulationIterations}."); //DEBUG
 
                 if (shouldResetCounter)
                 {
@@ -498,60 +525,67 @@ namespace Server.Core.Lobby
 
             if (shouldCheckInteraction)
             {
-                Type? interactionType = GetInteractionType(entity, newState);
-                if (interactionType is null) return;
+                InteractionTypeEnum interactionType = GetInteractionType(entity, newState);
+                if (interactionType is InteractionTypeEnum.None) return;
 
-                WorldEntity? targetEntity = entities.Where(e => e.State.Position == newState.Position)?.FirstOrDefault();
+                WorldEntity? targetEntity = entitiesMap[(newState.Position.X, newState.Position.Y)];
                 IBehaviour behaviour = entityModule.GetBehaviourOfType(interactionType);
 
                 // Distinction in case when we need to add custom parameters
-                if (interactionType == typeof(MoveBehaviourBase))
+                switch(interactionType)
                 {
-                    behaviour.Execute(entity, null, ModuleService.Instance ,new Dictionary<string, object>{
-                        { CustomBehaviourParams.MAP_WALKABLE_PARAM, walkableTiles   },
-                        { CustomBehaviourParams.NEW_POS_PARAM, newState.Position },
-                        { CustomBehaviourParams.ENTITIES_MAP_PARAM, entitiesMap }
-                    });
+                    case InteractionTypeEnum.Move:
+                        behaviour.Execute(entity, null, ModuleService.Instance, new Dictionary<string, object>{
+                            { CustomBehaviourParams.MAP_WALKABLE_PARAM, walkableTiles   },
+                            { CustomBehaviourParams.NEW_POS_PARAM, newState.Position },
+                            { CustomBehaviourParams.ENTITIES_MAP_PARAM, entitiesMap }
+                         });
 
-                    entity.State.InteractionFramesLeft = 32;
-                    entity.State.LastInteractionName = nameof(MoveBehaviourBase);
-                }
-                else if (interactionType == typeof(ReproduceBehaviourBase))
-                {
-                    behaviour.Execute(entity, targetEntity, ModuleService.Instance, new Dictionary<string, object>{
-                        { CustomBehaviourParams.LOBBY_PARAM, this },
-                        { CustomBehaviourParams.MAP_FERTILE_PARAM, fertileTiles },
-                        { CustomBehaviourParams.MAP_WALKABLE_PARAM, walkableTiles   }
-                    });
+                        entity.State.InteractionFramesLeft = 32;
+                        entity.State.LastInteractionName = nameof(MoveBehaviourBase);
+                        break;
+                    
+                    case InteractionTypeEnum.Attack:
+                        behaviour.Execute(entity, targetEntity!, ModuleService.Instance);
 
-                    if(targetEntity != null)
-                    {
-                        targetEntity.State.InteractionFramesLeft = 96;
-                        targetEntity.State.LastInteractionName = nameof(ReproduceBehaviourBase);
-                    }
-                    entity.State.InteractionFramesLeft = 96;
-                    entity.State.LastInteractionName = nameof(ReproduceBehaviourBase);
+                        entity.State.InteractionFramesLeft = 128;
+                        targetEntity!.State.InteractionFramesLeft = 128;
+
+                        entity.State.LastInteractionName = nameof(AttackBehaviourBase);
+                        targetEntity!.State.LastInteractionName = nameof(AttackBehaviourBase);
+                        break;
+                    
+                    case InteractionTypeEnum.Eat:
+                        behaviour.Execute(entity, targetEntity!, ModuleService.Instance);
+
+                        entity.State.InteractionFramesLeft = 128;
+                        targetEntity!.State.InteractionFramesLeft = 128;
+
+                        entity.State.LastInteractionName = "Undefined interaction";
+                        targetEntity!.State.LastInteractionName = "Undefined interaction";
+                        break;
+                    
+                    case InteractionTypeEnum.Reproduce:
+                        behaviour.Execute(entity, targetEntity, ModuleService.Instance, new Dictionary<string, object>{
+                            { CustomBehaviourParams.LOBBY_PARAM, this },
+                            { CustomBehaviourParams.MAP_FERTILE_PARAM, fertileTiles },
+                            { CustomBehaviourParams.MAP_WALKABLE_PARAM, walkableTiles   }
+                        });
+
+                        if (targetEntity != null)
+                        {
+                            targetEntity.State.InteractionFramesLeft = 96;
+                            targetEntity.State.LastInteractionName = nameof(ReproduceBehaviourBase);
+                        }
+                        entity.State.InteractionFramesLeft = 96;
+                        entity.State.LastInteractionName = nameof(ReproduceBehaviourBase);
+                        break;
+
+                    default:
+                        Log($"Undefined interaction type {interactionType} for entity {entity.Id}.", LogLevelEnum.Error);
+                        break;
                 }
-                else if(interactionType == typeof(AttackBehaviourBase))
-                {
-                    behaviour.Execute(entity, targetEntity!, ModuleService.Instance);
-                    
-                    entity.State.InteractionFramesLeft = 128;
-                    targetEntity!.State.InteractionFramesLeft = 128;
-                    
-                    entity.State.LastInteractionName = nameof(AttackBehaviourBase);
-                    targetEntity!.State.LastInteractionName = nameof(AttackBehaviourBase);
-                }
-                else
-                {
-                    behaviour.Execute(entity, targetEntity!, ModuleService.Instance);
-                    
-                    entity.State.InteractionFramesLeft = 128;
-                    targetEntity!.State.InteractionFramesLeft = 128;
-                    
-                    entity.State.LastInteractionName = "Undefined interaction";
-                    targetEntity!.State.LastInteractionName = "Undefined interaction";
-                }
+
             }
         }
 
@@ -592,7 +626,7 @@ namespace Server.Core.Lobby
         /// <param name="newState">Entity's new state</param>
         /// <returns>Type of the interaction, or null if no interaction should occur</returns>
         /// <exception cref="Exception">Modules must be correct</exception>
-        private Type? GetInteractionType(WorldEntity entity, EntityState newState)
+        private InteractionTypeEnum GetInteractionType(WorldEntity entity, EntityState newState)
         {
             Module entityModule = moduleService.GetModuleById(entity.ModuleID) ?? throw new Exception($"Module with ID={entity.ModuleID} not found");
             EntityTypeEnum entityType = entityModule.Type;
@@ -601,7 +635,7 @@ namespace Server.Core.Lobby
 
             if (entityOnPosition == null)
             {
-                if(entityModule.GetBehaviourOfType(typeof(MoveBehaviourBase))
+                if(entityModule.GetBehaviourOfType(InteractionTypeEnum.Move)
                     .CanExecute(entity, null, ModuleService.Instance, new Dictionary<string, object>{
                         { CustomBehaviourParams.MAP_WALKABLE_PARAM, walkableTiles   },
                         { CustomBehaviourParams.NEW_POS_PARAM, newState.Position },
@@ -609,15 +643,15 @@ namespace Server.Core.Lobby
                     })
                 )
                 {
-                    return typeof(MoveBehaviourBase);
+                    return InteractionTypeEnum.Move;
                 }
-                return null;
+                return InteractionTypeEnum.None;
             }
 
             EntityTypeEnum targetType = moduleService.GetModuleById(entityOnPosition.ModuleID)?.Type ?? throw new Exception($"Module with ID={entity.ModuleID} not found"); ;
 
             // We refactored this so that humans dont use this method, the clients send the human updates directly
-            if (entityType == EntityTypeEnum.Human) return null;
+            if (entityType == EntityTypeEnum.Human) return InteractionTypeEnum.None;
 
             // Plants reproduce by themselves - and do only this
             if (entityType == EntityTypeEnum.Plant)
@@ -627,51 +661,52 @@ namespace Server.Core.Lobby
                     Log("Plant is on the same position as another entity, which should not happen.", LogLevelEnum.Error);
                 }
 
-                if(entityModule.GetBehaviourOfType(typeof(ReproduceBehaviourBase))
+                if(entityModule.GetBehaviourOfType(InteractionTypeEnum.Reproduce)
                     .CanExecute(entity, entityOnPosition, ModuleService.Instance, new Dictionary<string, object>()
                     {
                         { CustomBehaviourParams.MAP_WALKABLE_PARAM, walkableTiles }
                     })
                 )
                 {
-                    return typeof(ReproduceBehaviourBase);
+                    return InteractionTypeEnum.Reproduce;
                 }
-                return null;
+                return InteractionTypeEnum.None;
             }
 
             // Attack - Humans wont be here
             if ((entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Human) ||
                 (entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Animal))
             {
-                AttackBehaviourBase attackBehaviour = (AttackBehaviourBase)entityModule.GetBehaviourOfType(typeof(AttackBehaviourBase));
+                AttackBehaviourBase attackBehaviour = (AttackBehaviourBase)entityModule.GetBehaviourOfType(InteractionTypeEnum.Attack);
                 if (attackBehaviour.CanExecute(entity, entityOnPosition, ModuleService.Instance))
                 {
-                    return typeof(AttackBehaviourBase);
+                    return InteractionTypeEnum.Attack;
                 }
             }
 
             // Reproduce - Animals reproduce with animals
             if (entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Animal)
             {
-                ReproduceBehaviourBase reproduceBehaviour = (ReproduceBehaviourBase)entityModule.GetBehaviourOfType(typeof(ReproduceBehaviourBase));
+                ReproduceBehaviourBase reproduceBehaviour = (ReproduceBehaviourBase)entityModule.GetBehaviourOfType(InteractionTypeEnum.Reproduce);
                 if (reproduceBehaviour.CanExecute(entity, entityOnPosition, ModuleService.Instance, new Dictionary<string, object>{
                         { CustomBehaviourParams.MAP_FERTILE_PARAM, fertileTiles }
                     }))
                 {
-                    return typeof(ReproduceBehaviourBase);
+                    return InteractionTypeEnum.Reproduce;
                 }
             }
 
             // Eat
             if (entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Plant)
             {
-                EatBehaviourBase eatBehaviour = (EatBehaviourBase)entityModule.GetBehaviourOfType(typeof(EatBehaviourBase));
+                EatBehaviourBase eatBehaviour = (EatBehaviourBase)entityModule.GetBehaviourOfType(InteractionTypeEnum.Eat);
                 if (eatBehaviour.CanExecute(entity, entityOnPosition, ModuleService.Instance))
                 {
-                    return typeof(EatBehaviourBase);
+                    return InteractionTypeEnum.Eat;
                 }
             }
 
+            /*
             // Gather - old code, Humans won't be here
             if (entityType == EntityTypeEnum.Human && targetType == EntityTypeEnum.Plant)
             {
@@ -691,8 +726,9 @@ namespace Server.Core.Lobby
                     return typeof(TameBehaviourBase);
                 }
             }
+            */
 
-            return null;
+            return InteractionTypeEnum.None;
         }
 
         #endregion
