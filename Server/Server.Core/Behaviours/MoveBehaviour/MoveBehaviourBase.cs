@@ -24,6 +24,12 @@ namespace Server.Core.Behaviours.MoveBehaviour
         {
             if (otherParams?.TryGetValue(CustomBehaviourParams.NEW_POS_PARAM, out object? value) == true && value is Position2D nextPosition)
             {
+                if (otherParams.TryGetValue(CustomBehaviourParams.ENTITIES_MAP_PARAM, out object? entitiesMapObj)
+                    && entitiesMapObj is Dictionary<(int, int), WorldEntity?> entitiesMap)
+                {
+                    entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = null;
+                    entitiesMap[(nextPosition.X, nextPosition.Y)] = entity;
+                }
                 entity.State.Position = nextPosition;
             }
         }

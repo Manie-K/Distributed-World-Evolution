@@ -51,6 +51,7 @@ namespace Server.Core.Lobby
         private readonly IModuleService moduleService;
         private readonly Dictionary<TcpClient, WorldEntity> clients;
         private readonly List<WorldEntity> entities;
+        private readonly Dictionary<(int, int), WorldEntity?> entitiesMap;
         private readonly List<int> allowedModulesIDs;
         private readonly bool[][] walkableTiles;
         private readonly bool[][] fertileTiles;
@@ -104,9 +105,20 @@ namespace Server.Core.Lobby
             this.fertileTiles = fertileTiles; 
             this.moduleService = moduleService;
 
-            entities = new List<WorldEntity>(200);
+            entities = new List<WorldEntity>(LobbyParams.NUM_INITIAL_ENTITIES);
+            entitiesMap = new Dictionary<(int, int), WorldEntity?>(walkableTiles[0].Length * walkableTiles.Length);
+
+            for (int x = 0; x < walkableTiles.Length; x++)
+            {
+                for (int y = 0; y < walkableTiles[x].Length; y++)
+                {
+                    entitiesMap[(x, y)] = null;
+                }
+            }
+
             allowedModulesIDs = new List<int>(20);
             clients = new Dictionary<TcpClient, WorldEntity>(maxPlayers);
+
             running = true;
 
             Server.OnMessageFromClientReceived += OnMessageFromClientReceived_Delegate;
@@ -135,14 +147,12 @@ namespace Server.Core.Lobby
         /// <inheritdoc/>
         public bool IsPositionFree(Position2D position)
         {
-            foreach (var entity in entities)
+            if(entitiesMap.ContainsKey((position.X, position.Y)))
             {
-                if (entity.State.Position == position)
-                {
-                    return false;
-                }
+                return entitiesMap[(position.X, position.Y)] == null;
             }
-            return true;
+
+            return false; //Out of bounds?
         }
 
         /// <inheritdoc/>
@@ -230,7 +240,9 @@ namespace Server.Core.Lobby
 
                 if (!IsPositionFree(entity.State.Position)) return false;
 
+                entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = entity;
                 entities.Add(entity);
+
                 return true;
             }
         }
@@ -250,6 +262,7 @@ namespace Server.Core.Lobby
                     Log($"Entity {entity.Id} does not exist in lobby {LobbyId}.", LogLevelEnum.Warning);
                     return false;
                 }
+                entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = null;
                 entities.Remove(entity);
                 return true;
             }
@@ -309,7 +322,7 @@ namespace Server.Core.Lobby
 
                     x = new Random().Next(walkableTiles.Length);
                     y = new Random().Next(walkableTiles[0].Length);
-                } while (!walkableTiles[x][y] || !IsPositionFree(new Position2D(x, y)));
+                } while (!walkableTiles[x][y] || !IsPositionFree(new Position2D(x, y)) || (module.Type == EntityTypeEnum.Plant && !fertileTiles[x][y]));
 
                 if(attemptsLeft <= 0)
                 {
@@ -403,12 +416,14 @@ namespace Server.Core.Lobby
                     if (entity.State.InteractionFramesLeft > 0)
                     {
                         entity.State.InteractionFramesLeft--;
+                        entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = entity;
                         continue;
                     }
                     entity.State.LastInteractionName = String.Empty;
 
                     if (entityModule.Type == EntityTypeEnum.Human)
                     {
+                        entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = entity; //Should it be here?
                         continue;
                     }
 
@@ -494,7 +509,8 @@ namespace Server.Core.Lobby
                 {
                     behaviour.Execute(entity, null, ModuleService.Instance ,new Dictionary<string, object>{
                         { CustomBehaviourParams.MAP_WALKABLE_PARAM, walkableTiles   },
-                        { CustomBehaviourParams.NEW_POS_PARAM, newState.Position }
+                        { CustomBehaviourParams.NEW_POS_PARAM, newState.Position },
+                        { CustomBehaviourParams.ENTITIES_MAP_PARAM, entitiesMap }
                     });
 
                     entity.State.InteractionFramesLeft = 32;
@@ -560,7 +576,13 @@ namespace Server.Core.Lobby
             }
 
             entHuman.UpdateState(new EntityState(human.State));
-            entOther?.UpdateState(new EntityState(other!.State));
+            entitiesMap[(entHuman.State.Position.X, entHuman.State.Position.Y)] = entHuman;
+
+            if (entOther != null)
+            {
+                entOther.UpdateState(new EntityState(other!.State));
+                entitiesMap[(entOther.State.Position.X, entOther.State.Position.Y)] = entOther;
+            }
         }
 
         /// <summary>
