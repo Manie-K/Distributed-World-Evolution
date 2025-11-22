@@ -14,7 +14,7 @@ namespace SharedLibrary.Messages
         /// <summary>
         /// Invoked when a message is received.
         /// </summary>
-        public static event Action<MessageBase>? MessageReceived;
+        public static event Action<MessageBase?>? MessageReceived;
         /// <summary>
         /// Invoked when a message is sent.
         /// </summary>

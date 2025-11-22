@@ -16,7 +16,7 @@ namespace Server.Core.Behaviours.MoveBehaviour
         public override string Description => "Won't go to occupied tiles";
 
         /// <inheritdoc>
-        public override bool CanExecute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
+        public override bool CanExecute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
             if (!base.CanExecute(entity, target, moduleService, otherParams)) return false;
 

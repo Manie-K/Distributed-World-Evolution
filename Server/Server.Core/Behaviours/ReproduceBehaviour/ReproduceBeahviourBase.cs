@@ -89,11 +89,16 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
 
         /// <inheritdoc/>
         /// Reproduction can occur if both entities are of the same module type and based on random roll with taking reproduction need into account.
-        public virtual bool CanExecute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
+        public virtual bool CanExecute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
             Module entityModule = moduleService.GetModuleById(entity.ModuleID)?? throw new Exception($"Module with ID={entity.ModuleID} not found");
             
             bool canReproduce = false;
+
+            if (target == null)
+            {
+                return false;
+            }
 
             if (entity.ModuleID == target.ModuleID && target != entity)
             {

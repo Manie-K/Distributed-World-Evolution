@@ -12,9 +12,9 @@ namespace Server.Core.Behaviours.AttackBehaviour
         public override string Description => "Most basic attack implementation. Always attacks other, gives Damage to target, takes rounded half of target damage back";
 
         /// <inheritdoc/>
-        public override bool CanExecute(WorldEntity attacker, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
+        public override bool CanExecute(WorldEntity attacker, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
-            return attacker.Id != target.Id;
+            return target != null && attacker.Id != target.Id;
         }
     }
 }
