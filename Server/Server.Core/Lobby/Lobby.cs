@@ -14,7 +14,6 @@ using Server.Core.Behaviours.MoveBehaviour;
 using Server.Core.Behaviours.TameBehaviour;
 using Server.Core.Behaviours.ReproduceBehaviour;
 using SharedLibrary.Helpers;
-using System.Collections.Immutable;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 
@@ -43,12 +42,12 @@ namespace Server.Core.Lobby
         /// <inheritdoc/>
         public event Action OnLobbyClosed = delegate { };
 
-
         private readonly IModuleService moduleService;
-        private readonly Dictionary<TcpClient, WorldEntity> clients;
         private readonly List<WorldEntity> entities;
         private readonly Dictionary<(int, int), WorldEntity?> entitiesMap;
+        private readonly List<WorldEntity> updatedEntitiesToPublish;
         private readonly List<int> allowedModulesIDs;
+        private readonly Dictionary<TcpClient, WorldEntity> clients;
         private readonly bool[][] walkableTiles;
         private readonly bool[][] fertileTiles;
 
@@ -60,7 +59,6 @@ namespace Server.Core.Lobby
         private int entitiesHealthAndHungerUpdateCounter = 0;
         private long updateCounter = 0;
 
-        private List<WorldEntityDTO> entitiesToUpdateDTOs;
 
         #region Constructors
 
@@ -108,6 +106,7 @@ namespace Server.Core.Lobby
 
             entities = new List<WorldEntity>(LobbyParams.NUM_INITIAL_ENTITIES);
             entitiesMap = new Dictionary<(int, int), WorldEntity?>(walkableTiles[0].Length * walkableTiles.Length);
+            updatedEntitiesToPublish = new List<WorldEntity>(20);
 
             for (int x = 0; x < walkableTiles.Length; x++)
             {
@@ -241,10 +240,10 @@ namespace Server.Core.Lobby
 
                 if (!IsPositionFree(entity.State.Position)) return false;
 
-                entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = entity;
                 entities.Add(entity);
+                entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = entity;
+                updatedEntitiesToPublish.Add(entity);
 
-                entitiesToUpdateDTOs.Add(entity.ToDTO());
                 return true;
             }
         }
@@ -265,8 +264,9 @@ namespace Server.Core.Lobby
                     return false;
                 }
                 entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = null;
-                entitiesToUpdateDTOs.Add(entity.ToDTO());
+                updatedEntitiesToPublish.Add(entity);
                 entities.Remove(entity);
+
                 return true;
             }
         }
@@ -377,17 +377,20 @@ namespace Server.Core.Lobby
 
             lock (clients)
             {
-                entitiesToUpdateDTOs = new List<WorldEntityDTO>();
-                for(int i = startIndex; i <= endIndex; i++)
+                lock (updatedEntitiesToPublish)
                 {
-                    entitiesToUpdateDTOs.Add(entities[i].ToDTO());
+                    for (int i = startIndex; i <= endIndex; i++)
+                    {
+                        updatedEntitiesToPublish.Add(entities[i]);
+                    }
                 }
                 
                 foreach (var clientPair in clients)
                 {
-                    _ = MessageManager.SendMessageAsync(clientPair.Key, new WorldStateMessage(entitiesToUpdateDTOs));
+                    _ = MessageManager.SendMessageAsync(clientPair.Key, new WorldStateMessage(updatedEntitiesToPublish.Select(e => e.ToDTO())));
                 }
             }
+            updatedEntitiesToPublish.Clear();
         }
 
         /// <summary>
@@ -422,10 +425,11 @@ namespace Server.Core.Lobby
             {
                 for (int i = startIndex; i <= endIndex; i++)
                 {
-                    if (i >= entities.Count) // in case entities were removed during the update, so the count is lower than index
+                    if (i >= entities.Count) //In case entities were removed during the update, so the count is lower than index
                     {
                         break;
                     }
+
                     WorldEntity entity = entities[i];
                     entityModule = moduleService.GetModuleById(entity.ModuleID);
 
