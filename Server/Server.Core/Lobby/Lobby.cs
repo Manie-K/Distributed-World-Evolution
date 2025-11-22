@@ -280,7 +280,8 @@ namespace Server.Core.Lobby
                 MaxPlayers,
                 clients.Count,
                 MapID,
-                allowedModulesIDs
+                allowedModulesIDs,
+                entities.Select(e => e.ToDTO()).ToList()
             );
         }
 

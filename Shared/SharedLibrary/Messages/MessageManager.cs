@@ -68,7 +68,6 @@ namespace SharedLibrary.Messages
                         MessageTypeEnum.GetMessage => JsonSerializer.Deserialize<GetMessage>(json),
                         MessageTypeEnum.LobbyData => JsonSerializer.Deserialize<LobbyDataMessage>(json),
                         MessageTypeEnum.BehaviourList => JsonSerializer.Deserialize<BehaviourListMessage>(json),
-                        MessageTypeEnum.UserState => JsonSerializer.Deserialize<UserStateMessage>(json),
                         _ => throw new NotImplementedException(),
                     };
                 }
