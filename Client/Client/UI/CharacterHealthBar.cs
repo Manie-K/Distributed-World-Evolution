@@ -23,7 +23,7 @@ namespace Client.UI
             spriteBatch.Draw(AssetsManager.GetInstance().GetHealthBarTexture(0), new Vector2(position.X + offsetX, position.Y + offsetY), Color.White);
             spriteBatch.Draw(
                 AssetsManager.GetInstance().GetHealthBarTexture(1),
-                new Rectangle((int)position.X + offsetX + 2, (int)position.Y + offsetY + 2, (int)(37 * rangeBar), 5),
+                new Rectangle((int)position.X + offsetX + 1, (int)position.Y + offsetY + 1, (int)(37 * rangeBar), 5),
                 new Rectangle(0, 0, (int)(37 * rangeBar), 5),
                 Color.White);
         }
