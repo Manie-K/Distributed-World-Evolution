@@ -14,10 +14,15 @@ namespace Server.Core.Behaviours.AttackBehaviour
         public override string Description => "Attacks only when the aggresion is greater than target's. Gives Damage to target according to formula: damage * ((agression - enemy_aggresion) / agression)";
 
         /// <inheritdoc/>
-        public override void Execute(WorldEntity attacker, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
+        public override void Execute(WorldEntity attacker, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
             try
             {
+                if (target == null)
+                {
+                    throw new ArgumentNullException(nameof(target), "Target cannot be null for attack behaviour execution.");
+                }
+
                 Module attackerModule = moduleService.GetModuleById(attacker.ModuleID) ?? throw new Exception($"Module with ID={attacker.ModuleID} not found!");
                 Module targetModule = moduleService.GetModuleById(target.ModuleID) ?? throw new Exception($"Module with ID={target.ModuleID} not found!");
 
@@ -35,8 +40,12 @@ namespace Server.Core.Behaviours.AttackBehaviour
         }
 
         /// <inheritdoc/>
-        public override bool CanExecute(WorldEntity attacker, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
+        public override bool CanExecute(WorldEntity attacker, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
+            if (target == null) {
+                return false;
+            }
+
             Module attackerModule = moduleService.GetModuleById(attacker.ModuleID) ?? throw new Exception($"Module with ID={attacker.ModuleID} not found!");
             Module targetModule = moduleService.GetModuleById(target.ModuleID) ?? throw new Exception($"Module with ID={attacker.ModuleID} not found!");
             return attacker.Id != target.Id && attackerModule.Agression > targetModule.Agression;

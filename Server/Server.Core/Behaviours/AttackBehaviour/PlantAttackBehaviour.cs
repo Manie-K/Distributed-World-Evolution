@@ -11,12 +11,12 @@ namespace Server.Core.Behaviours.AttackBehaviour
         /// <inheritdoc/>
         public override string Description => "Plants cannot fight.";
         /// <inheritdoc/>
-        public override bool CanExecute(WorldEntity attacker, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
+        public override bool CanExecute(WorldEntity attacker, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
             return false;
         }
         /// <inheritdoc/>
-        public override void Execute(WorldEntity attacker, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
+        public override void Execute(WorldEntity attacker, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
             return; //no-op
         }

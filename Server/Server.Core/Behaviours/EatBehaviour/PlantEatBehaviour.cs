@@ -11,12 +11,12 @@ namespace Server.Core.Behaviours.EatBehaviour
         /// <inheritdoc/>
         public override string Description => "Plants do not eat like an animals.";
         /// <inheritdoc/>
-        public override void Execute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
+        public override void Execute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
             return;
         }
         /// <inheritdoc/>
-        public override bool CanExecute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
+        public override bool CanExecute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
             return false;
         }

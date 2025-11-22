@@ -22,12 +22,17 @@ namespace Server.Core.Behaviours.AttackBehaviour
 
         /// <inheritdoc/>
         /// Target's module will be of type Human or Animal.
-        public virtual void Execute(WorldEntity attacker, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
+        public virtual void Execute(WorldEntity attacker, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
             try
             {
-                Module attackerModule = moduleService.GetModuleById(attacker.ModuleID) ?? throw new Exception($"Module with ID={attacker.ModuleID} not found!");
-                Module targetModule = moduleService.GetModuleById(target.ModuleID) ?? throw new Exception($"Module with ID={attacker.ModuleID} not found!");
+                if (target == null)
+                {
+                    throw new ArgumentNullException(nameof(target), "Target cannot be null for attack behaviour execution.");
+                }
+
+                Module attackerModule = moduleService.GetModuleById(attacker.ModuleID) ?? throw new ModuleNotFoundException($"Module with ID={attacker.ModuleID} not found!");
+                Module targetModule = moduleService.GetModuleById(target.ModuleID) ?? throw new ModuleNotFoundException($"Module with ID={attacker.ModuleID} not found!");
                
                 target.State.Health -= attackerModule.Damage;
                 attacker.State.Health -= (int)(targetModule.Damage * 0.5);
@@ -42,7 +47,7 @@ namespace Server.Core.Behaviours.AttackBehaviour
                     attacker.Die(moduleService);
                 }
             }
-            catch (ModuleNotFoundException ex)
+            catch (Exception ex)
             {
                 Console.WriteLine($"Error executing attack: {ex.Message}");
             }
@@ -50,7 +55,7 @@ namespace Server.Core.Behaviours.AttackBehaviour
 
         /// <inheritdoc/>
         /// Target's module will be of type Human or Animal.
-        public abstract bool CanExecute(WorldEntity attacker, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null);
+        public abstract bool CanExecute(WorldEntity attacker, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null);
 
         /// <inheritdoc/>
         public BehaviourDTO ToDTO()
