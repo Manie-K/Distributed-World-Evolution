@@ -43,10 +43,6 @@ namespace Server.Core.Lobby
         /// <inheritdoc/>
         public event Action OnLobbyClosed = delegate { };
 
-        /// <summary>
-        /// Lobby updates per second.
-        /// </summary>
-        public const double LOBBY_UPDATES_PER_SECOND = 64;
 
         private readonly IModuleService moduleService;
         private readonly Dictionary<TcpClient, WorldEntity> clients;
@@ -56,10 +52,16 @@ namespace Server.Core.Lobby
         private readonly bool[][] walkableTiles;
         private readonly bool[][] fertileTiles;
 
-        private int entitiesHealthAndHungerUpdateCounter = 0;
         private bool running;
+        
+        private readonly int entitiesPerGroup = (int)Math.Ceiling((double)LobbyParams.NUM_INITIAL_ENTITIES / LobbyParams.INITIAL_NUMBER_OF_GROUPS);
+        private int groupIndex = 0;
 
+        private int entitiesHealthAndHungerUpdateCounter = 0;
         private long updateCounter = 0;
+
+        
+
 
         #region Constructors
 
@@ -136,7 +138,7 @@ namespace Server.Core.Lobby
 
             while (running)
             {
-                Task.Delay((int)((1 / LOBBY_UPDATES_PER_SECOND) * 1000)).Wait();
+                Task.Delay((int)((1 / LobbyParams.LOBBY_UPDATES_PER_SECOND) * 1000)).Wait();
                 PublishWorldState();
             }
 
@@ -342,30 +344,63 @@ namespace Server.Core.Lobby
         /// </summary>
         private void PublishWorldState()
         {
-            updateCounter++;
-
             Console.WriteLine($"[DEBUG] Update #{updateCounter}"); //DEBUG
             var stopwatchWorld = Stopwatch.StartNew(); //DEBUG
-            UpdateWorldState();
+
+            if(entities.Count == 0)
+            {
+                Debug.WriteLine("No entities to update in lobby."); //DEBUG
+                return;
+            }
+
+            updateCounter++;
+
+            int startIndex = Math.Min(groupIndex * entitiesPerGroup, entities.Count - 1); //Inclusive
+            int endIndex = Math.Min(startIndex + entitiesPerGroup, entities.Count - 1); //Inclusive
+
+            Console.WriteLine($"[DEBUG] Updating entities from index {startIndex} to {endIndex}."); //DEBUG
+            UpdateWorldState(startIndex, endIndex);
+
+            if(endIndex >= entities.Count - 1)
+            {
+                groupIndex = 0;
+            }
+            else
+            {
+                groupIndex++;
+            }
+
             stopwatchWorld.Stop(); //DEBUG
             Console.WriteLine($"[DEBUG] World state update #{updateCounter} took {stopwatchWorld.ElapsedMilliseconds}ms."); //DEBUG
 
             lock (clients)
             {
+                var dtos = new List<WorldEntityDTO>(entitiesPerGroup);
+                for(int i = startIndex; i <= endIndex; i++)
+                {
+                    dtos.Add(entities[i].ToDTO());
+                }
+                
                 foreach (var clientPair in clients)
                 {
-                    _ = MessageManager.SendMessageAsync(clientPair.Key, new WorldStateMessage(
-                            entities.Select(e => e.ToDTO())
-                        ));
+                    _ = MessageManager.SendMessageAsync(clientPair.Key, new WorldStateMessage(dtos));
                 }
             }
         }
 
         /// <summary>
-        /// Updates the world state by simulating all non-human entities.
+        /// Updates the world state by simulating non-human entities.
         /// </summary>
-        private void UpdateWorldState()
+        /// <param name="startIndex">Index of first entity to be updated.</param>
+        /// <param name="endIndex">Index of last entity to be updated (inclusive).</param>
+        private void UpdateWorldState(int startIndex, int endIndex)
         {
+            if(startIndex < 0 || endIndex >= entities.Count || startIndex > endIndex)
+            {
+                Log(new ArgumentOutOfRangeException($"Invalid start ({startIndex}) or end ({endIndex}) index for updating world state."), LogLevelEnum.Error);
+                return;
+            }
+
             const int HUNGER_CHANGE = 1;
             const int HEALTH_CHANGE = 1;
 
@@ -383,7 +418,7 @@ namespace Server.Core.Lobby
 
             lock (entities)
             {
-                for (int i = 0; i < entities.Count; i++)
+                for (int i = startIndex; i <= endIndex; i++)
                 {
                     WorldEntity entity = entities[i];
                     entityModule = moduleService.GetModuleById(entity.ModuleID);
@@ -396,7 +431,8 @@ namespace Server.Core.Lobby
 
                     var stopwatch = Stopwatch.StartNew(); //DEBUG
                     allIterations++; //DEBUG
-                    if (entitiesHealthAndHungerUpdateCounter >= 10 * LOBBY_UPDATES_PER_SECOND)
+                    if (entitiesHealthAndHungerUpdateCounter >= 4 * LobbyParams.INITIAL_NUMBER_OF_GROUPS) //TODO: For now we have 32 groups, 64 updates per second,
+                                                                                                          //so each entity gets updated twice a second. So every 2 * value seconds. Definately need to set this.
                     {
                         shouldResetCounter = true;
                         if (entity.State.Health <= 0)
@@ -427,7 +463,7 @@ namespace Server.Core.Lobby
                     if (entity.State.InteractionFramesLeft > 0)
                     {
                         entity.State.InteractionFramesLeft--;
-                        entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = entity;
+                        entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = entity; //Should it be here?
 
                         stopwatch.Stop(); //DEBUG
                         allOtherTime += stopwatch.Elapsed.TotalMilliseconds; //DEBUG
@@ -523,69 +559,70 @@ namespace Server.Core.Lobby
             bool shouldCheckInteraction = ((entity.State.Position != newState.Position) || (entityModule.Type == EntityTypeEnum.Plant)) 
                                           && (entity.State.InteractionFramesLeft == 0);
 
-            if (shouldCheckInteraction)
+            if (!shouldCheckInteraction) return;
+
+            InteractionTypeEnum interactionType = GetInteractionType(entity, newState);
+            if (interactionType is InteractionTypeEnum.None) return;
+
+            WorldEntity? targetEntity = entitiesMap[(newState.Position.X, newState.Position.Y)];
+            IBehaviour behaviour = entityModule.GetBehaviourOfType(interactionType);
+
+            //time[s] = constant(update takes more than ideally) * how_many_groups / groups_per_second
+            double secondsPerEntityUpdate = (double)((2 * (Math.Ceiling((double)entities.Count / entitiesPerGroup))) / LobbyParams.LOBBY_UPDATES_PER_SECOND);
+
+            // Distinction in case when we need to add custom parameters
+            switch (interactionType)
             {
-                InteractionTypeEnum interactionType = GetInteractionType(entity, newState);
-                if (interactionType is InteractionTypeEnum.None) return;
-
-                WorldEntity? targetEntity = entitiesMap[(newState.Position.X, newState.Position.Y)];
-                IBehaviour behaviour = entityModule.GetBehaviourOfType(interactionType);
-
-                // Distinction in case when we need to add custom parameters
-                switch(interactionType)
-                {
-                    case InteractionTypeEnum.Move:
-                        behaviour.Execute(entity, null, ModuleService.Instance, new Dictionary<string, object>{
-                            { CustomBehaviourParams.MAP_WALKABLE_PARAM, walkableTiles   },
-                            { CustomBehaviourParams.NEW_POS_PARAM, newState.Position },
-                            { CustomBehaviourParams.ENTITIES_MAP_PARAM, entitiesMap }
-                         });
-
-                        entity.State.InteractionFramesLeft = 32;
-                        entity.State.LastInteractionName = nameof(MoveBehaviourBase);
-                        break;
-                    
-                    case InteractionTypeEnum.Attack:
-                        behaviour.Execute(entity, targetEntity!, ModuleService.Instance);
-
-                        entity.State.InteractionFramesLeft = 128;
-                        targetEntity!.State.InteractionFramesLeft = 128;
-
-                        entity.State.LastInteractionName = nameof(AttackBehaviourBase);
-                        targetEntity!.State.LastInteractionName = nameof(AttackBehaviourBase);
-                        break;
-                    
-                    case InteractionTypeEnum.Eat:
-                        behaviour.Execute(entity, targetEntity!, ModuleService.Instance);
-
-                        entity.State.InteractionFramesLeft = 128;
-                        targetEntity!.State.InteractionFramesLeft = 128;
-
-                        entity.State.LastInteractionName = "Undefined interaction";
-                        targetEntity!.State.LastInteractionName = "Undefined interaction";
-                        break;
-                    
-                    case InteractionTypeEnum.Reproduce:
-                        behaviour.Execute(entity, targetEntity, ModuleService.Instance, new Dictionary<string, object>{
-                            { CustomBehaviourParams.LOBBY_PARAM, this },
-                            { CustomBehaviourParams.MAP_FERTILE_PARAM, fertileTiles },
-                            { CustomBehaviourParams.MAP_WALKABLE_PARAM, walkableTiles   }
+                case InteractionTypeEnum.Move:
+                    behaviour.Execute(entity, null, ModuleService.Instance, new Dictionary<string, object>{
+                        { CustomBehaviourParams.MAP_WALKABLE_PARAM, walkableTiles   },
+                        { CustomBehaviourParams.NEW_POS_PARAM, newState.Position },
+                        { CustomBehaviourParams.ENTITIES_MAP_PARAM, entitiesMap }
                         });
 
-                        if (targetEntity != null)
-                        {
-                            targetEntity.State.InteractionFramesLeft = 96;
-                            targetEntity.State.LastInteractionName = nameof(ReproduceBehaviourBase);
-                        }
-                        entity.State.InteractionFramesLeft = 96;
-                        entity.State.LastInteractionName = nameof(ReproduceBehaviourBase);
-                        break;
+                    entity.State.InteractionFramesLeft = (int)(3 / secondsPerEntityUpdate); //TODO: Seconds / secondsPerEntityUpdate; Change the way this is set.
+                    entity.State.LastInteractionName = nameof(MoveBehaviourBase);
+                    break;
+                    
+                case InteractionTypeEnum.Attack:
+                    behaviour.Execute(entity, targetEntity!, ModuleService.Instance);
 
-                    default:
-                        Log($"Undefined interaction type {interactionType} for entity {entity.Id}.", LogLevelEnum.Error);
-                        break;
-                }
+                    entity.State.InteractionFramesLeft = (int)(3 / secondsPerEntityUpdate);//TODO: Change the way this is set. 
+                    targetEntity!.State.InteractionFramesLeft = (int)(3 / secondsPerEntityUpdate);//TODO: Change the way this is set. 
 
+                    entity.State.LastInteractionName = nameof(AttackBehaviourBase);
+                    targetEntity!.State.LastInteractionName = nameof(AttackBehaviourBase);
+                    break;
+                    
+                case InteractionTypeEnum.Eat:
+                    behaviour.Execute(entity, targetEntity!, ModuleService.Instance);
+
+                    entity.State.InteractionFramesLeft = (int)(2 / secondsPerEntityUpdate);//TODO: Change the way this is set. 
+                    targetEntity!.State.InteractionFramesLeft = (int)(2 / secondsPerEntityUpdate);//TODO: Change the way this is set. 
+
+                    entity.State.LastInteractionName = "Undefined interaction";
+                    targetEntity!.State.LastInteractionName = "Undefined interaction";
+                    break;
+                    
+                case InteractionTypeEnum.Reproduce:
+                    behaviour.Execute(entity, targetEntity, ModuleService.Instance, new Dictionary<string, object>{
+                        { CustomBehaviourParams.LOBBY_PARAM, this },
+                        { CustomBehaviourParams.MAP_FERTILE_PARAM, fertileTiles },
+                        { CustomBehaviourParams.MAP_WALKABLE_PARAM, walkableTiles   }
+                    });
+
+                    if (targetEntity != null)
+                    {
+                        targetEntity.State.InteractionFramesLeft = (int)(6 / secondsPerEntityUpdate);//TODO: Change the way this is set. 
+                        targetEntity.State.LastInteractionName = nameof(ReproduceBehaviourBase);
+                    }
+                    entity.State.InteractionFramesLeft = (int)(6 / secondsPerEntityUpdate);//TODO: Change the way this is set. 
+                    entity.State.LastInteractionName = nameof(ReproduceBehaviourBase);
+                    break;
+
+                default:
+                    Log($"Undefined interaction type {interactionType} for entity {entity.Id}.", LogLevelEnum.Error);
+                    break;
             }
         }
 
