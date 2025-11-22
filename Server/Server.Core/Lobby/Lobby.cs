@@ -60,8 +60,7 @@ namespace Server.Core.Lobby
         private int entitiesHealthAndHungerUpdateCounter = 0;
         private long updateCounter = 0;
 
-        
-
+        private List<WorldEntityDTO> entitiesToUpdateDTOs;
 
         #region Constructors
 
@@ -245,6 +244,7 @@ namespace Server.Core.Lobby
                 entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = entity;
                 entities.Add(entity);
 
+                entitiesToUpdateDTOs.Add(entity.ToDTO());
                 return true;
             }
         }
@@ -265,6 +265,7 @@ namespace Server.Core.Lobby
                     return false;
                 }
                 entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = null;
+                entitiesToUpdateDTOs.Add(entity.ToDTO());
                 entities.Remove(entity);
                 return true;
             }
@@ -376,15 +377,15 @@ namespace Server.Core.Lobby
 
             lock (clients)
             {
-                var dtos = new List<WorldEntityDTO>(entitiesPerGroup);
+                entitiesToUpdateDTOs = new List<WorldEntityDTO>();
                 for(int i = startIndex; i <= endIndex; i++)
                 {
-                    dtos.Add(entities[i].ToDTO());
+                    entitiesToUpdateDTOs.Add(entities[i].ToDTO());
                 }
                 
                 foreach (var clientPair in clients)
                 {
-                    _ = MessageManager.SendMessageAsync(clientPair.Key, new WorldStateMessage(dtos));
+                    _ = MessageManager.SendMessageAsync(clientPair.Key, new WorldStateMessage(entitiesToUpdateDTOs));
                 }
             }
         }
@@ -421,6 +422,10 @@ namespace Server.Core.Lobby
             {
                 for (int i = startIndex; i <= endIndex; i++)
                 {
+                    if (i >= entities.Count) // in case entities were removed during the update, so the count is lower than index
+                    {
+                        break;
+                    }
                     WorldEntity entity = entities[i];
                     entityModule = moduleService.GetModuleById(entity.ModuleID);
 
