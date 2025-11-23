@@ -17,7 +17,7 @@ namespace Server.Core.Services
         {
             if (ClientUI != null && ClientUI.Connected)
             {
-                _ = MessageManager.SendMessageAsync(ClientUI, new LobbyDataMessage(lobby.ToDTO(), null));
+                _ = MessageManager.SendMessageAsync(ClientUI, new LobbyDataMessage(lobby.ToDTO(), Guid.Empty));
             }
         }
 
