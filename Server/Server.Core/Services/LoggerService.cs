@@ -13,6 +13,14 @@ namespace Server.Core.Services
         private readonly TimeSpan _pollInterval = TimeSpan.FromMilliseconds(50);
         public TcpClient? ClientUI { set; get; }
 
+        public void SendLobby(Lobby.ILobby lobby)
+        {
+            if (ClientUI != null && ClientUI.Connected)
+            {
+                _ = MessageManager.SendMessageAsync(ClientUI, new LobbyDataMessage(lobby.ToDTO(), null));
+            }
+        }
+
         public void Log(string message, LogLevelEnum logLevel, object? sender = null)
         {
             var args = new OnLogEventArgs(message, logLevel);
