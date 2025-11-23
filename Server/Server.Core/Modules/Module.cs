@@ -1,4 +1,8 @@
 ﻿using Server.Core.Behaviours;
+using Server.Core.Behaviours.AttackBehaviour;
+using Server.Core.Behaviours.EatBehaviour;
+using Server.Core.Behaviours.MoveBehaviour;
+using Server.Core.Behaviours.ReproduceBehaviour;
 using Server.Core.Data;
 using Server.Core.Exceptions;
 using Server.Core.Helpers;
@@ -77,15 +81,29 @@ namespace Server.Core.Modules
             behaviours[type] = behaviour;
         }
 
-        public IBehaviour GetBehaviourOfType(Type type)
+        public IBehaviour GetBehaviourOfType(InteractionTypeEnum typeEnum)
         {
-            if (type.IsInterface || !type.IsAbstract || !type.IsClass || !typeof(IBehaviour).IsAssignableFrom(type))
+            IBehaviour? found;
+            switch (typeEnum)
             {
-                throw new ArgumentException("Type must be an abstract class that extends IBehaviour.");
-            }
+                case InteractionTypeEnum.None:
+                    throw new BehaviourImplementationNotFoundException();
 
-            behaviours.TryGetValue(type, out IBehaviour? found);
-            return found ?? throw new BehaviourImplementationNotFoundException();
+                case InteractionTypeEnum.Move:
+                    behaviours.TryGetValue(typeof(MoveBehaviourBase), out found);
+                    return found ?? throw new BehaviourImplementationNotFoundException();
+                case InteractionTypeEnum.Attack:
+                    behaviours.TryGetValue(typeof(AttackBehaviourBase), out found);
+                    return found ?? throw new BehaviourImplementationNotFoundException();
+                case InteractionTypeEnum.Eat:
+                    behaviours.TryGetValue(typeof(EatBehaviourBase), out found);
+                    return found ?? throw new BehaviourImplementationNotFoundException();
+                case InteractionTypeEnum.Reproduce:
+                    behaviours.TryGetValue(typeof(ReproduceBehaviourBase), out found);
+                    return found ?? throw new BehaviourImplementationNotFoundException();
+                default:
+                    throw new BehaviourImplementationNotFoundException();
+            }
         }
 
         public ModuleDTO ToDTO()
@@ -213,6 +231,6 @@ namespace Server.Core.Modules
         }
 
         #endregion
-    
+
     }
 }

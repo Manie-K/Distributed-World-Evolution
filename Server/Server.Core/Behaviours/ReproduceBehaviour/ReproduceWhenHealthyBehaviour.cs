@@ -9,7 +9,7 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
         /// <inheritdoc/>
         public override string Description => "Reproduces only when healthy.";
         /// <inheritdoc/>
-        public override bool CanExecute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
+        public override bool CanExecute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
             if (base.CanExecute(entity, target, moduleService, otherParams))
             {

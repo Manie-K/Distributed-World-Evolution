@@ -15,10 +15,6 @@ namespace SharedLibrary.Messages
         /// </summary>
         public LobbyDTO Lobby { get; init; }
         /// <summary>
-        /// Lobby ID.
-        /// </summary>
-
-        /// <summary>
         /// Guid of the user entity.
         /// </summary>
         public Guid UserEntityID { get; init; }

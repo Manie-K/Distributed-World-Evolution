@@ -9,7 +9,7 @@ namespace Server.Core.Behaviours.EatBehaviour
         /// <inheritdoc/>
         public override string Description => "Eats always";
         /// <inheritdoc/>
-        public override bool CanExecute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
+        public override bool CanExecute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
             return true;
         }

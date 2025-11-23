@@ -13,8 +13,13 @@ namespace Server.Core.Behaviours.AttackBehaviour
         public override string Description => "Attacks only humans. Gives Damage to target, takes rounded half of target damage back";
 
         /// <inheritdoc/>
-        public override bool CanExecute(WorldEntity attacker, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
+        public override bool CanExecute(WorldEntity attacker, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
+            if (target == null)
+            {
+                return false;
+            }
+
             Module targetModule = moduleService.GetModuleById(target.ModuleID) ?? throw new Exception($"Module with ID={attacker.ModuleID} not found!");
             return attacker.Id != target.Id && targetModule.Type == EntityTypeEnum.Human;
         }

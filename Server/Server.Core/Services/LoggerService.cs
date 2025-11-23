@@ -11,7 +11,7 @@ namespace Server.Core.Services
     {
         private readonly ConcurrentQueue<LogMessage> _logQueue = new();
         private readonly TimeSpan _pollInterval = TimeSpan.FromMilliseconds(50);
-        public TcpClient ClientUI { set; get; }
+        public TcpClient? ClientUI { set; get; }
 
         public void Log(string message, LogLevelEnum logLevel, object? sender = null)
         {

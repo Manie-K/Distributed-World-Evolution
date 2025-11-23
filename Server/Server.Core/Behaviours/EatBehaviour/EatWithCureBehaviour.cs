@@ -10,8 +10,13 @@ namespace Server.Core.Behaviours.EatBehaviour
         /// <inheritdoc/>
         public override string Description => "Eats and increase health at the same time, but decrease health twice if plan is poisonous";
         /// <inheritdoc/>
-        public override void Execute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
+        public override void Execute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
+            if (target == null)
+            {
+                return;
+            }
+
             Module targetModule = moduleService.GetModuleById(target.ModuleID) ?? throw new Exception($"Module with ID={target.ModuleID} not found!");
 
             if (targetModule.Damage > 0)
@@ -27,7 +32,7 @@ namespace Server.Core.Behaviours.EatBehaviour
             target.Die(moduleService);
         }
         /// <inheritdoc/>
-        public override bool CanExecute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
+        public override bool CanExecute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
             return true;
         }

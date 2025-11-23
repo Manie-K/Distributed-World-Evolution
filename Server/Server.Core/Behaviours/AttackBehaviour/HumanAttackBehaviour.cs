@@ -13,9 +13,9 @@ namespace Server.Core.Behaviours.AttackBehaviour
         public override string Description => "Attack behaviour used by humans";
 
         /// <inheritdoc/>
-        public override bool CanExecute(WorldEntity attacker, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
+        public override bool CanExecute(WorldEntity attacker, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
-            return attacker.Id != target.Id;
+            return attacker.Id != target?.Id;
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Server.Core.Behaviours.MoveBehaviour
         public override string Description => "Won't go to occupied tiles";
 
         /// <inheritdoc>
-        public override bool CanExecute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
+        public override bool CanExecute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
             if (!base.CanExecute(entity, target, moduleService, otherParams)) return false;
 
@@ -36,7 +36,7 @@ namespace Server.Core.Behaviours.MoveBehaviour
         }
 
         /// <inheritdoc>
-        public override (int, int) GetNextMovement(WorldEntity entity, ImmutableList<WorldEntity> otherEntites)
+        public override (int, int) GetNextMovement(WorldEntity entity, Span<WorldEntity> otherEntites)
         {
             int x = new Random().Next(3) - 1; // -1, 0, 1
             int y = new Random().Next(3) - 1; // -1, 0, 1

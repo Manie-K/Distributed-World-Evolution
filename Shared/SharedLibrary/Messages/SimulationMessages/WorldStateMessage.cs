@@ -14,13 +14,13 @@ namespace SharedLibrary.Messages
         /// <summary>
         /// World entities.
         /// </summary>
-        public IEnumerable<WorldEntityDTO> Entities { get; init; }
+        public IEnumerable<WorldEntityDTO> UpdatedEntities { get; init; }
         /// <summary>
         /// Constructor for WorldStateMessage.
         /// </summary>
-        public WorldStateMessage(IEnumerable<WorldEntityDTO> entities)
+        public WorldStateMessage(IEnumerable<WorldEntityDTO> updatedEntities)
         {
-            Entities = entities;
+            UpdatedEntities = updatedEntities;
         }
         /// <inheritdoc/>
         public override string BuildJson()
@@ -28,7 +28,7 @@ namespace SharedLibrary.Messages
             var payload = new
             {
                 MessageType = this.MessageType,
-                Entities = this.Entities
+                UpdatedEntities = this.UpdatedEntities
             };
 
             return JsonSerializer.Serialize(payload);

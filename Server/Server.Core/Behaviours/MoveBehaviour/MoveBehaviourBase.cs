@@ -24,6 +24,12 @@ namespace Server.Core.Behaviours.MoveBehaviour
         {
             if (otherParams?.TryGetValue(CustomBehaviourParams.NEW_POS_PARAM, out object? value) == true && value is Position2D nextPosition)
             {
+                if (otherParams.TryGetValue(CustomBehaviourParams.ENTITIES_MAP_PARAM, out object? entitiesMapObj)
+                    && entitiesMapObj is Dictionary<(int, int), WorldEntity?> entitiesMap)
+                {
+                    entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = null;
+                    entitiesMap[(nextPosition.X, nextPosition.Y)] = entity;
+                }
                 entity.State.Position = nextPosition;
             }
         }
@@ -56,7 +62,7 @@ namespace Server.Core.Behaviours.MoveBehaviour
         /// If the creation of immutable list from normal list and then traversing through all world entites will be too time consuming,
         /// we should change the data structure to something more optimized, 2d spatial map etc.Marked it as possible TODO.    
         /// </remarks>
-        public abstract (int, int) GetNextMovement(WorldEntity entity, ImmutableList<WorldEntity> otherEntites);
+        public abstract (int, int) GetNextMovement(WorldEntity entity, Span<WorldEntity> otherEntites);
 
         /// <inheritdoc/>
         public BehaviourDTO ToDTO()

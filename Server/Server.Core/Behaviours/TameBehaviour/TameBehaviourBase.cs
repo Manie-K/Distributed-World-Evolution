@@ -15,10 +15,10 @@ namespace Server.Core.Behaviours.TameBehaviour
         public abstract string Description { get; }
 
         /// <inheritdoc/>
-        public abstract void Execute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null);
+        public abstract void Execute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null);
 
         /// <inheritdoc/>
-        public abstract bool CanExecute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null);
+        public abstract bool CanExecute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null);
 
         /// <inheritdoc/>
         public BehaviourDTO ToDTO()

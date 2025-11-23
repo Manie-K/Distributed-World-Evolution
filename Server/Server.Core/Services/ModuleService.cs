@@ -1,6 +1,5 @@
-﻿using Server.Core.Behaviours;
+﻿using System.Diagnostics;
 using Server.Core.Data;
-using Server.Core.Exceptions;
 using Server.Core.Modules;
 using SharedLibrary.DTOs.ModuleDTO;
 
@@ -20,7 +19,7 @@ namespace Server.Core.Services
 
         public Module? GetModuleById(int id)
         {
-            using(var dbContext = new ApplicationDBContext())
+            using (var dbContext = new ApplicationDBContext())
             {
                 ModuleDBEntity? moduleDBEntity = dbContext.Modules.Find(id);
                 if (moduleDBEntity == null)

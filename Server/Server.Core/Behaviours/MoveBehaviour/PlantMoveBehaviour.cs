@@ -29,7 +29,7 @@ namespace Server.Core.Behaviours.MoveBehaviour
         }
 
         /// <inheritdoc>
-        public override (int, int) GetNextMovement(WorldEntity entity, ImmutableList<WorldEntity> otherEntites)
+        public override (int, int) GetNextMovement(WorldEntity entity, Span<WorldEntity> otherEntites)
         {
             return (0, 0);
         }

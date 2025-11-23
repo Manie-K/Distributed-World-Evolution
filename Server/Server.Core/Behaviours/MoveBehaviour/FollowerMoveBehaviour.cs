@@ -7,7 +7,7 @@ namespace Server.Core.Behaviours.MoveBehaviour
     {
         public override int DatabaseID => 105;
         public override string Description => "Moves the entity towards an entity, if one is present on neighbouring tiles.";
-        public override (int, int) GetNextMovement(WorldEntity entity, ImmutableList<WorldEntity> otherEntites)
+        public override (int, int) GetNextMovement(WorldEntity entity, Span<WorldEntity> otherEntites)
         {
             foreach (WorldEntity ent in otherEntites)
             {
