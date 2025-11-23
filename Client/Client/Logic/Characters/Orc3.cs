@@ -6,8 +6,8 @@ namespace Client
 {
     public class Orc3 : Character
     {
-        public Orc3(Vector2 position, Color color)
-           : base(position, color, 100, 100, 150f, 4, 12)
+        public Orc3(Vector2 position, int maxHealth, Color color)
+           : base(position, color, 100, 100, 150f, maxHealth)
         {
             am = new AnimationManager(2);
             SpriteDrawingOffset = new Vector2(-35, -37);
@@ -16,6 +16,7 @@ namespace Client
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(AssetsManager.GetInstance().GetCharacterTexture(am.ActiveAnimation, 2), GetPosition(), GetSourceRectangle(), Color.White);
+            HealthBar.Draw(spriteBatch, Position, -3, -38);
         }
     }
 }

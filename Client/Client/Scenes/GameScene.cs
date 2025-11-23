@@ -20,6 +20,7 @@ namespace Client
         private Player player;
         private Dictionary<Guid, Character> characters;
         private Dictionary<Guid, Plant> plants;
+        private List<WorldEntityDTO> inGameEntities;
         private WorldMap map;
         private Vector2 cameraOffset;
         private double clientUpdateTimer;
@@ -40,13 +41,27 @@ namespace Client
                 throw new Exception("Could not load the map " + Tilemap.GetMapFileName(mapID));
             }
             player = new Player(new Vector2(288, 32), Color.White, new Text(manager.ContentManager.Load<SpriteFont>("Fonts/PlayerName"), 
-                manager.UserSettings.PlayerName, true, new Vector2(500, 300 - 110), 70, 40), new Vector2(-68, -77),
+                manager.UserSettings.PlayerName, true, new Vector2(500, 300 - 110), 70, 40), new Vector2(-68, -77), -1,
                 ref panelsController.BestiaryPanel, ref panelsController.Inventory, map, manager.ClientManager);
 
             manager.Camera.MapSize = new System.Drawing.Size(map.MapWidth * map.TileSize, map.MapHeight * map.TileSize);
             manager.IsInGame = true;
             clientUpdateTimer = 0;
             timeBetweenUpdates = 1.0 / ClientManager.CLIENT_UPDATES_PER_SECOND;
+
+            //EntityStateDTO state = new EntityStateDTO(new SharedLibrary.Helpers.Position2D(1, 1), 100, 100, 0, ""); // TMP HELPER
+            //player.PlayerDTO = new WorldEntityDTO("Lachimek", manager.ClientManager.PlayerGuid, state, -17); // TMP HELPER
+            inGameEntities = new List<WorldEntityDTO>();
+            List<WorldEntityDTO> entitiesToLoad = manager.ClientManager.LobbyData.WorldEntities.ToList();
+            foreach (WorldEntityDTO entity in entitiesToLoad)
+            {
+                if (entity.Id.Equals(manager.ClientManager.PlayerGuid))
+                {
+                    SetPlayerStats(entity);
+                    continue;
+                }
+                LoadEntity(entity);
+            }
         }
 
         public void Load()
@@ -65,9 +80,13 @@ namespace Client
             // Removing dead creatures
             foreach (Guid guid in characters.Keys)
             {
-                if (entities.ContainsKey(guid))
+                if (!characters[guid].isDead)
                 {
                     newCharacterList.Add(guid, characters[guid]);
+                }
+                else
+                {
+                    inGameEntities.RemoveAll(e => e.Id == guid);
                 }
             }
             characters = newCharacterList;
@@ -75,34 +94,50 @@ namespace Client
             // Removing dead plants
             foreach (Guid guid in plants.Keys)
             {
-                if (entities.ContainsKey(guid))
+                if (!plants[guid].isDead)
                 {
                     newPlantList.Add(guid, plants[guid]);
+                }
+                else
+                {
+                    inGameEntities.RemoveAll(e => e.Id == guid);
                 }
             }
             plants = newPlantList;
 
+            // Updating new state
             foreach (WorldEntityDTO entity in entities.Values)
             {
                 if (entity.Id.Equals(manager.ClientManager.PlayerGuid))
                 {
-                    player.PlayerDTO ??= entity;
-                    player.PlayerDTO.State.Health = entity.State.Health;
-                    player.PlayerDTO.State.Hunger = entity.State.Hunger;
-                    panelsController.StatsPanel.SetHealthBar(entity.State.Health / player.GetPlayerMaxHealth());
-                    panelsController.StatsPanel.SetHungerBar(entity.State.Hunger / player.GetPlayerMaxHunger());
+                    SetPlayerStats(entity);
                     continue;
                 }
 
                 if (characters.TryGetValue(entity.Id, out Character character))
                 {
-                    character.Update(gameTime, manager.InputManager, entity.State);
+                    character.Update(gameTime, entity.State);
                     character.SetCurrentDirection(map.GetTilePosition2D(character.Position.X, character.Position.Y), entity.State.Position);
                     character.Position = GetWorldPosition(entity);
+                    character.HealthBar.SetRangeBar((float) entity.State.Health / character.MaxHealth);
+                    int index = inGameEntities.FindIndex(e => e.Id == entity.Id);
+                    if (index != -1)
+                    {
+                        inGameEntities[index] = entity;
+                    }
                 }
                 else if (plants.TryGetValue(entity.Id, out Plant plant))
                 {
                     plant.Position = GetWorldPosition(entity);
+                    if (entity.State.Health <= 0)
+                    { 
+                        plant.isDead = true;
+                    }
+                    int index = inGameEntities.FindIndex(e => e.Id == entity.Id);
+                    if (index != -1)
+                    {
+                        inGameEntities[index] = entity;
+                    }
                 }
                 else
                 {
@@ -110,11 +145,21 @@ namespace Client
                 }
             }
 
-            player.Update(gameTime, manager.InputManager);
+            // Updating creatures without new state
+            foreach (Guid guid in characters.Keys)
+            {
+                if (!entities.ContainsKey(guid))
+                {
+                    characters[guid].Update(gameTime);
+                }
+            }
+
+            player.Update(gameTime, manager.InputManager, inGameEntities);
 
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             clientUpdateTimer += delta;
 
+            // Send my player update
             if (clientUpdateTimer >= timeBetweenUpdates && player.PlayerDTO != null)
             {
                 player.PlayerDTO.State.Position = map.GetTilePosition2D(player.Position.X, player.Position.Y);
@@ -150,32 +195,34 @@ namespace Client
 
         private void LoadEntity(WorldEntityDTO entity)
         {
+            inGameEntities.Add(entity);
             int graphicID = manager.ClientManager.Modules.FirstOrDefault(m => m.DatabaseID == entity.ModuleID)?.GraphicalRepresentationID ?? -1;
+            int maxHealth = manager.ClientManager.Modules.FirstOrDefault(m => m.DatabaseID == entity.ModuleID)?.MaxHealth ?? -1;
             Vector2 position = GetWorldPosition(entity);
 
             if (graphicID <= 16)
             {
                 characters.Add(entity.Id, graphicID switch
                 {
-                    0 => new EnemyPlant1(position, Color.White),
-                    1 => new EnemyPlant2(position, Color.White),
-                    2 => new Pig(position, Color.White),
-                    3 => new Boar(position, Color.White),
-                    4 => new WhiteRabbit(position, Color.White),
-                    5 => new BrownRabbit(position, Color.White),
-                    6 => new EnemyPlant3(position, Color.White),
-                    7 => new Slime1(position, Color.White),
-                    8 => new Slime2(position, Color.White),
-                    9 => new Slime3(position, Color.White),
-                    10 => new Orc1(position, Color.White),
-                    11 => new Orc2(position, Color.White),
-                    12 => new Orc3(position, Color.White),
-                    13 => new Vampire1(position, Color.White),
-                    14 => new Vampire2(position, Color.White),
-                    15 => new Vampire3(position, Color.White),
+                    0 => new EnemyPlant1(position, maxHealth, Color.White),
+                    1 => new EnemyPlant2(position, maxHealth, Color.White),
+                    2 => new Pig(position, maxHealth, Color.White),
+                    3 => new Boar(position, maxHealth, Color.White),
+                    4 => new WhiteRabbit(position, maxHealth, Color.White),
+                    5 => new BrownRabbit(position, maxHealth, Color.White),
+                    6 => new EnemyPlant3(position, maxHealth, Color.White),
+                    7 => new Slime1(position, maxHealth, Color.White),
+                    8 => new Slime2(position, maxHealth, Color.White),
+                    9 => new Slime3(position, maxHealth, Color.White),
+                    10 => new Orc1(position, maxHealth, Color.White),
+                    11 => new Orc2(position, maxHealth, Color.White),
+                    12 => new Orc3(position, maxHealth, Color.White),
+                    13 => new Vampire1(position, maxHealth, Color.White),
+                    14 => new Vampire2(position, maxHealth, Color.White),
+                    15 => new Vampire3(position, maxHealth, Color.White),
                     16 => new Player(position, Color.White, new Text(manager.ContentManager.Load<SpriteFont>("Fonts/PlayerName"), entity.Name,
-                    true, new Vector2(500, 300 - 110), 70, 40), new Vector2(-53, -50), ref panelsController.BestiaryPanel, ref panelsController.Inventory),
-                    _ => new EnemyPlant1(position, Color.White)
+                    true, new Vector2(500, 300 - 110), 70, 40), new Vector2(-53, -50), maxHealth, ref panelsController.BestiaryPanel, ref panelsController.Inventory),
+                    _ => new EnemyPlant1(position, maxHealth, Color.White)
                 });
             }
             else
@@ -197,6 +244,15 @@ namespace Client
                     _ => new Cosmo(position)
                 });
             }
+        }
+
+        private void SetPlayerStats(WorldEntityDTO entity)
+        {
+            player.PlayerDTO ??= entity;
+            player.PlayerDTO.State.Health = entity.State.Health;
+            player.PlayerDTO.State.Hunger = entity.State.Hunger;
+            panelsController.StatsPanel.SetHealthBar(entity.State.Health / player.GetPlayerMaxHealth());
+            panelsController.StatsPanel.SetHungerBar(entity.State.Hunger / player.GetPlayerMaxHunger());
         }
 
         private Vector2 GetWorldPosition(WorldEntityDTO entity)
