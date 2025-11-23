@@ -132,7 +132,7 @@ namespace Client
         }
 
         private readonly object lobbyDataLock = new object();
-        private LobbyDTO lobbyData = new LobbyDTO(-1, "", 0, 0, 0, []);
+        private LobbyDTO lobbyData = new LobbyDTO(-1, "", 0, 0, 0, [], []);
         public LobbyDTO LobbyData
         {
             get
@@ -314,7 +314,7 @@ namespace Client
                     WorldStateMessage worldStateMessage = (WorldStateMessage)message;
                     lock (entitiesLock)
                     {
-                        entities = worldStateMessage.Entities.ToDictionary(e => e.Id);
+                        entities = worldStateMessage.UpdatedEntities.ToDictionary(e => e.Id);
                     }
                 }
                 else

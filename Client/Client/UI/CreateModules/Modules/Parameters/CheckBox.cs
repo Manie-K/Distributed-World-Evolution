@@ -69,5 +69,10 @@ namespace Client.UI.CreateModules.Modules.Parameters
         {
             value = !value;
         }
+
+        public void SetValue(bool value)
+        {
+            this.value = value;
+        }
     }
 }

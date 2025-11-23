@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Input;
 using SharedLibrary.DTOs.EntitiesDTO;
 using SharedLibrary.DTOs.ModuleDTO;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace Client
@@ -37,13 +38,16 @@ namespace Client
             Eat
         }
 
-        public Player(Vector2 position, Color color, Text playerName, Vector2 spriteDrawingOffset, ref BestiaryPanel bestiaryPanel,
+        public Player(Vector2 position, Color color, Text playerName, Vector2 spriteDrawingOffset, int maxHealth, ref BestiaryPanel bestiaryPanel,
             ref Inventory inventory, WorldMap map = null, ClientManager clientManager = null)
-            : base(position, color, 130, 108, 150f, 8, 7)
+            : base(position, color, 130, 108, 150f, maxHealth)
         {
             this.playerName = playerName;
             SpriteDrawingOffset = spriteDrawingOffset;
-            playerNameOffset = new Vector2(29 + SpriteDrawingOffset.X, -3 + SpriteDrawingOffset.Y);
+
+            if(maxHealth == -1) playerNameOffset = new Vector2(31 + SpriteDrawingOffset.X, -3 + SpriteDrawingOffset.Y);
+            else playerNameOffset = new Vector2(31 + SpriteDrawingOffset.X, -11 + SpriteDrawingOffset.Y);
+
             this.map = map;
             this.clientManager = clientManager;
             PlayerDTO = null;
@@ -56,19 +60,23 @@ namespace Client
             HungerToConsume = 0;
         }
 
-        public override void Update(GameTime gameTime, InputManager inputManager, EntityStateDTO state = null)
+        public void Update(GameTime gameTime, InputManager inputManager = null, List<WorldEntityDTO> inGameEntities = null, EntityStateDTO state = null)
         {
-            if (map == null)
+            if (map == null && state == null)
             {
-                base.Update(gameTime, inputManager, state);
+                base.Update(gameTime);
+            }
+            else if (map == null)
+            {
+                base.Update(gameTime, state);
             }
             else
             {
-                UpdatePlayer(gameTime, inputManager);
+                UpdatePlayer(gameTime, inputManager, inGameEntities);
             }
         }
 
-        private void UpdatePlayer(GameTime gameTime, InputManager inputManager)
+        private void UpdatePlayer(GameTime gameTime, InputManager inputManager, List<WorldEntityDTO> inGameEntities)
         {
             if (playerModule == null && PlayerDTO != null)
             {
@@ -93,22 +101,22 @@ namespace Client
 
             if (inputManager.CheckIfPressingKey(Keys.W))
             {
-                CurrentDirection = Direction.up;
+                CurrentDirection = Direction.Up;
                 movement.Y -= 1;
             }
             if (inputManager.CheckIfPressingKey(Keys.S))
             {
-                CurrentDirection = Direction.down;
+                CurrentDirection = Direction.Down;
                 movement.Y += 1;
             }
             if (inputManager.CheckIfPressingKey(Keys.A))
             {
-                CurrentDirection = Direction.left;
+                CurrentDirection = Direction.Left;
                 movement.X -= 1;
             }
             if (inputManager.CheckIfPressingKey(Keys.D))
             {
-                CurrentDirection = Direction.right;
+                CurrentDirection = Direction.Right;
                 movement.X += 1;
             }
 
@@ -135,20 +143,20 @@ namespace Client
 
             if (inputManager.CheckIfPressingKey(Keys.Space))
             {
-                HandleInteraction(InteractionType.Attack);
+                HandleInteraction(InteractionType.Attack, inGameEntities);
                 SetAnimation(1);
             }
             if (inputManager.CheckIfPressingKey(Keys.E))
             {
-                HandleInteraction(InteractionType.Gather);
+                HandleInteraction(InteractionType.Gather, inGameEntities);
             }
             if (inputManager.CheckIfPressingKey(Keys.F))
             {
-                HandleInteraction(InteractionType.Eat);
+                HandleInteraction(InteractionType.Eat, inGameEntities);
             }
             if (inputManager.CheckIfPressingKey(Keys.R))
             {
-                HandleInteraction(InteractionType.Tame);
+                HandleInteraction(InteractionType.Tame, inGameEntities);
             }
 
             am.Update(gameTime);
@@ -158,6 +166,7 @@ namespace Client
         {
             spriteBatch.Draw(AssetsManager.GetInstance().GetCharacterTexture(am.ActiveAnimation, 13), GetPosition(), GetSourceRectangle(), Color.White);
             playerName.Draw(spriteBatch, Position + playerNameOffset);
+            if(MaxHealth != -1) HealthBar.Draw(spriteBatch, Position, -7, -29);
         }
 
         public float GetPlayerMaxHealth()
@@ -184,13 +193,12 @@ namespace Client
             }
         }
 
-
-        private void HandleInteraction(InteractionType interactionType)
+        private void HandleInteraction(InteractionType interactionType, List<WorldEntityDTO> inGameEntities)
         {
             if (actionCooldown > 0) return;
 
-            TargetEntity = clientManager.Entities.FirstOrDefault(e => e.Value.State.Position.Equals(map.GetTilePosition2D(Position.X, Position.Y))).Value;
-            if (TargetEntity != null && TargetEntity.ModuleID != PlayerDTO.ModuleID)
+            TargetEntity = inGameEntities.FirstOrDefault(e => e.State.Position.Equals(map.GetTilePosition2D(Position.X, Position.Y)));
+            if (TargetEntity != null && PlayerDTO != null && TargetEntity.Id != PlayerDTO.Id)
             {
                 switch (interactionType)
                 {

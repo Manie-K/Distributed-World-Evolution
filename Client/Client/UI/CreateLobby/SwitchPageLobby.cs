@@ -119,5 +119,10 @@ namespace Client
         { 
             creatures.Clear();
         }
+
+        public List<CreateLobbyRow> GetModules()
+        {
+            return creatures;
+        }
     }
 }

@@ -6,8 +6,8 @@ namespace Client
 {
     public class Slime3 : Character
     {
-        public Slime3(Vector2 position, Color color)
-            : base(position, color, 100, 100, 150f, 6, 9)
+        public Slime3(Vector2 position, int maxHealth, Color color)
+            : base(position, color, 100, 100, 150f, maxHealth)
         {
             am = new AnimationManager(8);
             SpriteDrawingOffset = new Vector2(-35, -37);
@@ -16,6 +16,7 @@ namespace Client
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(AssetsManager.GetInstance().GetCharacterTexture(am.ActiveAnimation, 8), GetPosition(), GetSourceRectangle(), Color.White);
+            HealthBar.Draw(spriteBatch, Position, -3, -15);
         }
     }
 }
