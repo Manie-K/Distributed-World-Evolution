@@ -14,7 +14,7 @@ namespace SharedLibrary.Messages
         /// <summary>
         /// Invoked when a message is received.
         /// </summary>
-        public static event Action<MessageBase>? MessageReceived;
+        public static event Action<MessageBase?>? MessageReceived;
         /// <summary>
         /// Invoked when a message is sent.
         /// </summary>
@@ -68,7 +68,6 @@ namespace SharedLibrary.Messages
                         MessageTypeEnum.GetMessage => JsonSerializer.Deserialize<GetMessage>(json),
                         MessageTypeEnum.LobbyData => JsonSerializer.Deserialize<LobbyDataMessage>(json),
                         MessageTypeEnum.BehaviourList => JsonSerializer.Deserialize<BehaviourListMessage>(json),
-                        MessageTypeEnum.UserState => JsonSerializer.Deserialize<UserStateMessage>(json),
                         _ => throw new NotImplementedException(),
                     };
                 }

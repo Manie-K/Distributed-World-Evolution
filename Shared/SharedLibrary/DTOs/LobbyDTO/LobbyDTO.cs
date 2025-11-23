@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SharedLibrary.DTOs.EntitiesDTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,8 +15,9 @@ namespace SharedLibrary.DTOs.LobbyDTO
         public int CurrentPlayers { get; set; }
         public int MapID { get; init; }
         public ICollection<int> ModulesIDs { get; init; }
+        public ICollection<WorldEntityDTO> WorldEntities { get; init; }
 
-        public LobbyDTO(int id, string name, int maxPlayers, int currentPlayers, int mapID, ICollection<int> modulesIDs)
+        public LobbyDTO(int id, string name, int maxPlayers, int currentPlayers, int mapID, ICollection<int> modulesIDs, ICollection<WorldEntityDTO> worldEntities)
         {
             ID = id;
             Name = name;
@@ -23,6 +25,7 @@ namespace SharedLibrary.DTOs.LobbyDTO
             CurrentPlayers = currentPlayers;
             MapID = mapID;
             ModulesIDs = modulesIDs;
+            WorldEntities = worldEntities;
         }
 
     }

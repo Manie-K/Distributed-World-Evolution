@@ -9,12 +9,12 @@ namespace Server.Core.Behaviours.EatBehaviour
         /// <inheritdoc/>
         public override string Description => "Eats never";
         /// <inheritdoc/>
-        public override void Execute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
+        public override void Execute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
             return;
         }
         /// <inheritdoc/>
-        public override bool CanExecute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
+        public override bool CanExecute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
             return false;
         }

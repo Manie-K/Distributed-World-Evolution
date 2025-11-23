@@ -11,7 +11,7 @@ namespace Server.Core.Behaviours.EatBehaviour
         /// <inheritdoc/>
         public override string Description => "Eats when reproduction need is lesser than hunger need";
         /// <inheritdoc/>
-        public override bool CanExecute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
+        public override bool CanExecute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
             Module entityModule = moduleService.GetModuleById(entity.ModuleID) ?? throw new Exception($"Module with ID={entity.ModuleID} not found!");
 

@@ -16,8 +16,13 @@ namespace Server.Core.Behaviours.EatBehaviour
         public abstract string Description { get; }
 
         /// <inheritdoc/>
-        public virtual void Execute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
+        public virtual void Execute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
+            if (target == null)
+            {
+                return;
+            }
+
             Module targetModule = moduleService.GetModuleById(target.ModuleID) ?? throw new Exception($"Module with ID={target.ModuleID} not found!");
 
             if (targetModule.Damage > 0)
@@ -33,7 +38,7 @@ namespace Server.Core.Behaviours.EatBehaviour
         }
 
         /// <inheritdoc/>
-        public abstract bool CanExecute(WorldEntity entity, WorldEntity target, IModuleService moduleService, Dictionary<string, object>? otherParams = null);
+        public abstract bool CanExecute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null);
 
         /// <inheritdoc/>
         public BehaviourDTO ToDTO()
