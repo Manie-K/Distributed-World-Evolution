@@ -45,7 +45,7 @@ namespace Server.Core.Lobby
         private readonly IModuleService moduleService;
         private readonly List<WorldEntity> entities;
         private readonly Dictionary<(int, int), WorldEntity?> entitiesMap;
-        private readonly List<WorldEntity> updatedEntitiesToPublish;
+        private readonly HashSet<WorldEntity> updatedEntitiesToPublish;
         private readonly List<int> allowedModulesIDs;
         private readonly Dictionary<TcpClient, WorldEntity> clients;
         private readonly bool[][] walkableTiles;
@@ -106,7 +106,7 @@ namespace Server.Core.Lobby
 
             entities = new List<WorldEntity>(LobbyParams.NUM_INITIAL_ENTITIES);
             entitiesMap = new Dictionary<(int, int), WorldEntity?>(walkableTiles[0].Length * walkableTiles.Length);
-            updatedEntitiesToPublish = new List<WorldEntity>(20);
+            updatedEntitiesToPublish = new HashSet<WorldEntity>(LobbyParams.NUM_INITIAL_ENTITIES);
 
             for (int x = 0; x < walkableTiles.Length; x++)
             {
