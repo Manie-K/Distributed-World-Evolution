@@ -658,11 +658,13 @@ namespace Server.Core.Lobby
 
             entHuman.UpdateState(new EntityState(human.State));
             entitiesMap[(entHuman.State.Position.X, entHuman.State.Position.Y)] = entHuman;
+            updatedEntitiesToPublish.Add(entHuman);
 
             if (entOther != null)
             {
                 entOther.UpdateState(new EntityState(other!.State));
                 entitiesMap[(entOther.State.Position.X, entOther.State.Position.Y)] = entOther;
+                updatedEntitiesToPublish.Add(entOther);
             }
         }
 
