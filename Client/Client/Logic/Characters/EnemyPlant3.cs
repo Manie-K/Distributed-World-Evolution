@@ -16,10 +16,10 @@ namespace Client
         public override void Draw(SpriteBatch spriteBatch)
         {
             spriteBatch.Draw(AssetsManager.GetInstance().GetCharacterTexture(am.ActiveAnimation, 5), GetPosition(), GetSourceRectangle(), Color.White);
-            if(CurrentDirection == Direction.left)
+            if(CurrentDirection == Direction.Left)
             {
                 HealthBar.Draw(spriteBatch, Position, -6, -35);
-            }else if(CurrentDirection == Direction.right)
+            }else if(CurrentDirection == Direction.Right)
             {
                 HealthBar.Draw(spriteBatch, Position, 5, -35);
             }

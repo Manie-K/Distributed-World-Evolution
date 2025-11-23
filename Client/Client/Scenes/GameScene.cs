@@ -20,6 +20,7 @@ namespace Client
         private Player player;
         private Dictionary<Guid, Character> characters;
         private Dictionary<Guid, Plant> plants;
+        private List<WorldEntityDTO> inGameEntities;
         private WorldMap map;
         private Vector2 cameraOffset;
         private double clientUpdateTimer;
@@ -47,6 +48,20 @@ namespace Client
             manager.IsInGame = true;
             clientUpdateTimer = 0;
             timeBetweenUpdates = 1.0 / ClientManager.CLIENT_UPDATES_PER_SECOND;
+
+            //EntityStateDTO state = new EntityStateDTO(new SharedLibrary.Helpers.Position2D(1, 1), 100, 100, 0, ""); // TMP HELPER
+            //player.PlayerDTO = new WorldEntityDTO("Lachimek", manager.ClientManager.PlayerGuid, state, -17); // TMP HELPER
+            inGameEntities = new List<WorldEntityDTO>();
+            List<WorldEntityDTO> entitiesToLoad = manager.ClientManager.LobbyData.WorldEntities.ToList();
+            foreach (WorldEntityDTO entity in entitiesToLoad)
+            {
+                if (entity.Id.Equals(manager.ClientManager.PlayerGuid))
+                {
+                    SetPlayerStats(entity);
+                    continue;
+                }
+                LoadEntity(entity);
+            }
         }
 
         public void Load()
@@ -65,9 +80,13 @@ namespace Client
             // Removing dead creatures
             foreach (Guid guid in characters.Keys)
             {
-                if (entities.ContainsKey(guid))
+                if (!characters[guid].isDead)
                 {
                     newCharacterList.Add(guid, characters[guid]);
+                }
+                else
+                {
+                    inGameEntities.RemoveAll(e => e.Id == guid);
                 }
             }
             characters = newCharacterList;
@@ -75,36 +94,50 @@ namespace Client
             // Removing dead plants
             foreach (Guid guid in plants.Keys)
             {
-                if (entities.ContainsKey(guid))
+                if (!plants[guid].isDead)
                 {
                     newPlantList.Add(guid, plants[guid]);
+                }
+                else
+                {
+                    inGameEntities.RemoveAll(e => e.Id == guid);
                 }
             }
             plants = newPlantList;
 
+            // Updating new state
             foreach (WorldEntityDTO entity in entities.Values)
             {
                 if (entity.Id.Equals(manager.ClientManager.PlayerGuid))
                 {
-                    player.PlayerDTO ??= entity;
-                    player.PlayerDTO.State.Health = entity.State.Health;
-                    player.PlayerDTO.State.Hunger = entity.State.Hunger;
-                    panelsController.StatsPanel.SetHealthBar(entity.State.Health / player.GetPlayerMaxHealth());
-                    panelsController.StatsPanel.SetHungerBar(entity.State.Hunger / player.GetPlayerMaxHunger());
+                    SetPlayerStats(entity);
                     continue;
                 }
 
                 if (characters.TryGetValue(entity.Id, out Character character))
                 {
-                    character.Update(gameTime, manager.InputManager, entity.State);
+                    character.Update(gameTime, entity.State);
                     character.SetCurrentDirection(map.GetTilePosition2D(character.Position.X, character.Position.Y), entity.State.Position);
                     character.Position = GetWorldPosition(entity);
                     character.HealthBar.SetRangeBar((float) entity.State.Health / character.MaxHealth);
-
+                    int index = inGameEntities.FindIndex(e => e.Id == entity.Id);
+                    if (index != -1)
+                    {
+                        inGameEntities[index] = entity;
+                    }
                 }
                 else if (plants.TryGetValue(entity.Id, out Plant plant))
                 {
                     plant.Position = GetWorldPosition(entity);
+                    if (entity.State.Health <= 0)
+                    { 
+                        plant.isDead = true;
+                    }
+                    int index = inGameEntities.FindIndex(e => e.Id == entity.Id);
+                    if (index != -1)
+                    {
+                        inGameEntities[index] = entity;
+                    }
                 }
                 else
                 {
@@ -112,11 +145,21 @@ namespace Client
                 }
             }
 
-            player.Update(gameTime, manager.InputManager);
+            // Updating creatures without new state
+            foreach (Guid guid in characters.Keys)
+            {
+                if (!entities.ContainsKey(guid))
+                {
+                    characters[guid].Update(gameTime);
+                }
+            }
+
+            player.Update(gameTime, manager.InputManager, inGameEntities);
 
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             clientUpdateTimer += delta;
 
+            // Send my player update
             if (clientUpdateTimer >= timeBetweenUpdates && player.PlayerDTO != null)
             {
                 player.PlayerDTO.State.Position = map.GetTilePosition2D(player.Position.X, player.Position.Y);
@@ -152,6 +195,7 @@ namespace Client
 
         private void LoadEntity(WorldEntityDTO entity)
         {
+            inGameEntities.Add(entity);
             int graphicID = manager.ClientManager.Modules.FirstOrDefault(m => m.DatabaseID == entity.ModuleID)?.GraphicalRepresentationID ?? -1;
             int maxHealth = manager.ClientManager.Modules.FirstOrDefault(m => m.DatabaseID == entity.ModuleID)?.MaxHealth ?? -1;
             Vector2 position = GetWorldPosition(entity);
@@ -200,6 +244,15 @@ namespace Client
                     _ => new Cosmo(position)
                 });
             }
+        }
+
+        private void SetPlayerStats(WorldEntityDTO entity)
+        {
+            player.PlayerDTO ??= entity;
+            player.PlayerDTO.State.Health = entity.State.Health;
+            player.PlayerDTO.State.Hunger = entity.State.Hunger;
+            panelsController.StatsPanel.SetHealthBar(entity.State.Health / player.GetPlayerMaxHealth());
+            panelsController.StatsPanel.SetHungerBar(entity.State.Hunger / player.GetPlayerMaxHunger());
         }
 
         private Vector2 GetWorldPosition(WorldEntityDTO entity)
