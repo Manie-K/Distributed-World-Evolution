@@ -137,12 +137,22 @@ namespace Server.Core
             catch (IOException)
             {
                 loggerService.Log("Client disconnected.", LogLevelEnum.Info);
+                var lobbies = lobbyManager.GetAllLobbies();
+                foreach (var lobby in lobbies)
+                {
+                    lobbyManager.RemoveUserFromLobby(lobby.LobbyId, client);
+                }
                 client.Close();
             }
             catch (Exception ex)
             {
                 loggerService.Log($"Error while handling client: {ex.Message}", LogLevelEnum.Error);
                 await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "Internal server error."));
+                var lobbies = lobbyManager.GetAllLobbies();
+                foreach (var lobby in lobbies)
+                {
+                    lobbyManager.RemoveUserFromLobby(lobby.LobbyId, client);
+                }
                 client.Close();
             }
         }
@@ -187,6 +197,7 @@ namespace Server.Core
                 lobbyManager.AddUserToLobby(lobbyID, client, msg.UserName, out Guid userEntityID);
                 Lobby.Lobby lobby = lobbyManager.GetLobby(lobbyID);
 
+                loggerService.SendLobby(lobby);
                 await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyCreated, "New lobby created!"));
                 await SafeSendAsync(client, new LobbyDataMessage(lobby.ToDTO(), userEntityID));
                 await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyJoined, "Welcome to the new lobby!"));
