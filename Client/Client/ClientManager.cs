@@ -9,6 +9,7 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration;
 
 namespace Client
 {
@@ -167,9 +168,14 @@ namespace Client
             lobbyListReady = ActionStatus.IDLE;
             moduleListReady = ActionStatus.IDLE;
             behaviourListReady = ActionStatus.IDLE;
-            serverIp = "127.0.0.1";
-            port = 8080; // Docker port
-            //port = 5000; // Local port
+
+            var config = new ConfigurationBuilder()
+              .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+              .Build();
+            bool connectToDocker = bool.Parse(config["TcpSettings:UseDocker"]);
+            serverIp = config["TcpSettings:ServerIP"];
+            if (connectToDocker) port = int.Parse(config["TcpSettings:DockerPort"]);
+            else port = int.Parse(config["TcpSettings:LocalPort"]);
         }
 
         public void StartClient()
