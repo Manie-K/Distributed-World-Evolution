@@ -9,68 +9,86 @@ namespace Client.Logic
 {
     public class AnimationManager
     {
-        public int ActiveAnimation;
+        public AnimationType ActiveAnimation;
+        private bool IsDeadAnimationEnabled;
         public Animation[] Animations;
 
-        public AnimationManager(int type, float blockDelay = 1.5f)
+        public AnimationManager(int type, float blockDelay = 1.0f)
         {
             SetAnimations(type, blockDelay);
-            ActiveAnimation = 0;
+            ActiveAnimation = AnimationType.Walking;
+            IsDeadAnimationEnabled = false;
         }
 
-        public void SetAnimation(int type)
+        public void SetAnimation(AnimationType type)
         {
-            if(ActiveAnimation == 0)
+            int animationIndex = (int) type;
+
+            if(ActiveAnimation == AnimationType.Walking)
             {
-                if (type == 2 && Animations[type] != null)
+                if (type == AnimationType.Dying && Animations[animationIndex] != null)
                 {
-                    Animations[ActiveAnimation].Reset();
+                    Animations[animationIndex].Reset();
                     ActiveAnimation = type;
                 }
-                else if (type == 1 && Animations[type] != null && !Animations[type].IsBlocked)
+                else if(type == AnimationType.Dying && Animations[animationIndex] == null)
                 {
-                    Animations[ActiveAnimation].Reset();
-                    Animations[type].BlockAnimation();
+                    IsDeadAnimationEnabled = true;
+                }
+                else if (type == AnimationType.Attacking && Animations[animationIndex] != null && !Animations[animationIndex].IsBlocked)
+                {
+                    Animations[(int) ActiveAnimation].Reset();
+                    Animations[animationIndex].BlockAnimation();
                     ActiveAnimation = type;
                 }
             }
-            else if(ActiveAnimation == 1)
+            else if(ActiveAnimation == AnimationType.Attacking)
             {
-                if(type == 2 && Animations[type] != null)
+                if(type == AnimationType.Dying && Animations[animationIndex] != null)
                 {
-                    Animations[ActiveAnimation].Reset();
+                    Animations[(int) ActiveAnimation].Reset();
                     ActiveAnimation = type;
                 }
-                else if (type == 1 && Animations[ActiveAnimation].IsAnimationEnded)
+                else if (type == AnimationType.Dying && Animations[animationIndex] == null)
                 {
-                    Animations[ActiveAnimation].Reset();
-                    ActiveAnimation = 0;
+                    IsDeadAnimationEnabled = true;
                 }
-                else if (type == 0 && Animations[ActiveAnimation].IsAnimationEnded)
+                else if (type == AnimationType.Attacking && Animations[(int) ActiveAnimation].IsAnimationEnded)
                 {
-                    Animations[ActiveAnimation].Reset();
-                    ActiveAnimation = 0;
+                    Animations[(int) ActiveAnimation].Reset();
+                    ActiveAnimation = AnimationType.Walking;
+                }
+                else if (type == AnimationType.Walking && Animations[(int) ActiveAnimation].IsAnimationEnded)
+                {
+                    Animations[(int) ActiveAnimation].Reset();
+                    ActiveAnimation = AnimationType.Walking;
                 }
 
             }
-            else if (ActiveAnimation == 2)
+            else if (ActiveAnimation == AnimationType.Dying)
             {
-                if((type == 0 || type == 1) && Animations[type] != null && Animations[ActiveAnimation].IsAnimationEnded)
-                {
-                    Animations[ActiveAnimation].Reset();
-                    ActiveAnimation = type;
-                }
+
             }
         }
 
         public int GetActiveFrame()
         {
-            return Animations[ActiveAnimation].ActiveFrame;
+            return Animations[(int) ActiveAnimation].ActiveFrame;
+        }
+
+        public bool CheckDeadAnimation()
+        {
+            if (ActiveAnimation == AnimationType.Dying || IsDeadAnimationEnabled)
+            {
+                if (Animations[2] != null) return Animations[2].IsAnimationEnded;
+                else return true;
+            }
+            else return false;
         }
 
         public void Update(GameTime gameTime)
         {
-             Animations[ActiveAnimation].Update();   
+             Animations[(int) ActiveAnimation].Update();
 
              if (Animations[1] != null && Animations[1].IsBlocked) Animations[1].UpdateBlock(gameTime);    
         }

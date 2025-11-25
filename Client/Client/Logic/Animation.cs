@@ -20,7 +20,7 @@ namespace Client.Logic
         public float BlockDelayCounter;
         public float BlockDelay;
         public bool IsBlocked;
-        public Animation(int framesAmount, int interval, float blockDelay = 1.5f)
+        public Animation(int framesAmount, int interval, float blockDelay = 1.0f)
         {
             this.framesAmount = framesAmount;
             this.interval = interval;
