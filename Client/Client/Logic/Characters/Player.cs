@@ -15,7 +15,7 @@ namespace Client
 {
     public class Player : Character
     {
-        private const float PLAYER_ACTION_COOLDOWN = 1.5f;
+        private const float PLAYER_ACTION_COOLDOWN = 1.0f;
 
         public WorldEntityDTO TargetEntity;
         public WorldEntityDTO PlayerDTO;
@@ -144,7 +144,7 @@ namespace Client
             if (inputManager.CheckIfPressingKey(Keys.Space))
             {
                 HandleInteraction(InteractionType.Attack, inGameEntities);
-                SetAnimation(1);
+                SetAnimation(AnimationType.Attacking);
             }
             if (inputManager.CheckIfPressingKey(Keys.E))
             {
@@ -164,7 +164,7 @@ namespace Client
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(AssetsManager.GetInstance().GetCharacterTexture(am.ActiveAnimation, 13), GetPosition(), GetSourceRectangle(), Color.White);
+            spriteBatch.Draw(AssetsManager.GetInstance().GetCharacterTexture((int) am.ActiveAnimation, 13), GetPosition(), GetSourceRectangle(), Color.White);
             playerName.Draw(spriteBatch, Position + playerNameOffset);
             if(MaxHealth != -1) HealthBar.Draw(spriteBatch, Position, -7, -29);
         }
