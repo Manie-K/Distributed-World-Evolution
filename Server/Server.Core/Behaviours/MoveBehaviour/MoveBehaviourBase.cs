@@ -29,8 +29,8 @@ namespace Server.Core.Behaviours.MoveBehaviour
                 {
                     entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = null;
                     entitiesMap[(nextPosition.X, nextPosition.Y)] = entity;
+                    entity.State.Position = nextPosition;
                 }
-                entity.State.Position = nextPosition;
             }
         }
 
