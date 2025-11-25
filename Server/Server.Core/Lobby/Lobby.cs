@@ -46,12 +46,19 @@ namespace Server.Core.Lobby
         private readonly IModuleService moduleService;
         private readonly List<WorldEntity> entities;
         private readonly Dictionary<(int, int), WorldEntity?> entitiesMap;
-        private readonly ConcurrentDictionary<Guid, WorldEntity?> entitiesId;
-        private readonly ConcurrentDictionary<WorldEntity, byte> updatedEntitiesToPublish;
+        private readonly Dictionary<Guid, WorldEntity> entitiesId;
+        private readonly HashSet<WorldEntity> updatedEntitiesToPublish;
         private readonly List<int> allowedModulesIDs;
         private readonly Dictionary<TcpClient, WorldEntity> clients;
         private readonly bool[][] walkableTiles;
         private readonly bool[][] fertileTiles;
+
+        private readonly object entitiesLock = new object();
+        private readonly object entitiesMapLock = new object();
+        private readonly object entitiesIdLock = new object();
+        private readonly object entitiesToUpdateLock = new object();
+        private readonly object clientsLock = new object();
+        private readonly object allowedModulesLock = new object();
 
         private bool running;
         
@@ -108,8 +115,8 @@ namespace Server.Core.Lobby
 
             entities = new List<WorldEntity>(LobbyParams.NUM_INITIAL_ENTITIES);
             entitiesMap = new Dictionary<(int, int), WorldEntity?>(walkableTiles[0].Length * walkableTiles.Length);
-            entitiesId = new ConcurrentDictionary<Guid, WorldEntity?>(-1, LobbyParams.NUM_INITIAL_ENTITIES);
-            updatedEntitiesToPublish = new ConcurrentDictionary<WorldEntity, byte>(-1, LobbyParams.NUM_INITIAL_ENTITIES);
+            entitiesId = new Dictionary<Guid, WorldEntity>(LobbyParams.NUM_INITIAL_ENTITIES);
+            updatedEntitiesToPublish = new HashSet<WorldEntity>(LobbyParams.NUM_INITIAL_ENTITIES);
 
             allowedModulesIDs = new List<int>(20);
             clients = new Dictionary<TcpClient, WorldEntity>(maxPlayers);
@@ -158,9 +165,12 @@ namespace Server.Core.Lobby
         /// <inheritdoc/>
         public bool IsPositionFree(Position2D position)
         {
-            if(entitiesMap.ContainsKey((position.X, position.Y)))
+            lock (entitiesMapLock)
             {
-                return entitiesMap[(position.X, position.Y)] == null;
+                if (entitiesMap.ContainsKey((position.X, position.Y)))
+                {
+                    return entitiesMap[(position.X, position.Y)] == null;
+                }
             }
 
             return false; //Out of bounds?
@@ -169,36 +179,30 @@ namespace Server.Core.Lobby
         /// <inheritdoc/>
         public Guid AddClient(TcpClient client, string username)
         {
-            if(clients.Count >= MaxPlayers)
-            {
-                Log("Lobby is full.", LogLevelEnum.Warning);
-                return Guid.Empty;
-            }
-
             WorldEntity userEntity = WorldEntity.CreateWorldEntity(username, moduleService.GetHumanModuleId(),
                 new EntityState(new Position2D(0, 0), ModulePropertiesLimits.MAX_MAX_HEALTH, ModulePropertiesLimits.MAX_MAX_HUNGER), this);
 
-            lock (clients)
+            lock (clientsLock)
             {
+                if (clients.Count >= MaxPlayers)
+                {
+                    Log("Lobby is full.", LogLevelEnum.Warning);
+                    return Guid.Empty;
+                }
+
                 if (clients.Keys.Contains(client))
                 {
                     Log("Client already in lobby.", LogLevelEnum.Warning);
                     return Guid.Empty;
                 }
-                clients.Add(client, userEntity);
-            }
 
-
-            if (!AddWorldEntity(userEntity))
-            {
-                Log("Failed to add user entity to lobby.", LogLevelEnum.Error);
-
-                lock (clients)
+                if (!AddWorldEntity(userEntity))
                 {
-                    clients.Remove(client);
+                    Log("Failed to add user entity to lobby.", LogLevelEnum.Error);
+                    return Guid.Empty;
                 }
 
-                return Guid.Empty;
+                clients.Add(client, userEntity);
             }
 
             return userEntity.Id;
@@ -207,7 +211,7 @@ namespace Server.Core.Lobby
         /// <inheritdoc/>
         public bool RemoveClient(TcpClient client)
         {
-            lock (clients)
+            lock (clientsLock)
             {
                 if (!clients.Keys.Contains(client))
                 {
@@ -216,12 +220,12 @@ namespace Server.Core.Lobby
                 }
                 DestroyWorldEntity(clients[client]);
                 clients.Remove(client);
-            }
 
-            if(clients.Count == 0)
-            {
-                Log("No clients left in lobby. Closing lobby.", LogLevelEnum.Info);
-                running = false;
+                if(clients.Count == 0)
+                {
+                    Log("No clients left in lobby. Closing lobby.", LogLevelEnum.Info);
+                    running = false;
+                }
             }
 
             return true;
@@ -231,7 +235,7 @@ namespace Server.Core.Lobby
         public bool AddAllowedModule(int moduleId)
         {
             Module? module = moduleService.GetModuleById(moduleId);
-            lock (allowedModulesIDs)
+            lock (allowedModulesLock)
             {
                 if (allowedModulesIDs.Contains(moduleId))
                 {
@@ -246,30 +250,37 @@ namespace Server.Core.Lobby
         /// <inheritdoc/>
         public bool AddWorldEntity(WorldEntity entity)
         {
-            lock (entities)
+            if (!allowedModulesIDs.Contains(entity.ModuleID))
+            {
+                Log($"Entity's {entity.Id} module is not allowed in lobby {LobbyId}.", LogLevelEnum.Warning);
+                return false;
+            }
+
+            if (!IsPositionFree(entity.State.Position)) return false;
+
+            lock (entitiesLock)
             {
                 if (entities.Contains(entity))
                 {
                     Log($"Entity {entity.Id} already exists in lobby {LobbyId}.", LogLevelEnum.Warning);
                     return false;
                 }
-
-                bool moduleLoaded = allowedModulesIDs.Any(id => (id == entity.ModuleID));
-                if (!moduleLoaded)
-                {
-                    Log($"Entity's {entity.Id} module is not allowed in lobby {LobbyId}.", LogLevelEnum.Warning);
-                    return false;
-                }
-
-                if (!IsPositionFree(entity.State.Position)) return false;
-
                 entities.Add(entity);
-                entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = entity;
-                entitiesId.TryAdd(entity.Id, entity);
-                updatedEntitiesToPublish.TryAdd(entity, (byte)0);
-
-                return true;
             }
+            lock (entitiesMapLock)
+            {
+                entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = entity;
+            }
+            lock (entitiesIdLock)
+            {
+                entitiesId.Add(entity.Id, entity);
+            }
+            lock (entitiesToUpdateLock)
+            {
+                updatedEntitiesToPublish.Add(entity);
+            }
+
+            return true;
         }
 
         /// <inheritdoc/>
@@ -280,20 +291,29 @@ namespace Server.Core.Lobby
                 return false;
             }
 
-            lock (entities)
+            lock (entitiesLock)
             {
                 if (!entities.Contains(entity))
                 {
                     Log($"Entity {entity.Id} does not exist in lobby {LobbyId}.", LogLevelEnum.Warning);
                     return false;
                 }
-                entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = null;
-                updatedEntitiesToPublish.TryAdd(entity, (byte)0);
-                entitiesId.TryRemove(entity.Id, out _);
                 entities.Remove(entity);
-
-                return true;
             }
+            lock (entitiesMapLock)
+            {
+                entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = null;
+            }
+            lock(entitiesIdLock)
+            {
+                entitiesId.Remove(entity.Id);
+            }
+            lock (entitiesToUpdateLock)
+            {
+                updatedEntitiesToPublish.Add(entity);
+            }
+
+            return true;
         }
 
         /// <inheritdoc/>
@@ -376,45 +396,56 @@ namespace Server.Core.Lobby
         {
             Console.WriteLine($"[DEBUG] Update #{updateCounter}"); //DEBUG
             var stopwatchWorld = Stopwatch.StartNew(); //DEBUG
-
-            if (entities.Count == 0)
+            
+            int startIndex = 0, endIndex = 0;
+            lock (entitiesLock)
             {
-                Console.WriteLine("No entities to update in lobby.");
-                return;
+                if (entities.Count == 0)
+                {
+                    Console.WriteLine("No entities to update in lobby.");
+                    return;
+                }
+
+                startIndex = Math.Min(groupIndex * entitiesPerGroup, entities.Count - 1); //Inclusive
+                endIndex = Math.Min(startIndex + entitiesPerGroup, entities.Count - 1); //Inclusive
+
+                Console.WriteLine($"[DEBUG] Updating entities from index {startIndex} to {endIndex}. Entity count: [{entities.Count}]"); //DEBUG
+
+                if (endIndex >= entities.Count - 1)
+                {
+                    groupIndex = 0;
+                }
+                else
+                {
+                    groupIndex++;
+                }
             }
 
-            int startIndex = Math.Min(groupIndex * entitiesPerGroup, entities.Count - 1); //Inclusive
-            int endIndex = Math.Min(startIndex + entitiesPerGroup, entities.Count - 1); //Inclusive
-
-            Console.WriteLine($"[DEBUG] Updating entities from index {startIndex} to {endIndex}. Entity count: [{entities.Count}]"); //DEBUG
             UpdateWorldState(startIndex, endIndex);
 
-            if(endIndex >= entities.Count - 1)
-            {
-                groupIndex = 0;
-            }
-            else
-            {
-                groupIndex++;
-            }
 
             stopwatchWorld.Stop(); //DEBUG
             Console.WriteLine($"[DEBUG] World state update #{updateCounter} took {stopwatchWorld.ElapsedMilliseconds}ms."); //DEBUG
 
-            for (int i = startIndex; i <= endIndex; i++)
+            WorldStateMessage worldStateMessage;
+            lock (entitiesToUpdateLock) 
             {
-                updatedEntitiesToPublish.TryAdd(entities[i], (byte)0);
+                for (int i = startIndex; i <= endIndex; i++)
+                {
+                    updatedEntitiesToPublish.Add(entities[i]);
+                } 
+
+                worldStateMessage = new WorldStateMessage(updatedEntitiesToPublish.Select(e => e.ToDTO()));
+                updatedEntitiesToPublish.Clear();
             }
 
-            lock (clients)
+            lock (clientsLock)
             {
                 foreach (var clientPair in clients)
                 {
-                    _ = MessageManager.SendMessageAsync(clientPair.Key, new WorldStateMessage(updatedEntitiesToPublish.Keys.Select(e => e.ToDTO())));
+                    _ = MessageManager.SendMessageAsync(clientPair.Key, worldStateMessage); //TODO: Check if sending the same ref is ok
                 }
             }
-
-            updatedEntitiesToPublish.Clear();
 
             updateCounter++;
         }
@@ -426,10 +457,13 @@ namespace Server.Core.Lobby
         /// <param name="endIndex">Index of last entity to be updated (inclusive).</param>
         private void UpdateWorldState(int startIndex, int endIndex)
         {
-            if(startIndex < 0 || endIndex >= entities.Count || startIndex > endIndex)
+            lock (entitiesLock)
             {
-                Log(new ArgumentOutOfRangeException($"Invalid start ({startIndex}) or end ({endIndex}) index for updating world state."), LogLevelEnum.Error);
-                return;
+                if (startIndex < 0 || endIndex >= entities.Count || startIndex > endIndex)
+                {
+                    Log(new ArgumentOutOfRangeException($"Invalid start ({startIndex}) or end ({endIndex}) index for updating world state."), LogLevelEnum.Error);
+                    return;
+                }
             }
 
             const int HUNGER_CHANGE = 1;
@@ -449,13 +483,13 @@ namespace Server.Core.Lobby
 
             for (int i = startIndex; i <= endIndex; i++)
             {
-                if (i >= entities.Count) //In case entities were removed during the update, so the count is lower than index
+                lock (entitiesLock)
                 {
-                    break;
-                }
-
-                lock (entities)
-                {
+                    if (i >= entities.Count) //In case entities were removed during the update, so the count is lower than index
+                    {
+                        break;
+                    }
+                 
                     entity = entities[i];
                 }
                 entityModule = moduleService.GetModuleById(entity.ModuleID);
@@ -515,7 +549,7 @@ namespace Server.Core.Lobby
                 }
 
                 int stepX = 0, stepY = 0;
-                lock (entities)
+                lock (entitiesLock)
                 {
                     (stepX, stepY) = ((MoveBehaviourBase)entityModule.GetBehaviourOfType(InteractionTypeEnum.Move)).GetNextMovement(entity, CollectionsMarshal.AsSpan(entities));
                 }
@@ -675,39 +709,61 @@ namespace Server.Core.Lobby
         /// <exception cref="ArgumentNullException">Human entity can not be null.</exception>
         private void SimulateHumanEntityUpdate(WorldEntityDTO human, WorldEntityDTO? other)
         {
-            WorldEntity? entHuman = entitiesId[human.Id];
+            WorldEntity? entHuman;
+            WorldEntity? entOther;
+
+            lock(entitiesIdLock)
+            {
+                entHuman = entitiesId[human.Id];
+            }
 
             if (entHuman == null)
             {
                 throw new ArgumentNullException(nameof(entHuman), "Entity not found");
             }
-            if(entHuman.ModuleID != moduleService.GetHumanModuleId())
+            if (entHuman.ModuleID != moduleService.GetHumanModuleId())
             {
                 throw new ArgumentNullException(nameof(entHuman), "Entity not of human type");
             }
 
-            entitiesMap[(entHuman.State.Position.X, entHuman.State.Position.Y)] = null;
-            entHuman.UpdateState(new EntityState(human.State));
-            entitiesMap[(entHuman.State.Position.X, entHuman.State.Position.Y)] = entHuman;
-            updatedEntitiesToPublish.TryAdd(entHuman, (byte)0);
+            lock (entitiesMapLock)
+            {
+                entitiesMap[(entHuman.State.Position.X, entHuman.State.Position.Y)] = null;
+                entHuman.UpdateState(new EntityState(human.State));
+                entitiesMap[(entHuman.State.Position.X, entHuman.State.Position.Y)] = entHuman;
+            }
+
+            lock (entitiesToUpdateLock)
+            {
+                updatedEntitiesToPublish.Add(entHuman);
+            }
 
             if (other == null) { return; }
-            WorldEntity? entOther = entitiesId[other.Id];
+            
+            lock (entitiesIdLock)
+            {
+                entOther = entitiesId[other.Id];
+            }
+
             if(entOther == null) { return; }
 
-            if (entOther != null)
+            lock (entitiesMapLock)
             {
                 entitiesMap[(entOther.State.Position.X, entOther.State.Position.Y)] = null;
                 entOther.UpdateState(new EntityState(other!.State));
 
-                if(entOther.State.Health <= 0)
+                if (entOther.State.Health <= 0)
                 {
                     entOther.Die(moduleService);
                     return;
                 }
 
                 entitiesMap[(entOther.State.Position.X, entOther.State.Position.Y)] = entOther;
-                updatedEntitiesToPublish.TryAdd(entOther, (byte)0);
+            }
+
+            lock (entitiesToUpdateLock)
+            {
+                updatedEntitiesToPublish.Add(entOther);
             }
         }
 
@@ -722,8 +778,12 @@ namespace Server.Core.Lobby
         {
             Module entityModule = moduleService.GetModuleById(entity.ModuleID) ?? throw new Exception($"Module with ID={entity.ModuleID} not found");
             EntityTypeEnum entityType = entityModule.Type;
+            WorldEntity? entityOnPosition;
 
-            WorldEntity? entityOnPosition = entitiesMap[(newState.Position.X, newState.Position.Y)];
+            lock (entitiesMapLock)
+            {
+                entityOnPosition = entitiesMap[(newState.Position.X, newState.Position.Y)];
+            }
 
             if (entityOnPosition == null)
             {
@@ -830,7 +890,7 @@ namespace Server.Core.Lobby
 
         private void OnMessageFromClientReceived_Delegate(OnMessageFromClientEventArgs args)
         {
-            lock (clients)
+            lock (clientsLock)
             {
                 if(!clients.Keys.Contains(args.Client))
                 {
