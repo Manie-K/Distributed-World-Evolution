@@ -16,6 +16,7 @@ using Server.Core.Behaviours.ReproduceBehaviour;
 using SharedLibrary.Helpers;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.Collections.Concurrent;
 
 namespace Server.Core.Lobby
 {
@@ -46,7 +47,7 @@ namespace Server.Core.Lobby
         private readonly List<WorldEntity> entities;
         private readonly Dictionary<(int, int), WorldEntity?> entitiesMap;
         private readonly Dictionary<Guid, WorldEntity?> entitiesId;
-        private readonly HashSet<WorldEntity> updatedEntitiesToPublish;
+        private readonly ConcurrentDictionary<WorldEntity, byte> updatedEntitiesToPublish;
         private readonly List<int> allowedModulesIDs;
         private readonly Dictionary<TcpClient, WorldEntity> clients;
         private readonly bool[][] walkableTiles;
@@ -108,7 +109,7 @@ namespace Server.Core.Lobby
             entities = new List<WorldEntity>(LobbyParams.NUM_INITIAL_ENTITIES);
             entitiesMap = new Dictionary<(int, int), WorldEntity?>(walkableTiles[0].Length * walkableTiles.Length);
             entitiesId = new Dictionary<Guid, WorldEntity?>(LobbyParams.NUM_INITIAL_ENTITIES);
-            updatedEntitiesToPublish = new HashSet<WorldEntity>(LobbyParams.NUM_INITIAL_ENTITIES);
+            updatedEntitiesToPublish = new ConcurrentDictionary<WorldEntity, byte>(-1, LobbyParams.NUM_INITIAL_ENTITIES);
 
             allowedModulesIDs = new List<int>(20);
             clients = new Dictionary<TcpClient, WorldEntity>(maxPlayers);
@@ -265,7 +266,7 @@ namespace Server.Core.Lobby
                 entities.Add(entity);
                 entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = entity;
                 entitiesId.Add(entity.Id, entity);
-                updatedEntitiesToPublish.Add(entity);
+                updatedEntitiesToPublish.TryAdd(entity, (byte)0);
 
                 return true;
             }
@@ -287,7 +288,7 @@ namespace Server.Core.Lobby
                     return false;
                 }
                 entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = null;
-                updatedEntitiesToPublish.Add(entity);
+                updatedEntitiesToPublish.TryAdd(entity, (byte)0);
                 entitiesId.Remove(entity.Id);
                 entities.Remove(entity);
 
@@ -400,19 +401,16 @@ namespace Server.Core.Lobby
             stopwatchWorld.Stop(); //DEBUG
             Console.WriteLine($"[DEBUG] World state update #{updateCounter} took {stopwatchWorld.ElapsedMilliseconds}ms."); //DEBUG
 
-            lock (updatedEntitiesToPublish)
+            for (int i = startIndex; i <= endIndex; i++)
             {
-                for (int i = startIndex; i <= endIndex; i++)
-                {
-                    updatedEntitiesToPublish.Add(entities[i]);
-                }
+                updatedEntitiesToPublish.TryAdd(entities[i], (byte)0);
             }
 
             lock (clients)
             {
                 foreach (var clientPair in clients)
                 {
-                    _ = MessageManager.SendMessageAsync(clientPair.Key, new WorldStateMessage(updatedEntitiesToPublish.Select(e => e.ToDTO())));
+                    _ = MessageManager.SendMessageAsync(clientPair.Key, new WorldStateMessage(updatedEntitiesToPublish.Keys.Select(e => e.ToDTO())));
                 }
             }
 
@@ -471,7 +469,7 @@ namespace Server.Core.Lobby
                 var stopwatch = Stopwatch.StartNew(); //DEBUG
                 allIterations++; //DEBUG
                 if (entitiesHealthAndHungerUpdateCounter >= 4 * LobbyParams.INITIAL_NUMBER_OF_GROUPS) //TODO: For now we have 32 groups, 64 updates per second,
-                                                                                                        //so each entity gets updated twice a second. So every 2 * value seconds. Definately need to set this.
+                                                                                                      //so each entity gets updated twice a second. So every 2 * value seconds. Definately need to set this.
                 {
                     shouldResetCounter = true;
                     if (entity.State.Health <= 0)
@@ -541,14 +539,14 @@ namespace Server.Core.Lobby
                 sw.Stop();
                 allSimulationTime += sw.Elapsed.TotalMilliseconds; //DEBUG
                 allSimulationIterations++; //DEBUG
+            }
 
-                Console.WriteLine($"[DEBUG] Time this update: Other: {allOtherTime}. Iterations: {allIterations}."); //DEBUG
-                Console.WriteLine($"[DEBUG] Time this update: Simulation: {allSimulationTime}. Iterations: {allSimulationIterations}."); //DEBUG
+            Console.WriteLine($"[DEBUG] Time this update: Other: {allOtherTime}. Iterations: {allIterations}."); //DEBUG
+            Console.WriteLine($"[DEBUG] Time this update: Simulation: {allSimulationTime}. Iterations: {allSimulationIterations}."); //DEBUG
 
-                if (shouldResetCounter)
-                {
-                    entitiesHealthAndHungerUpdateCounter = 0;
-                }
+            if (shouldResetCounter)
+            {
+                entitiesHealthAndHungerUpdateCounter = 0;
             }
         }
 
@@ -691,7 +689,7 @@ namespace Server.Core.Lobby
             entitiesMap[(entHuman.State.Position.X, entHuman.State.Position.Y)] = null;
             entHuman.UpdateState(new EntityState(human.State));
             entitiesMap[(entHuman.State.Position.X, entHuman.State.Position.Y)] = entHuman;
-            updatedEntitiesToPublish.Add(entHuman);
+            updatedEntitiesToPublish.TryAdd(entHuman, (byte)0);
 
             if (other == null) { return; }
             WorldEntity? entOther = entitiesId[other.Id];
@@ -709,7 +707,7 @@ namespace Server.Core.Lobby
                 }
 
                 entitiesMap[(entOther.State.Position.X, entOther.State.Position.Y)] = entOther;
-                updatedEntitiesToPublish.Add(entOther);
+                updatedEntitiesToPublish.TryAdd(entOther, (byte)0);
             }
         }
 
