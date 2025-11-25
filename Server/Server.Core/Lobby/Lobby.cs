@@ -46,7 +46,7 @@ namespace Server.Core.Lobby
         private readonly IModuleService moduleService;
         private readonly List<WorldEntity> entities;
         private readonly Dictionary<(int, int), WorldEntity?> entitiesMap;
-        private readonly Dictionary<Guid, WorldEntity?> entitiesId;
+        private readonly ConcurrentDictionary<Guid, WorldEntity?> entitiesId;
         private readonly ConcurrentDictionary<WorldEntity, byte> updatedEntitiesToPublish;
         private readonly List<int> allowedModulesIDs;
         private readonly Dictionary<TcpClient, WorldEntity> clients;
@@ -108,7 +108,7 @@ namespace Server.Core.Lobby
 
             entities = new List<WorldEntity>(LobbyParams.NUM_INITIAL_ENTITIES);
             entitiesMap = new Dictionary<(int, int), WorldEntity?>(walkableTiles[0].Length * walkableTiles.Length);
-            entitiesId = new Dictionary<Guid, WorldEntity?>(LobbyParams.NUM_INITIAL_ENTITIES);
+            entitiesId = new ConcurrentDictionary<Guid, WorldEntity?>(-1, LobbyParams.NUM_INITIAL_ENTITIES);
             updatedEntitiesToPublish = new ConcurrentDictionary<WorldEntity, byte>(-1, LobbyParams.NUM_INITIAL_ENTITIES);
 
             allowedModulesIDs = new List<int>(20);
@@ -193,7 +193,7 @@ namespace Server.Core.Lobby
             {
                 Log("Failed to add user entity to lobby.", LogLevelEnum.Error);
 
-                lock(client)
+                lock (clients)
                 {
                     clients.Remove(client);
                 }
@@ -265,7 +265,7 @@ namespace Server.Core.Lobby
 
                 entities.Add(entity);
                 entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = entity;
-                entitiesId.Add(entity.Id, entity);
+                entitiesId.TryAdd(entity.Id, entity);
                 updatedEntitiesToPublish.TryAdd(entity, (byte)0);
 
                 return true;
@@ -289,7 +289,7 @@ namespace Server.Core.Lobby
                 }
                 entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = null;
                 updatedEntitiesToPublish.TryAdd(entity, (byte)0);
-                entitiesId.Remove(entity.Id);
+                entitiesId.TryRemove(entity.Id, out _);
                 entities.Remove(entity);
 
                 return true;
@@ -830,7 +830,7 @@ namespace Server.Core.Lobby
 
         private void OnMessageFromClientReceived_Delegate(OnMessageFromClientEventArgs args)
         {
-            lock(clients)
+            lock (clients)
             {
                 if(!clients.Keys.Contains(args.Client))
                 {
