@@ -16,7 +16,6 @@ using Server.Core.Behaviours.ReproduceBehaviour;
 using SharedLibrary.Helpers;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
-using System.Collections.Concurrent;
 
 namespace Server.Core.Lobby
 {
@@ -190,7 +189,7 @@ namespace Server.Core.Lobby
                     return Guid.Empty;
                 }
 
-                if (clients.Keys.Contains(client))
+                if (clients.ContainsKey(client))
                 {
                     Log("Client already in lobby.", LogLevelEnum.Warning);
                     return Guid.Empty;
@@ -213,12 +212,12 @@ namespace Server.Core.Lobby
         {
             lock (clientsLock)
             {
-                if (!clients.Keys.Contains(client))
+                if (!clients.TryGetValue(client, out WorldEntity? clientEntity))
                 {
                     Log("Client already not in lobby.", LogLevelEnum.Warning);
                     return false;
                 }
-                DestroyWorldEntity(clients[client]);
+                DestroyWorldEntity(clientEntity);
                 clients.Remove(client);
 
                 if(clients.Count == 0)
@@ -341,20 +340,16 @@ namespace Server.Core.Lobby
         /// </summary>
         private void InitializeWorldEntities()
         {
-            IModuleService moduleService = ModuleService.Instance;
             List<Module> modules = allowedModulesIDs.Select(id => moduleService.GetModuleById(id))
                                                     .Where(m => m != null)
                                                     .Cast<Module>()
                                                     .ToList()!;
             int modulesCount = modules.Count;
-
-            Module module;
-
             Log("Initializing world entities...", LogLevelEnum.Info);
 
             for (int i = 0; i < LobbyParams.NUM_INITIAL_ENTITIES; i++)
             {
-                module = modules[new Random().Next(modulesCount)];
+                Module module = modules[new Random().Next(modulesCount)];
                 
                 if(module.Type == EntityTypeEnum.Human)
                 {
@@ -469,10 +464,6 @@ namespace Server.Core.Lobby
             const int HUNGER_CHANGE = 1;
             const int HEALTH_CHANGE = 1;
 
-            WorldEntity entity;
-            Module? entityModule;
-            EntityState nextState;
-
             entitiesHealthAndHungerUpdateCounter++;
             bool shouldResetCounter = false;
 
@@ -483,6 +474,7 @@ namespace Server.Core.Lobby
 
             for (int i = startIndex; i <= endIndex; i++)
             {
+                WorldEntity entity;
                 lock (entitiesLock)
                 {
                     if (i >= entities.Count) //In case entities were removed during the update, so the count is lower than index
@@ -492,7 +484,7 @@ namespace Server.Core.Lobby
                  
                     entity = entities[i];
                 }
-                entityModule = moduleService.GetModuleById(entity.ModuleID);
+                Module? entityModule = moduleService.GetModuleById(entity.ModuleID);
 
                 if (entityModule == null)
                 {
@@ -515,7 +507,8 @@ namespace Server.Core.Lobby
                         allOtherTime += stopwatch.Elapsed.TotalMilliseconds; //DEBUG
                         continue;
                     }
-                    else if (entity.State.Hunger > 0)
+                    
+                    if (entity.State.Hunger > 0)
                     {
                         entity.State.Hunger -= HUNGER_CHANGE;
                     }
@@ -554,7 +547,7 @@ namespace Server.Core.Lobby
                     (stepX, stepY) = ((MoveBehaviourBase)entityModule.GetBehaviourOfType(InteractionTypeEnum.Move)).GetNextMovement(entity, CollectionsMarshal.AsSpan(entities));
                 }
 
-                nextState = new EntityState(entity.State);
+                var nextState = new EntityState(entity.State);
                 nextState.Position.X += stepX;
                 nextState.Position.Y += stepY;
 
@@ -591,21 +584,19 @@ namespace Server.Core.Lobby
                 Log("Received null message from client.", LogLevelEnum.Warning);
                 return;
             }
-            else
+            
+            switch (message.MessageType)
             {
-                switch (message.MessageType)
-                {
-                    case MessageTypeEnum.UserInteraction:
-                        HandleUpdateHumanWorldEntityMessage(client, (UserInteractionMessage)message);
-                        break;
-                    case MessageTypeEnum.InfoMessage:
-                        HandleInfoMessage(client, (InfoMessage)message);
-                        break;
-                    default:
-                        HandleUnsupportedMessageType(client, message);
-                        break;
-                }
-            }    
+                case MessageTypeEnum.UserInteraction:
+                    HandleUpdateHumanWorldEntityMessage(client, (UserInteractionMessage)message);
+                    break;
+                case MessageTypeEnum.InfoMessage:
+                    HandleInfoMessage(client, (InfoMessage)message);
+                    break;
+                default:
+                    HandleUnsupportedMessageType(client, message);
+                    break;
+            }  
         }
 
         /// <summary>
@@ -631,7 +622,7 @@ namespace Server.Core.Lobby
 
 
             // If we change position, there is a possible new interaction. Or we are a plant (to handle growth or other plant-specific behaviour)
-            bool shouldCheckInteraction = ((entity.State.Position != newState.Position) || (entityModule.Type == EntityTypeEnum.Plant)) 
+            bool shouldCheckInteraction = ((!Equals(entity.State.Position, newState.Position)) || (entityModule.Type == EntityTypeEnum.Plant)) 
                                           && (entity.State.InteractionFramesLeft == 0);
 
             if (!shouldCheckInteraction) return;
@@ -639,7 +630,11 @@ namespace Server.Core.Lobby
             InteractionTypeEnum interactionType = GetInteractionType(entity, newState);
             if (interactionType is InteractionTypeEnum.None) return;
 
-            WorldEntity? targetEntity = entitiesMap[(newState.Position.X, newState.Position.Y)];
+            WorldEntity? targetEntity;
+            lock(entitiesMapLock)
+            {
+                targetEntity = entitiesMap[(newState.Position.X, newState.Position.Y)];
+            }
             IBehaviour behaviour = entityModule.GetBehaviourOfType(interactionType);
 
             //time[s] = constant(update takes more than ideally) * how_many_groups / groups_per_second
@@ -650,9 +645,9 @@ namespace Server.Core.Lobby
             {
                 case InteractionTypeEnum.Move:
                     behaviour.Execute(entity, null, ModuleService.Instance, new Dictionary<string, object>{
-                    { CustomBehaviourParams.MAP_WALKABLE_PARAM, walkableTiles   },
-                    { CustomBehaviourParams.NEW_POS_PARAM, newState.Position },
-                    { CustomBehaviourParams.ENTITIES_MAP_PARAM, entitiesMap }
+                        { CustomBehaviourParams.MAP_WALKABLE_PARAM, walkableTiles   },
+                        { CustomBehaviourParams.NEW_POS_PARAM, newState.Position },
+                        { CustomBehaviourParams.ENTITIES_MAP_PARAM, entitiesMap }
                     });
 
                     entity.State.InteractionFramesLeft = (int)(3 / secondsPerEntityUpdate); //TODO: Seconds / secondsPerEntityUpdate; Change the way this is set.
