@@ -105,7 +105,7 @@ namespace Server.Core
                     break;
 
                 case RoleEnum.UI:
-                    loggerService.ClientUI = client;
+                    loggerService.AddClient(client);
                     await SafeSendAsync(client, new LobbyListMessage(lobbyManager.GetAllLobbies().Select(l => l.ToDTO()).ToList()));
                     Task.Delay(2000).Wait();
                     _ = loggerService.StartAsync(CancellationToken.None);
@@ -185,7 +185,7 @@ namespace Server.Core
                     msg.LobbyName, msg.MaxPlayers, msg.MapID, msg.WalkableTiles, msg.FertileTiles, msg.ModuleIDs);
 
                 Lobby.Lobby lobby = lobbyManager.GetLobby(lobbyID);
-                loggerService.SendLobby(lobby);
+                loggerService.AddLobby(lobby);
 
                 await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyCreated, "New lobby created!"));
                 await HandleJoinLobbyAsync(client, new JoinLobbyMessage(lobbyID, msg.UserName));

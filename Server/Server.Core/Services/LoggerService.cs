@@ -9,15 +9,25 @@ namespace Server.Core.Services
 {
     public class LoggerService : BackgroundService
     {
-        private readonly ConcurrentQueue<LogMessage> _logQueue = new();
+        private readonly ConcurrentQueue<MessageBase> _messageQueue = new();
         private readonly TimeSpan _pollInterval = TimeSpan.FromMilliseconds(50);
-        public TcpClient? ClientUI { set; get; }
+        private List<TcpClient> ClientsUI { set; get; } = new List<TcpClient>();
 
-        public void SendLobby(Lobby.ILobby lobby)
+        private readonly object _clientsLock = new object();
+
+        public void AddClient(TcpClient clientUI)
         {
-            if (ClientUI != null && ClientUI.Connected)
+            ClientsUI.Add(clientUI);
+        }
+
+        public void AddLobby(Lobby.ILobby lobby)
+        {
+            lock (_clientsLock)
             {
-                _ = MessageManager.SendMessageAsync(ClientUI, new LobbyDataMessage(lobby.ToDTO(), Guid.Empty));
+                foreach (var ClientUI in ClientsUI)
+                {
+                    _messageQueue.Enqueue(new LobbyDataMessage(lobby.ToDTO(), Guid.Empty));
+                }
             }
         }
 
@@ -39,26 +49,43 @@ namespace Server.Core.Services
 
             Console.WriteLine($"[{args.Timestamp:HH:mm:ss}] [{args.LogLevel}] {args.Message}");
 
-            _logQueue.Enqueue(logMessage);
+            _messageQueue.Enqueue(logMessage);
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            Console.WriteLine("[LoggerService] Logger service working...");
+            Console.WriteLine("[LoggerService] Logger service started working...");
 
             while (!stoppingToken.IsCancellationRequested)
             {
-                if (ClientUI != null && ClientUI.Connected)
+                while (_messageQueue.TryDequeue(out var message))
                 {
-                    if(_logQueue.TryDequeue(out var logMessage))
+                    lock (_clientsLock)
                     {
-                        await MessageManager.SendMessageAsync(ClientUI, logMessage);
+                        foreach (var ClientUI in ClientsUI)
+                        {
+                            if (ClientUI.Connected)
+                            {
+                                try
+                                {
+                                    _ = MessageManager.SendMessageAsync(ClientUI, message);
+                                }
+                                catch (IOException)
+                                {
+                                    ClientsUI.Remove(ClientUI);
+                                    ClientUI.Close();
+                                }
+                            }
+                            else
+                            {
+                                ClientsUI.Remove(ClientUI);
+                                ClientUI.Close();
+                            }
+                        }
                     }
                 }
-                else
-                {
-                    await Task.Delay(_pollInterval, stoppingToken);
-                }
+
+                await Task.Delay(_pollInterval, stoppingToken);
             }
 
             Console.WriteLine("[LoggerService] Logger service stopped working.");
