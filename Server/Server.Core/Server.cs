@@ -14,15 +14,7 @@ namespace Server.Core
     /// </summary>
     public class Server 
     {
-        /// <summary>
-        /// Singleton instance of the Server class
-        /// </summary>
-        public static Server Instance = new Server();
-
-        /// <summary>
-        /// Lobby manager instance
-        /// </summary>
-        private readonly LobbyManager lobbyManager =  new LobbyManager();
+        private readonly LobbyManager lobbyManager;
 
         /// <summary>
         /// OnMessageFromClientReceived event
@@ -32,13 +24,16 @@ namespace Server.Core
         /// <summary>
         /// Logger service instance
         /// </summary>
-        private LoggerService loggerService = new LoggerService();
+        private readonly LoggerService loggerService;
 
         /// <summary>
         /// Constructor for the Server class
         /// </summary>
-        private Server()
+        private Server(LoggerService loggerService, LobbyManager lobbyManager)
         {
+            this.loggerService = loggerService;
+            this.lobbyManager = lobbyManager;
+
             lobbyManager.OnLog += OnLog_Delegate;
             Lobby.Lobby.OnLog += OnLog_Delegate;
         }
@@ -137,24 +132,19 @@ namespace Server.Core
             catch (IOException)
             {
                 loggerService.Log("Client disconnected.", LogLevelEnum.Info);
-                var lobbies = lobbyManager.GetAllLobbies();
-                foreach (var lobby in lobbies)
-                {
-                    lobbyManager.RemoveUserFromLobby(lobby.LobbyId, client);
-                }
-                client.Close();
             }
             catch (Exception ex)
             {
                 loggerService.Log($"Error while handling client: {ex.Message}", LogLevelEnum.Error);
                 await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "Internal server error."));
-                var lobbies = lobbyManager.GetAllLobbies();
-                foreach (var lobby in lobbies)
-                {
-                    lobbyManager.RemoveUserFromLobby(lobby.LobbyId, client);
-                }
-                client.Close();
             }
+
+            var lobbies = lobbyManager.GetAllLobbies();
+            foreach (var lobby in lobbies)
+            {
+                lobbyManager.RemoveUserFromLobby(lobby.LobbyId, client);
+            }
+            client.Close();
         }
 
         private async Task HandleMessageAsync(TcpClient client, MessageBase message)
