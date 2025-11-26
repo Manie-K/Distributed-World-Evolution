@@ -404,7 +404,7 @@ namespace Server.Core.Lobby
                 startIndex = Math.Min(groupIndex * entitiesPerGroup, entities.Count - 1); //Inclusive
                 endIndex = Math.Min(startIndex + entitiesPerGroup, entities.Count - 1); //Inclusive
 
-                Console.WriteLine($"[DEBUG] Updating entities from index {startIndex} to {endIndex}. Entity count: [{entities.Count}]"); //DEBUG
+                //Console.WriteLine($"[DEBUG] Updating entities from index {startIndex} to {endIndex}. Entity count: [{entities.Count}]"); //DEBUG
 
                 if (endIndex >= entities.Count - 1)
                 {
@@ -420,7 +420,7 @@ namespace Server.Core.Lobby
 
 
             stopwatchWorld.Stop(); //DEBUG
-            Console.WriteLine($"[DEBUG] World state update #{updateCounter} took {stopwatchWorld.ElapsedMilliseconds}ms."); //DEBUG
+            //Console.WriteLine($"[DEBUG] World state update #{updateCounter} took {stopwatchWorld.ElapsedMilliseconds}ms."); //DEBUG
 
             WorldStateMessage worldStateMessage;
             lock (entitiesToUpdateLock) 
@@ -430,7 +430,7 @@ namespace Server.Core.Lobby
                     updatedEntitiesToPublish.Add(entities[i]);
                 } 
 
-                worldStateMessage = new WorldStateMessage(updatedEntitiesToPublish.Select(e => e.ToDTO()));
+                worldStateMessage = new WorldStateMessage(updatedEntitiesToPublish.Select(e => e.ToDTO()).ToList());
                 updatedEntitiesToPublish.Clear();
             }
 
@@ -494,7 +494,7 @@ namespace Server.Core.Lobby
 
                 var stopwatch = Stopwatch.StartNew(); //DEBUG
                 allIterations++; //DEBUG
-                if (entitiesHealthAndHungerUpdateCounter >= 4 * LobbyParams.INITIAL_NUMBER_OF_GROUPS) //TODO: For now we have 32 groups, 64 updates per second,
+                /*if (entitiesHealthAndHungerUpdateCounter >= 4 * LobbyParams.INITIAL_NUMBER_OF_GROUPS) //TODO: For now we have 32 groups, 64 updates per second,
                                                                                                       //so each entity gets updated twice a second. So every 2 * value seconds. Definately need to set this.
                 {
                     shouldResetCounter = true;
@@ -521,7 +521,7 @@ namespace Server.Core.Lobby
                     {
                         entity.State.Health += HEALTH_CHANGE;
                     }
-                }
+                }*/
 
 
                 if (entity.State.InteractionFramesLeft > 0)
@@ -568,8 +568,8 @@ namespace Server.Core.Lobby
                 allSimulationIterations++; //DEBUG
             }
 
-            Console.WriteLine($"[DEBUG] Time this update: Other: {allOtherTime}. Iterations: {allIterations}."); //DEBUG
-            Console.WriteLine($"[DEBUG] Time this update: Simulation: {allSimulationTime}. Iterations: {allSimulationIterations}."); //DEBUG
+            //Console.WriteLine($"[DEBUG] Time this update: Other: {allOtherTime}. Iterations: {allIterations}."); //DEBUG
+            //Console.WriteLine($"[DEBUG] Time this update: Simulation: {allSimulationTime}. Iterations: {allSimulationIterations}."); //DEBUG
 
             if (shouldResetCounter)
             {
@@ -710,6 +710,7 @@ namespace Server.Core.Lobby
             lock(entitiesIdLock)
             {
                 entHuman = entitiesId[human.Id];
+                if (entHuman.State.EqualsDto(human.State)) return;
             }
 
             if (entHuman == null)

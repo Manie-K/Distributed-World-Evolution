@@ -48,5 +48,19 @@ namespace Server.Core
             return new EntityStateDTO(Position, Health, Hunger, InteractionFramesLeft, LastInteractionName);
         }
 
+        public bool EqualsDto(EntityStateDTO? dto)
+        {
+            if (dto == null)
+            {
+                return false;
+            }
+
+            return Position.Equals(dto.Position)
+                && Health == dto.Health
+                && Hunger == dto.Hunger
+                && InteractionFramesLeft == dto.InteractionFramesLeft
+                && LastInteractionName == dto.LastInteractionName;
+        }
+
     }
 }
