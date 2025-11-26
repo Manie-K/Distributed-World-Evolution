@@ -184,13 +184,11 @@ namespace Server.Core
                 int lobbyID = lobbyManager.CreateAndInitializeLobby(
                     msg.LobbyName, msg.MaxPlayers, msg.MapID, msg.WalkableTiles, msg.FertileTiles, msg.ModuleIDs);
 
-                lobbyManager.AddUserToLobby(lobbyID, client, msg.UserName, out Guid userEntityID);
                 Lobby.Lobby lobby = lobbyManager.GetLobby(lobbyID);
-
                 loggerService.SendLobby(lobby);
+
                 await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyCreated, "New lobby created!"));
-                await SafeSendAsync(client, new LobbyDataMessage(lobby.ToDTO(), userEntityID));
-                await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyJoined, "Welcome to the new lobby!"));
+                await HandleJoinLobbyAsync(client, new JoinLobbyMessage(lobbyID, msg.UserName));
             }
             catch (Exception ex)
             {
