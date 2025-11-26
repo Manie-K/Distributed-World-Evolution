@@ -65,7 +65,6 @@ namespace Server.Core.Lobby
         private int groupIndex = 0;
 
         private int entitiesHealthAndHungerUpdateCounter = 0;
-        private long updateCounter = 0;
 
 
         #region Constructors
@@ -389,9 +388,6 @@ namespace Server.Core.Lobby
         /// </summary>
         private void PublishWorldState()
         {
-            Console.WriteLine($"[DEBUG] Update #{updateCounter}"); //DEBUG
-            var stopwatchWorld = Stopwatch.StartNew(); //DEBUG
-            
             int startIndex = 0, endIndex = 0;
             lock (entitiesLock)
             {
@@ -404,8 +400,6 @@ namespace Server.Core.Lobby
                 startIndex = Math.Min(groupIndex * entitiesPerGroup, entities.Count - 1); //Inclusive
                 endIndex = Math.Min(startIndex + entitiesPerGroup, entities.Count - 1); //Inclusive
 
-                //Console.WriteLine($"[DEBUG] Updating entities from index {startIndex} to {endIndex}. Entity count: [{entities.Count}]"); //DEBUG
-
                 if (endIndex >= entities.Count - 1)
                 {
                     groupIndex = 0;
@@ -417,10 +411,6 @@ namespace Server.Core.Lobby
             }
 
             UpdateWorldState(startIndex, endIndex);
-
-
-            stopwatchWorld.Stop(); //DEBUG
-            //Console.WriteLine($"[DEBUG] World state update #{updateCounter} took {stopwatchWorld.ElapsedMilliseconds}ms."); //DEBUG
 
             WorldStateMessage worldStateMessage;
             lock (entitiesToUpdateLock) 
@@ -441,8 +431,6 @@ namespace Server.Core.Lobby
                     _ = MessageManager.SendMessageAsync(clientPair.Key, worldStateMessage); //TODO: Check if sending the same ref is ok
                 }
             }
-
-            updateCounter++;
         }
 
         /// <summary>
@@ -467,11 +455,6 @@ namespace Server.Core.Lobby
             entitiesHealthAndHungerUpdateCounter++;
             bool shouldResetCounter = false;
 
-            double allOtherTime = 0.0;
-            double allSimulationTime = 0.0;
-            int allIterations = 0;
-            int allSimulationIterations = 0;
-
             for (int i = startIndex; i <= endIndex; i++)
             {
                 WorldEntity entity;
@@ -492,8 +475,6 @@ namespace Server.Core.Lobby
                     continue;
                 }
 
-                var stopwatch = Stopwatch.StartNew(); //DEBUG
-                allIterations++; //DEBUG
                 /*if (entitiesHealthAndHungerUpdateCounter >= 4 * LobbyParams.INITIAL_NUMBER_OF_GROUPS) //TODO: For now we have 32 groups, 64 updates per second,
                                                                                                       //so each entity gets updated twice a second. So every 2 * value seconds. Definately need to set this.
                 {
@@ -523,21 +504,15 @@ namespace Server.Core.Lobby
                     }
                 }*/
 
-
                 if (entity.State.InteractionFramesLeft > 0)
                 {
                     entity.State.InteractionFramesLeft--;
-
-                    stopwatch.Stop(); //DEBUG
-                    allOtherTime += stopwatch.Elapsed.TotalMilliseconds; //DEBUG
                     continue;
                 }
                 entity.State.LastInteractionName = String.Empty;
 
                 if (entityModule.Type == EntityTypeEnum.Human)
                 {
-                    stopwatch.Stop(); //DEBUG
-                    allOtherTime += stopwatch.Elapsed.TotalMilliseconds; //DEBUG
                     continue;
                 }
 
@@ -556,20 +531,8 @@ namespace Server.Core.Lobby
 
                 entity.State.LastMovementVector = new Position2D(stepX, stepY);
 
-                stopwatch.Stop(); //DEBUG
-                allOtherTime += stopwatch.Elapsed.TotalMilliseconds; //DEBUG
-
-                var sw = Stopwatch.StartNew();
-
                 SimulateNonHumanEntityUpdate(entity, nextState);
-
-                sw.Stop();
-                allSimulationTime += sw.Elapsed.TotalMilliseconds; //DEBUG
-                allSimulationIterations++; //DEBUG
             }
-
-            //Console.WriteLine($"[DEBUG] Time this update: Other: {allOtherTime}. Iterations: {allIterations}."); //DEBUG
-            //Console.WriteLine($"[DEBUG] Time this update: Simulation: {allSimulationTime}. Iterations: {allSimulationIterations}."); //DEBUG
 
             if (shouldResetCounter)
             {
@@ -880,7 +843,6 @@ namespace Server.Core.Lobby
         }
 
         #endregion
-
 
         #region Delegates
 
