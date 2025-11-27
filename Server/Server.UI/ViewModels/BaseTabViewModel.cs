@@ -1,20 +1,35 @@
 ﻿using SharedLibrary.Logging;
-using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
-using System.Linq;
 using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Server.UI.ViewModels
 {
     class BaseTabViewModel : INotifyPropertyChanged
     {
         public ObservableCollection<OnLogEventArgs> Logs { get; } = new();
-        public string Header { get; protected set; }
-        public string Info { get; protected set; }
+        public int ID { get; protected set; }
+        
+        protected string _header;
+        public string Header
+        {
+            get => _header;
+            protected set { _header = value; OnPropertyChanged(); }
+        }
+
+        protected string _info;
+        public string Info
+        {
+            get => _info;
+            protected set { _info = value; OnPropertyChanged(); }
+        }
+
+        public BaseTabViewModel(int id, string header, string info)
+        {
+            ID = id;
+            _header = header;
+            _info = info;
+        }
 
         public void AppendLog(OnLogEventArgs e)
         {
@@ -25,7 +40,8 @@ namespace Server.UI.ViewModels
         }
 
         public event PropertyChangedEventHandler? PropertyChanged;
-        protected void OnPropertyChanged([CallerMemberName] string propertyName = null)
+
+        protected void OnPropertyChanged([CallerMemberName] string? propertyName = null)
             => PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
     }
 }

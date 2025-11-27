@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Hosting;
+using SharedLibrary.DTOs.LobbyDTO;
 using SharedLibrary.Logging;
 using SharedLibrary.Messages;
 using System.Collections.Concurrent;
@@ -20,13 +21,13 @@ namespace Server.Core.Services
             ClientsUI.Add(clientUI);
         }
 
-        public void AddLobby(Lobby.ILobby lobby)
+        public void SendLobbyDTO(LobbyDTO lobbyDto)
         {
             lock (_clientsLock)
             {
                 foreach (var ClientUI in ClientsUI)
                 {
-                    _messageQueue.Enqueue(new LobbyDataMessage(lobby.ToDTO(), Guid.Empty));
+                    _messageQueue.Enqueue(new LobbyDataMessage(lobbyDto, Guid.Empty));
                 }
             }
         }

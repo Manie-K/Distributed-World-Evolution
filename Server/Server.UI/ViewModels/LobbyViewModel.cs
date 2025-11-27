@@ -1,31 +1,45 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Runtime.CompilerServices;
-using System.Text;
-using System.Threading.Tasks;
-using Server.Core.Lobby;
+﻿
 
 namespace Server.UI.ViewModels
 {
     internal class LobbyViewModel : BaseTabViewModel
     {
-        public int ID { get; init; }
-        public string Name { get; init; }
-        public int MaxPlayers { get; set; }
-        public int CurrentPlayers { get; set; }
-        public int MapID { get; init; }
+        private string _name;
+        public string Name
+        {
+            get => _name;
+            set { _name = value; OnPropertyChanged(); }
+        }
+
+        private int _maxPlayers;
+        public int MaxPlayers
+        {
+            get => _maxPlayers;
+            set { _maxPlayers = value; OnPropertyChanged(); }
+        }
+
+        private int _currentPlayers;
+        public int CurrentPlayers
+        {
+            get => _currentPlayers;
+            set { _currentPlayers = value; OnPropertyChanged(); }
+        }
+
+        private int _mapID;
+        public int MapID
+        {
+            get => _mapID;
+            set { _mapID = value; OnPropertyChanged(); }
+        }
 
         public LobbyViewModel(int id, string name, int maxPlayers, int currentPlayer, int mapID)
+            : base(id, name, $"ID: {id}, Max players: {maxPlayers}, Current Players: {currentPlayer}, MapID: {mapID}")
         {
-            Header = name;
-            ID = id;
-            Name = name;
-            MaxPlayers = maxPlayers;
-            CurrentPlayers = currentPlayer;
-            MapID = mapID;
-            Info = $"ID: {ID}, Max players: {MaxPlayers}, Current Players: {CurrentPlayers}, MapID: {MapID}";
+            _name = name;
+            _maxPlayers = maxPlayers;
+            _currentPlayers = currentPlayer;
+            _mapID = mapID;
         }
+
     }
 }

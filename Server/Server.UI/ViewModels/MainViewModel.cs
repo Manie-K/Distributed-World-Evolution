@@ -5,7 +5,6 @@ using System.Collections.ObjectModel;
 using System.Net.Sockets;
 using SharedLibrary.DTOs.LobbyDTO;
 using Microsoft.Extensions.Configuration;
-using System.Net;
 
 namespace Server.UI.ViewModels
 {
@@ -29,7 +28,7 @@ namespace Server.UI.ViewModels
 
             Tabs.Clear();
 
-            ServerTab = new ServerViewModel();
+            ServerTab = new ServerViewModel(-1);
             Tabs.Add(ServerTab);
 
             InitializeAsync();
@@ -67,9 +66,24 @@ namespace Server.UI.ViewModels
                         LobbyDTO lobby = lobbyData.Lobby;
 
                         _ = App.Current.Dispatcher.BeginInvoke(new Action(() =>
+                        {
+                            var existing = Tabs.FirstOrDefault(t => t.ID == lobby.ID);
+
+                            if (existing is LobbyViewModel vm)
                             {
-                                Tabs.Add(new LobbyViewModel(lobby.ID, lobby.Name, lobby.MaxPlayers, lobby.CurrentPlayers, lobby.MapID));
-                            }));
+                                vm.CurrentPlayers = lobby.CurrentPlayers;
+                            }
+                            else
+                            {
+                                Tabs.Add(new LobbyViewModel(
+                                    lobby.ID,
+                                    lobby.Name,
+                                    lobby.MaxPlayers,
+                                    lobby.CurrentPlayers,
+                                    lobby.MapID
+                                ));
+                            }
+                        }));
 
                     }
                 }
