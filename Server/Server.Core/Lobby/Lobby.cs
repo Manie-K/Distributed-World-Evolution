@@ -61,10 +61,12 @@ namespace Server.Core.Lobby
 
         private bool running;
         
-        private readonly int entitiesPerGroup = (int)Math.Ceiling((double)LobbyParams.NUM_INITIAL_ENTITIES / LobbyParams.INITIAL_NUMBER_OF_GROUPS);
+        private int entitiesPerGroup = (int)Math.Ceiling((double)LobbyParams.NUM_INITIAL_ENTITIES / LobbyParams.INITIAL_NUMBER_OF_GROUPS);
         private int groupIndex = 0;
 
         private int entitiesHealthAndHungerUpdateCounter = 0;
+        private int numberOfGroups = LobbyParams.INITIAL_NUMBER_OF_GROUPS;
+        private double secondsPerEntityUpdate = (double)(2 * (Math.Ceiling((double)LobbyParams.INITIAL_NUMBER_OF_GROUPS) / LobbyParams.LOBBY_UPDATES_PER_SECOND));
 
 
         #region Constructors
@@ -402,6 +404,10 @@ namespace Server.Core.Lobby
 
                 if (endIndex >= entities.Count - 1)
                 {
+                    numberOfGroups = (int)entities.Count / entitiesPerGroup; //We change number of groups and seconds per entity update
+                                                                             //after full update cycle (every entity is updated) @MaciejGóralczyk check
+                                                                             //time[s] = constant(update takes more than ideally) * how_many_groups / groups_per_second
+                    secondsPerEntityUpdate = (double)(2 * (Math.Ceiling((double)numberOfGroups) / LobbyParams.LOBBY_UPDATES_PER_SECOND));
                     groupIndex = 0;
                 }
                 else
@@ -449,11 +455,7 @@ namespace Server.Core.Lobby
                 }
             }
 
-            const int HUNGER_CHANGE = 1;
-            const int HEALTH_CHANGE = 1;
-
             entitiesHealthAndHungerUpdateCounter++;
-            bool shouldResetCounter = false;
 
             for (int i = startIndex; i <= endIndex; i++)
             {
@@ -475,34 +477,32 @@ namespace Server.Core.Lobby
                     continue;
                 }
 
-                /*if (entitiesHealthAndHungerUpdateCounter >= 4 * LobbyParams.INITIAL_NUMBER_OF_GROUPS) //TODO: For now we have 32 groups, 64 updates per second,
-                                                                                                      //so each entity gets updated twice a second. So every 2 * value seconds. Definately need to set this.
+                if (entitiesHealthAndHungerUpdateCounter >= numberOfGroups) //We update health and hunger once per two update cycles @MaciejGóralczyk check
                 {
-                    shouldResetCounter = true;
                     if (entity.State.Health <= 0)
                     {
                         entity.Die(moduleService);
                         i--;
 
-                        stopwatch.Stop(); //DEBUG
-                        allOtherTime += stopwatch.Elapsed.TotalMilliseconds; //DEBUG
+                        //stopwatch.Stop(); //DEBUG
+                        //allOtherTime += stopwatch.Elapsed.TotalMilliseconds; //DEBUG
                         continue;
                     }
                     
                     if (entity.State.Hunger > 0)
                     {
-                        entity.State.Hunger -= HUNGER_CHANGE;
+                        entity.State.Hunger -= LobbyParams.HUNGER_CHANGE;
                     }
                     else if (entity.State.Health > 0)
                     {
-                        entity.State.Health -= HEALTH_CHANGE;
+                        entity.State.Health -= LobbyParams.HEALTH_CHANGE;
                     }
 
                     if (entity.State.Hunger > 0 && entity.State.Health < entityModule.MaxHealth)
                     {
-                        entity.State.Health += HEALTH_CHANGE;
+                        entity.State.Health += LobbyParams.HEALTH_CHANGE;
                     }
-                }*/
+                }
 
                 if (entity.State.InteractionFramesLeft > 0)
                 {
@@ -534,7 +534,7 @@ namespace Server.Core.Lobby
                 SimulateNonHumanEntityUpdate(entity, nextState);
             }
 
-            if (shouldResetCounter)
+            if (entitiesHealthAndHungerUpdateCounter >= numberOfGroups)//We update health and hunger once per two update cycles @MaciejGóralczyk check
             {
                 entitiesHealthAndHungerUpdateCounter = 0;
             }
@@ -600,9 +600,6 @@ namespace Server.Core.Lobby
             }
             IBehaviour behaviour = entityModule.GetBehaviourOfType(interactionType);
 
-            //time[s] = constant(update takes more than ideally) * how_many_groups / groups_per_second
-            double secondsPerEntityUpdate = (double)((2 * (Math.Ceiling((double)entities.Count / entitiesPerGroup))) / LobbyParams.LOBBY_UPDATES_PER_SECOND);
-
             // Distinction in case when we need to add custom parameters
             switch (interactionType)
             {
@@ -613,15 +610,15 @@ namespace Server.Core.Lobby
                         { CustomBehaviourParams.ENTITIES_MAP_PARAM, entitiesMap }
                     });
 
-                    entity.State.InteractionFramesLeft = (int)(3 / secondsPerEntityUpdate); //TODO: Seconds / secondsPerEntityUpdate; Change the way this is set.
+                    entity.State.InteractionFramesLeft = (int)Math.Ceiling(1 / secondsPerEntityUpdate); //TODO: Seconds / secondsPerEntityUpdate; Change the way this is set.
                     entity.State.LastInteractionName = nameof(MoveBehaviourBase);
                     break;
 
                 case InteractionTypeEnum.Attack:
                     behaviour.Execute(entity, targetEntity!, ModuleService.Instance);
 
-                    entity.State.InteractionFramesLeft = (int)(3 / secondsPerEntityUpdate);//TODO: Change the way this is set. 
-                    targetEntity!.State.InteractionFramesLeft = (int)(3 / secondsPerEntityUpdate);//TODO: Change the way this is set. 
+                    entity.State.InteractionFramesLeft = (int)Math.Ceiling(3 / secondsPerEntityUpdate);//TODO: Change the way this is set. 
+                    targetEntity!.State.InteractionFramesLeft = (int)Math.Ceiling(3 / secondsPerEntityUpdate);//TODO: Change the way this is set. 
 
                     entity.State.LastInteractionName = nameof(AttackBehaviourBase);
                     targetEntity!.State.LastInteractionName = nameof(AttackBehaviourBase);
@@ -630,8 +627,8 @@ namespace Server.Core.Lobby
                 case InteractionTypeEnum.Eat:
                     behaviour.Execute(entity, targetEntity!, ModuleService.Instance);
 
-                    entity.State.InteractionFramesLeft = (int)(2 / secondsPerEntityUpdate);//TODO: Change the way this is set. 
-                    targetEntity!.State.InteractionFramesLeft = (int)(2 / secondsPerEntityUpdate);//TODO: Change the way this is set. 
+                    entity.State.InteractionFramesLeft = (int)Math.Ceiling(2 / secondsPerEntityUpdate);//TODO: Change the way this is set. 
+                    targetEntity!.State.InteractionFramesLeft = (int)Math.Ceiling(2 / secondsPerEntityUpdate);//TODO: Change the way this is set. 
 
                     entity.State.LastInteractionName = "Undefined animation interaction";
                     targetEntity!.State.LastInteractionName = "Undefined animation interaction";
@@ -646,10 +643,10 @@ namespace Server.Core.Lobby
 
                     if (targetEntity != null)
                     {
-                        targetEntity.State.InteractionFramesLeft = (int)(6 / secondsPerEntityUpdate);//TODO: Change the way this is set. 
+                        targetEntity.State.InteractionFramesLeft = (int)Math.Ceiling(4 / secondsPerEntityUpdate);//TODO: Change the way this is set. 
                         targetEntity.State.LastInteractionName = nameof(ReproduceBehaviourBase);
                     }
-                    entity.State.InteractionFramesLeft = (int)(6 / secondsPerEntityUpdate);//TODO: Change the way this is set. 
+                    entity.State.InteractionFramesLeft = (int)Math.Ceiling(4 / secondsPerEntityUpdate);//TODO: Change the way this is set. 
                     entity.State.LastInteractionName = nameof(ReproduceBehaviourBase);
                     break;
 
