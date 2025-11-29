@@ -2,6 +2,7 @@
 using Server.Core.Modules;
 using Server.Core.Services;
 using SharedLibrary.DTOs.EntitiesDTO;
+using SharedLibrary.Helpers;
 
 namespace Server.Core
 {
@@ -37,7 +38,7 @@ namespace Server.Core
             State.Health = newState.Health;
             State.Position = new (newState.Position);
             State.Hunger = newState.Hunger;
-            State.InteractionFramesLeft = newState.InteractionFramesLeft;
+            State.CyclesCooldownLeft = newState.CyclesCooldownLeft;
 
             if(State.Health <= 0)
             {
@@ -45,10 +46,17 @@ namespace Server.Core
             }
         }
 
+        public void UpdateStateWithDelta(Position2D positionDelta, int healthDelta, int hungerDelta)
+        {
+            State.Position += positionDelta;
+            State.Health += healthDelta;
+            State.Hunger += hungerDelta;
+        }
+
         public void Die(IModuleService moduleService)
         {
             Module? module = moduleService.GetModuleById(ModuleID);
-            if(module == null)
+            if (module == null)
             {
                 throw new Exception($"Module with ID {ModuleID} not found for entity {Id}");
             }

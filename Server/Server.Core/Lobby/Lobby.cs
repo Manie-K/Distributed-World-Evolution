@@ -14,7 +14,6 @@ using Server.Core.Behaviours.MoveBehaviour;
 using Server.Core.Behaviours.TameBehaviour;
 using Server.Core.Behaviours.ReproduceBehaviour;
 using SharedLibrary.Helpers;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
 
 namespace Server.Core.Lobby
@@ -130,7 +129,6 @@ namespace Server.Core.Lobby
                     entitiesMap[(x, y)] = null;
                 }
             }
-
 
             Server.OnMessageFromClientReceived += OnMessageFromClientReceived_Delegate;
         }
@@ -408,6 +406,8 @@ namespace Server.Core.Lobby
                                                                              //after full update cycle (every entity is updated) @MaciejGóralczyk check
                                                                              //time[s] = constant(update takes more than ideally) * how_many_groups / groups_per_second
                     secondsPerEntityUpdate = (double)(2 * (Math.Ceiling((double)numberOfGroups) / LobbyParams.LOBBY_UPDATES_PER_SECOND));
+                    Console.WriteLine($"Cycle takes {secondsPerEntityUpdate:F7} ms.");
+
                     groupIndex = 0;
                 }
                 else
@@ -477,7 +477,7 @@ namespace Server.Core.Lobby
                     continue;
                 }
 
-                if (entitiesHealthAndHungerUpdateCounter >= numberOfGroups) //We update health and hunger once per two update cycles @MaciejGóralczyk check
+                //if (entitiesHealthAndHungerUpdateCounter >= numberOfGroups) //We update health and hunger once per two update cycles @MaciejGóralczyk check
                 {
                     if (entity.State.Health <= 0)
                     {
@@ -504,9 +504,9 @@ namespace Server.Core.Lobby
                     }
                 }
 
-                if (entity.State.InteractionFramesLeft > 0)
+                if (entity.State.CyclesCooldownLeft > 0)
                 {
-                    entity.State.InteractionFramesLeft--;
+                    entity.State.CyclesCooldownLeft--;
                     continue;
                 }
                 entity.State.LastInteractionName = String.Empty;
@@ -586,7 +586,7 @@ namespace Server.Core.Lobby
 
             // If we change position, there is a possible new interaction. Or we are a plant (to handle growth or other plant-specific behaviour)
             bool shouldCheckInteraction = ((!Equals(entity.State.Position, newState.Position)) || (entityModule.Type == EntityTypeEnum.Plant)) 
-                                          && (entity.State.InteractionFramesLeft == 0);
+                                          && (entity.State.CyclesCooldownLeft == 0);
 
             if (!shouldCheckInteraction) return;
 
@@ -605,33 +605,40 @@ namespace Server.Core.Lobby
             {
                 case InteractionTypeEnum.Move:
                     behaviour.Execute(entity, null, ModuleService.Instance, new Dictionary<string, object>{
-                        { CustomBehaviourParams.MAP_WALKABLE_PARAM, walkableTiles   },
+                        { CustomBehaviourParams.MAP_WALKABLE_PARAM, walkableTiles },
                         { CustomBehaviourParams.NEW_POS_PARAM, newState.Position },
                         { CustomBehaviourParams.ENTITIES_MAP_PARAM, entitiesMap }
                     });
 
-                    entity.State.InteractionFramesLeft = (int)Math.Ceiling(1 / secondsPerEntityUpdate); //TODO: Seconds / secondsPerEntityUpdate; Change the way this is set.
+                    entity.State.CyclesCooldownLeft = (int)Math.Ceiling(1 / secondsPerEntityUpdate); //TODO: Seconds / secondsPerEntityUpdate; Change the way this is set.
                     entity.State.LastInteractionName = nameof(MoveBehaviourBase);
+
+                    //Console.WriteLine($"Entity {entity.Id} moved. Interaction frames left: {entity.State.CyclesCooldownLeft}");
                     break;
 
                 case InteractionTypeEnum.Attack:
                     behaviour.Execute(entity, targetEntity!, ModuleService.Instance);
 
-                    entity.State.InteractionFramesLeft = (int)Math.Ceiling(3 / secondsPerEntityUpdate);//TODO: Change the way this is set. 
-                    targetEntity!.State.InteractionFramesLeft = (int)Math.Ceiling(3 / secondsPerEntityUpdate);//TODO: Change the way this is set. 
+                    entity.State.CyclesCooldownLeft = (int)Math.Ceiling(3 / secondsPerEntityUpdate);//TODO: Change the way this is set. 
+                    targetEntity!.State.CyclesCooldownLeft = (int)Math.Ceiling(3 / secondsPerEntityUpdate);//TODO: Change the way this is set. 
 
                     entity.State.LastInteractionName = nameof(AttackBehaviourBase);
                     targetEntity!.State.LastInteractionName = nameof(AttackBehaviourBase);
+                    //Console.WriteLine($"Entity {entity.Id} attacked entity {targetEntity.Id}. " +
+                    //    $"Interaction frames left: {entity.State.CyclesCooldownLeft}");
                     break;
 
                 case InteractionTypeEnum.Eat:
                     behaviour.Execute(entity, targetEntity!, ModuleService.Instance);
 
-                    entity.State.InteractionFramesLeft = (int)Math.Ceiling(2 / secondsPerEntityUpdate);//TODO: Change the way this is set. 
-                    targetEntity!.State.InteractionFramesLeft = (int)Math.Ceiling(2 / secondsPerEntityUpdate);//TODO: Change the way this is set. 
+                    entity.State.CyclesCooldownLeft = (int)Math.Ceiling(2 / secondsPerEntityUpdate);//TODO: Change the way this is set. 
+                    targetEntity!.State.CyclesCooldownLeft = (int)Math.Ceiling(2 / secondsPerEntityUpdate);//TODO: Change the way this is set. 
 
                     entity.State.LastInteractionName = "Undefined animation interaction";
                     targetEntity!.State.LastInteractionName = "Undefined animation interaction";
+
+                    //Console.WriteLine($"Entity {entity.Id} ate entity {targetEntity.Id}. " +
+                    //    $"Interaction frames left: {entity.State.CyclesCooldownLeft}");
                     break;
 
                 case InteractionTypeEnum.Reproduce:
@@ -643,11 +650,14 @@ namespace Server.Core.Lobby
 
                     if (targetEntity != null)
                     {
-                        targetEntity.State.InteractionFramesLeft = (int)Math.Ceiling(4 / secondsPerEntityUpdate);//TODO: Change the way this is set. 
+                        targetEntity.State.CyclesCooldownLeft = (int)Math.Ceiling(4 / secondsPerEntityUpdate);//TODO: Change the way this is set. 
                         targetEntity.State.LastInteractionName = nameof(ReproduceBehaviourBase);
                     }
-                    entity.State.InteractionFramesLeft = (int)Math.Ceiling(4 / secondsPerEntityUpdate);//TODO: Change the way this is set. 
+                    entity.State.CyclesCooldownLeft = (int)Math.Ceiling(4 / secondsPerEntityUpdate);//TODO: Change the way this is set. 
                     entity.State.LastInteractionName = nameof(ReproduceBehaviourBase);
+
+                    //Console.WriteLine($"Entity {entity.Id} reproduced with entity {targetEntity?.Id}. " +
+                    //    $"Interaction frames left: {entity.State.CyclesCooldownLeft}");
                     break;
 
                 default:
@@ -657,10 +667,10 @@ namespace Server.Core.Lobby
         }
 
         /// <summary>
-        /// Updates the state of a human entity and optionally another entity. Based on data received from client.
+        /// Updates the state of a human entity and optionally another entity. Based on data received from client and treated as delta from last update.
         /// </summary>
-        /// <param name="human">Human entity to be changed. Must be human.</param>
-        /// <param name="other">Other entity to be changed. Optional.</param>
+        /// <param name="human">Human entity to be changed. Must be human. State is treated as delta</param>
+        /// <param name="other">Other entity to be changed. Optional. State is treated as delta</param>
         /// <exception cref="ArgumentNullException">Human entity can not be null.</exception>
         private void SimulateHumanEntityUpdate(WorldEntityDTO human, WorldEntityDTO? other)
         {
@@ -670,7 +680,6 @@ namespace Server.Core.Lobby
             lock(entitiesIdLock)
             {
                 entHuman = entitiesId[human.Id];
-                if (entHuman.State.EqualsDto(human.State)) return;
             }
 
             if (entHuman == null)
@@ -685,7 +694,7 @@ namespace Server.Core.Lobby
             lock (entitiesMapLock)
             {
                 entitiesMap[(entHuman.State.Position.X, entHuman.State.Position.Y)] = null;
-                entHuman.UpdateState(new EntityState(human.State));
+                entHuman.UpdateStateWithDelta(human.State.Position, human.State.Health, human.State.Hunger);
                 entitiesMap[(entHuman.State.Position.X, entHuman.State.Position.Y)] = entHuman;
             }
 
@@ -706,15 +715,12 @@ namespace Server.Core.Lobby
             lock (entitiesMapLock)
             {
                 entitiesMap[(entOther.State.Position.X, entOther.State.Position.Y)] = null;
-                entOther.UpdateState(new EntityState(other!.State));
+                entOther.UpdateStateWithDelta(entOther.State.Position, entOther.State.Health, entOther.State.Hunger);
 
-                if (entOther.State.Health <= 0)
+                if (entOther.State.Health > 0)
                 {
-                    entOther.Die(moduleService);
-                    return;
+                    entitiesMap[(entOther.State.Position.X, entOther.State.Position.Y)] = entOther;
                 }
-
-                entitiesMap[(entOther.State.Position.X, entOther.State.Position.Y)] = entOther;
             }
 
             lock (entitiesToUpdateLock)
