@@ -37,6 +37,8 @@ namespace Server.Core.Behaviours.AttackBehaviour
                 {
                     attacker.Die(moduleService);
                 }
+
+                attacker.State.LastAttackedEntityId = target.Id;
             }
             catch (Exception ex)
             {

@@ -38,7 +38,7 @@ namespace Server.Core
             State.Health = newState.Health;
             State.Position = new (newState.Position);
             State.Hunger = newState.Hunger;
-            State.CyclesCooldownLeft = newState.CyclesCooldownLeft;
+            State.InteractionCooldownLeft = newState.InteractionCooldownLeft;
 
             if(State.Health <= 0)
             {

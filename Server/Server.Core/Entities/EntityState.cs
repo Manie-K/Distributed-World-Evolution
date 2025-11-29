@@ -21,9 +21,9 @@ namespace Server.Core
         public int Hunger { get; set; }
 
         /// <summary>
-        /// The number of cycles left of cooldown.
+        /// The number of cycles left of interaction cooldown.
         /// </summary>
-        public int CyclesCooldownLeft { get; set; }
+        public int InteractionCooldownLeft { get; set; }
 
         /// <summary>
         /// The name of the last interaction performed by the entity - used for displaying animations on client side.
@@ -35,6 +35,8 @@ namespace Server.Core
         /// </summary>
         public Position2D LastMovementVector { get; set; } = new Position2D(0, 0);
         //We don't persist this value, it's only for runtime use. Reset to (0,0) won't break anything.
+
+        public Guid LastAttackedEntityId { get; set; } = Guid.Empty; //Skip in DTOs as well.
 
         /// <summary>
         /// Creates a new instance of EntityState.
@@ -48,7 +50,7 @@ namespace Server.Core
             Position = new Position2D(position.X, position.Y);
             Health = health;
             Hunger = hunger;
-            CyclesCooldownLeft = interactionFramesLeft;
+            InteractionCooldownLeft = interactionFramesLeft;
         }
 
         /// <summary>
@@ -60,7 +62,7 @@ namespace Server.Core
             Position = new Position2D(other.Position.X, other.Position.Y);
             Health = other.Health;
             Hunger = other.Hunger;
-            CyclesCooldownLeft = other.CyclesCooldownLeft;
+            InteractionCooldownLeft = other.InteractionCooldownLeft;
         }
 
         /// <summary>
@@ -72,7 +74,7 @@ namespace Server.Core
             Position = new Position2D(dto.Position.X, dto.Position.Y);
             Health = dto.Health;
             Hunger = dto.Hunger;
-            CyclesCooldownLeft = dto.InteractionFramesLeft;
+            InteractionCooldownLeft = dto.InteractionFramesLeft;
         }
 
         /// <summary>
@@ -81,7 +83,7 @@ namespace Server.Core
         /// <returns></returns>
         public EntityStateDTO ToDTO()
         {
-            return new EntityStateDTO(Position, Health, Hunger, CyclesCooldownLeft, LastInteractionName);
+            return new EntityStateDTO(Position, Health, Hunger, InteractionCooldownLeft, LastInteractionName);
         }
 
         /// <summary>
@@ -99,7 +101,7 @@ namespace Server.Core
             return Position.Equals(dto.Position)
                 && Health == dto.Health
                 && Hunger == dto.Hunger
-                && CyclesCooldownLeft == dto.InteractionFramesLeft
+                && InteractionCooldownLeft == dto.InteractionFramesLeft
                 && LastInteractionName == dto.LastInteractionName;
         }
 
