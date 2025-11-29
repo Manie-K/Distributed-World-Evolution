@@ -1,10 +1,11 @@
-﻿using Server.UI.Models;
+﻿using Microsoft.Extensions.Configuration;
+using Server.Core.Lobby;
+using Server.UI.Models;
+using SharedLibrary.DTOs.LobbyDTO;
 using SharedLibrary.Logging;
 using SharedLibrary.Messages;
 using System.Collections.ObjectModel;
 using System.Net.Sockets;
-using SharedLibrary.DTOs.LobbyDTO;
-using Microsoft.Extensions.Configuration;
 
 namespace Server.UI.ViewModels
 {
@@ -43,71 +44,65 @@ namespace Server.UI.ViewModels
 
             foreach (LobbyDTO lobby in lobbies)
             {
-                _ = App.Current.Dispatcher.BeginInvoke(new Action(() =>
-                {
-                    Tabs.Add(new LobbyViewModel(lobby.ID, lobby.Name, lobby.MaxPlayers, lobby.CurrentPlayers, lobby.MapID));
-                }));
+                Tabs.Add(new LobbyViewModel(lobby.ID, lobby.Name, lobby.MaxPlayers, lobby.CurrentPlayers, lobby.MapID));
             }
 
-            await Task.Run(async () =>
+            while (true)
             {
-                while (true)
+                message = await MessageManager.ReceiveMessageAsync(_client);
+
+                if (message.MessageType == MessageTypeEnum.LogMessage)
                 {
-                    MessageBase message = await MessageManager.ReceiveMessageAsync(_client);
-
-                    if (message.MessageType == MessageTypeEnum.LogMessage)
-                    {
-                        LogMessage log = (LogMessage)message;
-                        HandleLog(log.SenderID, log.OnLogEventArgs);
-                    }
-                    else if (message.MessageType == MessageTypeEnum.LobbyData)
-                    {
-                        LobbyDataMessage lobbyData = (LobbyDataMessage)message;
-                        LobbyDTO lobby = lobbyData.Lobby;
-
-                        _ = App.Current.Dispatcher.BeginInvoke(new Action(() =>
-                        {
-                            var existing = Tabs.FirstOrDefault(t => t.ID == lobby.ID);
-
-                            if (existing is LobbyViewModel vm)
-                            {
-                                vm.CurrentPlayers = lobby.CurrentPlayers;
-                            }
-                            else
-                            {
-                                Tabs.Add(new LobbyViewModel(
-                                    lobby.ID,
-                                    lobby.Name,
-                                    lobby.MaxPlayers,
-                                    lobby.CurrentPlayers,
-                                    lobby.MapID
-                                ));
-                            }
-                        }));
-
-                    }
+                    LogMessage logMessage = (LogMessage)message;
+                    HandleLog(logMessage.SenderID, logMessage.Log);
                 }
-            });
+                else if (message.MessageType == MessageTypeEnum.LobbyData)
+                {
+                    LobbyDataMessage lobbyData = (LobbyDataMessage)message;
+                    LobbyDTO lobbyDto = lobbyData.Lobby;
+                    HandleLobby(lobbyDto);
+                }
+
+            }
 
         }
 
-        public void HandleLog(int senderID, OnLogEventArgs e)
+        public void HandleLog(int senderID, Log log)
         {
             if (senderID != -1)
             {
                 LobbyViewModel? lobby = FindLobbyTabById(senderID);
                 if (lobby != null)
                 {
-                    lobby.AppendLog(e);
+                    lobby.AppendLog(log);
                 }
                 else
                 {
-                    ServerTab.AppendLog(e);
+                    ServerTab.AppendLog(log);
                 }
             }
             else
             {
-                ServerTab.AppendLog(e);
+                ServerTab.AppendLog(log);
+            }
+        }
+
+        public void HandleLobby(LobbyDTO lobbyDto)
+        {
+            var existing = Tabs.FirstOrDefault(t => t.ID == lobbyDto.ID);
+            if (existing is LobbyViewModel vm)
+            {
+                vm.Info = $"ID: {lobbyDto.ID}, Max players: {lobbyDto.MaxPlayers}, Current Players: {lobbyDto.CurrentPlayers}, MapID: {lobbyDto.MapID}";
+            }
+            else
+            {
+                Tabs.Add(new LobbyViewModel(
+                    lobbyDto.ID,
+                    lobbyDto.Name,
+                    lobbyDto.MaxPlayers,
+                    lobbyDto.CurrentPlayers,
+                    lobbyDto.MapID
+                ));
             }
         }
 

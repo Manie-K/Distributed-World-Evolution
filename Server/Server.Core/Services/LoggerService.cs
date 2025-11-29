@@ -11,10 +11,11 @@ namespace Server.Core.Services
     public class LoggerService : BackgroundService
     {
         private readonly ConcurrentQueue<MessageBase> _messageQueue = new();
-        private readonly TimeSpan _pollInterval = TimeSpan.FromMilliseconds(50);
         private List<TcpClient> ClientsUI { set; get; } = new List<TcpClient>();
 
         private readonly object _clientsLock = new object();
+
+        private readonly TimeSpan _pollInterval = TimeSpan.FromMilliseconds(50);
 
         public void AddClient(TcpClient clientUI)
         {
@@ -32,13 +33,13 @@ namespace Server.Core.Services
             }
         }
 
-        public void Log(string message, LogLevelEnum logLevel, object? sender = null)
+        public void Log(string content, LogLevelEnum logLevel, object? sender = null)
         {
-            var args = new OnLogEventArgs(message, logLevel);
+            Log log = new Log(content, logLevel);
             int senderID = (sender is Lobby.Lobby lobby) ? lobby.LobbyId : -1;
-            var logMessage = new LogMessage(args, senderID);
+            var logMessage = new LogMessage(log, senderID);
 
-            var color = args.LogLevel switch
+            var color = logLevel switch
             {
                 LogLevelEnum.Debug => Color.White,
                 LogLevelEnum.Info => Color.Green,
@@ -48,7 +49,7 @@ namespace Server.Core.Services
                 _ => Color.Gray,
             };
 
-            Console.WriteLine($"[{args.Timestamp:HH:mm:ss}] [{args.LogLevel}] {args.Message}");
+            Console.WriteLine($"[{log.Timestamp:HH:mm:ss}] [{log.LogLevel}] {log.Content}");
 
             _messageQueue.Enqueue(logMessage);
         }

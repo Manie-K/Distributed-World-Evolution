@@ -55,7 +55,7 @@
         </DataTemplate>
 
         <!-- ServerTemplate -->
-        <DataTemplate x:Key="ServerTemplate">
+        <DataTemplate x:Key="ServerTemplate" >
             <StackPanel Margin="10">
                 <TextBlock Text="{Binding Info}" FontWeight="Bold" Foreground="DarkBlue"/>
                 <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource LogsListTemplate}"/>
@@ -65,8 +65,7 @@
         <!-- LobbyTemplate -->
         <DataTemplate x:Key="LobbyTemplate">
             <StackPanel Margin="10">
-                <TextBlock Text="{Binding LobbyID, StringFormat=Lobby #{0}}" FontWeight="Bold" Foreground="Blue"/>
-                <TextBlock Text="{Binding Info}" FontWeight="Bold" Foreground="Blue"/>
+                <TextBlock Text="{Binding Info}" FontWeight="Bold" Foreground="DarkGreen"/>
                 <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource LogsListTemplate}"/>
             </StackPanel>
         </DataTemplate>

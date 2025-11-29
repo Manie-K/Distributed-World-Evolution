@@ -7,7 +7,7 @@ namespace Server.UI.ViewModels
 {
     class BaseTabViewModel : INotifyPropertyChanged
     {
-        public ObservableCollection<OnLogEventArgs> Logs { get; } = new();
+        public ObservableCollection<Log> Logs { get; } = new();
         public int ID { get; protected set; }
         
         protected string _header;
@@ -21,7 +21,7 @@ namespace Server.UI.ViewModels
         public string Info
         {
             get => _info;
-            protected set { _info = value; OnPropertyChanged(); }
+            set { _info = value; OnPropertyChanged(); }
         }
 
         public BaseTabViewModel(int id, string header, string info)
@@ -31,11 +31,11 @@ namespace Server.UI.ViewModels
             _info = info;
         }
 
-        public void AppendLog(OnLogEventArgs e)
+        public void AppendLog(Log log)
         {
             App.Current.Dispatcher.BeginInvoke(new Action(() =>
             {
-                Logs.Add(e);
+                Logs.Add(log);
             }), System.Windows.Threading.DispatcherPriority.Background);
         }
 
