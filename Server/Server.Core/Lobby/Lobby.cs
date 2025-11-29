@@ -61,7 +61,6 @@ namespace Server.Core.Lobby
         private bool running;
         
         private readonly int entitiesPerGroup = (int)Math.Ceiling((double)LobbyParams.NUM_INITIAL_ENTITIES / LobbyParams.INITIAL_NUMBER_OF_GROUPS);
-        
         private int currentGroupIndex = 0;
         private int totalCycles = 1; //Starts from 1 so we don't reduce health/hunger on first update
 
