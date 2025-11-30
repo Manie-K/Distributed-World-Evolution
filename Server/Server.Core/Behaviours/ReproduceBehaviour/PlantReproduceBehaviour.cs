@@ -96,7 +96,7 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
 
             if (entityType == EntityTypeEnum.Plant)
             {
-                int randomRoll = new Random().Next(1, 11);
+                int randomRoll = new Random().Next(1, 1100);
                 canReproduce = randomRoll <= entityModule.ReproductionNeed;
             }
 
