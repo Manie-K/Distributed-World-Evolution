@@ -52,10 +52,17 @@ namespace Server.Core.Lobby
         /// <summary>
         /// Checks if a position in the lobby is free (no world entity occupies it).
         /// </summary>
-        /// <param name="position"> Position to be checked. </param>
-        /// <returns> True if the position is unoccupied, false otherwise. </returns>
+        /// <param name="position">Position to be checked.</param>
+        /// <returns>True if the position is unoccupied, false otherwise.</returns>
         public bool IsPositionFree(Position2D position);
 
+        /// <summary>
+        /// Adds a module to the list of allowed modules in the lobby.
+        /// </summary>
+        /// <param name="moduleId">ID of the module to add.</param>
+        /// <returns>True if successful, false otherwise.</returns>
+        public bool AddAllowedModule(int moduleId);
+        
         /// <summary>
         /// Creates a world entity in the lobby.
         /// </summary>
