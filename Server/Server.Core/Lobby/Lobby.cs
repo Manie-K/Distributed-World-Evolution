@@ -251,7 +251,10 @@ namespace Server.Core.Lobby
                 return false;
             }
 
-            if (!IsPositionFree(entity.State.Position)) return false;
+            if (moduleService.GetModuleById(entity.ModuleID)?.Type != EntityTypeEnum.Human)
+            {
+                if (!IsPositionFree(entity.State.Position)) return false;
+            }
 
             lock (entitiesLock)
             {
@@ -281,6 +284,9 @@ namespace Server.Core.Lobby
         /// <inheritdoc/>
         public bool DestroyWorldEntity(WorldEntity entity)
         {
+            //Log($"Destroying entity {entity.Id} in lobby {LobbyId}. entity position: {entity.State.Position}" +
+            //   $"module name: {moduleService.GetModuleById(entity.ModuleID)?.Name}", LogLevelEnum.Debug);
+
             if (entity == null)
             {
                 return false;
@@ -291,6 +297,7 @@ namespace Server.Core.Lobby
                 if (!entities.Contains(entity))
                 {
                     Log($"Entity {entity.Id} does not exist in lobby {LobbyId}.", LogLevelEnum.Warning);
+                    Log(Environment.StackTrace, LogLevelEnum.Debug);
                     return false;
                 }
                 entities.Remove(entity);
@@ -342,6 +349,7 @@ namespace Server.Core.Lobby
                                                     .ToList()!;
             int modulesCount = modules.Count;
             Log("Initializing world entities...", LogLevelEnum.Info);
+            Log($"World map size {walkableTiles.Length} x {walkableTiles[0].Length}", LogLevelEnum.Info);
 
             for (int i = 0; i < LobbyParams.NUM_INITIAL_ENTITIES; i++)
             {
@@ -370,6 +378,11 @@ namespace Server.Core.Lobby
                 if(attemptsLeft <= 0)
                 {
                     continue;
+                }
+
+                if (x < 0 || x  >= 200 || y < 0 || y > 200)
+                {
+                    Console.WriteLine($"X: {x}, Y: {y}");
                 }
 
                 WorldEntity ent = WorldEntity.CreateWorldEntity($"[{i}]_{module.Name}", module.ID, new EntityState(
@@ -471,6 +484,7 @@ namespace Server.Core.Lobby
                 {
                     if (entity.State.Health <= 0)
                     {
+                        Console.WriteLine($"Entity {entity.Id} died due to 0 health.");
                         entity.Die(moduleService);
                         i--;
 
@@ -511,6 +525,11 @@ namespace Server.Core.Lobby
                     (stepX, stepY) = ((MoveBehaviourBase)entityModule.GetBehaviourOfType(InteractionTypeEnum.Move)).GetNextMovement(entity, CollectionsMarshal.AsSpan(entities));
                 }
 
+                if (entity.State.Position.X < 0 || entity.State.Position.X >= walkableTiles.Length ||
+                    entity.State.Position.Y < 0 || entity.State.Position.Y >= walkableTiles[0].Length)
+                {
+                    Console.WriteLine($"Entity id={entity.Id} position= {entity.State.Position} module name= {moduleService.GetModuleById(entity.ModuleID)?.Name}.");
+                }
                 var nextState = new EntityState(entity.State);
                 nextState.Position.X += stepX;
                 nextState.Position.Y += stepY;
@@ -601,20 +620,30 @@ namespace Server.Core.Lobby
                     break;
 
                 case InteractionTypeEnum.Attack:
-                    if(entity.State.LastAttackedEntityId != Guid.Empty)
+                    if (entity.State.LastAttackedEntityId != Guid.Empty)
                     {
                         lock (entitiesIdLock)
                         {
-                            targetEntity = entitiesId[entity.State.LastAttackedEntityId];
+                            if (entitiesId.TryGetValue(entity.State.LastAttackedEntityId, out WorldEntity? target))
+                            {
+                                if (target != null && behaviour.CanExecute(entity, target, moduleService))
+                                {
+                                    targetEntity = target;
+                                }
+                            }
                         }
                     }
-                    behaviour.Execute(entity, targetEntity, ModuleService.Instance);
 
-                    entity.State.InteractionCooldownLeft = cooldownLeft;
-                    targetEntity!.State.InteractionCooldownLeft = cooldownLeft;
+                    if (targetEntity != null)
+                    {
+                        behaviour.Execute(entity, targetEntity, ModuleService.Instance);
 
-                    entity.State.LastInteractionName = nameof(AttackBehaviourBase);
-                    targetEntity!.State.LastInteractionName = nameof(AttackBehaviourBase);
+                        entity.State.InteractionCooldownLeft = cooldownLeft;
+                        targetEntity!.State.InteractionCooldownLeft = cooldownLeft;
+
+                        entity.State.LastInteractionName = nameof(AttackBehaviourBase);
+                        targetEntity!.State.LastInteractionName = nameof(AttackBehaviourBase);
+                    }
 
                     break;
 
@@ -701,7 +730,7 @@ namespace Server.Core.Lobby
             lock (entitiesMapLock)
             {
                 entitiesMap[(entOther.State.Position.X, entOther.State.Position.Y)] = null;
-                entOther.UpdateStateWithDelta(entOther.State.Position, entOther.State.Health, entOther.State.Hunger);
+                entOther.UpdateStateWithDelta(other.State.Position, other.State.Health, other.State.Hunger);
 
                 if (entOther.State.Health > 0)
                 {
@@ -728,7 +757,7 @@ namespace Server.Core.Lobby
             EntityTypeEnum entityType = entityModule.Type;
             WorldEntity? entityOnPosition;
 
-            if(entity.State.LastAttackedEntityId != Guid.Empty)
+            if (entity.State.LastAttackedEntityId != Guid.Empty)
             {
                 AttackBehaviourBase attackBehaviour = (AttackBehaviourBase)entityModule.GetBehaviourOfType(InteractionTypeEnum.Attack);
                 WorldEntity? lastAttackedEntity;
@@ -737,16 +766,18 @@ namespace Server.Core.Lobby
                     entitiesId.TryGetValue(entity.State.LastAttackedEntityId, out lastAttackedEntity);
                 }
 
-                if (lastAttackedEntity != null && 
-                    lastAttackedEntity.State.Health > 0 && 
+                if (lastAttackedEntity != null &&
+                    lastAttackedEntity.State.Health > 0 &&
                     lastAttackedEntity.State.InteractionCooldownLeft == 0 &&
-                    Math.Abs(lastAttackedEntity.State.Position.X -= entity.State.Position.X) <= 1 &&
-                    Math.Abs(lastAttackedEntity.State.Position.Y -= entity.State.Position.Y) <= 1 &&
+                    Math.Abs(lastAttackedEntity.State.Position.X - entity.State.Position.X) <= 1 &&
+                    Math.Abs(lastAttackedEntity.State.Position.Y - entity.State.Position.Y) <= 1 &&
                     attackBehaviour.CanExecute(entity, lastAttackedEntity, ModuleService.Instance))
                 {
+                    //Log($"Entity= {entity.Id} attacked LastAttackedEntityId= {lastAttackedEntity.Id} again.", LogLevelEnum.Debug);
                     return InteractionTypeEnum.Attack;
                 }
 
+                //Log($"Entity= {entity.Id} removed LastAttackedEntityId= {entity.State.LastAttackedEntityId}.", LogLevelEnum.Debug);
                 entity.State.LastAttackedEntityId = Guid.Empty;
             }
 
