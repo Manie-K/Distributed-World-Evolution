@@ -7,6 +7,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using SharedLibrary.DTOs.EntitiesDTO;
 using SharedLibrary.DTOs.ModuleDTO;
+using SharedLibrary.Helpers;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,6 +20,7 @@ namespace Client
 
         public WorldEntityDTO TargetEntity;
         public WorldEntityDTO PlayerDTO;
+        public Position2D LastPosition;
         public int HungerToConsume;
 
         private BestiaryPanel bestiaryPanel;
@@ -52,6 +54,7 @@ namespace Client
             this.clientManager = clientManager;
             PlayerDTO = null;
             TargetEntity = null;
+            LastPosition = new Position2D(0, 0);
             am = new AnimationManager(13);
             playerModule = null;
             actionCooldown = 0;
@@ -85,9 +88,7 @@ namespace Client
 
             if (PlayerDTO != null && PlayerDTO.State.Health <= 0)
             {
-                Position = Vector2.One * 5;
-                PlayerDTO.State.Health = playerModule.MaxHealth;
-                PlayerDTO.State.Hunger = playerModule.MaxHunger;
+                //Position = new Vector2(10, 10);
                 am.Update(gameTime);
                 return;
             }
@@ -135,7 +136,7 @@ namespace Client
                 else if (newPosition.Y >= map.MapHeight * map.TileSize) newPosition.Y = map.MapHeight * map.TileSize - 1;
 
                 int tileID = map.GetTileIdAtPosition(newPosition.X, newPosition.Y);
-                if (map.TilesetData.First(m => m.Id == tileID).Walkable)
+                if (map.TilesetData.First(m => m.Id == tileID).Walkable && !IsEntityAtPosition(inGameEntities, map.GetTilePosition2D(newPosition.X, newPosition.Y)))
                 {
                     Position = newPosition;
                 }
@@ -169,6 +170,18 @@ namespace Client
             if(MaxHealth != -1) HealthBar.Draw(spriteBatch, Position, -7, -29);
         }
 
+        bool IsEntityAtPosition(List<WorldEntityDTO> inGameEntities, Position2D targetPosition)
+        {
+            foreach (WorldEntityDTO entity in inGameEntities)
+            {
+                if (entity.State.Position.Equals(targetPosition))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
         public float GetPlayerMaxHealth()
         {
             if (playerModule != null)
@@ -197,9 +210,29 @@ namespace Client
         {
             if (actionCooldown > 0) return;
 
-            TargetEntity = inGameEntities.FirstOrDefault(e => e.State.Position.Equals(map.GetTilePosition2D(Position.X, Position.Y)));
+            Position2D targetPosition = map.GetTilePosition2D(Position.X, Position.Y);
+            switch (CurrentDirection)
+            {
+                case Direction.Up:
+                    if (targetPosition.Y > 0) targetPosition.Y -= 1;
+                    break;
+                case Direction.Down:
+                    if (targetPosition.Y < map.MapHeight - 1) targetPosition.Y += 1;
+                    break;
+                case Direction.Left:
+                    if (targetPosition.X > 0) targetPosition.X -= 1;
+                    break;
+                case Direction.Right:
+                    if (targetPosition.X < map.MapWidth - 1) targetPosition.X += 1;
+                    break;
+                default:
+                    break;
+            }
+            TargetEntity = inGameEntities.FirstOrDefault(e => e.State.Position.Equals(targetPosition));
+
             if (TargetEntity != null && PlayerDTO != null && TargetEntity.Id != PlayerDTO.Id)
             {
+                TargetEntity.State.Hunger = 0;
                 switch (interactionType)
                 {
                     case InteractionType.Attack:
@@ -210,6 +243,8 @@ namespace Client
                         break;
                     case InteractionType.Tame:
                         TameTarget();
+                        break;
+                    default:
                         break;
                 }
             }
@@ -234,8 +269,8 @@ namespace Client
 
         private void AttackTarget()
         {
-            TargetEntity.State.Health -= playerModule.Damage;
-            Console.WriteLine("hp left: " + TargetEntity.State.Health);
+            TargetEntity.State.Health = -playerModule.Damage;
+            Console.WriteLine("Entity attacked for damage: " + playerModule.Damage);
         }
 
         private void GatherTarget()
@@ -243,7 +278,7 @@ namespace Client
             int graphicID = clientManager.Modules.Where(m => m.DatabaseID == TargetEntity.ModuleID).First().GraphicalRepresentationID;
             if (graphicID - 17 >= 0 && inventory.CollectItem(graphicID - 17))
             {
-                TargetEntity.State.Health = 0;
+                TargetEntity.State.Health = -clientManager.Modules.Where(m => m.DatabaseID == TargetEntity.ModuleID).First().MaxHealth;
                 Console.WriteLine("Plant gathered");
             }
         }
@@ -253,7 +288,7 @@ namespace Client
             int graphicID = clientManager.Modules.Where(m => m.DatabaseID == TargetEntity.ModuleID).First().GraphicalRepresentationID;
             if (graphicID < 16 && inventory.RemoveOneItem() && bestiaryPanel.AddSlot(graphicID))
             {
-                TargetEntity.State.Health = 0;
+                TargetEntity.State.Health = -clientManager.Modules.Where(m => m.DatabaseID == TargetEntity.ModuleID).First().MaxHealth;
                 Console.WriteLine("Animal tamed");
             }
         }

@@ -21,7 +21,6 @@ namespace Client
 
         protected override void Initialize()
         {
-            // TODO: Add your initialization logic here
             base.Initialize();
         }
 
@@ -29,8 +28,8 @@ namespace Client
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
-            // TODO: use manager.ContentManager to load your game content here
             manager.SetWindowManager();
+            manager.ClientManager.WindowManager = manager.WindowManager;
             manager.SceneManager.AddScene(new MainMenuScene(manager, this));
             manager.SceneManager.GetCurrentScene().Load();
 
