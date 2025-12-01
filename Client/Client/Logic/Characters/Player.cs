@@ -54,7 +54,7 @@ namespace Client
             this.clientManager = clientManager;
             PlayerDTO = null;
             TargetEntity = null;
-            LastPosition = new Position2D(0, 0);
+            LastPosition = new Position2D(1, 1);
             am = new AnimationManager(13);
             playerModule = null;
             actionCooldown = 0;

@@ -41,7 +41,7 @@ namespace Client
             {
                 throw new Exception("Could not load the map " + Tilemap.GetMapFileName(mapID));
             }
-            player = new Player(new Vector2(10, 10), Color.White, new Text(manager.ContentManager.Load<SpriteFont>("Fonts/PlayerName"), 
+            player = new Player(new Vector2(40, 40), Color.White, new Text(manager.ContentManager.Load<SpriteFont>("Fonts/PlayerName"), 
                 manager.UserSettings.PlayerName, true, new Vector2(500, 300 - 110), 70, 40), new Vector2(-68, -77), -1,
                 ref panelsController.BestiaryPanel, ref panelsController.Inventory, map, manager.ClientManager);
 
