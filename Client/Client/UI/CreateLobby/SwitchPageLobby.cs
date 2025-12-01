@@ -13,6 +13,7 @@ namespace Client
         private Button[] pageButtons;
         private Text pageNumberText;
         private List<CreateLobbyRow> creatures;
+        private int playerModuleID;
         private int pageNumber;
         public int selectedRow;
         private int amountOfRows;
@@ -25,6 +26,7 @@ namespace Client
             pageButtons[1] = new Button(null, FontNumbers, "", Position, 74, 50, Color.White);
             pageNumberText = new Text(FontNumbers, "1", true, new Vector2(Position.X, Position.Y + 50), 74, 105);
             pageNumberText.SetTextColor(Color.Gold);
+            playerModuleID = 0;
             pageNumber = 1;
             creatures = new List<CreateLobbyRow>();
             selectedRow = -1;
@@ -57,11 +59,17 @@ namespace Client
 
         public void AddRow(ModuleData module)
         {
-            creatures.Add(new CreateLobbyRow(contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), contentManager.Load<Texture2D>("UI/CreateModules/CheckBox/Box_Apply"),
-                                             contentManager.Load<Texture2D>("UI/CreateModules/CheckBox/Box_Apply_Check"), contentManager.Load<Texture2D>("UI/CreateLobby/verif_icon"),
-                                             module, new Vector2(245, 283 + 57 * (creatures.Count % amountOfRows)), 368, 58));
+            if (module.GraphicIndex == 16)
+            {
+                playerModuleID = module.ModuleID;
+            }
+            else
+            {
+                creatures.Add(new CreateLobbyRow(contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), contentManager.Load<Texture2D>("UI/CreateModules/CheckBox/Box_Apply"),
+                                                 contentManager.Load<Texture2D>("UI/CreateModules/CheckBox/Box_Apply_Check"), contentManager.Load<Texture2D>("UI/CreateLobby/verif_icon"),
+                                                 module, new Vector2(245, 283 + 57 * (creatures.Count % amountOfRows)), 368, 58));
+            }
         }
-
 
         public bool UpdateRows(Vector2 cursorPosition, bool ispressed)
         {
@@ -111,6 +119,7 @@ namespace Client
                     selectedCreatures.Add(creature.GetData().ModuleID);
                 }
             }
+            selectedCreatures.Add(playerModuleID);
 
             return selectedCreatures;
         }

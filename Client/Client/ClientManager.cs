@@ -1,4 +1,6 @@
-﻿using SharedLibrary.DTOs.EntitiesDTO;
+﻿using Client.Panels.Windows;
+using Microsoft.Extensions.Configuration;
+using SharedLibrary.DTOs.EntitiesDTO;
 using SharedLibrary.DTOs.LobbyDTO;
 using SharedLibrary.DTOs.ModuleDTO;
 using SharedLibrary.Messages;
@@ -9,7 +11,6 @@ using System.Linq;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
 
 namespace Client
 {
@@ -23,8 +24,9 @@ namespace Client
 
     public class ClientManager
     {
-        public const double CLIENT_UPDATES_PER_SECOND = 64;
+        public const double CLIENT_UPDATES_PER_SECOND = 16;
         public TcpClient Client { get; private set; }
+        public WindowManager WindowManager;
 
         private string serverIp;
         private int port;
@@ -215,7 +217,8 @@ namespace Client
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Error: " + ex.Message);
+                    Console.WriteLine("[Error]: " + ex.Message);
+                    WindowManager.ShowErrorWindow("Lost connection to the server");
                     continue;
                 }
 
