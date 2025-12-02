@@ -1,4 +1,6 @@
-﻿using SharedLibrary.DTOs.EntitiesDTO;
+﻿using Client.Panels.Windows;
+using Microsoft.Extensions.Configuration;
+using SharedLibrary.DTOs.EntitiesDTO;
 using SharedLibrary.DTOs.LobbyDTO;
 using SharedLibrary.DTOs.ModuleDTO;
 using SharedLibrary.Messages;
@@ -22,8 +24,9 @@ namespace Client
 
     public class ClientManager
     {
-        public const double CLIENT_UPDATES_PER_SECOND = 64;
+        public const double CLIENT_UPDATES_PER_SECOND = 16;
         public TcpClient Client { get; private set; }
+        public WindowManager WindowManager;
 
         private string serverIp;
         private int port;
@@ -167,9 +170,14 @@ namespace Client
             lobbyListReady = ActionStatus.IDLE;
             moduleListReady = ActionStatus.IDLE;
             behaviourListReady = ActionStatus.IDLE;
-            serverIp = "127.0.0.1";
-            port = 8080; // Docker port
-            //port = 5000; // Local port
+
+            var config = new ConfigurationBuilder()
+              .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
+              .Build();
+            bool connectToDocker = bool.Parse(config["TcpSettings:UseDocker"]);
+            serverIp = config["TcpSettings:ServerIP"];
+            if (connectToDocker) port = int.Parse(config["TcpSettings:DockerPort"]);
+            else port = int.Parse(config["TcpSettings:LocalPort"]);
         }
 
         public void StartClient()
@@ -209,7 +217,8 @@ namespace Client
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine("Error: " + ex.Message);
+                    Console.WriteLine("[Error]: " + ex.Message);
+                    WindowManager.ShowErrorWindow("Lost connection to the server");
                     continue;
                 }
 

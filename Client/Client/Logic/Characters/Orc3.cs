@@ -15,7 +15,9 @@ namespace Client
 
         public override void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(AssetsManager.GetInstance().GetCharacterTexture(am.ActiveAnimation, 2), GetPosition(), GetSourceRectangle(), Color.White);
+            if (am.CheckDeadAnimation()) return;
+
+            spriteBatch.Draw(AssetsManager.GetInstance().GetCharacterTexture((int) am.ActiveAnimation, 2), GetPosition(), GetSourceRectangle(), Color.White);
             HealthBar.Draw(spriteBatch, Position, -3, -38);
         }
     }

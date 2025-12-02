@@ -170,6 +170,7 @@ namespace SharedLibrary
                 0 => "Grassland.json",
                 1 => "Standard.json",
                 2 => "TwoBridges.json",
+                3 => "SmallStandard.json",
                 _ => "null.json",
             };
 
