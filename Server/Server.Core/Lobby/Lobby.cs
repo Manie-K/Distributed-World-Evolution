@@ -285,8 +285,8 @@ namespace Server.Core.Lobby
         /// <inheritdoc/>
         public bool DestroyWorldEntity(WorldEntity entity)
         {
-            Log($"Destroying entity {entity.Id} in lobby {LobbyId}. entity position: {entity.State.Position}" +
-               $"module name: {moduleService.GetModuleById(entity.ModuleID)?.Name}", LogLevelEnum.Debug);
+            Log($"Destroying: {entity.Id}, {entity.State.Position}, {moduleService.GetModuleById(entity.ModuleID)?.Type}, {moduleService.GetModuleById(entity.ModuleID)?.Name}",
+                LogLevelEnum.Debug);
 
             if (entity == null)
             {
@@ -415,46 +415,57 @@ namespace Server.Core.Lobby
                 {
                     totalCycles++;
                     currentGroupIndex = 0;
-                    var sb = new System.Text.StringBuilder();
-                    sb.AppendLine($"Cycle: {totalCycles}");
-                    
-                    lock(entitiesMapLock)
-                    {
-                        for (int x = 0; x < walkableTiles.Length; x++)
-                        {
-                            for (int y = 0; y < walkableTiles[x].Length; y++)
-                            {
-                                entitiesMap.TryGetValue((x, y), out WorldEntity? entityAtPos);
-                                if (entityAtPos == null)
-                                {
-                                    sb.Append('_');
-                                }
-                                else
-                                {
-                                    Module? module = moduleService.GetModuleById(entityAtPos.ModuleID);
-                                    if (module?.Type == EntityTypeEnum.Plant)
-                                    {
-                                        sb.Append('P');
-                                    }
-                                    else if (module?.Type == EntityTypeEnum.Animal)
-                                    {
-                                        sb.Append('A');
-                                    }
-                                    else if (module?.Type == EntityTypeEnum.Human)
-                                    {
-                                        sb.Append('H');
-                                    }
-                                }
-                            }
-                            sb.AppendLine();
-                        }
-                        sb.AppendLine("END_OF_CYCLE");
-                        sb.AppendLine();
-                        string filePath = @"C:\Logs\world_log.txt";
-                        Directory.CreateDirectory(Path.GetDirectoryName(filePath));
-                        File.AppendAllText(filePath, sb.ToString());
-                    }
 
+                    ///to delete
+                    //var sb = new System.Text.StringBuilder();
+                    //sb.AppendLine($"Cycle: {totalCycles}");
+                    
+                    //lock(entitiesMapLock)
+                    //{
+                    //    for (int y = 0; y < walkableTiles[0].Length; y++)
+                    //    {
+                    //        for (int x = 0; x < walkableTiles.Length; x++)
+                    //        {
+                    //            entitiesMap.TryGetValue((x, y), out WorldEntity? entityAtPos);
+                    //            if (entityAtPos == null)
+                    //            {
+                    //                sb.Append('_');
+                    //            }
+                    //            else
+                    //            {
+                    //                Module? module = moduleService.GetModuleById(entityAtPos.ModuleID);
+                    //                if (module?.Type == EntityTypeEnum.Plant)
+                    //                {
+                    //                    sb.Append('P');
+                    //                }
+                    //                else if (module?.Type == EntityTypeEnum.Animal)
+                    //                {
+                    //                    sb.Append('A');
+                    //                }
+                    //                else if (module?.Type == EntityTypeEnum.Human)
+                    //                {
+                    //                    sb.Append('H');
+                    //                }
+                    //            }
+                    //        }
+                    //        sb.AppendLine("");
+                    //    }
+                    //    sb.AppendLine("END_OF_CYCLE");
+                    //    sb.AppendLine("");
+
+                    //    string filePath = "C:\\Logs\\world_log.txt";
+                    //    if (!File.Exists(filePath))
+                    //    {
+                    //        using (StreamWriter sw = File.CreateText(filePath))
+                    //        {
+                    //            sw.WriteLine("Here will be cycle info");
+                    //            sw.WriteLine("");
+                    //        }
+                    //    }
+
+                    //    File.AppendAllText(filePath, sb.ToString());
+                    //}
+                    ///
                 }
                 else
                 {
@@ -462,16 +473,12 @@ namespace Server.Core.Lobby
                 }
             }
 
+            //Console.WriteLine($"[{entities.Count}]: Updating {startIndex} -> {endIndex}");
             UpdateWorldState(startIndex, endIndex);
 
             WorldStateMessage worldStateMessage;
             lock (entitiesToUpdateLock) 
             {
-                for (int i = startIndex; i <= endIndex; i++)
-                {
-                    updatedEntitiesToPublish.Add(entities[i]);
-                } 
-
                 worldStateMessage = new WorldStateMessage(updatedEntitiesToPublish.Select(e => e.ToDTO()).ToList());
                 updatedEntitiesToPublish.Clear();
             }
@@ -513,6 +520,12 @@ namespace Server.Core.Lobby
                  
                     entity = entities[i];
                 }
+
+                lock(entitiesToUpdateLock)
+                {
+                    updatedEntitiesToPublish.Add(entity);
+                }
+                
                 Module? entityModule = moduleService.GetModuleById(entity.ModuleID);
 
                 if (entityModule == null)
@@ -521,7 +534,7 @@ namespace Server.Core.Lobby
                     continue;
                 }
 
-                if(totalCycles % LobbyParams.CYCLES_PER_STATS_CHANGE == 0)
+                if(totalCycles % LobbyParams.CYCLES_PER_STATS_CHANGE == 0 && entityModule.Type != EntityTypeEnum.Plant)
                 {
                     if (entity.State.Health <= 0)
                     {
@@ -624,8 +637,7 @@ namespace Server.Core.Lobby
 
 
             // If we change position, there is a possible new interaction. Or we are a plant (to handle growth or other plant-specific behaviour)
-            bool shouldCheckInteraction = ((!Equals(entity.State.Position, newState.Position)) || (entityModule.Type == EntityTypeEnum.Plant)) 
-                                          && (entity.State.InteractionCooldownLeft == 0);
+            bool shouldCheckInteraction = (entity.State.InteractionCooldownLeft == 0 && (entityModule.Type == EntityTypeEnum.Plant || !entity.State.Position.Equals(newState.Position)));
 
             if (!shouldCheckInteraction) return;
 
@@ -793,6 +805,9 @@ namespace Server.Core.Lobby
             EntityTypeEnum entityType = entityModule.Type;
             WorldEntity? entityOnPosition;
 
+            // We refactored this so that humans dont use this method, the clients send the human updates directly
+            if (entityType == EntityTypeEnum.Human) return InteractionTypeEnum.None;
+
             if (entity.State.LastAttackedEntityId != Guid.Empty)
             {
                 AttackBehaviourBase attackBehaviour = (AttackBehaviourBase)entityModule.GetBehaviourOfType(InteractionTypeEnum.Attack);
@@ -826,7 +841,7 @@ namespace Server.Core.Lobby
             {
                 if(entityModule.GetBehaviourOfType(InteractionTypeEnum.Move)
                     .CanExecute(entity, null, ModuleService.Instance, new Dictionary<string, object>{
-                        { CustomBehaviourParams.MAP_WALKABLE_PARAM, walkableTiles   },
+                        { CustomBehaviourParams.MAP_WALKABLE_PARAM, walkableTiles },
                         { CustomBehaviourParams.NEW_POS_PARAM, newState.Position },
                         { CustomBehaviourParams.LOBBY_PARAM, this }
                     })
@@ -838,10 +853,7 @@ namespace Server.Core.Lobby
             }
 
             EntityTypeEnum targetType = moduleService.GetModuleById(entityOnPosition.ModuleID)?.Type ?? throw new Exception($"Module with ID={entity.ModuleID} not found"); ;
-
-            // We refactored this so that humans dont use this method, the clients send the human updates directly
-            if (entityType == EntityTypeEnum.Human) return InteractionTypeEnum.None;
-
+            
             // Plants reproduce by themselves - and do only this
             if (entityType == EntityTypeEnum.Plant)
             {
