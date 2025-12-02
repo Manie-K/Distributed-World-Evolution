@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Hosting;
+using SharedLibrary.DTOs.LobbyDTO;
 using SharedLibrary.Logging;
 using SharedLibrary.Messages;
 using System.Collections.Concurrent;
@@ -9,25 +10,36 @@ namespace Server.Core.Services
 {
     public class LoggerService : BackgroundService
     {
-        private readonly ConcurrentQueue<LogMessage> _logQueue = new();
-        private readonly TimeSpan _pollInterval = TimeSpan.FromMilliseconds(50);
-        public TcpClient? ClientUI { set; get; }
+        private readonly ConcurrentQueue<MessageBase> _messageQueue = new();
+        private List<TcpClient> ClientsUI { set; get; } = new List<TcpClient>();
 
-        public void SendLobby(Lobby.ILobby lobby)
+        private readonly object _clientsLock = new object();
+
+        private readonly TimeSpan _pollInterval = TimeSpan.FromMilliseconds(50);
+
+        public void AddClient(TcpClient clientUI)
         {
-            if (ClientUI != null && ClientUI.Connected)
+            ClientsUI.Add(clientUI);
+        }
+
+        public void SendLobbyDTO(LobbyDTO lobbyDto)
+        {
+            lock (_clientsLock)
             {
-                _ = MessageManager.SendMessageAsync(ClientUI, new LobbyDataMessage(lobby.ToDTO(), Guid.Empty));
+                foreach (var ClientUI in ClientsUI)
+                {
+                    _messageQueue.Enqueue(new LobbyDataMessage(lobbyDto, Guid.Empty));
+                }
             }
         }
 
-        public void Log(string message, LogLevelEnum logLevel, object? sender = null)
+        public void Log(string content, LogLevelEnum logLevel, object? sender = null)
         {
-            var args = new OnLogEventArgs(message, logLevel);
+            Log log = new Log(content, logLevel);
             int senderID = (sender is Lobby.Lobby lobby) ? lobby.LobbyId : -1;
-            var logMessage = new LogMessage(args, senderID);
+            var logMessage = new LogMessage(log, senderID);
 
-            var color = args.LogLevel switch
+            var color = logLevel switch
             {
                 LogLevelEnum.Debug => Color.White,
                 LogLevelEnum.Info => Color.Green,
@@ -37,28 +49,45 @@ namespace Server.Core.Services
                 _ => Color.Gray,
             };
 
-            Console.WriteLine($"[{args.Timestamp:HH:mm:ss}] [{args.LogLevel}] {args.Message}");
+            Console.WriteLine($"[{log.Timestamp:HH:mm:ss}] [{log.LogLevel}] {log.Content}");
 
-            _logQueue.Enqueue(logMessage);
+            _messageQueue.Enqueue(logMessage);
         }
 
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
-            Console.WriteLine("[LoggerService] Logger service working...");
+            Console.WriteLine("[LoggerService] Logger service started working...");
 
             while (!stoppingToken.IsCancellationRequested)
             {
-                if (ClientUI != null && ClientUI.Connected)
+                while (_messageQueue.TryDequeue(out var message))
                 {
-                    if(_logQueue.TryDequeue(out var logMessage))
+                    lock (_clientsLock)
                     {
-                        await MessageManager.SendMessageAsync(ClientUI, logMessage);
+                        foreach (var ClientUI in ClientsUI)
+                        {
+                            if (ClientUI.Connected)
+                            {
+                                try
+                                {
+                                    _ = MessageManager.SendMessageAsync(ClientUI, message);
+                                }
+                                catch (IOException)
+                                {
+                                    ClientsUI.Remove(ClientUI);
+                                    ClientUI.Close();
+                                }
+                            }
+                            else
+                            {
+                                ClientsUI.Remove(ClientUI);
+                                ClientUI.Close();
+                            }
+                        }
                     }
                 }
-                else
-                {
-                    await Task.Delay(_pollInterval, stoppingToken);
-                }
+
+                await Task.Delay(_pollInterval, stoppingToken);
             }
 
             Console.WriteLine("[LoggerService] Logger service stopped working.");

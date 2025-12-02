@@ -40,8 +40,6 @@ class Client
 
                 //MessageManager.SendMessageAsync(client, new GetMessage(GetMessageTypeEnum.ModuleList));
             }
-
-            client.Close();
         }
         catch (Exception e)
         {

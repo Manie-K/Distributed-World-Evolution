@@ -6,6 +6,7 @@ using SharedLibrary.Messages.BehaviourMessages;
 using System.Net;
 using System.Net.Sockets;
 using Microsoft.Extensions.Configuration;
+using SharedLibrary.DTOs.LobbyDTO;
 
 namespace Server.Core
 {
@@ -14,15 +15,7 @@ namespace Server.Core
     /// </summary>
     public class Server 
     {
-        /// <summary>
-        /// Singleton instance of the Server class
-        /// </summary>
-        public static Server Instance = new Server();
-
-        /// <summary>
-        /// Lobby manager instance
-        /// </summary>
-        private readonly LobbyManager lobbyManager =  new LobbyManager();
+        private readonly LobbyManager lobbyManager;
 
         /// <summary>
         /// OnMessageFromClientReceived event
@@ -32,13 +25,16 @@ namespace Server.Core
         /// <summary>
         /// Logger service instance
         /// </summary>
-        private LoggerService loggerService = new LoggerService();
+        private readonly LoggerService loggerService;
 
         /// <summary>
         /// Constructor for the Server class
         /// </summary>
-        private Server()
+        public Server(LoggerService loggerService, LobbyManager lobbyManager)
         {
+            this.loggerService = loggerService;
+            this.lobbyManager = lobbyManager;
+
             lobbyManager.OnLog += OnLog_Delegate;
             Lobby.Lobby.OnLog += OnLog_Delegate;
         }
@@ -110,7 +106,7 @@ namespace Server.Core
                     break;
 
                 case RoleEnum.UI:
-                    loggerService.ClientUI = client;
+                    loggerService.AddClient(client);
                     await SafeSendAsync(client, new LobbyListMessage(lobbyManager.GetAllLobbies().Select(l => l.ToDTO()).ToList()));
                     Task.Delay(2000).Wait();
                     _ = loggerService.StartAsync(CancellationToken.None);
@@ -137,24 +133,19 @@ namespace Server.Core
             catch (IOException)
             {
                 loggerService.Log("Client disconnected.", LogLevelEnum.Info);
-                var lobbies = lobbyManager.GetAllLobbies();
-                foreach (var lobby in lobbies)
-                {
-                    lobbyManager.RemoveUserFromLobby(lobby.LobbyId, client);
-                }
-                client.Close();
             }
             catch (Exception ex)
             {
                 loggerService.Log($"Error while handling client: {ex.Message}", LogLevelEnum.Error);
-                await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "Internal server error."));
-                var lobbies = lobbyManager.GetAllLobbies();
-                foreach (var lobby in lobbies)
-                {
-                    lobbyManager.RemoveUserFromLobby(lobby.LobbyId, client);
-                }
-                client.Close();
+                await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "Unexpected server error."));
             }
+
+            var lobbies = lobbyManager.GetAllLobbies();
+            foreach (var lobby in lobbies)
+            {
+                lobbyManager.RemoveUserFromLobby(lobby.LobbyId, client);
+            }
+            client.Close();
         }
 
         private async Task HandleMessageAsync(TcpClient client, MessageBase message)
@@ -194,18 +185,16 @@ namespace Server.Core
                 int lobbyID = lobbyManager.CreateAndInitializeLobby(
                     msg.LobbyName, msg.MaxPlayers, msg.MapID, msg.WalkableTiles, msg.FertileTiles, msg.ModuleIDs);
 
-                lobbyManager.AddUserToLobby(lobbyID, client, msg.UserName, out Guid userEntityID);
                 Lobby.Lobby lobby = lobbyManager.GetLobby(lobbyID);
+                loggerService.SendLobbyDTO(lobby.ToDTO());
 
-                loggerService.SendLobby(lobby);
                 await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyCreated, "New lobby created!"));
-                await SafeSendAsync(client, new LobbyDataMessage(lobby.ToDTO(), userEntityID));
-                await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyJoined, "Welcome to the new lobby!"));
+                await HandleJoinLobbyAsync(client, new JoinLobbyMessage(lobbyID, msg.UserName));
             }
             catch (Exception ex)
             {
                 loggerService.Log(ex.Message, LogLevelEnum.Error);
-                await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotCreated, "Lobby creation failed. Error:" + ex));
+                await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotCreated, "Lobby creation failed. Unexpected error."));
             }
         }
 
@@ -220,6 +209,7 @@ namespace Server.Core
                     return;
                 }
                 Lobby.Lobby lobby = lobbyManager.GetLobby(msg.LobbyID);
+                loggerService.SendLobbyDTO(lobby.ToDTO());
 
                 await SafeSendAsync(client, new LobbyDataMessage(lobby.ToDTO(), userEntityID));
                 await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyJoined, "Welcome to lobby!"));
@@ -227,7 +217,7 @@ namespace Server.Core
             catch (Exception ex)
             {
                 loggerService.Log(ex.Message, LogLevelEnum.Error);
-                await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotJoined, "Lobby join failed. Error:" + ex));
+                await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotJoined, "Lobby join failed. Unexpected error."));
             }
         }
 
@@ -235,13 +225,17 @@ namespace Server.Core
         {
             try
             {
+                Lobby.Lobby lobby = lobbyManager.GetLobby(msg.LobbyID);
+                LobbyDTO lobbyDTO = lobby.ToDTO();
+
                 lobbyManager.RemoveUserFromLobby(msg.LobbyID, client);
+                loggerService.SendLobbyDTO(lobbyDTO);
                 await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyDisjoined, "See you soon!"));
             }
             catch (Exception ex)
             {
                 loggerService.Log(ex.Message, LogLevelEnum.Error);
-                await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotDisjoined, "Error leaving lobby."));
+                await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotDisjoined, "Lobby disjoin failed. Unexpected error"));
             }
         }
 
@@ -273,7 +267,7 @@ namespace Server.Core
             catch (Exception ex)
             {
                loggerService.Log(ex.Message, LogLevelEnum.Error);
-                await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "Error while fetching data. Error:" + ex));
+                await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.Error, "Error while fetching data. Unexpected error."));
             }
         }
 
@@ -287,7 +281,7 @@ namespace Server.Core
             catch (Exception ex)
             {
                 loggerService.Log(ex.Message, LogLevelEnum.Error);
-                await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.ModuleNotCreated, "Module creation failed. Error:" + ex));
+                await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.ModuleNotCreated, "Module creation failed. Unexpected error."));
             }
         }
         #endregion
