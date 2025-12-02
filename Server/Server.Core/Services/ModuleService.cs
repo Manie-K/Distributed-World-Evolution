@@ -7,18 +7,19 @@ namespace Server.Core.Services
 {
     public class ModuleService : IModuleService
     {
-        public static IModuleService Instance = new ModuleService(BehaviourService.Instance);
+        //Singleton instance
+        public static IModuleService Instance = new ModuleService();
+        private ModuleService() { }
 
-        private IBehaviourService behaviourService;
-
-        public ModuleService(IBehaviourService behaviourService)
-        {
-            this.behaviourService = behaviourService;
-        }
-
+        private readonly Dictionary<int, Module> moduleCache = new Dictionary<int, Module>();
 
         public Module? GetModuleById(int id)
         {
+            if (moduleCache.TryGetValue(id, out Module? value))
+            {
+                return value;
+            }
+
             using (var dbContext = new ApplicationDBContext())
             {
                 ModuleDBEntity? moduleDBEntity = dbContext.Modules.Find(id);
@@ -28,6 +29,7 @@ namespace Server.Core.Services
                 }
 
                 Module module = Module.CreateFromDBEntity(moduleDBEntity);
+                moduleCache.Add(id, module);
                 return module;
             }
         }

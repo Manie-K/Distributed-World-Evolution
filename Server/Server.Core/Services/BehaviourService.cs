@@ -1,11 +1,11 @@
 ﻿using Server.Core.Behaviours;
-using Server.Core.Services;
 
 namespace Server.Core.Services
 {
     public class BehaviourService : IBehaviourService
     {
-        public static IBehaviourService Instance = new BehaviourService(); //TODO: Dependency Injection
+        public static IBehaviourService Instance = new BehaviourService();
+        private BehaviourService(){}
 
         public IEnumerable<IBehaviour> GetAllBehaviours()
         {
