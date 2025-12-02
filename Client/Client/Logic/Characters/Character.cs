@@ -23,7 +23,6 @@ namespace Client
 
     public class Character : ColoredSprite
     {
-        private AnimationType animationType;
         protected float speed;
         protected Direction CurrentDirection;
         public AnimationManager am;
@@ -34,7 +33,6 @@ namespace Client
         public Character(Vector2 position, Color color, int width, int height, float speed, int maxHealth)
             : base(null, position, width, height, color)
         {
-            animationType = AnimationType.Walking;
             this.speed = speed;
             MaxHealth = maxHealth;
             CurrentDirection = Direction.Down;
@@ -59,12 +57,10 @@ namespace Client
             if (state.Health <= 0)
             {
                 SetAnimation(AnimationType.Dying);
-                animationType = AnimationType.Dying;
             }
             else if (state.LastInteractionName.Equals("AttackBehaviourBase"))
             {
-                SetAnimation(AnimationType.Attacking);
-                animationType = AnimationType.Attacking;     
+                SetAnimation(AnimationType.Attacking);  
             }
 
             if (am.CheckDeadAnimation())
@@ -78,15 +74,6 @@ namespace Client
         public virtual void Update(GameTime gameTime)
         {
             SetAnimation(AnimationType.Walking);
-
-            if (animationType == AnimationType.Dying)
-            {
-                SetAnimation(AnimationType.Dying);
-            }
-            else if (animationType == AnimationType.Attacking)
-            {
-                SetAnimation(AnimationType.Attacking);
-            }
 
             if (am.CheckDeadAnimation())
             {
