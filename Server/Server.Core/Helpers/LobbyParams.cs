@@ -32,7 +32,7 @@ namespace Server.Core.Helpers
                         if (entitiesCount >= 500)
                             return 1;
                         else if (entitiesCount >= 200)
-                            return 3;
+                            return 2;
                         return 3;
                     }
 
@@ -45,17 +45,17 @@ namespace Server.Core.Helpers
 
                 case InteractionTypeEnum.Eat:
                     if (entitiesCount >= 500)
-                        return 1;
+                        return 0;
                     else if (entitiesCount >= 200)
-                        return 2;
+                        return 1;
                     return 2;
 
                 case InteractionTypeEnum.Reproduce:
                     if (entitiesCount >= 500)
-                        return 1;
+                        return 100;
                     else if (entitiesCount >= 200)
-                        return 3;
-                    return 3;
+                        return 200;
+                    return 300;
 
                 default:
                     return 0;
