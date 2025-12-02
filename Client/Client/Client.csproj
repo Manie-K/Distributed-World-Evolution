@@ -25,6 +25,9 @@
     <Content Include="..\..\Shared\SharedLibrary\WorldMap\Maps\Grassland.json" Link="Content\Maps\Grassland.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
+    <Content Include="..\..\Shared\SharedLibrary\WorldMap\Maps\SmallStandard.json" Link="Content\Maps\SmallStandard.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Content Include="..\..\Shared\SharedLibrary\WorldMap\Maps\Standard.json" Link="Content\Maps\Standard.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

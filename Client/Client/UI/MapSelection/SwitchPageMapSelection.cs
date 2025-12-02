@@ -63,6 +63,7 @@ namespace Client
             maps.Add(new MapData(contentManager.Load<Texture2D>("UI/BG_Forest"), "Grassland"));
             maps.Add(new MapData(contentManager.Load<Texture2D>("UI/MapSelection/Standard"), "Standard"));
             maps.Add(new MapData(contentManager.Load<Texture2D>("UI/MapSelection/TwoBridges"), "Two Bridges"));
+            maps.Add(new MapData(contentManager.Load<Texture2D>("UI/MapSelection/Standard"), "Small Standard"));
         }
 
         public void SetSelectedData(ref SelectedMapData data)

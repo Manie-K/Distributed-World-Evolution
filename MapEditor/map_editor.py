@@ -4,15 +4,15 @@ from collections import deque
 
 # --- Settings ---
 TILE_SIZE = 32
-MAP_WIDTH, MAP_HEIGHT = 200, 200
+MAP_WIDTH, MAP_HEIGHT = 50, 50
 SCREEN_WIDTH, SCREEN_HEIGHT = 1280, 720
 PALETTE_WIDTH = 100
 PALETTE_TILE_SIZE = 32
 SCROLL_SPEED = 20
 PALETTE_SCROLL_SPEED = 1
-TILESET_NAME = "tileset_version1.1.png"
-SAVE_FILENAME = "grassland.json"
-LOAD_FILENAME = "grassland.json"
+TILESET_NAME = "MapTileset.png"
+SAVE_FILENAME = "SmallStandard.json"
+LOAD_FILENAME = "SmallStandard.json"
 
 # Zoom
 zoom_level = 1.0

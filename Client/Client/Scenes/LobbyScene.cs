@@ -156,6 +156,7 @@ namespace Client
                     0 => "Forest",
                     1 => "Standard",
                     2 => "TwoBridges",
+                    3 => "SmallStandard",
                     _ => "Other",
                 };
 
