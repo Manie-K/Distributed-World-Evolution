@@ -15,6 +15,7 @@ using Server.Core.Behaviours.TameBehaviour;
 using Server.Core.Behaviours.ReproduceBehaviour;
 using SharedLibrary.Helpers;
 using System.Runtime.InteropServices;
+using System.CodeDom.Compiler;
 
 namespace Server.Core.Lobby
 {
@@ -284,8 +285,8 @@ namespace Server.Core.Lobby
         /// <inheritdoc/>
         public bool DestroyWorldEntity(WorldEntity entity)
         {
-            //Log($"Destroying entity {entity.Id} in lobby {LobbyId}. entity position: {entity.State.Position}" +
-            //   $"module name: {moduleService.GetModuleById(entity.ModuleID)?.Name}", LogLevelEnum.Debug);
+            Log($"Destroying entity {entity.Id} in lobby {LobbyId}. entity position: {entity.State.Position}" +
+               $"module name: {moduleService.GetModuleById(entity.ModuleID)?.Name}", LogLevelEnum.Debug);
 
             if (entity == null)
             {
@@ -414,6 +415,46 @@ namespace Server.Core.Lobby
                 {
                     totalCycles++;
                     currentGroupIndex = 0;
+                    var sb = new System.Text.StringBuilder();
+                    sb.AppendLine($"Cycle: {totalCycles}");
+                    
+                    lock(entitiesMapLock)
+                    {
+                        for (int x = 0; x < walkableTiles.Length; x++)
+                        {
+                            for (int y = 0; y < walkableTiles[x].Length; y++)
+                            {
+                                entitiesMap.TryGetValue((x, y), out WorldEntity? entityAtPos);
+                                if (entityAtPos == null)
+                                {
+                                    sb.Append('_');
+                                }
+                                else
+                                {
+                                    Module? module = moduleService.GetModuleById(entityAtPos.ModuleID);
+                                    if (module?.Type == EntityTypeEnum.Plant)
+                                    {
+                                        sb.Append('P');
+                                    }
+                                    else if (module?.Type == EntityTypeEnum.Animal)
+                                    {
+                                        sb.Append('A');
+                                    }
+                                    else if (module?.Type == EntityTypeEnum.Human)
+                                    {
+                                        sb.Append('H');
+                                    }
+                                }
+                            }
+                            sb.AppendLine();
+                        }
+                        sb.AppendLine("END_OF_CYCLE");
+                        sb.AppendLine();
+                        string filePath = @"C:\Logs\world_log.txt";
+                        Directory.CreateDirectory(Path.GetDirectoryName(filePath));
+                        File.AppendAllText(filePath, sb.ToString());
+                    }
+
                 }
                 else
                 {
@@ -525,11 +566,6 @@ namespace Server.Core.Lobby
                     (stepX, stepY) = ((MoveBehaviourBase)entityModule.GetBehaviourOfType(InteractionTypeEnum.Move)).GetNextMovement(entity, CollectionsMarshal.AsSpan(entities));
                 }
 
-                if (entity.State.Position.X < 0 || entity.State.Position.X >= walkableTiles.Length ||
-                    entity.State.Position.Y < 0 || entity.State.Position.Y >= walkableTiles[0].Length)
-                {
-                    Console.WriteLine($"Entity id={entity.Id} position= {entity.State.Position} module name= {moduleService.GetModuleById(entity.ModuleID)?.Name}.");
-                }
                 var nextState = new EntityState(entity.State);
                 nextState.Position.X += stepX;
                 nextState.Position.Y += stepY;
