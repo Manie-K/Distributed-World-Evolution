@@ -30,6 +30,10 @@ namespace Server.Core.Behaviours.AttackBehaviour
                 {
                     throw new ArgumentNullException(nameof(target), "Target cannot be null for attack behaviour execution.");
                 }
+                else if (attacker == target)
+                {
+                    throw new ArgumentException("Attacker and target cannot be the same entity.");
+                }
 
                 Module attackerModule = moduleService.GetModuleById(attacker.ModuleID) ?? throw new ModuleNotFoundException($"Module with ID={attacker.ModuleID} not found!");
                 Module targetModule = moduleService.GetModuleById(target.ModuleID) ?? throw new ModuleNotFoundException($"Module with ID={attacker.ModuleID} not found!");
@@ -37,15 +41,23 @@ namespace Server.Core.Behaviours.AttackBehaviour
                 target.State.Health -= attackerModule.Damage;
                 attacker.State.Health -= (int)(targetModule.Damage * 0.5);
 
-                if (target.State.Health <= 0)
+                if (target.State.Health > 0)
+                {
+                    if (attacker.State.Health > 0)
+                    {
+                        attacker.State.LastAttackedEntityId = target.Id;
+                    }
+                    else
+                    {
+                        attacker.Die(moduleService);
+                    }
+                }
+                else
                 {
                     target.Die(moduleService);
-                    attacker.State.Hunger += 20; //Hardcoded hunger increase on kill
+                    attacker.State.Hunger += 20;
                 }
-                if(attacker.State.Health <= 0)
-                {
-                    attacker.Die(moduleService);
-                }
+
             }
             catch (Exception ex)
             {

@@ -14,8 +14,8 @@ using Server.Core.Behaviours.MoveBehaviour;
 using Server.Core.Behaviours.TameBehaviour;
 using Server.Core.Behaviours.ReproduceBehaviour;
 using SharedLibrary.Helpers;
-using System.Diagnostics;
 using System.Runtime.InteropServices;
+using System.CodeDom.Compiler;
 
 namespace Server.Core.Lobby
 {
@@ -45,19 +45,25 @@ namespace Server.Core.Lobby
         private readonly IModuleService moduleService;
         private readonly List<WorldEntity> entities;
         private readonly Dictionary<(int, int), WorldEntity?> entitiesMap;
+        private readonly Dictionary<Guid, WorldEntity> entitiesId;
         private readonly HashSet<WorldEntity> updatedEntitiesToPublish;
         private readonly List<int> allowedModulesIDs;
         private readonly Dictionary<TcpClient, WorldEntity> clients;
         private readonly bool[][] walkableTiles;
         private readonly bool[][] fertileTiles;
 
+        private readonly object entitiesLock = new object();
+        private readonly object entitiesMapLock = new object();
+        private readonly object entitiesIdLock = new object();
+        private readonly object entitiesToUpdateLock = new object();
+        private readonly object clientsLock = new object();
+        private readonly object allowedModulesLock = new object();
+
         private bool running;
         
         private readonly int entitiesPerGroup = (int)Math.Ceiling((double)LobbyParams.NUM_INITIAL_ENTITIES / LobbyParams.INITIAL_NUMBER_OF_GROUPS);
-        private int groupIndex = 0;
-
-        private int entitiesHealthAndHungerUpdateCounter = 0;
-        private long updateCounter = 0;
+        private int currentGroupIndex = 0;
+        private int totalCycles = 1; //Starts from 1 so we don't reduce health/hunger on first update
 
 
         #region Constructors
@@ -106,7 +112,13 @@ namespace Server.Core.Lobby
 
             entities = new List<WorldEntity>(LobbyParams.NUM_INITIAL_ENTITIES);
             entitiesMap = new Dictionary<(int, int), WorldEntity?>(walkableTiles[0].Length * walkableTiles.Length);
+            entitiesId = new Dictionary<Guid, WorldEntity>(LobbyParams.NUM_INITIAL_ENTITIES);
             updatedEntitiesToPublish = new HashSet<WorldEntity>(LobbyParams.NUM_INITIAL_ENTITIES);
+
+            allowedModulesIDs = new List<int>(20);
+            clients = new Dictionary<TcpClient, WorldEntity>(maxPlayers);
+
+            running = true;
 
             for (int x = 0; x < walkableTiles.Length; x++)
             {
@@ -115,11 +127,6 @@ namespace Server.Core.Lobby
                     entitiesMap[(x, y)] = null;
                 }
             }
-
-            allowedModulesIDs = new List<int>(20);
-            clients = new Dictionary<TcpClient, WorldEntity>(maxPlayers);
-
-            running = true;
 
             Server.OnMessageFromClientReceived += OnMessageFromClientReceived_Delegate;
         }
@@ -134,10 +141,17 @@ namespace Server.Core.Lobby
         {
             Log($"Lobby {LobbyId} started.", LogLevelEnum.Info);
 
-            while (running)
+            try
             {
-                Task.Delay((int)((1 / LobbyParams.LOBBY_UPDATES_PER_SECOND) * 1000)).Wait();
-                PublishWorldState();
+                while (running)
+                {
+                    Task.Delay((int)((1 / LobbyParams.LOBBY_UPDATES_PER_SECOND) * 1000)).Wait();
+                    PublishWorldState();
+                }
+            }
+            catch (Exception ex)
+            {
+                Log(ex, LogLevelEnum.Critical);
             }
 
             OnLobbyClosed?.Invoke();
@@ -147,9 +161,12 @@ namespace Server.Core.Lobby
         /// <inheritdoc/>
         public bool IsPositionFree(Position2D position)
         {
-            if(entitiesMap.ContainsKey((position.X, position.Y)))
+            lock (entitiesMapLock)
             {
-                return entitiesMap[(position.X, position.Y)] == null;
+                if (entitiesMap.ContainsKey((position.X, position.Y)))
+                {
+                    return entitiesMap[(position.X, position.Y)] == null;
+                }
             }
 
             return false; //Out of bounds?
@@ -158,47 +175,53 @@ namespace Server.Core.Lobby
         /// <inheritdoc/>
         public Guid AddClient(TcpClient client, string username)
         {
-            if(clients.Count >= MaxPlayers)
-            {
-                Log("Lobby is full.", LogLevelEnum.Warning);
-                return Guid.Empty;
-            }
-
             WorldEntity userEntity = WorldEntity.CreateWorldEntity(username, moduleService.GetHumanModuleId(),
                 new EntityState(new Position2D(0, 0), ModulePropertiesLimits.MAX_MAX_HEALTH, ModulePropertiesLimits.MAX_MAX_HUNGER), this);
 
-            lock (clients)
+            lock (clientsLock)
             {
-                if (clients.Keys.Contains(client))
+                if (clients.Count >= MaxPlayers)
+                {
+                    Log("Lobby is full.", LogLevelEnum.Warning);
+                    return Guid.Empty;
+                }
+
+                if (clients.ContainsKey(client))
                 {
                     Log("Client already in lobby.", LogLevelEnum.Warning);
                     return Guid.Empty;
                 }
+
+                if (!AddWorldEntity(userEntity))
+                {
+                    Log("Failed to add user entity to lobby.", LogLevelEnum.Error);
+                    return Guid.Empty;
+                }
+
                 clients.Add(client, userEntity);
             }
 
-            AddWorldEntity(userEntity);
             return userEntity.Id;
         }
 
         /// <inheritdoc/>
         public bool RemoveClient(TcpClient client)
         {
-            lock (clients)
+            lock (clientsLock)
             {
-                if (!clients.Keys.Contains(client))
+                if (!clients.TryGetValue(client, out WorldEntity? clientEntity))
                 {
                     Log("Client already not in lobby.", LogLevelEnum.Warning);
                     return false;
                 }
-                DestroyWorldEntity(clients[client]);
+                DestroyWorldEntity(clientEntity);
                 clients.Remove(client);
-            }
 
-            if(clients.Count == 0)
-            {
-                Log("No clients left in lobby. Closing lobby.", LogLevelEnum.Info);
-                running = false;
+                if(clients.Count == 0)
+                {
+                    Log("No clients left in lobby. Closing lobby.", LogLevelEnum.Info);
+                    running = false;
+                }
             }
 
             return true;
@@ -208,7 +231,7 @@ namespace Server.Core.Lobby
         public bool AddAllowedModule(int moduleId)
         {
             Module? module = moduleService.GetModuleById(moduleId);
-            lock (allowedModulesIDs)
+            lock (allowedModulesLock)
             {
                 if (allowedModulesIDs.Contains(moduleId))
                 {
@@ -223,52 +246,77 @@ namespace Server.Core.Lobby
         /// <inheritdoc/>
         public bool AddWorldEntity(WorldEntity entity)
         {
-            lock (entities)
+            if (!allowedModulesIDs.Contains(entity.ModuleID))
+            {
+                Log($"Entity's {entity.Id} module is not allowed in lobby {LobbyId}.", LogLevelEnum.Warning);
+                return false;
+            }
+
+            if (moduleService.GetModuleById(entity.ModuleID)?.Type != EntityTypeEnum.Human)
+            {
+                if (!IsPositionFree(entity.State.Position)) return false;
+            }
+
+            lock (entitiesLock)
             {
                 if (entities.Contains(entity))
                 {
                     Log($"Entity {entity.Id} already exists in lobby {LobbyId}.", LogLevelEnum.Warning);
                     return false;
                 }
-
-                bool moduleLoaded = allowedModulesIDs.Any(id => (id == entity.ModuleID));
-                if (!moduleLoaded)
-                {
-                    Log($"Entity's {entity.Id} module is not allowed in lobby {LobbyId}.", LogLevelEnum.Warning);
-                    return false;
-                }
-
-                if (!IsPositionFree(entity.State.Position)) return false;
-
                 entities.Add(entity);
-                entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = entity;
-                updatedEntitiesToPublish.Add(entity);
-
-                return true;
             }
+            lock (entitiesMapLock)
+            {
+                entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = entity;
+            }
+            lock (entitiesIdLock)
+            {
+                entitiesId.Add(entity.Id, entity);
+            }
+            lock (entitiesToUpdateLock)
+            {
+                updatedEntitiesToPublish.Add(entity);
+            }
+
+            return true;
         }
 
         /// <inheritdoc/>
         public bool DestroyWorldEntity(WorldEntity entity)
         {
+            Log($"Destroying: {entity.Id}, {entity.State.Position}, {moduleService.GetModuleById(entity.ModuleID)?.Type}, {moduleService.GetModuleById(entity.ModuleID)?.Name}",
+                LogLevelEnum.Debug);
+
             if (entity == null)
             {
                 return false;
             }
 
-            lock (entities)
+            lock (entitiesLock)
             {
                 if (!entities.Contains(entity))
                 {
                     Log($"Entity {entity.Id} does not exist in lobby {LobbyId}.", LogLevelEnum.Warning);
+                    Log(Environment.StackTrace, LogLevelEnum.Debug);
                     return false;
                 }
-                entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = null;
-                updatedEntitiesToPublish.Add(entity);
                 entities.Remove(entity);
-
-                return true;
             }
+            lock (entitiesMapLock)
+            {
+                entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = null;
+            }
+            lock(entitiesIdLock)
+            {
+                entitiesId.Remove(entity.Id);
+            }
+            lock (entitiesToUpdateLock)
+            {
+                updatedEntitiesToPublish.Add(entity);
+            }
+
+            return true;
         }
 
         /// <inheritdoc/>
@@ -296,17 +344,17 @@ namespace Server.Core.Lobby
         /// </summary>
         private void InitializeWorldEntities()
         {
-            IModuleService moduleService = ModuleService.Instance;
-            List<Module> modules = (moduleService.GetAllModules().ToList());
+            List<Module> modules = allowedModulesIDs.Select(id => moduleService.GetModuleById(id))
+                                                    .Where(m => m != null)
+                                                    .Cast<Module>()
+                                                    .ToList()!;
             int modulesCount = modules.Count;
-
-            Module module;
-
             Log("Initializing world entities...", LogLevelEnum.Info);
+            Log($"World map size {walkableTiles.Length} x {walkableTiles[0].Length}", LogLevelEnum.Info);
 
             for (int i = 0; i < LobbyParams.NUM_INITIAL_ENTITIES; i++)
             {
-                module = modules[new Random().Next(modulesCount)];
+                Module module = modules[new Random().Next(modulesCount)];
                 
                 if(module.Type == EntityTypeEnum.Human)
                 {
@@ -333,6 +381,11 @@ namespace Server.Core.Lobby
                     continue;
                 }
 
+                if (x < 0 || x  >= 200 || y < 0 || y > 200)
+                {
+                    Console.WriteLine($"X: {x}, Y: {y}");
+                }
+
                 WorldEntity ent = WorldEntity.CreateWorldEntity($"[{i}]_{module.Name}", module.ID, new EntityState(
                         new Position2D(x, y) , module.MaxHealth, module.MaxHunger
                     ), this);
@@ -346,51 +399,97 @@ namespace Server.Core.Lobby
         /// </summary>
         private void PublishWorldState()
         {
-            Console.WriteLine($"[DEBUG] Update #{updateCounter}"); //DEBUG
-            var stopwatchWorld = Stopwatch.StartNew(); //DEBUG
-
-            if(entities.Count == 0)
+            int startIndex = 0, endIndex = 0;
+            lock (entitiesLock)
             {
-                Debug.WriteLine("No entities to update in lobby."); //DEBUG
-                return;
+                if (entities.Count == 0)
+                {
+                    Console.WriteLine("No entities to update in lobby.");
+                    return;
+                }
+
+                startIndex = Math.Min(currentGroupIndex * entitiesPerGroup, entities.Count - 1); //Inclusive
+                endIndex = Math.Min(startIndex + entitiesPerGroup, entities.Count - 1); //Inclusive
+
+                if (endIndex >= entities.Count - 1)
+                {
+                    totalCycles++;
+                    currentGroupIndex = 0;
+
+                    ///to delete
+                    //var sb = new System.Text.StringBuilder();
+                    //sb.AppendLine($"Cycle: {totalCycles}");
+                    
+                    //lock(entitiesMapLock)
+                    //{
+                    //    for (int y = 0; y < walkableTiles[0].Length; y++)
+                    //    {
+                    //        for (int x = 0; x < walkableTiles.Length; x++)
+                    //        {
+                    //            entitiesMap.TryGetValue((x, y), out WorldEntity? entityAtPos);
+                    //            if (entityAtPos == null)
+                    //            {
+                    //                sb.Append('_');
+                    //            }
+                    //            else
+                    //            {
+                    //                Module? module = moduleService.GetModuleById(entityAtPos.ModuleID);
+                    //                if (module?.Type == EntityTypeEnum.Plant)
+                    //                {
+                    //                    sb.Append('P');
+                    //                }
+                    //                else if (module?.Type == EntityTypeEnum.Animal)
+                    //                {
+                    //                    sb.Append('A');
+                    //                }
+                    //                else if (module?.Type == EntityTypeEnum.Human)
+                    //                {
+                    //                    sb.Append('H');
+                    //                }
+                    //            }
+                    //        }
+                    //        sb.AppendLine("");
+                    //    }
+                    //    sb.AppendLine("END_OF_CYCLE");
+                    //    sb.AppendLine("");
+
+                    //    string filePath = "C:\\Logs\\world_log.txt";
+                    //    if (!File.Exists(filePath))
+                    //    {
+                    //        using (StreamWriter sw = File.CreateText(filePath))
+                    //        {
+                    //            sw.WriteLine("Here will be cycle info");
+                    //            sw.WriteLine("");
+                    //        }
+                    //    }
+
+                    //    File.AppendAllText(filePath, sb.ToString());
+                    //}
+                    ///
+                }
+                else
+                {
+                    currentGroupIndex++;
+                }
             }
 
-            updateCounter++;
-
-            int startIndex = Math.Min(groupIndex * entitiesPerGroup, entities.Count - 1); //Inclusive
-            int endIndex = Math.Min(startIndex + entitiesPerGroup, entities.Count - 1); //Inclusive
-
-            Console.WriteLine($"[DEBUG] Updating entities from index {startIndex} to {endIndex}."); //DEBUG
+            //Console.WriteLine($"[{entities.Count}]: Updating {startIndex} -> {endIndex}");
             UpdateWorldState(startIndex, endIndex);
 
-            if(endIndex >= entities.Count - 1)
+            WorldStateMessage worldStateMessage;
+            lock (entitiesToUpdateLock) 
             {
-                groupIndex = 0;
-            }
-            else
-            {
-                groupIndex++;
+                worldStateMessage = new WorldStateMessage(updatedEntitiesToPublish.Select(e => e.ToDTO()).ToList());
+                updatedEntitiesToPublish.Clear();
             }
 
-            stopwatchWorld.Stop(); //DEBUG
-            Console.WriteLine($"[DEBUG] World state update #{updateCounter} took {stopwatchWorld.ElapsedMilliseconds}ms."); //DEBUG
-
-            lock (clients)
+            lock (clientsLock)
             {
-                lock (updatedEntitiesToPublish)
-                {
-                    for (int i = startIndex; i <= endIndex; i++)
-                    {
-                        updatedEntitiesToPublish.Add(entities[i]);
-                    }
-                }
-                
                 foreach (var clientPair in clients)
                 {
-                    _ = MessageManager.SendMessageAsync(clientPair.Key, new WorldStateMessage(updatedEntitiesToPublish.Select(e => e.ToDTO())));
+                    _ = MessageManager.SendMessageAsync(clientPair.Key, worldStateMessage); //TODO: Check if sending the same ref is ok
                 }
             }
-            updatedEntitiesToPublish.Clear();
         }
 
         /// <summary>
@@ -400,122 +499,96 @@ namespace Server.Core.Lobby
         /// <param name="endIndex">Index of last entity to be updated (inclusive).</param>
         private void UpdateWorldState(int startIndex, int endIndex)
         {
-            if(startIndex < 0 || endIndex >= entities.Count || startIndex > endIndex)
+            lock (entitiesLock)
             {
-                Log(new ArgumentOutOfRangeException($"Invalid start ({startIndex}) or end ({endIndex}) index for updating world state."), LogLevelEnum.Error);
-                return;
+                if (startIndex < 0 || endIndex >= entities.Count || startIndex > endIndex)
+                {
+                    Log(new ArgumentOutOfRangeException($"Invalid start ({startIndex}) or end ({endIndex}) index for updating world state."), LogLevelEnum.Error);
+                    return;
+                }
             }
 
-            const int HUNGER_CHANGE = 1;
-            const int HEALTH_CHANGE = 1;
-
-            Module? entityModule;
-            EntityState nextState;
-
-            entitiesHealthAndHungerUpdateCounter++;
-            bool shouldResetCounter = false;
-
-            double allOtherTime = 0.0;
-            double allSimulationTime = 0.0;
-            int allIterations = 0;
-            int allSimulationIterations = 0;
-
-
-            lock (entities)
+            for (int i = startIndex; i <= endIndex; i++)
             {
-                for (int i = startIndex; i <= endIndex; i++)
+                WorldEntity entity;
+                lock (entitiesLock)
                 {
                     if (i >= entities.Count) //In case entities were removed during the update, so the count is lower than index
                     {
                         break;
                     }
-
-                    WorldEntity entity = entities[i];
-                    entityModule = moduleService.GetModuleById(entity.ModuleID);
-
-                    if (entityModule == null)
-                    {
-                        Log($"Entity's {entity.Id} module not found in lobby {LobbyId}.", LogLevelEnum.Warning);
-                        continue;
-                    }
-
-                    var stopwatch = Stopwatch.StartNew(); //DEBUG
-                    allIterations++; //DEBUG
-                    if (entitiesHealthAndHungerUpdateCounter >= 4 * LobbyParams.INITIAL_NUMBER_OF_GROUPS) //TODO: For now we have 32 groups, 64 updates per second,
-                                                                                                          //so each entity gets updated twice a second. So every 2 * value seconds. Definately need to set this.
-                    {
-                        shouldResetCounter = true;
-                        if (entity.State.Health <= 0)
-                        {
-                            entity.Die(moduleService);
-                            i--;
-
-                            stopwatch.Stop(); //DEBUG
-                            allOtherTime += stopwatch.Elapsed.TotalMilliseconds; //DEBUG
-                            continue;
-                        }
-                        else if (entity.State.Hunger > 0)
-                        {
-                            entity.State.Hunger -= HUNGER_CHANGE;
-                        }
-                        else if (entity.State.Health > 0)
-                        {
-                            entity.State.Health -= HEALTH_CHANGE;
-                        }
-
-                        if (entity.State.Hunger > 0 && entity.State.Health < entityModule.MaxHealth)
-                        {
-                            entity.State.Health += HEALTH_CHANGE;
-                        }
-                    }
-
-
-                    if (entity.State.InteractionFramesLeft > 0)
-                    {
-                        entity.State.InteractionFramesLeft--;
-                        entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = entity; //Should it be here?
-
-                        stopwatch.Stop(); //DEBUG
-                        allOtherTime += stopwatch.Elapsed.TotalMilliseconds; //DEBUG
-                        continue;
-                    }
-                    entity.State.LastInteractionName = String.Empty;
-
-                    if (entityModule.Type == EntityTypeEnum.Human)
-                    {
-                        entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = entity; //Should it be here?
-
-                        stopwatch.Stop(); //DEBUG
-                        allOtherTime += stopwatch.Elapsed.TotalMilliseconds; //DEBUG
-                        continue;
-                    }
-
-
-                    (int stepX, int stepY) = ((MoveBehaviourBase)entityModule.GetBehaviourOfType(InteractionTypeEnum.Move)).GetNextMovement(entity, CollectionsMarshal.AsSpan(entities));
-
-                    nextState = new EntityState(entity.State);
-                    nextState.Position.X += stepX;
-                    nextState.Position.Y += stepY;
-
-                    entity.State.LastMovementVector = new Position2D(stepX, stepY);
-
-                    stopwatch.Stop(); //DEBUG
-                    allOtherTime += stopwatch.Elapsed.TotalMilliseconds; //DEBUG
-
-                    var sw = Stopwatch.StartNew();
-                    SimulateNonHumanEntityUpdate(entity, nextState);
-                    sw.Stop();
-                    allSimulationTime += sw.Elapsed.TotalMilliseconds; //DEBUG
-                    allSimulationIterations++; //DEBUG
+                 
+                    entity = entities[i];
                 }
 
-                Console.WriteLine($"[DEBUG] Time this update: Other: {allOtherTime}. Iterations: {allIterations}."); //DEBUG
-                Console.WriteLine($"[DEBUG] Time this update: Simulation: {allSimulationTime}. Iterations: {allSimulationIterations}."); //DEBUG
-
-                if (shouldResetCounter)
+                lock(entitiesToUpdateLock)
                 {
-                    entitiesHealthAndHungerUpdateCounter = 0;
+                    updatedEntitiesToPublish.Add(entity);
                 }
+                
+                Module? entityModule = moduleService.GetModuleById(entity.ModuleID);
+
+                if (entityModule == null)
+                {
+                    Log($"Entity's {entity.Id} module not found in lobby {LobbyId}.", LogLevelEnum.Warning);
+                    continue;
+                }
+
+                if(totalCycles % LobbyParams.CYCLES_PER_STATS_CHANGE == 0 && entityModule.Type != EntityTypeEnum.Plant)
+                {
+                    if (entity.State.Health <= 0)
+                    {
+                        Console.WriteLine($"Entity {entity.Id} died due to 0 health.");
+                        entity.Die(moduleService);
+                        i--;
+
+                        continue;
+                    }
+                    
+                    if (entity.State.Hunger > 0)
+                    {
+                        entity.State.Hunger -= LobbyParams.HUNGER_CHANGE;
+                    }
+                    else if (entity.State.Health > 0)
+                    {
+                        entity.State.Health -= LobbyParams.HEALTH_CHANGE;
+                    }
+
+                    if (entity.State.Hunger > 0 && entity.State.Health < entityModule.MaxHealth)
+                    {
+                        entity.State.Health += LobbyParams.HEALTH_CHANGE;
+                    }
+                }
+
+                if (entity.State.InteractionCooldownLeft > 0)
+                {
+                    entity.State.InteractionCooldownLeft--;
+                    continue;
+                }
+
+                entity.State.LastInteractionName = String.Empty;
+
+                if (entityModule.Type == EntityTypeEnum.Human)
+                {
+                    continue;
+                }
+
+                int stepX = 0, stepY = 0;
+                lock (entitiesLock)
+                {
+                    (stepX, stepY) = ((MoveBehaviourBase)entityModule.GetBehaviourOfType(InteractionTypeEnum.Move)).GetNextMovement(entity, CollectionsMarshal.AsSpan(entities));
+                }
+
+                var nextState = new EntityState(entity.State);
+                nextState.Position.X += stepX;
+                nextState.Position.Y += stepY;
+
+                nextState.Position.X = Math.Clamp(nextState.Position.X, 0, walkableTiles.Length - 1);
+                nextState.Position.Y = Math.Clamp(nextState.Position.Y, 0, walkableTiles[0].Length - 1);
+
+                entity.State.LastMovementVector = new Position2D(stepX, stepY);
+
+                SimulateNonHumanEntityUpdate(entity, nextState);
             }
         }
 
@@ -526,21 +599,19 @@ namespace Server.Core.Lobby
                 Log("Received null message from client.", LogLevelEnum.Warning);
                 return;
             }
-            else
+            
+            switch (message.MessageType)
             {
-                switch (message.MessageType)
-                {
-                    case MessageTypeEnum.UserInteraction:
-                        HandleUpdateHumanWorldEntityMessage(client, (UserInteractionMessage)message);
-                        break;
-                    case MessageTypeEnum.InfoMessage:
-                        HandleInfoMessage(client, (InfoMessage)message);
-                        break;
-                    default:
-                        HandleUnsupportedMessageType(client, message);
-                        break;
-                }
-            }    
+                case MessageTypeEnum.UserInteraction:
+                    HandleUpdateHumanWorldEntityMessage(client, (UserInteractionMessage)message);
+                    break;
+                case MessageTypeEnum.InfoMessage:
+                    HandleInfoMessage(client, (InfoMessage)message);
+                    break;
+                default:
+                    HandleUnsupportedMessageType(client, message);
+                    break;
+            }  
         }
 
         /// <summary>
@@ -566,68 +637,90 @@ namespace Server.Core.Lobby
 
 
             // If we change position, there is a possible new interaction. Or we are a plant (to handle growth or other plant-specific behaviour)
-            bool shouldCheckInteraction = ((entity.State.Position != newState.Position) || (entityModule.Type == EntityTypeEnum.Plant)) 
-                                          && (entity.State.InteractionFramesLeft == 0);
+            bool shouldCheckInteraction = (entity.State.InteractionCooldownLeft == 0 && (entityModule.Type == EntityTypeEnum.Plant || !entity.State.Position.Equals(newState.Position)));
 
             if (!shouldCheckInteraction) return;
 
             InteractionTypeEnum interactionType = GetInteractionType(entity, newState);
             if (interactionType is InteractionTypeEnum.None) return;
 
-            WorldEntity? targetEntity = entitiesMap[(newState.Position.X, newState.Position.Y)];
+            WorldEntity? targetEntity;
+            lock(entitiesMapLock)
+            {
+                targetEntity = entitiesMap[(newState.Position.X, newState.Position.Y)];
+            }
             IBehaviour behaviour = entityModule.GetBehaviourOfType(interactionType);
 
-            //time[s] = constant(update takes more than ideally) * how_many_groups / groups_per_second
-            double secondsPerEntityUpdate = (double)((2 * (Math.Ceiling((double)entities.Count / entitiesPerGroup))) / LobbyParams.LOBBY_UPDATES_PER_SECOND);
-
             // Distinction in case when we need to add custom parameters
+            int cooldownLeft = LobbyParams.InteractionCooldownInCycles(entities.Count, interactionType);
             switch (interactionType)
             {
                 case InteractionTypeEnum.Move:
                     behaviour.Execute(entity, null, ModuleService.Instance, new Dictionary<string, object>{
-                        { CustomBehaviourParams.MAP_WALKABLE_PARAM, walkableTiles   },
+                        { CustomBehaviourParams.MAP_WALKABLE_PARAM, walkableTiles },
                         { CustomBehaviourParams.NEW_POS_PARAM, newState.Position },
                         { CustomBehaviourParams.ENTITIES_MAP_PARAM, entitiesMap }
-                        });
-
-                    entity.State.InteractionFramesLeft = (int)(3 / secondsPerEntityUpdate); //TODO: Seconds / secondsPerEntityUpdate; Change the way this is set.
-                    entity.State.LastInteractionName = nameof(MoveBehaviourBase);
-                    break;
-                    
-                case InteractionTypeEnum.Attack:
-                    behaviour.Execute(entity, targetEntity!, ModuleService.Instance);
-
-                    entity.State.InteractionFramesLeft = (int)(3 / secondsPerEntityUpdate);//TODO: Change the way this is set. 
-                    targetEntity!.State.InteractionFramesLeft = (int)(3 / secondsPerEntityUpdate);//TODO: Change the way this is set. 
-
-                    entity.State.LastInteractionName = nameof(AttackBehaviourBase);
-                    targetEntity!.State.LastInteractionName = nameof(AttackBehaviourBase);
-                    break;
-                    
-                case InteractionTypeEnum.Eat:
-                    behaviour.Execute(entity, targetEntity!, ModuleService.Instance);
-
-                    entity.State.InteractionFramesLeft = (int)(2 / secondsPerEntityUpdate);//TODO: Change the way this is set. 
-                    targetEntity!.State.InteractionFramesLeft = (int)(2 / secondsPerEntityUpdate);//TODO: Change the way this is set. 
-
-                    entity.State.LastInteractionName = "Undefined interaction";
-                    targetEntity!.State.LastInteractionName = "Undefined interaction";
-                    break;
-                    
-                case InteractionTypeEnum.Reproduce:
-                    behaviour.Execute(entity, targetEntity, ModuleService.Instance, new Dictionary<string, object>{
-                        { CustomBehaviourParams.LOBBY_PARAM, this },
-                        { CustomBehaviourParams.MAP_FERTILE_PARAM, fertileTiles },
-                        { CustomBehaviourParams.MAP_WALKABLE_PARAM, walkableTiles   }
                     });
+
+                    entity.State.InteractionCooldownLeft = cooldownLeft;
+                    entity.State.LastInteractionName = nameof(MoveBehaviourBase);
+
+                    break;
+
+                case InteractionTypeEnum.Attack:
+                    if (entity.State.LastAttackedEntityId != Guid.Empty)
+                    {
+                        lock (entitiesIdLock)
+                        {
+                            if (entitiesId.TryGetValue(entity.State.LastAttackedEntityId, out WorldEntity? target))
+                            {
+                                if (target != null && behaviour.CanExecute(entity, target, moduleService))
+                                {
+                                    targetEntity = target;
+                                }
+                            }
+                        }
+                    }
 
                     if (targetEntity != null)
                     {
-                        targetEntity.State.InteractionFramesLeft = (int)(6 / secondsPerEntityUpdate);//TODO: Change the way this is set. 
+                        behaviour.Execute(entity, targetEntity, ModuleService.Instance);
+
+                        entity.State.InteractionCooldownLeft = cooldownLeft;
+                        targetEntity!.State.InteractionCooldownLeft = cooldownLeft;
+
+                        entity.State.LastInteractionName = nameof(AttackBehaviourBase);
+                        targetEntity!.State.LastInteractionName = nameof(AttackBehaviourBase);
+                    }
+
+                    break;
+
+                case InteractionTypeEnum.Eat:
+                    behaviour.Execute(entity, targetEntity!, ModuleService.Instance);
+
+                    entity.State.InteractionCooldownLeft = cooldownLeft;
+                    targetEntity!.State.InteractionCooldownLeft = cooldownLeft;
+
+                    entity.State.LastInteractionName = "Undefined animation interaction";
+                    targetEntity!.State.LastInteractionName = "Undefined animation interaction";
+
+                    break;
+
+                case InteractionTypeEnum.Reproduce:
+                    behaviour.Execute(entity, targetEntity, ModuleService.Instance, new Dictionary<string, object>{
+                    { CustomBehaviourParams.LOBBY_PARAM, this },
+                    { CustomBehaviourParams.MAP_FERTILE_PARAM, fertileTiles },
+                    { CustomBehaviourParams.MAP_WALKABLE_PARAM, walkableTiles   }
+                });
+
+                    if (targetEntity != null)
+                    {
+                        targetEntity.State.InteractionCooldownLeft = cooldownLeft;
                         targetEntity.State.LastInteractionName = nameof(ReproduceBehaviourBase);
                     }
-                    entity.State.InteractionFramesLeft = (int)(6 / secondsPerEntityUpdate);//TODO: Change the way this is set. 
+                    entity.State.InteractionCooldownLeft = cooldownLeft;
                     entity.State.LastInteractionName = nameof(ReproduceBehaviourBase);
+
                     break;
 
                 default:
@@ -637,33 +730,64 @@ namespace Server.Core.Lobby
         }
 
         /// <summary>
-        /// Updates the state of a human entity and optionally another entity. Based on data received from client.
+        /// Updates the state of a human entity and optionally another entity. Based on data received from client and treated as delta from last update.
         /// </summary>
-        /// <param name="human">Human entity to be changed. Must be human.</param>
-        /// <param name="other">Other entity to be changed. Optional.</param>
+        /// <param name="human">Human entity to be changed. Must be human. State is treated as delta</param>
+        /// <param name="other">Other entity to be changed. Optional. State is treated as delta</param>
         /// <exception cref="ArgumentNullException">Human entity can not be null.</exception>
         private void SimulateHumanEntityUpdate(WorldEntityDTO human, WorldEntityDTO? other)
         {
-            WorldEntity? entHuman = entities.Where(e => e.Id == human.Id)?.FirstOrDefault();
-            WorldEntity? entOther = entities.Where(e => e.Id == other?.Id)?.FirstOrDefault();
+            WorldEntity? entHuman;
+            WorldEntity? entOther;
+
+            lock(entitiesIdLock)
+            {
+                entHuman = entitiesId[human.Id];
+            }
 
             if (entHuman == null)
             {
                 throw new ArgumentNullException(nameof(entHuman), "Entity not found");
             }
-            if(entHuman.ModuleID != moduleService.GetHumanModuleId())
+            if (entHuman.ModuleID != moduleService.GetHumanModuleId())
             {
                 throw new ArgumentNullException(nameof(entHuman), "Entity not of human type");
             }
 
-            entHuman.UpdateState(new EntityState(human.State));
-            entitiesMap[(entHuman.State.Position.X, entHuman.State.Position.Y)] = entHuman;
-            updatedEntitiesToPublish.Add(entHuman);
-
-            if (entOther != null)
+            lock (entitiesMapLock)
             {
-                entOther.UpdateState(new EntityState(other!.State));
-                entitiesMap[(entOther.State.Position.X, entOther.State.Position.Y)] = entOther;
+                entitiesMap[(entHuman.State.Position.X, entHuman.State.Position.Y)] = null;
+                entHuman.UpdateStateWithDelta(human.State.Position, human.State.Health, human.State.Hunger);
+                entitiesMap[(entHuman.State.Position.X, entHuman.State.Position.Y)] = entHuman;
+            }
+
+            lock (entitiesToUpdateLock)
+            {
+                updatedEntitiesToPublish.Add(entHuman);
+            }
+
+            if (other == null) { return; }
+            
+            lock (entitiesIdLock)
+            {
+                entOther = entitiesId[other.Id];
+            }
+
+            if(entOther == null) { return; }
+
+            lock (entitiesMapLock)
+            {
+                entitiesMap[(entOther.State.Position.X, entOther.State.Position.Y)] = null;
+                entOther.UpdateStateWithDelta(other.State.Position, other.State.Health, other.State.Hunger);
+
+                if (entOther.State.Health > 0)
+                {
+                    entitiesMap[(entOther.State.Position.X, entOther.State.Position.Y)] = entOther;
+                }
+            }
+
+            lock (entitiesToUpdateLock)
+            {
                 updatedEntitiesToPublish.Add(entOther);
             }
         }
@@ -679,14 +803,45 @@ namespace Server.Core.Lobby
         {
             Module entityModule = moduleService.GetModuleById(entity.ModuleID) ?? throw new Exception($"Module with ID={entity.ModuleID} not found");
             EntityTypeEnum entityType = entityModule.Type;
+            WorldEntity? entityOnPosition;
 
-            WorldEntity? entityOnPosition = entities.Where(ent => ent.State.Position == newState.Position)?.FirstOrDefault();
+            // We refactored this so that humans dont use this method, the clients send the human updates directly
+            if (entityType == EntityTypeEnum.Human) return InteractionTypeEnum.None;
+
+            if (entity.State.LastAttackedEntityId != Guid.Empty)
+            {
+                AttackBehaviourBase attackBehaviour = (AttackBehaviourBase)entityModule.GetBehaviourOfType(InteractionTypeEnum.Attack);
+                WorldEntity? lastAttackedEntity;
+                lock (entitiesIdLock)
+                {
+                    entitiesId.TryGetValue(entity.State.LastAttackedEntityId, out lastAttackedEntity);
+                }
+
+                if (lastAttackedEntity != null &&
+                    lastAttackedEntity.State.Health > 0 &&
+                    lastAttackedEntity.State.InteractionCooldownLeft == 0 &&
+                    Math.Abs(lastAttackedEntity.State.Position.X - entity.State.Position.X) <= 1 &&
+                    Math.Abs(lastAttackedEntity.State.Position.Y - entity.State.Position.Y) <= 1 &&
+                    attackBehaviour.CanExecute(entity, lastAttackedEntity, ModuleService.Instance))
+                {
+                    //Log($"Entity= {entity.Id} attacked LastAttackedEntityId= {lastAttackedEntity.Id} again.", LogLevelEnum.Debug);
+                    return InteractionTypeEnum.Attack;
+                }
+
+                //Log($"Entity= {entity.Id} removed LastAttackedEntityId= {entity.State.LastAttackedEntityId}.", LogLevelEnum.Debug);
+                entity.State.LastAttackedEntityId = Guid.Empty;
+            }
+
+            lock (entitiesMapLock)
+            {
+                entityOnPosition = entitiesMap[(newState.Position.X, newState.Position.Y)];
+            }
 
             if (entityOnPosition == null)
             {
                 if(entityModule.GetBehaviourOfType(InteractionTypeEnum.Move)
                     .CanExecute(entity, null, ModuleService.Instance, new Dictionary<string, object>{
-                        { CustomBehaviourParams.MAP_WALKABLE_PARAM, walkableTiles   },
+                        { CustomBehaviourParams.MAP_WALKABLE_PARAM, walkableTiles },
                         { CustomBehaviourParams.NEW_POS_PARAM, newState.Position },
                         { CustomBehaviourParams.LOBBY_PARAM, this }
                     })
@@ -698,10 +853,7 @@ namespace Server.Core.Lobby
             }
 
             EntityTypeEnum targetType = moduleService.GetModuleById(entityOnPosition.ModuleID)?.Type ?? throw new Exception($"Module with ID={entity.ModuleID} not found"); ;
-
-            // We refactored this so that humans dont use this method, the clients send the human updates directly
-            if (entityType == EntityTypeEnum.Human) return InteractionTypeEnum.None;
-
+            
             // Plants reproduce by themselves - and do only this
             if (entityType == EntityTypeEnum.Plant)
             {
@@ -782,12 +934,11 @@ namespace Server.Core.Lobby
 
         #endregion
 
-
         #region Delegates
 
         private void OnMessageFromClientReceived_Delegate(OnMessageFromClientEventArgs args)
         {
-            lock(clients)
+            lock (clientsLock)
             {
                 if(!clients.Keys.Contains(args.Client))
                 {
@@ -807,17 +958,6 @@ namespace Server.Core.Lobby
         {
             WorldEntityDTO human = message.HumanEntity;
             WorldEntityDTO? other = message.OtherEntity;
-
-            WorldEntity? humanEntity = entities.Where(e => e.Id == human.Id)?.FirstOrDefault();
-            if (humanEntity == null)
-            {
-                throw new Exception($"Human entity ({human.Id}) not found in lobby.");
-            }
-
-            if (moduleService.GetModuleById(humanEntity.ModuleID)?.Type != EntityTypeEnum.Human)
-            {
-                throw new Exception($"Entity ({human.Id}) is not a human.");
-            }
 
             SimulateHumanEntityUpdate(human, other);
         }

@@ -6,30 +6,30 @@ namespace Server.Core.Behaviours
     {
         public static BehaviourInMemoryDB Instance = new BehaviourInMemoryDB();
 
-        private readonly Dictionary<int, Type> types;
+        private readonly Dictionary<int, IBehaviour> behaviourInstances;
 
         private BehaviourInMemoryDB()
         {
-            // Initialize the in-memory database with all behaviour types.
-            types = new Dictionary<int, Type>();
+            // Initialize the in-memory database with all behaviours.
+            behaviourInstances = new Dictionary<int, IBehaviour>();
 
-            List<Type> implementations = Assembly
+            List<Type> types = Assembly
                 .GetExecutingAssembly()
                 .GetTypes()
                 .Where(t => !t.IsInterface && !t.IsAbstract && t.IsClass && typeof(IBehaviour).IsAssignableFrom(t))
                 .ToList();
 
-            foreach (var implementation in implementations)
+            foreach (var implementation in types)
             {
                 try
                 {
-                    IBehaviour behaviourInstance = BehaviourFactory.Instance.CreateBehaviourOfType(implementation);
+                    IBehaviour behaviourInstance = BehaviourFactory.CreateBehaviourOfType(implementation);
                     int id = (int?)implementation
                         .GetProperty("DatabaseID", BindingFlags.Public | BindingFlags.Instance)?
                         .GetValue(behaviourInstance)
                         ?? throw new Exception($"Behaviour {implementation.FullName} does not have a valid DatabaseID.");
 
-                    types.Add(id, implementation);
+                    behaviourInstances.Add(id, behaviourInstance);
                 }
                 catch (Exception ex)
                 {
@@ -38,15 +38,32 @@ namespace Server.Core.Behaviours
             }
         }
 
-        public Type? GetTypeByID(int id)
+        public IBehaviour? GetInstanceByID(int id)
         {
-            types.TryGetValue(id, out Type? value);
+            behaviourInstances.TryGetValue(id, out IBehaviour? value);
             return value;
         }
 
-        public List<Type> GetAllTypes() 
+        public List<IBehaviour> GetAllInstances() 
         {
-            return types.Values.ToList();
+            return behaviourInstances.Values.ToList();
+        }
+
+        private static class BehaviourFactory
+        {
+            public static IBehaviour CreateBehaviourOfType(Type type)
+            {
+                try
+                {
+                    var instance = Activator.CreateInstance(type) as IBehaviour ?? throw new Exception($"Type {type.FullName} doesn't cast to IBehaviour");
+                    return instance;
+                }
+                catch (Exception ex)
+                {
+                    Console.WriteLine($"Error creating behaviour of type {type.FullName}: {ex.Message}");
+                    throw;
+                }
+            }
         }
     }
 }

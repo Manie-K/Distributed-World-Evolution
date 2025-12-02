@@ -1,5 +1,6 @@
 ﻿using System.Collections.Immutable;
 using Server.Core.Helpers;
+using Server.Core.Lobby;
 using Server.Core.Services;
 using SharedLibrary.DTOs.ModuleDTO;
 using SharedLibrary.Helpers;
@@ -27,28 +28,50 @@ namespace Server.Core.Behaviours.MoveBehaviour
                 if (otherParams.TryGetValue(CustomBehaviourParams.ENTITIES_MAP_PARAM, out object? entitiesMapObj)
                     && entitiesMapObj is Dictionary<(int, int), WorldEntity?> entitiesMap)
                 {
-                    entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = null;
-                    entitiesMap[(nextPosition.X, nextPosition.Y)] = entity;
+                    lock (entitiesMap)
+                    {
+                        if (entitiesMap[(nextPosition.X, nextPosition.Y)] != null)
+                        {
+                            Console.WriteLine($"[MoveBehaviour] Entity {entity.Id} moves to occupied position {nextPosition.X},{nextPosition.Y}....");
+                        }
+
+                        entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = null;
+                        entitiesMap[(nextPosition.X, nextPosition.Y)] = entity;
+                        entity.State.Position = nextPosition;
+                    }
                 }
-                entity.State.Position = nextPosition;
             }
         }
 
         /// <inheritdoc/>
         public virtual bool CanExecute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
-            Position2D nextPos = otherParams != null && otherParams.TryGetValue(CustomBehaviourParams.NEW_POS_PARAM, out object? value) && value is Position2D pos
+            if (otherParams == null)
+            {
+                Console.WriteLine("[MoveBehaviour] otherParams is null, cannot determine movement validity.");
+                return false;
+            }
+
+            Position2D nextPos = otherParams.TryGetValue(CustomBehaviourParams.NEW_POS_PARAM, out object? value) && value is Position2D pos
                 ? pos : entity.State.Position;
 
-            bool[][]? walkableTiles = otherParams != null && otherParams.TryGetValue(CustomBehaviourParams.MAP_WALKABLE_PARAM, out object? walkableTilesObj)
+            bool[][]? walkableTiles = otherParams.TryGetValue(CustomBehaviourParams.MAP_WALKABLE_PARAM, out object? walkableTilesObj)
                 && walkableTilesObj is bool[][] tiles ? tiles : null;
 
-            if (walkableTiles == null || nextPos.X < 0 || nextPos.Y < 0 || nextPos.X >= walkableTiles.Length || nextPos.Y >= walkableTiles[nextPos.X].Length)
+            ILobby lobby = otherParams.TryGetValue(CustomBehaviourParams.LOBBY_PARAM, out object? lobbyObj)
+                && lobbyObj is ILobby l ? l : throw new ArgumentNullException("Lobby parameter is required for AvoiderMoveBehaviour");
+
+            if (walkableTiles == null || lobby == null 
+                || nextPos.X < 0 || nextPos.Y < 0 
+                || nextPos.X >= walkableTiles.Length || nextPos.Y >= walkableTiles[nextPos.X].Length)
             {
                 return false;
             }
 
-            return walkableTiles[nextPos.X][nextPos.Y];
+            if (!walkableTiles[nextPos.X][nextPos.Y]) return false;
+            if (!lobby.IsPositionFree(nextPos)) return false;
+
+            return true;
         }
 
         /// TODO: Optimize if needed
