@@ -49,9 +49,9 @@ namespace Server.Core
         public void UpdateStateWithDelta(Position2D positionDelta, int healthDelta, int hungerDelta)
         {
             //TODO: change and add checks
-            State.Position = positionDelta;
-            State.Health = healthDelta;
-            State.Hunger = hungerDelta;
+            State.Position += positionDelta;
+            State.Health += healthDelta;
+            State.Hunger += hungerDelta;
         }
 
         public void Die(IModuleService moduleService)

@@ -7,10 +7,6 @@ namespace Server.Core.Services
         public static IBehaviourService Instance = new BehaviourService();
         private BehaviourService(){}
 
-        private BehaviourService()
-        {
-        }
-
         public IEnumerable<IBehaviour> GetAllBehaviours()
         {
             IEnumerable<IBehaviour> behaviours = BehaviourInMemoryDB.Instance.GetAllInstances();
