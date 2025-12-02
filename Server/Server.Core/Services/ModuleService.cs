@@ -7,8 +7,8 @@ namespace Server.Core.Services
 {
     public class ModuleService : IModuleService
     {
+        //Singleton instance
         public static IModuleService Instance = new ModuleService();
-
         private ModuleService() { }
 
         private readonly Dictionary<int, Module> moduleCache = new Dictionary<int, Module>();

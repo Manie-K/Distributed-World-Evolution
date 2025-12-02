@@ -4,7 +4,8 @@ namespace Server.Core.Services
 {
     public class BehaviourService : IBehaviourService
     {
-        public static IBehaviourService Instance = new BehaviourService(); //TODO: Dependency Injection
+        public static IBehaviourService Instance = new BehaviourService();
+        private BehaviourService(){}
 
         private BehaviourService()
         {
