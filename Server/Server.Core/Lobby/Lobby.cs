@@ -16,6 +16,7 @@ using Server.Core.Behaviours.ReproduceBehaviour;
 using SharedLibrary.Helpers;
 using System.Runtime.InteropServices;
 using System.CodeDom.Compiler;
+using System.Runtime.CompilerServices;
 
 namespace Server.Core.Lobby
 {
@@ -415,57 +416,6 @@ namespace Server.Core.Lobby
                 {
                     totalCycles++;
                     currentGroupIndex = 0;
-
-                    ///to delete
-                    //var sb = new System.Text.StringBuilder();
-                    //sb.AppendLine($"Cycle: {totalCycles}");
-                    
-                    //lock(entitiesMapLock)
-                    //{
-                    //    for (int y = 0; y < walkableTiles[0].Length; y++)
-                    //    {
-                    //        for (int x = 0; x < walkableTiles.Length; x++)
-                    //        {
-                    //            entitiesMap.TryGetValue((x, y), out WorldEntity? entityAtPos);
-                    //            if (entityAtPos == null)
-                    //            {
-                    //                sb.Append('_');
-                    //            }
-                    //            else
-                    //            {
-                    //                Module? module = moduleService.GetModuleById(entityAtPos.ModuleID);
-                    //                if (module?.Type == EntityTypeEnum.Plant)
-                    //                {
-                    //                    sb.Append('P');
-                    //                }
-                    //                else if (module?.Type == EntityTypeEnum.Animal)
-                    //                {
-                    //                    sb.Append('A');
-                    //                }
-                    //                else if (module?.Type == EntityTypeEnum.Human)
-                    //                {
-                    //                    sb.Append('H');
-                    //                }
-                    //            }
-                    //        }
-                    //        sb.AppendLine("");
-                    //    }
-                    //    sb.AppendLine("END_OF_CYCLE");
-                    //    sb.AppendLine("");
-
-                    //    string filePath = "C:\\Logs\\world_log.txt";
-                    //    if (!File.Exists(filePath))
-                    //    {
-                    //        using (StreamWriter sw = File.CreateText(filePath))
-                    //        {
-                    //            sw.WriteLine("Here will be cycle info");
-                    //            sw.WriteLine("");
-                    //        }
-                    //    }
-
-                    //    File.AppendAllText(filePath, sb.ToString());
-                    //}
-                    ///
                 }
                 else
                 {
@@ -473,7 +423,6 @@ namespace Server.Core.Lobby
                 }
             }
 
-            //Console.WriteLine($"[{entities.Count}]: Updating {startIndex} -> {endIndex}");
             UpdateWorldState(startIndex, endIndex);
 
             WorldStateMessage worldStateMessage;
@@ -732,8 +681,8 @@ namespace Server.Core.Lobby
         /// <summary>
         /// Updates the state of a human entity and optionally another entity. Based on data received from client and treated as delta from last update.
         /// </summary>
-        /// <param name="human">Human entity to be changed. Must be human. State is treated as delta</param>
-        /// <param name="other">Other entity to be changed. Optional. State is treated as delta</param>
+        /// <param name="human">Human entity to be changed. Must be human. State is treated as delta from previous</param>
+        /// <param name="other">Other entity to be changed. Optional. State is treated as delta from previous</param>
         /// <exception cref="ArgumentNullException">Human entity can not be null.</exception>
         private void SimulateHumanEntityUpdate(WorldEntityDTO human, WorldEntityDTO? other)
         {
