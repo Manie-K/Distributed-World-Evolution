@@ -5,6 +5,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using SharedLibrary;
 using SharedLibrary.DTOs.EntitiesDTO;
+using SharedLibrary.Helpers;
 using SharedLibrary.Messages;
 using System;
 using System.Collections.Generic;
@@ -40,7 +41,7 @@ namespace Client
             {
                 throw new Exception("Could not load the map " + Tilemap.GetMapFileName(mapID));
             }
-            player = new Player(new Vector2(288, 32), Color.White, new Text(manager.ContentManager.Load<SpriteFont>("Fonts/PlayerName"), 
+            player = new Player(new Vector2(40, 40), Color.White, new Text(manager.ContentManager.Load<SpriteFont>("Fonts/PlayerName"), 
                 manager.UserSettings.PlayerName, true, new Vector2(500, 300 - 110), 70, 40), new Vector2(-68, -77), -1,
                 ref panelsController.BestiaryPanel, ref panelsController.Inventory, map, manager.ClientManager);
 
@@ -49,8 +50,6 @@ namespace Client
             clientUpdateTimer = 0;
             timeBetweenUpdates = 1.0 / ClientManager.CLIENT_UPDATES_PER_SECOND;
 
-            //EntityStateDTO state = new EntityStateDTO(new SharedLibrary.Helpers.Position2D(1, 1), 100, 100, 0, ""); // TMP HELPER
-            //player.PlayerDTO = new WorldEntityDTO("Lachimek", manager.ClientManager.PlayerGuid, state, -17); // TMP HELPER
             inGameEntities = new List<WorldEntityDTO>();
             List<WorldEntityDTO> entitiesToLoad = manager.ClientManager.LobbyData.WorldEntities.ToList();
             foreach (WorldEntityDTO entity in entitiesToLoad)
@@ -139,7 +138,7 @@ namespace Client
                         inGameEntities[index] = entity;
                     }
                 }
-                else
+                else if (entity.State.Health > 0)
                 {
                     LoadEntity(entity);
                 }
@@ -159,17 +158,7 @@ namespace Client
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             clientUpdateTimer += delta;
 
-            // Send my player update
-            if (clientUpdateTimer >= timeBetweenUpdates && player.PlayerDTO != null)
-            {
-                player.PlayerDTO.State.Position = map.GetTilePosition2D(player.Position.X, player.Position.Y);
-                player.PlayerDTO.State.Hunger += player.HungerToConsume;
-                UserInteractionMessage message = new UserInteractionMessage(player.PlayerDTO, player.TargetEntity);
-                _ = MessageManager.SendMessageAsync(manager.ClientManager.Client, message);
-                clientUpdateTimer = 0;
-                player.HungerToConsume = 0;
-                player.TargetEntity = null;
-            }
+            SendPlayerStatus();
         }
 
         public void Draw(SpriteBatch spriteBatch)
@@ -244,6 +233,44 @@ namespace Client
                     _ => new Cosmo(position)
                 });
             }
+        }
+
+        private void SendPlayerStatus()
+        {
+            if (clientUpdateTimer < timeBetweenUpdates || player.PlayerDTO == null) return;
+
+            int playerHealth = player.PlayerDTO.State.Health;
+            Position2D targetEntityPosition = null;
+            player.PlayerDTO.State.Position = map.GetTilePosition2D(player.Position.X, player.Position.Y) - player.LastPosition;
+            player.LastPosition = map.GetTilePosition2D(player.Position.X, player.Position.Y);
+            if (playerHealth <= 0)
+            {
+                player.PlayerDTO.State.Health = (int)player.GetPlayerMaxHealth();
+                player.PlayerDTO.State.Hunger = (int)player.GetPlayerMaxHunger();
+            }
+            else
+            {
+                player.PlayerDTO.State.Hunger = player.HungerToConsume;
+                player.PlayerDTO.State.Health = 0;
+            }
+            if (player.TargetEntity != null)
+            {
+                targetEntityPosition = player.TargetEntity.State.Position;
+                player.TargetEntity.State.Position = new Position2D(0, 0);
+            }
+
+            UserInteractionMessage message = new UserInteractionMessage(player.PlayerDTO, player.TargetEntity);
+            _ = MessageManager.SendMessageAsync(manager.ClientManager.Client, message);
+
+            if (player.TargetEntity != null)
+            {
+                player.TargetEntity.State.Position = targetEntityPosition;
+                player.TargetEntity.State.Health = 1;
+                player.TargetEntity = null;
+            }
+            clientUpdateTimer = 0;
+            player.HungerToConsume = 0;
+            player.PlayerDTO.State.Health = playerHealth;
         }
 
         private void SetPlayerStats(WorldEntityDTO entity)

@@ -16,17 +16,13 @@ namespace Client
 
     public enum AnimationType
     {
-        Dying,
+        Walking,
         Attacking,
-        Walking
+        Dying
     }
 
     public class Character : ColoredSprite
     {
-        private const float ANIMATION_TIMER_TRIGGER = 1.0f;
-
-        private AnimationType animationType;
-        private float animationTimer;
         protected float speed;
         protected Direction CurrentDirection;
         public AnimationManager am;
@@ -37,8 +33,6 @@ namespace Client
         public Character(Vector2 position, Color color, int width, int height, float speed, int maxHealth)
             : base(null, position, width, height, color)
         {
-            animationType = AnimationType.Walking;
-            animationTimer = 0;
             this.speed = speed;
             MaxHealth = maxHealth;
             CurrentDirection = Direction.Down;
@@ -51,30 +45,27 @@ namespace Client
             return new Rectangle(width * am.GetActiveFrame(), height * (int)CurrentDirection, width, height);
         }
 
-        public void SetAnimation(int type)
+        public void SetAnimation(AnimationType type)
         {
             am.SetAnimation(type);
         }
 
         public virtual void Update(GameTime gameTime, EntityStateDTO state) 
         {
-            UpdateTimer(gameTime);
-            SetAnimation(0);
+            SetAnimation(AnimationType.Walking);
 
             if (state.Health <= 0)
             {
-                SetAnimation(2);
-                animationType = AnimationType.Dying;
-                animationTimer = 0.0f;
+                SetAnimation(AnimationType.Dying);
             }
             else if (state.LastInteractionName.Equals("AttackBehaviourBase"))
             {
-                SetAnimation(1);
-                if (animationType != AnimationType.Attacking)
-                {
-                    animationType = AnimationType.Attacking;
-                    animationTimer = 0.0f;
-                }
+                SetAnimation(AnimationType.Attacking);  
+            }
+
+            if (am.CheckDeadAnimation())
+            {
+                isDead = true;
             }
 
             am.Update(gameTime);
@@ -82,16 +73,11 @@ namespace Client
 
         public virtual void Update(GameTime gameTime)
         {
-            UpdateTimer(gameTime);
-            SetAnimation(0);
+            SetAnimation(AnimationType.Walking);
 
-            if (animationType == AnimationType.Dying)
+            if (am.CheckDeadAnimation())
             {
-                SetAnimation(2);
-            }
-            else if (animationType == AnimationType.Attacking)
-            {
-                SetAnimation(1);
+                isDead = true;
             }
 
             am.Update(gameTime);
@@ -114,25 +100,6 @@ namespace Client
             else if (newPosition.Y > currentPosition.Y)
             {
                 CurrentDirection = Direction.Down;
-            }
-        }
-
-        private void UpdateTimer(GameTime gameTime)
-        {
-            if (animationType == AnimationType.Dying || animationType == AnimationType.Attacking)
-            {
-                float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-                animationTimer += delta;
-            }
-
-            if (animationType == AnimationType.Dying && animationTimer > ANIMATION_TIMER_TRIGGER)
-            {
-                isDead = true;
-            }
-            else if (animationType == AnimationType.Attacking && animationTimer > ANIMATION_TIMER_TRIGGER)
-            {
-                animationType = AnimationType.Walking;
-                animationTimer = 0.0f;
             }
         }
     }

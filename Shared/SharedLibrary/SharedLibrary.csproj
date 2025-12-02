@@ -7,6 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Update="WorldMap\Maps\SmallStandard.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="WorldMap\Maps\TwoBridges.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
