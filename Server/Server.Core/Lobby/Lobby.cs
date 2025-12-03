@@ -261,6 +261,13 @@ namespace Server.Core.Lobby
                     entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = entity;
                 }
             }
+            else if (!IsPositionFree(entity.State.Position))
+            {
+                lock (entitiesMapLock)
+                {
+                    entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = entity;
+                }
+            }
 
             lock (entitiesLock)
             {
@@ -705,10 +712,7 @@ namespace Server.Core.Lobby
             {
                 entitiesMap[(entHuman.State.Position.X, entHuman.State.Position.Y)] = null;
                 entHuman.UpdateStateWithDelta(human.State.Position, human.State.Health, human.State.Hunger);
-                if (entitiesMap[(entHuman.State.Position.X, entHuman.State.Position.Y)] == null)
-                {
-                    entitiesMap[(entHuman.State.Position.X, entHuman.State.Position.Y)] = entHuman;
-                }
+                entitiesMap[(entHuman.State.Position.X, entHuman.State.Position.Y)] = entHuman;
             }
 
             lock (entitiesToUpdateLock)
@@ -723,13 +727,13 @@ namespace Server.Core.Lobby
             
             lock (entitiesIdLock)
             {
-                Log("Other is not null", LogLevelEnum.Debug);
+                //Log("Other is not null", LogLevelEnum.Debug);
                 entOther = entitiesId[other.Id];
             }
 
             if(entOther == null) 
             {
-                Log("Other entity is null, skipping its update.", LogLevelEnum.Debug);
+                //Log("Other entity is null, skipping its update.", LogLevelEnum.Debug);
                 return; 
             }
 
@@ -749,7 +753,7 @@ namespace Server.Core.Lobby
                 updatedEntitiesToPublish.Add(entOther);
             }
 
-            Log($"Entity healt={entOther.State.Health}", LogLevelEnum.Debug);
+            //Log($"Entity health={entOther.State.Health}", LogLevelEnum.Debug);
         }
 
         /// <summary>
