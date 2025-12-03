@@ -253,20 +253,12 @@ namespace Server.Core.Lobby
                 return false;
             }
 
-            if (moduleService.GetModuleById(entity.ModuleID)?.Type != EntityTypeEnum.Human)
+            if (moduleService.GetModuleById(entity.ModuleID)?.Type != EntityTypeEnum.Human && !IsPositionFree(entity.State.Position)) 
+                return false;
+            
+            lock (entitiesMapLock)
             {
-                if (!IsPositionFree(entity.State.Position)) return false;
-                lock (entitiesMapLock)
-                {
-                    entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = entity;
-                }
-            }
-            else
-            {
-                lock (entitiesMapLock)
-                {
-                    entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = entity;
-                }
+                entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = entity;
             }
 
             lock (entitiesLock)
