@@ -1,5 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using Server.Core.Data;
+using Server.Core.Lobby;
+using Server.Core.Services;
 
 namespace Server.Core
 {
@@ -31,7 +35,20 @@ namespace Server.Core
                 }
             }
 
-            await Server.Instance.StartAsync(args);
+            var builder = Host.CreateApplicationBuilder(args);
+
+            builder.Services.AddSingleton<Server>();
+            builder.Services.AddSingleton<LobbyManager>();
+            builder.Services.AddSingleton<LoggerService>();
+            builder.Services.AddHostedService(provider => provider.GetRequiredService<LoggerService>());
+
+            var host = builder.Build();
+            await host.StartAsync();
+
+            var server = host.Services.GetRequiredService<Server>();
+            await server.StartAsync(args);
+
+            await host.WaitForShutdownAsync();
         }
     }
 }

@@ -40,7 +40,9 @@ namespace SharedLibrary.Messages
                 {
                     int read = await stream.ReadAsync(messageBuffer, totalRead, messageLength - totalRead);
                     if (read == 0)
+                    {
                         throw new IOException("Connection with sender lost.");
+                    }
                     totalRead += read;
                 }
 
@@ -79,10 +81,10 @@ namespace SharedLibrary.Messages
                 MessageReceived?.Invoke(message);
                 return message ?? throw new Exception("Message null");
             }
-            catch (Exception ex)
+            catch (IOException ex)
             {
                 MessageReceived?.Invoke(null);
-                throw new IOException("Error checking client connection.", ex);
+                throw new IOException("Client is diconnected.", ex);
             }
             
         }
@@ -94,7 +96,7 @@ namespace SharedLibrary.Messages
         {
             try
             {
-                if (client == null || !client.Connected) return false;
+                if (client == null || !client.Connected) throw new IOException("Client is not connected.");
 
                 string json = message.BuildJson();
                 byte[] messageBytes = Encoding.UTF8.GetBytes(json);
@@ -109,10 +111,10 @@ namespace SharedLibrary.Messages
                 MessageSended?.Invoke(true);
                 return true;
             }
-            catch
+            catch (IOException ex)
             {
                 MessageSended?.Invoke(false);
-                return false;
+                throw new IOException("Client is diconnected.", ex);
             }
         }
 

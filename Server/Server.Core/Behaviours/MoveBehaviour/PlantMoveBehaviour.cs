@@ -1,5 +1,6 @@
-﻿using System.Collections.Immutable;
+﻿using Server.Core.Helpers;
 using Server.Core.Services;
+using System.Collections.Immutable;
 
 namespace Server.Core.Behaviours.MoveBehaviour
 {
@@ -14,13 +15,6 @@ namespace Server.Core.Behaviours.MoveBehaviour
 
         /// <inheritdoc>
         public override string Description => "Plants do not move.";
-
-        /// <inheritdoc>
-        public override void Execute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
-        {
-            //noop
-            return;
-        }
 
         /// <inheritdoc>
         public override bool CanExecute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)

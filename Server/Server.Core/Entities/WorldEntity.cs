@@ -51,6 +51,11 @@ namespace Server.Core
             State.Position += positionDelta;
             State.Health += healthDelta;
             State.Hunger += hungerDelta;
+
+            if (State.Health <= 0)
+            {
+                Die(ModuleService.Instance);
+            }
         }
 
         public void Die(IModuleService moduleService)

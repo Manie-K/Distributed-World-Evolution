@@ -1,31 +1,24 @@
 ﻿using Server.Core.Behaviours;
-using Server.Core.Services;
 
 namespace Server.Core.Services
 {
     public class BehaviourService : IBehaviourService
     {
-        public static IBehaviourService Instance = new BehaviourService(); //TODO: Dependency Injection
+        public static IBehaviourService Instance = new BehaviourService();
+        private BehaviourService(){}
 
         public IEnumerable<IBehaviour> GetAllBehaviours()
         {
-            IEnumerable<IBehaviour> behaviours = new List<IBehaviour>();
-
-            BehaviourInMemoryDB.Instance.GetAllTypes().ForEach(type =>
-            {
-                IBehaviour behaviour = BehaviourFactory.Instance.CreateBehaviourOfType(type);
-                behaviours = behaviours.Append(behaviour);
-            });
-
+            IEnumerable<IBehaviour> behaviours = BehaviourInMemoryDB.Instance.GetAllInstances();
             return behaviours;
         }
 
         public IBehaviour GetBehaviourInstanceByID(int id)
         {
-            Type? type = BehaviourInMemoryDB.Instance.GetTypeByID(id) ?? 
+            IBehaviour? instance = BehaviourInMemoryDB.Instance.GetInstanceByID(id) ?? 
                 throw new ArgumentException($"No behaviour found with ID {id}");
 
-            return BehaviourFactory.Instance.CreateBehaviourOfType(type);
+            return instance;
         }
     }
 }
