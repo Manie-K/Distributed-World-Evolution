@@ -261,7 +261,7 @@ namespace Server.Core.Lobby
                     entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = entity;
                 }
             }
-            else if (!IsPositionFree(entity.State.Position))
+            else
             {
                 lock (entitiesMapLock)
                 {
