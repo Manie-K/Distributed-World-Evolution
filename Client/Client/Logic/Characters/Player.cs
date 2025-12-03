@@ -88,7 +88,7 @@ namespace Client
 
             if (PlayerDTO != null && PlayerDTO.State.Health <= 0)
             {
-                //Position = new Vector2(10, 10);
+                Position = new Vector2(40, 40);
                 am.Update(gameTime);
                 return;
             }
@@ -222,7 +222,12 @@ namespace Client
                 TargetEntity = inGameEntities.FirstOrDefault(e => e.State.Position.Equals(targetPosition));
             }
 
-            if (TargetEntity != null && PlayerDTO != null && TargetEntity.Id != PlayerDTO.Id)
+            if (interactionType == InteractionType.Eat)
+            {
+                Eat();
+                TargetEntity = null;
+            }
+            else if (TargetEntity != null && PlayerDTO != null && TargetEntity.Id != PlayerDTO.Id)
             {
                 TargetEntity.State.Hunger = 0;
                 switch (interactionType)
@@ -238,13 +243,6 @@ namespace Client
                         break;
                     default:
                         break;
-                }
-            }
-            else
-            {
-                if (interactionType == InteractionType.Eat)
-                {
-                    Eat();
                 }
             }
 
