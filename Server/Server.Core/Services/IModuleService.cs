@@ -6,11 +6,8 @@ namespace Server.Core.Services
     public interface IModuleService
     {
         public Module? GetModuleById(int id);
-
-        public IEnumerable<Module> GetAllModules();
-
-        public void CreateModule(CreateModuleDTO dto);
-
         public int GetHumanModuleId();
+        public IEnumerable<Module> GetAllModules();
+        public void CreateModule(CreateModuleDTO dto);
     }
 }

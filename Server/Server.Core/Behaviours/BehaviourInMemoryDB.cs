@@ -6,47 +6,47 @@ namespace Server.Core.Behaviours
     {
         public static BehaviourInMemoryDB Instance = new BehaviourInMemoryDB();
 
-        private readonly Dictionary<int, Type> types;
+        private readonly Dictionary<int, IBehaviour> behaviourInstances;
 
         private BehaviourInMemoryDB()
         {
-            // Initialize the in-memory database with all behaviour types.
-            types = new Dictionary<int, Type>();
+            // Initialize the in-memory database with all behaviours.
+            behaviourInstances = new Dictionary<int, IBehaviour>();
 
-            List<Type> implementations = Assembly
+            List<Type> types = Assembly
                 .GetExecutingAssembly()
                 .GetTypes()
                 .Where(t => !t.IsInterface && !t.IsAbstract && t.IsClass && typeof(IBehaviour).IsAssignableFrom(t))
                 .ToList();
 
-            foreach (var implementation in implementations)
+            foreach (var implementingType in types)
             {
                 try
                 {
-                    IBehaviour behaviourInstance = BehaviourFactory.Instance.CreateBehaviourOfType(implementation);
-                    int id = (int?)implementation
+                    IBehaviour behaviourInstance = Activator.CreateInstance(implementingType) as IBehaviour ?? throw new Exception($"Type {implementingType.FullName} doesn't cast to IBehaviour");
+                    int id = (int?)implementingType
                         .GetProperty("DatabaseID", BindingFlags.Public | BindingFlags.Instance)?
                         .GetValue(behaviourInstance)
-                        ?? throw new Exception($"Behaviour {implementation.FullName} does not have a valid DatabaseID.");
+                        ?? throw new Exception($"Behaviour {implementingType.FullName} does not have a valid DatabaseID field.");
 
-                    types.Add(id, implementation);
+                    behaviourInstances.Add(id, behaviourInstance);
                 }
                 catch (Exception ex)
                 {
-                    Console.WriteLine($"Error initializing behaviour type {implementation.FullName}: {ex.Message}");
+                    Console.WriteLine($"Error instantiating behaviour type {implementingType.FullName}: {ex.Message}");
                 }
             }
         }
 
-        public Type? GetTypeByID(int id)
+        public IBehaviour? GetInstanceByID(int id)
         {
-            types.TryGetValue(id, out Type? value);
+            behaviourInstances.TryGetValue(id, out IBehaviour? value);
             return value;
         }
 
-        public List<Type> GetAllTypes() 
+        public List<IBehaviour> GetAllInstances() 
         {
-            return types.Values.ToList();
+            return behaviourInstances.Values.ToList();
         }
     }
 }

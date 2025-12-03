@@ -11,30 +11,27 @@ namespace SharedLibrary.Messages
         /// <inheritdoc/>
         public override MessageTypeEnum MessageType => MessageTypeEnum.LogMessage;
         /// <summary>
-        /// Log event arguments.
+        /// Log arguments.
         /// </summary>
-        public OnLogEventArgs OnLogEventArgs { get; init; }
+        public Log Log { get; init; }
         /// <summary>
         /// Sender ID of the log message.
         /// </summary>
         public int SenderID { get; init; }
-
         /// <summary>
         /// Constructor for LogMessage.
         /// </summary>
-        public LogMessage(OnLogEventArgs onLogEventArgs, int senderID)
+        public LogMessage(Log log, int senderID)
         {
-            OnLogEventArgs = onLogEventArgs;
+            Log = log;
             SenderID = senderID;
         }
-
         /// <inheritdoc/>
         public override string BuildJson()
         {
             var payload = new
             {
-                MessageType = MessageType,
-                OnLogEventArgs = OnLogEventArgs,
+                Log = Log,
                 SenderID = SenderID
             };
 

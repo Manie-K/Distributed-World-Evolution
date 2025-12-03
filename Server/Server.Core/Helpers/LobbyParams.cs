@@ -30,10 +30,10 @@ namespace Server.Core.Helpers
                 case InteractionTypeEnum.Move:
                     {
                         if (entitiesCount >= 500)
-                            return 1;
+                            return 2;
                         else if (entitiesCount >= 200)
                             return 3;
-                        return 3;
+                        return 4;
                     }
 
                 case InteractionTypeEnum.Attack:
@@ -45,17 +45,17 @@ namespace Server.Core.Helpers
 
                 case InteractionTypeEnum.Eat:
                     if (entitiesCount >= 500)
-                        return 1;
+                        return 0;
                     else if (entitiesCount >= 200)
-                        return 2;
+                        return 1;
                     return 2;
 
                 case InteractionTypeEnum.Reproduce:
                     if (entitiesCount >= 500)
-                        return 1;
+                        return 0;
                     else if (entitiesCount >= 200)
-                        return 3;
-                    return 3;
+                        return 1;
+                    return 2;
 
                 default:
                     return 0;

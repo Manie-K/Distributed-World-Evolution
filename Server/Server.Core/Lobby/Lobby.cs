@@ -15,6 +15,8 @@ using Server.Core.Behaviours.TameBehaviour;
 using Server.Core.Behaviours.ReproduceBehaviour;
 using SharedLibrary.Helpers;
 using System.Runtime.InteropServices;
+using System.CodeDom.Compiler;
+using System.Runtime.CompilerServices;
 
 namespace Server.Core.Lobby
 {
@@ -251,7 +253,13 @@ namespace Server.Core.Lobby
                 return false;
             }
 
-            if (!IsPositionFree(entity.State.Position)) return false;
+            if (moduleService.GetModuleById(entity.ModuleID)?.Type != EntityTypeEnum.Human && !IsPositionFree(entity.State.Position)) 
+                return false;
+            
+            lock (entitiesMapLock)
+            {
+                entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = entity;
+            }
 
             lock (entitiesLock)
             {
@@ -261,10 +269,6 @@ namespace Server.Core.Lobby
                     return false;
                 }
                 entities.Add(entity);
-            }
-            lock (entitiesMapLock)
-            {
-                entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = entity;
             }
             lock (entitiesIdLock)
             {
@@ -281,6 +285,8 @@ namespace Server.Core.Lobby
         /// <inheritdoc/>
         public bool DestroyWorldEntity(WorldEntity entity)
         {
+            //Log($"Destroying: {entity.Id}, {entity.State.Position}, {moduleService.GetModuleById(entity.ModuleID)?.Type}, {moduleService.GetModuleById(entity.ModuleID)?.Name}", LogLevelEnum.Debug);
+
             if (entity == null)
             {
                 return false;
@@ -291,6 +297,7 @@ namespace Server.Core.Lobby
                 if (!entities.Contains(entity))
                 {
                     Log($"Entity {entity.Id} does not exist in lobby {LobbyId}.", LogLevelEnum.Warning);
+                    Log(Environment.StackTrace, LogLevelEnum.Debug);
                     return false;
                 }
                 entities.Remove(entity);
@@ -342,6 +349,7 @@ namespace Server.Core.Lobby
                                                     .ToList()!;
             int modulesCount = modules.Count;
             Log("Initializing world entities...", LogLevelEnum.Info);
+            Log($"World map size {walkableTiles.Length} x {walkableTiles[0].Length}", LogLevelEnum.Info);
 
             for (int i = 0; i < LobbyParams.NUM_INITIAL_ENTITIES; i++)
             {
@@ -370,6 +378,11 @@ namespace Server.Core.Lobby
                 if(attemptsLeft <= 0)
                 {
                     continue;
+                }
+
+                if (x < 0 || x  >= 200 || y < 0 || y > 200)
+                {
+                    Console.WriteLine($"X: {x}, Y: {y}");
                 }
 
                 WorldEntity ent = WorldEntity.CreateWorldEntity($"[{i}]_{module.Name}", module.ID, new EntityState(
@@ -413,11 +426,6 @@ namespace Server.Core.Lobby
             WorldStateMessage worldStateMessage;
             lock (entitiesToUpdateLock) 
             {
-                for (int i = startIndex; i <= endIndex; i++)
-                {
-                    updatedEntitiesToPublish.Add(entities[i]);
-                } 
-
                 worldStateMessage = new WorldStateMessage(updatedEntitiesToPublish.Select(e => e.ToDTO()).ToList());
                 updatedEntitiesToPublish.Clear();
             }
@@ -459,6 +467,12 @@ namespace Server.Core.Lobby
                  
                     entity = entities[i];
                 }
+
+                lock(entitiesToUpdateLock)
+                {
+                    updatedEntitiesToPublish.Add(entity);
+                }
+                
                 Module? entityModule = moduleService.GetModuleById(entity.ModuleID);
 
                 if (entityModule == null)
@@ -467,7 +481,7 @@ namespace Server.Core.Lobby
                     continue;
                 }
 
-                if(totalCycles % LobbyParams.CYCLES_PER_STATS_CHANGE == 0)
+                if(totalCycles % LobbyParams.CYCLES_PER_STATS_CHANGE == 0 && entityModule.Type != EntityTypeEnum.Plant)
                 {
                     if (entity.State.Health <= 0)
                     {
@@ -569,8 +583,7 @@ namespace Server.Core.Lobby
 
 
             // If we change position, there is a possible new interaction. Or we are a plant (to handle growth or other plant-specific behaviour)
-            bool shouldCheckInteraction = ((!Equals(entity.State.Position, newState.Position)) || (entityModule.Type == EntityTypeEnum.Plant)) 
-                                          && (entity.State.InteractionCooldownLeft == 0);
+            bool shouldCheckInteraction = (entity.State.InteractionCooldownLeft == 0 && (entityModule.Type == EntityTypeEnum.Plant || !entity.State.Position.Equals(newState.Position)));
 
             if (!shouldCheckInteraction) return;
 
@@ -601,20 +614,30 @@ namespace Server.Core.Lobby
                     break;
 
                 case InteractionTypeEnum.Attack:
-                    if(entity.State.LastAttackedEntityId != Guid.Empty)
+                    if (entity.State.LastAttackedEntityId != Guid.Empty)
                     {
                         lock (entitiesIdLock)
                         {
-                            targetEntity = entitiesId[entity.State.LastAttackedEntityId];
+                            if (entitiesId.TryGetValue(entity.State.LastAttackedEntityId, out WorldEntity? target))
+                            {
+                                if (target != null && behaviour.CanExecute(entity, target, moduleService))
+                                {
+                                    targetEntity = target;
+                                }
+                            }
                         }
                     }
-                    behaviour.Execute(entity, targetEntity, ModuleService.Instance);
 
-                    entity.State.InteractionCooldownLeft = cooldownLeft;
-                    targetEntity!.State.InteractionCooldownLeft = cooldownLeft;
+                    if (targetEntity != null)
+                    {
+                        behaviour.Execute(entity, targetEntity, ModuleService.Instance);
 
-                    entity.State.LastInteractionName = nameof(AttackBehaviourBase);
-                    targetEntity!.State.LastInteractionName = nameof(AttackBehaviourBase);
+                        entity.State.InteractionCooldownLeft = cooldownLeft;
+                        targetEntity!.State.InteractionCooldownLeft = cooldownLeft;
+
+                        entity.State.LastInteractionName = nameof(AttackBehaviourBase);
+                        targetEntity!.State.LastInteractionName = nameof(AttackBehaviourBase);
+                    }
 
                     break;
 
@@ -655,8 +678,8 @@ namespace Server.Core.Lobby
         /// <summary>
         /// Updates the state of a human entity and optionally another entity. Based on data received from client and treated as delta from last update.
         /// </summary>
-        /// <param name="human">Human entity to be changed. Must be human. State is treated as delta</param>
-        /// <param name="other">Other entity to be changed. Optional. State is treated as delta</param>
+        /// <param name="human">Human entity to be changed. Must be human. State is treated as delta from previous</param>
+        /// <param name="other">Other entity to be changed. Optional. State is treated as delta from previous</param>
         /// <exception cref="ArgumentNullException">Human entity can not be null.</exception>
         private void SimulateHumanEntityUpdate(WorldEntityDTO human, WorldEntityDTO? other)
         {
@@ -689,19 +712,27 @@ namespace Server.Core.Lobby
                 updatedEntitiesToPublish.Add(entHuman);
             }
 
-            if (other == null) { return; }
+            if (other == null) 
+            {
+                return; 
+            }
             
             lock (entitiesIdLock)
             {
+                //Log("Other is not null", LogLevelEnum.Debug);
                 entOther = entitiesId[other.Id];
             }
 
-            if(entOther == null) { return; }
+            if(entOther == null) 
+            {
+                //Log("Other entity is null, skipping its update.", LogLevelEnum.Debug);
+                return; 
+            }
 
             lock (entitiesMapLock)
             {
                 entitiesMap[(entOther.State.Position.X, entOther.State.Position.Y)] = null;
-                entOther.UpdateStateWithDelta(entOther.State.Position, entOther.State.Health, entOther.State.Hunger);
+                entOther.UpdateStateWithDelta(other.State.Position, other.State.Health, other.State.Hunger);
 
                 if (entOther.State.Health > 0)
                 {
@@ -713,6 +744,8 @@ namespace Server.Core.Lobby
             {
                 updatedEntitiesToPublish.Add(entOther);
             }
+
+            //Log($"Entity health={entOther.State.Health}", LogLevelEnum.Debug);
         }
 
         /// <summary>
@@ -728,7 +761,10 @@ namespace Server.Core.Lobby
             EntityTypeEnum entityType = entityModule.Type;
             WorldEntity? entityOnPosition;
 
-            if(entity.State.LastAttackedEntityId != Guid.Empty)
+            // We refactored this so that humans dont use this method, the clients send the human updates directly
+            if (entityType == EntityTypeEnum.Human) return InteractionTypeEnum.None;
+
+            if (entity.State.LastAttackedEntityId != Guid.Empty)
             {
                 AttackBehaviourBase attackBehaviour = (AttackBehaviourBase)entityModule.GetBehaviourOfType(InteractionTypeEnum.Attack);
                 WorldEntity? lastAttackedEntity;
@@ -737,16 +773,18 @@ namespace Server.Core.Lobby
                     entitiesId.TryGetValue(entity.State.LastAttackedEntityId, out lastAttackedEntity);
                 }
 
-                if (lastAttackedEntity != null && 
-                    lastAttackedEntity.State.Health > 0 && 
+                if (lastAttackedEntity != null &&
+                    lastAttackedEntity.State.Health > 0 &&
                     lastAttackedEntity.State.InteractionCooldownLeft == 0 &&
-                    Math.Abs(lastAttackedEntity.State.Position.X -= entity.State.Position.X) <= 1 &&
-                    Math.Abs(lastAttackedEntity.State.Position.Y -= entity.State.Position.Y) <= 1 &&
+                    Math.Abs(lastAttackedEntity.State.Position.X - entity.State.Position.X) <= 1 &&
+                    Math.Abs(lastAttackedEntity.State.Position.Y - entity.State.Position.Y) <= 1 &&
                     attackBehaviour.CanExecute(entity, lastAttackedEntity, ModuleService.Instance))
                 {
+                    //Log($"Entity= {entity.Id} attacked LastAttackedEntityId= {lastAttackedEntity.Id} again.", LogLevelEnum.Debug);
                     return InteractionTypeEnum.Attack;
                 }
 
+                //Log($"Entity= {entity.Id} removed LastAttackedEntityId= {entity.State.LastAttackedEntityId}.", LogLevelEnum.Debug);
                 entity.State.LastAttackedEntityId = Guid.Empty;
             }
 
@@ -759,7 +797,7 @@ namespace Server.Core.Lobby
             {
                 if(entityModule.GetBehaviourOfType(InteractionTypeEnum.Move)
                     .CanExecute(entity, null, ModuleService.Instance, new Dictionary<string, object>{
-                        { CustomBehaviourParams.MAP_WALKABLE_PARAM, walkableTiles   },
+                        { CustomBehaviourParams.MAP_WALKABLE_PARAM, walkableTiles },
                         { CustomBehaviourParams.NEW_POS_PARAM, newState.Position },
                         { CustomBehaviourParams.LOBBY_PARAM, this }
                     })
@@ -771,10 +809,7 @@ namespace Server.Core.Lobby
             }
 
             EntityTypeEnum targetType = moduleService.GetModuleById(entityOnPosition.ModuleID)?.Type ?? throw new Exception($"Module with ID={entity.ModuleID} not found"); ;
-
-            // We refactored this so that humans dont use this method, the clients send the human updates directly
-            if (entityType == EntityTypeEnum.Human) return InteractionTypeEnum.None;
-
+            
             // Plants reproduce by themselves - and do only this
             if (entityType == EntityTypeEnum.Plant)
             {
@@ -854,6 +889,7 @@ namespace Server.Core.Lobby
         }
 
         #endregion
+
 
         #region Delegates
 
