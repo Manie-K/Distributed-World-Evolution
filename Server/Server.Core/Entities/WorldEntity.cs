@@ -48,14 +48,14 @@ namespace Server.Core
 
         public void UpdateStateWithDelta(Position2D positionDelta, int healthDelta, int hungerDelta)
         {
-            //TODO: change and add checks
-            if(positionDelta.X > 1 || positionDelta.X < -1 || positionDelta.Y > 1 || positionDelta.Y < -1)
-            {
-                Console.WriteLine($"Position delta might be incorrect. {positionDelta}");
-            }
             State.Position += positionDelta;
             State.Health += healthDelta;
             State.Hunger += hungerDelta;
+
+            if (State.Health <= 0)
+            {
+                Die(ModuleService.Instance);
+            }
         }
 
         public void Die(IModuleService moduleService)

@@ -256,6 +256,10 @@ namespace Server.Core.Lobby
             if (moduleService.GetModuleById(entity.ModuleID)?.Type != EntityTypeEnum.Human)
             {
                 if (!IsPositionFree(entity.State.Position)) return false;
+                lock (entitiesMapLock)
+                {
+                    entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = entity;
+                }
             }
 
             lock (entitiesLock)
@@ -266,10 +270,6 @@ namespace Server.Core.Lobby
                     return false;
                 }
                 entities.Add(entity);
-            }
-            lock (entitiesMapLock)
-            {
-                entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = entity;
             }
             lock (entitiesIdLock)
             {
@@ -286,8 +286,7 @@ namespace Server.Core.Lobby
         /// <inheritdoc/>
         public bool DestroyWorldEntity(WorldEntity entity)
         {
-            Log($"Destroying: {entity.Id}, {entity.State.Position}, {moduleService.GetModuleById(entity.ModuleID)?.Type}, {moduleService.GetModuleById(entity.ModuleID)?.Name}",
-                LogLevelEnum.Debug);
+            //Log($"Destroying: {entity.Id}, {entity.State.Position}, {moduleService.GetModuleById(entity.ModuleID)?.Type}, {moduleService.GetModuleById(entity.ModuleID)?.Name}", LogLevelEnum.Debug);
 
             if (entity == null)
             {
@@ -487,7 +486,6 @@ namespace Server.Core.Lobby
                 {
                     if (entity.State.Health <= 0)
                     {
-                        Console.WriteLine($"Entity {entity.Id} died due to 0 health.");
                         entity.Die(moduleService);
                         i--;
 
@@ -707,7 +705,10 @@ namespace Server.Core.Lobby
             {
                 entitiesMap[(entHuman.State.Position.X, entHuman.State.Position.Y)] = null;
                 entHuman.UpdateStateWithDelta(human.State.Position, human.State.Health, human.State.Hunger);
-                entitiesMap[(entHuman.State.Position.X, entHuman.State.Position.Y)] = entHuman;
+                if (entitiesMap[(entHuman.State.Position.X, entHuman.State.Position.Y)] == null)
+                {
+                    entitiesMap[(entHuman.State.Position.X, entHuman.State.Position.Y)] = entHuman;
+                }
             }
 
             lock (entitiesToUpdateLock)
@@ -715,14 +716,22 @@ namespace Server.Core.Lobby
                 updatedEntitiesToPublish.Add(entHuman);
             }
 
-            if (other == null) { return; }
+            if (other == null) 
+            {
+                return; 
+            }
             
             lock (entitiesIdLock)
             {
+                Log("Other is not null", LogLevelEnum.Debug);
                 entOther = entitiesId[other.Id];
             }
 
-            if(entOther == null) { return; }
+            if(entOther == null) 
+            {
+                Log("Other entity is null, skipping its update.", LogLevelEnum.Debug);
+                return; 
+            }
 
             lock (entitiesMapLock)
             {
@@ -739,6 +748,8 @@ namespace Server.Core.Lobby
             {
                 updatedEntitiesToPublish.Add(entOther);
             }
+
+            Log($"Entity healt={entOther.State.Health}", LogLevelEnum.Debug);
         }
 
         /// <summary>
@@ -882,6 +893,7 @@ namespace Server.Core.Lobby
         }
 
         #endregion
+
 
         #region Delegates
 
