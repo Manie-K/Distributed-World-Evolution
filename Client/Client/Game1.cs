@@ -18,8 +18,8 @@ namespace Client
             graphics.PreferredBackBufferWidth = manager.UserSettings.ScreenWidth;
             graphics.PreferredBackBufferHeight = manager.UserSettings.ScreenHeight;
 
-            IsFixedTimeStep = false;
-            graphics.SynchronizeWithVerticalRetrace = false;
+            //IsFixedTimeStep = false;
+            //graphics.SynchronizeWithVerticalRetrace = false;
         }
 
         protected override void Initialize()

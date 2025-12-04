@@ -181,7 +181,7 @@ namespace Client
 
         public void DrawStatic(SpriteBatch spriteBatch)
         {
-            performanceText.Draw(spriteBatch);
+            //performanceText.Draw(spriteBatch);
             panelsController.Draw(spriteBatch);
         }
 
