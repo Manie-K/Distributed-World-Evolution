@@ -77,7 +77,7 @@ namespace Client
 
             panelsController.Update();
             
-            IReadOnlyDictionary<Guid, WorldEntityDTO> entities = manager.ClientManager.Entities;
+            IReadOnlyDictionary<Guid, WorldEntityDTO> entities = manager.ClientManager.FlushEntities();
             Dictionary<Guid, Character> newCharacterList = [];
             Dictionary<Guid, Plant> newPlantList = [];
 
