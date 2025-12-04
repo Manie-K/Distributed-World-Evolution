@@ -17,6 +17,7 @@ namespace Client
     {
         private GameManager manager;
 
+        private Text performanceText;
         private PanelsController panelsController;
         private Player player;
         private Dictionary<Guid, Character> characters;
@@ -34,6 +35,7 @@ namespace Client
             characters = [];
             plants = [];
 
+            performanceText = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), "sec", false, new Vector2(900, 10), 106, 40);
             panelsController = new PanelsController(manager);
             cameraOffset = new Vector2(0, 70);
             map = new WorldMap();
@@ -70,6 +72,9 @@ namespace Client
 
         public void Update(GameTime gameTime)
         {
+            float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            performanceText.SetText("sec: " + delta + " ; creatures: " + inGameEntities.Count);
+
             panelsController.Update();
             
             IReadOnlyDictionary<Guid, WorldEntityDTO> entities = manager.ClientManager.Entities;
@@ -154,10 +159,7 @@ namespace Client
             }
 
             player.Update(gameTime, manager.InputManager, inGameEntities);
-
-            float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             clientUpdateTimer += delta;
-
             SendPlayerStatus();
         }
 
@@ -179,6 +181,7 @@ namespace Client
 
         public void DrawStatic(SpriteBatch spriteBatch)
         {
+            //performanceText.Draw(spriteBatch);
             panelsController.Draw(spriteBatch);
         }
 
