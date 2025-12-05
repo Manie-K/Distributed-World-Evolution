@@ -118,7 +118,7 @@ namespace Server.Core.Lobby
             {
                 foreach (var lobby in lobbies.Values)
                 {
-                    if (lobby.CheckClient(client))
+                    if (lobby.IsClientPresent(client))
                     {
                         lobby.RemoveClient(client);
                     }

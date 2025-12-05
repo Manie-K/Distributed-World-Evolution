@@ -15,8 +15,6 @@ using Server.Core.Behaviours.TameBehaviour;
 using Server.Core.Behaviours.ReproduceBehaviour;
 using SharedLibrary.Helpers;
 using System.Runtime.InteropServices;
-using System.CodeDom.Compiler;
-using System.Runtime.CompilerServices;
 
 namespace Server.Core.Lobby
 {
@@ -33,7 +31,6 @@ namespace Server.Core.Lobby
 
         /// <inheritdoc/>
         public int MaxPlayers { get; init; }
-
 
         /// <summary>
         /// Static event used for logging within the lobby.
@@ -65,8 +62,6 @@ namespace Server.Core.Lobby
         private readonly int entitiesPerGroup = (int)Math.Ceiling((double)LobbyParams.NUM_INITIAL_ENTITIES / LobbyParams.INITIAL_NUMBER_OF_GROUPS);
         private int currentGroupIndex = 0;
         private int totalCycles = 1; //Starts from 1 so we don't reduce health/hunger on first update
-
-        private long numberOfUpdates = 0;
 
         #region Constructors
 
@@ -155,7 +150,6 @@ namespace Server.Core.Lobby
             }
 
             OnLobbyClosed?.Invoke();
-            Log($"Lobby {LobbyId} closed. Number of updates: {numberOfUpdates}", LogLevelEnum.Info);
         }
 
         /// <inheritdoc/>
@@ -338,7 +332,7 @@ namespace Server.Core.Lobby
         }
 
         /// <inheritdoc/>
-        public bool CheckClient(TcpClient client)
+        public bool IsClientPresent(TcpClient client)
         {
             lock (clientsLock)
             {
@@ -459,7 +453,6 @@ namespace Server.Core.Lobby
                 {
                     _ = MessageManager.SendMessageAsync(clientPair.Key, worldStateMessage); //TODO: Check if sending the same ref is ok
                 }
-                numberOfUpdates++;
             }
         }
 
@@ -605,20 +598,24 @@ namespace Server.Core.Lobby
             Module? entityModule = moduleService.GetModuleById(entity.ModuleID)
                 ?? throw new Exception($"Entity's {entity.Id} module not found.");
 
+            WorldEntity? targetEntity;
+            lock (entitiesMapLock)
+            {
+                if (entityModule.Type == EntityTypeEnum.Plant)
+                {
+                    entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = entity;
+                }
+
+                targetEntity = entitiesMap[(newState.Position.X, newState.Position.Y)];
+            }
 
             // If we change position, there is a possible new interaction. Or we are a plant (to handle growth or other plant-specific behaviour)
             bool shouldCheckInteraction = (entity.State.InteractionCooldownLeft == 0 && (entityModule.Type == EntityTypeEnum.Plant || !entity.State.Position.Equals(newState.Position)));
-
             if (!shouldCheckInteraction) return;
 
             InteractionTypeEnum interactionType = GetInteractionType(entity, newState);
             if (interactionType is InteractionTypeEnum.None) return;
 
-            WorldEntity? targetEntity;
-            lock (entitiesMapLock)
-            {
-                targetEntity = entitiesMap[(newState.Position.X, newState.Position.Y)];
-            }
             IBehaviour behaviour = entityModule.GetBehaviourOfType(interactionType);
 
             // Distinction in case when we need to add custom parameters
@@ -820,7 +817,7 @@ namespace Server.Core.Lobby
                 {
                     return InteractionTypeEnum.Reproduce;
                 }
-                return InteractionTypeEnum.Move;
+                return InteractionTypeEnum.None;
             }
 
             if (entity.State.LastAttackedEntityId != Guid.Empty)

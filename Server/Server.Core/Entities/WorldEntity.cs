@@ -1,4 +1,5 @@
-﻿using Server.Core.Lobby;
+﻿using Server.Core.Exceptions;
+using Server.Core.Lobby;
 using Server.Core.Modules;
 using Server.Core.Services;
 using SharedLibrary.DTOs.EntitiesDTO;
@@ -40,7 +41,7 @@ namespace Server.Core
             State.Hunger = newState.Hunger;
             State.InteractionCooldownLeft = newState.InteractionCooldownLeft;
 
-            if(State.Health <= 0)
+            if (State.Health <= 0)
             {
                 Die(ModuleService.Instance);
             }
@@ -53,6 +54,8 @@ namespace Server.Core
             State.Hunger += hungerDelta;
 
             Module? module = ModuleService.Instance.GetModuleById(ModuleID);
+            
+            // Debug
             if (module != null && module.Type != EntityTypeEnum.Human)
             {
                 Console.WriteLine($"{module.Name} -> new state: Health={State.Health}, Hunger={State.Hunger})");
@@ -66,25 +69,18 @@ namespace Server.Core
 
         public void Die(IModuleService moduleService)
         {
-            Module? module = moduleService.GetModuleById(ModuleID);
-            if (module == null)
-            {
-                throw new Exception($"Module with ID {ModuleID} not found for entity {Id}");
-            }
-
+            Module? module = moduleService.GetModuleById(ModuleID) ?? throw new ModuleNotFoundException($"Module with ID {ModuleID} not found for entity {Id}");
             this.State.Health = 0;
             this.State.Hunger = 0;
             this.State.Position = new Position2D(0,0);
 
             if (module.Type == EntityTypeEnum.Human)
             {
-                //@EVERYONE, What do we do here?
                 //noop for now
-                //Client side?
+                //Client side
             }
             else
             {
-                // Remove entity from lobby
                 Lobby.DestroyWorldEntity(this);
             }
         }

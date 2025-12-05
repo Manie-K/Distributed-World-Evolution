@@ -17,6 +17,7 @@ namespace Server.Core.Behaviours.EatBehaviour
                 return;
             }
 
+            Module entityModule = moduleService.GetModuleById(entity.ModuleID) ?? throw new Exception($"Module with ID={entity.ModuleID} not found!");
             Module targetModule = moduleService.GetModuleById(target.ModuleID) ?? throw new Exception($"Module with ID={target.ModuleID} not found!");
 
             if (targetModule.Damage > 0)
@@ -30,7 +31,13 @@ namespace Server.Core.Behaviours.EatBehaviour
                 entity.State.Health += targetModule.MaxHunger;
             }
 
+            entity.State.Hunger = Math.Clamp(entity.State.Hunger, 0, entityModule.MaxHunger);
+
             target.Die(moduleService);
+            if(entity.State.Health <= 0)
+            {
+                entity.Die(moduleService);
+            }
         }
         /// <inheritdoc/>
         public override bool CanExecute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
