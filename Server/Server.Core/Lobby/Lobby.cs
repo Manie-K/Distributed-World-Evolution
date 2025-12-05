@@ -44,7 +44,7 @@ namespace Server.Core.Lobby
         private readonly List<WorldEntity> entities;
         private readonly Dictionary<(int, int), WorldEntity?> entitiesMap;
         private readonly Dictionary<Guid, WorldEntity> entitiesId;
-        private readonly HashSet<WorldEntity> updatedEntitiesToPublish;
+        private readonly List<WorldEntity> updatedEntitiesToPublish;
         private readonly List<int> allowedModulesIDs;
         private readonly Dictionary<TcpClient, WorldEntity> clients;
         private readonly bool[][] walkableTiles;
@@ -110,7 +110,7 @@ namespace Server.Core.Lobby
             entities = new List<WorldEntity>(LobbyParams.NUM_INITIAL_ENTITIES);
             entitiesMap = new Dictionary<(int, int), WorldEntity?>(walkableTiles[0].Length * walkableTiles.Length);
             entitiesId = new Dictionary<Guid, WorldEntity>(LobbyParams.NUM_INITIAL_ENTITIES);
-            updatedEntitiesToPublish = new HashSet<WorldEntity>(LobbyParams.NUM_INITIAL_ENTITIES);
+            updatedEntitiesToPublish = new List<WorldEntity>(LobbyParams.NUM_INITIAL_ENTITIES);
 
             allowedModulesIDs = new List<int>(20);
             clients = new Dictionary<TcpClient, WorldEntity>(maxPlayers);
@@ -275,7 +275,10 @@ namespace Server.Core.Lobby
             }
             lock (entitiesToUpdateLock)
             {
-                updatedEntitiesToPublish.Add(entity);
+                if(!updatedEntitiesToPublish.Contains(entity))
+                {
+                    updatedEntitiesToPublish.Add(entity);
+                }
             }
 
             return true;
@@ -310,7 +313,10 @@ namespace Server.Core.Lobby
             }
             lock (entitiesToUpdateLock)
             {
-                updatedEntitiesToPublish.Add(entity);
+                if(!updatedEntitiesToPublish.Contains(entity))
+                {
+                    updatedEntitiesToPublish.Add(entity);
+                }
             }
 
             return true;
@@ -487,7 +493,10 @@ namespace Server.Core.Lobby
 
                 lock (entitiesToUpdateLock)
                 {
-                    updatedEntitiesToPublish.Add(entity);
+                    if (!updatedEntitiesToPublish.Contains(entity))
+                    {
+                        updatedEntitiesToPublish.Add(entity);
+                    }
                 }
 
                 Module? entityModule = moduleService.GetModuleById(entity.ModuleID);
@@ -730,7 +739,10 @@ namespace Server.Core.Lobby
 
             lock (entitiesToUpdateLock)
             {
-                updatedEntitiesToPublish.Add(entHuman);
+                if (!updatedEntitiesToPublish.Contains(entHuman))
+                {
+                    updatedEntitiesToPublish.Add(entHuman);
+                }
             }
 
             if (other == null)
@@ -773,7 +785,10 @@ namespace Server.Core.Lobby
 
             lock (entitiesToUpdateLock)
             {
-                updatedEntitiesToPublish.Add(entOther);
+                if(!updatedEntitiesToPublish.Contains(entOther))
+                {
+                    updatedEntitiesToPublish.Add(entOther);
+                }
             }
 
             //Log($"Entity health={entOther.State.Health}", LogLevelEnum.Debug);
