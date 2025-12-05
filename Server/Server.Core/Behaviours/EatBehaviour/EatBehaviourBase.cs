@@ -25,14 +25,8 @@ namespace Server.Core.Behaviours.EatBehaviour
 
             Module targetModule = moduleService.GetModuleById(target.ModuleID) ?? throw new Exception($"Module with ID={target.ModuleID} not found!");
 
-            if (targetModule.Damage > 0)
-            {
-                entity.State.Health -= targetModule.Damage;
-            }
-            else
-            {
-                entity.State.Hunger += targetModule.MaxHunger;
-            }
+            entity.State.Health -= targetModule.Damage;
+            entity.State.Hunger += targetModule.MaxHunger;
 
             target.Die(moduleService);
         }

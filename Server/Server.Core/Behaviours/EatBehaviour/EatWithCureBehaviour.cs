@@ -22,6 +22,7 @@ namespace Server.Core.Behaviours.EatBehaviour
             if (targetModule.Damage > 0)
             {
                 entity.State.Health -= 2 * targetModule.Damage;
+                entity.State.Hunger += targetModule.MaxHunger;
             }
             else
             {

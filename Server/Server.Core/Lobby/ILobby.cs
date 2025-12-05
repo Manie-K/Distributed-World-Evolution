@@ -1,7 +1,8 @@
-﻿using System.Net.Sockets;
-using SharedLibrary.DTOs.LobbyDTO;
+﻿using SharedLibrary.DTOs.LobbyDTO;
 using SharedLibrary.Helpers;
 using SharedLibrary.Logging;
+using SharedLibrary.Messages;
+using System.Net.Sockets;
 
 namespace Server.Core.Lobby
 {
@@ -87,5 +88,20 @@ namespace Server.Core.Lobby
         /// </summary>
         /// <returns> DataTransferObject representing this lobby </returns>
         public LobbyDTO ToDTO();
+
+        /// <summary>
+        /// Checks if the given client is part of the lobby.
+        /// </summary>
+        /// <param name="client"></param>
+        /// <returns> True if the client is in the lobby, false otherwise. </returns>
+        public bool CheckClient(TcpClient client);
+
+        /// <summary>
+        /// Handles a received message from a client.
+        /// </summary>
+        /// <param name="client"> Message sender. </param>
+        /// <param name="message"> Client's message to be handled. </param>
+        public void HandleClientMessage(TcpClient client, MessageBase message);
+
     }
 }

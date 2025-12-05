@@ -1,6 +1,8 @@
 ﻿using Server.Core.Exceptions;
 using Server.Core.Services;
 using SharedLibrary.Logging;
+using SharedLibrary.Messages;
+using System.CodeDom;
 using System.Net.Sockets;
 
 namespace Server.Core.Lobby
@@ -109,7 +111,32 @@ namespace Server.Core.Lobby
                 throw new NullLobbyException($"Lobby with ID {lobbyId} does not exist.");
             }
         }
-        
+
+        public void RemoveUserFromLobbies(TcpClient client)
+        {
+            lock (lobbyLock)
+            {
+                foreach (var lobby in lobbies.Values)
+                {
+                    if (lobby.CheckClient(client))
+                    {
+                        lobby.RemoveClient(client);
+                    }
+                }
+            }
+        }
+
+        public void SendMessageToLobbyWithClient(TcpClient client, MessageBase message)
+        {
+            lock (lobbyLock)
+            {
+                foreach (var lobby in lobbies.Values)
+                {
+                    lobby.HandleClientMessage(client, message);
+                }
+            }
+        }
+
         public List<ILobby> GetAllLobbies()
         {
             lock (lobbyLock)

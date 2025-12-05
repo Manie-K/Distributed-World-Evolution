@@ -14,12 +14,12 @@ namespace Server.Core.Behaviours.MoveBehaviour
         public override EntityTypeEnum Type => EntityTypeEnum.Plant;
 
         /// <inheritdoc>
-        public override string Description => "Plants do not move.";
+        public override string Description => "Plants move behaviour - they do not change their position.";
 
         /// <inheritdoc>
         public override bool CanExecute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
-            return false;
+            return true;
         }
 
         /// <inheritdoc>

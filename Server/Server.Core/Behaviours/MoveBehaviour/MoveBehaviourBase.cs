@@ -30,11 +30,6 @@ namespace Server.Core.Behaviours.MoveBehaviour
                 {
                     lock (entitiesMap)
                     {
-                        if (entitiesMap[(nextPosition.X, nextPosition.Y)] != null)
-                        {
-                            Console.WriteLine($"[MoveBehaviour] Entity {entity.Id} moves to occupied position {nextPosition.X},{nextPosition.Y}....");
-                        }
-
                         entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = null;
                         entitiesMap[(nextPosition.X, nextPosition.Y)] = entity;
                         entity.State.Position = nextPosition;

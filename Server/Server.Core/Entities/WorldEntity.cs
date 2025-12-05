@@ -52,6 +52,12 @@ namespace Server.Core
             State.Health += healthDelta;
             State.Hunger += hungerDelta;
 
+            Module? module = ModuleService.Instance.GetModuleById(ModuleID);
+            if (module != null && module.Type != EntityTypeEnum.Human)
+            {
+                Console.WriteLine($"{module.Name} -> new state: Health={State.Health}, Hunger={State.Hunger})");
+            }
+
             if (State.Health <= 0)
             {
                 Die(ModuleService.Instance);
@@ -65,6 +71,10 @@ namespace Server.Core
             {
                 throw new Exception($"Module with ID {ModuleID} not found for entity {Id}");
             }
+
+            this.State.Health = 0;
+            this.State.Hunger = 0;
+            this.State.Position = new Position2D(0,0);
 
             if (module.Type == EntityTypeEnum.Human)
             {

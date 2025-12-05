@@ -9,7 +9,7 @@ namespace Server.Core.Helpers
         public const int INITIAL_NUMBER_OF_GROUPS = 32;
         public const int HUNGER_CHANGE = 1;
         public const int HEALTH_CHANGE = 2;
-        public const int CYCLES_PER_STATS_CHANGE = 2;
+        public const int CYCLES_PER_STATS_CHANGE = 4;
 
         /// <summary>
         /// Calculates interaction cooldown in cycles based on the number of entities in the world and interaction type.

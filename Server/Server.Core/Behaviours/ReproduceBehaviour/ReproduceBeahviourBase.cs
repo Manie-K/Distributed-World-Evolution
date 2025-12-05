@@ -102,7 +102,7 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
 
             if (entity.ModuleID == target.ModuleID && target != entity)
             {
-                int randomRoll = new Random().Next(1, 110); 
+                int randomRoll = new Random().Next(1, 1100); 
                 canReproduce = randomRoll <= entityModule.ReproductionNeed;
             }
 
