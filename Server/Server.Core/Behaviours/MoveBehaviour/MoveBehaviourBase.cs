@@ -28,11 +28,14 @@ namespace Server.Core.Behaviours.MoveBehaviour
                 if (otherParams.TryGetValue(CustomBehaviourParams.ENTITIES_MAP_PARAM, out object? entitiesMapObj)
                     && entitiesMapObj is Dictionary<(int, int), WorldEntity?> entitiesMap)
                 {
-                    lock (entitiesMap)
+                    if (otherParams.TryGetValue(CustomBehaviourParams.ENTITIES_MAP_LOCK_PARAM, out object? entitiesMapLock) && entitiesMapLock != null)
                     {
-                        entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = null;
-                        entitiesMap[(nextPosition.X, nextPosition.Y)] = entity;
-                        entity.State.Position = nextPosition;
+                        lock (entitiesMapLock)
+                        {
+                            entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = null;
+                            entitiesMap[(nextPosition.X, nextPosition.Y)] = entity;
+                            entity.State.Position = nextPosition;
+                        }
                     }
                 }
             }

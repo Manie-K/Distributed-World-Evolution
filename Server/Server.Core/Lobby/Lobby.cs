@@ -15,6 +15,7 @@ using Server.Core.Behaviours.TameBehaviour;
 using Server.Core.Behaviours.ReproduceBehaviour;
 using SharedLibrary.Helpers;
 using System.Runtime.InteropServices;
+using System.Diagnostics;
 
 namespace Server.Core.Lobby
 {
@@ -56,6 +57,8 @@ namespace Server.Core.Lobby
         private readonly object entitiesToUpdateLock = new object();
         private readonly object clientsLock = new object();
         private readonly object allowedModulesLock = new object();
+
+        private readonly Dictionary<Guid, string> callStacks = new();
 
         private bool running;
 
@@ -212,7 +215,6 @@ namespace Server.Core.Lobby
                 // Set entity state 0 for other clients to handle and remove from lobby
                 clientEntity.State.Health = 0;
                 clientEntity.State.Hunger = 0;
-                clientEntity.State.Position = new Position2D(0, 0);
 
                 DestroyWorldEntity(clientEntity);
                 clients.Remove(client);
@@ -255,11 +257,6 @@ namespace Server.Core.Lobby
             if (moduleService.GetModuleById(entity.ModuleID)?.Type != EntityTypeEnum.Human && !IsPositionFree(entity.State.Position))
                 return false;
 
-            lock (entitiesMapLock)
-            {
-                entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = entity;
-            }
-
             lock (entitiesLock)
             {
                 if (entities.Contains(entity))
@@ -268,6 +265,10 @@ namespace Server.Core.Lobby
                     return false;
                 }
                 entities.Add(entity);
+            }
+            lock (entitiesMapLock)
+            {
+                entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = entity;
             }
             lock (entitiesIdLock)
             {
@@ -287,7 +288,7 @@ namespace Server.Core.Lobby
         /// <inheritdoc/>
         public bool DestroyWorldEntity(WorldEntity entity)
         {
-            //Log($"Destroying: {entity.Id}, {entity.State.Position}, {moduleService.GetModuleById(entity.ModuleID)?.Type}, {moduleService.GetModuleById(entity.ModuleID)?.Name}", LogLevelEnum.Debug);
+            Log($"Destroying: {entity.Id}, {entity.State.Position}, {moduleService.GetModuleById(entity.ModuleID)?.Type}, {moduleService.GetModuleById(entity.ModuleID)?.Name}", LogLevelEnum.Debug);
 
             if (entity == null)
             {
@@ -299,9 +300,12 @@ namespace Server.Core.Lobby
                 if (!entities.Contains(entity))
                 {
                     Log($"Entity {entity.Id} does not exist in lobby {LobbyId}.", LogLevelEnum.Warning);
+                    Log($"\nCurrent call stack: {Environment.StackTrace}\n", LogLevelEnum.Debug);
+                    Log($"Current cycle: {totalCycles}. Call stack of first deletion:\n{callStacks.GetValueOrDefault(entity.Id, "No call stack recorded.")}", LogLevelEnum.Debug);
                     return false;
                 }
                 entities.Remove(entity);
+                callStacks.Add(entity.Id, $"Cycle: {totalCycles} -> " + Environment.StackTrace);
             }
             lock (entitiesMapLock)
             {
@@ -460,6 +464,26 @@ namespace Server.Core.Lobby
                     _ = MessageManager.SendMessageAsync(clientPair.Key, worldStateMessage); //TODO: Check if sending the same ref is ok
                 }
             }
+
+            if((entities.Count != entitiesId.Count) || (entities.Count != entitiesMap.Count(p => p.Value != null)))
+            {
+                Log($"Inconsistent entity counts in lobby {LobbyId}: entities count = {entities.Count}, entitiesId count = {entitiesId.Count}, entitiesMap count = {entitiesMap.Count(p => p.Value != null)}", LogLevelEnum.Error);
+                foreach (var pair in entitiesMap.Where(p => p.Value != null))
+                {
+                    if (!entitiesId.ContainsKey(pair.Value.Id))
+                    {
+                        Log($"Entity {pair.Value.Id} present in entitiesMap but missing in entitiesId dictionary.", LogLevelEnum.Error);
+                        Log($"The entity position is {pair.Key}.", LogLevelEnum.Error);
+                        Log($"Position contains entity with ID: {entitiesMap[(pair.Key)].Id}", LogLevelEnum.Error);
+                    }
+                    if (entities.Count(e => e.Id == pair.Value.Id) == 0)
+                    {
+                        Log($"Entity {pair.Value.Id} present in entitiesMap but missing in entities list.", LogLevelEnum.Error);
+                    }
+
+                }
+                Debugger.Break();
+            }
         }
 
         /// <summary>
@@ -507,16 +531,16 @@ namespace Server.Core.Lobby
                     continue;
                 }
 
+                if (entity.State.Health <= 0)
+                {
+                    entity.Die(moduleService);
+                    i--;
+
+                    continue;
+                }
+
                 if (totalCycles % LobbyParams.CYCLES_PER_STATS_CHANGE == 0 && entityModule.Type != EntityTypeEnum.Plant)
                 {
-                    if (entity.State.Health <= 0)
-                    {
-                        entity.Die(moduleService);
-                        i--;
-
-                        continue;
-                    }
-
                     if (entity.State.Hunger > 0)
                     {
                         entity.State.Hunger -= LobbyParams.HUNGER_CHANGE;
@@ -635,7 +659,8 @@ namespace Server.Core.Lobby
                     behaviour.Execute(entity, null, ModuleService.Instance, new Dictionary<string, object>{
                         { CustomBehaviourParams.MAP_WALKABLE_PARAM, walkableTiles },
                         { CustomBehaviourParams.NEW_POS_PARAM, newState.Position },
-                        { CustomBehaviourParams.ENTITIES_MAP_PARAM, entitiesMap }
+                        { CustomBehaviourParams.ENTITIES_MAP_PARAM, entitiesMap },
+                        { CustomBehaviourParams.ENTITIES_MAP_LOCK_PARAM, entitiesMapLock } 
                     });
 
                     entity.State.InteractionCooldownLeft = cooldownLeft;
@@ -713,6 +738,7 @@ namespace Server.Core.Lobby
         /// <exception cref="ArgumentNullException">Human entity can not be null.</exception>
         private void SimulateHumanEntityUpdate(WorldEntityDTO human, WorldEntityDTO? other)
         {
+            
             WorldEntity? entHuman;
             WorldEntity? entOther;
 
@@ -744,7 +770,6 @@ namespace Server.Core.Lobby
                     updatedEntitiesToPublish.Add(entHuman);
                 }
             }
-
             if (other == null)
             {
                 return;
@@ -755,6 +780,7 @@ namespace Server.Core.Lobby
                 Log("Other is not null", LogLevelEnum.Debug);
                 try
                 {
+                    Log($"EntitiesID count: {entitiesId.Count}", LogLevelEnum.Debug);
                     entOther = entitiesId[other.Id];
                 }
                 catch (Exception ex)
@@ -790,7 +816,7 @@ namespace Server.Core.Lobby
                     updatedEntitiesToPublish.Add(entOther);
                 }
             }
-
+            
             //Log($"Entity health={entOther.State.Health}", LogLevelEnum.Debug);
         }
 
