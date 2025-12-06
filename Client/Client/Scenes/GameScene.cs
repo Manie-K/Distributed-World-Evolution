@@ -25,6 +25,7 @@ namespace Client
         private List<WorldEntityDTO> inGameEntities;
         private WorldMap map;
         private Vector2 cameraOffset;
+        private bool showPerformance;
         private double clientUpdateTimer;
         private double timeBetweenUpdates;
 
@@ -51,6 +52,7 @@ namespace Client
             manager.IsInGame = true;
             clientUpdateTimer = 0;
             timeBetweenUpdates = 1.0 / ClientManager.CLIENT_UPDATES_PER_SECOND;
+            showPerformance = bool.Parse(manager.AppConfig["TcpSettings:ShowPerformance"]);
 
             inGameEntities = new List<WorldEntityDTO>();
             List<WorldEntityDTO> entitiesToLoad = manager.ClientManager.LobbyData.WorldEntities.ToList();
@@ -73,7 +75,7 @@ namespace Client
         public void Update(GameTime gameTime)
         {
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            performanceText.SetText("sec: " + delta + " ; creatures: " + inGameEntities.Count);
+            if (showPerformance) performanceText.SetText("sec: " + delta + " ; creatures: " + inGameEntities.Count);
 
             panelsController.Update();
             
@@ -181,7 +183,7 @@ namespace Client
 
         public void DrawStatic(SpriteBatch spriteBatch)
         {
-            //performanceText.Draw(spriteBatch);
+            if (showPerformance) performanceText.Draw(spriteBatch);
             panelsController.Draw(spriteBatch);
         }
 
