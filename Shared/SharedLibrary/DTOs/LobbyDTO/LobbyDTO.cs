@@ -1,9 +1,4 @@
 ﻿using SharedLibrary.DTOs.EntitiesDTO;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SharedLibrary.DTOs.LobbyDTO
 {
@@ -27,6 +22,5 @@ namespace SharedLibrary.DTOs.LobbyDTO
             ModulesIDs = modulesIDs;
             WorldEntities = worldEntities;
         }
-
     }
 }

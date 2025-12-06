@@ -98,26 +98,26 @@ namespace Client
             {
                 actionCooldown -= delta;
             }
-            Vector2 movement = Vector2.Zero;
 
+            Vector2 movement = Vector2.Zero;
             if (inputManager.CheckIfPressingKey(Keys.W))
             {
-                CurrentDirection = Direction.Up;
+                currentDirection = Direction.Up;
                 movement.Y -= 1;
             }
             if (inputManager.CheckIfPressingKey(Keys.S))
             {
-                CurrentDirection = Direction.Down;
+                currentDirection = Direction.Down;
                 movement.Y += 1;
             }
             if (inputManager.CheckIfPressingKey(Keys.A))
             {
-                CurrentDirection = Direction.Left;
+                currentDirection = Direction.Left;
                 movement.X -= 1;
             }
             if (inputManager.CheckIfPressingKey(Keys.D))
             {
-                CurrentDirection = Direction.Right;
+                currentDirection = Direction.Right;
                 movement.X += 1;
             }
 
@@ -202,7 +202,7 @@ namespace Client
             if (TargetEntity == null)
             {
                 Position2D targetPosition = map.GetTilePosition2D(Position.X, Position.Y);
-                switch (CurrentDirection)
+                switch (currentDirection)
                 {
                     case Direction.Up:
                         if (targetPosition.Y > 0) targetPosition.Y -= 1;

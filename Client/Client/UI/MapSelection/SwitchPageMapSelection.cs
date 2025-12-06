@@ -78,6 +78,5 @@ namespace Client
             mapName.SetText(maps[pageNumber - 1].Name);
             pageNumberText.SetText(pageNumber.ToString());
         }
-
     }
 }

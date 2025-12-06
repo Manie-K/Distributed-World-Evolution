@@ -1,10 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Client.UI.CreateModules.Modules.Parameters
 {
@@ -17,7 +12,6 @@ namespace Client.UI.CreateModules.Modules.Parameters
         private Color hoverColor;
         private bool isHovered;
         private bool value;
-
 
         public CheckBox(Texture2D backGroundTexture, Texture2D applyTexture, Vector2 position, int width, int height, Color color)
         {
@@ -36,7 +30,6 @@ namespace Client.UI.CreateModules.Modules.Parameters
             {
                 backgroundColor = isHovered ? hoverColor : Color.White;
                 spriteBatch.Draw(applyTexture, bounds, backgroundColor);
-
             }
         }
 

@@ -51,10 +51,7 @@ namespace Client
             manager.ClientManager.BehaviourListReady = ActionStatus.PENDING;
         }
 
-        public void Load()
-        {
-
-        }
+        public void Load() {}
 
         public void Update(GameTime gameTime)
         {
@@ -146,10 +143,7 @@ namespace Client
             descriptionBox.DescriptionButton.Update(manager.InputManager.GetMousePosition());
         }
 
-        public void Draw(SpriteBatch spriteBatch)
-        {
-
-        }
+        public void Draw(SpriteBatch spriteBatch) {}
 
         public void DrawStatic(SpriteBatch spriteBatch)
         {

@@ -16,9 +16,9 @@ namespace Client.UI.CreateModules.Modules.Parameters
         private Button[] pageButtons;
         private Text pageNumberText;
         private List<ModuleParameter> parameters;
+
         private int pageNumber;
         private int amountOfRows;
-
         private int lastParameterClicked;
 
         public SwitchPageModulesParameters(SpriteFont fontNumbers, Vector2 position, ContentManager contentManager, int amountOfRows)

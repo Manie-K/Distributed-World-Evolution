@@ -20,7 +20,6 @@ namespace Client.Panels
             playButton = new Button(manager.ContentManager.Load<Texture2D>("Panels/Esc_Panel/Play_Button2"), null, null, new Vector2(485, 196), 309, 68, Color.Gold);
             settingsButton = new Button(manager.ContentManager.Load<Texture2D>("Panels/Esc_Panel/Settings_Button2"), null, null, new Vector2(485, 277), 309, 65, Color.Gold);
             exitButton = new Button(manager.ContentManager.Load<Texture2D>("Panels/Esc_Panel/Exit_Button2"), null, null, new Vector2(485, 356), 309, 66, Color.Gold);
-
         }
 
         public bool Update(Vector2 position)
@@ -64,7 +63,6 @@ namespace Client.Panels
 
             return false;
         }
-
 
         public void Draw(SpriteBatch spriteBatch)
         {

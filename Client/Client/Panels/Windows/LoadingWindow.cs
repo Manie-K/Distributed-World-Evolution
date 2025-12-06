@@ -1,10 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace Client.Panels.Windows
@@ -15,15 +10,16 @@ namespace Client.Panels.Windows
         private Text information;
         private Text Timerinformation;
         private int timer;
+
         public bool IsEnabled;
 
         public LoadingWindow(GameManager manager)
         {
             background = manager.ContentManager.Load<Texture2D>("Panels/LoadingWindow/Loading_Window");
             information = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsText"), "", true,
-                                   new Vector2(466, 259),353, 87);
+                new Vector2(466, 259),353, 87);
             Timerinformation = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsText"), "", true,
-                       new Vector2(552, 389), 185, 75);
+                new Vector2(552, 389), 185, 75);
             IsEnabled = false;
             timer = 1;
             Timerinformation.SetText(TimerToString());
@@ -34,11 +30,9 @@ namespace Client.Panels.Windows
 
         public void Draw(SpriteBatch spriteBatch)
         {
-
             spriteBatch.Draw(background, new Rectangle(415, 189, 452, 341), Color.White);
             information.Draw(spriteBatch);
             Timerinformation.Draw(spriteBatch);
-
         }
 
         public void SetLoadingInformation(string loadinginformation)
@@ -91,6 +85,5 @@ namespace Client.Panels.Windows
 
             return minutesInString + ":" + secondsInString;
         }
-
     }
 }

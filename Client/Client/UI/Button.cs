@@ -1,8 +1,5 @@
-﻿using Client.Rendering;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Diagnostics;
 
 namespace Client
 {
@@ -18,8 +15,8 @@ namespace Client
         private Color hoverColor;
         private bool isHovered;
         private bool isDisabled;
-        public bool SwitchingValue;
 
+        public bool SwitchingValue;
 
         public Button(Texture2D backGroundTexture, SpriteFont font, string text, Vector2 position, int width, int height, Color color)
         {
@@ -60,7 +57,6 @@ namespace Client
                 spriteBatch.DrawString(font, text, textPosition, textColor);
             }
         }
-
 
         public void Update(Vector2 mousePosition)
         {

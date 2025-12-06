@@ -1,8 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Diagnostics;
 
 namespace Client
 {
@@ -34,11 +31,10 @@ namespace Client
         {
             return left;
         }
+
         public Button GetRightButton()
         {
             return right;
         }
-
-
     }
 }

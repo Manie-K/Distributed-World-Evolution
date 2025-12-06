@@ -11,19 +11,17 @@ namespace Client
         private CheckBox checkBox;
         private Text creatureName;
         private Rectangle bounds;
-
         private Texture2D verifyIcon;
         private Rectangle iconBounds;
 
         public CreateLobbyRow(SpriteFont font, Texture2D checkboxBG, Texture2D checkboxApply, Texture2D verifyIcon, ModuleData module, Vector2 position, int width, int height)
         {
-
             moduleData = module;
             creatureName = new Text(font, module.ModuleName, true, new Vector2(position.X + 70, position.Y), width - 70, height);
 
             bounds = new Rectangle((int)position.X + 70, (int)position.Y, width, height);
 
-            this.checkBox = new CheckBox(checkboxBG, checkboxApply, new Vector2(position.X + 22, position.Y + 17), 25, 24, Color.Gold);
+            checkBox = new CheckBox(checkboxBG, checkboxApply, new Vector2(position.X + 22, position.Y + 17), 25, 24, Color.Gold);
 
             this.verifyIcon = verifyIcon;
             iconBounds = new Rectangle((int) position.X + width + 13, (int) position.Y + 10, 35, 39);
@@ -49,7 +47,6 @@ namespace Client
             }
             return false;
         }
-
 
         public void Draw(SpriteBatch spriteBatch)
         {

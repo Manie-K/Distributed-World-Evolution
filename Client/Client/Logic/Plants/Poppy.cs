@@ -1,6 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 
-
 namespace Client.Logic.Plants
 {
     public class Poppy : Plant

@@ -8,10 +8,10 @@ namespace Client.UI.CreateLobby.Parameters
     {
         private Text parameterName;
         private Text parameterValue;
-        public string Description;
-
         private Texture2D background;
         private Rectangle rect;
+
+        public string Description;
 
         public ParameterRow(ContentManager contentManager, string name, string value, string description, Vector2 position, int type)
         {
@@ -47,6 +47,7 @@ namespace Client.UI.CreateLobby.Parameters
         {
             return rect.Contains(position);
         }
+
         public string GetDescription()
         {
             return Description;

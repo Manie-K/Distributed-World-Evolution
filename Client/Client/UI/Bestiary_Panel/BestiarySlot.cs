@@ -86,8 +86,6 @@ namespace Client.UI.Bestiary_Panel
                 case 2:
                     creatureTexture = manager.ContentManager.Load<Texture2D>("Panels/Bestiary_Panel/CreaturesImages/Bestiary_Pig");
                     break;
-
-
             }
         }
     }

@@ -1,8 +1,6 @@
 ﻿using Client.Logic;
-using Client.Logic.Plants;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using SharedLibrary.Helpers;
 
 namespace Client.UI.Bestiary_Panel
 {

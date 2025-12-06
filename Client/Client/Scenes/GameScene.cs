@@ -16,7 +16,6 @@ namespace Client
     public class GameScene : IScene
     {
         private GameManager manager;
-
         private Text performanceText;
         private PanelsController panelsController;
         private Player player;
@@ -25,6 +24,7 @@ namespace Client
         private List<WorldEntityDTO> inGameEntities;
         private WorldMap map;
         private Vector2 cameraOffset;
+
         private bool showPerformance;
         private double clientUpdateTimer;
         private double timeBetweenUpdates;
@@ -32,7 +32,6 @@ namespace Client
         public GameScene(GameManager manager, int mapID)
         {
             this.manager = manager;
-
             characters = [];
             plants = [];
 
@@ -67,10 +66,7 @@ namespace Client
             }
         }
 
-        public void Load()
-        {
-
-        }
+        public void Load() {}
 
         public void Update(GameTime gameTime)
         {
@@ -86,7 +82,7 @@ namespace Client
             // Removing dead creatures
             foreach (Guid guid in characters.Keys)
             {
-                if (!characters[guid].isDead)
+                if (!characters[guid].IsDead)
                 {
                     newCharacterList.Add(guid, characters[guid]);
                 }
@@ -100,7 +96,7 @@ namespace Client
             // Removing dead plants
             foreach (Guid guid in plants.Keys)
             {
-                if (!plants[guid].isDead)
+                if (!plants[guid].IsDead)
                 {
                     newPlantList.Add(guid, plants[guid]);
                 }
@@ -137,7 +133,7 @@ namespace Client
                     plant.Position = GetWorldPosition(entity);
                     if (entity.State.Health <= 0)
                     { 
-                        plant.isDead = true;
+                        plant.IsDead = true;
                     }
                     int index = inGameEntities.FindIndex(e => e.Id == entity.Id);
                     if (index != -1)
@@ -160,6 +156,7 @@ namespace Client
                 }
             }
 
+            // Updating player
             player.Update(gameTime, manager.InputManager, inGameEntities);
             clientUpdateTimer += delta;
             SendPlayerStatus();

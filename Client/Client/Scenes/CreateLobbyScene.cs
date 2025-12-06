@@ -16,7 +16,6 @@ namespace Client
     public class CreateLobbyScene : IScene
     {
         private GameManager manager;
-
         private Texture2D backGround;
         private Button exitButton;
         private SwitchPageLobby switchPageLobby;
@@ -28,7 +27,6 @@ namespace Client
         private SelectedMapData mapData;
         private ModulesImageDisplay modulesImageDisplay;
         private SwitchPageParameters switchPageParameters;
-
         private DescriptionBox descriptionBox;
 
         private bool isCreatingLobby;
@@ -70,10 +68,7 @@ namespace Client
             manager.ClientManager.ModuleListReady = ActionStatus.PENDING;
         }
 
-        public void Load()
-        {
-
-        }
+        public void Load() {}
 
         public void InitializeCreaturesRows()
         {
@@ -208,10 +203,7 @@ namespace Client
             }
         }
 
-        public void Draw(SpriteBatch spriteBatch)
-        {
-
-        }
+        public void Draw(SpriteBatch spriteBatch) {}
 
         public void DrawStatic(SpriteBatch spriteBatch)
         {
