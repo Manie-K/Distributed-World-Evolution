@@ -6,6 +6,7 @@ using SharedLibrary.DTOs.ModuleDTO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using SharedLibrary.Helpers;
 
 namespace Client.UI.CreateModules.Modules.Parameters
 {
@@ -36,11 +37,16 @@ namespace Client.UI.CreateModules.Modules.Parameters
         public void AddRow(List<BehaviourDTO> behaviours)
         {
             parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Type", "Type of the creature", false));
-            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Damage", "Number of the damage dealt"));
-            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Aggresion", "Number of agression"));
-            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Reproduction", "The need for breeding"));
-            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Max Health", "Max Health"));
-            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Max Hunger", "Max Hunger"));
+            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Damage",
+                "Number of the damage dealt. Min value: " + ModulePropertiesLimits.MIN_DAMAGE + ", Max value: "+ ModulePropertiesLimits.MAX_DAMAGE));
+            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Aggresion",
+                "Number of agression. Min value: " + ModulePropertiesLimits.MIN_AGGRESSION + ", Max value: " + ModulePropertiesLimits.MAX_AGGRESSION));
+            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Reproduction",
+                "The need for breeding. Min value: " + ModulePropertiesLimits.MIN_REPRODUCTION_NEED + ", Max value: " + ModulePropertiesLimits.MAX_REPRODUCTION_NEED));
+            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Max Health",
+                "Max Health. Min value: " + ModulePropertiesLimits.MIN_MAX_HEALTH + ", Max value: " + ModulePropertiesLimits.MAX_MAX_HEALTH));
+            parameters.Add(new ModuleStatsParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), 0, "Max Satiety",
+                "Max Satiety. Min value: " + ModulePropertiesLimits.MIN_MAX_HUNGER + ", Max value: " + ModulePropertiesLimits.MAX_MAX_HUNGER));
 
             parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), behaviours.Where(b => b.InteractionType == BehaviourInteractionTypeEnum.Attack).ToList(), 1, "Attack", "Attack behaviour"));
             parameters.Add(new ModuleBehaviourParameter(contentManager, new Vector2(675, 185 + 76 * (parameters.Count % amountOfRows)), behaviours.Where(b => b.InteractionType == BehaviourInteractionTypeEnum.Eat).ToList(), 1, "Eat", "Eat behaviour"));

@@ -10,7 +10,6 @@ using SharedLibrary.DTOs.ModuleDTO;
 using SharedLibrary.Messages;
 using System;
 using System.Collections.Generic;
-using System.Text.Json;
 
 namespace Client
 {
@@ -49,6 +48,7 @@ namespace Client
             CheckAllButton = new Button(manager.ContentManager.Load<Texture2D>("UI/Buttons/AllButon"), null, null, new Vector2(155, 219), 80, 40, Color.Lime);
             gameNameBox = new TextBox(null, manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"),
                                         new Vector2(288, 129), 170, 36, Color.White);
+            gameNameBox.SetText("Your Lobby");
             playerAmountBox = new TextBox(null, manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"),
                                         new Vector2(523, 129), 50, 36, Color.White, true);
             playerAmountBox.SetText("4");
@@ -88,7 +88,7 @@ namespace Client
                 parameters.Add(new ModuleParametersData("Aggresion", module.Aggresion.ToString(), 0, "Aggresion"));
                 parameters.Add(new ModuleParametersData("Reproduction", module.ReproductionNeed.ToString(), 0, "Reproduction Need"));
                 parameters.Add(new ModuleParametersData("Max Health", module.MaxHealth.ToString(), 0, "Max Health"));
-                parameters.Add(new ModuleParametersData("Max Hunger", module.MaxHunger.ToString(), 0, "Max Hunger"));
+                parameters.Add(new ModuleParametersData("Max Satiety", module.MaxHunger.ToString(), 0, "Max Satiety"));
 
                 if (module.Behaviours != null)
                 {

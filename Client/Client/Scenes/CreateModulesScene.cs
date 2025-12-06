@@ -36,6 +36,7 @@ namespace Client
             saveButton = new Button(manager.ContentManager.Load<Texture2D>("UI/Buttons/SaveButton"), null, null, new Vector2(520, 570), 211, 79, new Color(255, 255, 128));
             switchPageModules = new SwitchPageModules(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), new Vector2(115, 316), manager.ContentManager);
             moduleName = new TextBox(null, manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), new Vector2(886, 110), 220, 42, Color.White);
+            moduleName.SetText("Your Module");
             descriptionBox = new DescriptionBox(manager.ContentManager.Load<SpriteFont>("Fonts/DescriptionFont"), 0, manager.ContentManager);
 
             this.switchPageModulesParameters = new SwitchPageModulesParameters(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"),
