@@ -4,12 +4,13 @@ namespace Server.Core.Helpers
 {
     public class LobbyParams
     {
-        public const int NUM_INITIAL_ENTITIES = 500;
+        public const int NUM_INITIAL_ENTITIES = 750;
+        public const int MAX_ENTITIES = 5000;
         public const double LOBBY_UPDATES_PER_SECOND = 64;
-        public const int INITIAL_NUMBER_OF_GROUPS = 32;
+        public const int INITIAL_NUMBER_OF_GROUPS = 4;
         public const int HUNGER_CHANGE = 1;
         public const int HEALTH_CHANGE = 2;
-        public const int CYCLES_PER_STATS_CHANGE = 4;
+        public const int CYCLES_PER_STATS_CHANGE = 16;
 
         /// <summary>
         /// Calculates interaction cooldown in cycles based on the number of entities in the world and interaction type.
@@ -19,46 +20,48 @@ namespace Server.Core.Helpers
         /// <returns></returns>
         public static int InteractionCooldownInCycles(int entitiesCount, InteractionTypeEnum interactionTypeEnum)
         {
+            const int modifier = 8;
             if (entitiesCount >= 1000)
-                return 0;
+                if(interactionTypeEnum == InteractionTypeEnum.Move)
+                    return 2 * modifier;
+                else
+                    return 1 * modifier;
 
             switch (interactionTypeEnum)
             {
                 case InteractionTypeEnum.None:
-                    return 0;
+                    return 1 * modifier;
 
                 case InteractionTypeEnum.Move:
-                    {
-                        if (entitiesCount >= 500)
-                            return 2;
-                        else if (entitiesCount >= 200)
-                            return 3;
-                        return 4;
-                    }
+                    if (entitiesCount >= 500)
+                        return 2 * modifier;
+                    else if (entitiesCount >= 200)
+                        return 3 * modifier;
+                    return 4 * modifier;
 
                 case InteractionTypeEnum.Attack:
                     if (entitiesCount >= 500)
-                        return 0;
+                        return 2 * modifier;
                     else if (entitiesCount >= 200)
-                        return 1;
-                    return 2;
+                        return 2 * modifier;
+                    return 3 * modifier;
 
                 case InteractionTypeEnum.Eat:
                     if (entitiesCount >= 500)
-                        return 0;
+                        return 1 * modifier;
                     else if (entitiesCount >= 200)
-                        return 1;
-                    return 2;
+                        return 2 * modifier;
+                    return 3 * modifier;
 
                 case InteractionTypeEnum.Reproduce:
                     if (entitiesCount >= 500)
-                        return 0;
+                        return 4 * modifier;
                     else if (entitiesCount >= 200)
-                        return 1;
-                    return 2;
+                        return 4 * modifier;
+                    return 5 * modifier;
 
                 default:
-                    return 0;
+                    return 1 * modifier;
             }
         }
     }

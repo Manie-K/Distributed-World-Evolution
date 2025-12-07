@@ -1,5 +1,4 @@
-﻿using System.Collections.Immutable;
-using Server.Core.Helpers;
+﻿using Server.Core.Helpers;
 using Server.Core.Lobby;
 using Server.Core.Services;
 using SharedLibrary.DTOs.ModuleDTO;
@@ -57,7 +56,7 @@ namespace Server.Core.Behaviours.MoveBehaviour
                 && walkableTilesObj is bool[][] tiles ? tiles : null;
 
             ILobby lobby = otherParams.TryGetValue(CustomBehaviourParams.LOBBY_PARAM, out object? lobbyObj)
-                && lobbyObj is ILobby l ? l : throw new ArgumentNullException("Lobby parameter is required for AvoiderMoveBehaviour");
+                && lobbyObj is ILobby l ? l : throw new ArgumentNullException("Lobby parameter is required for BasicMoveBehaviour");
 
             if (walkableTiles == null || lobby == null 
                 || nextPos.X < 0 || nextPos.Y < 0 

@@ -49,17 +49,19 @@ namespace Server.Core
 
         public void UpdateStateWithDelta(Position2D positionDelta, int healthDelta, int hungerDelta)
         {
+            Module module = ModuleService.Instance.GetModuleById(ModuleID) ?? throw new ModuleNotFoundException($"Module with ID {ModuleID} not found for entity {Id}");
+            
+            if(!positionDelta.Equals(new Position2D(0,0)) && module.Type != EntityTypeEnum.Human)
+            {
+                Console.WriteLine("Non human entity changed position after client update.");
+            }
+
             State.Position += positionDelta;
             State.Health += healthDelta;
             State.Hunger += hungerDelta;
 
-            Module? module = ModuleService.Instance.GetModuleById(ModuleID);
-            
-            // Debug
-            if (module != null && module.Type != EntityTypeEnum.Human)
-            {
-                Console.WriteLine($"{module.Name} -> new state: Health={State.Health}, Hunger={State.Hunger})");
-            }
+            State.Health = Math.Clamp(State.Health, 0, module.MaxHealth);
+            State.Hunger = Math.Clamp(State.Hunger, 0, module.MaxHunger);
 
             if (State.Health <= 0)
             {
@@ -77,6 +79,8 @@ namespace Server.Core
             {
                 //noop for now
                 //Client side
+                this.State.Health = 100;
+                this.State.Hunger = 100;
             }
             else
             {
