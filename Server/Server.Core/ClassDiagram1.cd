@@ -1,0 +1,211 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="Server.Core.Behaviours.BehaviourInMemoryDB" Collapsed="true">
+    <Position X="20.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAQAAAACAAABA=</HashCode>
+      <FileName>Behaviours\BehaviourInMemoryDB.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Server.Core.Connection.ConnectionManager" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="18.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>YAAAAAAUAAwAAAACAAEAIAAAAIAoAAgAAQAAQAAQAAA=</HashCode>
+      <FileName>Connection\ConnectionManager.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Server.Core.Data.ApplicationDBContext">
+    <Position X="11.5" Y="0.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAQAAAAAAAAAAAAAQEAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Data\ApplicationDBContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Server.Core.Data.InitialData" Collapsed="true">
+    <Position X="13.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACAAAAAAA=</HashCode>
+      <FileName>Data\InitialData.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Server.Core.Data.ModuleDBEntity" Collapsed="true">
+    <Position X="11.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAACAAiAAAAAAAQAQAAAAAACAAAQAAAAQAAQA=</HashCode>
+      <FileName>Data\ModuleDBEntity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Server.Core.EntityState" Collapsed="true">
+    <Position X="14.75" Y="10.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAiAgAAAAAAAAgAAAQQAAAAAAAIAAAAAAAAAAgAAA=</HashCode>
+      <FileName>Entities\EntityState.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Server.Core.WorldEntity" Collapsed="true">
+    <Position X="14.75" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAACQAAAQAAAAACgAAAAQAQAAAAAAAIAAAAABAAAAAA=</HashCode>
+      <FileName>Entities\WorldEntity.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Server.Core.Program">
+    <Position X="13" Y="6" Width="1.75" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAABAAAAAA=</HashCode>
+      <FileName>Program.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Server.Core.Helpers.CustomBehaviourParams">
+    <Position X="5.75" Y="1" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAIAAAAIAAAAAAIAAAAAAAAAAAAAAAAAQAAQAA=</HashCode>
+      <FileName>Helpers\CustomBehaviourParams.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Server.Core.Helpers.LobbyParams" Collapsed="true">
+    <Position X="20.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAACAAAAAAAAKAAAAEAAAAAAAAAAIAAAAIAAA=</HashCode>
+      <FileName>Helpers\LobbyParams.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Server.Core.Helpers.TypeHelpers" Collapsed="true">
+    <Position X="18.5" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAABAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Helpers\TypeHelpers.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Server.Core.Lobby.Lobby" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="20.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>iAAAAAAQAAIBZQCAgAIGUYSoFA0AAQWQVAICAgUADCo=</HashCode>
+      <FileName>Lobby\Lobby.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Server.Core.Lobby.LobbyManager" Collapsed="true">
+    <Position X="22.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAgAAAAAAAIAAACAAADAAAAAIhAAACAAAAAAAAAEAA=</HashCode>
+      <FileName>Lobby\LobbyManager.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Server.Core.Modules.Module" Collapsed="true">
+    <Position X="11.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACAAAAAiIAAAAAAQQQIIAAAACAAAQAAAAQAAQA=</HashCode>
+      <FileName>Modules\Module.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Server.Core.Services.BehaviourService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="18.75" Y="9.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAQAAABAAAAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>Services\BehaviourService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Server.Core.Services.LoggerService" Collapsed="true">
+    <Position X="24" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAIAAAAAAAAgAAAAgABAAAAAACAAAAQEA=</HashCode>
+      <FileName>Services\LoggerService.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Server.Core.Services.ModuleService" Collapsed="true" BaseTypeListCollapsed="true">
+    <Position X="17" Y="9.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAABAAAAACAAAAIAAAAAAAAARAAAAAAAAAA=</HashCode>
+      <FileName>Services\ModuleService.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" Collapsed="true" />
+  </Class>
+  <Class Name="Server.Core.Behaviours.EatBehaviour.EatBehaviourBase" Collapsed="true">
+    <Position X="4.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAQAAEAAQAAAAAAAAAAAAQAAAEAAAAA=</HashCode>
+      <FileName>Behaviours\EatBehaviour\EatBehaviourBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Server.Core.Behaviours.AttackBehaviour.AttackBehaviourBase" Collapsed="true">
+    <Position X="2.5" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAQAAEAAQAAAAAAAAAAAAQAAAEAAAAA=</HashCode>
+      <FileName>Behaviours\AttackBehaviour\AttackBehaviourBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Server.Core.Behaviours.MoveBehaviour.MoveBehaviourBase" Collapsed="true">
+    <Position X="0.75" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAQAAEAAQAAAAAAAAAAAAQAABEAAAAA=</HashCode>
+      <FileName>Behaviours\MoveBehaviour\MoveBehaviourBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Class Name="Server.Core.Behaviours.ReproduceBehaviour.ReproduceBehaviourBase" Collapsed="true">
+    <Position X="6.25" Y="3.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAQAAEAAQAAAAAAAAAAAAQAAAEAAAAA=</HashCode>
+      <FileName>Behaviours\ReproduceBehaviour\ReproduceBeahviourBase.cs</FileName>
+    </TypeIdentifier>
+    <Lollipop Position="0.2" />
+  </Class>
+  <Interface Name="Server.Core.Behaviours.IBehaviour">
+    <Position X="3.75" Y="1" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAgAAQAAEAAQAAAAAAAAAAAAQAAAEAAAAA=</HashCode>
+      <FileName>Behaviours\IBehaviour.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Server.Core.Connection.IConnectionManager">
+    <Position X="18.5" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAAAAAAAAA=</HashCode>
+      <FileName>Connection\IConnectionManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Server.Core.Lobby.ILobby" Collapsed="true">
+    <Position X="20.5" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAAAAAAAAAIAAACAgAAAQQSAEAAAAAAARAACAAAADAI=</HashCode>
+      <FileName>Lobby\ILobby.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Server.Core.Lobby.ILobbyManager" Collapsed="true">
+    <Position X="22.25" Y="5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Lobby\ILobbyManager.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Server.Core.Services.IBehaviourService">
+    <Position X="18.75" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAQAAABAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Services\IBehaviourService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Interface Name="Server.Core.Services.IModuleService">
+    <Position X="17" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAABAAAAAAAAAACAAAAIAAAAAAAAABAAAAAAAAAA=</HashCode>
+      <FileName>Services\IModuleService.cs</FileName>
+    </TypeIdentifier>
+  </Interface>
+  <Enum Name="Server.Core.Behaviours.InteractionTypeEnum" Collapsed="true">
+    <Position X="14.75" Y="8.25" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAEIAAEAAAAAAAAAAAAIAAAAAAAAAAAAEAAAA=</HashCode>
+      <FileName>Behaviours\InteractionTypeEnum.cs</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

@@ -77,9 +77,10 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
                 null,
                 entity.ModuleID,
                 new EntityState(
-                    position: position,
-                    health: entityModule.MaxHealth,
-                    hunger: entityModule.MaxHunger
+                    position,
+                    entityModule.MaxHealth,
+                    entityModule.MaxHunger,
+                    10
                 ),
                 lobby
             );
@@ -102,7 +103,7 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
 
             if (entity.ModuleID == target.ModuleID && target != entity)
             {
-                int randomRoll = new Random().Next(1, 110); 
+                int randomRoll = new Random().Next(1, 61);
                 canReproduce = randomRoll <= entityModule.ReproductionNeed;
             }
 

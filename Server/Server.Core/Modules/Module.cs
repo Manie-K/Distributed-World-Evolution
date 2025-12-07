@@ -41,6 +41,8 @@ namespace Server.Core.Modules
                                 .WithDamage(dbEntity.Damage)
                                 .WithAgression(dbEntity.Agression)
                                 .WithReproductionNeed(dbEntity.ReproductionNeed)
+                                .WithMaxHunger(dbEntity.MaxHunger)
+                                .WithMaxHealth(dbEntity.MaxHealth)
                                 .WithGraphicsId(dbEntity.GraphicalRepresentationID)
                                 .WithBehaviours(behaviours)
                                 .Create();
