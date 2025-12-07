@@ -386,6 +386,12 @@ namespace Server.Core.Lobby
             Log("Initializing world entities...", LogLevelEnum.Info);
             Log($"World map size {walkableTiles.Length} x {walkableTiles[0].Length}", LogLevelEnum.Info);
 
+            if (modulesCount <= 1)
+            {
+                Log("No allowed modules in lobby to create world entities.", LogLevelEnum.Warning);
+                return;
+            }
+
             for (int i = 0; i < LobbyParams.NUM_INITIAL_ENTITIES; i++)
             {
                 Module module = modules[new Random().Next(modulesCount)];
