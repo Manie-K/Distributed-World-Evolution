@@ -37,6 +37,7 @@ namespace SharedLibrary.Messages
         {
             var payload = new
             {
+                MessageType = MessageType,
                 Log = Log,
                 SenderID = SenderID
             };

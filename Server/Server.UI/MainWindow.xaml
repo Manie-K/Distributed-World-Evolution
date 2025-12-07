@@ -23,7 +23,7 @@
                                 <MultiBinding StringFormat="[{0:HH:mm:ss}] [{1}] {2}">
                                     <Binding Path="Timestamp"/>
                                     <Binding Path="LogLevel"/>
-                                    <Binding Path="Message"/>
+                                    <Binding Path="Content"/>
                                 </MultiBinding>
                             </TextBlock.Text>
                             <TextBlock.Style>
