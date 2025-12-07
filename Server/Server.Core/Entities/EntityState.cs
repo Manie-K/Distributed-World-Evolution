@@ -8,25 +8,7 @@ namespace Server.Core
         /// <summary>
         /// The position of the entity in the game world.
         /// </summary>
-        public Position2D Position 
-        { 
-            get 
-            { 
-                return _position;
-            } 
-            set 
-            {
-                if (value.X < 0 || value.X >= 200 || value.Y < 0 || value.Y > 200)
-                {
-                    Console.WriteLine($"X: {value.X}, Y: {value.Y}");
-                    Console.WriteLine(Environment.StackTrace);
-                    throw new ArgumentOutOfRangeException(nameof(value), "Position is out of bounds.");
-                }
-                _position = value;
-            } 
-        }
-
-        private Position2D _position;
+        public Position2D Position { get; set; }
         /// <summary>
         /// The health of the entity.
         /// </summary>
@@ -64,12 +46,6 @@ namespace Server.Core
         /// <param name="interactionFramesLeft">Cooldown left</param>
         public EntityState(Position2D position, int health, int hunger, int interactionFramesLeft = 0)
         {
-            if (position.X < 0 || position.X >= 200 || position.Y < 0 || position.Y > 200)
-            {
-                Console.WriteLine($"X: {position.X}, Y: {position.Y} - EntityState(...........)");
-                Console.WriteLine(Environment.StackTrace);
-                throw new ArgumentOutOfRangeException(nameof(position), "Position is out of bounds.");
-            }
             Position = new Position2D(position.X, position.Y);
             Health = health;
             Hunger = hunger;
@@ -82,12 +58,6 @@ namespace Server.Core
         /// <param name="other"></param>
         public EntityState(EntityState other)
         {
-            if (other.Position.X < 0 || other.Position.X >= 200 || other.Position.Y < 0 || other.Position.Y > 200)
-            {
-                Console.WriteLine($"X: {other.Position.X}, Y: {other.Position.Y} - EntityState(EntityState other)");
-                Console.WriteLine(Environment.StackTrace);
-                throw new ArgumentOutOfRangeException(nameof(other.Position), "Position is out of bounds.");
-            }
             Position = new Position2D(other.Position.X, other.Position.Y);
             Health = other.Health;
             Hunger = other.Hunger;

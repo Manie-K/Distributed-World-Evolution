@@ -1,7 +1,8 @@
-﻿using System.Net.Sockets;
-using SharedLibrary.DTOs.LobbyDTO;
+﻿using SharedLibrary.DTOs.LobbyDTO;
 using SharedLibrary.Helpers;
 using SharedLibrary.Logging;
+using SharedLibrary.Messages;
+using System.Net.Sockets;
 
 namespace Server.Core.Lobby
 {
@@ -27,7 +28,6 @@ namespace Server.Core.Lobby
         /// </summary>  
         public int MaxPlayers { get; }
 
-
         /// <summary>
         /// Event triggered when the lobby is closed.
         /// </summary>
@@ -48,6 +48,20 @@ namespace Server.Core.Lobby
         /// <param name="client">TCP client to be removed.</param>"
         /// <returns>True if client was removed, false otherwise.</returns>
         public bool RemoveClient(TcpClient client);
+
+        /// <summary>
+        /// Checks if the given client is part of the lobby.
+        /// </summary>
+        /// <param name="client"></param>
+        /// <returns> True if the client is in the lobby, false otherwise. </returns>
+        public bool IsClientPresent(TcpClient client);
+
+        /// <summary>
+        /// Handles a received message from a client.
+        /// </summary>
+        /// <param name="client"> Message sender. </param>
+        /// <param name="message"> Client's message to be handled. </param>
+        public void HandleClientMessage(TcpClient client, MessageBase message);
 
         /// <summary>
         /// Checks if a position in the lobby is free (no world entity occupies it).
@@ -87,5 +101,7 @@ namespace Server.Core.Lobby
         /// </summary>
         /// <returns> DataTransferObject representing this lobby </returns>
         public LobbyDTO ToDTO();
+
+
     }
 }
