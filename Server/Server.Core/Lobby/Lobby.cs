@@ -329,16 +329,19 @@ namespace Server.Core.Lobby
         /// <inheritdoc/>
         public LobbyDTO ToDTO()
         {
-            return new LobbyDTO
-            (
-                LobbyId,
-                Name,
-                MaxPlayers,
-                clients.Count,
-                MapID,
-                allowedModulesIDs,
-                entities.Select(e => e.ToDTO()).ToList()
-            );
+            lock (entitiesLock)
+            {
+                return new LobbyDTO
+                (
+                    LobbyId,
+                    Name,
+                    MaxPlayers,
+                    clients.Count,
+                    MapID,
+                    allowedModulesIDs,
+                    entities.Select(e => e.ToDTO()).ToList()
+                );
+            }
         }
 
         /// <inheritdoc/>
