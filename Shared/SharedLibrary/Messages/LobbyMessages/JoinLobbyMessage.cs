@@ -9,22 +9,27 @@ namespace SharedLibrary.Messages
     {
         /// <inheritdoc/>
         public override MessageTypeEnum MessageType => MessageTypeEnum.JoinLobby;
+        
         /// <summary>
         /// ID of the lobby to join.
         /// </summary>
         public int LobbyID { get; init; }
+        
         /// <summary>
         /// Username of the player joining the lobby.
         /// </summary>
         public string UserName { get; init; }
+
         /// <summary>
         /// Constructor for JoinLobbyMessage.
         /// </summary>
+        /// <param name="lobbyID"> ID of the lobby to join. </param>
         public JoinLobbyMessage(int lobbyID, string userName)
         {
             LobbyID = lobbyID;
             UserName = userName;
         }
+        
         /// <inheritdoc/>
         public override string BuildJson()
         {
@@ -37,5 +42,7 @@ namespace SharedLibrary.Messages
 
             return JsonSerializer.Serialize(payload);
         }
+
     }
+
 }

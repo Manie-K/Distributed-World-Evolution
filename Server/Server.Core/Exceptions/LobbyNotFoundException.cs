@@ -3,17 +3,17 @@
 namespace Server.Core.Exceptions
 {
     [DebuggerDisplay($"{{{nameof(GetDebuggerDisplay)}(),nq}}")]
-    public class NullLobbyException : Exception
+    public class LobbyNotFoundException : Exception
     {
-        public NullLobbyException()
+        public LobbyNotFoundException()
         {
         }
 
-        public NullLobbyException(string? message) : base(message)
+        public LobbyNotFoundException(string? message) : base(message)
         {
         }
 
-        public NullLobbyException(string? message, Exception? innerException) : base(message, innerException)
+        public LobbyNotFoundException(string? message, Exception? innerException) : base(message, innerException)
         {
         }
 

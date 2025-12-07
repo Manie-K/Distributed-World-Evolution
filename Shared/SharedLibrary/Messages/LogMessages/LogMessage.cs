@@ -10,22 +10,28 @@ namespace SharedLibrary.Messages
     {
         /// <inheritdoc/>
         public override MessageTypeEnum MessageType => MessageTypeEnum.LogMessage;
+        
         /// <summary>
-        /// Log arguments.
+        /// Log.
         /// </summary>
         public Log Log { get; init; }
+        
         /// <summary>
         /// Sender ID of the log message.
         /// </summary>
         public int SenderID { get; init; }
+
         /// <summary>
         /// Constructor for LogMessage.
         /// </summary>
+        /// <param name="log"> Log. </param>
+        /// <param name="senderID"> Sender ID of the log message. </param>
         public LogMessage(Log log, int senderID)
         {
             Log = log;
             SenderID = senderID;
         }
+        
         /// <inheritdoc/>
         public override string BuildJson()
         {
@@ -37,5 +43,7 @@ namespace SharedLibrary.Messages
 
             return JsonSerializer.Serialize(payload);
         }
+
     }
+
 }

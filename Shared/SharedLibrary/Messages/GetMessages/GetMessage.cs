@@ -9,16 +9,21 @@ namespace SharedLibrary.Messages
     {
         /// <inheritdoc/>
         public override MessageTypeEnum MessageType => MessageTypeEnum.GetMessage;
+
         /// <summary>
-        /// Type of information being requested, for example ModuleList, LobbyList etc.
+        /// Type of information being requested.
+        /// </summary>
         public GetMessageTypeEnum GetMessageType { get; init; }
+
         /// <summary>
         /// Constructor for GetMessage.
         /// </summary>
+        /// <param name="getMessageType"> Type of information being requested. </param>
         public GetMessage(GetMessageTypeEnum getMessageType)
         {
             GetMessageType = getMessageType;
         }
+        
         /// <inheritdoc/>
         public override string BuildJson()
         {
@@ -30,5 +35,7 @@ namespace SharedLibrary.Messages
 
             return JsonSerializer.Serialize(payload);
         }
+
     }
+
 }

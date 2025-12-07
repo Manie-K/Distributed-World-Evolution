@@ -73,7 +73,6 @@ namespace Server.Core
             Position = new Position2D(dto.Position.X, dto.Position.Y);
             Health = dto.Health;
             Hunger = dto.Hunger;
-            InteractionCooldownLeft = dto.InteractionFramesLeft;
         }
 
         /// <summary>
@@ -82,7 +81,7 @@ namespace Server.Core
         /// <returns></returns>
         public EntityStateDTO ToDTO()
         {
-            return new EntityStateDTO(Position, Health, Hunger, InteractionCooldownLeft, LastInteractionName);
+            return new EntityStateDTO(Position, Health, Hunger, LastInteractionName);
         }
 
         /// <summary>
@@ -100,7 +99,6 @@ namespace Server.Core
             return Position.Equals(dto.Position)
                 && Health == dto.Health
                 && Hunger == dto.Hunger
-                && InteractionCooldownLeft == dto.InteractionFramesLeft
                 && LastInteractionName == dto.LastInteractionName;
         }
 

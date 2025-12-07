@@ -150,7 +150,7 @@ namespace Server.Core.Lobby
                     PublishWorldState();
                 }
                 double avgTimeMs = totalCycles > 0 ? (double)totalTime / totalCycles : 0;
-                Log($"Lobby {LobbyId} stopped. Total cycles: {totalCycles}, Avg update time: {avgTimeMs} ms, Min update time: {minTime} ms, Max update time: {maxTime} ms.", LogLevelEnum.Info);
+                Log($"Lobby {LobbyId} stopped. Number of entities: {entities.Count}. Total cycles: {totalCycles}, Avg update time: {avgTimeMs} ms, Min update time: {minTime} ms, Max update time: {maxTime} ms.", LogLevelEnum.Info);
             }
             catch (Exception ex)
             {

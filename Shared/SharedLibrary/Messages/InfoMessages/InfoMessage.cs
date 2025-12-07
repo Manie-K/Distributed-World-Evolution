@@ -7,22 +7,28 @@
     {
         /// <inheritdoc/>
         public override MessageTypeEnum MessageType => MessageTypeEnum.InfoMessage;
+        
         /// <summary>
-        /// Type of the informational message, for example Info, Warning, Error etc.
+        /// Type of the info message.
         /// </summary>
         public InfoMessageTypeEnum InfoMessageType { get; init; }
+        
         /// <summary>
         /// Optional content of the message.
         /// </summary>
         public string? MessageContent { get; init; }
+
         /// <summary>
-        /// Constructor for InfoMessage.
+        /// Constructor .
         /// </summary>
+        /// <param name="infoMessageType"> Type of the info message. </param>
+        /// <param name="messageContent"> Optional content of the message. </param>
         public InfoMessage(InfoMessageTypeEnum infoMessageType, string? messageContent)
         {
             InfoMessageType = infoMessageType;
             MessageContent = messageContent;        
         }
+        
         /// <inheritdoc/>
         public override string BuildJson()
         {
@@ -35,5 +41,7 @@
 
             return System.Text.Json.JsonSerializer.Serialize(payload);
         }
+
     }
+
 }
