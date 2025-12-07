@@ -1,0 +1,30 @@
+### YamlMime:ManagedReference
+items:
+- uid: Server.UI
+  commentId: N:Server.UI
+  id: Server.UI
+  children:
+  - Server.UI.App
+  - Server.UI.MainWindow
+  langs:
+  - csharp
+  - vb
+  name: Server.UI
+  nameWithType: Server.UI
+  fullName: Server.UI
+  type: Namespace
+  assemblies:
+  - Server.UI
+references:
+- uid: Server.UI.App
+  commentId: T:Server.UI.App
+  href: Server.UI.App.html
+  name: App
+  nameWithType: App
+  fullName: Server.UI.App
+- uid: Server.UI.MainWindow
+  commentId: T:Server.UI.MainWindow
+  href: Server.UI.MainWindow.html
+  name: MainWindow
+  nameWithType: MainWindow
+  fullName: Server.UI.MainWindow

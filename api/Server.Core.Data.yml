@@ -1,0 +1,54 @@
+### YamlMime:ManagedReference
+items:
+- uid: Server.Core.Data
+  commentId: N:Server.Core.Data
+  id: Server.Core.Data
+  children:
+  - Server.Core.Data.ModuleDBEntity
+  langs:
+  - csharp
+  - vb
+  name: Server.Core.Data
+  nameWithType: Server.Core.Data
+  fullName: Server.Core.Data
+  type: Namespace
+  assemblies:
+  - Server.Core
+references:
+- uid: Server.Core.Data.ModuleDBEntity
+  commentId: T:Server.Core.Data.ModuleDBEntity
+  parent: Server.Core.Data
+  href: Server.Core.Data.ModuleDBEntity.html
+  name: ModuleDBEntity
+  nameWithType: ModuleDBEntity
+  fullName: Server.Core.Data.ModuleDBEntity
+- uid: Server.Core.Data
+  commentId: N:Server.Core.Data
+  href: Server.html
+  name: Server.Core.Data
+  nameWithType: Server.Core.Data
+  fullName: Server.Core.Data
+  spec.csharp:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+  - name: .
+  - uid: Server.Core.Data
+    name: Data
+    href: Server.Core.Data.html
+  spec.vb:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+  - name: .
+  - uid: Server.Core.Data
+    name: Data
+    href: Server.Core.Data.html

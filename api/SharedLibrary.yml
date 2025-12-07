@@ -1,0 +1,54 @@
+### YamlMime:ManagedReference
+items:
+- uid: SharedLibrary
+  commentId: N:SharedLibrary
+  id: SharedLibrary
+  children:
+  - SharedLibrary.TileExtensions
+  - SharedLibrary.TileProperty
+  - SharedLibrary.TileType
+  - SharedLibrary.Tilemap
+  langs:
+  - csharp
+  - vb
+  name: SharedLibrary
+  nameWithType: SharedLibrary
+  fullName: SharedLibrary
+  type: Namespace
+  assemblies:
+  - SharedLibrary
+references:
+- uid: SharedLibrary.Tilemap
+  commentId: T:SharedLibrary.Tilemap
+  parent: SharedLibrary
+  href: https://github.com/Manie-K/Distributed-World-Evolution/blob/04d77cccea139c5e616524f8a10c7afb68cc7eb5/Shared/SharedLibrary/WorldMap/Tilemap.cs
+  name: Tilemap
+  nameWithType: Tilemap
+  fullName: SharedLibrary.Tilemap
+- uid: SharedLibrary.TileType
+  commentId: T:SharedLibrary.TileType
+  parent: SharedLibrary
+  href: SharedLibrary.TileType.html
+  name: TileType
+  nameWithType: TileType
+  fullName: SharedLibrary.TileType
+- uid: SharedLibrary.TileProperty
+  commentId: T:SharedLibrary.TileProperty
+  parent: SharedLibrary
+  href: SharedLibrary.TileProperty.html
+  name: TileProperty
+  nameWithType: TileProperty
+  fullName: SharedLibrary.TileProperty
+- uid: SharedLibrary.TileExtensions
+  commentId: T:SharedLibrary.TileExtensions
+  parent: SharedLibrary
+  href: SharedLibrary.TileExtensions.html
+  name: TileExtensions
+  nameWithType: TileExtensions
+  fullName: SharedLibrary.TileExtensions
+- uid: SharedLibrary
+  commentId: N:SharedLibrary
+  href: SharedLibrary.html
+  name: SharedLibrary
+  nameWithType: SharedLibrary
+  fullName: SharedLibrary

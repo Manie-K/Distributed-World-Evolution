@@ -1,0 +1,926 @@
+### YamlMime:ManagedReference
+items:
+- uid: SharedLibrary.DTOs.ModuleDTO.ModuleDTO
+  commentId: T:SharedLibrary.DTOs.ModuleDTO.ModuleDTO
+  id: ModuleDTO
+  parent: SharedLibrary.DTOs.ModuleDTO
+  children:
+  - SharedLibrary.DTOs.ModuleDTO.ModuleDTO.#ctor(System.Int32,System.String,System.Boolean,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Collections.Generic.List{SharedLibrary.DTOs.ModuleDTO.BehaviourDTO},Server.Core.EntityTypeEnum,System.Int32)
+  - SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Aggresion
+  - SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Behaviours
+  - SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Damage
+  - SharedLibrary.DTOs.ModuleDTO.ModuleDTO.DatabaseID
+  - SharedLibrary.DTOs.ModuleDTO.ModuleDTO.GraphicalRepresentationID
+  - SharedLibrary.DTOs.ModuleDTO.ModuleDTO.IsOfficialModule
+  - SharedLibrary.DTOs.ModuleDTO.ModuleDTO.MaxHealth
+  - SharedLibrary.DTOs.ModuleDTO.ModuleDTO.MaxHunger
+  - SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Name
+  - SharedLibrary.DTOs.ModuleDTO.ModuleDTO.ReproductionNeed
+  - SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Type
+  langs:
+  - csharp
+  - vb
+  name: ModuleDTO
+  nameWithType: ModuleDTO
+  fullName: SharedLibrary.DTOs.ModuleDTO.ModuleDTO
+  type: Class
+  source:
+    remote:
+      path: Shared/SharedLibrary/DTOs/ModuleDTO/ModuleDTO.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: ModuleDTO
+    path: Shared/SharedLibrary/DTOs/ModuleDTO/ModuleDTO.cs
+    startLine: 7
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.DTOs.ModuleDTO
+  summary: Used for displaying information in Client.
+  example: []
+  syntax:
+    content: public class ModuleDTO
+    content.vb: Public Class ModuleDTO
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.DatabaseID
+  commentId: P:SharedLibrary.DTOs.ModuleDTO.ModuleDTO.DatabaseID
+  id: DatabaseID
+  parent: SharedLibrary.DTOs.ModuleDTO.ModuleDTO
+  langs:
+  - csharp
+  - vb
+  name: DatabaseID
+  nameWithType: ModuleDTO.DatabaseID
+  fullName: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.DatabaseID
+  type: Property
+  source:
+    remote:
+      path: Shared/SharedLibrary/DTOs/ModuleDTO/ModuleDTO.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: DatabaseID
+    path: Shared/SharedLibrary/DTOs/ModuleDTO/ModuleDTO.cs
+    startLine: 9
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.DTOs.ModuleDTO
+  syntax:
+    content: public int DatabaseID { get; init; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property DatabaseID As Integer
+  overload: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.DatabaseID*
+- uid: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Name
+  commentId: P:SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Name
+  id: Name
+  parent: SharedLibrary.DTOs.ModuleDTO.ModuleDTO
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: ModuleDTO.Name
+  fullName: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Name
+  type: Property
+  source:
+    remote:
+      path: Shared/SharedLibrary/DTOs/ModuleDTO/ModuleDTO.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Name
+    path: Shared/SharedLibrary/DTOs/ModuleDTO/ModuleDTO.cs
+    startLine: 10
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.DTOs.ModuleDTO
+  syntax:
+    content: public string Name { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Name As String
+  overload: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Name*
+- uid: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.IsOfficialModule
+  commentId: P:SharedLibrary.DTOs.ModuleDTO.ModuleDTO.IsOfficialModule
+  id: IsOfficialModule
+  parent: SharedLibrary.DTOs.ModuleDTO.ModuleDTO
+  langs:
+  - csharp
+  - vb
+  name: IsOfficialModule
+  nameWithType: ModuleDTO.IsOfficialModule
+  fullName: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.IsOfficialModule
+  type: Property
+  source:
+    remote:
+      path: Shared/SharedLibrary/DTOs/ModuleDTO/ModuleDTO.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: IsOfficialModule
+    path: Shared/SharedLibrary/DTOs/ModuleDTO/ModuleDTO.cs
+    startLine: 11
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.DTOs.ModuleDTO
+  syntax:
+    content: public bool IsOfficialModule { get; init; }
+    parameters: []
+    return:
+      type: System.Boolean
+    content.vb: Public Property IsOfficialModule As Boolean
+  overload: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.IsOfficialModule*
+- uid: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Damage
+  commentId: P:SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Damage
+  id: Damage
+  parent: SharedLibrary.DTOs.ModuleDTO.ModuleDTO
+  langs:
+  - csharp
+  - vb
+  name: Damage
+  nameWithType: ModuleDTO.Damage
+  fullName: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Damage
+  type: Property
+  source:
+    remote:
+      path: Shared/SharedLibrary/DTOs/ModuleDTO/ModuleDTO.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Damage
+    path: Shared/SharedLibrary/DTOs/ModuleDTO/ModuleDTO.cs
+    startLine: 12
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.DTOs.ModuleDTO
+  syntax:
+    content: public int Damage { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property Damage As Integer
+  overload: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Damage*
+- uid: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Aggresion
+  commentId: P:SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Aggresion
+  id: Aggresion
+  parent: SharedLibrary.DTOs.ModuleDTO.ModuleDTO
+  langs:
+  - csharp
+  - vb
+  name: Aggresion
+  nameWithType: ModuleDTO.Aggresion
+  fullName: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Aggresion
+  type: Property
+  source:
+    remote:
+      path: Shared/SharedLibrary/DTOs/ModuleDTO/ModuleDTO.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Aggresion
+    path: Shared/SharedLibrary/DTOs/ModuleDTO/ModuleDTO.cs
+    startLine: 13
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.DTOs.ModuleDTO
+  syntax:
+    content: public int Aggresion { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property Aggresion As Integer
+  overload: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Aggresion*
+- uid: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.ReproductionNeed
+  commentId: P:SharedLibrary.DTOs.ModuleDTO.ModuleDTO.ReproductionNeed
+  id: ReproductionNeed
+  parent: SharedLibrary.DTOs.ModuleDTO.ModuleDTO
+  langs:
+  - csharp
+  - vb
+  name: ReproductionNeed
+  nameWithType: ModuleDTO.ReproductionNeed
+  fullName: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.ReproductionNeed
+  type: Property
+  source:
+    remote:
+      path: Shared/SharedLibrary/DTOs/ModuleDTO/ModuleDTO.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: ReproductionNeed
+    path: Shared/SharedLibrary/DTOs/ModuleDTO/ModuleDTO.cs
+    startLine: 14
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.DTOs.ModuleDTO
+  syntax:
+    content: public int ReproductionNeed { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property ReproductionNeed As Integer
+  overload: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.ReproductionNeed*
+- uid: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.MaxHunger
+  commentId: P:SharedLibrary.DTOs.ModuleDTO.ModuleDTO.MaxHunger
+  id: MaxHunger
+  parent: SharedLibrary.DTOs.ModuleDTO.ModuleDTO
+  langs:
+  - csharp
+  - vb
+  name: MaxHunger
+  nameWithType: ModuleDTO.MaxHunger
+  fullName: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.MaxHunger
+  type: Property
+  source:
+    remote:
+      path: Shared/SharedLibrary/DTOs/ModuleDTO/ModuleDTO.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: MaxHunger
+    path: Shared/SharedLibrary/DTOs/ModuleDTO/ModuleDTO.cs
+    startLine: 15
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.DTOs.ModuleDTO
+  syntax:
+    content: public int MaxHunger { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property MaxHunger As Integer
+  overload: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.MaxHunger*
+- uid: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.MaxHealth
+  commentId: P:SharedLibrary.DTOs.ModuleDTO.ModuleDTO.MaxHealth
+  id: MaxHealth
+  parent: SharedLibrary.DTOs.ModuleDTO.ModuleDTO
+  langs:
+  - csharp
+  - vb
+  name: MaxHealth
+  nameWithType: ModuleDTO.MaxHealth
+  fullName: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.MaxHealth
+  type: Property
+  source:
+    remote:
+      path: Shared/SharedLibrary/DTOs/ModuleDTO/ModuleDTO.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: MaxHealth
+    path: Shared/SharedLibrary/DTOs/ModuleDTO/ModuleDTO.cs
+    startLine: 16
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.DTOs.ModuleDTO
+  syntax:
+    content: public int MaxHealth { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property MaxHealth As Integer
+  overload: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.MaxHealth*
+- uid: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Behaviours
+  commentId: P:SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Behaviours
+  id: Behaviours
+  parent: SharedLibrary.DTOs.ModuleDTO.ModuleDTO
+  langs:
+  - csharp
+  - vb
+  name: Behaviours
+  nameWithType: ModuleDTO.Behaviours
+  fullName: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Behaviours
+  type: Property
+  source:
+    remote:
+      path: Shared/SharedLibrary/DTOs/ModuleDTO/ModuleDTO.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Behaviours
+    path: Shared/SharedLibrary/DTOs/ModuleDTO/ModuleDTO.cs
+    startLine: 17
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.DTOs.ModuleDTO
+  syntax:
+    content: public List<BehaviourDTO> Behaviours { get; init; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.List{SharedLibrary.DTOs.ModuleDTO.BehaviourDTO}
+    content.vb: Public Property Behaviours As List(Of BehaviourDTO)
+  overload: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Behaviours*
+- uid: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Type
+  commentId: P:SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Type
+  id: Type
+  parent: SharedLibrary.DTOs.ModuleDTO.ModuleDTO
+  langs:
+  - csharp
+  - vb
+  name: Type
+  nameWithType: ModuleDTO.Type
+  fullName: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Type
+  type: Property
+  source:
+    remote:
+      path: Shared/SharedLibrary/DTOs/ModuleDTO/ModuleDTO.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Type
+    path: Shared/SharedLibrary/DTOs/ModuleDTO/ModuleDTO.cs
+    startLine: 18
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.DTOs.ModuleDTO
+  syntax:
+    content: public EntityTypeEnum Type { get; init; }
+    parameters: []
+    return:
+      type: Server.Core.EntityTypeEnum
+    content.vb: Public Property Type As EntityTypeEnum
+  overload: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Type*
+- uid: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.GraphicalRepresentationID
+  commentId: P:SharedLibrary.DTOs.ModuleDTO.ModuleDTO.GraphicalRepresentationID
+  id: GraphicalRepresentationID
+  parent: SharedLibrary.DTOs.ModuleDTO.ModuleDTO
+  langs:
+  - csharp
+  - vb
+  name: GraphicalRepresentationID
+  nameWithType: ModuleDTO.GraphicalRepresentationID
+  fullName: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.GraphicalRepresentationID
+  type: Property
+  source:
+    remote:
+      path: Shared/SharedLibrary/DTOs/ModuleDTO/ModuleDTO.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: GraphicalRepresentationID
+    path: Shared/SharedLibrary/DTOs/ModuleDTO/ModuleDTO.cs
+    startLine: 19
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.DTOs.ModuleDTO
+  syntax:
+    content: public int GraphicalRepresentationID { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property GraphicalRepresentationID As Integer
+  overload: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.GraphicalRepresentationID*
+- uid: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.#ctor(System.Int32,System.String,System.Boolean,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Collections.Generic.List{SharedLibrary.DTOs.ModuleDTO.BehaviourDTO},Server.Core.EntityTypeEnum,System.Int32)
+  commentId: M:SharedLibrary.DTOs.ModuleDTO.ModuleDTO.#ctor(System.Int32,System.String,System.Boolean,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Collections.Generic.List{SharedLibrary.DTOs.ModuleDTO.BehaviourDTO},Server.Core.EntityTypeEnum,System.Int32)
+  id: '#ctor(System.Int32,System.String,System.Boolean,System.Int32,System.Int32,System.Int32,System.Int32,System.Int32,System.Collections.Generic.List{SharedLibrary.DTOs.ModuleDTO.BehaviourDTO},Server.Core.EntityTypeEnum,System.Int32)'
+  parent: SharedLibrary.DTOs.ModuleDTO.ModuleDTO
+  langs:
+  - csharp
+  - vb
+  name: ModuleDTO(int, string, bool, int, int, int, int, int, List<BehaviourDTO>, EntityTypeEnum, int)
+  nameWithType: ModuleDTO.ModuleDTO(int, string, bool, int, int, int, int, int, List<BehaviourDTO>, EntityTypeEnum, int)
+  fullName: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.ModuleDTO(int, string, bool, int, int, int, int, int, System.Collections.Generic.List<SharedLibrary.DTOs.ModuleDTO.BehaviourDTO>, Server.Core.EntityTypeEnum, int)
+  type: Constructor
+  source:
+    remote:
+      path: Shared/SharedLibrary/DTOs/ModuleDTO/ModuleDTO.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: .ctor
+    path: Shared/SharedLibrary/DTOs/ModuleDTO/ModuleDTO.cs
+    startLine: 21
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.DTOs.ModuleDTO
+  syntax:
+    content: public ModuleDTO(int databaseID, string name, bool isOfficialModule, int damage, int aggresion, int reproductionNeed, int maxHunger, int maxHealth, List<BehaviourDTO> behaviours, EntityTypeEnum type, int graphicalRepresentationID)
+    parameters:
+    - id: databaseID
+      type: System.Int32
+    - id: name
+      type: System.String
+    - id: isOfficialModule
+      type: System.Boolean
+    - id: damage
+      type: System.Int32
+    - id: aggresion
+      type: System.Int32
+    - id: reproductionNeed
+      type: System.Int32
+    - id: maxHunger
+      type: System.Int32
+    - id: maxHealth
+      type: System.Int32
+    - id: behaviours
+      type: System.Collections.Generic.List{SharedLibrary.DTOs.ModuleDTO.BehaviourDTO}
+    - id: type
+      type: Server.Core.EntityTypeEnum
+    - id: graphicalRepresentationID
+      type: System.Int32
+    content.vb: Public Sub New(databaseID As Integer, name As String, isOfficialModule As Boolean, damage As Integer, aggresion As Integer, reproductionNeed As Integer, maxHunger As Integer, maxHealth As Integer, behaviours As List(Of BehaviourDTO), type As EntityTypeEnum, graphicalRepresentationID As Integer)
+  overload: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.#ctor*
+  nameWithType.vb: ModuleDTO.New(Integer, String, Boolean, Integer, Integer, Integer, Integer, Integer, List(Of BehaviourDTO), EntityTypeEnum, Integer)
+  fullName.vb: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.New(Integer, String, Boolean, Integer, Integer, Integer, Integer, Integer, System.Collections.Generic.List(Of SharedLibrary.DTOs.ModuleDTO.BehaviourDTO), Server.Core.EntityTypeEnum, Integer)
+  name.vb: New(Integer, String, Boolean, Integer, Integer, Integer, Integer, Integer, List(Of BehaviourDTO), EntityTypeEnum, Integer)
+references:
+- uid: SharedLibrary.DTOs.ModuleDTO
+  commentId: N:SharedLibrary.DTOs.ModuleDTO
+  href: SharedLibrary.html
+  name: SharedLibrary.DTOs.ModuleDTO
+  nameWithType: SharedLibrary.DTOs.ModuleDTO
+  fullName: SharedLibrary.DTOs.ModuleDTO
+  spec.csharp:
+  - uid: SharedLibrary
+    name: SharedLibrary
+    href: SharedLibrary.html
+  - name: .
+  - uid: SharedLibrary.DTOs
+    name: DTOs
+    href: SharedLibrary.DTOs.html
+  - name: .
+  - uid: SharedLibrary.DTOs.ModuleDTO
+    name: ModuleDTO
+    href: SharedLibrary.DTOs.ModuleDTO.html
+  spec.vb:
+  - uid: SharedLibrary
+    name: SharedLibrary
+    href: SharedLibrary.html
+  - name: .
+  - uid: SharedLibrary.DTOs
+    name: DTOs
+    href: SharedLibrary.DTOs.html
+  - name: .
+  - uid: SharedLibrary.DTOs.ModuleDTO
+    name: ModuleDTO
+    href: SharedLibrary.DTOs.ModuleDTO.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.DatabaseID*
+  commentId: Overload:SharedLibrary.DTOs.ModuleDTO.ModuleDTO.DatabaseID
+  href: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.html#SharedLibrary_DTOs_ModuleDTO_ModuleDTO_DatabaseID
+  name: DatabaseID
+  nameWithType: ModuleDTO.DatabaseID
+  fullName: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.DatabaseID
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Name*
+  commentId: Overload:SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Name
+  href: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.html#SharedLibrary_DTOs_ModuleDTO_ModuleDTO_Name
+  name: Name
+  nameWithType: ModuleDTO.Name
+  fullName: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Name
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.IsOfficialModule*
+  commentId: Overload:SharedLibrary.DTOs.ModuleDTO.ModuleDTO.IsOfficialModule
+  href: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.html#SharedLibrary_DTOs_ModuleDTO_ModuleDTO_IsOfficialModule
+  name: IsOfficialModule
+  nameWithType: ModuleDTO.IsOfficialModule
+  fullName: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.IsOfficialModule
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Damage*
+  commentId: Overload:SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Damage
+  href: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.html#SharedLibrary_DTOs_ModuleDTO_ModuleDTO_Damage
+  name: Damage
+  nameWithType: ModuleDTO.Damage
+  fullName: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Damage
+- uid: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Aggresion*
+  commentId: Overload:SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Aggresion
+  href: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.html#SharedLibrary_DTOs_ModuleDTO_ModuleDTO_Aggresion
+  name: Aggresion
+  nameWithType: ModuleDTO.Aggresion
+  fullName: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Aggresion
+- uid: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.ReproductionNeed*
+  commentId: Overload:SharedLibrary.DTOs.ModuleDTO.ModuleDTO.ReproductionNeed
+  href: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.html#SharedLibrary_DTOs_ModuleDTO_ModuleDTO_ReproductionNeed
+  name: ReproductionNeed
+  nameWithType: ModuleDTO.ReproductionNeed
+  fullName: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.ReproductionNeed
+- uid: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.MaxHunger*
+  commentId: Overload:SharedLibrary.DTOs.ModuleDTO.ModuleDTO.MaxHunger
+  href: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.html#SharedLibrary_DTOs_ModuleDTO_ModuleDTO_MaxHunger
+  name: MaxHunger
+  nameWithType: ModuleDTO.MaxHunger
+  fullName: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.MaxHunger
+- uid: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.MaxHealth*
+  commentId: Overload:SharedLibrary.DTOs.ModuleDTO.ModuleDTO.MaxHealth
+  href: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.html#SharedLibrary_DTOs_ModuleDTO_ModuleDTO_MaxHealth
+  name: MaxHealth
+  nameWithType: ModuleDTO.MaxHealth
+  fullName: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.MaxHealth
+- uid: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Behaviours*
+  commentId: Overload:SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Behaviours
+  href: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.html#SharedLibrary_DTOs_ModuleDTO_ModuleDTO_Behaviours
+  name: Behaviours
+  nameWithType: ModuleDTO.Behaviours
+  fullName: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Behaviours
+- uid: System.Collections.Generic.List{SharedLibrary.DTOs.ModuleDTO.BehaviourDTO}
+  commentId: T:System.Collections.Generic.List{SharedLibrary.DTOs.ModuleDTO.BehaviourDTO}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<BehaviourDTO>
+  nameWithType: List<BehaviourDTO>
+  fullName: System.Collections.Generic.List<SharedLibrary.DTOs.ModuleDTO.BehaviourDTO>
+  nameWithType.vb: List(Of BehaviourDTO)
+  fullName.vb: System.Collections.Generic.List(Of SharedLibrary.DTOs.ModuleDTO.BehaviourDTO)
+  name.vb: List(Of BehaviourDTO)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: SharedLibrary.DTOs.ModuleDTO.BehaviourDTO
+    name: BehaviourDTO
+    href: https://github.com/Manie-K/Distributed-World-Evolution/blob/04d77cccea139c5e616524f8a10c7afb68cc7eb5/Shared/SharedLibrary/DTOs/ModuleDTO/BehaviourDTO.cs
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SharedLibrary.DTOs.ModuleDTO.BehaviourDTO
+    name: BehaviourDTO
+    href: https://github.com/Manie-K/Distributed-World-Evolution/blob/04d77cccea139c5e616524f8a10c7afb68cc7eb5/Shared/SharedLibrary/DTOs/ModuleDTO/BehaviourDTO.cs
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Type*
+  commentId: Overload:SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Type
+  href: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.html#SharedLibrary_DTOs_ModuleDTO_ModuleDTO_Type
+  name: Type
+  nameWithType: ModuleDTO.Type
+  fullName: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.Type
+- uid: Server.Core.EntityTypeEnum
+  commentId: T:Server.Core.EntityTypeEnum
+  parent: Server.Core
+  href: https://github.com/Manie-K/Distributed-World-Evolution/blob/04d77cccea139c5e616524f8a10c7afb68cc7eb5/Shared/SharedLibrary/DTOs/EntitiesDTO/EntityTypeEnum.cs
+  name: EntityTypeEnum
+  nameWithType: EntityTypeEnum
+  fullName: Server.Core.EntityTypeEnum
+- uid: Server.Core
+  commentId: N:Server.Core
+  href: Server.html
+  name: Server.Core
+  nameWithType: Server.Core
+  fullName: Server.Core
+  spec.csharp:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+  spec.vb:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+- uid: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.GraphicalRepresentationID*
+  commentId: Overload:SharedLibrary.DTOs.ModuleDTO.ModuleDTO.GraphicalRepresentationID
+  href: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.html#SharedLibrary_DTOs_ModuleDTO_ModuleDTO_GraphicalRepresentationID
+  name: GraphicalRepresentationID
+  nameWithType: ModuleDTO.GraphicalRepresentationID
+  fullName: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.GraphicalRepresentationID
+- uid: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.#ctor*
+  commentId: Overload:SharedLibrary.DTOs.ModuleDTO.ModuleDTO.#ctor
+  href: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.html#SharedLibrary_DTOs_ModuleDTO_ModuleDTO__ctor_System_Int32_System_String_System_Boolean_System_Int32_System_Int32_System_Int32_System_Int32_System_Int32_System_Collections_Generic_List_SharedLibrary_DTOs_ModuleDTO_BehaviourDTO__Server_Core_EntityTypeEnum_System_Int32_
+  name: ModuleDTO
+  nameWithType: ModuleDTO.ModuleDTO
+  fullName: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.ModuleDTO
+  nameWithType.vb: ModuleDTO.New
+  fullName.vb: SharedLibrary.DTOs.ModuleDTO.ModuleDTO.New
+  name.vb: New

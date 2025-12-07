@@ -1,0 +1,522 @@
+### YamlMime:ManagedReference
+items:
+- uid: SharedLibrary.Messages.DisjoinLobbyMessage
+  commentId: T:SharedLibrary.Messages.DisjoinLobbyMessage
+  id: DisjoinLobbyMessage
+  parent: SharedLibrary.Messages
+  children:
+  - SharedLibrary.Messages.DisjoinLobbyMessage.#ctor(System.Int32)
+  - SharedLibrary.Messages.DisjoinLobbyMessage.BuildJson
+  - SharedLibrary.Messages.DisjoinLobbyMessage.LobbyID
+  - SharedLibrary.Messages.DisjoinLobbyMessage.MessageType
+  langs:
+  - csharp
+  - vb
+  name: DisjoinLobbyMessage
+  nameWithType: DisjoinLobbyMessage
+  fullName: SharedLibrary.Messages.DisjoinLobbyMessage
+  type: Class
+  source:
+    remote:
+      path: Shared/SharedLibrary/Messages/LobbyMessages/DisjoinLobbyMessage.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: DisjoinLobbyMessage
+    path: Shared/SharedLibrary/Messages/LobbyMessages/DisjoinLobbyMessage.cs
+    startLine: 7
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.Messages
+  summary: Contains information needed to disjoin from a game lobby.
+  example: []
+  syntax:
+    content: 'public class DisjoinLobbyMessage : MessageBase'
+    content.vb: Public Class DisjoinLobbyMessage Inherits MessageBase
+  inheritance:
+  - System.Object
+  - SharedLibrary.Messages.MessageBase
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: SharedLibrary.Messages.DisjoinLobbyMessage.MessageType
+  commentId: P:SharedLibrary.Messages.DisjoinLobbyMessage.MessageType
+  id: MessageType
+  parent: SharedLibrary.Messages.DisjoinLobbyMessage
+  langs:
+  - csharp
+  - vb
+  name: MessageType
+  nameWithType: DisjoinLobbyMessage.MessageType
+  fullName: SharedLibrary.Messages.DisjoinLobbyMessage.MessageType
+  type: Property
+  source:
+    remote:
+      path: Shared/SharedLibrary/Messages/LobbyMessages/DisjoinLobbyMessage.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: MessageType
+    path: Shared/SharedLibrary/Messages/LobbyMessages/DisjoinLobbyMessage.cs
+    startLine: 10
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.Messages
+  summary: 'Message type, for example: JoinLobby, InfoMessage, WorldState etc.'
+  example: []
+  syntax:
+    content: public override MessageTypeEnum MessageType { get; }
+    parameters: []
+    return:
+      type: SharedLibrary.Messages.MessageTypeEnum
+    content.vb: Public Overrides ReadOnly Property MessageType As MessageTypeEnum
+  overridden: SharedLibrary.Messages.MessageBase.MessageType
+  overload: SharedLibrary.Messages.DisjoinLobbyMessage.MessageType*
+- uid: SharedLibrary.Messages.DisjoinLobbyMessage.LobbyID
+  commentId: P:SharedLibrary.Messages.DisjoinLobbyMessage.LobbyID
+  id: LobbyID
+  parent: SharedLibrary.Messages.DisjoinLobbyMessage
+  langs:
+  - csharp
+  - vb
+  name: LobbyID
+  nameWithType: DisjoinLobbyMessage.LobbyID
+  fullName: SharedLibrary.Messages.DisjoinLobbyMessage.LobbyID
+  type: Property
+  source:
+    remote:
+      path: Shared/SharedLibrary/Messages/LobbyMessages/DisjoinLobbyMessage.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: LobbyID
+    path: Shared/SharedLibrary/Messages/LobbyMessages/DisjoinLobbyMessage.cs
+    startLine: 14
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.Messages
+  summary: ID of the lobby to disjoin from.
+  example: []
+  syntax:
+    content: public int LobbyID { get; init; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property LobbyID As Integer
+  overload: SharedLibrary.Messages.DisjoinLobbyMessage.LobbyID*
+- uid: SharedLibrary.Messages.DisjoinLobbyMessage.#ctor(System.Int32)
+  commentId: M:SharedLibrary.Messages.DisjoinLobbyMessage.#ctor(System.Int32)
+  id: '#ctor(System.Int32)'
+  parent: SharedLibrary.Messages.DisjoinLobbyMessage
+  langs:
+  - csharp
+  - vb
+  name: DisjoinLobbyMessage(int)
+  nameWithType: DisjoinLobbyMessage.DisjoinLobbyMessage(int)
+  fullName: SharedLibrary.Messages.DisjoinLobbyMessage.DisjoinLobbyMessage(int)
+  type: Constructor
+  source:
+    remote:
+      path: Shared/SharedLibrary/Messages/LobbyMessages/DisjoinLobbyMessage.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: .ctor
+    path: Shared/SharedLibrary/Messages/LobbyMessages/DisjoinLobbyMessage.cs
+    startLine: 18
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.Messages
+  summary: Constructor for DisjoinLobbyMessage.
+  example: []
+  syntax:
+    content: public DisjoinLobbyMessage(int lobbyID)
+    parameters:
+    - id: lobbyID
+      type: System.Int32
+    content.vb: Public Sub New(lobbyID As Integer)
+  overload: SharedLibrary.Messages.DisjoinLobbyMessage.#ctor*
+  nameWithType.vb: DisjoinLobbyMessage.New(Integer)
+  fullName.vb: SharedLibrary.Messages.DisjoinLobbyMessage.New(Integer)
+  name.vb: New(Integer)
+- uid: SharedLibrary.Messages.DisjoinLobbyMessage.BuildJson
+  commentId: M:SharedLibrary.Messages.DisjoinLobbyMessage.BuildJson
+  id: BuildJson
+  parent: SharedLibrary.Messages.DisjoinLobbyMessage
+  langs:
+  - csharp
+  - vb
+  name: BuildJson()
+  nameWithType: DisjoinLobbyMessage.BuildJson()
+  fullName: SharedLibrary.Messages.DisjoinLobbyMessage.BuildJson()
+  type: Method
+  source:
+    remote:
+      path: Shared/SharedLibrary/Messages/LobbyMessages/DisjoinLobbyMessage.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: BuildJson
+    path: Shared/SharedLibrary/Messages/LobbyMessages/DisjoinLobbyMessage.cs
+    startLine: 23
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.Messages
+  summary: Builds the JSON representation of the message.
+  example: []
+  syntax:
+    content: public override string BuildJson()
+    return:
+      type: System.String
+    content.vb: Public Overrides Function BuildJson() As String
+  overridden: SharedLibrary.Messages.MessageBase.BuildJson
+  overload: SharedLibrary.Messages.DisjoinLobbyMessage.BuildJson*
+references:
+- uid: SharedLibrary.Messages
+  commentId: N:SharedLibrary.Messages
+  href: SharedLibrary.html
+  name: SharedLibrary.Messages
+  nameWithType: SharedLibrary.Messages
+  fullName: SharedLibrary.Messages
+  spec.csharp:
+  - uid: SharedLibrary
+    name: SharedLibrary
+    href: SharedLibrary.html
+  - name: .
+  - uid: SharedLibrary.Messages
+    name: Messages
+    href: SharedLibrary.Messages.html
+  spec.vb:
+  - uid: SharedLibrary
+    name: SharedLibrary
+    href: SharedLibrary.html
+  - name: .
+  - uid: SharedLibrary.Messages
+    name: Messages
+    href: SharedLibrary.Messages.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: SharedLibrary.Messages.MessageBase
+  commentId: T:SharedLibrary.Messages.MessageBase
+  parent: SharedLibrary.Messages
+  href: SharedLibrary.Messages.MessageBase.html
+  name: MessageBase
+  nameWithType: MessageBase
+  fullName: SharedLibrary.Messages.MessageBase
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: SharedLibrary.Messages.MessageBase.MessageType
+  commentId: P:SharedLibrary.Messages.MessageBase.MessageType
+  parent: SharedLibrary.Messages.MessageBase
+  href: SharedLibrary.Messages.MessageBase.html#SharedLibrary_Messages_MessageBase_MessageType
+  name: MessageType
+  nameWithType: MessageBase.MessageType
+  fullName: SharedLibrary.Messages.MessageBase.MessageType
+- uid: SharedLibrary.Messages.DisjoinLobbyMessage.MessageType*
+  commentId: Overload:SharedLibrary.Messages.DisjoinLobbyMessage.MessageType
+  href: SharedLibrary.Messages.DisjoinLobbyMessage.html#SharedLibrary_Messages_DisjoinLobbyMessage_MessageType
+  name: MessageType
+  nameWithType: DisjoinLobbyMessage.MessageType
+  fullName: SharedLibrary.Messages.DisjoinLobbyMessage.MessageType
+- uid: SharedLibrary.Messages.MessageTypeEnum
+  commentId: T:SharedLibrary.Messages.MessageTypeEnum
+  parent: SharedLibrary.Messages
+  href: SharedLibrary.Messages.MessageTypeEnum.html
+  name: MessageTypeEnum
+  nameWithType: MessageTypeEnum
+  fullName: SharedLibrary.Messages.MessageTypeEnum
+- uid: SharedLibrary.Messages.DisjoinLobbyMessage.LobbyID*
+  commentId: Overload:SharedLibrary.Messages.DisjoinLobbyMessage.LobbyID
+  href: SharedLibrary.Messages.DisjoinLobbyMessage.html#SharedLibrary_Messages_DisjoinLobbyMessage_LobbyID
+  name: LobbyID
+  nameWithType: DisjoinLobbyMessage.LobbyID
+  fullName: SharedLibrary.Messages.DisjoinLobbyMessage.LobbyID
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: SharedLibrary.Messages.DisjoinLobbyMessage.#ctor*
+  commentId: Overload:SharedLibrary.Messages.DisjoinLobbyMessage.#ctor
+  href: SharedLibrary.Messages.DisjoinLobbyMessage.html#SharedLibrary_Messages_DisjoinLobbyMessage__ctor_System_Int32_
+  name: DisjoinLobbyMessage
+  nameWithType: DisjoinLobbyMessage.DisjoinLobbyMessage
+  fullName: SharedLibrary.Messages.DisjoinLobbyMessage.DisjoinLobbyMessage
+  nameWithType.vb: DisjoinLobbyMessage.New
+  fullName.vb: SharedLibrary.Messages.DisjoinLobbyMessage.New
+  name.vb: New
+- uid: SharedLibrary.Messages.MessageBase.BuildJson
+  commentId: M:SharedLibrary.Messages.MessageBase.BuildJson
+  parent: SharedLibrary.Messages.MessageBase
+  href: SharedLibrary.Messages.MessageBase.html#SharedLibrary_Messages_MessageBase_BuildJson
+  name: BuildJson()
+  nameWithType: MessageBase.BuildJson()
+  fullName: SharedLibrary.Messages.MessageBase.BuildJson()
+  spec.csharp:
+  - uid: SharedLibrary.Messages.MessageBase.BuildJson
+    name: BuildJson
+    href: SharedLibrary.Messages.MessageBase.html#SharedLibrary_Messages_MessageBase_BuildJson
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: SharedLibrary.Messages.MessageBase.BuildJson
+    name: BuildJson
+    href: SharedLibrary.Messages.MessageBase.html#SharedLibrary_Messages_MessageBase_BuildJson
+  - name: (
+  - name: )
+- uid: SharedLibrary.Messages.DisjoinLobbyMessage.BuildJson*
+  commentId: Overload:SharedLibrary.Messages.DisjoinLobbyMessage.BuildJson
+  href: SharedLibrary.Messages.DisjoinLobbyMessage.html#SharedLibrary_Messages_DisjoinLobbyMessage_BuildJson
+  name: BuildJson
+  nameWithType: DisjoinLobbyMessage.BuildJson
+  fullName: SharedLibrary.Messages.DisjoinLobbyMessage.BuildJson
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String

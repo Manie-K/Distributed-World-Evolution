@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Map Editor | Distributed World Evolution </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Map Editor | Distributed World Evolution ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="../toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Manie-K/Distributed-World-Evolution/blob/fix/client-code-clean-up/MapEditor/README.md/#L1">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="Distributed World Evolution">
+            Distributed World Evolution
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+
+      <div class="content">
+        <div class="actionbar">
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="">
+<h1 id="map-editor">Map Editor</h1>
+
+<p>Map Editor</p>
+<h2 id="controls">Controls</h2>
+<p><code>Left Mouse Button</code> – paint</p>
+<p><code>Shift</code> + <code>Right Mouse Button</code> – bucket fill</p>
+<p><code>Arrow Keys</code> – scroll the map</p>
+<p><code>W</code> / <code>S</code> – scroll the tile palette</p>
+<p><code>+</code> / <code>-</code> – zoom the map</p>
+<p><code>Q</code> – save the map</p>
+<p><code>E</code> – load the map</p>
+<p>Palette on the right – clicking sets selected paint tile</p>
+<h2 id="how-to-use">How to use</h2>
+<ul>
+<li>Put tileset image in the root folder next to this script</li>
+<li>Set <code>TILESET_NAME</code> parameter with the name of the image</li>
+<li>Set <code>TILE_SIZE</code> parameter with the size of the single tile in pixels, e.g. <code>32</code></li>
+<li>Set <code>MAP_WIDTH</code> and <code>MAP_HEIGHT</code> parameters to the size of the map in number of tiles, e.g. <code>200</code>, <code>200</code></li>
+<li>Set <code>SCREEN_WIDTH</code> and <code>SCREEN_HEIGHT</code> parameters to setup editor application size, e.g. <code>1280</code>, <code>720</code></li>
+<li>Set <code>SAVE_FILENAME</code> and <code>LOAD_FILENAME</code> - those files are also stored in the root folder next to this script</li>
+<li>Start the editor <code>python map_editor.py</code> (run it inside the script directory!)</li>
+<li>After finished and saved work, copy the content of the save file into the <code>Tiles</code> array in your map.json</li>
+</ul>
+<h2 id="adding-a-new-map-to-the-client">Adding a new map to the client</h2>
+<p>The structure of a json map is as follows:</p>
+<p><code>Name</code> - name of the map</p>
+<p><code>TexturePath</code> - path to the tileset texture, with the root being the <code>Content</code> folder</p>
+<p><code>TileSize</code> - size in pixels of a single tile from the tileset texture</p>
+<p><code>TilesetTextureWidth</code> - total width in pixels of the tileset texture</p>
+<p><code>TilesetTextureHeight</code> - total height in pixels of the tileset texture</p>
+<p><code>MapWidth</code> - desired total map width, in number of tiles</p>
+<p><code>MapHeight</code> - desired total map height, in number of tiles</p>
+<p><code>TilesetData</code> - data about each tile in the tileset texture; contains <code>id</code> of a tile (starting from 0, at the top-left of the texture), <code>Type</code> from the TileProperty.cs enum (you can add new ones if needed), and <code>Walkable</code> which is set to true if entities can walk on the given tile</p>
+<p><code>Tiles</code> - 2D array of tile ids representing playable map</p>
+<p>When the map json is ready:</p>
+<ul>
+<li>Place it inside <code>SharedLibrary/WorldMap/Maps</code>, set the file parameter <code>CopyToOutputDirectory</code> to <code>PreserveNewest</code></li>
+<li>Add a file link reference inside <code>Client/Content/Maps</code> to your json file, set the file parameter <code>CopyToOutputDirectory</code> to <code>PreserveNewest</code></li>
+<li>Add the tileset texture to <code>Client/Content/Maps/Tiles</code> and include the new image using <code>Content.mgcb</code></li>
+<li>In the client, add a new option in the <code>InitializeRows</code> function in <code>SwitchPageMapSelection.cs</code></li>
+<li>In the shared library, add a new case in the <code>GetMapFileName</code> function in <code>Tilemap.cs</code>, the string must match the json filename</li>
+<li>In the client, add a new case in the <code>LoadLobbies</code> function in <code>LobbyScene.cs</code>, the name of the map will be displayed in lobby menu</li>
+</ul>
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Manie-K/Distributed-World-Evolution/blob/fix/client-code-clean-up/MapEditor/README.md/#L1" class="edit-link">Edit this page</a>
+        </div>
+
+        <div class="next-article d-print-none border-top" id="nextArticle"></div>
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

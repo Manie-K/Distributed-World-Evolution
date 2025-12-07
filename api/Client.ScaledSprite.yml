@@ -1,0 +1,582 @@
+### YamlMime:ManagedReference
+items:
+- uid: Client.ScaledSprite
+  commentId: T:Client.ScaledSprite
+  id: ScaledSprite
+  parent: Client
+  children:
+  - Client.ScaledSprite.#ctor(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Vector2,System.Int32,System.Int32,Microsoft.Xna.Framework.Vector2)
+  - Client.ScaledSprite.height
+  - Client.ScaledSprite.width
+  langs:
+  - csharp
+  - vb
+  name: ScaledSprite
+  nameWithType: ScaledSprite
+  fullName: Client.ScaledSprite
+  type: Class
+  source:
+    remote:
+      path: Client/Client/Sprites/ScaledSprite.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: ScaledSprite
+    path: Client/Client/Sprites/ScaledSprite.cs
+    startLine: 5
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: 'public class ScaledSprite : Sprite'
+    content.vb: Public Class ScaledSprite Inherits Sprite
+  inheritance:
+  - System.Object
+  - Client.Sprite
+  derivedClasses:
+  - Client.ColoredSprite
+  inheritedMembers:
+  - Client.Sprite.Texture
+  - Client.Sprite.Position
+  - Client.Sprite.SpriteDrawingOffset
+  - Client.Sprite.GetPosition
+  - Client.Sprite.Update
+  - Client.Sprite.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Client.ScaledSprite.width
+  commentId: F:Client.ScaledSprite.width
+  id: width
+  parent: Client.ScaledSprite
+  langs:
+  - csharp
+  - vb
+  name: width
+  nameWithType: ScaledSprite.width
+  fullName: Client.ScaledSprite.width
+  type: Field
+  source:
+    remote:
+      path: Client/Client/Sprites/ScaledSprite.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: width
+    path: Client/Client/Sprites/ScaledSprite.cs
+    startLine: 7
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: protected int width
+    return:
+      type: System.Int32
+    content.vb: Protected width As Integer
+- uid: Client.ScaledSprite.height
+  commentId: F:Client.ScaledSprite.height
+  id: height
+  parent: Client.ScaledSprite
+  langs:
+  - csharp
+  - vb
+  name: height
+  nameWithType: ScaledSprite.height
+  fullName: Client.ScaledSprite.height
+  type: Field
+  source:
+    remote:
+      path: Client/Client/Sprites/ScaledSprite.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: height
+    path: Client/Client/Sprites/ScaledSprite.cs
+    startLine: 8
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: protected int height
+    return:
+      type: System.Int32
+    content.vb: Protected height As Integer
+- uid: Client.ScaledSprite.#ctor(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Vector2,System.Int32,System.Int32,Microsoft.Xna.Framework.Vector2)
+  commentId: M:Client.ScaledSprite.#ctor(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Vector2,System.Int32,System.Int32,Microsoft.Xna.Framework.Vector2)
+  id: '#ctor(Microsoft.Xna.Framework.Graphics.Texture2D,Microsoft.Xna.Framework.Vector2,System.Int32,System.Int32,Microsoft.Xna.Framework.Vector2)'
+  parent: Client.ScaledSprite
+  langs:
+  - csharp
+  - vb
+  name: ScaledSprite(Texture2D, Vector2, int, int, Vector2)
+  nameWithType: ScaledSprite.ScaledSprite(Texture2D, Vector2, int, int, Vector2)
+  fullName: Client.ScaledSprite.ScaledSprite(Microsoft.Xna.Framework.Graphics.Texture2D, Microsoft.Xna.Framework.Vector2, int, int, Microsoft.Xna.Framework.Vector2)
+  type: Constructor
+  source:
+    remote:
+      path: Client/Client/Sprites/ScaledSprite.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: .ctor
+    path: Client/Client/Sprites/ScaledSprite.cs
+    startLine: 10
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: public ScaledSprite(Texture2D texture, Vector2 position, int width, int height, Vector2 spriteDrawingOffset = default)
+    parameters:
+    - id: texture
+      type: Microsoft.Xna.Framework.Graphics.Texture2D
+    - id: position
+      type: Microsoft.Xna.Framework.Vector2
+    - id: width
+      type: System.Int32
+    - id: height
+      type: System.Int32
+    - id: spriteDrawingOffset
+      type: Microsoft.Xna.Framework.Vector2
+    content.vb: Public Sub New(texture As Texture2D, position As Vector2, width As Integer, height As Integer, spriteDrawingOffset As Vector2 = Nothing)
+  overload: Client.ScaledSprite.#ctor*
+  nameWithType.vb: ScaledSprite.New(Texture2D, Vector2, Integer, Integer, Vector2)
+  fullName.vb: Client.ScaledSprite.New(Microsoft.Xna.Framework.Graphics.Texture2D, Microsoft.Xna.Framework.Vector2, Integer, Integer, Microsoft.Xna.Framework.Vector2)
+  name.vb: New(Texture2D, Vector2, Integer, Integer, Vector2)
+references:
+- uid: Client
+  commentId: N:Client
+  href: Client.html
+  name: Client
+  nameWithType: Client
+  fullName: Client
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Client.Sprite
+  commentId: T:Client.Sprite
+  parent: Client
+  href: Client.Sprite.html
+  name: Sprite
+  nameWithType: Sprite
+  fullName: Client.Sprite
+- uid: Client.Sprite.Texture
+  commentId: F:Client.Sprite.Texture
+  parent: Client.Sprite
+  href: Client.Sprite.html#Client_Sprite_Texture
+  name: Texture
+  nameWithType: Sprite.Texture
+  fullName: Client.Sprite.Texture
+- uid: Client.Sprite.Position
+  commentId: F:Client.Sprite.Position
+  parent: Client.Sprite
+  href: Client.Sprite.html#Client_Sprite_Position
+  name: Position
+  nameWithType: Sprite.Position
+  fullName: Client.Sprite.Position
+- uid: Client.Sprite.SpriteDrawingOffset
+  commentId: F:Client.Sprite.SpriteDrawingOffset
+  parent: Client.Sprite
+  href: Client.Sprite.html#Client_Sprite_SpriteDrawingOffset
+  name: SpriteDrawingOffset
+  nameWithType: Sprite.SpriteDrawingOffset
+  fullName: Client.Sprite.SpriteDrawingOffset
+- uid: Client.Sprite.GetPosition
+  commentId: M:Client.Sprite.GetPosition
+  parent: Client.Sprite
+  href: Client.Sprite.html#Client_Sprite_GetPosition
+  name: GetPosition()
+  nameWithType: Sprite.GetPosition()
+  fullName: Client.Sprite.GetPosition()
+  spec.csharp:
+  - uid: Client.Sprite.GetPosition
+    name: GetPosition
+    href: Client.Sprite.html#Client_Sprite_GetPosition
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Client.Sprite.GetPosition
+    name: GetPosition
+    href: Client.Sprite.html#Client_Sprite_GetPosition
+  - name: (
+  - name: )
+- uid: Client.Sprite.Update
+  commentId: M:Client.Sprite.Update
+  parent: Client.Sprite
+  href: Client.Sprite.html#Client_Sprite_Update
+  name: Update()
+  nameWithType: Sprite.Update()
+  fullName: Client.Sprite.Update()
+  spec.csharp:
+  - uid: Client.Sprite.Update
+    name: Update
+    href: Client.Sprite.html#Client_Sprite_Update
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Client.Sprite.Update
+    name: Update
+    href: Client.Sprite.html#Client_Sprite_Update
+  - name: (
+  - name: )
+- uid: Client.Sprite.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)
+  commentId: M:Client.Sprite.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)
+  parent: Client.Sprite
+  isExternal: true
+  href: Client.Sprite.html#Client_Sprite_Draw_Microsoft_Xna_Framework_Graphics_SpriteBatch_
+  name: Draw(SpriteBatch)
+  nameWithType: Sprite.Draw(SpriteBatch)
+  fullName: Client.Sprite.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)
+  spec.csharp:
+  - uid: Client.Sprite.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)
+    name: Draw
+    href: Client.Sprite.html#Client_Sprite_Draw_Microsoft_Xna_Framework_Graphics_SpriteBatch_
+  - name: (
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteBatch
+    name: SpriteBatch
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Client.Sprite.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)
+    name: Draw
+    href: Client.Sprite.html#Client_Sprite_Draw_Microsoft_Xna_Framework_Graphics_SpriteBatch_
+  - name: (
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteBatch
+    name: SpriteBatch
+    isExternal: true
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Client.ScaledSprite.#ctor*
+  commentId: Overload:Client.ScaledSprite.#ctor
+  href: Client.ScaledSprite.html#Client_ScaledSprite__ctor_Microsoft_Xna_Framework_Graphics_Texture2D_Microsoft_Xna_Framework_Vector2_System_Int32_System_Int32_Microsoft_Xna_Framework_Vector2_
+  name: ScaledSprite
+  nameWithType: ScaledSprite.ScaledSprite
+  fullName: Client.ScaledSprite.ScaledSprite
+  nameWithType.vb: ScaledSprite.New
+  fullName.vb: Client.ScaledSprite.New
+  name.vb: New
+- uid: Microsoft.Xna.Framework.Graphics.Texture2D
+  commentId: T:Microsoft.Xna.Framework.Graphics.Texture2D
+  parent: Microsoft.Xna.Framework.Graphics
+  isExternal: true
+  name: Texture2D
+  nameWithType: Texture2D
+  fullName: Microsoft.Xna.Framework.Graphics.Texture2D
+- uid: Microsoft.Xna.Framework.Vector2
+  commentId: T:Microsoft.Xna.Framework.Vector2
+  parent: Microsoft.Xna.Framework
+  isExternal: true
+  name: Vector2
+  nameWithType: Vector2
+  fullName: Microsoft.Xna.Framework.Vector2
+- uid: Microsoft.Xna.Framework.Graphics
+  commentId: N:Microsoft.Xna.Framework.Graphics
+  isExternal: true
+  name: Microsoft.Xna.Framework.Graphics
+  nameWithType: Microsoft.Xna.Framework.Graphics
+  fullName: Microsoft.Xna.Framework.Graphics
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna
+    name: Xna
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna.Framework
+    name: Framework
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna.Framework.Graphics
+    name: Graphics
+    isExternal: true
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna
+    name: Xna
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna.Framework
+    name: Framework
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna.Framework.Graphics
+    name: Graphics
+    isExternal: true
+- uid: Microsoft.Xna.Framework
+  commentId: N:Microsoft.Xna.Framework
+  isExternal: true
+  name: Microsoft.Xna.Framework
+  nameWithType: Microsoft.Xna.Framework
+  fullName: Microsoft.Xna.Framework
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna
+    name: Xna
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna.Framework
+    name: Framework
+    isExternal: true
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna
+    name: Xna
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna.Framework
+    name: Framework
+    isExternal: true

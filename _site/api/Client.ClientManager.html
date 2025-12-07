@@ -1,0 +1,829 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+      <title>Class ClientManager | Distributed World Evolution </title>
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta name="title" content="Class ClientManager | Distributed World Evolution ">
+      
+      
+      <link rel="icon" href="../favicon.ico">
+      <link rel="stylesheet" href="../public/docfx.min.css">
+      <link rel="stylesheet" href="../public/main.css">
+      <meta name="docfx:navrel" content="../toc.html">
+      <meta name="docfx:tocrel" content="toc.html">
+      
+      <meta name="docfx:rel" content="../">
+      
+      
+      <meta name="docfx:docurl" content="https://github.com/Manie-K/Distributed-World-Evolution/new/fix/client-code-clean-up/apiSpec/new?filename=Client_ClientManager.md&amp;value=---%0Auid%3A%20Client.ClientManager%0Asummary%3A%20&#39;*You%20can%20override%20summary%20for%20the%20API%20here%20using%20*MARKDOWN*%20syntax&#39;%0A---%0A%0A*Please%20type%20below%20more%20information%20about%20this%20API%3A*%0A%0A">
+      <meta name="loc:inThisArticle" content="In this article">
+      <meta name="loc:searchResultsCount" content="{count} results for &quot;{query}&quot;">
+      <meta name="loc:searchNoResults" content="No results for &quot;{query}&quot;">
+      <meta name="loc:tocFilter" content="Filter by title">
+      <meta name="loc:nextArticle" content="Next">
+      <meta name="loc:prevArticle" content="Previous">
+      <meta name="loc:themeLight" content="Light">
+      <meta name="loc:themeDark" content="Dark">
+      <meta name="loc:themeAuto" content="Auto">
+      <meta name="loc:changeTheme" content="Change theme">
+      <meta name="loc:copy" content="Copy">
+      <meta name="loc:downloadPdf" content="Download PDF">
+
+      <script type="module" src="./../public/docfx.min.js"></script>
+
+      <script>
+        const theme = localStorage.getItem('theme') || 'auto'
+        document.documentElement.setAttribute('data-bs-theme', theme === 'auto' ? (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light') : theme)
+      </script>
+
+  </head>
+
+  <body class="tex2jax_ignore" data-layout="" data-yaml-mime="ManagedReference">
+    <header class="bg-body border-bottom">
+      <nav id="autocollapse" class="navbar navbar-expand-md" role="navigation">
+        <div class="container-xxl flex-nowrap">
+          <a class="navbar-brand" href="../index.html">
+            <img id="logo" class="svg" src="../logo.svg" alt="Distributed World Evolution">
+            Distributed World Evolution
+          </a>
+          <button class="btn btn-lg d-md-none border-0" type="button" data-bs-toggle="collapse" data-bs-target="#navpanel" aria-controls="navpanel" aria-expanded="false" aria-label="Toggle navigation">
+            <i class="bi bi-three-dots"></i>
+          </button>
+          <div class="collapse navbar-collapse" id="navpanel">
+            <div id="navbar">
+              <form class="search" role="search" id="search">
+                <i class="bi bi-search"></i>
+                <input class="form-control" id="search-query" type="search" disabled placeholder="Search" autocomplete="off" aria-label="Search">
+              </form>
+            </div>
+          </div>
+        </div>
+      </nav>
+    </header>
+
+    <main class="container-xxl">
+      <div class="toc-offcanvas">
+        <div class="offcanvas-md offcanvas-start" tabindex="-1" id="tocOffcanvas" aria-labelledby="tocOffcanvasLabel">
+          <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="tocOffcanvasLabel">Table of Contents</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#tocOffcanvas" aria-label="Close"></button>
+          </div>
+          <div class="offcanvas-body">
+            <nav class="toc" id="toc"></nav>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="actionbar">
+          <button class="btn btn-lg border-0 d-md-none" type="button" data-bs-toggle="offcanvas" data-bs-target="#tocOffcanvas" aria-controls="tocOffcanvas" aria-expanded="false" aria-label="Show table of contents">
+            <i class="bi bi-list"></i>
+          </button>
+
+          <nav id="breadcrumb"></nav>
+        </div>
+
+        <article data-uid="Client.ClientManager">
+
+
+
+  <h1 id="Client_ClientManager" data-uid="Client.ClientManager" class="text-break">
+Class ClientManager  <a class="header-action link-secondary" title="View source" href="https://github.com/Manie-K/Distributed-World-Evolution/blob/fix/client-code-clean-up/Client/Client/ClientManager.cs/#L25"><i class="bi bi-code-slash"></i></a>
+  </h1>
+
+  <div class="facts text-secondary">
+    <dl><dt>Namespace</dt><dd><a class="xref" href="Client.html">Client</a></dd></dl>
+  <dl><dt>Assembly</dt><dd>Client.dll</dd></dl>
+  </div>
+
+  <div class="markdown summary"></div>
+  <div class="markdown conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public class ClientManager</code></pre>
+  </div>
+
+
+
+
+  <dl class="typelist inheritance">
+    <dt>Inheritance</dt>
+    <dd>
+      <div><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object">object</a></div>
+      <div><span class="xref">ClientManager</span></div>
+    </dd>
+  </dl>
+
+
+
+  <dl class="typelist inheritedMembers">
+    <dt>Inherited Members</dt>
+    <dd>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)">object.Equals(object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)">object.Equals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gethashcode">object.GetHashCode()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.gettype">object.GetType()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone">object.MemberwiseClone()</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.referenceequals">object.ReferenceEquals(object, object)</a>
+    </div>
+    <div>
+      <a class="xref" href="https://learn.microsoft.com/dotnet/api/system.object.tostring">object.ToString()</a>
+    </div>
+  </dd></dl>
+
+
+
+
+
+
+  <h2 class="section" id="constructors">Constructors
+</h2>
+
+
+  <a id="Client_ClientManager__ctor_" data-uid="Client.ClientManager.#ctor*"></a>
+
+  <h3 id="Client_ClientManager__ctor_Microsoft_Extensions_Configuration_IConfigurationRoot_" data-uid="Client.ClientManager.#ctor(Microsoft.Extensions.Configuration.IConfigurationRoot)">
+  ClientManager(IConfigurationRoot)
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Manie-K/Distributed-World-Evolution/blob/fix/client-code-clean-up/Client/Client/ClientManager.cs/#L174"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public ClientManager(IConfigurationRoot config)</code></pre>
+  </div>
+
+  <h4 class="section">Parameters</h4>
+  <dl class="parameters">
+    <dt><code>config</code> <a class="xref" href="https://learn.microsoft.com/dotnet/api/microsoft.extensions.configuration.iconfigurationroot">IConfigurationRoot</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="fields">Fields
+</h2>
+
+
+
+  <h3 id="Client_ClientManager_CLIENT_UPDATES_PER_SECOND" data-uid="Client.ClientManager.CLIENT_UPDATES_PER_SECOND">
+  CLIENT_UPDATES_PER_SECOND
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Manie-K/Distributed-World-Evolution/blob/fix/client-code-clean-up/Client/Client/ClientManager.cs/#L27"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public const double CLIENT_UPDATES_PER_SECOND = 16</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.double">double</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+  <h3 id="Client_ClientManager_WindowManager" data-uid="Client.ClientManager.WindowManager">
+  WindowManager
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Manie-K/Distributed-World-Evolution/blob/fix/client-code-clean-up/Client/Client/ClientManager.cs/#L29"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public WindowManager WindowManager</code></pre>
+  </div>
+
+
+
+
+  <h4 class="section">Field Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="Client.Panels.Windows.WindowManager.html">WindowManager</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="properties">Properties
+</h2>
+
+
+  <a id="Client_ClientManager_BehaviourListReady_" data-uid="Client.ClientManager.BehaviourListReady*"></a>
+
+  <h3 id="Client_ClientManager_BehaviourListReady" data-uid="Client.ClientManager.BehaviourListReady">
+  BehaviourListReady
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Manie-K/Distributed-World-Evolution/blob/fix/client-code-clean-up/Client/Client/ClientManager.cs/#L79"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int BehaviourListReady { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Client_ClientManager_Behaviours_" data-uid="Client.ClientManager.Behaviours*"></a>
+
+  <h3 id="Client_ClientManager_Behaviours" data-uid="Client.ClientManager.Behaviours">
+  Behaviours
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Manie-K/Distributed-World-Evolution/blob/fix/client-code-clean-up/Client/Client/ClientManager.cs/#L135"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;BehaviourDTO&gt; Behaviours { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://github.com/Manie-K/Distributed-World-Evolution/blob/04d77cccea139c5e616524f8a10c7afb68cc7eb5/Shared/SharedLibrary/DTOs/ModuleDTO/BehaviourDTO.cs">BehaviourDTO</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Client_ClientManager_Client_" data-uid="Client.ClientManager.Client*"></a>
+
+  <h3 id="Client_ClientManager_Client" data-uid="Client.ClientManager.Client">
+  Client
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Manie-K/Distributed-World-Evolution/blob/fix/client-code-clean-up/Client/Client/ClientManager.cs/#L28"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public TcpClient Client { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.net.sockets.tcpclient">TcpClient</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Client_ClientManager_Entities_" data-uid="Client.ClientManager.Entities*"></a>
+
+  <h3 id="Client_ClientManager_Entities" data-uid="Client.ClientManager.Entities">
+  Entities
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Manie-K/Distributed-World-Evolution/blob/fix/client-code-clean-up/Client/Client/ClientManager.cs/#L87"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlyDictionary&lt;Guid, WorldEntityDTO&gt; Entities { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2">IReadOnlyDictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.guid">Guid</a>, <a class="xref" href="https://github.com/Manie-K/Distributed-World-Evolution/blob/04d77cccea139c5e616524f8a10c7afb68cc7eb5/Shared/SharedLibrary/DTOs/EntitiesDTO/WorldEntityDTO.cs">WorldEntityDTO</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Client_ClientManager_Lobbies_" data-uid="Client.ClientManager.Lobbies*"></a>
+
+  <h3 id="Client_ClientManager_Lobbies" data-uid="Client.ClientManager.Lobbies">
+  Lobbies
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Manie-K/Distributed-World-Evolution/blob/fix/client-code-clean-up/Client/Client/ClientManager.cs/#L109"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;LobbyDTO&gt; Lobbies { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://github.com/Manie-K/Distributed-World-Evolution/blob/04d77cccea139c5e616524f8a10c7afb68cc7eb5/Shared/SharedLibrary/DTOs/LobbyDTO/LobbyDTO.cs">LobbyDTO</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Client_ClientManager_LobbyCreated_" data-uid="Client.ClientManager.LobbyCreated*"></a>
+
+  <h3 id="Client_ClientManager_LobbyCreated" data-uid="Client.ClientManager.LobbyCreated">
+  LobbyCreated
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Manie-K/Distributed-World-Evolution/blob/fix/client-code-clean-up/Client/Client/ClientManager.cs/#L40"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int LobbyCreated { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Client_ClientManager_LobbyData_" data-uid="Client.ClientManager.LobbyData*"></a>
+
+  <h3 id="Client_ClientManager_LobbyData" data-uid="Client.ClientManager.LobbyData">
+  LobbyData
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Manie-K/Distributed-World-Evolution/blob/fix/client-code-clean-up/Client/Client/ClientManager.cs/#L148"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public LobbyDTO LobbyData { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="SharedLibrary.DTOs.LobbyDTO.LobbyDTO.html">LobbyDTO</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Client_ClientManager_LobbyJoined_" data-uid="Client.ClientManager.LobbyJoined*"></a>
+
+  <h3 id="Client_ClientManager_LobbyJoined" data-uid="Client.ClientManager.LobbyJoined">
+  LobbyJoined
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Manie-K/Distributed-World-Evolution/blob/fix/client-code-clean-up/Client/Client/ClientManager.cs/#L54"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int LobbyJoined { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Client_ClientManager_LobbyListReady_" data-uid="Client.ClientManager.LobbyListReady*"></a>
+
+  <h3 id="Client_ClientManager_LobbyListReady" data-uid="Client.ClientManager.LobbyListReady">
+  LobbyListReady
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Manie-K/Distributed-World-Evolution/blob/fix/client-code-clean-up/Client/Client/ClientManager.cs/#L65"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int LobbyListReady { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Client_ClientManager_ModuleCreated_" data-uid="Client.ClientManager.ModuleCreated*"></a>
+
+  <h3 id="Client_ClientManager_ModuleCreated" data-uid="Client.ClientManager.ModuleCreated">
+  ModuleCreated
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Manie-K/Distributed-World-Evolution/blob/fix/client-code-clean-up/Client/Client/ClientManager.cs/#L47"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int ModuleCreated { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Client_ClientManager_ModuleListReady_" data-uid="Client.ClientManager.ModuleListReady*"></a>
+
+  <h3 id="Client_ClientManager_ModuleListReady" data-uid="Client.ClientManager.ModuleListReady">
+  ModuleListReady
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Manie-K/Distributed-World-Evolution/blob/fix/client-code-clean-up/Client/Client/ClientManager.cs/#L72"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public int ModuleListReady { get; set; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.int32">int</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Client_ClientManager_Modules_" data-uid="Client.ClientManager.Modules*"></a>
+
+  <h3 id="Client_ClientManager_Modules" data-uid="Client.ClientManager.Modules">
+  Modules
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Manie-K/Distributed-World-Evolution/blob/fix/client-code-clean-up/Client/Client/ClientManager.cs/#L122"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlyList&lt;ModuleDTO&gt; Modules { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1">IReadOnlyList</a>&lt;<a class="xref" href="https://github.com/Manie-K/Distributed-World-Evolution/blob/04d77cccea139c5e616524f8a10c7afb68cc7eb5/Shared/SharedLibrary/DTOs/ModuleDTO/ModuleDTO.cs">ModuleDTO</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <a id="Client_ClientManager_PlayerGuid_" data-uid="Client.ClientManager.PlayerGuid*"></a>
+
+  <h3 id="Client_ClientManager_PlayerGuid" data-uid="Client.ClientManager.PlayerGuid">
+  PlayerGuid
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Manie-K/Distributed-World-Evolution/blob/fix/client-code-clean-up/Client/Client/ClientManager.cs/#L161"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public Guid PlayerGuid { get; }</code></pre>
+  </div>
+
+
+
+
+
+  <h4 class="section">Property Value</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.guid">Guid</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+  <h2 class="section" id="methods">Methods
+</h2>
+
+
+  <a id="Client_ClientManager_CloseClient_" data-uid="Client.ClientManager.CloseClient*"></a>
+
+  <h3 id="Client_ClientManager_CloseClient" data-uid="Client.ClientManager.CloseClient">
+  CloseClient()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Manie-K/Distributed-World-Evolution/blob/fix/client-code-clean-up/Client/Client/ClientManager.cs/#L208"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void CloseClient()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Client_ClientManager_FlushEntities_" data-uid="Client.ClientManager.FlushEntities*"></a>
+
+  <h3 id="Client_ClientManager_FlushEntities" data-uid="Client.ClientManager.FlushEntities">
+  FlushEntities()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Manie-K/Distributed-World-Evolution/blob/fix/client-code-clean-up/Client/Client/ClientManager.cs/#L97"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public IReadOnlyDictionary&lt;Guid, WorldEntityDTO&gt; FlushEntities()</code></pre>
+  </div>
+
+
+  <h4 class="section">Returns</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2">IReadOnlyDictionary</a>&lt;<a class="xref" href="https://learn.microsoft.com/dotnet/api/system.guid">Guid</a>, <a class="xref" href="https://github.com/Manie-K/Distributed-World-Evolution/blob/04d77cccea139c5e616524f8a10c7afb68cc7eb5/Shared/SharedLibrary/DTOs/EntitiesDTO/WorldEntityDTO.cs">WorldEntityDTO</a>&gt;</dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Client_ClientManager_SetPendingLobbyJoined_" data-uid="Client.ClientManager.SetPendingLobbyJoined*"></a>
+
+  <h3 id="Client_ClientManager_SetPendingLobbyJoined" data-uid="Client.ClientManager.SetPendingLobbyJoined">
+  SetPendingLobbyJoined()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Manie-K/Distributed-World-Evolution/blob/fix/client-code-clean-up/Client/Client/ClientManager.cs/#L59"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void SetPendingLobbyJoined()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <a id="Client_ClientManager_StartClient_" data-uid="Client.ClientManager.StartClient*"></a>
+
+  <h3 id="Client_ClientManager_StartClient" data-uid="Client.ClientManager.StartClient">
+  StartClient()
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Manie-K/Distributed-World-Evolution/blob/fix/client-code-clean-up/Client/Client/ClientManager.cs/#L189"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public void StartClient()</code></pre>
+  </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+  <h2 class="section" id="events">Events
+</h2>
+
+
+
+  <h3 id="Client_ClientManager_OnErrorMessageReceived" data-uid="Client.ClientManager.OnErrorMessageReceived">
+  OnErrorMessageReceived
+  <a class="header-action link-secondary" title="View source" href="https://github.com/Manie-K/Distributed-World-Evolution/blob/fix/client-code-clean-up/Client/Client/ClientManager.cs/#L35"><i class="bi bi-code-slash"></i></a>
+  </h3>
+
+  <div class="markdown level1 summary"></div>
+  <div class="markdown level1 conceptual"></div>
+
+  <div class="codewrapper">
+    <pre><code class="lang-csharp hljs">public static event Action OnErrorMessageReceived</code></pre>
+  </div>
+
+
+
+
+
+
+  <h4 class="section">Event Type</h4>
+  <dl class="parameters">
+    <dt><a class="xref" href="https://learn.microsoft.com/dotnet/api/system.action">Action</a></dt>
+    <dd></dd>
+  </dl>
+
+
+
+
+
+
+
+
+</article>
+
+        <div class="contribution d-print-none">
+          <a href="https://github.com/Manie-K/Distributed-World-Evolution/blob/fix/client-code-clean-up/Client/Client/ClientManager.cs/#L25" class="edit-link">Edit this page</a>
+        </div>
+
+
+      </div>
+
+      <div class="affix">
+        <nav id="affix"></nav>
+      </div>
+    </main>
+
+    <div class="container-xxl search-results" id="search-results"></div>
+
+    <footer class="border-top text-secondary">
+      <div class="container-xxl">
+        <div class="flex-fill">
+          <span>Made with <a href="https://dotnet.github.io/docfx">docfx</a></span>
+        </div>
+      </div>
+    </footer>
+  </body>
+</html>

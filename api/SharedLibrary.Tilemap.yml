@@ -1,0 +1,1174 @@
+### YamlMime:ManagedReference
+items:
+- uid: SharedLibrary.Tilemap
+  commentId: T:SharedLibrary.Tilemap
+  id: Tilemap
+  parent: SharedLibrary
+  children:
+  - SharedLibrary.Tilemap.#ctor
+  - SharedLibrary.Tilemap.GetFertileTiles
+  - SharedLibrary.Tilemap.GetMapFileName(System.Int32)
+  - SharedLibrary.Tilemap.GetTileIdAtPosition(System.Single,System.Single)
+  - SharedLibrary.Tilemap.GetTileIdAtPosition2D(System.Int32,System.Int32)
+  - SharedLibrary.Tilemap.GetTilePosition2D(System.Single,System.Single)
+  - SharedLibrary.Tilemap.GetWalkableTiles
+  - SharedLibrary.Tilemap.LoadMap(System.String,System.Int32)
+  - SharedLibrary.Tilemap.MapHeight
+  - SharedLibrary.Tilemap.MapWidth
+  - SharedLibrary.Tilemap.Name
+  - SharedLibrary.Tilemap.TexturePath
+  - SharedLibrary.Tilemap.TileSize
+  - SharedLibrary.Tilemap.Tiles
+  - SharedLibrary.Tilemap.TilesetData
+  - SharedLibrary.Tilemap.TilesetTextureHeight
+  - SharedLibrary.Tilemap.TilesetTextureWidth
+  langs:
+  - csharp
+  - vb
+  name: Tilemap
+  nameWithType: Tilemap
+  fullName: SharedLibrary.Tilemap
+  type: Class
+  source:
+    remote:
+      path: Shared/SharedLibrary/WorldMap/Tilemap.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Tilemap
+    path: Shared/SharedLibrary/WorldMap/Tilemap.cs
+    startLine: 6
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary
+  syntax:
+    content: public class Tilemap
+    content.vb: Public Class Tilemap
+  inheritance:
+  - System.Object
+  derivedClasses:
+  - Client.Rendering.WorldMap
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: SharedLibrary.Tilemap.Name
+  commentId: P:SharedLibrary.Tilemap.Name
+  id: Name
+  parent: SharedLibrary.Tilemap
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: Tilemap.Name
+  fullName: SharedLibrary.Tilemap.Name
+  type: Property
+  source:
+    remote:
+      path: Shared/SharedLibrary/WorldMap/Tilemap.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Name
+    path: Shared/SharedLibrary/WorldMap/Tilemap.cs
+    startLine: 10
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary
+  syntax:
+    content: public string? Name { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Name As String
+  overload: SharedLibrary.Tilemap.Name*
+- uid: SharedLibrary.Tilemap.TexturePath
+  commentId: P:SharedLibrary.Tilemap.TexturePath
+  id: TexturePath
+  parent: SharedLibrary.Tilemap
+  langs:
+  - csharp
+  - vb
+  name: TexturePath
+  nameWithType: Tilemap.TexturePath
+  fullName: SharedLibrary.Tilemap.TexturePath
+  type: Property
+  source:
+    remote:
+      path: Shared/SharedLibrary/WorldMap/Tilemap.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: TexturePath
+    path: Shared/SharedLibrary/WorldMap/Tilemap.cs
+    startLine: 11
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary
+  syntax:
+    content: public string? TexturePath { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property TexturePath As String
+  overload: SharedLibrary.Tilemap.TexturePath*
+- uid: SharedLibrary.Tilemap.TileSize
+  commentId: P:SharedLibrary.Tilemap.TileSize
+  id: TileSize
+  parent: SharedLibrary.Tilemap
+  langs:
+  - csharp
+  - vb
+  name: TileSize
+  nameWithType: Tilemap.TileSize
+  fullName: SharedLibrary.Tilemap.TileSize
+  type: Property
+  source:
+    remote:
+      path: Shared/SharedLibrary/WorldMap/Tilemap.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: TileSize
+    path: Shared/SharedLibrary/WorldMap/Tilemap.cs
+    startLine: 15
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary
+  summary: Size of a single tile texture in pixels
+  example: []
+  syntax:
+    content: public int TileSize { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property TileSize As Integer
+  overload: SharedLibrary.Tilemap.TileSize*
+- uid: SharedLibrary.Tilemap.TilesetTextureWidth
+  commentId: P:SharedLibrary.Tilemap.TilesetTextureWidth
+  id: TilesetTextureWidth
+  parent: SharedLibrary.Tilemap
+  langs:
+  - csharp
+  - vb
+  name: TilesetTextureWidth
+  nameWithType: Tilemap.TilesetTextureWidth
+  fullName: SharedLibrary.Tilemap.TilesetTextureWidth
+  type: Property
+  source:
+    remote:
+      path: Shared/SharedLibrary/WorldMap/Tilemap.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: TilesetTextureWidth
+    path: Shared/SharedLibrary/WorldMap/Tilemap.cs
+    startLine: 16
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary
+  syntax:
+    content: public int TilesetTextureWidth { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property TilesetTextureWidth As Integer
+  overload: SharedLibrary.Tilemap.TilesetTextureWidth*
+- uid: SharedLibrary.Tilemap.TilesetTextureHeight
+  commentId: P:SharedLibrary.Tilemap.TilesetTextureHeight
+  id: TilesetTextureHeight
+  parent: SharedLibrary.Tilemap
+  langs:
+  - csharp
+  - vb
+  name: TilesetTextureHeight
+  nameWithType: Tilemap.TilesetTextureHeight
+  fullName: SharedLibrary.Tilemap.TilesetTextureHeight
+  type: Property
+  source:
+    remote:
+      path: Shared/SharedLibrary/WorldMap/Tilemap.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: TilesetTextureHeight
+    path: Shared/SharedLibrary/WorldMap/Tilemap.cs
+    startLine: 17
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary
+  syntax:
+    content: public int TilesetTextureHeight { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property TilesetTextureHeight As Integer
+  overload: SharedLibrary.Tilemap.TilesetTextureHeight*
+- uid: SharedLibrary.Tilemap.MapWidth
+  commentId: P:SharedLibrary.Tilemap.MapWidth
+  id: MapWidth
+  parent: SharedLibrary.Tilemap
+  langs:
+  - csharp
+  - vb
+  name: MapWidth
+  nameWithType: Tilemap.MapWidth
+  fullName: SharedLibrary.Tilemap.MapWidth
+  type: Property
+  source:
+    remote:
+      path: Shared/SharedLibrary/WorldMap/Tilemap.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: MapWidth
+    path: Shared/SharedLibrary/WorldMap/Tilemap.cs
+    startLine: 18
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary
+  syntax:
+    content: public int MapWidth { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property MapWidth As Integer
+  overload: SharedLibrary.Tilemap.MapWidth*
+- uid: SharedLibrary.Tilemap.MapHeight
+  commentId: P:SharedLibrary.Tilemap.MapHeight
+  id: MapHeight
+  parent: SharedLibrary.Tilemap
+  langs:
+  - csharp
+  - vb
+  name: MapHeight
+  nameWithType: Tilemap.MapHeight
+  fullName: SharedLibrary.Tilemap.MapHeight
+  type: Property
+  source:
+    remote:
+      path: Shared/SharedLibrary/WorldMap/Tilemap.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: MapHeight
+    path: Shared/SharedLibrary/WorldMap/Tilemap.cs
+    startLine: 19
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary
+  syntax:
+    content: public int MapHeight { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property MapHeight As Integer
+  overload: SharedLibrary.Tilemap.MapHeight*
+- uid: SharedLibrary.Tilemap.TilesetData
+  commentId: P:SharedLibrary.Tilemap.TilesetData
+  id: TilesetData
+  parent: SharedLibrary.Tilemap
+  langs:
+  - csharp
+  - vb
+  name: TilesetData
+  nameWithType: Tilemap.TilesetData
+  fullName: SharedLibrary.Tilemap.TilesetData
+  type: Property
+  source:
+    remote:
+      path: Shared/SharedLibrary/WorldMap/Tilemap.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: TilesetData
+    path: Shared/SharedLibrary/WorldMap/Tilemap.cs
+    startLine: 23
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary
+  summary: Details about each tile from tileset texture, identified by the tile id
+  example: []
+  syntax:
+    content: public List<TileProperty>? TilesetData { get; set; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.List{SharedLibrary.TileProperty}
+    content.vb: Public Property TilesetData As List(Of TileProperty)
+  overload: SharedLibrary.Tilemap.TilesetData*
+- uid: SharedLibrary.Tilemap.Tiles
+  commentId: P:SharedLibrary.Tilemap.Tiles
+  id: Tiles
+  parent: SharedLibrary.Tilemap
+  langs:
+  - csharp
+  - vb
+  name: Tiles
+  nameWithType: Tilemap.Tiles
+  fullName: SharedLibrary.Tilemap.Tiles
+  type: Property
+  source:
+    remote:
+      path: Shared/SharedLibrary/WorldMap/Tilemap.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Tiles
+    path: Shared/SharedLibrary/WorldMap/Tilemap.cs
+    startLine: 27
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary
+  summary: 2D tile map representation with tile ids
+  example: []
+  syntax:
+    content: public int[][]? Tiles { get; set; }
+    parameters: []
+    return:
+      type: System.Int32[][]
+    content.vb: Public Property Tiles As Integer()()
+  overload: SharedLibrary.Tilemap.Tiles*
+- uid: SharedLibrary.Tilemap.#ctor
+  commentId: M:SharedLibrary.Tilemap.#ctor
+  id: '#ctor'
+  parent: SharedLibrary.Tilemap
+  langs:
+  - csharp
+  - vb
+  name: Tilemap()
+  nameWithType: Tilemap.Tilemap()
+  fullName: SharedLibrary.Tilemap.Tilemap()
+  type: Constructor
+  source:
+    remote:
+      path: Shared/SharedLibrary/WorldMap/Tilemap.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: .ctor
+    path: Shared/SharedLibrary/WorldMap/Tilemap.cs
+    startLine: 29
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary
+  syntax:
+    content: public Tilemap()
+    content.vb: Public Sub New()
+  overload: SharedLibrary.Tilemap.#ctor*
+  nameWithType.vb: Tilemap.New()
+  fullName.vb: SharedLibrary.Tilemap.New()
+  name.vb: New()
+- uid: SharedLibrary.Tilemap.LoadMap(System.String,System.Int32)
+  commentId: M:SharedLibrary.Tilemap.LoadMap(System.String,System.Int32)
+  id: LoadMap(System.String,System.Int32)
+  parent: SharedLibrary.Tilemap
+  langs:
+  - csharp
+  - vb
+  name: LoadMap(string, int)
+  nameWithType: Tilemap.LoadMap(string, int)
+  fullName: SharedLibrary.Tilemap.LoadMap(string, int)
+  type: Method
+  source:
+    remote:
+      path: Shared/SharedLibrary/WorldMap/Tilemap.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: LoadMap
+    path: Shared/SharedLibrary/WorldMap/Tilemap.cs
+    startLine: 46
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary
+  summary: Loads the tilemap from a JSON file and sets the current map data.
+  example: []
+  syntax:
+    content: public bool LoadMap(string filePath, int mapID)
+    parameters:
+    - id: filePath
+      type: System.String
+      description: The path to the JSON file containing the map data.
+    - id: mapID
+      type: System.Int32
+    return:
+      type: System.Boolean
+      description: True if the map was loaded successfully; otherwise, false.
+    content.vb: Public Function LoadMap(filePath As String, mapID As Integer) As Boolean
+  overload: SharedLibrary.Tilemap.LoadMap*
+  nameWithType.vb: Tilemap.LoadMap(String, Integer)
+  fullName.vb: SharedLibrary.Tilemap.LoadMap(String, Integer)
+  name.vb: LoadMap(String, Integer)
+- uid: SharedLibrary.Tilemap.GetTileIdAtPosition(System.Single,System.Single)
+  commentId: M:SharedLibrary.Tilemap.GetTileIdAtPosition(System.Single,System.Single)
+  id: GetTileIdAtPosition(System.Single,System.Single)
+  parent: SharedLibrary.Tilemap
+  langs:
+  - csharp
+  - vb
+  name: GetTileIdAtPosition(float, float)
+  nameWithType: Tilemap.GetTileIdAtPosition(float, float)
+  fullName: SharedLibrary.Tilemap.GetTileIdAtPosition(float, float)
+  type: Method
+  source:
+    remote:
+      path: Shared/SharedLibrary/WorldMap/Tilemap.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: GetTileIdAtPosition
+    path: Shared/SharedLibrary/WorldMap/Tilemap.cs
+    startLine: 90
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary
+  summary: Gets ID of a tile on given x,y map position
+  example: []
+  syntax:
+    content: public int GetTileIdAtPosition(float x, float y)
+    parameters:
+    - id: x
+      type: System.Single
+    - id: y
+      type: System.Single
+    return:
+      type: System.Int32
+      description: TilesetData ID of a tile
+    content.vb: Public Function GetTileIdAtPosition(x As Single, y As Single) As Integer
+  overload: SharedLibrary.Tilemap.GetTileIdAtPosition*
+  nameWithType.vb: Tilemap.GetTileIdAtPosition(Single, Single)
+  fullName.vb: SharedLibrary.Tilemap.GetTileIdAtPosition(Single, Single)
+  name.vb: GetTileIdAtPosition(Single, Single)
+- uid: SharedLibrary.Tilemap.GetTileIdAtPosition2D(System.Int32,System.Int32)
+  commentId: M:SharedLibrary.Tilemap.GetTileIdAtPosition2D(System.Int32,System.Int32)
+  id: GetTileIdAtPosition2D(System.Int32,System.Int32)
+  parent: SharedLibrary.Tilemap
+  langs:
+  - csharp
+  - vb
+  name: GetTileIdAtPosition2D(int, int)
+  nameWithType: Tilemap.GetTileIdAtPosition2D(int, int)
+  fullName: SharedLibrary.Tilemap.GetTileIdAtPosition2D(int, int)
+  type: Method
+  source:
+    remote:
+      path: Shared/SharedLibrary/WorldMap/Tilemap.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: GetTileIdAtPosition2D
+    path: Shared/SharedLibrary/WorldMap/Tilemap.cs
+    startLine: 105
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary
+  summary: Gets ID of a tile on given x,y tile
+  example: []
+  syntax:
+    content: public int GetTileIdAtPosition2D(int x, int y)
+    parameters:
+    - id: x
+      type: System.Int32
+    - id: y
+      type: System.Int32
+    return:
+      type: System.Int32
+      description: TilesetData ID of a tile
+    content.vb: Public Function GetTileIdAtPosition2D(x As Integer, y As Integer) As Integer
+  overload: SharedLibrary.Tilemap.GetTileIdAtPosition2D*
+  nameWithType.vb: Tilemap.GetTileIdAtPosition2D(Integer, Integer)
+  fullName.vb: SharedLibrary.Tilemap.GetTileIdAtPosition2D(Integer, Integer)
+  name.vb: GetTileIdAtPosition2D(Integer, Integer)
+- uid: SharedLibrary.Tilemap.GetTilePosition2D(System.Single,System.Single)
+  commentId: M:SharedLibrary.Tilemap.GetTilePosition2D(System.Single,System.Single)
+  id: GetTilePosition2D(System.Single,System.Single)
+  parent: SharedLibrary.Tilemap
+  langs:
+  - csharp
+  - vb
+  name: GetTilePosition2D(float, float)
+  nameWithType: Tilemap.GetTilePosition2D(float, float)
+  fullName: SharedLibrary.Tilemap.GetTilePosition2D(float, float)
+  type: Method
+  source:
+    remote:
+      path: Shared/SharedLibrary/WorldMap/Tilemap.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: GetTilePosition2D
+    path: Shared/SharedLibrary/WorldMap/Tilemap.cs
+    startLine: 117
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary
+  summary: Gets x,y tile based on given x,y map position
+  example: []
+  syntax:
+    content: public Position2D GetTilePosition2D(float x, float y)
+    parameters:
+    - id: x
+      type: System.Single
+    - id: y
+      type: System.Single
+    return:
+      type: SharedLibrary.Helpers.Position2D
+      description: Tile's x,y
+    content.vb: Public Function GetTilePosition2D(x As Single, y As Single) As Position2D
+  overload: SharedLibrary.Tilemap.GetTilePosition2D*
+  nameWithType.vb: Tilemap.GetTilePosition2D(Single, Single)
+  fullName.vb: SharedLibrary.Tilemap.GetTilePosition2D(Single, Single)
+  name.vb: GetTilePosition2D(Single, Single)
+- uid: SharedLibrary.Tilemap.GetWalkableTiles
+  commentId: M:SharedLibrary.Tilemap.GetWalkableTiles
+  id: GetWalkableTiles
+  parent: SharedLibrary.Tilemap
+  langs:
+  - csharp
+  - vb
+  name: GetWalkableTiles()
+  nameWithType: Tilemap.GetWalkableTiles()
+  fullName: SharedLibrary.Tilemap.GetWalkableTiles()
+  type: Method
+  source:
+    remote:
+      path: Shared/SharedLibrary/WorldMap/Tilemap.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: GetWalkableTiles
+    path: Shared/SharedLibrary/WorldMap/Tilemap.cs
+    startLine: 128
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary
+  syntax:
+    content: public bool[][] GetWalkableTiles()
+    return:
+      type: System.Boolean[][]
+    content.vb: Public Function GetWalkableTiles() As Boolean()()
+  overload: SharedLibrary.Tilemap.GetWalkableTiles*
+- uid: SharedLibrary.Tilemap.GetFertileTiles
+  commentId: M:SharedLibrary.Tilemap.GetFertileTiles
+  id: GetFertileTiles
+  parent: SharedLibrary.Tilemap
+  langs:
+  - csharp
+  - vb
+  name: GetFertileTiles()
+  nameWithType: Tilemap.GetFertileTiles()
+  fullName: SharedLibrary.Tilemap.GetFertileTiles()
+  type: Method
+  source:
+    remote:
+      path: Shared/SharedLibrary/WorldMap/Tilemap.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: GetFertileTiles
+    path: Shared/SharedLibrary/WorldMap/Tilemap.cs
+    startLine: 146
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary
+  syntax:
+    content: public bool[][] GetFertileTiles()
+    return:
+      type: System.Boolean[][]
+    content.vb: Public Function GetFertileTiles() As Boolean()()
+  overload: SharedLibrary.Tilemap.GetFertileTiles*
+- uid: SharedLibrary.Tilemap.GetMapFileName(System.Int32)
+  commentId: M:SharedLibrary.Tilemap.GetMapFileName(System.Int32)
+  id: GetMapFileName(System.Int32)
+  parent: SharedLibrary.Tilemap
+  langs:
+  - csharp
+  - vb
+  name: GetMapFileName(int)
+  nameWithType: Tilemap.GetMapFileName(int)
+  fullName: SharedLibrary.Tilemap.GetMapFileName(int)
+  type: Method
+  source:
+    remote:
+      path: Shared/SharedLibrary/WorldMap/Tilemap.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: GetMapFileName
+    path: Shared/SharedLibrary/WorldMap/Tilemap.cs
+    startLine: 165
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary
+  syntax:
+    content: public static string GetMapFileName(int mapID)
+    parameters:
+    - id: mapID
+      type: System.Int32
+    return:
+      type: System.String
+    content.vb: Public Shared Function GetMapFileName(mapID As Integer) As String
+  overload: SharedLibrary.Tilemap.GetMapFileName*
+  nameWithType.vb: Tilemap.GetMapFileName(Integer)
+  fullName.vb: SharedLibrary.Tilemap.GetMapFileName(Integer)
+  name.vb: GetMapFileName(Integer)
+references:
+- uid: SharedLibrary
+  commentId: N:SharedLibrary
+  href: SharedLibrary.html
+  name: SharedLibrary
+  nameWithType: SharedLibrary
+  fullName: SharedLibrary
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: SharedLibrary.Tilemap.Name*
+  commentId: Overload:SharedLibrary.Tilemap.Name
+  href: SharedLibrary.Tilemap.html#SharedLibrary_Tilemap_Name
+  name: Name
+  nameWithType: Tilemap.Name
+  fullName: SharedLibrary.Tilemap.Name
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: SharedLibrary.Tilemap.TexturePath*
+  commentId: Overload:SharedLibrary.Tilemap.TexturePath
+  href: SharedLibrary.Tilemap.html#SharedLibrary_Tilemap_TexturePath
+  name: TexturePath
+  nameWithType: Tilemap.TexturePath
+  fullName: SharedLibrary.Tilemap.TexturePath
+- uid: SharedLibrary.Tilemap.TileSize*
+  commentId: Overload:SharedLibrary.Tilemap.TileSize
+  href: SharedLibrary.Tilemap.html#SharedLibrary_Tilemap_TileSize
+  name: TileSize
+  nameWithType: Tilemap.TileSize
+  fullName: SharedLibrary.Tilemap.TileSize
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: SharedLibrary.Tilemap.TilesetTextureWidth*
+  commentId: Overload:SharedLibrary.Tilemap.TilesetTextureWidth
+  href: SharedLibrary.Tilemap.html#SharedLibrary_Tilemap_TilesetTextureWidth
+  name: TilesetTextureWidth
+  nameWithType: Tilemap.TilesetTextureWidth
+  fullName: SharedLibrary.Tilemap.TilesetTextureWidth
+- uid: SharedLibrary.Tilemap.TilesetTextureHeight*
+  commentId: Overload:SharedLibrary.Tilemap.TilesetTextureHeight
+  href: SharedLibrary.Tilemap.html#SharedLibrary_Tilemap_TilesetTextureHeight
+  name: TilesetTextureHeight
+  nameWithType: Tilemap.TilesetTextureHeight
+  fullName: SharedLibrary.Tilemap.TilesetTextureHeight
+- uid: SharedLibrary.Tilemap.MapWidth*
+  commentId: Overload:SharedLibrary.Tilemap.MapWidth
+  href: SharedLibrary.Tilemap.html#SharedLibrary_Tilemap_MapWidth
+  name: MapWidth
+  nameWithType: Tilemap.MapWidth
+  fullName: SharedLibrary.Tilemap.MapWidth
+- uid: SharedLibrary.Tilemap.MapHeight*
+  commentId: Overload:SharedLibrary.Tilemap.MapHeight
+  href: SharedLibrary.Tilemap.html#SharedLibrary_Tilemap_MapHeight
+  name: MapHeight
+  nameWithType: Tilemap.MapHeight
+  fullName: SharedLibrary.Tilemap.MapHeight
+- uid: SharedLibrary.Tilemap.TilesetData*
+  commentId: Overload:SharedLibrary.Tilemap.TilesetData
+  href: SharedLibrary.Tilemap.html#SharedLibrary_Tilemap_TilesetData
+  name: TilesetData
+  nameWithType: Tilemap.TilesetData
+  fullName: SharedLibrary.Tilemap.TilesetData
+- uid: System.Collections.Generic.List{SharedLibrary.TileProperty}
+  commentId: T:System.Collections.Generic.List{SharedLibrary.TileProperty}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<TileProperty>
+  nameWithType: List<TileProperty>
+  fullName: System.Collections.Generic.List<SharedLibrary.TileProperty>
+  nameWithType.vb: List(Of TileProperty)
+  fullName.vb: System.Collections.Generic.List(Of SharedLibrary.TileProperty)
+  name.vb: List(Of TileProperty)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: SharedLibrary.TileProperty
+    name: TileProperty
+    href: SharedLibrary.TileProperty.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SharedLibrary.TileProperty
+    name: TileProperty
+    href: SharedLibrary.TileProperty.html
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: SharedLibrary.Tilemap.Tiles*
+  commentId: Overload:SharedLibrary.Tilemap.Tiles
+  href: SharedLibrary.Tilemap.html#SharedLibrary_Tilemap_Tiles
+  name: Tiles
+  nameWithType: Tilemap.Tiles
+  fullName: SharedLibrary.Tilemap.Tiles
+- uid: System.Int32[][]
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int[][]
+  nameWithType: int[][]
+  fullName: int[][]
+  nameWithType.vb: Integer()()
+  fullName.vb: Integer()()
+  name.vb: Integer()()
+  spec.csharp:
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: '['
+  - name: ']'
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: (
+  - name: )
+  - name: (
+  - name: )
+- uid: SharedLibrary.Tilemap.#ctor*
+  commentId: Overload:SharedLibrary.Tilemap.#ctor
+  href: SharedLibrary.Tilemap.html#SharedLibrary_Tilemap__ctor
+  name: Tilemap
+  nameWithType: Tilemap.Tilemap
+  fullName: SharedLibrary.Tilemap.Tilemap
+  nameWithType.vb: Tilemap.New
+  fullName.vb: SharedLibrary.Tilemap.New
+  name.vb: New
+- uid: SharedLibrary.Tilemap.LoadMap*
+  commentId: Overload:SharedLibrary.Tilemap.LoadMap
+  href: SharedLibrary.Tilemap.html#SharedLibrary_Tilemap_LoadMap_System_String_System_Int32_
+  name: LoadMap
+  nameWithType: Tilemap.LoadMap
+  fullName: SharedLibrary.Tilemap.LoadMap
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: SharedLibrary.Tilemap.GetTileIdAtPosition*
+  commentId: Overload:SharedLibrary.Tilemap.GetTileIdAtPosition
+  href: SharedLibrary.Tilemap.html#SharedLibrary_Tilemap_GetTileIdAtPosition_System_Single_System_Single_
+  name: GetTileIdAtPosition
+  nameWithType: Tilemap.GetTileIdAtPosition
+  fullName: SharedLibrary.Tilemap.GetTileIdAtPosition
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: SharedLibrary.Tilemap.GetTileIdAtPosition2D*
+  commentId: Overload:SharedLibrary.Tilemap.GetTileIdAtPosition2D
+  href: SharedLibrary.Tilemap.html#SharedLibrary_Tilemap_GetTileIdAtPosition2D_System_Int32_System_Int32_
+  name: GetTileIdAtPosition2D
+  nameWithType: Tilemap.GetTileIdAtPosition2D
+  fullName: SharedLibrary.Tilemap.GetTileIdAtPosition2D
+- uid: SharedLibrary.Tilemap.GetTilePosition2D*
+  commentId: Overload:SharedLibrary.Tilemap.GetTilePosition2D
+  href: SharedLibrary.Tilemap.html#SharedLibrary_Tilemap_GetTilePosition2D_System_Single_System_Single_
+  name: GetTilePosition2D
+  nameWithType: Tilemap.GetTilePosition2D
+  fullName: SharedLibrary.Tilemap.GetTilePosition2D
+- uid: SharedLibrary.Helpers.Position2D
+  commentId: T:SharedLibrary.Helpers.Position2D
+  parent: SharedLibrary.Helpers
+  href: https://github.com/Manie-K/Distributed-World-Evolution/blob/04d77cccea139c5e616524f8a10c7afb68cc7eb5/Shared/SharedLibrary/Helpers/Position2D.cs
+  name: Position2D
+  nameWithType: Position2D
+  fullName: SharedLibrary.Helpers.Position2D
+- uid: SharedLibrary.Helpers
+  commentId: N:SharedLibrary.Helpers
+  href: SharedLibrary.html
+  name: SharedLibrary.Helpers
+  nameWithType: SharedLibrary.Helpers
+  fullName: SharedLibrary.Helpers
+  spec.csharp:
+  - uid: SharedLibrary
+    name: SharedLibrary
+    href: SharedLibrary.html
+  - name: .
+  - uid: SharedLibrary.Helpers
+    name: Helpers
+    href: SharedLibrary.Helpers.html
+  spec.vb:
+  - uid: SharedLibrary
+    name: SharedLibrary
+    href: SharedLibrary.html
+  - name: .
+  - uid: SharedLibrary.Helpers
+    name: Helpers
+    href: SharedLibrary.Helpers.html
+- uid: SharedLibrary.Tilemap.GetWalkableTiles*
+  commentId: Overload:SharedLibrary.Tilemap.GetWalkableTiles
+  href: SharedLibrary.Tilemap.html#SharedLibrary_Tilemap_GetWalkableTiles
+  name: GetWalkableTiles
+  nameWithType: Tilemap.GetWalkableTiles
+  fullName: SharedLibrary.Tilemap.GetWalkableTiles
+- uid: System.Boolean[][]
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool[][]
+  nameWithType: bool[][]
+  fullName: bool[][]
+  nameWithType.vb: Boolean()()
+  fullName.vb: Boolean()()
+  name.vb: Boolean()()
+  spec.csharp:
+  - uid: System.Boolean
+    name: bool
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: '['
+  - name: ']'
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.Boolean
+    name: Boolean
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.boolean
+  - name: (
+  - name: )
+  - name: (
+  - name: )
+- uid: SharedLibrary.Tilemap.GetFertileTiles*
+  commentId: Overload:SharedLibrary.Tilemap.GetFertileTiles
+  href: SharedLibrary.Tilemap.html#SharedLibrary_Tilemap_GetFertileTiles
+  name: GetFertileTiles
+  nameWithType: Tilemap.GetFertileTiles
+  fullName: SharedLibrary.Tilemap.GetFertileTiles
+- uid: SharedLibrary.Tilemap.GetMapFileName*
+  commentId: Overload:SharedLibrary.Tilemap.GetMapFileName
+  href: SharedLibrary.Tilemap.html#SharedLibrary_Tilemap_GetMapFileName_System_Int32_
+  name: GetMapFileName
+  nameWithType: Tilemap.GetMapFileName
+  fullName: SharedLibrary.Tilemap.GetMapFileName

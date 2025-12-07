@@ -1,0 +1,51 @@
+### YamlMime:ManagedReference
+items:
+- uid: Server.Core.Migrations
+  commentId: N:Server.Core.Migrations
+  id: Server.Core.Migrations
+  children:
+  - Server.Core.Migrations.AddedInitialModules
+  - Server.Core.Migrations.ChangedHumanDamage
+  - Server.Core.Migrations.HumanInitialData
+  - Server.Core.Migrations.InitialCreate
+  - Server.Core.Migrations.StatsChanged
+  langs:
+  - csharp
+  - vb
+  name: Server.Core.Migrations
+  nameWithType: Server.Core.Migrations
+  fullName: Server.Core.Migrations
+  type: Namespace
+  assemblies:
+  - Server.Core
+references:
+- uid: Server.Core.Migrations.InitialCreate
+  commentId: T:Server.Core.Migrations.InitialCreate
+  href: Server.Core.Migrations.InitialCreate.html
+  name: InitialCreate
+  nameWithType: InitialCreate
+  fullName: Server.Core.Migrations.InitialCreate
+- uid: Server.Core.Migrations.HumanInitialData
+  commentId: T:Server.Core.Migrations.HumanInitialData
+  href: Server.Core.Migrations.HumanInitialData.html
+  name: HumanInitialData
+  nameWithType: HumanInitialData
+  fullName: Server.Core.Migrations.HumanInitialData
+- uid: Server.Core.Migrations.AddedInitialModules
+  commentId: T:Server.Core.Migrations.AddedInitialModules
+  href: Server.Core.Migrations.AddedInitialModules.html
+  name: AddedInitialModules
+  nameWithType: AddedInitialModules
+  fullName: Server.Core.Migrations.AddedInitialModules
+- uid: Server.Core.Migrations.StatsChanged
+  commentId: T:Server.Core.Migrations.StatsChanged
+  href: Server.Core.Migrations.StatsChanged.html
+  name: StatsChanged
+  nameWithType: StatsChanged
+  fullName: Server.Core.Migrations.StatsChanged
+- uid: Server.Core.Migrations.ChangedHumanDamage
+  commentId: T:Server.Core.Migrations.ChangedHumanDamage
+  href: Server.Core.Migrations.ChangedHumanDamage.html
+  name: ChangedHumanDamage
+  nameWithType: ChangedHumanDamage
+  fullName: Server.Core.Migrations.ChangedHumanDamage

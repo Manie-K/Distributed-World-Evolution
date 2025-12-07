@@ -1,0 +1,23 @@
+### YamlMime:ManagedReference
+items:
+- uid: Client.UI.CreateLobby
+  commentId: N:Client.UI.CreateLobby
+  id: Client.UI.CreateLobby
+  children:
+  - Client.UI.CreateLobby.ModulesImageDisplay
+  langs:
+  - csharp
+  - vb
+  name: Client.UI.CreateLobby
+  nameWithType: Client.UI.CreateLobby
+  fullName: Client.UI.CreateLobby
+  type: Namespace
+  assemblies:
+  - Client
+references:
+- uid: Client.UI.CreateLobby.ModulesImageDisplay
+  commentId: T:Client.UI.CreateLobby.ModulesImageDisplay
+  href: Client.UI.CreateLobby.ModulesImageDisplay.html
+  name: ModulesImageDisplay
+  nameWithType: ModulesImageDisplay
+  fullName: Client.UI.CreateLobby.ModulesImageDisplay

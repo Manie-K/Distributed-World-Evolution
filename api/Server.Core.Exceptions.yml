@@ -1,0 +1,30 @@
+### YamlMime:ManagedReference
+items:
+- uid: Server.Core.Exceptions
+  commentId: N:Server.Core.Exceptions
+  id: Server.Core.Exceptions
+  children:
+  - Server.Core.Exceptions.BehaviourImplementationNotFoundException
+  - Server.Core.Exceptions.NullLobbyException
+  langs:
+  - csharp
+  - vb
+  name: Server.Core.Exceptions
+  nameWithType: Server.Core.Exceptions
+  fullName: Server.Core.Exceptions
+  type: Namespace
+  assemblies:
+  - Server.Core
+references:
+- uid: Server.Core.Exceptions.BehaviourImplementationNotFoundException
+  commentId: T:Server.Core.Exceptions.BehaviourImplementationNotFoundException
+  href: Server.Core.Exceptions.BehaviourImplementationNotFoundException.html
+  name: BehaviourImplementationNotFoundException
+  nameWithType: BehaviourImplementationNotFoundException
+  fullName: Server.Core.Exceptions.BehaviourImplementationNotFoundException
+- uid: Server.Core.Exceptions.NullLobbyException
+  commentId: T:Server.Core.Exceptions.NullLobbyException
+  href: Server.Core.Exceptions.NullLobbyException.html
+  name: NullLobbyException
+  nameWithType: NullLobbyException
+  fullName: Server.Core.Exceptions.NullLobbyException

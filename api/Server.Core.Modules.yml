@@ -1,0 +1,78 @@
+### YamlMime:ManagedReference
+items:
+- uid: Server.Core.Modules
+  commentId: N:Server.Core.Modules
+  id: Server.Core.Modules
+  children:
+  - Server.Core.Modules.Module
+  - Server.Core.Modules.Module.ModuleBuilder
+  langs:
+  - csharp
+  - vb
+  name: Server.Core.Modules
+  nameWithType: Server.Core.Modules
+  fullName: Server.Core.Modules
+  type: Namespace
+  assemblies:
+  - Server.Core
+references:
+- uid: Server.Core.Modules.Module
+  commentId: T:Server.Core.Modules.Module
+  parent: Server.Core.Modules
+  href: Server.Core.Modules.Module.html
+  name: Module
+  nameWithType: Module
+  fullName: Server.Core.Modules.Module
+- uid: Server.Core.Modules.Module.ModuleBuilder
+  commentId: T:Server.Core.Modules.Module.ModuleBuilder
+  parent: Server.Core.Modules
+  href: Server.Core.Modules.Module.html
+  name: Module.ModuleBuilder
+  nameWithType: Module.ModuleBuilder
+  fullName: Server.Core.Modules.Module.ModuleBuilder
+  spec.csharp:
+  - uid: Server.Core.Modules.Module
+    name: Module
+    href: Server.Core.Modules.Module.html
+  - name: .
+  - uid: Server.Core.Modules.Module.ModuleBuilder
+    name: ModuleBuilder
+    href: Server.Core.Modules.Module.ModuleBuilder.html
+  spec.vb:
+  - uid: Server.Core.Modules.Module
+    name: Module
+    href: Server.Core.Modules.Module.html
+  - name: .
+  - uid: Server.Core.Modules.Module.ModuleBuilder
+    name: ModuleBuilder
+    href: Server.Core.Modules.Module.ModuleBuilder.html
+- uid: Server.Core.Modules
+  commentId: N:Server.Core.Modules
+  href: Server.html
+  name: Server.Core.Modules
+  nameWithType: Server.Core.Modules
+  fullName: Server.Core.Modules
+  spec.csharp:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+  - name: .
+  - uid: Server.Core.Modules
+    name: Modules
+    href: Server.Core.Modules.html
+  spec.vb:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+  - name: .
+  - uid: Server.Core.Modules
+    name: Modules
+    href: Server.Core.Modules.html

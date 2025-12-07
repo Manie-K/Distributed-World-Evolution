@@ -1,0 +1,1463 @@
+### YamlMime:ManagedReference
+items:
+- uid: Client.ClientManager
+  commentId: T:Client.ClientManager
+  id: ClientManager
+  parent: Client
+  children:
+  - Client.ClientManager.#ctor(Microsoft.Extensions.Configuration.IConfigurationRoot)
+  - Client.ClientManager.BehaviourListReady
+  - Client.ClientManager.Behaviours
+  - Client.ClientManager.CLIENT_UPDATES_PER_SECOND
+  - Client.ClientManager.Client
+  - Client.ClientManager.CloseClient
+  - Client.ClientManager.Entities
+  - Client.ClientManager.FlushEntities
+  - Client.ClientManager.Lobbies
+  - Client.ClientManager.LobbyCreated
+  - Client.ClientManager.LobbyData
+  - Client.ClientManager.LobbyJoined
+  - Client.ClientManager.LobbyListReady
+  - Client.ClientManager.ModuleCreated
+  - Client.ClientManager.ModuleListReady
+  - Client.ClientManager.Modules
+  - Client.ClientManager.OnErrorMessageReceived
+  - Client.ClientManager.PlayerGuid
+  - Client.ClientManager.SetPendingLobbyJoined
+  - Client.ClientManager.StartClient
+  - Client.ClientManager.WindowManager
+  langs:
+  - csharp
+  - vb
+  name: ClientManager
+  nameWithType: ClientManager
+  fullName: Client.ClientManager
+  type: Class
+  source:
+    remote:
+      path: Client/Client/ClientManager.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: ClientManager
+    path: Client/Client/ClientManager.cs
+    startLine: 24
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: public class ClientManager
+    content.vb: Public Class ClientManager
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Client.ClientManager.CLIENT_UPDATES_PER_SECOND
+  commentId: F:Client.ClientManager.CLIENT_UPDATES_PER_SECOND
+  id: CLIENT_UPDATES_PER_SECOND
+  parent: Client.ClientManager
+  langs:
+  - csharp
+  - vb
+  name: CLIENT_UPDATES_PER_SECOND
+  nameWithType: ClientManager.CLIENT_UPDATES_PER_SECOND
+  fullName: Client.ClientManager.CLIENT_UPDATES_PER_SECOND
+  type: Field
+  source:
+    remote:
+      path: Client/Client/ClientManager.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: CLIENT_UPDATES_PER_SECOND
+    path: Client/Client/ClientManager.cs
+    startLine: 26
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: public const double CLIENT_UPDATES_PER_SECOND = 16
+    return:
+      type: System.Double
+    content.vb: Public Const CLIENT_UPDATES_PER_SECOND As Double = 16
+- uid: Client.ClientManager.Client
+  commentId: P:Client.ClientManager.Client
+  id: Client
+  parent: Client.ClientManager
+  langs:
+  - csharp
+  - vb
+  name: Client
+  nameWithType: ClientManager.Client
+  fullName: Client.ClientManager.Client
+  type: Property
+  source:
+    remote:
+      path: Client/Client/ClientManager.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Client
+    path: Client/Client/ClientManager.cs
+    startLine: 27
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: public TcpClient Client { get; }
+    parameters: []
+    return:
+      type: System.Net.Sockets.TcpClient
+    content.vb: Public Property Client As TcpClient
+  overload: Client.ClientManager.Client*
+- uid: Client.ClientManager.WindowManager
+  commentId: F:Client.ClientManager.WindowManager
+  id: WindowManager
+  parent: Client.ClientManager
+  langs:
+  - csharp
+  - vb
+  name: WindowManager
+  nameWithType: ClientManager.WindowManager
+  fullName: Client.ClientManager.WindowManager
+  type: Field
+  source:
+    remote:
+      path: Client/Client/ClientManager.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: WindowManager
+    path: Client/Client/ClientManager.cs
+    startLine: 28
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: public WindowManager WindowManager
+    return:
+      type: Client.Panels.Windows.WindowManager
+    content.vb: Public WindowManager As WindowManager
+- uid: Client.ClientManager.OnErrorMessageReceived
+  commentId: E:Client.ClientManager.OnErrorMessageReceived
+  id: OnErrorMessageReceived
+  parent: Client.ClientManager
+  langs:
+  - csharp
+  - vb
+  name: OnErrorMessageReceived
+  nameWithType: ClientManager.OnErrorMessageReceived
+  fullName: Client.ClientManager.OnErrorMessageReceived
+  type: Event
+  source:
+    remote:
+      path: Client/Client/ClientManager.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: OnErrorMessageReceived
+    path: Client/Client/ClientManager.cs
+    startLine: 34
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: public static event Action OnErrorMessageReceived
+    return:
+      type: System.Action
+    content.vb: Public Shared Event OnErrorMessageReceived As Action
+- uid: Client.ClientManager.LobbyCreated
+  commentId: P:Client.ClientManager.LobbyCreated
+  id: LobbyCreated
+  parent: Client.ClientManager
+  langs:
+  - csharp
+  - vb
+  name: LobbyCreated
+  nameWithType: ClientManager.LobbyCreated
+  fullName: Client.ClientManager.LobbyCreated
+  type: Property
+  source:
+    remote:
+      path: Client/Client/ClientManager.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: LobbyCreated
+    path: Client/Client/ClientManager.cs
+    startLine: 39
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: public int LobbyCreated { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property LobbyCreated As Integer
+  overload: Client.ClientManager.LobbyCreated*
+- uid: Client.ClientManager.ModuleCreated
+  commentId: P:Client.ClientManager.ModuleCreated
+  id: ModuleCreated
+  parent: Client.ClientManager
+  langs:
+  - csharp
+  - vb
+  name: ModuleCreated
+  nameWithType: ClientManager.ModuleCreated
+  fullName: Client.ClientManager.ModuleCreated
+  type: Property
+  source:
+    remote:
+      path: Client/Client/ClientManager.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: ModuleCreated
+    path: Client/Client/ClientManager.cs
+    startLine: 46
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: public int ModuleCreated { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property ModuleCreated As Integer
+  overload: Client.ClientManager.ModuleCreated*
+- uid: Client.ClientManager.LobbyJoined
+  commentId: P:Client.ClientManager.LobbyJoined
+  id: LobbyJoined
+  parent: Client.ClientManager
+  langs:
+  - csharp
+  - vb
+  name: LobbyJoined
+  nameWithType: ClientManager.LobbyJoined
+  fullName: Client.ClientManager.LobbyJoined
+  type: Property
+  source:
+    remote:
+      path: Client/Client/ClientManager.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: LobbyJoined
+    path: Client/Client/ClientManager.cs
+    startLine: 53
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: public int LobbyJoined { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property LobbyJoined As Integer
+  overload: Client.ClientManager.LobbyJoined*
+- uid: Client.ClientManager.SetPendingLobbyJoined
+  commentId: M:Client.ClientManager.SetPendingLobbyJoined
+  id: SetPendingLobbyJoined
+  parent: Client.ClientManager
+  langs:
+  - csharp
+  - vb
+  name: SetPendingLobbyJoined()
+  nameWithType: ClientManager.SetPendingLobbyJoined()
+  fullName: Client.ClientManager.SetPendingLobbyJoined()
+  type: Method
+  source:
+    remote:
+      path: Client/Client/ClientManager.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: SetPendingLobbyJoined
+    path: Client/Client/ClientManager.cs
+    startLine: 58
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: public void SetPendingLobbyJoined()
+    content.vb: Public Sub SetPendingLobbyJoined()
+  overload: Client.ClientManager.SetPendingLobbyJoined*
+- uid: Client.ClientManager.LobbyListReady
+  commentId: P:Client.ClientManager.LobbyListReady
+  id: LobbyListReady
+  parent: Client.ClientManager
+  langs:
+  - csharp
+  - vb
+  name: LobbyListReady
+  nameWithType: ClientManager.LobbyListReady
+  fullName: Client.ClientManager.LobbyListReady
+  type: Property
+  source:
+    remote:
+      path: Client/Client/ClientManager.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: LobbyListReady
+    path: Client/Client/ClientManager.cs
+    startLine: 64
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: public int LobbyListReady { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property LobbyListReady As Integer
+  overload: Client.ClientManager.LobbyListReady*
+- uid: Client.ClientManager.ModuleListReady
+  commentId: P:Client.ClientManager.ModuleListReady
+  id: ModuleListReady
+  parent: Client.ClientManager
+  langs:
+  - csharp
+  - vb
+  name: ModuleListReady
+  nameWithType: ClientManager.ModuleListReady
+  fullName: Client.ClientManager.ModuleListReady
+  type: Property
+  source:
+    remote:
+      path: Client/Client/ClientManager.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: ModuleListReady
+    path: Client/Client/ClientManager.cs
+    startLine: 71
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: public int ModuleListReady { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property ModuleListReady As Integer
+  overload: Client.ClientManager.ModuleListReady*
+- uid: Client.ClientManager.BehaviourListReady
+  commentId: P:Client.ClientManager.BehaviourListReady
+  id: BehaviourListReady
+  parent: Client.ClientManager
+  langs:
+  - csharp
+  - vb
+  name: BehaviourListReady
+  nameWithType: ClientManager.BehaviourListReady
+  fullName: Client.ClientManager.BehaviourListReady
+  type: Property
+  source:
+    remote:
+      path: Client/Client/ClientManager.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: BehaviourListReady
+    path: Client/Client/ClientManager.cs
+    startLine: 78
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: public int BehaviourListReady { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property BehaviourListReady As Integer
+  overload: Client.ClientManager.BehaviourListReady*
+- uid: Client.ClientManager.Entities
+  commentId: P:Client.ClientManager.Entities
+  id: Entities
+  parent: Client.ClientManager
+  langs:
+  - csharp
+  - vb
+  name: Entities
+  nameWithType: ClientManager.Entities
+  fullName: Client.ClientManager.Entities
+  type: Property
+  source:
+    remote:
+      path: Client/Client/ClientManager.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Entities
+    path: Client/Client/ClientManager.cs
+    startLine: 86
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: public IReadOnlyDictionary<Guid, WorldEntityDTO> Entities { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IReadOnlyDictionary{System.Guid,SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO}
+    content.vb: Public ReadOnly Property Entities As IReadOnlyDictionary(Of Guid, WorldEntityDTO)
+  overload: Client.ClientManager.Entities*
+- uid: Client.ClientManager.FlushEntities
+  commentId: M:Client.ClientManager.FlushEntities
+  id: FlushEntities
+  parent: Client.ClientManager
+  langs:
+  - csharp
+  - vb
+  name: FlushEntities()
+  nameWithType: ClientManager.FlushEntities()
+  fullName: Client.ClientManager.FlushEntities()
+  type: Method
+  source:
+    remote:
+      path: Client/Client/ClientManager.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: FlushEntities
+    path: Client/Client/ClientManager.cs
+    startLine: 96
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: public IReadOnlyDictionary<Guid, WorldEntityDTO> FlushEntities()
+    return:
+      type: System.Collections.Generic.IReadOnlyDictionary{System.Guid,SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO}
+    content.vb: Public Function FlushEntities() As IReadOnlyDictionary(Of Guid, WorldEntityDTO)
+  overload: Client.ClientManager.FlushEntities*
+- uid: Client.ClientManager.Lobbies
+  commentId: P:Client.ClientManager.Lobbies
+  id: Lobbies
+  parent: Client.ClientManager
+  langs:
+  - csharp
+  - vb
+  name: Lobbies
+  nameWithType: ClientManager.Lobbies
+  fullName: Client.ClientManager.Lobbies
+  type: Property
+  source:
+    remote:
+      path: Client/Client/ClientManager.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Lobbies
+    path: Client/Client/ClientManager.cs
+    startLine: 108
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: public IReadOnlyList<LobbyDTO> Lobbies { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IReadOnlyList{SharedLibrary.DTOs.LobbyDTO.LobbyDTO}
+    content.vb: Public ReadOnly Property Lobbies As IReadOnlyList(Of LobbyDTO)
+  overload: Client.ClientManager.Lobbies*
+- uid: Client.ClientManager.Modules
+  commentId: P:Client.ClientManager.Modules
+  id: Modules
+  parent: Client.ClientManager
+  langs:
+  - csharp
+  - vb
+  name: Modules
+  nameWithType: ClientManager.Modules
+  fullName: Client.ClientManager.Modules
+  type: Property
+  source:
+    remote:
+      path: Client/Client/ClientManager.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Modules
+    path: Client/Client/ClientManager.cs
+    startLine: 121
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: public IReadOnlyList<ModuleDTO> Modules { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IReadOnlyList{SharedLibrary.DTOs.ModuleDTO.ModuleDTO}
+    content.vb: Public ReadOnly Property Modules As IReadOnlyList(Of ModuleDTO)
+  overload: Client.ClientManager.Modules*
+- uid: Client.ClientManager.Behaviours
+  commentId: P:Client.ClientManager.Behaviours
+  id: Behaviours
+  parent: Client.ClientManager
+  langs:
+  - csharp
+  - vb
+  name: Behaviours
+  nameWithType: ClientManager.Behaviours
+  fullName: Client.ClientManager.Behaviours
+  type: Property
+  source:
+    remote:
+      path: Client/Client/ClientManager.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Behaviours
+    path: Client/Client/ClientManager.cs
+    startLine: 134
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: public IReadOnlyList<BehaviourDTO> Behaviours { get; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IReadOnlyList{SharedLibrary.DTOs.ModuleDTO.BehaviourDTO}
+    content.vb: Public ReadOnly Property Behaviours As IReadOnlyList(Of BehaviourDTO)
+  overload: Client.ClientManager.Behaviours*
+- uid: Client.ClientManager.LobbyData
+  commentId: P:Client.ClientManager.LobbyData
+  id: LobbyData
+  parent: Client.ClientManager
+  langs:
+  - csharp
+  - vb
+  name: LobbyData
+  nameWithType: ClientManager.LobbyData
+  fullName: Client.ClientManager.LobbyData
+  type: Property
+  source:
+    remote:
+      path: Client/Client/ClientManager.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: LobbyData
+    path: Client/Client/ClientManager.cs
+    startLine: 147
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: public LobbyDTO LobbyData { get; }
+    parameters: []
+    return:
+      type: SharedLibrary.DTOs.LobbyDTO.LobbyDTO
+    content.vb: Public ReadOnly Property LobbyData As LobbyDTO
+  overload: Client.ClientManager.LobbyData*
+- uid: Client.ClientManager.PlayerGuid
+  commentId: P:Client.ClientManager.PlayerGuid
+  id: PlayerGuid
+  parent: Client.ClientManager
+  langs:
+  - csharp
+  - vb
+  name: PlayerGuid
+  nameWithType: ClientManager.PlayerGuid
+  fullName: Client.ClientManager.PlayerGuid
+  type: Property
+  source:
+    remote:
+      path: Client/Client/ClientManager.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: PlayerGuid
+    path: Client/Client/ClientManager.cs
+    startLine: 160
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: public Guid PlayerGuid { get; }
+    parameters: []
+    return:
+      type: System.Guid
+    content.vb: Public ReadOnly Property PlayerGuid As Guid
+  overload: Client.ClientManager.PlayerGuid*
+- uid: Client.ClientManager.#ctor(Microsoft.Extensions.Configuration.IConfigurationRoot)
+  commentId: M:Client.ClientManager.#ctor(Microsoft.Extensions.Configuration.IConfigurationRoot)
+  id: '#ctor(Microsoft.Extensions.Configuration.IConfigurationRoot)'
+  parent: Client.ClientManager
+  langs:
+  - csharp
+  - vb
+  name: ClientManager(IConfigurationRoot)
+  nameWithType: ClientManager.ClientManager(IConfigurationRoot)
+  fullName: Client.ClientManager.ClientManager(Microsoft.Extensions.Configuration.IConfigurationRoot)
+  type: Constructor
+  source:
+    remote:
+      path: Client/Client/ClientManager.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: .ctor
+    path: Client/Client/ClientManager.cs
+    startLine: 173
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: public ClientManager(IConfigurationRoot config)
+    parameters:
+    - id: config
+      type: Microsoft.Extensions.Configuration.IConfigurationRoot
+    content.vb: Public Sub New(config As IConfigurationRoot)
+  overload: Client.ClientManager.#ctor*
+  nameWithType.vb: ClientManager.New(IConfigurationRoot)
+  fullName.vb: Client.ClientManager.New(Microsoft.Extensions.Configuration.IConfigurationRoot)
+  name.vb: New(IConfigurationRoot)
+- uid: Client.ClientManager.StartClient
+  commentId: M:Client.ClientManager.StartClient
+  id: StartClient
+  parent: Client.ClientManager
+  langs:
+  - csharp
+  - vb
+  name: StartClient()
+  nameWithType: ClientManager.StartClient()
+  fullName: Client.ClientManager.StartClient()
+  type: Method
+  source:
+    remote:
+      path: Client/Client/ClientManager.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: StartClient
+    path: Client/Client/ClientManager.cs
+    startLine: 188
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: public void StartClient()
+    content.vb: Public Sub StartClient()
+  overload: Client.ClientManager.StartClient*
+- uid: Client.ClientManager.CloseClient
+  commentId: M:Client.ClientManager.CloseClient
+  id: CloseClient
+  parent: Client.ClientManager
+  langs:
+  - csharp
+  - vb
+  name: CloseClient()
+  nameWithType: ClientManager.CloseClient()
+  fullName: Client.ClientManager.CloseClient()
+  type: Method
+  source:
+    remote:
+      path: Client/Client/ClientManager.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: CloseClient
+    path: Client/Client/ClientManager.cs
+    startLine: 207
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: public void CloseClient()
+    content.vb: Public Sub CloseClient()
+  overload: Client.ClientManager.CloseClient*
+references:
+- uid: Client
+  commentId: N:Client
+  href: Client.html
+  name: Client
+  nameWithType: Client
+  fullName: Client
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Double
+  commentId: T:System.Double
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.double
+  name: double
+  nameWithType: double
+  fullName: double
+  nameWithType.vb: Double
+  fullName.vb: Double
+  name.vb: Double
+- uid: Client.ClientManager.Client*
+  commentId: Overload:Client.ClientManager.Client
+  href: Client.ClientManager.html#Client_ClientManager_Client
+  name: Client
+  nameWithType: ClientManager.Client
+  fullName: Client.ClientManager.Client
+- uid: System.Net.Sockets.TcpClient
+  commentId: T:System.Net.Sockets.TcpClient
+  parent: System.Net.Sockets
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.net.sockets.tcpclient
+  name: TcpClient
+  nameWithType: TcpClient
+  fullName: System.Net.Sockets.TcpClient
+- uid: System.Net.Sockets
+  commentId: N:System.Net.Sockets
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Net.Sockets
+  nameWithType: System.Net.Sockets
+  fullName: System.Net.Sockets
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Net
+    name: Net
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.net
+  - name: .
+  - uid: System.Net.Sockets
+    name: Sockets
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.net.sockets
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Net
+    name: Net
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.net
+  - name: .
+  - uid: System.Net.Sockets
+    name: Sockets
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.net.sockets
+- uid: Client.Panels.Windows.WindowManager
+  commentId: T:Client.Panels.Windows.WindowManager
+  parent: Client.Panels.Windows
+  href: Client.Panels.Windows.WindowManager.html
+  name: WindowManager
+  nameWithType: WindowManager
+  fullName: Client.Panels.Windows.WindowManager
+- uid: Client.Panels.Windows
+  commentId: N:Client.Panels.Windows
+  href: Client.html
+  name: Client.Panels.Windows
+  nameWithType: Client.Panels.Windows
+  fullName: Client.Panels.Windows
+  spec.csharp:
+  - uid: Client
+    name: Client
+    href: Client.html
+  - name: .
+  - uid: Client.Panels
+    name: Panels
+    href: Client.Panels.html
+  - name: .
+  - uid: Client.Panels.Windows
+    name: Windows
+    href: Client.Panels.Windows.html
+  spec.vb:
+  - uid: Client
+    name: Client
+    href: Client.html
+  - name: .
+  - uid: Client.Panels
+    name: Panels
+    href: Client.Panels.html
+  - name: .
+  - uid: Client.Panels.Windows
+    name: Windows
+    href: Client.Panels.Windows.html
+- uid: System.Action
+  commentId: T:System.Action
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.action
+  name: Action
+  nameWithType: Action
+  fullName: System.Action
+- uid: Client.ClientManager.LobbyCreated*
+  commentId: Overload:Client.ClientManager.LobbyCreated
+  href: Client.ClientManager.html#Client_ClientManager_LobbyCreated
+  name: LobbyCreated
+  nameWithType: ClientManager.LobbyCreated
+  fullName: Client.ClientManager.LobbyCreated
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Client.ClientManager.ModuleCreated*
+  commentId: Overload:Client.ClientManager.ModuleCreated
+  href: Client.ClientManager.html#Client_ClientManager_ModuleCreated
+  name: ModuleCreated
+  nameWithType: ClientManager.ModuleCreated
+  fullName: Client.ClientManager.ModuleCreated
+- uid: Client.ClientManager.LobbyJoined*
+  commentId: Overload:Client.ClientManager.LobbyJoined
+  href: Client.ClientManager.html#Client_ClientManager_LobbyJoined
+  name: LobbyJoined
+  nameWithType: ClientManager.LobbyJoined
+  fullName: Client.ClientManager.LobbyJoined
+- uid: Client.ClientManager.SetPendingLobbyJoined*
+  commentId: Overload:Client.ClientManager.SetPendingLobbyJoined
+  href: Client.ClientManager.html#Client_ClientManager_SetPendingLobbyJoined
+  name: SetPendingLobbyJoined
+  nameWithType: ClientManager.SetPendingLobbyJoined
+  fullName: Client.ClientManager.SetPendingLobbyJoined
+- uid: Client.ClientManager.LobbyListReady*
+  commentId: Overload:Client.ClientManager.LobbyListReady
+  href: Client.ClientManager.html#Client_ClientManager_LobbyListReady
+  name: LobbyListReady
+  nameWithType: ClientManager.LobbyListReady
+  fullName: Client.ClientManager.LobbyListReady
+- uid: Client.ClientManager.ModuleListReady*
+  commentId: Overload:Client.ClientManager.ModuleListReady
+  href: Client.ClientManager.html#Client_ClientManager_ModuleListReady
+  name: ModuleListReady
+  nameWithType: ClientManager.ModuleListReady
+  fullName: Client.ClientManager.ModuleListReady
+- uid: Client.ClientManager.BehaviourListReady*
+  commentId: Overload:Client.ClientManager.BehaviourListReady
+  href: Client.ClientManager.html#Client_ClientManager_BehaviourListReady
+  name: BehaviourListReady
+  nameWithType: ClientManager.BehaviourListReady
+  fullName: Client.ClientManager.BehaviourListReady
+- uid: Client.ClientManager.Entities*
+  commentId: Overload:Client.ClientManager.Entities
+  href: Client.ClientManager.html#Client_ClientManager_Entities
+  name: Entities
+  nameWithType: ClientManager.Entities
+  fullName: Client.ClientManager.Entities
+- uid: System.Collections.Generic.IReadOnlyDictionary{System.Guid,SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO}
+  commentId: T:System.Collections.Generic.IReadOnlyDictionary{System.Guid,SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyDictionary`2
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  name: IReadOnlyDictionary<Guid, WorldEntityDTO>
+  nameWithType: IReadOnlyDictionary<Guid, WorldEntityDTO>
+  fullName: System.Collections.Generic.IReadOnlyDictionary<System.Guid, SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO>
+  nameWithType.vb: IReadOnlyDictionary(Of Guid, WorldEntityDTO)
+  fullName.vb: System.Collections.Generic.IReadOnlyDictionary(Of System.Guid, SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO)
+  name.vb: IReadOnlyDictionary(Of Guid, WorldEntityDTO)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2
+    name: IReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  - name: <
+  - uid: System.Guid
+    name: Guid
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.guid
+  - name: ','
+  - name: " "
+  - uid: SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO
+    name: WorldEntityDTO
+    isExternal: true
+    href: https://github.com/Manie-K/Distributed-World-Evolution/blob/04d77cccea139c5e616524f8a10c7afb68cc7eb5/Shared/SharedLibrary/DTOs/EntitiesDTO/WorldEntityDTO.cs
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2
+    name: IReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Guid
+    name: Guid
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.guid
+  - name: ','
+  - name: " "
+  - uid: SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO
+    name: WorldEntityDTO
+    isExternal: true
+    href: https://github.com/Manie-K/Distributed-World-Evolution/blob/04d77cccea139c5e616524f8a10c7afb68cc7eb5/Shared/SharedLibrary/DTOs/EntitiesDTO/WorldEntityDTO.cs
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyDictionary`2
+  commentId: T:System.Collections.Generic.IReadOnlyDictionary`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  name: IReadOnlyDictionary<TKey, TValue>
+  nameWithType: IReadOnlyDictionary<TKey, TValue>
+  fullName: System.Collections.Generic.IReadOnlyDictionary<TKey, TValue>
+  nameWithType.vb: IReadOnlyDictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.IReadOnlyDictionary(Of TKey, TValue)
+  name.vb: IReadOnlyDictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2
+    name: IReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyDictionary`2
+    name: IReadOnlyDictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlydictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Client.ClientManager.FlushEntities*
+  commentId: Overload:Client.ClientManager.FlushEntities
+  href: Client.ClientManager.html#Client_ClientManager_FlushEntities
+  name: FlushEntities
+  nameWithType: ClientManager.FlushEntities
+  fullName: Client.ClientManager.FlushEntities
+- uid: Client.ClientManager.Lobbies*
+  commentId: Overload:Client.ClientManager.Lobbies
+  href: Client.ClientManager.html#Client_ClientManager_Lobbies
+  name: Lobbies
+  nameWithType: ClientManager.Lobbies
+  fullName: Client.ClientManager.Lobbies
+- uid: System.Collections.Generic.IReadOnlyList{SharedLibrary.DTOs.LobbyDTO.LobbyDTO}
+  commentId: T:System.Collections.Generic.IReadOnlyList{SharedLibrary.DTOs.LobbyDTO.LobbyDTO}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<LobbyDTO>
+  nameWithType: IReadOnlyList<LobbyDTO>
+  fullName: System.Collections.Generic.IReadOnlyList<SharedLibrary.DTOs.LobbyDTO.LobbyDTO>
+  nameWithType.vb: IReadOnlyList(Of LobbyDTO)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of SharedLibrary.DTOs.LobbyDTO.LobbyDTO)
+  name.vb: IReadOnlyList(Of LobbyDTO)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: SharedLibrary.DTOs.LobbyDTO.LobbyDTO
+    name: LobbyDTO
+    isExternal: true
+    href: https://github.com/Manie-K/Distributed-World-Evolution/blob/04d77cccea139c5e616524f8a10c7afb68cc7eb5/Shared/SharedLibrary/DTOs/LobbyDTO/LobbyDTO.cs
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SharedLibrary.DTOs.LobbyDTO.LobbyDTO
+    name: LobbyDTO
+    isExternal: true
+    href: https://github.com/Manie-K/Distributed-World-Evolution/blob/04d77cccea139c5e616524f8a10c7afb68cc7eb5/Shared/SharedLibrary/DTOs/LobbyDTO/LobbyDTO.cs
+  - name: )
+- uid: System.Collections.Generic.IReadOnlyList`1
+  commentId: T:System.Collections.Generic.IReadOnlyList`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<T>
+  nameWithType: IReadOnlyList<T>
+  fullName: System.Collections.Generic.IReadOnlyList<T>
+  nameWithType.vb: IReadOnlyList(Of T)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of T)
+  name.vb: IReadOnlyList(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Client.ClientManager.Modules*
+  commentId: Overload:Client.ClientManager.Modules
+  href: Client.ClientManager.html#Client_ClientManager_Modules
+  name: Modules
+  nameWithType: ClientManager.Modules
+  fullName: Client.ClientManager.Modules
+- uid: System.Collections.Generic.IReadOnlyList{SharedLibrary.DTOs.ModuleDTO.ModuleDTO}
+  commentId: T:System.Collections.Generic.IReadOnlyList{SharedLibrary.DTOs.ModuleDTO.ModuleDTO}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<ModuleDTO>
+  nameWithType: IReadOnlyList<ModuleDTO>
+  fullName: System.Collections.Generic.IReadOnlyList<SharedLibrary.DTOs.ModuleDTO.ModuleDTO>
+  nameWithType.vb: IReadOnlyList(Of ModuleDTO)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of SharedLibrary.DTOs.ModuleDTO.ModuleDTO)
+  name.vb: IReadOnlyList(Of ModuleDTO)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: SharedLibrary.DTOs.ModuleDTO.ModuleDTO
+    name: ModuleDTO
+    isExternal: true
+    href: https://github.com/Manie-K/Distributed-World-Evolution/blob/04d77cccea139c5e616524f8a10c7afb68cc7eb5/Shared/SharedLibrary/DTOs/ModuleDTO/ModuleDTO.cs
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SharedLibrary.DTOs.ModuleDTO.ModuleDTO
+    name: ModuleDTO
+    isExternal: true
+    href: https://github.com/Manie-K/Distributed-World-Evolution/blob/04d77cccea139c5e616524f8a10c7afb68cc7eb5/Shared/SharedLibrary/DTOs/ModuleDTO/ModuleDTO.cs
+  - name: )
+- uid: Client.ClientManager.Behaviours*
+  commentId: Overload:Client.ClientManager.Behaviours
+  href: Client.ClientManager.html#Client_ClientManager_Behaviours
+  name: Behaviours
+  nameWithType: ClientManager.Behaviours
+  fullName: Client.ClientManager.Behaviours
+- uid: System.Collections.Generic.IReadOnlyList{SharedLibrary.DTOs.ModuleDTO.BehaviourDTO}
+  commentId: T:System.Collections.Generic.IReadOnlyList{SharedLibrary.DTOs.ModuleDTO.BehaviourDTO}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IReadOnlyList`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  name: IReadOnlyList<BehaviourDTO>
+  nameWithType: IReadOnlyList<BehaviourDTO>
+  fullName: System.Collections.Generic.IReadOnlyList<SharedLibrary.DTOs.ModuleDTO.BehaviourDTO>
+  nameWithType.vb: IReadOnlyList(Of BehaviourDTO)
+  fullName.vb: System.Collections.Generic.IReadOnlyList(Of SharedLibrary.DTOs.ModuleDTO.BehaviourDTO)
+  name.vb: IReadOnlyList(Of BehaviourDTO)
+  spec.csharp:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: <
+  - uid: SharedLibrary.DTOs.ModuleDTO.BehaviourDTO
+    name: BehaviourDTO
+    isExternal: true
+    href: https://github.com/Manie-K/Distributed-World-Evolution/blob/04d77cccea139c5e616524f8a10c7afb68cc7eb5/Shared/SharedLibrary/DTOs/ModuleDTO/BehaviourDTO.cs
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IReadOnlyList`1
+    name: IReadOnlyList
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ireadonlylist-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SharedLibrary.DTOs.ModuleDTO.BehaviourDTO
+    name: BehaviourDTO
+    isExternal: true
+    href: https://github.com/Manie-K/Distributed-World-Evolution/blob/04d77cccea139c5e616524f8a10c7afb68cc7eb5/Shared/SharedLibrary/DTOs/ModuleDTO/BehaviourDTO.cs
+  - name: )
+- uid: Client.ClientManager.LobbyData*
+  commentId: Overload:Client.ClientManager.LobbyData
+  href: Client.ClientManager.html#Client_ClientManager_LobbyData
+  name: LobbyData
+  nameWithType: ClientManager.LobbyData
+  fullName: Client.ClientManager.LobbyData
+- uid: SharedLibrary.DTOs.LobbyDTO.LobbyDTO
+  commentId: T:SharedLibrary.DTOs.LobbyDTO.LobbyDTO
+  parent: SharedLibrary.DTOs.LobbyDTO
+  href: https://github.com/Manie-K/Distributed-World-Evolution/blob/04d77cccea139c5e616524f8a10c7afb68cc7eb5/Shared/SharedLibrary/DTOs/LobbyDTO/LobbyDTO.cs
+  name: LobbyDTO
+  nameWithType: LobbyDTO
+  fullName: SharedLibrary.DTOs.LobbyDTO.LobbyDTO
+- uid: SharedLibrary.DTOs.LobbyDTO
+  commentId: N:SharedLibrary.DTOs.LobbyDTO
+  href: SharedLibrary.html
+  name: SharedLibrary.DTOs.LobbyDTO
+  nameWithType: SharedLibrary.DTOs.LobbyDTO
+  fullName: SharedLibrary.DTOs.LobbyDTO
+  spec.csharp:
+  - uid: SharedLibrary
+    name: SharedLibrary
+    href: SharedLibrary.html
+  - name: .
+  - uid: SharedLibrary.DTOs
+    name: DTOs
+    href: SharedLibrary.DTOs.html
+  - name: .
+  - uid: SharedLibrary.DTOs.LobbyDTO
+    name: LobbyDTO
+    href: SharedLibrary.DTOs.LobbyDTO.html
+  spec.vb:
+  - uid: SharedLibrary
+    name: SharedLibrary
+    href: SharedLibrary.html
+  - name: .
+  - uid: SharedLibrary.DTOs
+    name: DTOs
+    href: SharedLibrary.DTOs.html
+  - name: .
+  - uid: SharedLibrary.DTOs.LobbyDTO
+    name: LobbyDTO
+    href: SharedLibrary.DTOs.LobbyDTO.html
+- uid: Client.ClientManager.PlayerGuid*
+  commentId: Overload:Client.ClientManager.PlayerGuid
+  href: Client.ClientManager.html#Client_ClientManager_PlayerGuid
+  name: PlayerGuid
+  nameWithType: ClientManager.PlayerGuid
+  fullName: Client.ClientManager.PlayerGuid
+- uid: System.Guid
+  commentId: T:System.Guid
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.guid
+  name: Guid
+  nameWithType: Guid
+  fullName: System.Guid
+- uid: Client.ClientManager.#ctor*
+  commentId: Overload:Client.ClientManager.#ctor
+  href: Client.ClientManager.html#Client_ClientManager__ctor_Microsoft_Extensions_Configuration_IConfigurationRoot_
+  name: ClientManager
+  nameWithType: ClientManager.ClientManager
+  fullName: Client.ClientManager.ClientManager
+  nameWithType.vb: ClientManager.New
+  fullName.vb: Client.ClientManager.New
+  name.vb: New
+- uid: Microsoft.Extensions.Configuration.IConfigurationRoot
+  commentId: T:Microsoft.Extensions.Configuration.IConfigurationRoot
+  parent: Microsoft.Extensions.Configuration
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.configuration.iconfigurationroot
+  name: IConfigurationRoot
+  nameWithType: IConfigurationRoot
+  fullName: Microsoft.Extensions.Configuration.IConfigurationRoot
+- uid: Microsoft.Extensions.Configuration
+  commentId: N:Microsoft.Extensions.Configuration
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/microsoft
+  name: Microsoft.Extensions.Configuration
+  nameWithType: Microsoft.Extensions.Configuration
+  fullName: Microsoft.Extensions.Configuration
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Extensions
+    name: Extensions
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions
+  - name: .
+  - uid: Microsoft.Extensions.Configuration
+    name: Configuration
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.configuration
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft
+  - name: .
+  - uid: Microsoft.Extensions
+    name: Extensions
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions
+  - name: .
+  - uid: Microsoft.Extensions.Configuration
+    name: Configuration
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/microsoft.extensions.configuration
+- uid: Client.ClientManager.StartClient*
+  commentId: Overload:Client.ClientManager.StartClient
+  href: Client.ClientManager.html#Client_ClientManager_StartClient
+  name: StartClient
+  nameWithType: ClientManager.StartClient
+  fullName: Client.ClientManager.StartClient
+- uid: Client.ClientManager.CloseClient*
+  commentId: Overload:Client.ClientManager.CloseClient
+  href: Client.ClientManager.html#Client_ClientManager_CloseClient
+  name: CloseClient
+  nameWithType: ClientManager.CloseClient
+  fullName: Client.ClientManager.CloseClient

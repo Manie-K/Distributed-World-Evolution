@@ -1,0 +1,53 @@
+### YamlMime:ManagedReference
+items:
+- uid: SharedLibrary.Helpers
+  commentId: N:SharedLibrary.Helpers
+  id: SharedLibrary.Helpers
+  children:
+  - SharedLibrary.Helpers.ModulePropertiesLimits
+  - SharedLibrary.Helpers.Position2D
+  langs:
+  - csharp
+  - vb
+  name: SharedLibrary.Helpers
+  nameWithType: SharedLibrary.Helpers
+  fullName: SharedLibrary.Helpers
+  type: Namespace
+  assemblies:
+  - SharedLibrary
+references:
+- uid: SharedLibrary.Helpers.ModulePropertiesLimits
+  commentId: T:SharedLibrary.Helpers.ModulePropertiesLimits
+  href: SharedLibrary.Helpers.ModulePropertiesLimits.html
+  name: ModulePropertiesLimits
+  nameWithType: ModulePropertiesLimits
+  fullName: SharedLibrary.Helpers.ModulePropertiesLimits
+- uid: SharedLibrary.Helpers.Position2D
+  commentId: T:SharedLibrary.Helpers.Position2D
+  parent: SharedLibrary.Helpers
+  href: https://github.com/Manie-K/Distributed-World-Evolution/blob/04d77cccea139c5e616524f8a10c7afb68cc7eb5/Shared/SharedLibrary/Helpers/Position2D.cs
+  name: Position2D
+  nameWithType: Position2D
+  fullName: SharedLibrary.Helpers.Position2D
+- uid: SharedLibrary.Helpers
+  commentId: N:SharedLibrary.Helpers
+  href: SharedLibrary.html
+  name: SharedLibrary.Helpers
+  nameWithType: SharedLibrary.Helpers
+  fullName: SharedLibrary.Helpers
+  spec.csharp:
+  - uid: SharedLibrary
+    name: SharedLibrary
+    href: SharedLibrary.html
+  - name: .
+  - uid: SharedLibrary.Helpers
+    name: Helpers
+    href: SharedLibrary.Helpers.html
+  spec.vb:
+  - uid: SharedLibrary
+    name: SharedLibrary
+    href: SharedLibrary.html
+  - name: .
+  - uid: SharedLibrary.Helpers
+    name: Helpers
+    href: SharedLibrary.Helpers.html

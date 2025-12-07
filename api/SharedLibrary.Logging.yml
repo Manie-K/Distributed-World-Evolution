@@ -1,0 +1,61 @@
+### YamlMime:ManagedReference
+items:
+- uid: SharedLibrary.Logging
+  commentId: N:SharedLibrary.Logging
+  id: SharedLibrary.Logging
+  children:
+  - SharedLibrary.Logging.Log
+  - SharedLibrary.Logging.LogLevelEnum
+  - SharedLibrary.Logging.OnLogEventArgs
+  langs:
+  - csharp
+  - vb
+  name: SharedLibrary.Logging
+  nameWithType: SharedLibrary.Logging
+  fullName: SharedLibrary.Logging
+  type: Namespace
+  assemblies:
+  - SharedLibrary
+references:
+- uid: SharedLibrary.Logging.Log
+  commentId: T:SharedLibrary.Logging.Log
+  parent: SharedLibrary.Logging
+  href: SharedLibrary.Logging.Log.html
+  name: Log
+  nameWithType: Log
+  fullName: SharedLibrary.Logging.Log
+- uid: SharedLibrary.Logging.LogLevelEnum
+  commentId: T:SharedLibrary.Logging.LogLevelEnum
+  parent: SharedLibrary.Logging
+  href: SharedLibrary.Logging.LogLevelEnum.html
+  name: LogLevelEnum
+  nameWithType: LogLevelEnum
+  fullName: SharedLibrary.Logging.LogLevelEnum
+- uid: SharedLibrary.Logging.OnLogEventArgs
+  commentId: T:SharedLibrary.Logging.OnLogEventArgs
+  href: SharedLibrary.Logging.OnLogEventArgs.html
+  name: OnLogEventArgs
+  nameWithType: OnLogEventArgs
+  fullName: SharedLibrary.Logging.OnLogEventArgs
+- uid: SharedLibrary.Logging
+  commentId: N:SharedLibrary.Logging
+  href: SharedLibrary.html
+  name: SharedLibrary.Logging
+  nameWithType: SharedLibrary.Logging
+  fullName: SharedLibrary.Logging
+  spec.csharp:
+  - uid: SharedLibrary
+    name: SharedLibrary
+    href: SharedLibrary.html
+  - name: .
+  - uid: SharedLibrary.Logging
+    name: Logging
+    href: SharedLibrary.Logging.html
+  spec.vb:
+  - uid: SharedLibrary
+    name: SharedLibrary
+    href: SharedLibrary.html
+  - name: .
+  - uid: SharedLibrary.Logging
+    name: Logging
+    href: SharedLibrary.Logging.html

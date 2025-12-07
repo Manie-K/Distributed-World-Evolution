@@ -1,0 +1,124 @@
+### YamlMime:ManagedReference
+items:
+- uid: SharedLibrary.Messages.RoleEnum
+  commentId: T:SharedLibrary.Messages.RoleEnum
+  id: RoleEnum
+  parent: SharedLibrary.Messages
+  children:
+  - SharedLibrary.Messages.RoleEnum.UI
+  - SharedLibrary.Messages.RoleEnum.User
+  langs:
+  - csharp
+  - vb
+  name: RoleEnum
+  nameWithType: RoleEnum
+  fullName: SharedLibrary.Messages.RoleEnum
+  type: Enum
+  source:
+    remote:
+      path: Shared/SharedLibrary/Messages/RoleMessages/RoleEnum.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: RoleEnum
+    path: Shared/SharedLibrary/Messages/RoleMessages/RoleEnum.cs
+    startLine: 4
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.Messages
+  syntax:
+    content: >-
+      [JsonConverter(typeof(JsonStringEnumConverter))]
+
+      public enum RoleEnum
+    content.vb: >-
+      <JsonConverter(GetType(JsonStringEnumConverter))>
+
+      Public Enum RoleEnum
+  attributes:
+  - type: System.Text.Json.Serialization.JsonConverterAttribute
+    ctor: System.Text.Json.Serialization.JsonConverterAttribute.#ctor(System.Type)
+    arguments:
+    - type: System.Type
+      value: System.Text.Json.Serialization.JsonStringEnumConverter
+- uid: SharedLibrary.Messages.RoleEnum.User
+  commentId: F:SharedLibrary.Messages.RoleEnum.User
+  id: User
+  parent: SharedLibrary.Messages.RoleEnum
+  langs:
+  - csharp
+  - vb
+  name: User
+  nameWithType: RoleEnum.User
+  fullName: SharedLibrary.Messages.RoleEnum.User
+  type: Field
+  source:
+    remote:
+      path: Shared/SharedLibrary/Messages/RoleMessages/RoleEnum.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: User
+    path: Shared/SharedLibrary/Messages/RoleMessages/RoleEnum.cs
+    startLine: 7
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.Messages
+  syntax:
+    content: User = 0
+    return:
+      type: SharedLibrary.Messages.RoleEnum
+- uid: SharedLibrary.Messages.RoleEnum.UI
+  commentId: F:SharedLibrary.Messages.RoleEnum.UI
+  id: UI
+  parent: SharedLibrary.Messages.RoleEnum
+  langs:
+  - csharp
+  - vb
+  name: UI
+  nameWithType: RoleEnum.UI
+  fullName: SharedLibrary.Messages.RoleEnum.UI
+  type: Field
+  source:
+    remote:
+      path: Shared/SharedLibrary/Messages/RoleMessages/RoleEnum.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: UI
+    path: Shared/SharedLibrary/Messages/RoleMessages/RoleEnum.cs
+    startLine: 8
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.Messages
+  syntax:
+    content: UI = 1
+    return:
+      type: SharedLibrary.Messages.RoleEnum
+references:
+- uid: SharedLibrary.Messages
+  commentId: N:SharedLibrary.Messages
+  href: SharedLibrary.html
+  name: SharedLibrary.Messages
+  nameWithType: SharedLibrary.Messages
+  fullName: SharedLibrary.Messages
+  spec.csharp:
+  - uid: SharedLibrary
+    name: SharedLibrary
+    href: SharedLibrary.html
+  - name: .
+  - uid: SharedLibrary.Messages
+    name: Messages
+    href: SharedLibrary.Messages.html
+  spec.vb:
+  - uid: SharedLibrary
+    name: SharedLibrary
+    href: SharedLibrary.html
+  - name: .
+  - uid: SharedLibrary.Messages
+    name: Messages
+    href: SharedLibrary.Messages.html
+- uid: SharedLibrary.Messages.RoleEnum
+  commentId: T:SharedLibrary.Messages.RoleEnum
+  parent: SharedLibrary.Messages
+  href: SharedLibrary.Messages.RoleEnum.html
+  name: RoleEnum
+  nameWithType: RoleEnum
+  fullName: SharedLibrary.Messages.RoleEnum

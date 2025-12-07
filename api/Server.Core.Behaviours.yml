@@ -1,0 +1,70 @@
+### YamlMime:ManagedReference
+items:
+- uid: Server.Core.Behaviours
+  commentId: N:Server.Core.Behaviours
+  id: Server.Core.Behaviours
+  children:
+  - Server.Core.Behaviours.BehaviourInMemoryDB
+  - Server.Core.Behaviours.IBehaviour
+  - Server.Core.Behaviours.InteractionTypeEnum
+  langs:
+  - csharp
+  - vb
+  name: Server.Core.Behaviours
+  nameWithType: Server.Core.Behaviours
+  fullName: Server.Core.Behaviours
+  type: Namespace
+  assemblies:
+  - Server.Core
+references:
+- uid: Server.Core.Behaviours.BehaviourInMemoryDB
+  commentId: T:Server.Core.Behaviours.BehaviourInMemoryDB
+  parent: Server.Core.Behaviours
+  href: Server.Core.Behaviours.BehaviourInMemoryDB.html
+  name: BehaviourInMemoryDB
+  nameWithType: BehaviourInMemoryDB
+  fullName: Server.Core.Behaviours.BehaviourInMemoryDB
+- uid: Server.Core.Behaviours.IBehaviour
+  commentId: T:Server.Core.Behaviours.IBehaviour
+  parent: Server.Core.Behaviours
+  href: Server.Core.Behaviours.IBehaviour.html
+  name: IBehaviour
+  nameWithType: IBehaviour
+  fullName: Server.Core.Behaviours.IBehaviour
+- uid: Server.Core.Behaviours.InteractionTypeEnum
+  commentId: T:Server.Core.Behaviours.InteractionTypeEnum
+  parent: Server.Core.Behaviours
+  href: Server.Core.Behaviours.InteractionTypeEnum.html
+  name: InteractionTypeEnum
+  nameWithType: InteractionTypeEnum
+  fullName: Server.Core.Behaviours.InteractionTypeEnum
+- uid: Server.Core.Behaviours
+  commentId: N:Server.Core.Behaviours
+  href: Server.html
+  name: Server.Core.Behaviours
+  nameWithType: Server.Core.Behaviours
+  fullName: Server.Core.Behaviours
+  spec.csharp:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+  - name: .
+  - uid: Server.Core.Behaviours
+    name: Behaviours
+    href: Server.Core.Behaviours.html
+  spec.vb:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+  - name: .
+  - uid: Server.Core.Behaviours
+    name: Behaviours
+    href: Server.Core.Behaviours.html

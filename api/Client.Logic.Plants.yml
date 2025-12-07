@@ -1,0 +1,138 @@
+### YamlMime:ManagedReference
+items:
+- uid: Client.Logic.Plants
+  commentId: N:Client.Logic.Plants
+  id: Client.Logic.Plants
+  children:
+  - Client.Logic.Plants.Cosmo
+  - Client.Logic.Plants.Daffodil
+  - Client.Logic.Plants.Daisy
+  - Client.Logic.Plants.Lavender
+  - Client.Logic.Plants.Lily
+  - Client.Logic.Plants.LilyOfTheValley
+  - Client.Logic.Plants.Orchid
+  - Client.Logic.Plants.Pansy
+  - Client.Logic.Plants.Plant
+  - Client.Logic.Plants.Poppy
+  - Client.Logic.Plants.Rose
+  - Client.Logic.Plants.Sunflower
+  - Client.Logic.Plants.Tulip
+  langs:
+  - csharp
+  - vb
+  name: Client.Logic.Plants
+  nameWithType: Client.Logic.Plants
+  fullName: Client.Logic.Plants
+  type: Namespace
+  assemblies:
+  - Client
+references:
+- uid: Client.Logic.Plants.Cosmo
+  commentId: T:Client.Logic.Plants.Cosmo
+  href: Client.Logic.Plants.Cosmo.html
+  name: Cosmo
+  nameWithType: Cosmo
+  fullName: Client.Logic.Plants.Cosmo
+- uid: Client.Logic.Plants.Daffodil
+  commentId: T:Client.Logic.Plants.Daffodil
+  href: Client.Logic.Plants.Daffodil.html
+  name: Daffodil
+  nameWithType: Daffodil
+  fullName: Client.Logic.Plants.Daffodil
+- uid: Client.Logic.Plants.Daisy
+  commentId: T:Client.Logic.Plants.Daisy
+  href: Client.Logic.Plants.Daisy.html
+  name: Daisy
+  nameWithType: Daisy
+  fullName: Client.Logic.Plants.Daisy
+- uid: Client.Logic.Plants.Lavender
+  commentId: T:Client.Logic.Plants.Lavender
+  href: Client.Logic.Plants.Lavender.html
+  name: Lavender
+  nameWithType: Lavender
+  fullName: Client.Logic.Plants.Lavender
+- uid: Client.Logic.Plants.Lily
+  commentId: T:Client.Logic.Plants.Lily
+  href: Client.Logic.Plants.Lily.html
+  name: Lily
+  nameWithType: Lily
+  fullName: Client.Logic.Plants.Lily
+- uid: Client.Logic.Plants.LilyOfTheValley
+  commentId: T:Client.Logic.Plants.LilyOfTheValley
+  href: Client.Logic.Plants.LilyOfTheValley.html
+  name: LilyOfTheValley
+  nameWithType: LilyOfTheValley
+  fullName: Client.Logic.Plants.LilyOfTheValley
+- uid: Client.Logic.Plants.Orchid
+  commentId: T:Client.Logic.Plants.Orchid
+  href: Client.Logic.Plants.Orchid.html
+  name: Orchid
+  nameWithType: Orchid
+  fullName: Client.Logic.Plants.Orchid
+- uid: Client.Logic.Plants.Pansy
+  commentId: T:Client.Logic.Plants.Pansy
+  href: Client.Logic.Plants.Pansy.html
+  name: Pansy
+  nameWithType: Pansy
+  fullName: Client.Logic.Plants.Pansy
+- uid: Client.Logic.Plants.Plant
+  commentId: T:Client.Logic.Plants.Plant
+  parent: Client.Logic.Plants
+  href: Client.Logic.Plants.Plant.html
+  name: Plant
+  nameWithType: Plant
+  fullName: Client.Logic.Plants.Plant
+- uid: Client.Logic.Plants.Poppy
+  commentId: T:Client.Logic.Plants.Poppy
+  href: Client.Logic.Plants.Poppy.html
+  name: Poppy
+  nameWithType: Poppy
+  fullName: Client.Logic.Plants.Poppy
+- uid: Client.Logic.Plants.Rose
+  commentId: T:Client.Logic.Plants.Rose
+  href: Client.Logic.Plants.Rose.html
+  name: Rose
+  nameWithType: Rose
+  fullName: Client.Logic.Plants.Rose
+- uid: Client.Logic.Plants.Sunflower
+  commentId: T:Client.Logic.Plants.Sunflower
+  href: Client.Logic.Plants.Sunflower.html
+  name: Sunflower
+  nameWithType: Sunflower
+  fullName: Client.Logic.Plants.Sunflower
+- uid: Client.Logic.Plants.Tulip
+  commentId: T:Client.Logic.Plants.Tulip
+  href: Client.Logic.Plants.Tulip.html
+  name: Tulip
+  nameWithType: Tulip
+  fullName: Client.Logic.Plants.Tulip
+- uid: Client.Logic.Plants
+  commentId: N:Client.Logic.Plants
+  href: Client.html
+  name: Client.Logic.Plants
+  nameWithType: Client.Logic.Plants
+  fullName: Client.Logic.Plants
+  spec.csharp:
+  - uid: Client
+    name: Client
+    href: Client.html
+  - name: .
+  - uid: Client.Logic
+    name: Logic
+    href: Client.Logic.html
+  - name: .
+  - uid: Client.Logic.Plants
+    name: Plants
+    href: Client.Logic.Plants.html
+  spec.vb:
+  - uid: Client
+    name: Client
+    href: Client.html
+  - name: .
+  - uid: Client.Logic
+    name: Logic
+    href: Client.Logic.html
+  - name: .
+  - uid: Client.Logic.Plants
+    name: Plants
+    href: Client.Logic.Plants.html

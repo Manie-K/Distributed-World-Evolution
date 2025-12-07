@@ -1,0 +1,639 @@
+### YamlMime:ManagedReference
+items:
+- uid: SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage
+  commentId: T:SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage
+  id: BehaviourListMessage
+  parent: SharedLibrary.Messages.BehaviourMessages
+  children:
+  - SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.#ctor(System.Collections.Generic.IEnumerable{SharedLibrary.DTOs.ModuleDTO.BehaviourDTO})
+  - SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.Behaviours
+  - SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.BuildJson
+  - SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.MessageType
+  langs:
+  - csharp
+  - vb
+  name: BehaviourListMessage
+  nameWithType: BehaviourListMessage
+  fullName: SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage
+  type: Class
+  source:
+    remote:
+      path: Shared/SharedLibrary/Messages/BehaviourMessages/BehaviourListMessage.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: BehaviourListMessage
+    path: Shared/SharedLibrary/Messages/BehaviourMessages/BehaviourListMessage.cs
+    startLine: 8
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.Messages.BehaviourMessages
+  summary: Contains a list of behaviours available on the server.
+  example: []
+  syntax:
+    content: 'public class BehaviourListMessage : MessageBase'
+    content.vb: Public Class BehaviourListMessage Inherits MessageBase
+  inheritance:
+  - System.Object
+  - SharedLibrary.Messages.MessageBase
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.MessageType
+  commentId: P:SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.MessageType
+  id: MessageType
+  parent: SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage
+  langs:
+  - csharp
+  - vb
+  name: MessageType
+  nameWithType: BehaviourListMessage.MessageType
+  fullName: SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.MessageType
+  type: Property
+  source:
+    remote:
+      path: Shared/SharedLibrary/Messages/BehaviourMessages/BehaviourListMessage.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: MessageType
+    path: Shared/SharedLibrary/Messages/BehaviourMessages/BehaviourListMessage.cs
+    startLine: 11
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.Messages.BehaviourMessages
+  summary: 'Message type, for example: JoinLobby, InfoMessage, WorldState etc.'
+  example: []
+  syntax:
+    content: public override MessageTypeEnum MessageType { get; }
+    parameters: []
+    return:
+      type: SharedLibrary.Messages.MessageTypeEnum
+    content.vb: Public Overrides ReadOnly Property MessageType As MessageTypeEnum
+  overridden: SharedLibrary.Messages.MessageBase.MessageType
+  overload: SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.MessageType*
+- uid: SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.Behaviours
+  commentId: P:SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.Behaviours
+  id: Behaviours
+  parent: SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage
+  langs:
+  - csharp
+  - vb
+  name: Behaviours
+  nameWithType: BehaviourListMessage.Behaviours
+  fullName: SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.Behaviours
+  type: Property
+  source:
+    remote:
+      path: Shared/SharedLibrary/Messages/BehaviourMessages/BehaviourListMessage.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Behaviours
+    path: Shared/SharedLibrary/Messages/BehaviourMessages/BehaviourListMessage.cs
+    startLine: 15
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.Messages.BehaviourMessages
+  summary: List of behaviours available on the server.
+  example: []
+  syntax:
+    content: public IEnumerable<BehaviourDTO> Behaviours { get; init; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.IEnumerable{SharedLibrary.DTOs.ModuleDTO.BehaviourDTO}
+    content.vb: Public Property Behaviours As IEnumerable(Of BehaviourDTO)
+  overload: SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.Behaviours*
+- uid: SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.#ctor(System.Collections.Generic.IEnumerable{SharedLibrary.DTOs.ModuleDTO.BehaviourDTO})
+  commentId: M:SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.#ctor(System.Collections.Generic.IEnumerable{SharedLibrary.DTOs.ModuleDTO.BehaviourDTO})
+  id: '#ctor(System.Collections.Generic.IEnumerable{SharedLibrary.DTOs.ModuleDTO.BehaviourDTO})'
+  parent: SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage
+  langs:
+  - csharp
+  - vb
+  name: BehaviourListMessage(IEnumerable<BehaviourDTO>)
+  nameWithType: BehaviourListMessage.BehaviourListMessage(IEnumerable<BehaviourDTO>)
+  fullName: SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.BehaviourListMessage(System.Collections.Generic.IEnumerable<SharedLibrary.DTOs.ModuleDTO.BehaviourDTO>)
+  type: Constructor
+  source:
+    remote:
+      path: Shared/SharedLibrary/Messages/BehaviourMessages/BehaviourListMessage.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: .ctor
+    path: Shared/SharedLibrary/Messages/BehaviourMessages/BehaviourListMessage.cs
+    startLine: 19
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.Messages.BehaviourMessages
+  summary: Constructor for BehaviourListMessage.
+  example: []
+  syntax:
+    content: public BehaviourListMessage(IEnumerable<BehaviourDTO> behaviours)
+    parameters:
+    - id: behaviours
+      type: System.Collections.Generic.IEnumerable{SharedLibrary.DTOs.ModuleDTO.BehaviourDTO}
+    content.vb: Public Sub New(behaviours As IEnumerable(Of BehaviourDTO))
+  overload: SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.#ctor*
+  nameWithType.vb: BehaviourListMessage.New(IEnumerable(Of BehaviourDTO))
+  fullName.vb: SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.New(System.Collections.Generic.IEnumerable(Of SharedLibrary.DTOs.ModuleDTO.BehaviourDTO))
+  name.vb: New(IEnumerable(Of BehaviourDTO))
+- uid: SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.BuildJson
+  commentId: M:SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.BuildJson
+  id: BuildJson
+  parent: SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage
+  langs:
+  - csharp
+  - vb
+  name: BuildJson()
+  nameWithType: BehaviourListMessage.BuildJson()
+  fullName: SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.BuildJson()
+  type: Method
+  source:
+    remote:
+      path: Shared/SharedLibrary/Messages/BehaviourMessages/BehaviourListMessage.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: BuildJson
+    path: Shared/SharedLibrary/Messages/BehaviourMessages/BehaviourListMessage.cs
+    startLine: 24
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.Messages.BehaviourMessages
+  summary: Builds the JSON representation of the message.
+  example: []
+  syntax:
+    content: public override string BuildJson()
+    return:
+      type: System.String
+    content.vb: Public Overrides Function BuildJson() As String
+  overridden: SharedLibrary.Messages.MessageBase.BuildJson
+  overload: SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.BuildJson*
+references:
+- uid: SharedLibrary.Messages.BehaviourMessages
+  commentId: N:SharedLibrary.Messages.BehaviourMessages
+  href: SharedLibrary.html
+  name: SharedLibrary.Messages.BehaviourMessages
+  nameWithType: SharedLibrary.Messages.BehaviourMessages
+  fullName: SharedLibrary.Messages.BehaviourMessages
+  spec.csharp:
+  - uid: SharedLibrary
+    name: SharedLibrary
+    href: SharedLibrary.html
+  - name: .
+  - uid: SharedLibrary.Messages
+    name: Messages
+    href: SharedLibrary.Messages.html
+  - name: .
+  - uid: SharedLibrary.Messages.BehaviourMessages
+    name: BehaviourMessages
+    href: SharedLibrary.Messages.BehaviourMessages.html
+  spec.vb:
+  - uid: SharedLibrary
+    name: SharedLibrary
+    href: SharedLibrary.html
+  - name: .
+  - uid: SharedLibrary.Messages
+    name: Messages
+    href: SharedLibrary.Messages.html
+  - name: .
+  - uid: SharedLibrary.Messages.BehaviourMessages
+    name: BehaviourMessages
+    href: SharedLibrary.Messages.BehaviourMessages.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: SharedLibrary.Messages.MessageBase
+  commentId: T:SharedLibrary.Messages.MessageBase
+  parent: SharedLibrary.Messages
+  href: SharedLibrary.Messages.MessageBase.html
+  name: MessageBase
+  nameWithType: MessageBase
+  fullName: SharedLibrary.Messages.MessageBase
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: SharedLibrary.Messages
+  commentId: N:SharedLibrary.Messages
+  href: SharedLibrary.html
+  name: SharedLibrary.Messages
+  nameWithType: SharedLibrary.Messages
+  fullName: SharedLibrary.Messages
+  spec.csharp:
+  - uid: SharedLibrary
+    name: SharedLibrary
+    href: SharedLibrary.html
+  - name: .
+  - uid: SharedLibrary.Messages
+    name: Messages
+    href: SharedLibrary.Messages.html
+  spec.vb:
+  - uid: SharedLibrary
+    name: SharedLibrary
+    href: SharedLibrary.html
+  - name: .
+  - uid: SharedLibrary.Messages
+    name: Messages
+    href: SharedLibrary.Messages.html
+- uid: SharedLibrary.Messages.MessageBase.MessageType
+  commentId: P:SharedLibrary.Messages.MessageBase.MessageType
+  parent: SharedLibrary.Messages.MessageBase
+  href: SharedLibrary.Messages.MessageBase.html#SharedLibrary_Messages_MessageBase_MessageType
+  name: MessageType
+  nameWithType: MessageBase.MessageType
+  fullName: SharedLibrary.Messages.MessageBase.MessageType
+- uid: SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.MessageType*
+  commentId: Overload:SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.MessageType
+  href: SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.html#SharedLibrary_Messages_BehaviourMessages_BehaviourListMessage_MessageType
+  name: MessageType
+  nameWithType: BehaviourListMessage.MessageType
+  fullName: SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.MessageType
+- uid: SharedLibrary.Messages.MessageTypeEnum
+  commentId: T:SharedLibrary.Messages.MessageTypeEnum
+  parent: SharedLibrary.Messages
+  href: SharedLibrary.Messages.MessageTypeEnum.html
+  name: MessageTypeEnum
+  nameWithType: MessageTypeEnum
+  fullName: SharedLibrary.Messages.MessageTypeEnum
+- uid: SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.Behaviours*
+  commentId: Overload:SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.Behaviours
+  href: SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.html#SharedLibrary_Messages_BehaviourMessages_BehaviourListMessage_Behaviours
+  name: Behaviours
+  nameWithType: BehaviourListMessage.Behaviours
+  fullName: SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.Behaviours
+- uid: System.Collections.Generic.IEnumerable{SharedLibrary.DTOs.ModuleDTO.BehaviourDTO}
+  commentId: T:System.Collections.Generic.IEnumerable{SharedLibrary.DTOs.ModuleDTO.BehaviourDTO}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<BehaviourDTO>
+  nameWithType: IEnumerable<BehaviourDTO>
+  fullName: System.Collections.Generic.IEnumerable<SharedLibrary.DTOs.ModuleDTO.BehaviourDTO>
+  nameWithType.vb: IEnumerable(Of BehaviourDTO)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of SharedLibrary.DTOs.ModuleDTO.BehaviourDTO)
+  name.vb: IEnumerable(Of BehaviourDTO)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: SharedLibrary.DTOs.ModuleDTO.BehaviourDTO
+    name: BehaviourDTO
+    href: SharedLibrary.DTOs.ModuleDTO.BehaviourDTO.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SharedLibrary.DTOs.ModuleDTO.BehaviourDTO
+    name: BehaviourDTO
+    href: SharedLibrary.DTOs.ModuleDTO.BehaviourDTO.html
+  - name: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.#ctor*
+  commentId: Overload:SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.#ctor
+  href: SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.html#SharedLibrary_Messages_BehaviourMessages_BehaviourListMessage__ctor_System_Collections_Generic_IEnumerable_SharedLibrary_DTOs_ModuleDTO_BehaviourDTO__
+  name: BehaviourListMessage
+  nameWithType: BehaviourListMessage.BehaviourListMessage
+  fullName: SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.BehaviourListMessage
+  nameWithType.vb: BehaviourListMessage.New
+  fullName.vb: SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.New
+  name.vb: New
+- uid: SharedLibrary.Messages.MessageBase.BuildJson
+  commentId: M:SharedLibrary.Messages.MessageBase.BuildJson
+  parent: SharedLibrary.Messages.MessageBase
+  href: SharedLibrary.Messages.MessageBase.html#SharedLibrary_Messages_MessageBase_BuildJson
+  name: BuildJson()
+  nameWithType: MessageBase.BuildJson()
+  fullName: SharedLibrary.Messages.MessageBase.BuildJson()
+  spec.csharp:
+  - uid: SharedLibrary.Messages.MessageBase.BuildJson
+    name: BuildJson
+    href: SharedLibrary.Messages.MessageBase.html#SharedLibrary_Messages_MessageBase_BuildJson
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: SharedLibrary.Messages.MessageBase.BuildJson
+    name: BuildJson
+    href: SharedLibrary.Messages.MessageBase.html#SharedLibrary_Messages_MessageBase_BuildJson
+  - name: (
+  - name: )
+- uid: SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.BuildJson*
+  commentId: Overload:SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.BuildJson
+  href: SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.html#SharedLibrary_Messages_BehaviourMessages_BehaviourListMessage_BuildJson
+  name: BuildJson
+  nameWithType: BehaviourListMessage.BuildJson
+  fullName: SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage.BuildJson
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String

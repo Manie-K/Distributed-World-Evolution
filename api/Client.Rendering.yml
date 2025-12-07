@@ -1,0 +1,54 @@
+### YamlMime:ManagedReference
+items:
+- uid: Client.Rendering
+  commentId: N:Client.Rendering
+  id: Client.Rendering
+  children:
+  - Client.Rendering.Camera2D
+  - Client.Rendering.WorldMap
+  langs:
+  - csharp
+  - vb
+  name: Client.Rendering
+  nameWithType: Client.Rendering
+  fullName: Client.Rendering
+  type: Namespace
+  assemblies:
+  - Client
+references:
+- uid: Client.Rendering.Camera2D
+  commentId: T:Client.Rendering.Camera2D
+  parent: Client.Rendering
+  href: Client.Rendering.Camera2D.html
+  name: Camera2D
+  nameWithType: Camera2D
+  fullName: Client.Rendering.Camera2D
+- uid: Client.Rendering.WorldMap
+  commentId: T:Client.Rendering.WorldMap
+  parent: Client.Rendering
+  href: Client.Rendering.WorldMap.html
+  name: WorldMap
+  nameWithType: WorldMap
+  fullName: Client.Rendering.WorldMap
+- uid: Client.Rendering
+  commentId: N:Client.Rendering
+  href: Client.html
+  name: Client.Rendering
+  nameWithType: Client.Rendering
+  fullName: Client.Rendering
+  spec.csharp:
+  - uid: Client
+    name: Client
+    href: Client.html
+  - name: .
+  - uid: Client.Rendering
+    name: Rendering
+    href: Client.Rendering.html
+  spec.vb:
+  - uid: Client
+    name: Client
+    href: Client.html
+  - name: .
+  - uid: Client.Rendering
+    name: Rendering
+    href: Client.Rendering.html

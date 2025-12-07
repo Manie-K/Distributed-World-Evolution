@@ -1,0 +1,685 @@
+### YamlMime:ManagedReference
+items:
+- uid: Client.Logic.AnimationManager
+  commentId: T:Client.Logic.AnimationManager
+  id: AnimationManager
+  parent: Client.Logic
+  children:
+  - Client.Logic.AnimationManager.#ctor(System.Int32,System.Single)
+  - Client.Logic.AnimationManager.ActiveAnimation
+  - Client.Logic.AnimationManager.Animations
+  - Client.Logic.AnimationManager.CheckDeadAnimation
+  - Client.Logic.AnimationManager.GetActiveFrame
+  - Client.Logic.AnimationManager.SetAnimation(Client.AnimationType)
+  - Client.Logic.AnimationManager.SetAnimations(System.Int32,System.Single)
+  - Client.Logic.AnimationManager.Update(Microsoft.Xna.Framework.GameTime)
+  langs:
+  - csharp
+  - vb
+  name: AnimationManager
+  nameWithType: AnimationManager
+  fullName: Client.Logic.AnimationManager
+  type: Class
+  source:
+    remote:
+      path: Client/Client/Logic/AnimationManager.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: AnimationManager
+    path: Client/Client/Logic/AnimationManager.cs
+    startLine: 4
+  assemblies:
+  - Client
+  namespace: Client.Logic
+  syntax:
+    content: public class AnimationManager
+    content.vb: Public Class AnimationManager
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Client.Logic.AnimationManager.ActiveAnimation
+  commentId: F:Client.Logic.AnimationManager.ActiveAnimation
+  id: ActiveAnimation
+  parent: Client.Logic.AnimationManager
+  langs:
+  - csharp
+  - vb
+  name: ActiveAnimation
+  nameWithType: AnimationManager.ActiveAnimation
+  fullName: Client.Logic.AnimationManager.ActiveAnimation
+  type: Field
+  source:
+    remote:
+      path: Client/Client/Logic/AnimationManager.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: ActiveAnimation
+    path: Client/Client/Logic/AnimationManager.cs
+    startLine: 8
+  assemblies:
+  - Client
+  namespace: Client.Logic
+  syntax:
+    content: public AnimationType ActiveAnimation
+    return:
+      type: Client.AnimationType
+    content.vb: Public ActiveAnimation As AnimationType
+- uid: Client.Logic.AnimationManager.Animations
+  commentId: F:Client.Logic.AnimationManager.Animations
+  id: Animations
+  parent: Client.Logic.AnimationManager
+  langs:
+  - csharp
+  - vb
+  name: Animations
+  nameWithType: AnimationManager.Animations
+  fullName: Client.Logic.AnimationManager.Animations
+  type: Field
+  source:
+    remote:
+      path: Client/Client/Logic/AnimationManager.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Animations
+    path: Client/Client/Logic/AnimationManager.cs
+    startLine: 9
+  assemblies:
+  - Client
+  namespace: Client.Logic
+  syntax:
+    content: public Animation[] Animations
+    return:
+      type: Client.Logic.Animation[]
+    content.vb: Public Animations As Animation()
+- uid: Client.Logic.AnimationManager.#ctor(System.Int32,System.Single)
+  commentId: M:Client.Logic.AnimationManager.#ctor(System.Int32,System.Single)
+  id: '#ctor(System.Int32,System.Single)'
+  parent: Client.Logic.AnimationManager
+  langs:
+  - csharp
+  - vb
+  name: AnimationManager(int, float)
+  nameWithType: AnimationManager.AnimationManager(int, float)
+  fullName: Client.Logic.AnimationManager.AnimationManager(int, float)
+  type: Constructor
+  source:
+    remote:
+      path: Client/Client/Logic/AnimationManager.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: .ctor
+    path: Client/Client/Logic/AnimationManager.cs
+    startLine: 11
+  assemblies:
+  - Client
+  namespace: Client.Logic
+  syntax:
+    content: public AnimationManager(int type, float blockDelay = 1)
+    parameters:
+    - id: type
+      type: System.Int32
+    - id: blockDelay
+      type: System.Single
+    content.vb: Public Sub New(type As Integer, blockDelay As Single = 1)
+  overload: Client.Logic.AnimationManager.#ctor*
+  nameWithType.vb: AnimationManager.New(Integer, Single)
+  fullName.vb: Client.Logic.AnimationManager.New(Integer, Single)
+  name.vb: New(Integer, Single)
+- uid: Client.Logic.AnimationManager.SetAnimation(Client.AnimationType)
+  commentId: M:Client.Logic.AnimationManager.SetAnimation(Client.AnimationType)
+  id: SetAnimation(Client.AnimationType)
+  parent: Client.Logic.AnimationManager
+  langs:
+  - csharp
+  - vb
+  name: SetAnimation(AnimationType)
+  nameWithType: AnimationManager.SetAnimation(AnimationType)
+  fullName: Client.Logic.AnimationManager.SetAnimation(Client.AnimationType)
+  type: Method
+  source:
+    remote:
+      path: Client/Client/Logic/AnimationManager.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: SetAnimation
+    path: Client/Client/Logic/AnimationManager.cs
+    startLine: 18
+  assemblies:
+  - Client
+  namespace: Client.Logic
+  syntax:
+    content: public void SetAnimation(AnimationType type)
+    parameters:
+    - id: type
+      type: Client.AnimationType
+    content.vb: Public Sub SetAnimation(type As AnimationType)
+  overload: Client.Logic.AnimationManager.SetAnimation*
+- uid: Client.Logic.AnimationManager.GetActiveFrame
+  commentId: M:Client.Logic.AnimationManager.GetActiveFrame
+  id: GetActiveFrame
+  parent: Client.Logic.AnimationManager
+  langs:
+  - csharp
+  - vb
+  name: GetActiveFrame()
+  nameWithType: AnimationManager.GetActiveFrame()
+  fullName: Client.Logic.AnimationManager.GetActiveFrame()
+  type: Method
+  source:
+    remote:
+      path: Client/Client/Logic/AnimationManager.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: GetActiveFrame
+    path: Client/Client/Logic/AnimationManager.cs
+    startLine: 64
+  assemblies:
+  - Client
+  namespace: Client.Logic
+  syntax:
+    content: public int GetActiveFrame()
+    return:
+      type: System.Int32
+    content.vb: Public Function GetActiveFrame() As Integer
+  overload: Client.Logic.AnimationManager.GetActiveFrame*
+- uid: Client.Logic.AnimationManager.CheckDeadAnimation
+  commentId: M:Client.Logic.AnimationManager.CheckDeadAnimation
+  id: CheckDeadAnimation
+  parent: Client.Logic.AnimationManager
+  langs:
+  - csharp
+  - vb
+  name: CheckDeadAnimation()
+  nameWithType: AnimationManager.CheckDeadAnimation()
+  fullName: Client.Logic.AnimationManager.CheckDeadAnimation()
+  type: Method
+  source:
+    remote:
+      path: Client/Client/Logic/AnimationManager.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: CheckDeadAnimation
+    path: Client/Client/Logic/AnimationManager.cs
+    startLine: 69
+  assemblies:
+  - Client
+  namespace: Client.Logic
+  syntax:
+    content: public bool CheckDeadAnimation()
+    return:
+      type: System.Boolean
+    content.vb: Public Function CheckDeadAnimation() As Boolean
+  overload: Client.Logic.AnimationManager.CheckDeadAnimation*
+- uid: Client.Logic.AnimationManager.Update(Microsoft.Xna.Framework.GameTime)
+  commentId: M:Client.Logic.AnimationManager.Update(Microsoft.Xna.Framework.GameTime)
+  id: Update(Microsoft.Xna.Framework.GameTime)
+  parent: Client.Logic.AnimationManager
+  langs:
+  - csharp
+  - vb
+  name: Update(GameTime)
+  nameWithType: AnimationManager.Update(GameTime)
+  fullName: Client.Logic.AnimationManager.Update(Microsoft.Xna.Framework.GameTime)
+  type: Method
+  source:
+    remote:
+      path: Client/Client/Logic/AnimationManager.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Update
+    path: Client/Client/Logic/AnimationManager.cs
+    startLine: 79
+  assemblies:
+  - Client
+  namespace: Client.Logic
+  syntax:
+    content: public void Update(GameTime gameTime)
+    parameters:
+    - id: gameTime
+      type: Microsoft.Xna.Framework.GameTime
+    content.vb: Public Sub Update(gameTime As GameTime)
+  overload: Client.Logic.AnimationManager.Update*
+- uid: Client.Logic.AnimationManager.SetAnimations(System.Int32,System.Single)
+  commentId: M:Client.Logic.AnimationManager.SetAnimations(System.Int32,System.Single)
+  id: SetAnimations(System.Int32,System.Single)
+  parent: Client.Logic.AnimationManager
+  langs:
+  - csharp
+  - vb
+  name: SetAnimations(int, float)
+  nameWithType: AnimationManager.SetAnimations(int, float)
+  fullName: Client.Logic.AnimationManager.SetAnimations(int, float)
+  type: Method
+  source:
+    remote:
+      path: Client/Client/Logic/AnimationManager.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: SetAnimations
+    path: Client/Client/Logic/AnimationManager.cs
+    startLine: 85
+  assemblies:
+  - Client
+  namespace: Client.Logic
+  syntax:
+    content: public void SetAnimations(int type, float blockDelay)
+    parameters:
+    - id: type
+      type: System.Int32
+    - id: blockDelay
+      type: System.Single
+    content.vb: Public Sub SetAnimations(type As Integer, blockDelay As Single)
+  overload: Client.Logic.AnimationManager.SetAnimations*
+  nameWithType.vb: AnimationManager.SetAnimations(Integer, Single)
+  fullName.vb: Client.Logic.AnimationManager.SetAnimations(Integer, Single)
+  name.vb: SetAnimations(Integer, Single)
+references:
+- uid: Client.Logic
+  commentId: N:Client.Logic
+  href: Client.html
+  name: Client.Logic
+  nameWithType: Client.Logic
+  fullName: Client.Logic
+  spec.csharp:
+  - uid: Client
+    name: Client
+    href: Client.html
+  - name: .
+  - uid: Client.Logic
+    name: Logic
+    href: Client.Logic.html
+  spec.vb:
+  - uid: Client
+    name: Client
+    href: Client.html
+  - name: .
+  - uid: Client.Logic
+    name: Logic
+    href: Client.Logic.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Client.AnimationType
+  commentId: T:Client.AnimationType
+  parent: Client
+  href: Client.AnimationType.html
+  name: AnimationType
+  nameWithType: AnimationType
+  fullName: Client.AnimationType
+- uid: Client
+  commentId: N:Client
+  href: Client.html
+  name: Client
+  nameWithType: Client
+  fullName: Client
+- uid: Client.Logic.Animation[]
+  isExternal: true
+  href: Client.Logic.Animation.html
+  name: Animation[]
+  nameWithType: Animation[]
+  fullName: Client.Logic.Animation[]
+  nameWithType.vb: Animation()
+  fullName.vb: Client.Logic.Animation()
+  name.vb: Animation()
+  spec.csharp:
+  - uid: Client.Logic.Animation
+    name: Animation
+    href: Client.Logic.Animation.html
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: Client.Logic.Animation
+    name: Animation
+    href: Client.Logic.Animation.html
+  - name: (
+  - name: )
+- uid: Client.Logic.AnimationManager.#ctor*
+  commentId: Overload:Client.Logic.AnimationManager.#ctor
+  href: Client.Logic.AnimationManager.html#Client_Logic_AnimationManager__ctor_System_Int32_System_Single_
+  name: AnimationManager
+  nameWithType: AnimationManager.AnimationManager
+  fullName: Client.Logic.AnimationManager.AnimationManager
+  nameWithType.vb: AnimationManager.New
+  fullName.vb: Client.Logic.AnimationManager.New
+  name.vb: New
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Client.Logic.AnimationManager.SetAnimation*
+  commentId: Overload:Client.Logic.AnimationManager.SetAnimation
+  href: Client.Logic.AnimationManager.html#Client_Logic_AnimationManager_SetAnimation_Client_AnimationType_
+  name: SetAnimation
+  nameWithType: AnimationManager.SetAnimation
+  fullName: Client.Logic.AnimationManager.SetAnimation
+- uid: Client.Logic.AnimationManager.GetActiveFrame*
+  commentId: Overload:Client.Logic.AnimationManager.GetActiveFrame
+  href: Client.Logic.AnimationManager.html#Client_Logic_AnimationManager_GetActiveFrame
+  name: GetActiveFrame
+  nameWithType: AnimationManager.GetActiveFrame
+  fullName: Client.Logic.AnimationManager.GetActiveFrame
+- uid: Client.Logic.AnimationManager.CheckDeadAnimation*
+  commentId: Overload:Client.Logic.AnimationManager.CheckDeadAnimation
+  href: Client.Logic.AnimationManager.html#Client_Logic_AnimationManager_CheckDeadAnimation
+  name: CheckDeadAnimation
+  nameWithType: AnimationManager.CheckDeadAnimation
+  fullName: Client.Logic.AnimationManager.CheckDeadAnimation
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Client.Logic.AnimationManager.Update*
+  commentId: Overload:Client.Logic.AnimationManager.Update
+  href: Client.Logic.AnimationManager.html#Client_Logic_AnimationManager_Update_Microsoft_Xna_Framework_GameTime_
+  name: Update
+  nameWithType: AnimationManager.Update
+  fullName: Client.Logic.AnimationManager.Update
+- uid: Microsoft.Xna.Framework.GameTime
+  commentId: T:Microsoft.Xna.Framework.GameTime
+  parent: Microsoft.Xna.Framework
+  isExternal: true
+  name: GameTime
+  nameWithType: GameTime
+  fullName: Microsoft.Xna.Framework.GameTime
+- uid: Microsoft.Xna.Framework
+  commentId: N:Microsoft.Xna.Framework
+  isExternal: true
+  name: Microsoft.Xna.Framework
+  nameWithType: Microsoft.Xna.Framework
+  fullName: Microsoft.Xna.Framework
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna
+    name: Xna
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna.Framework
+    name: Framework
+    isExternal: true
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna
+    name: Xna
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna.Framework
+    name: Framework
+    isExternal: true
+- uid: Client.Logic.AnimationManager.SetAnimations*
+  commentId: Overload:Client.Logic.AnimationManager.SetAnimations
+  href: Client.Logic.AnimationManager.html#Client_Logic_AnimationManager_SetAnimations_System_Int32_System_Single_
+  name: SetAnimations
+  nameWithType: AnimationManager.SetAnimations
+  fullName: Client.Logic.AnimationManager.SetAnimations

@@ -1,0 +1,84 @@
+### YamlMime:ManagedReference
+items:
+- uid: Server.Core.Services
+  commentId: N:Server.Core.Services
+  id: Server.Core.Services
+  children:
+  - Server.Core.Services.BehaviourService
+  - Server.Core.Services.IBehaviourService
+  - Server.Core.Services.IModuleService
+  - Server.Core.Services.LoggerService
+  - Server.Core.Services.ModuleService
+  langs:
+  - csharp
+  - vb
+  name: Server.Core.Services
+  nameWithType: Server.Core.Services
+  fullName: Server.Core.Services
+  type: Namespace
+  assemblies:
+  - Server.Core
+references:
+- uid: Server.Core.Services.BehaviourService
+  commentId: T:Server.Core.Services.BehaviourService
+  href: Server.Core.Services.BehaviourService.html
+  name: BehaviourService
+  nameWithType: BehaviourService
+  fullName: Server.Core.Services.BehaviourService
+- uid: Server.Core.Services.IBehaviourService
+  commentId: T:Server.Core.Services.IBehaviourService
+  parent: Server.Core.Services
+  href: Server.Core.Services.IBehaviourService.html
+  name: IBehaviourService
+  nameWithType: IBehaviourService
+  fullName: Server.Core.Services.IBehaviourService
+- uid: Server.Core.Services.IModuleService
+  commentId: T:Server.Core.Services.IModuleService
+  parent: Server.Core.Services
+  href: Server.Core.Services.IModuleService.html
+  name: IModuleService
+  nameWithType: IModuleService
+  fullName: Server.Core.Services.IModuleService
+- uid: Server.Core.Services.LoggerService
+  commentId: T:Server.Core.Services.LoggerService
+  parent: Server.Core.Services
+  href: Server.Core.Services.LoggerService.html
+  name: LoggerService
+  nameWithType: LoggerService
+  fullName: Server.Core.Services.LoggerService
+- uid: Server.Core.Services.ModuleService
+  commentId: T:Server.Core.Services.ModuleService
+  href: Server.Core.Services.ModuleService.html
+  name: ModuleService
+  nameWithType: ModuleService
+  fullName: Server.Core.Services.ModuleService
+- uid: Server.Core.Services
+  commentId: N:Server.Core.Services
+  href: Server.html
+  name: Server.Core.Services
+  nameWithType: Server.Core.Services
+  fullName: Server.Core.Services
+  spec.csharp:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+  - name: .
+  - uid: Server.Core.Services
+    name: Services
+    href: Server.Core.Services.html
+  spec.vb:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+  - name: .
+  - uid: Server.Core.Services
+    name: Services
+    href: Server.Core.Services.html

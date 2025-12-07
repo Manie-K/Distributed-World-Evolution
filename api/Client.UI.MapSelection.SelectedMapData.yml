@@ -1,0 +1,464 @@
+### YamlMime:ManagedReference
+items:
+- uid: Client.UI.MapSelection.SelectedMapData
+  commentId: T:Client.UI.MapSelection.SelectedMapData
+  id: SelectedMapData
+  parent: Client.UI.MapSelection
+  children:
+  - Client.UI.MapSelection.SelectedMapData.#ctor
+  - Client.UI.MapSelection.SelectedMapData.ChangeData(System.Int32,System.String)
+  - Client.UI.MapSelection.SelectedMapData.index
+  - Client.UI.MapSelection.SelectedMapData.name
+  langs:
+  - csharp
+  - vb
+  name: SelectedMapData
+  nameWithType: SelectedMapData
+  fullName: Client.UI.MapSelection.SelectedMapData
+  type: Class
+  source:
+    remote:
+      path: Client/Client/UI/MapSelection/SelectedMapData.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: SelectedMapData
+    path: Client/Client/UI/MapSelection/SelectedMapData.cs
+    startLine: 2
+  assemblies:
+  - Client
+  namespace: Client.UI.MapSelection
+  syntax:
+    content: public class SelectedMapData
+    content.vb: Public Class SelectedMapData
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Client.UI.MapSelection.SelectedMapData.index
+  commentId: F:Client.UI.MapSelection.SelectedMapData.index
+  id: index
+  parent: Client.UI.MapSelection.SelectedMapData
+  langs:
+  - csharp
+  - vb
+  name: index
+  nameWithType: SelectedMapData.index
+  fullName: Client.UI.MapSelection.SelectedMapData.index
+  type: Field
+  source:
+    remote:
+      path: Client/Client/UI/MapSelection/SelectedMapData.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: index
+    path: Client/Client/UI/MapSelection/SelectedMapData.cs
+    startLine: 4
+  assemblies:
+  - Client
+  namespace: Client.UI.MapSelection
+  syntax:
+    content: public int index
+    return:
+      type: System.Int32
+    content.vb: Public index As Integer
+- uid: Client.UI.MapSelection.SelectedMapData.name
+  commentId: F:Client.UI.MapSelection.SelectedMapData.name
+  id: name
+  parent: Client.UI.MapSelection.SelectedMapData
+  langs:
+  - csharp
+  - vb
+  name: name
+  nameWithType: SelectedMapData.name
+  fullName: Client.UI.MapSelection.SelectedMapData.name
+  type: Field
+  source:
+    remote:
+      path: Client/Client/UI/MapSelection/SelectedMapData.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: name
+    path: Client/Client/UI/MapSelection/SelectedMapData.cs
+    startLine: 5
+  assemblies:
+  - Client
+  namespace: Client.UI.MapSelection
+  syntax:
+    content: public string name
+    return:
+      type: System.String
+    content.vb: Public name As String
+- uid: Client.UI.MapSelection.SelectedMapData.#ctor
+  commentId: M:Client.UI.MapSelection.SelectedMapData.#ctor
+  id: '#ctor'
+  parent: Client.UI.MapSelection.SelectedMapData
+  langs:
+  - csharp
+  - vb
+  name: SelectedMapData()
+  nameWithType: SelectedMapData.SelectedMapData()
+  fullName: Client.UI.MapSelection.SelectedMapData.SelectedMapData()
+  type: Constructor
+  source:
+    remote:
+      path: Client/Client/UI/MapSelection/SelectedMapData.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: .ctor
+    path: Client/Client/UI/MapSelection/SelectedMapData.cs
+    startLine: 7
+  assemblies:
+  - Client
+  namespace: Client.UI.MapSelection
+  syntax:
+    content: public SelectedMapData()
+    content.vb: Public Sub New()
+  overload: Client.UI.MapSelection.SelectedMapData.#ctor*
+  nameWithType.vb: SelectedMapData.New()
+  fullName.vb: Client.UI.MapSelection.SelectedMapData.New()
+  name.vb: New()
+- uid: Client.UI.MapSelection.SelectedMapData.ChangeData(System.Int32,System.String)
+  commentId: M:Client.UI.MapSelection.SelectedMapData.ChangeData(System.Int32,System.String)
+  id: ChangeData(System.Int32,System.String)
+  parent: Client.UI.MapSelection.SelectedMapData
+  langs:
+  - csharp
+  - vb
+  name: ChangeData(int, string)
+  nameWithType: SelectedMapData.ChangeData(int, string)
+  fullName: Client.UI.MapSelection.SelectedMapData.ChangeData(int, string)
+  type: Method
+  source:
+    remote:
+      path: Client/Client/UI/MapSelection/SelectedMapData.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: ChangeData
+    path: Client/Client/UI/MapSelection/SelectedMapData.cs
+    startLine: 13
+  assemblies:
+  - Client
+  namespace: Client.UI.MapSelection
+  syntax:
+    content: public void ChangeData(int index, string name)
+    parameters:
+    - id: index
+      type: System.Int32
+    - id: name
+      type: System.String
+    content.vb: Public Sub ChangeData(index As Integer, name As String)
+  overload: Client.UI.MapSelection.SelectedMapData.ChangeData*
+  nameWithType.vb: SelectedMapData.ChangeData(Integer, String)
+  fullName.vb: Client.UI.MapSelection.SelectedMapData.ChangeData(Integer, String)
+  name.vb: ChangeData(Integer, String)
+references:
+- uid: Client.UI.MapSelection
+  commentId: N:Client.UI.MapSelection
+  href: Client.html
+  name: Client.UI.MapSelection
+  nameWithType: Client.UI.MapSelection
+  fullName: Client.UI.MapSelection
+  spec.csharp:
+  - uid: Client
+    name: Client
+    href: Client.html
+  - name: .
+  - uid: Client.UI
+    name: UI
+    href: Client.UI.html
+  - name: .
+  - uid: Client.UI.MapSelection
+    name: MapSelection
+    href: Client.UI.MapSelection.html
+  spec.vb:
+  - uid: Client
+    name: Client
+    href: Client.html
+  - name: .
+  - uid: Client.UI
+    name: UI
+    href: Client.UI.html
+  - name: .
+  - uid: Client.UI.MapSelection
+    name: MapSelection
+    href: Client.UI.MapSelection.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Client.UI.MapSelection.SelectedMapData.#ctor*
+  commentId: Overload:Client.UI.MapSelection.SelectedMapData.#ctor
+  href: Client.UI.MapSelection.SelectedMapData.html#Client_UI_MapSelection_SelectedMapData__ctor
+  name: SelectedMapData
+  nameWithType: SelectedMapData.SelectedMapData
+  fullName: Client.UI.MapSelection.SelectedMapData.SelectedMapData
+  nameWithType.vb: SelectedMapData.New
+  fullName.vb: Client.UI.MapSelection.SelectedMapData.New
+  name.vb: New
+- uid: Client.UI.MapSelection.SelectedMapData.ChangeData*
+  commentId: Overload:Client.UI.MapSelection.SelectedMapData.ChangeData
+  href: Client.UI.MapSelection.SelectedMapData.html#Client_UI_MapSelection_SelectedMapData_ChangeData_System_Int32_System_String_
+  name: ChangeData
+  nameWithType: SelectedMapData.ChangeData
+  fullName: Client.UI.MapSelection.SelectedMapData.ChangeData

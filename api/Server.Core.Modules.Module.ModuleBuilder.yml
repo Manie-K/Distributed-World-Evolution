@@ -1,0 +1,1121 @@
+### YamlMime:ManagedReference
+items:
+- uid: Server.Core.Modules.Module.ModuleBuilder
+  commentId: T:Server.Core.Modules.Module.ModuleBuilder
+  id: Module.ModuleBuilder
+  parent: Server.Core.Modules
+  children:
+  - Server.Core.Modules.Module.ModuleBuilder.#ctor
+  - Server.Core.Modules.Module.ModuleBuilder.Create
+  - Server.Core.Modules.Module.ModuleBuilder.IsOfficial(System.Boolean)
+  - Server.Core.Modules.Module.ModuleBuilder.OfType(Server.Core.EntityTypeEnum)
+  - Server.Core.Modules.Module.ModuleBuilder.WithAgression(System.Int32)
+  - Server.Core.Modules.Module.ModuleBuilder.WithBehaviour(Server.Core.Behaviours.IBehaviour)
+  - Server.Core.Modules.Module.ModuleBuilder.WithBehaviours(System.Collections.Generic.List{Server.Core.Behaviours.IBehaviour})
+  - Server.Core.Modules.Module.ModuleBuilder.WithDamage(System.Int32)
+  - Server.Core.Modules.Module.ModuleBuilder.WithGraphicsId(System.Int32)
+  - Server.Core.Modules.Module.ModuleBuilder.WithID(System.Int32)
+  - Server.Core.Modules.Module.ModuleBuilder.WithMaxHealth(System.Int32)
+  - Server.Core.Modules.Module.ModuleBuilder.WithMaxHunger(System.Int32)
+  - Server.Core.Modules.Module.ModuleBuilder.WithName(System.String)
+  - Server.Core.Modules.Module.ModuleBuilder.WithReproductionNeed(System.Int32)
+  - Server.Core.Modules.Module.ModuleBuilder.id
+  langs:
+  - csharp
+  - vb
+  name: Module.ModuleBuilder
+  nameWithType: Module.ModuleBuilder
+  fullName: Server.Core.Modules.Module.ModuleBuilder
+  type: Class
+  source:
+    remote:
+      path: Server/Server.Core/Modules/Module.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: ModuleBuilder
+    path: Server/Server.Core/Modules/Module.cs
+    startLine: 120
+  assemblies:
+  - Server.Core
+  namespace: Server.Core.Modules
+  syntax:
+    content: public class Module.ModuleBuilder
+    content.vb: Public Class [Module].ModuleBuilder
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Server.Core.Modules.Module.ModuleBuilder.id
+  commentId: F:Server.Core.Modules.Module.ModuleBuilder.id
+  id: id
+  parent: Server.Core.Modules.Module.ModuleBuilder
+  langs:
+  - csharp
+  - vb
+  name: id
+  nameWithType: Module.ModuleBuilder.id
+  fullName: Server.Core.Modules.Module.ModuleBuilder.id
+  type: Field
+  source:
+    remote:
+      path: Server/Server.Core/Modules/Module.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: id
+    path: Server/Server.Core/Modules/Module.cs
+    startLine: 122
+  assemblies:
+  - Server.Core
+  namespace: Server.Core.Modules
+  syntax:
+    content: public int id
+    return:
+      type: System.Int32
+    content.vb: Public id As Integer
+- uid: Server.Core.Modules.Module.ModuleBuilder.#ctor
+  commentId: M:Server.Core.Modules.Module.ModuleBuilder.#ctor
+  id: '#ctor'
+  parent: Server.Core.Modules.Module.ModuleBuilder
+  langs:
+  - csharp
+  - vb
+  name: ModuleBuilder()
+  nameWithType: Module.ModuleBuilder.ModuleBuilder()
+  fullName: Server.Core.Modules.Module.ModuleBuilder.ModuleBuilder()
+  type: Constructor
+  source:
+    remote:
+      path: Server/Server.Core/Modules/Module.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: .ctor
+    path: Server/Server.Core/Modules/Module.cs
+    startLine: 134
+  assemblies:
+  - Server.Core
+  namespace: Server.Core.Modules
+  syntax:
+    content: public ModuleBuilder()
+    content.vb: Public Sub New()
+  overload: Server.Core.Modules.Module.ModuleBuilder.#ctor*
+  nameWithType.vb: Module.ModuleBuilder.New()
+  fullName.vb: Server.Core.Modules.Module.ModuleBuilder.New()
+  name.vb: New()
+- uid: Server.Core.Modules.Module.ModuleBuilder.Create
+  commentId: M:Server.Core.Modules.Module.ModuleBuilder.Create
+  id: Create
+  parent: Server.Core.Modules.Module.ModuleBuilder
+  langs:
+  - csharp
+  - vb
+  name: Create()
+  nameWithType: Module.ModuleBuilder.Create()
+  fullName: Server.Core.Modules.Module.ModuleBuilder.Create()
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Core/Modules/Module.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Create
+    path: Server/Server.Core/Modules/Module.cs
+    startLine: 149
+  assemblies:
+  - Server.Core
+  namespace: Server.Core.Modules
+  syntax:
+    content: public Module Create()
+    return:
+      type: Server.Core.Modules.Module
+    content.vb: Public Function Create() As [Module]
+  overload: Server.Core.Modules.Module.ModuleBuilder.Create*
+- uid: Server.Core.Modules.Module.ModuleBuilder.WithID(System.Int32)
+  commentId: M:Server.Core.Modules.Module.ModuleBuilder.WithID(System.Int32)
+  id: WithID(System.Int32)
+  parent: Server.Core.Modules.Module.ModuleBuilder
+  langs:
+  - csharp
+  - vb
+  name: WithID(int)
+  nameWithType: Module.ModuleBuilder.WithID(int)
+  fullName: Server.Core.Modules.Module.ModuleBuilder.WithID(int)
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Core/Modules/Module.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: WithID
+    path: Server/Server.Core/Modules/Module.cs
+    startLine: 159
+  assemblies:
+  - Server.Core
+  namespace: Server.Core.Modules
+  syntax:
+    content: public Module.ModuleBuilder WithID(int id)
+    parameters:
+    - id: id
+      type: System.Int32
+    return:
+      type: Server.Core.Modules.Module.ModuleBuilder
+    content.vb: Public Function WithID(id As Integer) As [Module].ModuleBuilder
+  overload: Server.Core.Modules.Module.ModuleBuilder.WithID*
+  nameWithType.vb: Module.ModuleBuilder.WithID(Integer)
+  fullName.vb: Server.Core.Modules.Module.ModuleBuilder.WithID(Integer)
+  name.vb: WithID(Integer)
+- uid: Server.Core.Modules.Module.ModuleBuilder.OfType(Server.Core.EntityTypeEnum)
+  commentId: M:Server.Core.Modules.Module.ModuleBuilder.OfType(Server.Core.EntityTypeEnum)
+  id: OfType(Server.Core.EntityTypeEnum)
+  parent: Server.Core.Modules.Module.ModuleBuilder
+  langs:
+  - csharp
+  - vb
+  name: OfType(EntityTypeEnum)
+  nameWithType: Module.ModuleBuilder.OfType(EntityTypeEnum)
+  fullName: Server.Core.Modules.Module.ModuleBuilder.OfType(Server.Core.EntityTypeEnum)
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Core/Modules/Module.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: OfType
+    path: Server/Server.Core/Modules/Module.cs
+    startLine: 165
+  assemblies:
+  - Server.Core
+  namespace: Server.Core.Modules
+  syntax:
+    content: public Module.ModuleBuilder OfType(EntityTypeEnum type)
+    parameters:
+    - id: type
+      type: Server.Core.EntityTypeEnum
+    return:
+      type: Server.Core.Modules.Module.ModuleBuilder
+    content.vb: Public Function OfType(type As EntityTypeEnum) As [Module].ModuleBuilder
+  overload: Server.Core.Modules.Module.ModuleBuilder.OfType*
+- uid: Server.Core.Modules.Module.ModuleBuilder.WithName(System.String)
+  commentId: M:Server.Core.Modules.Module.ModuleBuilder.WithName(System.String)
+  id: WithName(System.String)
+  parent: Server.Core.Modules.Module.ModuleBuilder
+  langs:
+  - csharp
+  - vb
+  name: WithName(string)
+  nameWithType: Module.ModuleBuilder.WithName(string)
+  fullName: Server.Core.Modules.Module.ModuleBuilder.WithName(string)
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Core/Modules/Module.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: WithName
+    path: Server/Server.Core/Modules/Module.cs
+    startLine: 171
+  assemblies:
+  - Server.Core
+  namespace: Server.Core.Modules
+  syntax:
+    content: public Module.ModuleBuilder WithName(string name)
+    parameters:
+    - id: name
+      type: System.String
+    return:
+      type: Server.Core.Modules.Module.ModuleBuilder
+    content.vb: Public Function WithName(name As String) As [Module].ModuleBuilder
+  overload: Server.Core.Modules.Module.ModuleBuilder.WithName*
+  nameWithType.vb: Module.ModuleBuilder.WithName(String)
+  fullName.vb: Server.Core.Modules.Module.ModuleBuilder.WithName(String)
+  name.vb: WithName(String)
+- uid: Server.Core.Modules.Module.ModuleBuilder.IsOfficial(System.Boolean)
+  commentId: M:Server.Core.Modules.Module.ModuleBuilder.IsOfficial(System.Boolean)
+  id: IsOfficial(System.Boolean)
+  parent: Server.Core.Modules.Module.ModuleBuilder
+  langs:
+  - csharp
+  - vb
+  name: IsOfficial(bool)
+  nameWithType: Module.ModuleBuilder.IsOfficial(bool)
+  fullName: Server.Core.Modules.Module.ModuleBuilder.IsOfficial(bool)
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Core/Modules/Module.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: IsOfficial
+    path: Server/Server.Core/Modules/Module.cs
+    startLine: 177
+  assemblies:
+  - Server.Core
+  namespace: Server.Core.Modules
+  syntax:
+    content: public Module.ModuleBuilder IsOfficial(bool official)
+    parameters:
+    - id: official
+      type: System.Boolean
+    return:
+      type: Server.Core.Modules.Module.ModuleBuilder
+    content.vb: Public Function IsOfficial(official As Boolean) As [Module].ModuleBuilder
+  overload: Server.Core.Modules.Module.ModuleBuilder.IsOfficial*
+  nameWithType.vb: Module.ModuleBuilder.IsOfficial(Boolean)
+  fullName.vb: Server.Core.Modules.Module.ModuleBuilder.IsOfficial(Boolean)
+  name.vb: IsOfficial(Boolean)
+- uid: Server.Core.Modules.Module.ModuleBuilder.WithDamage(System.Int32)
+  commentId: M:Server.Core.Modules.Module.ModuleBuilder.WithDamage(System.Int32)
+  id: WithDamage(System.Int32)
+  parent: Server.Core.Modules.Module.ModuleBuilder
+  langs:
+  - csharp
+  - vb
+  name: WithDamage(int)
+  nameWithType: Module.ModuleBuilder.WithDamage(int)
+  fullName: Server.Core.Modules.Module.ModuleBuilder.WithDamage(int)
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Core/Modules/Module.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: WithDamage
+    path: Server/Server.Core/Modules/Module.cs
+    startLine: 183
+  assemblies:
+  - Server.Core
+  namespace: Server.Core.Modules
+  syntax:
+    content: public Module.ModuleBuilder WithDamage(int damage)
+    parameters:
+    - id: damage
+      type: System.Int32
+    return:
+      type: Server.Core.Modules.Module.ModuleBuilder
+    content.vb: Public Function WithDamage(damage As Integer) As [Module].ModuleBuilder
+  overload: Server.Core.Modules.Module.ModuleBuilder.WithDamage*
+  nameWithType.vb: Module.ModuleBuilder.WithDamage(Integer)
+  fullName.vb: Server.Core.Modules.Module.ModuleBuilder.WithDamage(Integer)
+  name.vb: WithDamage(Integer)
+- uid: Server.Core.Modules.Module.ModuleBuilder.WithAgression(System.Int32)
+  commentId: M:Server.Core.Modules.Module.ModuleBuilder.WithAgression(System.Int32)
+  id: WithAgression(System.Int32)
+  parent: Server.Core.Modules.Module.ModuleBuilder
+  langs:
+  - csharp
+  - vb
+  name: WithAgression(int)
+  nameWithType: Module.ModuleBuilder.WithAgression(int)
+  fullName: Server.Core.Modules.Module.ModuleBuilder.WithAgression(int)
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Core/Modules/Module.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: WithAgression
+    path: Server/Server.Core/Modules/Module.cs
+    startLine: 188
+  assemblies:
+  - Server.Core
+  namespace: Server.Core.Modules
+  syntax:
+    content: public Module.ModuleBuilder WithAgression(int aggresion)
+    parameters:
+    - id: aggresion
+      type: System.Int32
+    return:
+      type: Server.Core.Modules.Module.ModuleBuilder
+    content.vb: Public Function WithAgression(aggresion As Integer) As [Module].ModuleBuilder
+  overload: Server.Core.Modules.Module.ModuleBuilder.WithAgression*
+  nameWithType.vb: Module.ModuleBuilder.WithAgression(Integer)
+  fullName.vb: Server.Core.Modules.Module.ModuleBuilder.WithAgression(Integer)
+  name.vb: WithAgression(Integer)
+- uid: Server.Core.Modules.Module.ModuleBuilder.WithReproductionNeed(System.Int32)
+  commentId: M:Server.Core.Modules.Module.ModuleBuilder.WithReproductionNeed(System.Int32)
+  id: WithReproductionNeed(System.Int32)
+  parent: Server.Core.Modules.Module.ModuleBuilder
+  langs:
+  - csharp
+  - vb
+  name: WithReproductionNeed(int)
+  nameWithType: Module.ModuleBuilder.WithReproductionNeed(int)
+  fullName: Server.Core.Modules.Module.ModuleBuilder.WithReproductionNeed(int)
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Core/Modules/Module.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: WithReproductionNeed
+    path: Server/Server.Core/Modules/Module.cs
+    startLine: 194
+  assemblies:
+  - Server.Core
+  namespace: Server.Core.Modules
+  syntax:
+    content: public Module.ModuleBuilder WithReproductionNeed(int reproductionNeed)
+    parameters:
+    - id: reproductionNeed
+      type: System.Int32
+    return:
+      type: Server.Core.Modules.Module.ModuleBuilder
+    content.vb: Public Function WithReproductionNeed(reproductionNeed As Integer) As [Module].ModuleBuilder
+  overload: Server.Core.Modules.Module.ModuleBuilder.WithReproductionNeed*
+  nameWithType.vb: Module.ModuleBuilder.WithReproductionNeed(Integer)
+  fullName.vb: Server.Core.Modules.Module.ModuleBuilder.WithReproductionNeed(Integer)
+  name.vb: WithReproductionNeed(Integer)
+- uid: Server.Core.Modules.Module.ModuleBuilder.WithMaxHunger(System.Int32)
+  commentId: M:Server.Core.Modules.Module.ModuleBuilder.WithMaxHunger(System.Int32)
+  id: WithMaxHunger(System.Int32)
+  parent: Server.Core.Modules.Module.ModuleBuilder
+  langs:
+  - csharp
+  - vb
+  name: WithMaxHunger(int)
+  nameWithType: Module.ModuleBuilder.WithMaxHunger(int)
+  fullName: Server.Core.Modules.Module.ModuleBuilder.WithMaxHunger(int)
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Core/Modules/Module.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: WithMaxHunger
+    path: Server/Server.Core/Modules/Module.cs
+    startLine: 200
+  assemblies:
+  - Server.Core
+  namespace: Server.Core.Modules
+  syntax:
+    content: public Module.ModuleBuilder WithMaxHunger(int maxHunger)
+    parameters:
+    - id: maxHunger
+      type: System.Int32
+    return:
+      type: Server.Core.Modules.Module.ModuleBuilder
+    content.vb: Public Function WithMaxHunger(maxHunger As Integer) As [Module].ModuleBuilder
+  overload: Server.Core.Modules.Module.ModuleBuilder.WithMaxHunger*
+  nameWithType.vb: Module.ModuleBuilder.WithMaxHunger(Integer)
+  fullName.vb: Server.Core.Modules.Module.ModuleBuilder.WithMaxHunger(Integer)
+  name.vb: WithMaxHunger(Integer)
+- uid: Server.Core.Modules.Module.ModuleBuilder.WithMaxHealth(System.Int32)
+  commentId: M:Server.Core.Modules.Module.ModuleBuilder.WithMaxHealth(System.Int32)
+  id: WithMaxHealth(System.Int32)
+  parent: Server.Core.Modules.Module.ModuleBuilder
+  langs:
+  - csharp
+  - vb
+  name: WithMaxHealth(int)
+  nameWithType: Module.ModuleBuilder.WithMaxHealth(int)
+  fullName: Server.Core.Modules.Module.ModuleBuilder.WithMaxHealth(int)
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Core/Modules/Module.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: WithMaxHealth
+    path: Server/Server.Core/Modules/Module.cs
+    startLine: 206
+  assemblies:
+  - Server.Core
+  namespace: Server.Core.Modules
+  syntax:
+    content: public Module.ModuleBuilder WithMaxHealth(int maxHealth)
+    parameters:
+    - id: maxHealth
+      type: System.Int32
+    return:
+      type: Server.Core.Modules.Module.ModuleBuilder
+    content.vb: Public Function WithMaxHealth(maxHealth As Integer) As [Module].ModuleBuilder
+  overload: Server.Core.Modules.Module.ModuleBuilder.WithMaxHealth*
+  nameWithType.vb: Module.ModuleBuilder.WithMaxHealth(Integer)
+  fullName.vb: Server.Core.Modules.Module.ModuleBuilder.WithMaxHealth(Integer)
+  name.vb: WithMaxHealth(Integer)
+- uid: Server.Core.Modules.Module.ModuleBuilder.WithGraphicsId(System.Int32)
+  commentId: M:Server.Core.Modules.Module.ModuleBuilder.WithGraphicsId(System.Int32)
+  id: WithGraphicsId(System.Int32)
+  parent: Server.Core.Modules.Module.ModuleBuilder
+  langs:
+  - csharp
+  - vb
+  name: WithGraphicsId(int)
+  nameWithType: Module.ModuleBuilder.WithGraphicsId(int)
+  fullName: Server.Core.Modules.Module.ModuleBuilder.WithGraphicsId(int)
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Core/Modules/Module.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: WithGraphicsId
+    path: Server/Server.Core/Modules/Module.cs
+    startLine: 212
+  assemblies:
+  - Server.Core
+  namespace: Server.Core.Modules
+  syntax:
+    content: public Module.ModuleBuilder WithGraphicsId(int graphicsId)
+    parameters:
+    - id: graphicsId
+      type: System.Int32
+    return:
+      type: Server.Core.Modules.Module.ModuleBuilder
+    content.vb: Public Function WithGraphicsId(graphicsId As Integer) As [Module].ModuleBuilder
+  overload: Server.Core.Modules.Module.ModuleBuilder.WithGraphicsId*
+  nameWithType.vb: Module.ModuleBuilder.WithGraphicsId(Integer)
+  fullName.vb: Server.Core.Modules.Module.ModuleBuilder.WithGraphicsId(Integer)
+  name.vb: WithGraphicsId(Integer)
+- uid: Server.Core.Modules.Module.ModuleBuilder.WithBehaviour(Server.Core.Behaviours.IBehaviour)
+  commentId: M:Server.Core.Modules.Module.ModuleBuilder.WithBehaviour(Server.Core.Behaviours.IBehaviour)
+  id: WithBehaviour(Server.Core.Behaviours.IBehaviour)
+  parent: Server.Core.Modules.Module.ModuleBuilder
+  langs:
+  - csharp
+  - vb
+  name: WithBehaviour(IBehaviour)
+  nameWithType: Module.ModuleBuilder.WithBehaviour(IBehaviour)
+  fullName: Server.Core.Modules.Module.ModuleBuilder.WithBehaviour(Server.Core.Behaviours.IBehaviour)
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Core/Modules/Module.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: WithBehaviour
+    path: Server/Server.Core/Modules/Module.cs
+    startLine: 218
+  assemblies:
+  - Server.Core
+  namespace: Server.Core.Modules
+  syntax:
+    content: public Module.ModuleBuilder WithBehaviour(IBehaviour behaviour)
+    parameters:
+    - id: behaviour
+      type: Server.Core.Behaviours.IBehaviour
+    return:
+      type: Server.Core.Modules.Module.ModuleBuilder
+    content.vb: Public Function WithBehaviour(behaviour As IBehaviour) As [Module].ModuleBuilder
+  overload: Server.Core.Modules.Module.ModuleBuilder.WithBehaviour*
+- uid: Server.Core.Modules.Module.ModuleBuilder.WithBehaviours(System.Collections.Generic.List{Server.Core.Behaviours.IBehaviour})
+  commentId: M:Server.Core.Modules.Module.ModuleBuilder.WithBehaviours(System.Collections.Generic.List{Server.Core.Behaviours.IBehaviour})
+  id: WithBehaviours(System.Collections.Generic.List{Server.Core.Behaviours.IBehaviour})
+  parent: Server.Core.Modules.Module.ModuleBuilder
+  langs:
+  - csharp
+  - vb
+  name: WithBehaviours(List<IBehaviour>)
+  nameWithType: Module.ModuleBuilder.WithBehaviours(List<IBehaviour>)
+  fullName: Server.Core.Modules.Module.ModuleBuilder.WithBehaviours(System.Collections.Generic.List<Server.Core.Behaviours.IBehaviour>)
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Core/Modules/Module.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: WithBehaviours
+    path: Server/Server.Core/Modules/Module.cs
+    startLine: 224
+  assemblies:
+  - Server.Core
+  namespace: Server.Core.Modules
+  syntax:
+    content: public Module.ModuleBuilder WithBehaviours(List<IBehaviour> behaviours)
+    parameters:
+    - id: behaviours
+      type: System.Collections.Generic.List{Server.Core.Behaviours.IBehaviour}
+    return:
+      type: Server.Core.Modules.Module.ModuleBuilder
+    content.vb: Public Function WithBehaviours(behaviours As List(Of IBehaviour)) As [Module].ModuleBuilder
+  overload: Server.Core.Modules.Module.ModuleBuilder.WithBehaviours*
+  nameWithType.vb: Module.ModuleBuilder.WithBehaviours(List(Of IBehaviour))
+  fullName.vb: Server.Core.Modules.Module.ModuleBuilder.WithBehaviours(System.Collections.Generic.List(Of Server.Core.Behaviours.IBehaviour))
+  name.vb: WithBehaviours(List(Of IBehaviour))
+references:
+- uid: Server.Core.Modules
+  commentId: N:Server.Core.Modules
+  href: Server.html
+  name: Server.Core.Modules
+  nameWithType: Server.Core.Modules
+  fullName: Server.Core.Modules
+  spec.csharp:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+  - name: .
+  - uid: Server.Core.Modules
+    name: Modules
+    href: Server.Core.Modules.html
+  spec.vb:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+  - name: .
+  - uid: Server.Core.Modules
+    name: Modules
+    href: Server.Core.Modules.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Server.Core.Modules.Module.ModuleBuilder.#ctor*
+  commentId: Overload:Server.Core.Modules.Module.ModuleBuilder.#ctor
+  href: Server.Core.Modules.Module.ModuleBuilder.html#Server_Core_Modules_Module_ModuleBuilder__ctor
+  name: ModuleBuilder
+  nameWithType: Module.ModuleBuilder.ModuleBuilder
+  fullName: Server.Core.Modules.Module.ModuleBuilder.ModuleBuilder
+  nameWithType.vb: Module.ModuleBuilder.New
+  fullName.vb: Server.Core.Modules.Module.ModuleBuilder.New
+  name.vb: New
+- uid: Server.Core.Modules.Module.ModuleBuilder.Create*
+  commentId: Overload:Server.Core.Modules.Module.ModuleBuilder.Create
+  href: Server.Core.Modules.Module.ModuleBuilder.html#Server_Core_Modules_Module_ModuleBuilder_Create
+  name: Create
+  nameWithType: Module.ModuleBuilder.Create
+  fullName: Server.Core.Modules.Module.ModuleBuilder.Create
+- uid: Server.Core.Modules.Module
+  commentId: T:Server.Core.Modules.Module
+  parent: Server.Core.Modules
+  href: Server.Core.Modules.Module.html
+  name: Module
+  nameWithType: Module
+  fullName: Server.Core.Modules.Module
+- uid: Server.Core.Modules.Module.ModuleBuilder.WithID*
+  commentId: Overload:Server.Core.Modules.Module.ModuleBuilder.WithID
+  href: Server.Core.Modules.Module.ModuleBuilder.html#Server_Core_Modules_Module_ModuleBuilder_WithID_System_Int32_
+  name: WithID
+  nameWithType: Module.ModuleBuilder.WithID
+  fullName: Server.Core.Modules.Module.ModuleBuilder.WithID
+- uid: Server.Core.Modules.Module.ModuleBuilder
+  commentId: T:Server.Core.Modules.Module.ModuleBuilder
+  parent: Server.Core.Modules
+  href: Server.Core.Modules.Module.html
+  name: Module.ModuleBuilder
+  nameWithType: Module.ModuleBuilder
+  fullName: Server.Core.Modules.Module.ModuleBuilder
+  spec.csharp:
+  - uid: Server.Core.Modules.Module
+    name: Module
+    href: Server.Core.Modules.Module.html
+  - name: .
+  - uid: Server.Core.Modules.Module.ModuleBuilder
+    name: ModuleBuilder
+    href: Server.Core.Modules.Module.ModuleBuilder.html
+  spec.vb:
+  - uid: Server.Core.Modules.Module
+    name: Module
+    href: Server.Core.Modules.Module.html
+  - name: .
+  - uid: Server.Core.Modules.Module.ModuleBuilder
+    name: ModuleBuilder
+    href: Server.Core.Modules.Module.ModuleBuilder.html
+- uid: Server.Core.Modules.Module.ModuleBuilder.OfType*
+  commentId: Overload:Server.Core.Modules.Module.ModuleBuilder.OfType
+  href: Server.Core.Modules.Module.ModuleBuilder.html#Server_Core_Modules_Module_ModuleBuilder_OfType_Server_Core_EntityTypeEnum_
+  name: OfType
+  nameWithType: Module.ModuleBuilder.OfType
+  fullName: Server.Core.Modules.Module.ModuleBuilder.OfType
+- uid: Server.Core.EntityTypeEnum
+  commentId: T:Server.Core.EntityTypeEnum
+  parent: Server.Core
+  href: https://github.com/Manie-K/Distributed-World-Evolution/blob/04d77cccea139c5e616524f8a10c7afb68cc7eb5/Shared/SharedLibrary/DTOs/EntitiesDTO/EntityTypeEnum.cs
+  name: EntityTypeEnum
+  nameWithType: EntityTypeEnum
+  fullName: Server.Core.EntityTypeEnum
+- uid: Server.Core
+  commentId: N:Server.Core
+  href: Server.html
+  name: Server.Core
+  nameWithType: Server.Core
+  fullName: Server.Core
+  spec.csharp:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+  spec.vb:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+- uid: Server.Core.Modules.Module.ModuleBuilder.WithName*
+  commentId: Overload:Server.Core.Modules.Module.ModuleBuilder.WithName
+  href: Server.Core.Modules.Module.ModuleBuilder.html#Server_Core_Modules_Module_ModuleBuilder_WithName_System_String_
+  name: WithName
+  nameWithType: Module.ModuleBuilder.WithName
+  fullName: Server.Core.Modules.Module.ModuleBuilder.WithName
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Server.Core.Modules.Module.ModuleBuilder.IsOfficial*
+  commentId: Overload:Server.Core.Modules.Module.ModuleBuilder.IsOfficial
+  href: Server.Core.Modules.Module.ModuleBuilder.html#Server_Core_Modules_Module_ModuleBuilder_IsOfficial_System_Boolean_
+  name: IsOfficial
+  nameWithType: Module.ModuleBuilder.IsOfficial
+  fullName: Server.Core.Modules.Module.ModuleBuilder.IsOfficial
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Server.Core.Modules.Module.ModuleBuilder.WithDamage*
+  commentId: Overload:Server.Core.Modules.Module.ModuleBuilder.WithDamage
+  href: Server.Core.Modules.Module.ModuleBuilder.html#Server_Core_Modules_Module_ModuleBuilder_WithDamage_System_Int32_
+  name: WithDamage
+  nameWithType: Module.ModuleBuilder.WithDamage
+  fullName: Server.Core.Modules.Module.ModuleBuilder.WithDamage
+- uid: Server.Core.Modules.Module.ModuleBuilder.WithAgression*
+  commentId: Overload:Server.Core.Modules.Module.ModuleBuilder.WithAgression
+  href: Server.Core.Modules.Module.ModuleBuilder.html#Server_Core_Modules_Module_ModuleBuilder_WithAgression_System_Int32_
+  name: WithAgression
+  nameWithType: Module.ModuleBuilder.WithAgression
+  fullName: Server.Core.Modules.Module.ModuleBuilder.WithAgression
+- uid: Server.Core.Modules.Module.ModuleBuilder.WithReproductionNeed*
+  commentId: Overload:Server.Core.Modules.Module.ModuleBuilder.WithReproductionNeed
+  href: Server.Core.Modules.Module.ModuleBuilder.html#Server_Core_Modules_Module_ModuleBuilder_WithReproductionNeed_System_Int32_
+  name: WithReproductionNeed
+  nameWithType: Module.ModuleBuilder.WithReproductionNeed
+  fullName: Server.Core.Modules.Module.ModuleBuilder.WithReproductionNeed
+- uid: Server.Core.Modules.Module.ModuleBuilder.WithMaxHunger*
+  commentId: Overload:Server.Core.Modules.Module.ModuleBuilder.WithMaxHunger
+  href: Server.Core.Modules.Module.ModuleBuilder.html#Server_Core_Modules_Module_ModuleBuilder_WithMaxHunger_System_Int32_
+  name: WithMaxHunger
+  nameWithType: Module.ModuleBuilder.WithMaxHunger
+  fullName: Server.Core.Modules.Module.ModuleBuilder.WithMaxHunger
+- uid: Server.Core.Modules.Module.ModuleBuilder.WithMaxHealth*
+  commentId: Overload:Server.Core.Modules.Module.ModuleBuilder.WithMaxHealth
+  href: Server.Core.Modules.Module.ModuleBuilder.html#Server_Core_Modules_Module_ModuleBuilder_WithMaxHealth_System_Int32_
+  name: WithMaxHealth
+  nameWithType: Module.ModuleBuilder.WithMaxHealth
+  fullName: Server.Core.Modules.Module.ModuleBuilder.WithMaxHealth
+- uid: Server.Core.Modules.Module.ModuleBuilder.WithGraphicsId*
+  commentId: Overload:Server.Core.Modules.Module.ModuleBuilder.WithGraphicsId
+  href: Server.Core.Modules.Module.ModuleBuilder.html#Server_Core_Modules_Module_ModuleBuilder_WithGraphicsId_System_Int32_
+  name: WithGraphicsId
+  nameWithType: Module.ModuleBuilder.WithGraphicsId
+  fullName: Server.Core.Modules.Module.ModuleBuilder.WithGraphicsId
+- uid: Server.Core.Modules.Module.ModuleBuilder.WithBehaviour*
+  commentId: Overload:Server.Core.Modules.Module.ModuleBuilder.WithBehaviour
+  href: Server.Core.Modules.Module.ModuleBuilder.html#Server_Core_Modules_Module_ModuleBuilder_WithBehaviour_Server_Core_Behaviours_IBehaviour_
+  name: WithBehaviour
+  nameWithType: Module.ModuleBuilder.WithBehaviour
+  fullName: Server.Core.Modules.Module.ModuleBuilder.WithBehaviour
+- uid: Server.Core.Behaviours.IBehaviour
+  commentId: T:Server.Core.Behaviours.IBehaviour
+  parent: Server.Core.Behaviours
+  href: Server.Core.Behaviours.IBehaviour.html
+  name: IBehaviour
+  nameWithType: IBehaviour
+  fullName: Server.Core.Behaviours.IBehaviour
+- uid: Server.Core.Behaviours
+  commentId: N:Server.Core.Behaviours
+  href: Server.html
+  name: Server.Core.Behaviours
+  nameWithType: Server.Core.Behaviours
+  fullName: Server.Core.Behaviours
+  spec.csharp:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+  - name: .
+  - uid: Server.Core.Behaviours
+    name: Behaviours
+    href: Server.Core.Behaviours.html
+  spec.vb:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+  - name: .
+  - uid: Server.Core.Behaviours
+    name: Behaviours
+    href: Server.Core.Behaviours.html
+- uid: Server.Core.Modules.Module.ModuleBuilder.WithBehaviours*
+  commentId: Overload:Server.Core.Modules.Module.ModuleBuilder.WithBehaviours
+  href: Server.Core.Modules.Module.ModuleBuilder.html#Server_Core_Modules_Module_ModuleBuilder_WithBehaviours_System_Collections_Generic_List_Server_Core_Behaviours_IBehaviour__
+  name: WithBehaviours
+  nameWithType: Module.ModuleBuilder.WithBehaviours
+  fullName: Server.Core.Modules.Module.ModuleBuilder.WithBehaviours
+- uid: System.Collections.Generic.List{Server.Core.Behaviours.IBehaviour}
+  commentId: T:System.Collections.Generic.List{Server.Core.Behaviours.IBehaviour}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<IBehaviour>
+  nameWithType: List<IBehaviour>
+  fullName: System.Collections.Generic.List<Server.Core.Behaviours.IBehaviour>
+  nameWithType.vb: List(Of IBehaviour)
+  fullName.vb: System.Collections.Generic.List(Of Server.Core.Behaviours.IBehaviour)
+  name.vb: List(Of IBehaviour)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: Server.Core.Behaviours.IBehaviour
+    name: IBehaviour
+    href: Server.Core.Behaviours.IBehaviour.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Server.Core.Behaviours.IBehaviour
+    name: IBehaviour
+    href: Server.Core.Behaviours.IBehaviour.html
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic

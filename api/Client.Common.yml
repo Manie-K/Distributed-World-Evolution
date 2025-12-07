@@ -1,0 +1,54 @@
+### YamlMime:ManagedReference
+items:
+- uid: Client.Common
+  commentId: N:Client.Common
+  id: Client.Common
+  children:
+  - Client.Common.InputManager
+  - Client.Common.UserSettings
+  langs:
+  - csharp
+  - vb
+  name: Client.Common
+  nameWithType: Client.Common
+  fullName: Client.Common
+  type: Namespace
+  assemblies:
+  - Client
+references:
+- uid: Client.Common.InputManager
+  commentId: T:Client.Common.InputManager
+  parent: Client.Common
+  href: Client.Common.InputManager.html
+  name: InputManager
+  nameWithType: InputManager
+  fullName: Client.Common.InputManager
+- uid: Client.Common.UserSettings
+  commentId: T:Client.Common.UserSettings
+  parent: Client.Common
+  href: Client.Common.UserSettings.html
+  name: UserSettings
+  nameWithType: UserSettings
+  fullName: Client.Common.UserSettings
+- uid: Client.Common
+  commentId: N:Client.Common
+  href: Client.html
+  name: Client.Common
+  nameWithType: Client.Common
+  fullName: Client.Common
+  spec.csharp:
+  - uid: Client
+    name: Client
+    href: Client.html
+  - name: .
+  - uid: Client.Common
+    name: Common
+    href: Client.Common.html
+  spec.vb:
+  - uid: Client
+    name: Client
+    href: Client.html
+  - name: .
+  - uid: Client.Common
+    name: Common
+    href: Client.Common.html

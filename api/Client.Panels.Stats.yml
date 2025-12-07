@@ -1,0 +1,61 @@
+### YamlMime:ManagedReference
+items:
+- uid: Client.Panels.Stats
+  commentId: N:Client.Panels.Stats
+  id: Client.Panels.Stats
+  children:
+  - Client.Panels.Stats.Bar
+  - Client.Panels.Stats.StatsPanel
+  langs:
+  - csharp
+  - vb
+  name: Client.Panels.Stats
+  nameWithType: Client.Panels.Stats
+  fullName: Client.Panels.Stats
+  type: Namespace
+  assemblies:
+  - Client
+references:
+- uid: Client.Panels.Stats.Bar
+  commentId: T:Client.Panels.Stats.Bar
+  href: Client.Panels.Stats.Bar.html
+  name: Bar
+  nameWithType: Bar
+  fullName: Client.Panels.Stats.Bar
+- uid: Client.Panels.Stats.StatsPanel
+  commentId: T:Client.Panels.Stats.StatsPanel
+  parent: Client.Panels.Stats
+  href: Client.Panels.Stats.StatsPanel.html
+  name: StatsPanel
+  nameWithType: StatsPanel
+  fullName: Client.Panels.Stats.StatsPanel
+- uid: Client.Panels.Stats
+  commentId: N:Client.Panels.Stats
+  href: Client.html
+  name: Client.Panels.Stats
+  nameWithType: Client.Panels.Stats
+  fullName: Client.Panels.Stats
+  spec.csharp:
+  - uid: Client
+    name: Client
+    href: Client.html
+  - name: .
+  - uid: Client.Panels
+    name: Panels
+    href: Client.Panels.html
+  - name: .
+  - uid: Client.Panels.Stats
+    name: Stats
+    href: Client.Panels.Stats.html
+  spec.vb:
+  - uid: Client
+    name: Client
+    href: Client.html
+  - name: .
+  - uid: Client.Panels
+    name: Panels
+    href: Client.Panels.html
+  - name: .
+  - uid: Client.Panels.Stats
+    name: Stats
+    href: Client.Panels.Stats.html
