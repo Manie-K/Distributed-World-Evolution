@@ -1,7 +1,4 @@
-﻿using System;
-using Server.Core;
-
-namespace SharedLibrary.DTOs.EntitiesDTO
+﻿namespace SharedLibrary.DTOs.EntitiesDTO
 {
     public class WorldEntityDTO
     {

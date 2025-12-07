@@ -1,9 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Client.Logic
 {
@@ -20,6 +15,7 @@ namespace Client.Logic
         public float BlockDelayCounter;
         public float BlockDelay;
         public bool IsBlocked;
+
         public Animation(int framesAmount, int interval, float blockDelay = 1.0f)
         {
             this.framesAmount = framesAmount;
@@ -47,7 +43,6 @@ namespace Client.Logic
                     ActiveFrame = 0;
                     IsAnimationEnded = true;
                 }
-
             }
         }
 

@@ -1,39 +1,35 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Client.Logic
 {
     public class AnimationManager
     {
+        private bool isDeadAnimationEnabled;
+
         public AnimationType ActiveAnimation;
-        private bool IsDeadAnimationEnabled;
         public Animation[] Animations;
 
         public AnimationManager(int type, float blockDelay = 1.0f)
         {
             SetAnimations(type, blockDelay);
             ActiveAnimation = AnimationType.Walking;
-            IsDeadAnimationEnabled = false;
+            isDeadAnimationEnabled = false;
         }
 
         public void SetAnimation(AnimationType type)
         {
             int animationIndex = (int) type;
 
-            if(ActiveAnimation == AnimationType.Walking)
+            if (ActiveAnimation == AnimationType.Walking)
             {
                 if (type == AnimationType.Dying && Animations[animationIndex] != null)
                 {
                     Animations[animationIndex].Reset();
                     ActiveAnimation = type;
                 }
-                else if(type == AnimationType.Dying && Animations[animationIndex] == null)
+                else if (type == AnimationType.Dying && Animations[animationIndex] == null)
                 {
-                    IsDeadAnimationEnabled = true;
+                    isDeadAnimationEnabled = true;
                 }
                 else if (type == AnimationType.Attacking && Animations[animationIndex] != null && !Animations[animationIndex].IsBlocked)
                 {
@@ -42,16 +38,16 @@ namespace Client.Logic
                     ActiveAnimation = type;
                 }
             }
-            else if(ActiveAnimation == AnimationType.Attacking)
+            else if (ActiveAnimation == AnimationType.Attacking)
             {
-                if(type == AnimationType.Dying && Animations[animationIndex] != null)
+                if (type == AnimationType.Dying && Animations[animationIndex] != null)
                 {
                     Animations[(int) ActiveAnimation].Reset();
                     ActiveAnimation = type;
                 }
                 else if (type == AnimationType.Dying && Animations[animationIndex] == null)
                 {
-                    IsDeadAnimationEnabled = true;
+                    isDeadAnimationEnabled = true;
                 }
                 else if (type == AnimationType.Attacking && Animations[(int) ActiveAnimation].IsAnimationEnded)
                 {
@@ -63,11 +59,6 @@ namespace Client.Logic
                     Animations[(int) ActiveAnimation].Reset();
                     ActiveAnimation = AnimationType.Walking;
                 }
-
-            }
-            else if (ActiveAnimation == AnimationType.Dying)
-            {
-
             }
         }
 
@@ -78,7 +69,7 @@ namespace Client.Logic
 
         public bool CheckDeadAnimation()
         {
-            if (ActiveAnimation == AnimationType.Dying || IsDeadAnimationEnabled)
+            if (ActiveAnimation == AnimationType.Dying || isDeadAnimationEnabled)
             {
                 if (Animations[2] != null) return Animations[2].IsAnimationEnded;
                 else return true;
@@ -89,7 +80,6 @@ namespace Client.Logic
         public void Update(GameTime gameTime)
         {
              Animations[(int) ActiveAnimation].Update();
-
              if (Animations[1] != null && Animations[1].IsBlocked) Animations[1].UpdateBlock(gameTime);    
         }
 
@@ -204,6 +194,5 @@ namespace Client.Logic
 
             }
         }
-
     }
 }

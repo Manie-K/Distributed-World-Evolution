@@ -22,10 +22,8 @@ public class AudioManager
     private Dictionary<string, Song> songs = new();
     private ContentManager content;
 
-
     private float globalMusicVolume = 1.0f;
     private float globalEffectVolume = 1.0f;
-
 
     private bool isMuted = false;
     private float savedMusicVolume = 1.0f;
@@ -35,7 +33,6 @@ public class AudioManager
     {
         this.content = content;
     }
-
 
     public void LoadSong(string name, string path)
     {
@@ -96,7 +93,6 @@ public class AudioManager
         if(isMuted) return savedEffectVolume;
         else return globalEffectVolume;
     }
-
 
     public void IncreaseMusicVolume(float step = 0.1f)
     {

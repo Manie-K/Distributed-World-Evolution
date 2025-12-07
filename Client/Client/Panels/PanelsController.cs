@@ -10,8 +10,8 @@ namespace Client.Panels
         public BestiaryPanel BestiaryPanel;
         public EscPanel EscPanel { get; set; }
         public Inventory Inventory;
-
         public StatsPanel StatsPanel;
+
         private int pickedPanel;
         private bool isBlocked;
 

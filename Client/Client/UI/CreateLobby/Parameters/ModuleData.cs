@@ -10,7 +10,6 @@ namespace Client.UI.CreateLobby.Parameters
         public bool IsOfficial { set; get; }      
         public List<ModuleParametersData> ModuleParameters { set; get; }
 
-
         public ModuleData(string moduleName, int moduleID, int graphicIndex, bool isOfficial, List<ModuleParametersData> moduleParameters)
         {
             ModuleName = moduleName;

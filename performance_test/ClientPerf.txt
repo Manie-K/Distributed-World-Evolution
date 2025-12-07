@@ -1,11 +1,10 @@
-ms:  ; creatures: 500
-ms:  ; creatures: 1000
-ms:  ; creatures: 2000
-ms:  ; creatures: 3000
-ms:  ; creatures: 4000
-ms:  ; creatures: 5000
-ms:  ; creatures: 7000
-ms:  ; creatures: 9000
-ms:  ; creatures: 10000
-ms:  ; creatures: 12000
-ms:  ; creatures: 15000
+ms: 2 ; creatures: 500
+ms: 4 ; creatures: 1000
+ms: 7 ; creatures: 2000
+ms: 11 ; creatures: 3000
+ms: 17 ; creatures: 4000
+ms: 23 ; creatures: 5000
+ms: 35 ; creatures: 7000
+ms: 70 ; creatures: 9000
+ms: 103 ; creatures: 10000
+ms: 417 ; creatures: 12000

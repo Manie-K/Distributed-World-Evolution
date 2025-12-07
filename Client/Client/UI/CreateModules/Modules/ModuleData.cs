@@ -25,6 +25,5 @@ namespace Client.UI.CreateModules.Modules
         {
             spriteBatch.Draw(texture, rect, Color.White);
         }
-
     }
 }

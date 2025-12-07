@@ -29,9 +29,7 @@ namespace Client.UI.CreateModules.Modules.Parameters
             return behaviourBox.CheckLeftClick(position);
         }
 
-        public override void Update(Vector2 position)
-        {
-        }
+        public override void Update(Vector2 position) {}
 
         public override int GetValue()
         {

@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace Client.UI.MapSelection
+﻿namespace Client.UI.MapSelection
 {
     public class SelectedMapData
     {
@@ -16,7 +10,6 @@ namespace Client.UI.MapSelection
             this.index = 0;
             this.name = "Day Forest";
         }
-
 
         public void ChangeData(int index, string name)
         {

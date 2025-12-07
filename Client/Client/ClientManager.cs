@@ -171,7 +171,7 @@ namespace Client
 
         #endregion
 
-        public ClientManager()
+        public ClientManager(IConfigurationRoot config)
         {
             lobbyCreated = ActionStatus.IDLE;
             moduleCreated = ActionStatus.IDLE;
@@ -180,9 +180,6 @@ namespace Client
             moduleListReady = ActionStatus.IDLE;
             behaviourListReady = ActionStatus.IDLE;
 
-            var config = new ConfigurationBuilder()
-              .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-              .Build();
             bool connectToDocker = bool.Parse(config["TcpSettings:UseDocker"]);
             serverIp = config["TcpSettings:ServerIP"];
             if (connectToDocker) port = int.Parse(config["TcpSettings:DockerPort"]);

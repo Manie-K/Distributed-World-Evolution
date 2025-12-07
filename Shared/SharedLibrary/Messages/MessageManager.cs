@@ -1,5 +1,4 @@
-﻿using SharedLibrary.Messages;
-using SharedLibrary.Messages.BehaviourMessages;
+﻿using SharedLibrary.Messages.BehaviourMessages;
 using System.Net.Sockets;
 using System.Text;
 using System.Text.Json;
@@ -86,7 +85,6 @@ namespace SharedLibrary.Messages
                 MessageReceived?.Invoke(null);
                 throw new IOException("Client is diconnected.", ex);
             }
-            
         }
 
         /// <summary>
@@ -117,8 +115,5 @@ namespace SharedLibrary.Messages
                 throw new IOException("Client is diconnected.", ex);
             }
         }
-
-
     }
-
 }

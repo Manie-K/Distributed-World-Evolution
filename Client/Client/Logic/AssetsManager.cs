@@ -1,10 +1,5 @@
 ﻿using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Client.Logic
 {
@@ -16,10 +11,8 @@ namespace Client.Logic
         private Texture2D[] CharactersAttackSpritesheet;
         private Texture2D[] CharactersDeathSpritesheet;
         private Texture2D[] AnimalsHealthBarTextures;
-        private AssetsManager()
-        {
 
-        }
+        private AssetsManager() {}
 
         public static AssetsManager GetInstance()
         {
@@ -29,6 +22,7 @@ namespace Client.Logic
             }
             return instance;
         }
+
         public void Load(ContentManager content)
         {
             FlowersSpritesheet = content.Load<Texture2D>("Plants/Flowers_With_Outline_Spritesheet");

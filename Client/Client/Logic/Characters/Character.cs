@@ -24,25 +24,26 @@ namespace Client
     public class Character : ColoredSprite
     {
         protected float speed;
-        protected Direction CurrentDirection;
+        protected Direction currentDirection;
+
         public AnimationManager am;
         public CharacterHealthBar HealthBar;
         public int MaxHealth;
-        public bool isDead;
+        public bool IsDead;
 
         public Character(Vector2 position, Color color, int width, int height, float speed, int maxHealth)
             : base(null, position, width, height, color)
         {
             this.speed = speed;
             MaxHealth = maxHealth;
-            CurrentDirection = Direction.Down;
+            currentDirection = Direction.Down;
             HealthBar = new CharacterHealthBar();
-            isDead = false;
+            IsDead = false;
         }
 
         public Rectangle GetSourceRectangle()
         {
-            return new Rectangle(width * am.GetActiveFrame(), height * (int)CurrentDirection, width, height);
+            return new Rectangle(width * am.GetActiveFrame(), height * (int)currentDirection, width, height);
         }
 
         public void SetAnimation(AnimationType type)
@@ -65,7 +66,7 @@ namespace Client
 
             if (am.CheckDeadAnimation())
             {
-                isDead = true;
+                IsDead = true;
             }
 
             am.Update(gameTime);
@@ -77,7 +78,7 @@ namespace Client
 
             if (am.CheckDeadAnimation())
             {
-                isDead = true;
+                IsDead = true;
             }
 
             am.Update(gameTime);
@@ -87,19 +88,19 @@ namespace Client
         {
             if (newPosition.X > currentPosition.X)
             {
-                CurrentDirection = Direction.Right;
+                currentDirection = Direction.Right;
             }
             else if (newPosition.X < currentPosition.X)
             { 
-                CurrentDirection = Direction.Left;
+                currentDirection = Direction.Left;
             }
             else if (newPosition.Y < currentPosition.Y)
             {
-                CurrentDirection = Direction.Up;
+                currentDirection = Direction.Up;
             }
             else if (newPosition.Y > currentPosition.Y)
             {
-                CurrentDirection = Direction.Down;
+                currentDirection = Direction.Down;
             }
         }
     }

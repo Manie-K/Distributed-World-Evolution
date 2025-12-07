@@ -16,7 +16,6 @@ namespace Client
     public class GameScene : IScene
     {
         private GameManager manager;
-
         private Text performanceText;
         private PanelsController panelsController;
         private Player player;
@@ -25,13 +24,14 @@ namespace Client
         private List<WorldEntityDTO> inGameEntities;
         private WorldMap map;
         private Vector2 cameraOffset;
+
+        private bool showPerformance;
         private double clientUpdateTimer;
         private double timeBetweenUpdates;
 
         public GameScene(GameManager manager, int mapID)
         {
             this.manager = manager;
-
             characters = [];
             plants = [];
 
@@ -51,6 +51,7 @@ namespace Client
             manager.IsInGame = true;
             clientUpdateTimer = 0;
             timeBetweenUpdates = 1.0 / ClientManager.CLIENT_UPDATES_PER_SECOND;
+            showPerformance = bool.Parse(manager.AppConfig["TcpSettings:ShowPerformance"]);
 
             inGameEntities = new List<WorldEntityDTO>();
             List<WorldEntityDTO> entitiesToLoad = manager.ClientManager.LobbyData.WorldEntities.ToList();
@@ -65,15 +66,12 @@ namespace Client
             }
         }
 
-        public void Load()
-        {
-
-        }
+        public void Load() {}
 
         public void Update(GameTime gameTime)
         {
             float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            performanceText.SetText("sec: " + delta + " ; creatures: " + inGameEntities.Count);
+            if (showPerformance) performanceText.SetText("sec: " + delta + " ; creatures: " + inGameEntities.Count);
 
             panelsController.Update();
             
@@ -84,7 +82,7 @@ namespace Client
             // Removing dead creatures
             foreach (Guid guid in characters.Keys)
             {
-                if (!characters[guid].isDead)
+                if (!characters[guid].IsDead)
                 {
                     newCharacterList.Add(guid, characters[guid]);
                 }
@@ -98,7 +96,7 @@ namespace Client
             // Removing dead plants
             foreach (Guid guid in plants.Keys)
             {
-                if (!plants[guid].isDead)
+                if (!plants[guid].IsDead)
                 {
                     newPlantList.Add(guid, plants[guid]);
                 }
@@ -135,7 +133,7 @@ namespace Client
                     plant.Position = GetWorldPosition(entity);
                     if (entity.State.Health <= 0)
                     { 
-                        plant.isDead = true;
+                        plant.IsDead = true;
                     }
                     int index = inGameEntities.FindIndex(e => e.Id == entity.Id);
                     if (index != -1)
@@ -158,6 +156,7 @@ namespace Client
                 }
             }
 
+            // Updating player
             player.Update(gameTime, manager.InputManager, inGameEntities);
             clientUpdateTimer += delta;
             SendPlayerStatus();
@@ -181,7 +180,7 @@ namespace Client
 
         public void DrawStatic(SpriteBatch spriteBatch)
         {
-            //performanceText.Draw(spriteBatch);
+            if (showPerformance) performanceText.Draw(spriteBatch);
             panelsController.Draw(spriteBatch);
         }
 
