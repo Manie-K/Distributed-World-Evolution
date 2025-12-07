@@ -15,7 +15,7 @@ namespace Client.UI.CreateModules.Modules.Parameters
         public ModuleStatsParameter(ContentManager contentManager, Vector2 position, int type, string name, string description, bool canEdit = true)
             : base(contentManager, position, type, name, description)
         {
-            statsBox = new StatsBox(contentManager.Load<Texture2D>("UI/CreateModules/Stats/box_Button"), contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), 100, position);
+            statsBox = new StatsBox(contentManager.Load<Texture2D>("UI/CreateModules/Stats/box_Button"), contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), 10, position);
             moduleName = new Text(contentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), name, true, new Vector2(position.X + 80, position.Y), 205, 43);
             moduleName.SetTextColor(Color.White);
             this.canEdit = canEdit;

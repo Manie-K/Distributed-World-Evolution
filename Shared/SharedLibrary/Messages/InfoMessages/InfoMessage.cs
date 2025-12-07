@@ -35,6 +35,5 @@
 
             return System.Text.Json.JsonSerializer.Serialize(payload);
         }
-
     }
 }

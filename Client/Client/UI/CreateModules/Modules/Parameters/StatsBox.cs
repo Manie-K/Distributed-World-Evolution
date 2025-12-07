@@ -15,14 +15,12 @@ namespace Client.UI.CreateModules.Modules.Parameters
             textureStatsBox = texture;
             rect = new Rectangle((int) position.X+338, (int) position.Y-2, 86, 46);
             parameterValue.SetTextColor(Color.White);
-
             parameterValue.SetText(value.ToString());
         }
 
         public bool CheckLeftClick(Vector2 cursorPosition)
         {
             return parameterValue.CheckLeftClick(cursorPosition);
-
         }
 
         public void Update()

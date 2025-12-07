@@ -7,12 +7,12 @@ namespace Client.Logic.Plants
     {
         public Rectangle SourceRect;
         public Vector2 Position;
-        public bool isDead;
+        public bool IsDead;
 
         public Plant(Vector2 position)
         {
             Position = position;
-            isDead = false;
+            IsDead = false;
         }
 
         public void Draw(SpriteBatch spriteBatch)

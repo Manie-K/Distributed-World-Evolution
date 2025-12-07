@@ -8,14 +8,12 @@ namespace Client
     public class SettingsScene : IScene
     {
         private GameManager manager;
-
         private Button exitButton;
         private SwitchButton[] switchButtons;
         private Texture2D backGround;
         private Texture2D[] keyBoardKeysImages;
         private Text[] keyBoardKeysText;
         private TextBox playerNameTextBox;
-
         private Text nicknameTextBoxText;
         private Texture2D nicknameTextBoxTexture;
 
@@ -58,18 +56,13 @@ namespace Client
             playerNameTextBox = new TextBox(null, manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), new Vector2(688, 564), 190, 56, Color.Black);
             playerNameTextBox.SetText(manager.UserSettings.PlayerName);
 
-            
             nicknameTextBoxTexture = manager.ContentManager.Load<Texture2D>("UI/Buttons/Username_TextBox");
             nicknameTextBoxText = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), "Nickname", false, new Vector2(730, 525), 106, 40);
 
             backGround = manager.ContentManager.Load<Texture2D>("UI/BG_Settings");
-
         }
 
-        public void Load()
-        {
-
-        }
+        public void Load() {}
 
         public void Update(GameTime gameTime)
         {
@@ -83,12 +76,10 @@ namespace Client
                 UpdatePage(manager.InputManager.GetMousePosition());
             }
 
-
             if (manager.InputManager.CheckIfCanPressKey(Keys.Escape))
             {
                 ExitSettings();
             }
-
 
             exitButton.Update(manager.InputManager.GetMousePosition());
             playerNameTextBox.Update();
@@ -135,11 +126,7 @@ namespace Client
             }
         }
 
-
-        public void Draw(SpriteBatch spriteBatch)
-        {
-
-        }
+        public void Draw(SpriteBatch spriteBatch) {}
 
         public void DrawStatic(SpriteBatch spriteBatch)
         {

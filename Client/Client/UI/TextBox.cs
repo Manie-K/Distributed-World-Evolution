@@ -68,7 +68,6 @@ namespace Client
             return false;
         }
 
-
         public void Update()
         {
             previousKeyboardState = currentKeyboardState;
@@ -94,7 +93,6 @@ namespace Client
                 }
             }
         }
-        
 
         public void SetTextColor(Color color)
         {
@@ -172,7 +170,5 @@ namespace Client
                 return "";
             }
         }
-
-
     }
 }

@@ -9,11 +9,11 @@ namespace Client.UI.CreateModules.Modules.Parameters
     {
         private Texture2D textureBehaviourBox;
         private Rectangle rect;
-
         private Button[] pageButtons;
         private Text behaviourText;
         private List<BehaviourDTO> behaviourParameters;
-        public int selectedParameter;
+
+        public int SelectedParameter;
 
         public BehaviourBox(Texture2D texture, SpriteFont font, List<BehaviourDTO> values, Vector2 position)
         {
@@ -25,7 +25,7 @@ namespace Client.UI.CreateModules.Modules.Parameters
             pageButtons = new Button[2];
             pageButtons[0] = new Button(null, null, "", new Vector2(position.X +245, position.Y-2), 35, 46, Color.White);
             pageButtons[1] = new Button(null, null, "", new Vector2(position.X + 421, position.Y-2), 35, 46, Color.White);
-            selectedParameter = 0;
+            SelectedParameter = 0;
 
             behaviourText.SetTextColor(Color.White);
             if (values.Count > 0)
@@ -39,11 +39,11 @@ namespace Client.UI.CreateModules.Modules.Parameters
             bool isClicked = true;
             if (pageButtons[0].CheckLeftClick(cursorPosition))
             {
-                if (selectedParameter > 0) selectedParameter--;
+                if (SelectedParameter > 0) SelectedParameter--;
             }
             else if (pageButtons[1].CheckLeftClick(cursorPosition))
             {
-                if (selectedParameter < behaviourParameters.Count - 1) selectedParameter++;
+                if (SelectedParameter < behaviourParameters.Count - 1) SelectedParameter++;
             }
             else if (rect.Contains(cursorPosition))
             {
@@ -53,7 +53,7 @@ namespace Client.UI.CreateModules.Modules.Parameters
 
             if (behaviourParameters.Count > 0)
             {
-                behaviourText.SetText(behaviourParameters[selectedParameter].DatabaseID.ToString());
+                behaviourText.SetText(behaviourParameters[SelectedParameter].DatabaseID.ToString());
             }
             return isClicked;
         }
@@ -70,7 +70,7 @@ namespace Client.UI.CreateModules.Modules.Parameters
         {
             if (behaviourParameters.Count > 0)
             {
-                return behaviourParameters[selectedParameter].Description;
+                return behaviourParameters[SelectedParameter].Description;
             }
             else
             {
@@ -82,7 +82,7 @@ namespace Client.UI.CreateModules.Modules.Parameters
         {
             if (behaviourParameters.Count > 0)
             {
-                return behaviourParameters[selectedParameter].DatabaseID;
+                return behaviourParameters[SelectedParameter].DatabaseID;
             }
             else
             { 

@@ -1,13 +1,8 @@
-﻿using Client.Rendering;
-using Client.UI.Bestiary_Panel;
+﻿using Client.UI.Bestiary_Panel;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Client.Panels
 {
@@ -25,7 +20,6 @@ namespace Client.Panels
             exitButton = new Button(manager.ContentManager.Load<Texture2D>("Panels/Bestiary_Panel/Bestiary_Exit"), null, null, new Vector2(909, 98), 60, 42, Color.Gold);
             slots = new List<BestiarySlot>();
         }
-
 
         public bool Update(Vector2 position)
         {
@@ -51,7 +45,6 @@ namespace Client.Panels
             }
             return false;
         }
-
 
         public void Draw(SpriteBatch spriteBatch)
         {

@@ -43,10 +43,8 @@ namespace Client
             manager.AudioManager.PlaySong("MainMenuSong");
         }
 
-
         public void Update(GameTime gameTime)
         {
-
             if (manager.InputManager.CheckIfLeftClick())
             {
                 if (!playButtonClicked)
@@ -99,7 +97,6 @@ namespace Client
                 playButtonClicked = false;
             }
 
-
             if (playButtonClicked)
             {
                 saveButton.Update(manager.InputManager.GetMousePosition());
@@ -112,13 +109,9 @@ namespace Client
                 modulesButton.Update(manager.InputManager.GetMousePosition());
                 quitButton.Update(manager.InputManager.GetMousePosition());
             }
-
         }
 
-        public void Draw(SpriteBatch spriteBatch)
-        {
-
-        }
+        public void Draw(SpriteBatch spriteBatch) {}
 
         public void DrawStatic(SpriteBatch spriteBatch)
         {
@@ -139,6 +132,5 @@ namespace Client
                 saveButton.Draw(spriteBatch);
             }
         }
-
     }
 }

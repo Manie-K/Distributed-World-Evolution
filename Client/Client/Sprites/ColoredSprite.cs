@@ -13,9 +13,6 @@ namespace Client
             this.color = color;
         }
 
-        public override void Draw(SpriteBatch spritebatch)
-        {
-
-        }
+        public override void Draw(SpriteBatch spritebatch) {}
     }
 }

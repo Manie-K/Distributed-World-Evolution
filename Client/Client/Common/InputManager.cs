@@ -1,10 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Client.Common
 {
@@ -12,21 +7,17 @@ namespace Client.Common
     {
         private MouseState currentMouseState;
         private MouseState previousMouseState;
-
         private KeyboardState currentKeyboardState;
         private KeyboardState previousKeyboardState;
-        private Vector2 MousePosition;
+        private Vector2 mousePosition;
 
-        public InputManager()
-        {
-
-        }
+        public InputManager() {}
 
         public void Update()
         {
             currentMouseState = Mouse.GetState();
             currentKeyboardState = Keyboard.GetState();
-            MousePosition = new Vector2(currentMouseState.X, currentMouseState.Y);
+            mousePosition = new Vector2(currentMouseState.X, currentMouseState.Y);
         }
 
         public void SetPreviousStates()
@@ -61,8 +52,7 @@ namespace Client.Common
 
         public Vector2 GetMousePosition()
         {
-            return MousePosition;
+            return mousePosition;
         }
-
     }
 }

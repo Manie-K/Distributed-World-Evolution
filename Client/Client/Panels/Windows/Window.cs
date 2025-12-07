@@ -8,15 +8,15 @@ namespace Client.Panels.Windows
         private Texture2D background;
         private Button okButton;
         private Text information;
-        public bool isEnabled;
+
+        public bool IsEnabled;
 
         public Window(GameManager manager, WindowType type)
         {
             SetBackground(manager, type);
             okButton = new Button(manager.ContentManager.Load<Texture2D>("Panels/Warning_Window/OK_Button2"), null, null, new Vector2(563, 427), 155, 65, Color.Gold);
-            information = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/WindowTextFont"), "", true,
-                                   new Vector2(486, 305), 317, 93);
-            isEnabled = false;
+            information = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/WindowTextFont"), "", true, new Vector2(486, 305), 317, 93);
+            IsEnabled = false;
         }
 
         public void Update(Vector2 position)
@@ -26,16 +26,14 @@ namespace Client.Panels.Windows
 
         public void CheckLeftClick(Vector2 position)
         {
-
             if (okButton.CheckLeftClick(position))
             {
-                isEnabled = false;
+                IsEnabled = false;
             }
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-
             spriteBatch.Draw(background, new Rectangle(415, 189, 452, 341), Color.White);
             okButton.Draw(spriteBatch);
             information.Draw(spriteBatch);
@@ -60,7 +58,7 @@ namespace Client.Panels.Windows
         public void SetInformation(string message)
         {
             information.SetText(FormatText(message));
-            isEnabled = true;
+            IsEnabled = true;
         }
 
         private string FormatText(string text)

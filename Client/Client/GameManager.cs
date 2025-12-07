@@ -1,6 +1,7 @@
 ﻿using Client.Common;
 using Client.Panels.Windows;
 using Client.Rendering;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Xna.Framework.Content;
 using System.Drawing;
 
@@ -16,10 +17,12 @@ namespace Client
         public InputManager InputManager { get; private set; }
         public WindowManager WindowManager { get; private set; }
         public ClientManager ClientManager { get; private set; }
+        public IConfigurationRoot AppConfig { get; private set; }
         public bool IsInGame { get; set; }
 
         public GameManager(ContentManager content)
         {
+            AppConfig = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: true, reloadOnChange: true).Build();
             UserSettings = new UserSettings();
             UserSettings.LoadUserSettings();
             ContentManager = content;
@@ -27,7 +30,7 @@ namespace Client
             SceneManager = new();
             AudioManager = new AudioManager(ContentManager);
             InputManager = new InputManager();
-            ClientManager = new ClientManager();
+            ClientManager = new ClientManager(AppConfig);
             AudioManager.SetGlobalMusicVolume(UserSettings.GlobalMusicVolume);
             AudioManager.SetGlobalEffectVolume(UserSettings.GlobalEffectVolume);
             Camera = new Camera2D(new Size(UserSettings.ScreenWidth, UserSettings.ScreenHeight));

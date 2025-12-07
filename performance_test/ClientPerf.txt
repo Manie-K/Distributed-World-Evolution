@@ -1,0 +1,10 @@
+ms: 2 ; creatures: 500
+ms: 4 ; creatures: 1000
+ms: 7 ; creatures: 2000
+ms: 11 ; creatures: 3000
+ms: 17 ; creatures: 4000
+ms: 23 ; creatures: 5000
+ms: 35 ; creatures: 7000
+ms: 70 ; creatures: 9000
+ms: 103 ; creatures: 10000
+ms: 417 ; creatures: 12000
