@@ -1,0 +1,767 @@
+### YamlMime:ManagedReference
+items:
+- uid: SharedLibrary.DTOs.LobbyDTO.LobbyDTO
+  commentId: T:SharedLibrary.DTOs.LobbyDTO.LobbyDTO
+  id: LobbyDTO
+  parent: SharedLibrary.DTOs.LobbyDTO
+  children:
+  - SharedLibrary.DTOs.LobbyDTO.LobbyDTO.#ctor(System.Int32,System.String,System.Int32,System.Int32,System.Int32,System.Collections.Generic.ICollection{System.Int32},System.Collections.Generic.ICollection{SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO})
+  - SharedLibrary.DTOs.LobbyDTO.LobbyDTO.CurrentPlayers
+  - SharedLibrary.DTOs.LobbyDTO.LobbyDTO.ID
+  - SharedLibrary.DTOs.LobbyDTO.LobbyDTO.MapID
+  - SharedLibrary.DTOs.LobbyDTO.LobbyDTO.MaxPlayers
+  - SharedLibrary.DTOs.LobbyDTO.LobbyDTO.ModulesIDs
+  - SharedLibrary.DTOs.LobbyDTO.LobbyDTO.Name
+  - SharedLibrary.DTOs.LobbyDTO.LobbyDTO.WorldEntities
+  langs:
+  - csharp
+  - vb
+  name: LobbyDTO
+  nameWithType: LobbyDTO
+  fullName: SharedLibrary.DTOs.LobbyDTO.LobbyDTO
+  type: Class
+  source:
+    remote:
+      path: Shared/SharedLibrary/DTOs/LobbyDTO/LobbyDTO.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: LobbyDTO
+    path: Shared/SharedLibrary/DTOs/LobbyDTO/LobbyDTO.cs
+    startLine: 4
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.DTOs.LobbyDTO
+  syntax:
+    content: public class LobbyDTO
+    content.vb: Public Class LobbyDTO
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.ID
+  commentId: P:SharedLibrary.DTOs.LobbyDTO.LobbyDTO.ID
+  id: ID
+  parent: SharedLibrary.DTOs.LobbyDTO.LobbyDTO
+  langs:
+  - csharp
+  - vb
+  name: ID
+  nameWithType: LobbyDTO.ID
+  fullName: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.ID
+  type: Property
+  source:
+    remote:
+      path: Shared/SharedLibrary/DTOs/LobbyDTO/LobbyDTO.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: ID
+    path: Shared/SharedLibrary/DTOs/LobbyDTO/LobbyDTO.cs
+    startLine: 6
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.DTOs.LobbyDTO
+  syntax:
+    content: public int ID { get; init; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property ID As Integer
+  overload: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.ID*
+- uid: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.Name
+  commentId: P:SharedLibrary.DTOs.LobbyDTO.LobbyDTO.Name
+  id: Name
+  parent: SharedLibrary.DTOs.LobbyDTO.LobbyDTO
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: LobbyDTO.Name
+  fullName: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.Name
+  type: Property
+  source:
+    remote:
+      path: Shared/SharedLibrary/DTOs/LobbyDTO/LobbyDTO.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Name
+    path: Shared/SharedLibrary/DTOs/LobbyDTO/LobbyDTO.cs
+    startLine: 7
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.DTOs.LobbyDTO
+  syntax:
+    content: public string Name { get; init; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property Name As String
+  overload: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.Name*
+- uid: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.MaxPlayers
+  commentId: P:SharedLibrary.DTOs.LobbyDTO.LobbyDTO.MaxPlayers
+  id: MaxPlayers
+  parent: SharedLibrary.DTOs.LobbyDTO.LobbyDTO
+  langs:
+  - csharp
+  - vb
+  name: MaxPlayers
+  nameWithType: LobbyDTO.MaxPlayers
+  fullName: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.MaxPlayers
+  type: Property
+  source:
+    remote:
+      path: Shared/SharedLibrary/DTOs/LobbyDTO/LobbyDTO.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: MaxPlayers
+    path: Shared/SharedLibrary/DTOs/LobbyDTO/LobbyDTO.cs
+    startLine: 8
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.DTOs.LobbyDTO
+  syntax:
+    content: public int MaxPlayers { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property MaxPlayers As Integer
+  overload: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.MaxPlayers*
+- uid: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.CurrentPlayers
+  commentId: P:SharedLibrary.DTOs.LobbyDTO.LobbyDTO.CurrentPlayers
+  id: CurrentPlayers
+  parent: SharedLibrary.DTOs.LobbyDTO.LobbyDTO
+  langs:
+  - csharp
+  - vb
+  name: CurrentPlayers
+  nameWithType: LobbyDTO.CurrentPlayers
+  fullName: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.CurrentPlayers
+  type: Property
+  source:
+    remote:
+      path: Shared/SharedLibrary/DTOs/LobbyDTO/LobbyDTO.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: CurrentPlayers
+    path: Shared/SharedLibrary/DTOs/LobbyDTO/LobbyDTO.cs
+    startLine: 9
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.DTOs.LobbyDTO
+  syntax:
+    content: public int CurrentPlayers { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property CurrentPlayers As Integer
+  overload: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.CurrentPlayers*
+- uid: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.MapID
+  commentId: P:SharedLibrary.DTOs.LobbyDTO.LobbyDTO.MapID
+  id: MapID
+  parent: SharedLibrary.DTOs.LobbyDTO.LobbyDTO
+  langs:
+  - csharp
+  - vb
+  name: MapID
+  nameWithType: LobbyDTO.MapID
+  fullName: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.MapID
+  type: Property
+  source:
+    remote:
+      path: Shared/SharedLibrary/DTOs/LobbyDTO/LobbyDTO.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: MapID
+    path: Shared/SharedLibrary/DTOs/LobbyDTO/LobbyDTO.cs
+    startLine: 10
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.DTOs.LobbyDTO
+  syntax:
+    content: public int MapID { get; init; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property MapID As Integer
+  overload: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.MapID*
+- uid: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.ModulesIDs
+  commentId: P:SharedLibrary.DTOs.LobbyDTO.LobbyDTO.ModulesIDs
+  id: ModulesIDs
+  parent: SharedLibrary.DTOs.LobbyDTO.LobbyDTO
+  langs:
+  - csharp
+  - vb
+  name: ModulesIDs
+  nameWithType: LobbyDTO.ModulesIDs
+  fullName: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.ModulesIDs
+  type: Property
+  source:
+    remote:
+      path: Shared/SharedLibrary/DTOs/LobbyDTO/LobbyDTO.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: ModulesIDs
+    path: Shared/SharedLibrary/DTOs/LobbyDTO/LobbyDTO.cs
+    startLine: 11
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.DTOs.LobbyDTO
+  syntax:
+    content: public ICollection<int> ModulesIDs { get; init; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.ICollection{System.Int32}
+    content.vb: Public Property ModulesIDs As ICollection(Of Integer)
+  overload: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.ModulesIDs*
+- uid: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.WorldEntities
+  commentId: P:SharedLibrary.DTOs.LobbyDTO.LobbyDTO.WorldEntities
+  id: WorldEntities
+  parent: SharedLibrary.DTOs.LobbyDTO.LobbyDTO
+  langs:
+  - csharp
+  - vb
+  name: WorldEntities
+  nameWithType: LobbyDTO.WorldEntities
+  fullName: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.WorldEntities
+  type: Property
+  source:
+    remote:
+      path: Shared/SharedLibrary/DTOs/LobbyDTO/LobbyDTO.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: WorldEntities
+    path: Shared/SharedLibrary/DTOs/LobbyDTO/LobbyDTO.cs
+    startLine: 12
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.DTOs.LobbyDTO
+  syntax:
+    content: public ICollection<WorldEntityDTO> WorldEntities { get; init; }
+    parameters: []
+    return:
+      type: System.Collections.Generic.ICollection{SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO}
+    content.vb: Public Property WorldEntities As ICollection(Of WorldEntityDTO)
+  overload: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.WorldEntities*
+- uid: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.#ctor(System.Int32,System.String,System.Int32,System.Int32,System.Int32,System.Collections.Generic.ICollection{System.Int32},System.Collections.Generic.ICollection{SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO})
+  commentId: M:SharedLibrary.DTOs.LobbyDTO.LobbyDTO.#ctor(System.Int32,System.String,System.Int32,System.Int32,System.Int32,System.Collections.Generic.ICollection{System.Int32},System.Collections.Generic.ICollection{SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO})
+  id: '#ctor(System.Int32,System.String,System.Int32,System.Int32,System.Int32,System.Collections.Generic.ICollection{System.Int32},System.Collections.Generic.ICollection{SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO})'
+  parent: SharedLibrary.DTOs.LobbyDTO.LobbyDTO
+  langs:
+  - csharp
+  - vb
+  name: LobbyDTO(int, string, int, int, int, ICollection<int>, ICollection<WorldEntityDTO>)
+  nameWithType: LobbyDTO.LobbyDTO(int, string, int, int, int, ICollection<int>, ICollection<WorldEntityDTO>)
+  fullName: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.LobbyDTO(int, string, int, int, int, System.Collections.Generic.ICollection<int>, System.Collections.Generic.ICollection<SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO>)
+  type: Constructor
+  source:
+    remote:
+      path: Shared/SharedLibrary/DTOs/LobbyDTO/LobbyDTO.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: .ctor
+    path: Shared/SharedLibrary/DTOs/LobbyDTO/LobbyDTO.cs
+    startLine: 14
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.DTOs.LobbyDTO
+  syntax:
+    content: public LobbyDTO(int id, string name, int maxPlayers, int currentPlayers, int mapID, ICollection<int> modulesIDs, ICollection<WorldEntityDTO> worldEntities)
+    parameters:
+    - id: id
+      type: System.Int32
+    - id: name
+      type: System.String
+    - id: maxPlayers
+      type: System.Int32
+    - id: currentPlayers
+      type: System.Int32
+    - id: mapID
+      type: System.Int32
+    - id: modulesIDs
+      type: System.Collections.Generic.ICollection{System.Int32}
+    - id: worldEntities
+      type: System.Collections.Generic.ICollection{SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO}
+    content.vb: Public Sub New(id As Integer, name As String, maxPlayers As Integer, currentPlayers As Integer, mapID As Integer, modulesIDs As ICollection(Of Integer), worldEntities As ICollection(Of WorldEntityDTO))
+  overload: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.#ctor*
+  nameWithType.vb: LobbyDTO.New(Integer, String, Integer, Integer, Integer, ICollection(Of Integer), ICollection(Of WorldEntityDTO))
+  fullName.vb: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.New(Integer, String, Integer, Integer, Integer, System.Collections.Generic.ICollection(Of Integer), System.Collections.Generic.ICollection(Of SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO))
+  name.vb: New(Integer, String, Integer, Integer, Integer, ICollection(Of Integer), ICollection(Of WorldEntityDTO))
+references:
+- uid: SharedLibrary.DTOs.LobbyDTO
+  commentId: N:SharedLibrary.DTOs.LobbyDTO
+  href: SharedLibrary.html
+  name: SharedLibrary.DTOs.LobbyDTO
+  nameWithType: SharedLibrary.DTOs.LobbyDTO
+  fullName: SharedLibrary.DTOs.LobbyDTO
+  spec.csharp:
+  - uid: SharedLibrary
+    name: SharedLibrary
+    href: SharedLibrary.html
+  - name: .
+  - uid: SharedLibrary.DTOs
+    name: DTOs
+    href: SharedLibrary.DTOs.html
+  - name: .
+  - uid: SharedLibrary.DTOs.LobbyDTO
+    name: LobbyDTO
+    href: SharedLibrary.DTOs.LobbyDTO.html
+  spec.vb:
+  - uid: SharedLibrary
+    name: SharedLibrary
+    href: SharedLibrary.html
+  - name: .
+  - uid: SharedLibrary.DTOs
+    name: DTOs
+    href: SharedLibrary.DTOs.html
+  - name: .
+  - uid: SharedLibrary.DTOs.LobbyDTO
+    name: LobbyDTO
+    href: SharedLibrary.DTOs.LobbyDTO.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.ID*
+  commentId: Overload:SharedLibrary.DTOs.LobbyDTO.LobbyDTO.ID
+  href: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.html#SharedLibrary_DTOs_LobbyDTO_LobbyDTO_ID
+  name: ID
+  nameWithType: LobbyDTO.ID
+  fullName: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.ID
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.Name*
+  commentId: Overload:SharedLibrary.DTOs.LobbyDTO.LobbyDTO.Name
+  href: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.html#SharedLibrary_DTOs_LobbyDTO_LobbyDTO_Name
+  name: Name
+  nameWithType: LobbyDTO.Name
+  fullName: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.Name
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.MaxPlayers*
+  commentId: Overload:SharedLibrary.DTOs.LobbyDTO.LobbyDTO.MaxPlayers
+  href: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.html#SharedLibrary_DTOs_LobbyDTO_LobbyDTO_MaxPlayers
+  name: MaxPlayers
+  nameWithType: LobbyDTO.MaxPlayers
+  fullName: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.MaxPlayers
+- uid: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.CurrentPlayers*
+  commentId: Overload:SharedLibrary.DTOs.LobbyDTO.LobbyDTO.CurrentPlayers
+  href: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.html#SharedLibrary_DTOs_LobbyDTO_LobbyDTO_CurrentPlayers
+  name: CurrentPlayers
+  nameWithType: LobbyDTO.CurrentPlayers
+  fullName: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.CurrentPlayers
+- uid: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.MapID*
+  commentId: Overload:SharedLibrary.DTOs.LobbyDTO.LobbyDTO.MapID
+  href: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.html#SharedLibrary_DTOs_LobbyDTO_LobbyDTO_MapID
+  name: MapID
+  nameWithType: LobbyDTO.MapID
+  fullName: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.MapID
+- uid: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.ModulesIDs*
+  commentId: Overload:SharedLibrary.DTOs.LobbyDTO.LobbyDTO.ModulesIDs
+  href: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.html#SharedLibrary_DTOs_LobbyDTO_LobbyDTO_ModulesIDs
+  name: ModulesIDs
+  nameWithType: LobbyDTO.ModulesIDs
+  fullName: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.ModulesIDs
+- uid: System.Collections.Generic.ICollection{System.Int32}
+  commentId: T:System.Collections.Generic.ICollection{System.Int32}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.ICollection`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  name: ICollection<int>
+  nameWithType: ICollection<int>
+  fullName: System.Collections.Generic.ICollection<int>
+  nameWithType.vb: ICollection(Of Integer)
+  fullName.vb: System.Collections.Generic.ICollection(Of Integer)
+  name.vb: ICollection(Of Integer)
+  spec.csharp:
+  - uid: System.Collections.Generic.ICollection`1
+    name: ICollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.ICollection`1
+    name: ICollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: System.Collections.Generic.ICollection`1
+  commentId: T:System.Collections.Generic.ICollection`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  name: ICollection<T>
+  nameWithType: ICollection<T>
+  fullName: System.Collections.Generic.ICollection<T>
+  nameWithType.vb: ICollection(Of T)
+  fullName.vb: System.Collections.Generic.ICollection(Of T)
+  name.vb: ICollection(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.ICollection`1
+    name: ICollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.ICollection`1
+    name: ICollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.WorldEntities*
+  commentId: Overload:SharedLibrary.DTOs.LobbyDTO.LobbyDTO.WorldEntities
+  href: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.html#SharedLibrary_DTOs_LobbyDTO_LobbyDTO_WorldEntities
+  name: WorldEntities
+  nameWithType: LobbyDTO.WorldEntities
+  fullName: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.WorldEntities
+- uid: System.Collections.Generic.ICollection{SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO}
+  commentId: T:System.Collections.Generic.ICollection{SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.ICollection`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  name: ICollection<WorldEntityDTO>
+  nameWithType: ICollection<WorldEntityDTO>
+  fullName: System.Collections.Generic.ICollection<SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO>
+  nameWithType.vb: ICollection(Of WorldEntityDTO)
+  fullName.vb: System.Collections.Generic.ICollection(Of SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO)
+  name.vb: ICollection(Of WorldEntityDTO)
+  spec.csharp:
+  - uid: System.Collections.Generic.ICollection`1
+    name: ICollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  - name: <
+  - uid: SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO
+    name: WorldEntityDTO
+    href: SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.ICollection`1
+    name: ICollection
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.icollection-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO
+    name: WorldEntityDTO
+    href: SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO.html
+  - name: )
+- uid: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.#ctor*
+  commentId: Overload:SharedLibrary.DTOs.LobbyDTO.LobbyDTO.#ctor
+  href: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.html#SharedLibrary_DTOs_LobbyDTO_LobbyDTO__ctor_System_Int32_System_String_System_Int32_System_Int32_System_Int32_System_Collections_Generic_ICollection_System_Int32__System_Collections_Generic_ICollection_SharedLibrary_DTOs_EntitiesDTO_WorldEntityDTO__
+  name: LobbyDTO
+  nameWithType: LobbyDTO.LobbyDTO
+  fullName: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.LobbyDTO
+  nameWithType.vb: LobbyDTO.New
+  fullName.vb: SharedLibrary.DTOs.LobbyDTO.LobbyDTO.New
+  name.vb: New

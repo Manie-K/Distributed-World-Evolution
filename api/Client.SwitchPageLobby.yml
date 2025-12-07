@@ -1,0 +1,1016 @@
+### YamlMime:ManagedReference
+items:
+- uid: Client.SwitchPageLobby
+  commentId: T:Client.SwitchPageLobby
+  id: SwitchPageLobby
+  parent: Client
+  children:
+  - Client.SwitchPageLobby.#ctor(Microsoft.Xna.Framework.Graphics.SpriteFont,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Content.ContentManager,System.Int32)
+  - Client.SwitchPageLobby.AddRow(Client.UI.CreateLobby.Parameters.ModuleData)
+  - Client.SwitchPageLobby.CheckLeftClick(Microsoft.Xna.Framework.Vector2)
+  - Client.SwitchPageLobby.ClearModules
+  - Client.SwitchPageLobby.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)
+  - Client.SwitchPageLobby.GetModules
+  - Client.SwitchPageLobby.GetPickedModule
+  - Client.SwitchPageLobby.GetRowsOnPage
+  - Client.SwitchPageLobby.GetSelectedModulesIDList
+  - Client.SwitchPageLobby.UpdateRows(Microsoft.Xna.Framework.Vector2,System.Boolean)
+  - Client.SwitchPageLobby.selectedRow
+  langs:
+  - csharp
+  - vb
+  name: SwitchPageLobby
+  nameWithType: SwitchPageLobby
+  fullName: Client.SwitchPageLobby
+  type: Class
+  source:
+    remote:
+      path: Client/Client/UI/CreateLobby/SwitchPageLobby.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: SwitchPageLobby
+    path: Client/Client/UI/CreateLobby/SwitchPageLobby.cs
+    startLine: 9
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: public class SwitchPageLobby
+    content.vb: Public Class SwitchPageLobby
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Client.SwitchPageLobby.selectedRow
+  commentId: F:Client.SwitchPageLobby.selectedRow
+  id: selectedRow
+  parent: Client.SwitchPageLobby
+  langs:
+  - csharp
+  - vb
+  name: selectedRow
+  nameWithType: SwitchPageLobby.selectedRow
+  fullName: Client.SwitchPageLobby.selectedRow
+  type: Field
+  source:
+    remote:
+      path: Client/Client/UI/CreateLobby/SwitchPageLobby.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: selectedRow
+    path: Client/Client/UI/CreateLobby/SwitchPageLobby.cs
+    startLine: 17
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: public int selectedRow
+    return:
+      type: System.Int32
+    content.vb: Public selectedRow As Integer
+- uid: Client.SwitchPageLobby.#ctor(Microsoft.Xna.Framework.Graphics.SpriteFont,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Content.ContentManager,System.Int32)
+  commentId: M:Client.SwitchPageLobby.#ctor(Microsoft.Xna.Framework.Graphics.SpriteFont,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Content.ContentManager,System.Int32)
+  id: '#ctor(Microsoft.Xna.Framework.Graphics.SpriteFont,Microsoft.Xna.Framework.Vector2,Microsoft.Xna.Framework.Content.ContentManager,System.Int32)'
+  parent: Client.SwitchPageLobby
+  langs:
+  - csharp
+  - vb
+  name: SwitchPageLobby(SpriteFont, Vector2, ContentManager, int)
+  nameWithType: SwitchPageLobby.SwitchPageLobby(SpriteFont, Vector2, ContentManager, int)
+  fullName: Client.SwitchPageLobby.SwitchPageLobby(Microsoft.Xna.Framework.Graphics.SpriteFont, Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Content.ContentManager, int)
+  type: Constructor
+  source:
+    remote:
+      path: Client/Client/UI/CreateLobby/SwitchPageLobby.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: .ctor
+    path: Client/Client/UI/CreateLobby/SwitchPageLobby.cs
+    startLine: 20
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: public SwitchPageLobby(SpriteFont FontNumbers, Vector2 Position, ContentManager ContentManager, int AmountOfRows)
+    parameters:
+    - id: FontNumbers
+      type: Microsoft.Xna.Framework.Graphics.SpriteFont
+    - id: Position
+      type: Microsoft.Xna.Framework.Vector2
+    - id: ContentManager
+      type: Microsoft.Xna.Framework.Content.ContentManager
+    - id: AmountOfRows
+      type: System.Int32
+    content.vb: Public Sub New(FontNumbers As SpriteFont, Position As Vector2, ContentManager As ContentManager, AmountOfRows As Integer)
+  overload: Client.SwitchPageLobby.#ctor*
+  nameWithType.vb: SwitchPageLobby.New(SpriteFont, Vector2, ContentManager, Integer)
+  fullName.vb: Client.SwitchPageLobby.New(Microsoft.Xna.Framework.Graphics.SpriteFont, Microsoft.Xna.Framework.Vector2, Microsoft.Xna.Framework.Content.ContentManager, Integer)
+  name.vb: New(SpriteFont, Vector2, ContentManager, Integer)
+- uid: Client.SwitchPageLobby.CheckLeftClick(Microsoft.Xna.Framework.Vector2)
+  commentId: M:Client.SwitchPageLobby.CheckLeftClick(Microsoft.Xna.Framework.Vector2)
+  id: CheckLeftClick(Microsoft.Xna.Framework.Vector2)
+  parent: Client.SwitchPageLobby
+  langs:
+  - csharp
+  - vb
+  name: CheckLeftClick(Vector2)
+  nameWithType: SwitchPageLobby.CheckLeftClick(Vector2)
+  fullName: Client.SwitchPageLobby.CheckLeftClick(Microsoft.Xna.Framework.Vector2)
+  type: Method
+  source:
+    remote:
+      path: Client/Client/UI/CreateLobby/SwitchPageLobby.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: CheckLeftClick
+    path: Client/Client/UI/CreateLobby/SwitchPageLobby.cs
+    startLine: 35
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: public void CheckLeftClick(Vector2 clickPosition)
+    parameters:
+    - id: clickPosition
+      type: Microsoft.Xna.Framework.Vector2
+    content.vb: Public Sub CheckLeftClick(clickPosition As Vector2)
+  overload: Client.SwitchPageLobby.CheckLeftClick*
+- uid: Client.SwitchPageLobby.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)
+  commentId: M:Client.SwitchPageLobby.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)
+  id: Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)
+  parent: Client.SwitchPageLobby
+  langs:
+  - csharp
+  - vb
+  name: Draw(SpriteBatch)
+  nameWithType: SwitchPageLobby.Draw(SpriteBatch)
+  fullName: Client.SwitchPageLobby.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)
+  type: Method
+  source:
+    remote:
+      path: Client/Client/UI/CreateLobby/SwitchPageLobby.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Draw
+    path: Client/Client/UI/CreateLobby/SwitchPageLobby.cs
+    startLine: 50
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: public void Draw(SpriteBatch spriteBatch)
+    parameters:
+    - id: spriteBatch
+      type: Microsoft.Xna.Framework.Graphics.SpriteBatch
+    content.vb: Public Sub Draw(spriteBatch As SpriteBatch)
+  overload: Client.SwitchPageLobby.Draw*
+- uid: Client.SwitchPageLobby.AddRow(Client.UI.CreateLobby.Parameters.ModuleData)
+  commentId: M:Client.SwitchPageLobby.AddRow(Client.UI.CreateLobby.Parameters.ModuleData)
+  id: AddRow(Client.UI.CreateLobby.Parameters.ModuleData)
+  parent: Client.SwitchPageLobby
+  langs:
+  - csharp
+  - vb
+  name: AddRow(ModuleData)
+  nameWithType: SwitchPageLobby.AddRow(ModuleData)
+  fullName: Client.SwitchPageLobby.AddRow(Client.UI.CreateLobby.Parameters.ModuleData)
+  type: Method
+  source:
+    remote:
+      path: Client/Client/UI/CreateLobby/SwitchPageLobby.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: AddRow
+    path: Client/Client/UI/CreateLobby/SwitchPageLobby.cs
+    startLine: 59
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: public void AddRow(ModuleData module)
+    parameters:
+    - id: module
+      type: Client.UI.CreateLobby.Parameters.ModuleData
+    content.vb: Public Sub AddRow([module] As ModuleData)
+  overload: Client.SwitchPageLobby.AddRow*
+- uid: Client.SwitchPageLobby.UpdateRows(Microsoft.Xna.Framework.Vector2,System.Boolean)
+  commentId: M:Client.SwitchPageLobby.UpdateRows(Microsoft.Xna.Framework.Vector2,System.Boolean)
+  id: UpdateRows(Microsoft.Xna.Framework.Vector2,System.Boolean)
+  parent: Client.SwitchPageLobby
+  langs:
+  - csharp
+  - vb
+  name: UpdateRows(Vector2, bool)
+  nameWithType: SwitchPageLobby.UpdateRows(Vector2, bool)
+  fullName: Client.SwitchPageLobby.UpdateRows(Microsoft.Xna.Framework.Vector2, bool)
+  type: Method
+  source:
+    remote:
+      path: Client/Client/UI/CreateLobby/SwitchPageLobby.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: UpdateRows
+    path: Client/Client/UI/CreateLobby/SwitchPageLobby.cs
+    startLine: 73
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: public bool UpdateRows(Vector2 cursorPosition, bool ispressed)
+    parameters:
+    - id: cursorPosition
+      type: Microsoft.Xna.Framework.Vector2
+    - id: ispressed
+      type: System.Boolean
+    return:
+      type: System.Boolean
+    content.vb: Public Function UpdateRows(cursorPosition As Vector2, ispressed As Boolean) As Boolean
+  overload: Client.SwitchPageLobby.UpdateRows*
+  nameWithType.vb: SwitchPageLobby.UpdateRows(Vector2, Boolean)
+  fullName.vb: Client.SwitchPageLobby.UpdateRows(Microsoft.Xna.Framework.Vector2, Boolean)
+  name.vb: UpdateRows(Vector2, Boolean)
+- uid: Client.SwitchPageLobby.GetRowsOnPage
+  commentId: M:Client.SwitchPageLobby.GetRowsOnPage
+  id: GetRowsOnPage
+  parent: Client.SwitchPageLobby
+  langs:
+  - csharp
+  - vb
+  name: GetRowsOnPage()
+  nameWithType: SwitchPageLobby.GetRowsOnPage()
+  fullName: Client.SwitchPageLobby.GetRowsOnPage()
+  type: Method
+  source:
+    remote:
+      path: Client/Client/UI/CreateLobby/SwitchPageLobby.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: GetRowsOnPage
+    path: Client/Client/UI/CreateLobby/SwitchPageLobby.cs
+    startLine: 94
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: public int GetRowsOnPage()
+    return:
+      type: System.Int32
+    content.vb: Public Function GetRowsOnPage() As Integer
+  overload: Client.SwitchPageLobby.GetRowsOnPage*
+- uid: Client.SwitchPageLobby.GetPickedModule
+  commentId: M:Client.SwitchPageLobby.GetPickedModule
+  id: GetPickedModule
+  parent: Client.SwitchPageLobby
+  langs:
+  - csharp
+  - vb
+  name: GetPickedModule()
+  nameWithType: SwitchPageLobby.GetPickedModule()
+  fullName: Client.SwitchPageLobby.GetPickedModule()
+  type: Method
+  source:
+    remote:
+      path: Client/Client/UI/CreateLobby/SwitchPageLobby.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: GetPickedModule
+    path: Client/Client/UI/CreateLobby/SwitchPageLobby.cs
+    startLine: 106
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: public ModuleData GetPickedModule()
+    return:
+      type: Client.UI.CreateLobby.Parameters.ModuleData
+    content.vb: Public Function GetPickedModule() As ModuleData
+  overload: Client.SwitchPageLobby.GetPickedModule*
+- uid: Client.SwitchPageLobby.GetSelectedModulesIDList
+  commentId: M:Client.SwitchPageLobby.GetSelectedModulesIDList
+  id: GetSelectedModulesIDList
+  parent: Client.SwitchPageLobby
+  langs:
+  - csharp
+  - vb
+  name: GetSelectedModulesIDList()
+  nameWithType: SwitchPageLobby.GetSelectedModulesIDList()
+  fullName: Client.SwitchPageLobby.GetSelectedModulesIDList()
+  type: Method
+  source:
+    remote:
+      path: Client/Client/UI/CreateLobby/SwitchPageLobby.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: GetSelectedModulesIDList
+    path: Client/Client/UI/CreateLobby/SwitchPageLobby.cs
+    startLine: 111
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: public List<int> GetSelectedModulesIDList()
+    return:
+      type: System.Collections.Generic.List{System.Int32}
+    content.vb: Public Function GetSelectedModulesIDList() As List(Of Integer)
+  overload: Client.SwitchPageLobby.GetSelectedModulesIDList*
+- uid: Client.SwitchPageLobby.ClearModules
+  commentId: M:Client.SwitchPageLobby.ClearModules
+  id: ClearModules
+  parent: Client.SwitchPageLobby
+  langs:
+  - csharp
+  - vb
+  name: ClearModules()
+  nameWithType: SwitchPageLobby.ClearModules()
+  fullName: Client.SwitchPageLobby.ClearModules()
+  type: Method
+  source:
+    remote:
+      path: Client/Client/UI/CreateLobby/SwitchPageLobby.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: ClearModules
+    path: Client/Client/UI/CreateLobby/SwitchPageLobby.cs
+    startLine: 126
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: public void ClearModules()
+    content.vb: Public Sub ClearModules()
+  overload: Client.SwitchPageLobby.ClearModules*
+- uid: Client.SwitchPageLobby.GetModules
+  commentId: M:Client.SwitchPageLobby.GetModules
+  id: GetModules
+  parent: Client.SwitchPageLobby
+  langs:
+  - csharp
+  - vb
+  name: GetModules()
+  nameWithType: SwitchPageLobby.GetModules()
+  fullName: Client.SwitchPageLobby.GetModules()
+  type: Method
+  source:
+    remote:
+      path: Client/Client/UI/CreateLobby/SwitchPageLobby.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: GetModules
+    path: Client/Client/UI/CreateLobby/SwitchPageLobby.cs
+    startLine: 131
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: public List<CreateLobbyRow> GetModules()
+    return:
+      type: System.Collections.Generic.List{Client.CreateLobbyRow}
+    content.vb: Public Function GetModules() As List(Of CreateLobbyRow)
+  overload: Client.SwitchPageLobby.GetModules*
+references:
+- uid: Client
+  commentId: N:Client
+  href: Client.html
+  name: Client
+  nameWithType: Client
+  fullName: Client
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Client.SwitchPageLobby.#ctor*
+  commentId: Overload:Client.SwitchPageLobby.#ctor
+  href: Client.SwitchPageLobby.html#Client_SwitchPageLobby__ctor_Microsoft_Xna_Framework_Graphics_SpriteFont_Microsoft_Xna_Framework_Vector2_Microsoft_Xna_Framework_Content_ContentManager_System_Int32_
+  name: SwitchPageLobby
+  nameWithType: SwitchPageLobby.SwitchPageLobby
+  fullName: Client.SwitchPageLobby.SwitchPageLobby
+  nameWithType.vb: SwitchPageLobby.New
+  fullName.vb: Client.SwitchPageLobby.New
+  name.vb: New
+- uid: Microsoft.Xna.Framework.Graphics.SpriteFont
+  commentId: T:Microsoft.Xna.Framework.Graphics.SpriteFont
+  parent: Microsoft.Xna.Framework.Graphics
+  isExternal: true
+  name: SpriteFont
+  nameWithType: SpriteFont
+  fullName: Microsoft.Xna.Framework.Graphics.SpriteFont
+- uid: Microsoft.Xna.Framework.Vector2
+  commentId: T:Microsoft.Xna.Framework.Vector2
+  parent: Microsoft.Xna.Framework
+  isExternal: true
+  name: Vector2
+  nameWithType: Vector2
+  fullName: Microsoft.Xna.Framework.Vector2
+- uid: Microsoft.Xna.Framework.Content.ContentManager
+  commentId: T:Microsoft.Xna.Framework.Content.ContentManager
+  parent: Microsoft.Xna.Framework.Content
+  isExternal: true
+  name: ContentManager
+  nameWithType: ContentManager
+  fullName: Microsoft.Xna.Framework.Content.ContentManager
+- uid: Microsoft.Xna.Framework.Graphics
+  commentId: N:Microsoft.Xna.Framework.Graphics
+  isExternal: true
+  name: Microsoft.Xna.Framework.Graphics
+  nameWithType: Microsoft.Xna.Framework.Graphics
+  fullName: Microsoft.Xna.Framework.Graphics
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna
+    name: Xna
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna.Framework
+    name: Framework
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna.Framework.Graphics
+    name: Graphics
+    isExternal: true
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna
+    name: Xna
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna.Framework
+    name: Framework
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna.Framework.Graphics
+    name: Graphics
+    isExternal: true
+- uid: Microsoft.Xna.Framework
+  commentId: N:Microsoft.Xna.Framework
+  isExternal: true
+  name: Microsoft.Xna.Framework
+  nameWithType: Microsoft.Xna.Framework
+  fullName: Microsoft.Xna.Framework
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna
+    name: Xna
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna.Framework
+    name: Framework
+    isExternal: true
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna
+    name: Xna
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna.Framework
+    name: Framework
+    isExternal: true
+- uid: Microsoft.Xna.Framework.Content
+  commentId: N:Microsoft.Xna.Framework.Content
+  isExternal: true
+  name: Microsoft.Xna.Framework.Content
+  nameWithType: Microsoft.Xna.Framework.Content
+  fullName: Microsoft.Xna.Framework.Content
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna
+    name: Xna
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna.Framework
+    name: Framework
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna.Framework.Content
+    name: Content
+    isExternal: true
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna
+    name: Xna
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna.Framework
+    name: Framework
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna.Framework.Content
+    name: Content
+    isExternal: true
+- uid: Client.SwitchPageLobby.CheckLeftClick*
+  commentId: Overload:Client.SwitchPageLobby.CheckLeftClick
+  href: Client.SwitchPageLobby.html#Client_SwitchPageLobby_CheckLeftClick_Microsoft_Xna_Framework_Vector2_
+  name: CheckLeftClick
+  nameWithType: SwitchPageLobby.CheckLeftClick
+  fullName: Client.SwitchPageLobby.CheckLeftClick
+- uid: Client.SwitchPageLobby.Draw*
+  commentId: Overload:Client.SwitchPageLobby.Draw
+  href: Client.SwitchPageLobby.html#Client_SwitchPageLobby_Draw_Microsoft_Xna_Framework_Graphics_SpriteBatch_
+  name: Draw
+  nameWithType: SwitchPageLobby.Draw
+  fullName: Client.SwitchPageLobby.Draw
+- uid: Microsoft.Xna.Framework.Graphics.SpriteBatch
+  commentId: T:Microsoft.Xna.Framework.Graphics.SpriteBatch
+  parent: Microsoft.Xna.Framework.Graphics
+  isExternal: true
+  name: SpriteBatch
+  nameWithType: SpriteBatch
+  fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch
+- uid: Client.SwitchPageLobby.AddRow*
+  commentId: Overload:Client.SwitchPageLobby.AddRow
+  href: Client.SwitchPageLobby.html#Client_SwitchPageLobby_AddRow_Client_UI_CreateLobby_Parameters_ModuleData_
+  name: AddRow
+  nameWithType: SwitchPageLobby.AddRow
+  fullName: Client.SwitchPageLobby.AddRow
+- uid: Client.UI.CreateLobby.Parameters.ModuleData
+  commentId: T:Client.UI.CreateLobby.Parameters.ModuleData
+  parent: Client.UI.CreateLobby.Parameters
+  href: Client.UI.CreateLobby.Parameters.ModuleData.html
+  name: ModuleData
+  nameWithType: ModuleData
+  fullName: Client.UI.CreateLobby.Parameters.ModuleData
+- uid: Client.UI.CreateLobby.Parameters
+  commentId: N:Client.UI.CreateLobby.Parameters
+  href: Client.html
+  name: Client.UI.CreateLobby.Parameters
+  nameWithType: Client.UI.CreateLobby.Parameters
+  fullName: Client.UI.CreateLobby.Parameters
+  spec.csharp:
+  - uid: Client
+    name: Client
+    href: Client.html
+  - name: .
+  - uid: Client.UI
+    name: UI
+    href: Client.UI.html
+  - name: .
+  - uid: Client.UI.CreateLobby
+    name: CreateLobby
+    href: Client.UI.CreateLobby.html
+  - name: .
+  - uid: Client.UI.CreateLobby.Parameters
+    name: Parameters
+    href: Client.UI.CreateLobby.Parameters.html
+  spec.vb:
+  - uid: Client
+    name: Client
+    href: Client.html
+  - name: .
+  - uid: Client.UI
+    name: UI
+    href: Client.UI.html
+  - name: .
+  - uid: Client.UI.CreateLobby
+    name: CreateLobby
+    href: Client.UI.CreateLobby.html
+  - name: .
+  - uid: Client.UI.CreateLobby.Parameters
+    name: Parameters
+    href: Client.UI.CreateLobby.Parameters.html
+- uid: Client.SwitchPageLobby.UpdateRows*
+  commentId: Overload:Client.SwitchPageLobby.UpdateRows
+  href: Client.SwitchPageLobby.html#Client_SwitchPageLobby_UpdateRows_Microsoft_Xna_Framework_Vector2_System_Boolean_
+  name: UpdateRows
+  nameWithType: SwitchPageLobby.UpdateRows
+  fullName: Client.SwitchPageLobby.UpdateRows
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Client.SwitchPageLobby.GetRowsOnPage*
+  commentId: Overload:Client.SwitchPageLobby.GetRowsOnPage
+  href: Client.SwitchPageLobby.html#Client_SwitchPageLobby_GetRowsOnPage
+  name: GetRowsOnPage
+  nameWithType: SwitchPageLobby.GetRowsOnPage
+  fullName: Client.SwitchPageLobby.GetRowsOnPage
+- uid: Client.SwitchPageLobby.GetPickedModule*
+  commentId: Overload:Client.SwitchPageLobby.GetPickedModule
+  href: Client.SwitchPageLobby.html#Client_SwitchPageLobby_GetPickedModule
+  name: GetPickedModule
+  nameWithType: SwitchPageLobby.GetPickedModule
+  fullName: Client.SwitchPageLobby.GetPickedModule
+- uid: Client.SwitchPageLobby.GetSelectedModulesIDList*
+  commentId: Overload:Client.SwitchPageLobby.GetSelectedModulesIDList
+  href: Client.SwitchPageLobby.html#Client_SwitchPageLobby_GetSelectedModulesIDList
+  name: GetSelectedModulesIDList
+  nameWithType: SwitchPageLobby.GetSelectedModulesIDList
+  fullName: Client.SwitchPageLobby.GetSelectedModulesIDList
+- uid: System.Collections.Generic.List{System.Int32}
+  commentId: T:System.Collections.Generic.List{System.Int32}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<int>
+  nameWithType: List<int>
+  fullName: System.Collections.Generic.List<int>
+  nameWithType.vb: List(Of Integer)
+  fullName.vb: System.Collections.Generic.List(Of Integer)
+  name.vb: List(Of Integer)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: System.Collections.Generic.List`1
+  commentId: T:System.Collections.Generic.List`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<T>
+  nameWithType: List<T>
+  fullName: System.Collections.Generic.List<T>
+  nameWithType.vb: List(Of T)
+  fullName.vb: System.Collections.Generic.List(Of T)
+  name.vb: List(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Client.SwitchPageLobby.ClearModules*
+  commentId: Overload:Client.SwitchPageLobby.ClearModules
+  href: Client.SwitchPageLobby.html#Client_SwitchPageLobby_ClearModules
+  name: ClearModules
+  nameWithType: SwitchPageLobby.ClearModules
+  fullName: Client.SwitchPageLobby.ClearModules
+- uid: Client.SwitchPageLobby.GetModules*
+  commentId: Overload:Client.SwitchPageLobby.GetModules
+  href: Client.SwitchPageLobby.html#Client_SwitchPageLobby_GetModules
+  name: GetModules
+  nameWithType: SwitchPageLobby.GetModules
+  fullName: Client.SwitchPageLobby.GetModules
+- uid: System.Collections.Generic.List{Client.CreateLobbyRow}
+  commentId: T:System.Collections.Generic.List{Client.CreateLobbyRow}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.List`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  name: List<CreateLobbyRow>
+  nameWithType: List<CreateLobbyRow>
+  fullName: System.Collections.Generic.List<Client.CreateLobbyRow>
+  nameWithType.vb: List(Of CreateLobbyRow)
+  fullName.vb: System.Collections.Generic.List(Of Client.CreateLobbyRow)
+  name.vb: List(Of CreateLobbyRow)
+  spec.csharp:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: <
+  - uid: Client.CreateLobbyRow
+    name: CreateLobbyRow
+    href: Client.CreateLobbyRow.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.List`1
+    name: List
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.list-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Client.CreateLobbyRow
+    name: CreateLobbyRow
+    href: Client.CreateLobbyRow.html
+  - name: )

@@ -1,0 +1,1180 @@
+### YamlMime:ManagedReference
+items:
+- uid: Server.Tests.AttackBehaviourTests
+  commentId: T:Server.Tests.AttackBehaviourTests
+  id: AttackBehaviourTests
+  parent: Server.Tests
+  children:
+  - Server.Tests.AttackBehaviourTests.#ctor
+  - Server.Tests.AttackBehaviourTests.AllImplementationsHaveUniqueDatabaseIDs_Test
+  - Server.Tests.AttackBehaviourTests.AlwaysAttackAnimalsBehaviour_CanExecute_Test
+  - Server.Tests.AttackBehaviourTests.AlwaysAttackBehaviour_CanExecute_Test
+  - Server.Tests.AttackBehaviourTests.AlwaysAttackHumanBehaviour_CanExecute_Test
+  - Server.Tests.AttackBehaviourTests.BaseAttackBehaviour_Execute_Test
+  - Server.Tests.AttackBehaviourTests.DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour_CanExecute_Test
+  - Server.Tests.AttackBehaviourTests.DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour_Execute_Test
+  - Server.Tests.AttackBehaviourTests.Dispose
+  - Server.Tests.AttackBehaviourTests.EnemyLowHealthAttackBehaviour_CanExecute_Test
+  - Server.Tests.AttackBehaviourTests.EnemyLowHealthAttackBehaviour_Execute_Test
+  - Server.Tests.AttackBehaviourTests.GreaterAggressionAttackBehaviour_CanExecute_Test
+  - Server.Tests.AttackBehaviourTests.GreaterAggressionAttackBehaviour_Execute_Test
+  - Server.Tests.AttackBehaviourTests.HumanAttackBehaviour_CanExecute_Test
+  - Server.Tests.AttackBehaviourTests.NeverAttackBehaviour_CanExecute_Test
+  - Server.Tests.AttackBehaviourTests.NeverAttackBehaviour_Execute_Test
+  - Server.Tests.AttackBehaviourTests.OnlyAttackSelfSpecies_CanExecute_Test
+  - Server.Tests.AttackBehaviourTests.Random25AttackBehaviour_CanExecute_Test
+  - Server.Tests.AttackBehaviourTests.Random50AttackBehaviour_CanExecute_Test
+  - Server.Tests.AttackBehaviourTests.Random75AttackBehaviour_CanExecute_Test
+  langs:
+  - csharp
+  - vb
+  name: AttackBehaviourTests
+  nameWithType: AttackBehaviourTests
+  fullName: Server.Tests.AttackBehaviourTests
+  type: Class
+  source:
+    remote:
+      path: Server/Server.Tests/AttackBehaviourTests.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: AttackBehaviourTests
+    path: Server/Server.Tests/AttackBehaviourTests.cs
+    startLine: 11
+  assemblies:
+  - Server.Tests
+  namespace: Server.Tests
+  syntax:
+    content: 'public class AttackBehaviourTests : IDisposable'
+    content.vb: Public Class AttackBehaviourTests Implements IDisposable
+  inheritance:
+  - System.Object
+  implements:
+  - System.IDisposable
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Server.Tests.AttackBehaviourTests.#ctor
+  commentId: M:Server.Tests.AttackBehaviourTests.#ctor
+  id: '#ctor'
+  parent: Server.Tests.AttackBehaviourTests
+  langs:
+  - csharp
+  - vb
+  name: AttackBehaviourTests()
+  nameWithType: AttackBehaviourTests.AttackBehaviourTests()
+  fullName: Server.Tests.AttackBehaviourTests.AttackBehaviourTests()
+  type: Constructor
+  source:
+    remote:
+      path: Server/Server.Tests/AttackBehaviourTests.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: .ctor
+    path: Server/Server.Tests/AttackBehaviourTests.cs
+    startLine: 26
+  assemblies:
+  - Server.Tests
+  namespace: Server.Tests
+  syntax:
+    content: public AttackBehaviourTests()
+    content.vb: Public Sub New()
+  overload: Server.Tests.AttackBehaviourTests.#ctor*
+  nameWithType.vb: AttackBehaviourTests.New()
+  fullName.vb: Server.Tests.AttackBehaviourTests.New()
+  name.vb: New()
+- uid: Server.Tests.AttackBehaviourTests.Dispose
+  commentId: M:Server.Tests.AttackBehaviourTests.Dispose
+  id: Dispose
+  parent: Server.Tests.AttackBehaviourTests
+  langs:
+  - csharp
+  - vb
+  name: Dispose()
+  nameWithType: AttackBehaviourTests.Dispose()
+  fullName: Server.Tests.AttackBehaviourTests.Dispose()
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Tests/AttackBehaviourTests.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Dispose
+    path: Server/Server.Tests/AttackBehaviourTests.cs
+    startLine: 90
+  assemblies:
+  - Server.Tests
+  namespace: Server.Tests
+  summary: Performs application-defined tasks associated with freeing, releasing, or resetting unmanaged resources.
+  example: []
+  syntax:
+    content: public void Dispose()
+    content.vb: Public Sub Dispose()
+  overload: Server.Tests.AttackBehaviourTests.Dispose*
+  implements:
+  - System.IDisposable.Dispose
+- uid: Server.Tests.AttackBehaviourTests.AllImplementationsHaveUniqueDatabaseIDs_Test
+  commentId: M:Server.Tests.AttackBehaviourTests.AllImplementationsHaveUniqueDatabaseIDs_Test
+  id: AllImplementationsHaveUniqueDatabaseIDs_Test
+  parent: Server.Tests.AttackBehaviourTests
+  langs:
+  - csharp
+  - vb
+  name: AllImplementationsHaveUniqueDatabaseIDs_Test()
+  nameWithType: AttackBehaviourTests.AllImplementationsHaveUniqueDatabaseIDs_Test()
+  fullName: Server.Tests.AttackBehaviourTests.AllImplementationsHaveUniqueDatabaseIDs_Test()
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Tests/AttackBehaviourTests.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: AllImplementationsHaveUniqueDatabaseIDs_Test
+    path: Server/Server.Tests/AttackBehaviourTests.cs
+    startLine: 96
+  assemblies:
+  - Server.Tests
+  namespace: Server.Tests
+  syntax:
+    content: >-
+      [Fact]
+
+      public void AllImplementationsHaveUniqueDatabaseIDs_Test()
+    content.vb: >-
+      <Fact>
+
+      Public Sub AllImplementationsHaveUniqueDatabaseIDs_Test()
+  overload: Server.Tests.AttackBehaviourTests.AllImplementationsHaveUniqueDatabaseIDs_Test*
+  attributes:
+  - type: Xunit.FactAttribute
+    ctor: Xunit.FactAttribute.#ctor
+    arguments: []
+- uid: Server.Tests.AttackBehaviourTests.BaseAttackBehaviour_Execute_Test
+  commentId: M:Server.Tests.AttackBehaviourTests.BaseAttackBehaviour_Execute_Test
+  id: BaseAttackBehaviour_Execute_Test
+  parent: Server.Tests.AttackBehaviourTests
+  langs:
+  - csharp
+  - vb
+  name: BaseAttackBehaviour_Execute_Test()
+  nameWithType: AttackBehaviourTests.BaseAttackBehaviour_Execute_Test()
+  fullName: Server.Tests.AttackBehaviourTests.BaseAttackBehaviour_Execute_Test()
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Tests/AttackBehaviourTests.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: BaseAttackBehaviour_Execute_Test
+    path: Server/Server.Tests/AttackBehaviourTests.cs
+    startLine: 113
+  assemblies:
+  - Server.Tests
+  namespace: Server.Tests
+  syntax:
+    content: >-
+      [Fact]
+
+      public void BaseAttackBehaviour_Execute_Test()
+    content.vb: >-
+      <Fact>
+
+      Public Sub BaseAttackBehaviour_Execute_Test()
+  overload: Server.Tests.AttackBehaviourTests.BaseAttackBehaviour_Execute_Test*
+  attributes:
+  - type: Xunit.FactAttribute
+    ctor: Xunit.FactAttribute.#ctor
+    arguments: []
+- uid: Server.Tests.AttackBehaviourTests.AlwaysAttackBehaviour_CanExecute_Test
+  commentId: M:Server.Tests.AttackBehaviourTests.AlwaysAttackBehaviour_CanExecute_Test
+  id: AlwaysAttackBehaviour_CanExecute_Test
+  parent: Server.Tests.AttackBehaviourTests
+  langs:
+  - csharp
+  - vb
+  name: AlwaysAttackBehaviour_CanExecute_Test()
+  nameWithType: AttackBehaviourTests.AlwaysAttackBehaviour_CanExecute_Test()
+  fullName: Server.Tests.AttackBehaviourTests.AlwaysAttackBehaviour_CanExecute_Test()
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Tests/AttackBehaviourTests.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: AlwaysAttackBehaviour_CanExecute_Test
+    path: Server/Server.Tests/AttackBehaviourTests.cs
+    startLine: 133
+  assemblies:
+  - Server.Tests
+  namespace: Server.Tests
+  syntax:
+    content: >-
+      [Fact]
+
+      public void AlwaysAttackBehaviour_CanExecute_Test()
+    content.vb: >-
+      <Fact>
+
+      Public Sub AlwaysAttackBehaviour_CanExecute_Test()
+  overload: Server.Tests.AttackBehaviourTests.AlwaysAttackBehaviour_CanExecute_Test*
+  attributes:
+  - type: Xunit.FactAttribute
+    ctor: Xunit.FactAttribute.#ctor
+    arguments: []
+- uid: Server.Tests.AttackBehaviourTests.AlwaysAttackAnimalsBehaviour_CanExecute_Test
+  commentId: M:Server.Tests.AttackBehaviourTests.AlwaysAttackAnimalsBehaviour_CanExecute_Test
+  id: AlwaysAttackAnimalsBehaviour_CanExecute_Test
+  parent: Server.Tests.AttackBehaviourTests
+  langs:
+  - csharp
+  - vb
+  name: AlwaysAttackAnimalsBehaviour_CanExecute_Test()
+  nameWithType: AttackBehaviourTests.AlwaysAttackAnimalsBehaviour_CanExecute_Test()
+  fullName: Server.Tests.AttackBehaviourTests.AlwaysAttackAnimalsBehaviour_CanExecute_Test()
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Tests/AttackBehaviourTests.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: AlwaysAttackAnimalsBehaviour_CanExecute_Test
+    path: Server/Server.Tests/AttackBehaviourTests.cs
+    startLine: 144
+  assemblies:
+  - Server.Tests
+  namespace: Server.Tests
+  syntax:
+    content: >-
+      [Fact]
+
+      public void AlwaysAttackAnimalsBehaviour_CanExecute_Test()
+    content.vb: >-
+      <Fact>
+
+      Public Sub AlwaysAttackAnimalsBehaviour_CanExecute_Test()
+  overload: Server.Tests.AttackBehaviourTests.AlwaysAttackAnimalsBehaviour_CanExecute_Test*
+  attributes:
+  - type: Xunit.FactAttribute
+    ctor: Xunit.FactAttribute.#ctor
+    arguments: []
+- uid: Server.Tests.AttackBehaviourTests.AlwaysAttackHumanBehaviour_CanExecute_Test
+  commentId: M:Server.Tests.AttackBehaviourTests.AlwaysAttackHumanBehaviour_CanExecute_Test
+  id: AlwaysAttackHumanBehaviour_CanExecute_Test
+  parent: Server.Tests.AttackBehaviourTests
+  langs:
+  - csharp
+  - vb
+  name: AlwaysAttackHumanBehaviour_CanExecute_Test()
+  nameWithType: AttackBehaviourTests.AlwaysAttackHumanBehaviour_CanExecute_Test()
+  fullName: Server.Tests.AttackBehaviourTests.AlwaysAttackHumanBehaviour_CanExecute_Test()
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Tests/AttackBehaviourTests.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: AlwaysAttackHumanBehaviour_CanExecute_Test
+    path: Server/Server.Tests/AttackBehaviourTests.cs
+    startLine: 156
+  assemblies:
+  - Server.Tests
+  namespace: Server.Tests
+  syntax:
+    content: >-
+      [Fact]
+
+      public void AlwaysAttackHumanBehaviour_CanExecute_Test()
+    content.vb: >-
+      <Fact>
+
+      Public Sub AlwaysAttackHumanBehaviour_CanExecute_Test()
+  overload: Server.Tests.AttackBehaviourTests.AlwaysAttackHumanBehaviour_CanExecute_Test*
+  attributes:
+  - type: Xunit.FactAttribute
+    ctor: Xunit.FactAttribute.#ctor
+    arguments: []
+- uid: Server.Tests.AttackBehaviourTests.GreaterAggressionAttackBehaviour_Execute_Test
+  commentId: M:Server.Tests.AttackBehaviourTests.GreaterAggressionAttackBehaviour_Execute_Test
+  id: GreaterAggressionAttackBehaviour_Execute_Test
+  parent: Server.Tests.AttackBehaviourTests
+  langs:
+  - csharp
+  - vb
+  name: GreaterAggressionAttackBehaviour_Execute_Test()
+  nameWithType: AttackBehaviourTests.GreaterAggressionAttackBehaviour_Execute_Test()
+  fullName: Server.Tests.AttackBehaviourTests.GreaterAggressionAttackBehaviour_Execute_Test()
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Tests/AttackBehaviourTests.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: GreaterAggressionAttackBehaviour_Execute_Test
+    path: Server/Server.Tests/AttackBehaviourTests.cs
+    startLine: 168
+  assemblies:
+  - Server.Tests
+  namespace: Server.Tests
+  syntax:
+    content: >-
+      [Fact]
+
+      public void GreaterAggressionAttackBehaviour_Execute_Test()
+    content.vb: >-
+      <Fact>
+
+      Public Sub GreaterAggressionAttackBehaviour_Execute_Test()
+  overload: Server.Tests.AttackBehaviourTests.GreaterAggressionAttackBehaviour_Execute_Test*
+  attributes:
+  - type: Xunit.FactAttribute
+    ctor: Xunit.FactAttribute.#ctor
+    arguments: []
+- uid: Server.Tests.AttackBehaviourTests.GreaterAggressionAttackBehaviour_CanExecute_Test
+  commentId: M:Server.Tests.AttackBehaviourTests.GreaterAggressionAttackBehaviour_CanExecute_Test
+  id: GreaterAggressionAttackBehaviour_CanExecute_Test
+  parent: Server.Tests.AttackBehaviourTests
+  langs:
+  - csharp
+  - vb
+  name: GreaterAggressionAttackBehaviour_CanExecute_Test()
+  nameWithType: AttackBehaviourTests.GreaterAggressionAttackBehaviour_CanExecute_Test()
+  fullName: Server.Tests.AttackBehaviourTests.GreaterAggressionAttackBehaviour_CanExecute_Test()
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Tests/AttackBehaviourTests.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: GreaterAggressionAttackBehaviour_CanExecute_Test
+    path: Server/Server.Tests/AttackBehaviourTests.cs
+    startLine: 188
+  assemblies:
+  - Server.Tests
+  namespace: Server.Tests
+  syntax:
+    content: >-
+      [Fact]
+
+      public void GreaterAggressionAttackBehaviour_CanExecute_Test()
+    content.vb: >-
+      <Fact>
+
+      Public Sub GreaterAggressionAttackBehaviour_CanExecute_Test()
+  overload: Server.Tests.AttackBehaviourTests.GreaterAggressionAttackBehaviour_CanExecute_Test*
+  attributes:
+  - type: Xunit.FactAttribute
+    ctor: Xunit.FactAttribute.#ctor
+    arguments: []
+- uid: Server.Tests.AttackBehaviourTests.Random25AttackBehaviour_CanExecute_Test
+  commentId: M:Server.Tests.AttackBehaviourTests.Random25AttackBehaviour_CanExecute_Test
+  id: Random25AttackBehaviour_CanExecute_Test
+  parent: Server.Tests.AttackBehaviourTests
+  langs:
+  - csharp
+  - vb
+  name: Random25AttackBehaviour_CanExecute_Test()
+  nameWithType: AttackBehaviourTests.Random25AttackBehaviour_CanExecute_Test()
+  fullName: Server.Tests.AttackBehaviourTests.Random25AttackBehaviour_CanExecute_Test()
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Tests/AttackBehaviourTests.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Random25AttackBehaviour_CanExecute_Test
+    path: Server/Server.Tests/AttackBehaviourTests.cs
+    startLine: 199
+  assemblies:
+  - Server.Tests
+  namespace: Server.Tests
+  syntax:
+    content: >-
+      [Fact]
+
+      public void Random25AttackBehaviour_CanExecute_Test()
+    content.vb: >-
+      <Fact>
+
+      Public Sub Random25AttackBehaviour_CanExecute_Test()
+  overload: Server.Tests.AttackBehaviourTests.Random25AttackBehaviour_CanExecute_Test*
+  attributes:
+  - type: Xunit.FactAttribute
+    ctor: Xunit.FactAttribute.#ctor
+    arguments: []
+- uid: Server.Tests.AttackBehaviourTests.Random50AttackBehaviour_CanExecute_Test
+  commentId: M:Server.Tests.AttackBehaviourTests.Random50AttackBehaviour_CanExecute_Test
+  id: Random50AttackBehaviour_CanExecute_Test
+  parent: Server.Tests.AttackBehaviourTests
+  langs:
+  - csharp
+  - vb
+  name: Random50AttackBehaviour_CanExecute_Test()
+  nameWithType: AttackBehaviourTests.Random50AttackBehaviour_CanExecute_Test()
+  fullName: Server.Tests.AttackBehaviourTests.Random50AttackBehaviour_CanExecute_Test()
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Tests/AttackBehaviourTests.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Random50AttackBehaviour_CanExecute_Test
+    path: Server/Server.Tests/AttackBehaviourTests.cs
+    startLine: 212
+  assemblies:
+  - Server.Tests
+  namespace: Server.Tests
+  syntax:
+    content: >-
+      [Fact]
+
+      public void Random50AttackBehaviour_CanExecute_Test()
+    content.vb: >-
+      <Fact>
+
+      Public Sub Random50AttackBehaviour_CanExecute_Test()
+  overload: Server.Tests.AttackBehaviourTests.Random50AttackBehaviour_CanExecute_Test*
+  attributes:
+  - type: Xunit.FactAttribute
+    ctor: Xunit.FactAttribute.#ctor
+    arguments: []
+- uid: Server.Tests.AttackBehaviourTests.Random75AttackBehaviour_CanExecute_Test
+  commentId: M:Server.Tests.AttackBehaviourTests.Random75AttackBehaviour_CanExecute_Test
+  id: Random75AttackBehaviour_CanExecute_Test
+  parent: Server.Tests.AttackBehaviourTests
+  langs:
+  - csharp
+  - vb
+  name: Random75AttackBehaviour_CanExecute_Test()
+  nameWithType: AttackBehaviourTests.Random75AttackBehaviour_CanExecute_Test()
+  fullName: Server.Tests.AttackBehaviourTests.Random75AttackBehaviour_CanExecute_Test()
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Tests/AttackBehaviourTests.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Random75AttackBehaviour_CanExecute_Test
+    path: Server/Server.Tests/AttackBehaviourTests.cs
+    startLine: 225
+  assemblies:
+  - Server.Tests
+  namespace: Server.Tests
+  syntax:
+    content: >-
+      [Fact]
+
+      public void Random75AttackBehaviour_CanExecute_Test()
+    content.vb: >-
+      <Fact>
+
+      Public Sub Random75AttackBehaviour_CanExecute_Test()
+  overload: Server.Tests.AttackBehaviourTests.Random75AttackBehaviour_CanExecute_Test*
+  attributes:
+  - type: Xunit.FactAttribute
+    ctor: Xunit.FactAttribute.#ctor
+    arguments: []
+- uid: Server.Tests.AttackBehaviourTests.EnemyLowHealthAttackBehaviour_Execute_Test
+  commentId: M:Server.Tests.AttackBehaviourTests.EnemyLowHealthAttackBehaviour_Execute_Test
+  id: EnemyLowHealthAttackBehaviour_Execute_Test
+  parent: Server.Tests.AttackBehaviourTests
+  langs:
+  - csharp
+  - vb
+  name: EnemyLowHealthAttackBehaviour_Execute_Test()
+  nameWithType: AttackBehaviourTests.EnemyLowHealthAttackBehaviour_Execute_Test()
+  fullName: Server.Tests.AttackBehaviourTests.EnemyLowHealthAttackBehaviour_Execute_Test()
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Tests/AttackBehaviourTests.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: EnemyLowHealthAttackBehaviour_Execute_Test
+    path: Server/Server.Tests/AttackBehaviourTests.cs
+    startLine: 238
+  assemblies:
+  - Server.Tests
+  namespace: Server.Tests
+  syntax:
+    content: >-
+      [Fact]
+
+      public void EnemyLowHealthAttackBehaviour_Execute_Test()
+    content.vb: >-
+      <Fact>
+
+      Public Sub EnemyLowHealthAttackBehaviour_Execute_Test()
+  overload: Server.Tests.AttackBehaviourTests.EnemyLowHealthAttackBehaviour_Execute_Test*
+  attributes:
+  - type: Xunit.FactAttribute
+    ctor: Xunit.FactAttribute.#ctor
+    arguments: []
+- uid: Server.Tests.AttackBehaviourTests.EnemyLowHealthAttackBehaviour_CanExecute_Test
+  commentId: M:Server.Tests.AttackBehaviourTests.EnemyLowHealthAttackBehaviour_CanExecute_Test
+  id: EnemyLowHealthAttackBehaviour_CanExecute_Test
+  parent: Server.Tests.AttackBehaviourTests
+  langs:
+  - csharp
+  - vb
+  name: EnemyLowHealthAttackBehaviour_CanExecute_Test()
+  nameWithType: AttackBehaviourTests.EnemyLowHealthAttackBehaviour_CanExecute_Test()
+  fullName: Server.Tests.AttackBehaviourTests.EnemyLowHealthAttackBehaviour_CanExecute_Test()
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Tests/AttackBehaviourTests.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: EnemyLowHealthAttackBehaviour_CanExecute_Test
+    path: Server/Server.Tests/AttackBehaviourTests.cs
+    startLine: 258
+  assemblies:
+  - Server.Tests
+  namespace: Server.Tests
+  syntax:
+    content: >-
+      [Fact]
+
+      public void EnemyLowHealthAttackBehaviour_CanExecute_Test()
+    content.vb: >-
+      <Fact>
+
+      Public Sub EnemyLowHealthAttackBehaviour_CanExecute_Test()
+  overload: Server.Tests.AttackBehaviourTests.EnemyLowHealthAttackBehaviour_CanExecute_Test*
+  attributes:
+  - type: Xunit.FactAttribute
+    ctor: Xunit.FactAttribute.#ctor
+    arguments: []
+- uid: Server.Tests.AttackBehaviourTests.OnlyAttackSelfSpecies_CanExecute_Test
+  commentId: M:Server.Tests.AttackBehaviourTests.OnlyAttackSelfSpecies_CanExecute_Test
+  id: OnlyAttackSelfSpecies_CanExecute_Test
+  parent: Server.Tests.AttackBehaviourTests
+  langs:
+  - csharp
+  - vb
+  name: OnlyAttackSelfSpecies_CanExecute_Test()
+  nameWithType: AttackBehaviourTests.OnlyAttackSelfSpecies_CanExecute_Test()
+  fullName: Server.Tests.AttackBehaviourTests.OnlyAttackSelfSpecies_CanExecute_Test()
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Tests/AttackBehaviourTests.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: OnlyAttackSelfSpecies_CanExecute_Test
+    path: Server/Server.Tests/AttackBehaviourTests.cs
+    startLine: 272
+  assemblies:
+  - Server.Tests
+  namespace: Server.Tests
+  syntax:
+    content: >-
+      [Fact]
+
+      public void OnlyAttackSelfSpecies_CanExecute_Test()
+    content.vb: >-
+      <Fact>
+
+      Public Sub OnlyAttackSelfSpecies_CanExecute_Test()
+  overload: Server.Tests.AttackBehaviourTests.OnlyAttackSelfSpecies_CanExecute_Test*
+  attributes:
+  - type: Xunit.FactAttribute
+    ctor: Xunit.FactAttribute.#ctor
+    arguments: []
+- uid: Server.Tests.AttackBehaviourTests.DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour_Execute_Test
+  commentId: M:Server.Tests.AttackBehaviourTests.DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour_Execute_Test
+  id: DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour_Execute_Test
+  parent: Server.Tests.AttackBehaviourTests
+  langs:
+  - csharp
+  - vb
+  name: DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour_Execute_Test()
+  nameWithType: AttackBehaviourTests.DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour_Execute_Test()
+  fullName: Server.Tests.AttackBehaviourTests.DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour_Execute_Test()
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Tests/AttackBehaviourTests.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour_Execute_Test
+    path: Server/Server.Tests/AttackBehaviourTests.cs
+    startLine: 284
+  assemblies:
+  - Server.Tests
+  namespace: Server.Tests
+  syntax:
+    content: >-
+      [Fact]
+
+      public void DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour_Execute_Test()
+    content.vb: >-
+      <Fact>
+
+      Public Sub DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour_Execute_Test()
+  overload: Server.Tests.AttackBehaviourTests.DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour_Execute_Test*
+  attributes:
+  - type: Xunit.FactAttribute
+    ctor: Xunit.FactAttribute.#ctor
+    arguments: []
+- uid: Server.Tests.AttackBehaviourTests.DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour_CanExecute_Test
+  commentId: M:Server.Tests.AttackBehaviourTests.DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour_CanExecute_Test
+  id: DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour_CanExecute_Test
+  parent: Server.Tests.AttackBehaviourTests
+  langs:
+  - csharp
+  - vb
+  name: DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour_CanExecute_Test()
+  nameWithType: AttackBehaviourTests.DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour_CanExecute_Test()
+  fullName: Server.Tests.AttackBehaviourTests.DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour_CanExecute_Test()
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Tests/AttackBehaviourTests.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour_CanExecute_Test
+    path: Server/Server.Tests/AttackBehaviourTests.cs
+    startLine: 304
+  assemblies:
+  - Server.Tests
+  namespace: Server.Tests
+  syntax:
+    content: >-
+      [Fact]
+
+      public void DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour_CanExecute_Test()
+    content.vb: >-
+      <Fact>
+
+      Public Sub DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour_CanExecute_Test()
+  overload: Server.Tests.AttackBehaviourTests.DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour_CanExecute_Test*
+  attributes:
+  - type: Xunit.FactAttribute
+    ctor: Xunit.FactAttribute.#ctor
+    arguments: []
+- uid: Server.Tests.AttackBehaviourTests.HumanAttackBehaviour_CanExecute_Test
+  commentId: M:Server.Tests.AttackBehaviourTests.HumanAttackBehaviour_CanExecute_Test
+  id: HumanAttackBehaviour_CanExecute_Test
+  parent: Server.Tests.AttackBehaviourTests
+  langs:
+  - csharp
+  - vb
+  name: HumanAttackBehaviour_CanExecute_Test()
+  nameWithType: AttackBehaviourTests.HumanAttackBehaviour_CanExecute_Test()
+  fullName: Server.Tests.AttackBehaviourTests.HumanAttackBehaviour_CanExecute_Test()
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Tests/AttackBehaviourTests.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: HumanAttackBehaviour_CanExecute_Test
+    path: Server/Server.Tests/AttackBehaviourTests.cs
+    startLine: 321
+  assemblies:
+  - Server.Tests
+  namespace: Server.Tests
+  syntax:
+    content: >-
+      [Fact]
+
+      public void HumanAttackBehaviour_CanExecute_Test()
+    content.vb: >-
+      <Fact>
+
+      Public Sub HumanAttackBehaviour_CanExecute_Test()
+  overload: Server.Tests.AttackBehaviourTests.HumanAttackBehaviour_CanExecute_Test*
+  attributes:
+  - type: Xunit.FactAttribute
+    ctor: Xunit.FactAttribute.#ctor
+    arguments: []
+- uid: Server.Tests.AttackBehaviourTests.NeverAttackBehaviour_Execute_Test
+  commentId: M:Server.Tests.AttackBehaviourTests.NeverAttackBehaviour_Execute_Test
+  id: NeverAttackBehaviour_Execute_Test
+  parent: Server.Tests.AttackBehaviourTests
+  langs:
+  - csharp
+  - vb
+  name: NeverAttackBehaviour_Execute_Test()
+  nameWithType: AttackBehaviourTests.NeverAttackBehaviour_Execute_Test()
+  fullName: Server.Tests.AttackBehaviourTests.NeverAttackBehaviour_Execute_Test()
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Tests/AttackBehaviourTests.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: NeverAttackBehaviour_Execute_Test
+    path: Server/Server.Tests/AttackBehaviourTests.cs
+    startLine: 333
+  assemblies:
+  - Server.Tests
+  namespace: Server.Tests
+  syntax:
+    content: >-
+      [Fact]
+
+      public void NeverAttackBehaviour_Execute_Test()
+    content.vb: >-
+      <Fact>
+
+      Public Sub NeverAttackBehaviour_Execute_Test()
+  overload: Server.Tests.AttackBehaviourTests.NeverAttackBehaviour_Execute_Test*
+  attributes:
+  - type: Xunit.FactAttribute
+    ctor: Xunit.FactAttribute.#ctor
+    arguments: []
+- uid: Server.Tests.AttackBehaviourTests.NeverAttackBehaviour_CanExecute_Test
+  commentId: M:Server.Tests.AttackBehaviourTests.NeverAttackBehaviour_CanExecute_Test
+  id: NeverAttackBehaviour_CanExecute_Test
+  parent: Server.Tests.AttackBehaviourTests
+  langs:
+  - csharp
+  - vb
+  name: NeverAttackBehaviour_CanExecute_Test()
+  nameWithType: AttackBehaviourTests.NeverAttackBehaviour_CanExecute_Test()
+  fullName: Server.Tests.AttackBehaviourTests.NeverAttackBehaviour_CanExecute_Test()
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Tests/AttackBehaviourTests.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: NeverAttackBehaviour_CanExecute_Test
+    path: Server/Server.Tests/AttackBehaviourTests.cs
+    startLine: 353
+  assemblies:
+  - Server.Tests
+  namespace: Server.Tests
+  syntax:
+    content: >-
+      [Fact]
+
+      public void NeverAttackBehaviour_CanExecute_Test()
+    content.vb: >-
+      <Fact>
+
+      Public Sub NeverAttackBehaviour_CanExecute_Test()
+  overload: Server.Tests.AttackBehaviourTests.NeverAttackBehaviour_CanExecute_Test*
+  attributes:
+  - type: Xunit.FactAttribute
+    ctor: Xunit.FactAttribute.#ctor
+    arguments: []
+references:
+- uid: Server.Tests
+  commentId: N:Server.Tests
+  href: Server.html
+  name: Server.Tests
+  nameWithType: Server.Tests
+  fullName: Server.Tests
+  spec.csharp:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Tests
+    name: Tests
+    href: Server.Tests.html
+  spec.vb:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Tests
+    name: Tests
+    href: Server.Tests.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.IDisposable
+  commentId: T:System.IDisposable
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable
+  name: IDisposable
+  nameWithType: IDisposable
+  fullName: System.IDisposable
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Server.Tests.AttackBehaviourTests.#ctor*
+  commentId: Overload:Server.Tests.AttackBehaviourTests.#ctor
+  href: Server.Tests.AttackBehaviourTests.html#Server_Tests_AttackBehaviourTests__ctor
+  name: AttackBehaviourTests
+  nameWithType: AttackBehaviourTests.AttackBehaviourTests
+  fullName: Server.Tests.AttackBehaviourTests.AttackBehaviourTests
+  nameWithType.vb: AttackBehaviourTests.New
+  fullName.vb: Server.Tests.AttackBehaviourTests.New
+  name.vb: New
+- uid: Server.Tests.AttackBehaviourTests.Dispose*
+  commentId: Overload:Server.Tests.AttackBehaviourTests.Dispose
+  href: Server.Tests.AttackBehaviourTests.html#Server_Tests_AttackBehaviourTests_Dispose
+  name: Dispose
+  nameWithType: AttackBehaviourTests.Dispose
+  fullName: Server.Tests.AttackBehaviourTests.Dispose
+- uid: System.IDisposable.Dispose
+  commentId: M:System.IDisposable.Dispose
+  parent: System.IDisposable
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  name: Dispose()
+  nameWithType: IDisposable.Dispose()
+  fullName: System.IDisposable.Dispose()
+  spec.csharp:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.IDisposable.Dispose
+    name: Dispose
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.idisposable.dispose
+  - name: (
+  - name: )
+- uid: Server.Tests.AttackBehaviourTests.AllImplementationsHaveUniqueDatabaseIDs_Test*
+  commentId: Overload:Server.Tests.AttackBehaviourTests.AllImplementationsHaveUniqueDatabaseIDs_Test
+  href: Server.Tests.AttackBehaviourTests.html#Server_Tests_AttackBehaviourTests_AllImplementationsHaveUniqueDatabaseIDs_Test
+  name: AllImplementationsHaveUniqueDatabaseIDs_Test
+  nameWithType: AttackBehaviourTests.AllImplementationsHaveUniqueDatabaseIDs_Test
+  fullName: Server.Tests.AttackBehaviourTests.AllImplementationsHaveUniqueDatabaseIDs_Test
+- uid: Server.Tests.AttackBehaviourTests.BaseAttackBehaviour_Execute_Test*
+  commentId: Overload:Server.Tests.AttackBehaviourTests.BaseAttackBehaviour_Execute_Test
+  href: Server.Tests.AttackBehaviourTests.html#Server_Tests_AttackBehaviourTests_BaseAttackBehaviour_Execute_Test
+  name: BaseAttackBehaviour_Execute_Test
+  nameWithType: AttackBehaviourTests.BaseAttackBehaviour_Execute_Test
+  fullName: Server.Tests.AttackBehaviourTests.BaseAttackBehaviour_Execute_Test
+- uid: Server.Tests.AttackBehaviourTests.AlwaysAttackBehaviour_CanExecute_Test*
+  commentId: Overload:Server.Tests.AttackBehaviourTests.AlwaysAttackBehaviour_CanExecute_Test
+  href: Server.Tests.AttackBehaviourTests.html#Server_Tests_AttackBehaviourTests_AlwaysAttackBehaviour_CanExecute_Test
+  name: AlwaysAttackBehaviour_CanExecute_Test
+  nameWithType: AttackBehaviourTests.AlwaysAttackBehaviour_CanExecute_Test
+  fullName: Server.Tests.AttackBehaviourTests.AlwaysAttackBehaviour_CanExecute_Test
+- uid: Server.Tests.AttackBehaviourTests.AlwaysAttackAnimalsBehaviour_CanExecute_Test*
+  commentId: Overload:Server.Tests.AttackBehaviourTests.AlwaysAttackAnimalsBehaviour_CanExecute_Test
+  href: Server.Tests.AttackBehaviourTests.html#Server_Tests_AttackBehaviourTests_AlwaysAttackAnimalsBehaviour_CanExecute_Test
+  name: AlwaysAttackAnimalsBehaviour_CanExecute_Test
+  nameWithType: AttackBehaviourTests.AlwaysAttackAnimalsBehaviour_CanExecute_Test
+  fullName: Server.Tests.AttackBehaviourTests.AlwaysAttackAnimalsBehaviour_CanExecute_Test
+- uid: Server.Tests.AttackBehaviourTests.AlwaysAttackHumanBehaviour_CanExecute_Test*
+  commentId: Overload:Server.Tests.AttackBehaviourTests.AlwaysAttackHumanBehaviour_CanExecute_Test
+  href: Server.Tests.AttackBehaviourTests.html#Server_Tests_AttackBehaviourTests_AlwaysAttackHumanBehaviour_CanExecute_Test
+  name: AlwaysAttackHumanBehaviour_CanExecute_Test
+  nameWithType: AttackBehaviourTests.AlwaysAttackHumanBehaviour_CanExecute_Test
+  fullName: Server.Tests.AttackBehaviourTests.AlwaysAttackHumanBehaviour_CanExecute_Test
+- uid: Server.Tests.AttackBehaviourTests.GreaterAggressionAttackBehaviour_Execute_Test*
+  commentId: Overload:Server.Tests.AttackBehaviourTests.GreaterAggressionAttackBehaviour_Execute_Test
+  href: Server.Tests.AttackBehaviourTests.html#Server_Tests_AttackBehaviourTests_GreaterAggressionAttackBehaviour_Execute_Test
+  name: GreaterAggressionAttackBehaviour_Execute_Test
+  nameWithType: AttackBehaviourTests.GreaterAggressionAttackBehaviour_Execute_Test
+  fullName: Server.Tests.AttackBehaviourTests.GreaterAggressionAttackBehaviour_Execute_Test
+- uid: Server.Tests.AttackBehaviourTests.GreaterAggressionAttackBehaviour_CanExecute_Test*
+  commentId: Overload:Server.Tests.AttackBehaviourTests.GreaterAggressionAttackBehaviour_CanExecute_Test
+  href: Server.Tests.AttackBehaviourTests.html#Server_Tests_AttackBehaviourTests_GreaterAggressionAttackBehaviour_CanExecute_Test
+  name: GreaterAggressionAttackBehaviour_CanExecute_Test
+  nameWithType: AttackBehaviourTests.GreaterAggressionAttackBehaviour_CanExecute_Test
+  fullName: Server.Tests.AttackBehaviourTests.GreaterAggressionAttackBehaviour_CanExecute_Test
+- uid: Server.Tests.AttackBehaviourTests.Random25AttackBehaviour_CanExecute_Test*
+  commentId: Overload:Server.Tests.AttackBehaviourTests.Random25AttackBehaviour_CanExecute_Test
+  href: Server.Tests.AttackBehaviourTests.html#Server_Tests_AttackBehaviourTests_Random25AttackBehaviour_CanExecute_Test
+  name: Random25AttackBehaviour_CanExecute_Test
+  nameWithType: AttackBehaviourTests.Random25AttackBehaviour_CanExecute_Test
+  fullName: Server.Tests.AttackBehaviourTests.Random25AttackBehaviour_CanExecute_Test
+- uid: Server.Tests.AttackBehaviourTests.Random50AttackBehaviour_CanExecute_Test*
+  commentId: Overload:Server.Tests.AttackBehaviourTests.Random50AttackBehaviour_CanExecute_Test
+  href: Server.Tests.AttackBehaviourTests.html#Server_Tests_AttackBehaviourTests_Random50AttackBehaviour_CanExecute_Test
+  name: Random50AttackBehaviour_CanExecute_Test
+  nameWithType: AttackBehaviourTests.Random50AttackBehaviour_CanExecute_Test
+  fullName: Server.Tests.AttackBehaviourTests.Random50AttackBehaviour_CanExecute_Test
+- uid: Server.Tests.AttackBehaviourTests.Random75AttackBehaviour_CanExecute_Test*
+  commentId: Overload:Server.Tests.AttackBehaviourTests.Random75AttackBehaviour_CanExecute_Test
+  href: Server.Tests.AttackBehaviourTests.html#Server_Tests_AttackBehaviourTests_Random75AttackBehaviour_CanExecute_Test
+  name: Random75AttackBehaviour_CanExecute_Test
+  nameWithType: AttackBehaviourTests.Random75AttackBehaviour_CanExecute_Test
+  fullName: Server.Tests.AttackBehaviourTests.Random75AttackBehaviour_CanExecute_Test
+- uid: Server.Tests.AttackBehaviourTests.EnemyLowHealthAttackBehaviour_Execute_Test*
+  commentId: Overload:Server.Tests.AttackBehaviourTests.EnemyLowHealthAttackBehaviour_Execute_Test
+  href: Server.Tests.AttackBehaviourTests.html#Server_Tests_AttackBehaviourTests_EnemyLowHealthAttackBehaviour_Execute_Test
+  name: EnemyLowHealthAttackBehaviour_Execute_Test
+  nameWithType: AttackBehaviourTests.EnemyLowHealthAttackBehaviour_Execute_Test
+  fullName: Server.Tests.AttackBehaviourTests.EnemyLowHealthAttackBehaviour_Execute_Test
+- uid: Server.Tests.AttackBehaviourTests.EnemyLowHealthAttackBehaviour_CanExecute_Test*
+  commentId: Overload:Server.Tests.AttackBehaviourTests.EnemyLowHealthAttackBehaviour_CanExecute_Test
+  href: Server.Tests.AttackBehaviourTests.html#Server_Tests_AttackBehaviourTests_EnemyLowHealthAttackBehaviour_CanExecute_Test
+  name: EnemyLowHealthAttackBehaviour_CanExecute_Test
+  nameWithType: AttackBehaviourTests.EnemyLowHealthAttackBehaviour_CanExecute_Test
+  fullName: Server.Tests.AttackBehaviourTests.EnemyLowHealthAttackBehaviour_CanExecute_Test
+- uid: Server.Tests.AttackBehaviourTests.OnlyAttackSelfSpecies_CanExecute_Test*
+  commentId: Overload:Server.Tests.AttackBehaviourTests.OnlyAttackSelfSpecies_CanExecute_Test
+  href: Server.Tests.AttackBehaviourTests.html#Server_Tests_AttackBehaviourTests_OnlyAttackSelfSpecies_CanExecute_Test
+  name: OnlyAttackSelfSpecies_CanExecute_Test
+  nameWithType: AttackBehaviourTests.OnlyAttackSelfSpecies_CanExecute_Test
+  fullName: Server.Tests.AttackBehaviourTests.OnlyAttackSelfSpecies_CanExecute_Test
+- uid: Server.Tests.AttackBehaviourTests.DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour_Execute_Test*
+  commentId: Overload:Server.Tests.AttackBehaviourTests.DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour_Execute_Test
+  href: Server.Tests.AttackBehaviourTests.html#Server_Tests_AttackBehaviourTests_DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour_Execute_Test
+  name: DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour_Execute_Test
+  nameWithType: AttackBehaviourTests.DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour_Execute_Test
+  fullName: Server.Tests.AttackBehaviourTests.DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour_Execute_Test
+- uid: Server.Tests.AttackBehaviourTests.DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour_CanExecute_Test*
+  commentId: Overload:Server.Tests.AttackBehaviourTests.DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour_CanExecute_Test
+  href: Server.Tests.AttackBehaviourTests.html#Server_Tests_AttackBehaviourTests_DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour_CanExecute_Test
+  name: DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour_CanExecute_Test
+  nameWithType: AttackBehaviourTests.DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour_CanExecute_Test
+  fullName: Server.Tests.AttackBehaviourTests.DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour_CanExecute_Test
+- uid: Server.Tests.AttackBehaviourTests.HumanAttackBehaviour_CanExecute_Test*
+  commentId: Overload:Server.Tests.AttackBehaviourTests.HumanAttackBehaviour_CanExecute_Test
+  href: Server.Tests.AttackBehaviourTests.html#Server_Tests_AttackBehaviourTests_HumanAttackBehaviour_CanExecute_Test
+  name: HumanAttackBehaviour_CanExecute_Test
+  nameWithType: AttackBehaviourTests.HumanAttackBehaviour_CanExecute_Test
+  fullName: Server.Tests.AttackBehaviourTests.HumanAttackBehaviour_CanExecute_Test
+- uid: Server.Tests.AttackBehaviourTests.NeverAttackBehaviour_Execute_Test*
+  commentId: Overload:Server.Tests.AttackBehaviourTests.NeverAttackBehaviour_Execute_Test
+  href: Server.Tests.AttackBehaviourTests.html#Server_Tests_AttackBehaviourTests_NeverAttackBehaviour_Execute_Test
+  name: NeverAttackBehaviour_Execute_Test
+  nameWithType: AttackBehaviourTests.NeverAttackBehaviour_Execute_Test
+  fullName: Server.Tests.AttackBehaviourTests.NeverAttackBehaviour_Execute_Test
+- uid: Server.Tests.AttackBehaviourTests.NeverAttackBehaviour_CanExecute_Test*
+  commentId: Overload:Server.Tests.AttackBehaviourTests.NeverAttackBehaviour_CanExecute_Test
+  href: Server.Tests.AttackBehaviourTests.html#Server_Tests_AttackBehaviourTests_NeverAttackBehaviour_CanExecute_Test
+  name: NeverAttackBehaviour_CanExecute_Test
+  nameWithType: AttackBehaviourTests.NeverAttackBehaviour_CanExecute_Test
+  fullName: Server.Tests.AttackBehaviourTests.NeverAttackBehaviour_CanExecute_Test

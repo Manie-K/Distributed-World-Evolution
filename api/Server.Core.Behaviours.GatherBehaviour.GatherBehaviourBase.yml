@@ -1,0 +1,1091 @@
+### YamlMime:ManagedReference
+items:
+- uid: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase
+  commentId: T:Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase
+  id: GatherBehaviourBase
+  parent: Server.Core.Behaviours.GatherBehaviour
+  children:
+  - Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.CanExecute(Server.Core.WorldEntity,Server.Core.WorldEntity,Server.Core.Services.IModuleService,System.Collections.Generic.Dictionary{System.String,System.Object})
+  - Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.DatabaseID
+  - Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.Description
+  - Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.Execute(Server.Core.WorldEntity,Server.Core.WorldEntity,Server.Core.Services.IModuleService,System.Collections.Generic.Dictionary{System.String,System.Object})
+  - Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.ToDTO
+  - Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.Type
+  langs:
+  - csharp
+  - vb
+  name: GatherBehaviourBase
+  nameWithType: GatherBehaviourBase
+  fullName: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase
+  type: Class
+  source:
+    remote:
+      path: Server/Server.Core/Behaviours/GatherBehaviour/GatherBehaviourBase.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: GatherBehaviourBase
+    path: Server/Server.Core/Behaviours/GatherBehaviour/GatherBehaviourBase.cs
+    startLine: 5
+  assemblies:
+  - Server.Core
+  namespace: Server.Core.Behaviours.GatherBehaviour
+  syntax:
+    content: 'public abstract class GatherBehaviourBase : IBehaviour'
+    content.vb: Public MustInherit Class GatherBehaviourBase Implements IBehaviour
+  inheritance:
+  - System.Object
+  implements:
+  - Server.Core.Behaviours.IBehaviour
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.DatabaseID
+  commentId: P:Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.DatabaseID
+  id: DatabaseID
+  parent: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase
+  langs:
+  - csharp
+  - vb
+  name: DatabaseID
+  nameWithType: GatherBehaviourBase.DatabaseID
+  fullName: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.DatabaseID
+  type: Property
+  source:
+    remote:
+      path: Server/Server.Core/Behaviours/GatherBehaviour/GatherBehaviourBase.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: DatabaseID
+    path: Server/Server.Core/Behaviours/GatherBehaviour/GatherBehaviourBase.cs
+    startLine: 8
+  assemblies:
+  - Server.Core
+  namespace: Server.Core.Behaviours.GatherBehaviour
+  summary: The ID inside the database.
+  example: []
+  syntax:
+    content: public abstract int DatabaseID { get; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public MustOverride ReadOnly Property DatabaseID As Integer
+  overload: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.DatabaseID*
+  implements:
+  - Server.Core.Behaviours.IBehaviour.DatabaseID
+- uid: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.Type
+  commentId: P:Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.Type
+  id: Type
+  parent: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase
+  langs:
+  - csharp
+  - vb
+  name: Type
+  nameWithType: GatherBehaviourBase.Type
+  fullName: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.Type
+  type: Property
+  source:
+    remote:
+      path: Server/Server.Core/Behaviours/GatherBehaviour/GatherBehaviourBase.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Type
+    path: Server/Server.Core/Behaviours/GatherBehaviour/GatherBehaviourBase.cs
+    startLine: 11
+  assemblies:
+  - Server.Core
+  namespace: Server.Core.Behaviours.GatherBehaviour
+  summary: >-
+    The type of entity this behaviour is available for.
+
+    Used for filtering behaviours on client side.
+  example: []
+  syntax:
+    content: public virtual EntityTypeEnum Type { get; }
+    parameters: []
+    return:
+      type: Server.Core.EntityTypeEnum
+    content.vb: Public Overridable ReadOnly Property Type As EntityTypeEnum
+  overload: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.Type*
+  implements:
+  - Server.Core.Behaviours.IBehaviour.Type
+- uid: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.Description
+  commentId: P:Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.Description
+  id: Description
+  parent: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase
+  langs:
+  - csharp
+  - vb
+  name: Description
+  nameWithType: GatherBehaviourBase.Description
+  fullName: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.Description
+  type: Property
+  source:
+    remote:
+      path: Server/Server.Core/Behaviours/GatherBehaviour/GatherBehaviourBase.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Description
+    path: Server/Server.Core/Behaviours/GatherBehaviour/GatherBehaviourBase.cs
+    startLine: 14
+  assemblies:
+  - Server.Core
+  namespace: Server.Core.Behaviours.GatherBehaviour
+  summary: Will be displayed on client side to describe the behaviour.
+  example: []
+  syntax:
+    content: public abstract string Description { get; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public MustOverride ReadOnly Property Description As String
+  overload: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.Description*
+  implements:
+  - Server.Core.Behaviours.IBehaviour.Description
+- uid: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.Execute(Server.Core.WorldEntity,Server.Core.WorldEntity,Server.Core.Services.IModuleService,System.Collections.Generic.Dictionary{System.String,System.Object})
+  commentId: M:Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.Execute(Server.Core.WorldEntity,Server.Core.WorldEntity,Server.Core.Services.IModuleService,System.Collections.Generic.Dictionary{System.String,System.Object})
+  id: Execute(Server.Core.WorldEntity,Server.Core.WorldEntity,Server.Core.Services.IModuleService,System.Collections.Generic.Dictionary{System.String,System.Object})
+  parent: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase
+  langs:
+  - csharp
+  - vb
+  name: Execute(WorldEntity, WorldEntity?, IModuleService, Dictionary<string, object>?)
+  nameWithType: GatherBehaviourBase.Execute(WorldEntity, WorldEntity?, IModuleService, Dictionary<string, object>?)
+  fullName: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.Execute(Server.Core.WorldEntity, Server.Core.WorldEntity?, Server.Core.Services.IModuleService, System.Collections.Generic.Dictionary<string, object>?)
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Core/Behaviours/GatherBehaviour/GatherBehaviourBase.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Execute
+    path: Server/Server.Core/Behaviours/GatherBehaviour/GatherBehaviourBase.cs
+    startLine: 18
+  assemblies:
+  - Server.Core
+  namespace: Server.Core.Behaviours.GatherBehaviour
+  summary: Executes the behaviour.
+  example: []
+  syntax:
+    content: public abstract void Execute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
+    parameters:
+    - id: entity
+      type: Server.Core.WorldEntity
+    - id: target
+      type: Server.Core.WorldEntity
+    - id: moduleService
+      type: Server.Core.Services.IModuleService
+    - id: otherParams
+      type: System.Collections.Generic.Dictionary{System.String,System.Object}
+    content.vb: Public MustOverride Sub Execute(entity As WorldEntity, target As WorldEntity, moduleService As IModuleService, otherParams As Dictionary(Of String, Object) = Nothing)
+  overload: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.Execute*
+  implements:
+  - Server.Core.Behaviours.IBehaviour.Execute(Server.Core.WorldEntity,Server.Core.WorldEntity,Server.Core.Services.IModuleService,System.Collections.Generic.Dictionary{System.String,System.Object})
+  nameWithType.vb: GatherBehaviourBase.Execute(WorldEntity, WorldEntity, IModuleService, Dictionary(Of String, Object))
+  fullName.vb: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.Execute(Server.Core.WorldEntity, Server.Core.WorldEntity, Server.Core.Services.IModuleService, System.Collections.Generic.Dictionary(Of String, Object))
+  name.vb: Execute(WorldEntity, WorldEntity, IModuleService, Dictionary(Of String, Object))
+- uid: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.CanExecute(Server.Core.WorldEntity,Server.Core.WorldEntity,Server.Core.Services.IModuleService,System.Collections.Generic.Dictionary{System.String,System.Object})
+  commentId: M:Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.CanExecute(Server.Core.WorldEntity,Server.Core.WorldEntity,Server.Core.Services.IModuleService,System.Collections.Generic.Dictionary{System.String,System.Object})
+  id: CanExecute(Server.Core.WorldEntity,Server.Core.WorldEntity,Server.Core.Services.IModuleService,System.Collections.Generic.Dictionary{System.String,System.Object})
+  parent: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase
+  langs:
+  - csharp
+  - vb
+  name: CanExecute(WorldEntity, WorldEntity?, IModuleService, Dictionary<string, object>?)
+  nameWithType: GatherBehaviourBase.CanExecute(WorldEntity, WorldEntity?, IModuleService, Dictionary<string, object>?)
+  fullName: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.CanExecute(Server.Core.WorldEntity, Server.Core.WorldEntity?, Server.Core.Services.IModuleService, System.Collections.Generic.Dictionary<string, object>?)
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Core/Behaviours/GatherBehaviour/GatherBehaviourBase.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: CanExecute
+    path: Server/Server.Core/Behaviours/GatherBehaviour/GatherBehaviourBase.cs
+    startLine: 21
+  assemblies:
+  - Server.Core
+  namespace: Server.Core.Behaviours.GatherBehaviour
+  summary: Checks if the behaviour can be executed.
+  example: []
+  syntax:
+    content: public abstract bool CanExecute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
+    parameters:
+    - id: entity
+      type: Server.Core.WorldEntity
+    - id: target
+      type: Server.Core.WorldEntity
+    - id: moduleService
+      type: Server.Core.Services.IModuleService
+    - id: otherParams
+      type: System.Collections.Generic.Dictionary{System.String,System.Object}
+    return:
+      type: System.Boolean
+      description: ''
+    content.vb: Public MustOverride Function CanExecute(entity As WorldEntity, target As WorldEntity, moduleService As IModuleService, otherParams As Dictionary(Of String, Object) = Nothing) As Boolean
+  overload: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.CanExecute*
+  implements:
+  - Server.Core.Behaviours.IBehaviour.CanExecute(Server.Core.WorldEntity,Server.Core.WorldEntity,Server.Core.Services.IModuleService,System.Collections.Generic.Dictionary{System.String,System.Object})
+  nameWithType.vb: GatherBehaviourBase.CanExecute(WorldEntity, WorldEntity, IModuleService, Dictionary(Of String, Object))
+  fullName.vb: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.CanExecute(Server.Core.WorldEntity, Server.Core.WorldEntity, Server.Core.Services.IModuleService, System.Collections.Generic.Dictionary(Of String, Object))
+  name.vb: CanExecute(WorldEntity, WorldEntity, IModuleService, Dictionary(Of String, Object))
+- uid: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.ToDTO
+  commentId: M:Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.ToDTO
+  id: ToDTO
+  parent: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase
+  langs:
+  - csharp
+  - vb
+  name: ToDTO()
+  nameWithType: GatherBehaviourBase.ToDTO()
+  fullName: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.ToDTO()
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Core/Behaviours/GatherBehaviour/GatherBehaviourBase.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: ToDTO
+    path: Server/Server.Core/Behaviours/GatherBehaviour/GatherBehaviourBase.cs
+    startLine: 24
+  assemblies:
+  - Server.Core
+  namespace: Server.Core.Behaviours.GatherBehaviour
+  summary: Converts the behaviour to a DTO.
+  example: []
+  syntax:
+    content: public BehaviourDTO ToDTO()
+    return:
+      type: SharedLibrary.DTOs.ModuleDTO.BehaviourDTO
+    content.vb: Public Function ToDTO() As BehaviourDTO
+  overload: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.ToDTO*
+  implements:
+  - Server.Core.Behaviours.IBehaviour.ToDTO
+references:
+- uid: Server.Core.Behaviours.GatherBehaviour
+  commentId: N:Server.Core.Behaviours.GatherBehaviour
+  href: Server.html
+  name: Server.Core.Behaviours.GatherBehaviour
+  nameWithType: Server.Core.Behaviours.GatherBehaviour
+  fullName: Server.Core.Behaviours.GatherBehaviour
+  spec.csharp:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+  - name: .
+  - uid: Server.Core.Behaviours
+    name: Behaviours
+    href: Server.Core.Behaviours.html
+  - name: .
+  - uid: Server.Core.Behaviours.GatherBehaviour
+    name: GatherBehaviour
+    href: Server.Core.Behaviours.GatherBehaviour.html
+  spec.vb:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+  - name: .
+  - uid: Server.Core.Behaviours
+    name: Behaviours
+    href: Server.Core.Behaviours.html
+  - name: .
+  - uid: Server.Core.Behaviours.GatherBehaviour
+    name: GatherBehaviour
+    href: Server.Core.Behaviours.GatherBehaviour.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Server.Core.Behaviours.IBehaviour
+  commentId: T:Server.Core.Behaviours.IBehaviour
+  parent: Server.Core.Behaviours
+  href: Server.Core.Behaviours.IBehaviour.html
+  name: IBehaviour
+  nameWithType: IBehaviour
+  fullName: Server.Core.Behaviours.IBehaviour
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Server.Core.Behaviours
+  commentId: N:Server.Core.Behaviours
+  href: Server.html
+  name: Server.Core.Behaviours
+  nameWithType: Server.Core.Behaviours
+  fullName: Server.Core.Behaviours
+  spec.csharp:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+  - name: .
+  - uid: Server.Core.Behaviours
+    name: Behaviours
+    href: Server.Core.Behaviours.html
+  spec.vb:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+  - name: .
+  - uid: Server.Core.Behaviours
+    name: Behaviours
+    href: Server.Core.Behaviours.html
+- uid: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.DatabaseID*
+  commentId: Overload:Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.DatabaseID
+  href: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.html#Server_Core_Behaviours_GatherBehaviour_GatherBehaviourBase_DatabaseID
+  name: DatabaseID
+  nameWithType: GatherBehaviourBase.DatabaseID
+  fullName: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.DatabaseID
+- uid: Server.Core.Behaviours.IBehaviour.DatabaseID
+  commentId: P:Server.Core.Behaviours.IBehaviour.DatabaseID
+  parent: Server.Core.Behaviours.IBehaviour
+  href: Server.Core.Behaviours.IBehaviour.html#Server_Core_Behaviours_IBehaviour_DatabaseID
+  name: DatabaseID
+  nameWithType: IBehaviour.DatabaseID
+  fullName: Server.Core.Behaviours.IBehaviour.DatabaseID
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.Type*
+  commentId: Overload:Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.Type
+  href: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.html#Server_Core_Behaviours_GatherBehaviour_GatherBehaviourBase_Type
+  name: Type
+  nameWithType: GatherBehaviourBase.Type
+  fullName: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.Type
+- uid: Server.Core.Behaviours.IBehaviour.Type
+  commentId: P:Server.Core.Behaviours.IBehaviour.Type
+  parent: Server.Core.Behaviours.IBehaviour
+  href: Server.Core.Behaviours.IBehaviour.html#Server_Core_Behaviours_IBehaviour_Type
+  name: Type
+  nameWithType: IBehaviour.Type
+  fullName: Server.Core.Behaviours.IBehaviour.Type
+- uid: Server.Core.EntityTypeEnum
+  commentId: T:Server.Core.EntityTypeEnum
+  parent: Server.Core
+  href: https://github.com/Manie-K/Distributed-World-Evolution/blob/04d77cccea139c5e616524f8a10c7afb68cc7eb5/Shared/SharedLibrary/DTOs/EntitiesDTO/EntityTypeEnum.cs
+  name: EntityTypeEnum
+  nameWithType: EntityTypeEnum
+  fullName: Server.Core.EntityTypeEnum
+- uid: Server.Core
+  commentId: N:Server.Core
+  href: Server.html
+  name: Server.Core
+  nameWithType: Server.Core
+  fullName: Server.Core
+  spec.csharp:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+  spec.vb:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+- uid: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.Description*
+  commentId: Overload:Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.Description
+  href: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.html#Server_Core_Behaviours_GatherBehaviour_GatherBehaviourBase_Description
+  name: Description
+  nameWithType: GatherBehaviourBase.Description
+  fullName: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.Description
+- uid: Server.Core.Behaviours.IBehaviour.Description
+  commentId: P:Server.Core.Behaviours.IBehaviour.Description
+  parent: Server.Core.Behaviours.IBehaviour
+  href: Server.Core.Behaviours.IBehaviour.html#Server_Core_Behaviours_IBehaviour_Description
+  name: Description
+  nameWithType: IBehaviour.Description
+  fullName: Server.Core.Behaviours.IBehaviour.Description
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.Execute*
+  commentId: Overload:Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.Execute
+  href: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.html#Server_Core_Behaviours_GatherBehaviour_GatherBehaviourBase_Execute_Server_Core_WorldEntity_Server_Core_WorldEntity_Server_Core_Services_IModuleService_System_Collections_Generic_Dictionary_System_String_System_Object__
+  name: Execute
+  nameWithType: GatherBehaviourBase.Execute
+  fullName: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.Execute
+- uid: Server.Core.Behaviours.IBehaviour.Execute(Server.Core.WorldEntity,Server.Core.WorldEntity,Server.Core.Services.IModuleService,System.Collections.Generic.Dictionary{System.String,System.Object})
+  commentId: M:Server.Core.Behaviours.IBehaviour.Execute(Server.Core.WorldEntity,Server.Core.WorldEntity,Server.Core.Services.IModuleService,System.Collections.Generic.Dictionary{System.String,System.Object})
+  parent: Server.Core.Behaviours.IBehaviour
+  isExternal: true
+  href: Server.Core.Behaviours.IBehaviour.html#Server_Core_Behaviours_IBehaviour_Execute_Server_Core_WorldEntity_Server_Core_WorldEntity_Server_Core_Services_IModuleService_System_Collections_Generic_Dictionary_System_String_System_Object__
+  name: Execute(WorldEntity, WorldEntity, IModuleService, Dictionary<string, object>)
+  nameWithType: IBehaviour.Execute(WorldEntity, WorldEntity, IModuleService, Dictionary<string, object>)
+  fullName: Server.Core.Behaviours.IBehaviour.Execute(Server.Core.WorldEntity, Server.Core.WorldEntity, Server.Core.Services.IModuleService, System.Collections.Generic.Dictionary<string, object>)
+  nameWithType.vb: IBehaviour.Execute(WorldEntity, WorldEntity, IModuleService, Dictionary(Of String, Object))
+  fullName.vb: Server.Core.Behaviours.IBehaviour.Execute(Server.Core.WorldEntity, Server.Core.WorldEntity, Server.Core.Services.IModuleService, System.Collections.Generic.Dictionary(Of String, Object))
+  name.vb: Execute(WorldEntity, WorldEntity, IModuleService, Dictionary(Of String, Object))
+  spec.csharp:
+  - uid: Server.Core.Behaviours.IBehaviour.Execute(Server.Core.WorldEntity,Server.Core.WorldEntity,Server.Core.Services.IModuleService,System.Collections.Generic.Dictionary{System.String,System.Object})
+    name: Execute
+    href: Server.Core.Behaviours.IBehaviour.html#Server_Core_Behaviours_IBehaviour_Execute_Server_Core_WorldEntity_Server_Core_WorldEntity_Server_Core_Services_IModuleService_System_Collections_Generic_Dictionary_System_String_System_Object__
+  - name: (
+  - uid: Server.Core.WorldEntity
+    name: WorldEntity
+    href: Server.Core.WorldEntity.html
+  - name: ','
+  - name: " "
+  - uid: Server.Core.WorldEntity
+    name: WorldEntity
+    href: Server.Core.WorldEntity.html
+  - name: ','
+  - name: " "
+  - uid: Server.Core.Services.IModuleService
+    name: IModuleService
+    href: Server.Core.Services.IModuleService.html
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: Server.Core.Behaviours.IBehaviour.Execute(Server.Core.WorldEntity,Server.Core.WorldEntity,Server.Core.Services.IModuleService,System.Collections.Generic.Dictionary{System.String,System.Object})
+    name: Execute
+    href: Server.Core.Behaviours.IBehaviour.html#Server_Core_Behaviours_IBehaviour_Execute_Server_Core_WorldEntity_Server_Core_WorldEntity_Server_Core_Services_IModuleService_System_Collections_Generic_Dictionary_System_String_System_Object__
+  - name: (
+  - uid: Server.Core.WorldEntity
+    name: WorldEntity
+    href: Server.Core.WorldEntity.html
+  - name: ','
+  - name: " "
+  - uid: Server.Core.WorldEntity
+    name: WorldEntity
+    href: Server.Core.WorldEntity.html
+  - name: ','
+  - name: " "
+  - uid: Server.Core.Services.IModuleService
+    name: IModuleService
+    href: Server.Core.Services.IModuleService.html
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  - name: )
+- uid: Server.Core.WorldEntity
+  commentId: T:Server.Core.WorldEntity
+  parent: Server.Core
+  href: Server.Core.WorldEntity.html
+  name: WorldEntity
+  nameWithType: WorldEntity
+  fullName: Server.Core.WorldEntity
+- uid: Server.Core.Services.IModuleService
+  commentId: T:Server.Core.Services.IModuleService
+  parent: Server.Core.Services
+  href: Server.Core.Services.IModuleService.html
+  name: IModuleService
+  nameWithType: IModuleService
+  fullName: Server.Core.Services.IModuleService
+- uid: System.Collections.Generic.Dictionary{System.String,System.Object}
+  commentId: T:System.Collections.Generic.Dictionary{System.String,System.Object}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.Dictionary`2
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<string, object>
+  nameWithType: Dictionary<string, object>
+  fullName: System.Collections.Generic.Dictionary<string, object>
+  nameWithType.vb: Dictionary(Of String, Object)
+  fullName.vb: System.Collections.Generic.Dictionary(Of String, Object)
+  name.vb: Dictionary(Of String, Object)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: Server.Core.Services
+  commentId: N:Server.Core.Services
+  href: Server.html
+  name: Server.Core.Services
+  nameWithType: Server.Core.Services
+  fullName: Server.Core.Services
+  spec.csharp:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+  - name: .
+  - uid: Server.Core.Services
+    name: Services
+    href: Server.Core.Services.html
+  spec.vb:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+  - name: .
+  - uid: Server.Core.Services
+    name: Services
+    href: Server.Core.Services.html
+- uid: System.Collections.Generic.Dictionary`2
+  commentId: T:System.Collections.Generic.Dictionary`2
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  name: Dictionary<TKey, TValue>
+  nameWithType: Dictionary<TKey, TValue>
+  fullName: System.Collections.Generic.Dictionary<TKey, TValue>
+  nameWithType.vb: Dictionary(Of TKey, TValue)
+  fullName.vb: System.Collections.Generic.Dictionary(Of TKey, TValue)
+  name.vb: Dictionary(Of TKey, TValue)
+  spec.csharp:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - name: TKey
+  - name: ','
+  - name: " "
+  - name: TValue
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+- uid: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.CanExecute*
+  commentId: Overload:Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.CanExecute
+  href: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.html#Server_Core_Behaviours_GatherBehaviour_GatherBehaviourBase_CanExecute_Server_Core_WorldEntity_Server_Core_WorldEntity_Server_Core_Services_IModuleService_System_Collections_Generic_Dictionary_System_String_System_Object__
+  name: CanExecute
+  nameWithType: GatherBehaviourBase.CanExecute
+  fullName: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.CanExecute
+- uid: Server.Core.Behaviours.IBehaviour.CanExecute(Server.Core.WorldEntity,Server.Core.WorldEntity,Server.Core.Services.IModuleService,System.Collections.Generic.Dictionary{System.String,System.Object})
+  commentId: M:Server.Core.Behaviours.IBehaviour.CanExecute(Server.Core.WorldEntity,Server.Core.WorldEntity,Server.Core.Services.IModuleService,System.Collections.Generic.Dictionary{System.String,System.Object})
+  parent: Server.Core.Behaviours.IBehaviour
+  isExternal: true
+  href: Server.Core.Behaviours.IBehaviour.html#Server_Core_Behaviours_IBehaviour_CanExecute_Server_Core_WorldEntity_Server_Core_WorldEntity_Server_Core_Services_IModuleService_System_Collections_Generic_Dictionary_System_String_System_Object__
+  name: CanExecute(WorldEntity, WorldEntity, IModuleService, Dictionary<string, object>)
+  nameWithType: IBehaviour.CanExecute(WorldEntity, WorldEntity, IModuleService, Dictionary<string, object>)
+  fullName: Server.Core.Behaviours.IBehaviour.CanExecute(Server.Core.WorldEntity, Server.Core.WorldEntity, Server.Core.Services.IModuleService, System.Collections.Generic.Dictionary<string, object>)
+  nameWithType.vb: IBehaviour.CanExecute(WorldEntity, WorldEntity, IModuleService, Dictionary(Of String, Object))
+  fullName.vb: Server.Core.Behaviours.IBehaviour.CanExecute(Server.Core.WorldEntity, Server.Core.WorldEntity, Server.Core.Services.IModuleService, System.Collections.Generic.Dictionary(Of String, Object))
+  name.vb: CanExecute(WorldEntity, WorldEntity, IModuleService, Dictionary(Of String, Object))
+  spec.csharp:
+  - uid: Server.Core.Behaviours.IBehaviour.CanExecute(Server.Core.WorldEntity,Server.Core.WorldEntity,Server.Core.Services.IModuleService,System.Collections.Generic.Dictionary{System.String,System.Object})
+    name: CanExecute
+    href: Server.Core.Behaviours.IBehaviour.html#Server_Core_Behaviours_IBehaviour_CanExecute_Server_Core_WorldEntity_Server_Core_WorldEntity_Server_Core_Services_IModuleService_System_Collections_Generic_Dictionary_System_String_System_Object__
+  - name: (
+  - uid: Server.Core.WorldEntity
+    name: WorldEntity
+    href: Server.Core.WorldEntity.html
+  - name: ','
+  - name: " "
+  - uid: Server.Core.WorldEntity
+    name: WorldEntity
+    href: Server.Core.WorldEntity.html
+  - name: ','
+  - name: " "
+  - uid: Server.Core.Services.IModuleService
+    name: IModuleService
+    href: Server.Core.Services.IModuleService.html
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: <
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: '>'
+  - name: )
+  spec.vb:
+  - uid: Server.Core.Behaviours.IBehaviour.CanExecute(Server.Core.WorldEntity,Server.Core.WorldEntity,Server.Core.Services.IModuleService,System.Collections.Generic.Dictionary{System.String,System.Object})
+    name: CanExecute
+    href: Server.Core.Behaviours.IBehaviour.html#Server_Core_Behaviours_IBehaviour_CanExecute_Server_Core_WorldEntity_Server_Core_WorldEntity_Server_Core_Services_IModuleService_System_Collections_Generic_Dictionary_System_String_System_Object__
+  - name: (
+  - uid: Server.Core.WorldEntity
+    name: WorldEntity
+    href: Server.Core.WorldEntity.html
+  - name: ','
+  - name: " "
+  - uid: Server.Core.WorldEntity
+    name: WorldEntity
+    href: Server.Core.WorldEntity.html
+  - name: ','
+  - name: " "
+  - uid: Server.Core.Services.IModuleService
+    name: IModuleService
+    href: Server.Core.Services.IModuleService.html
+  - name: ','
+  - name: " "
+  - uid: System.Collections.Generic.Dictionary`2
+    name: Dictionary
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.dictionary-2
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  - name: )
+- uid: System.Boolean
+  commentId: T:System.Boolean
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.boolean
+  name: bool
+  nameWithType: bool
+  fullName: bool
+  nameWithType.vb: Boolean
+  fullName.vb: Boolean
+  name.vb: Boolean
+- uid: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.ToDTO*
+  commentId: Overload:Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.ToDTO
+  href: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.html#Server_Core_Behaviours_GatherBehaviour_GatherBehaviourBase_ToDTO
+  name: ToDTO
+  nameWithType: GatherBehaviourBase.ToDTO
+  fullName: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase.ToDTO
+- uid: Server.Core.Behaviours.IBehaviour.ToDTO
+  commentId: M:Server.Core.Behaviours.IBehaviour.ToDTO
+  parent: Server.Core.Behaviours.IBehaviour
+  href: Server.Core.Behaviours.IBehaviour.html#Server_Core_Behaviours_IBehaviour_ToDTO
+  name: ToDTO()
+  nameWithType: IBehaviour.ToDTO()
+  fullName: Server.Core.Behaviours.IBehaviour.ToDTO()
+  spec.csharp:
+  - uid: Server.Core.Behaviours.IBehaviour.ToDTO
+    name: ToDTO
+    href: Server.Core.Behaviours.IBehaviour.html#Server_Core_Behaviours_IBehaviour_ToDTO
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Server.Core.Behaviours.IBehaviour.ToDTO
+    name: ToDTO
+    href: Server.Core.Behaviours.IBehaviour.html#Server_Core_Behaviours_IBehaviour_ToDTO
+  - name: (
+  - name: )
+- uid: SharedLibrary.DTOs.ModuleDTO.BehaviourDTO
+  commentId: T:SharedLibrary.DTOs.ModuleDTO.BehaviourDTO
+  parent: SharedLibrary.DTOs.ModuleDTO
+  href: SharedLibrary.DTOs.ModuleDTO.BehaviourDTO.html
+  name: BehaviourDTO
+  nameWithType: BehaviourDTO
+  fullName: SharedLibrary.DTOs.ModuleDTO.BehaviourDTO
+- uid: SharedLibrary.DTOs.ModuleDTO
+  commentId: N:SharedLibrary.DTOs.ModuleDTO
+  href: SharedLibrary.html
+  name: SharedLibrary.DTOs.ModuleDTO
+  nameWithType: SharedLibrary.DTOs.ModuleDTO
+  fullName: SharedLibrary.DTOs.ModuleDTO
+  spec.csharp:
+  - uid: SharedLibrary
+    name: SharedLibrary
+    href: SharedLibrary.html
+  - name: .
+  - uid: SharedLibrary.DTOs
+    name: DTOs
+    href: SharedLibrary.DTOs.html
+  - name: .
+  - uid: SharedLibrary.DTOs.ModuleDTO
+    name: ModuleDTO
+    href: SharedLibrary.DTOs.ModuleDTO.html
+  spec.vb:
+  - uid: SharedLibrary
+    name: SharedLibrary
+    href: SharedLibrary.html
+  - name: .
+  - uid: SharedLibrary.DTOs
+    name: DTOs
+    href: SharedLibrary.DTOs.html
+  - name: .
+  - uid: SharedLibrary.DTOs.ModuleDTO
+    name: ModuleDTO
+    href: SharedLibrary.DTOs.ModuleDTO.html

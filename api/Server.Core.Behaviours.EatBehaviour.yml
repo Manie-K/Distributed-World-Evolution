@@ -1,0 +1,125 @@
+### YamlMime:ManagedReference
+items:
+- uid: Server.Core.Behaviours.EatBehaviour
+  commentId: N:Server.Core.Behaviours.EatBehaviour
+  id: Server.Core.Behaviours.EatBehaviour
+  children:
+  - Server.Core.Behaviours.EatBehaviour.EatAlwaysBehaviour
+  - Server.Core.Behaviours.EatBehaviour.EatBehaviourBase
+  - Server.Core.Behaviours.EatBehaviour.EatIfNotPoisonous
+  - Server.Core.Behaviours.EatBehaviour.EatNeverBehaviour
+  - Server.Core.Behaviours.EatBehaviour.EatRandomly60Behaviour
+  - Server.Core.Behaviours.EatBehaviour.EatWhenHungerLesserThanReproductionNeed
+  - Server.Core.Behaviours.EatBehaviour.EatWhenHungry50Behaviour
+  - Server.Core.Behaviours.EatBehaviour.EatWhenNotHealthy50Behaviour
+  - Server.Core.Behaviours.EatBehaviour.EatWithCureBehaviour
+  - Server.Core.Behaviours.EatBehaviour.PlantEatBehaviour
+  langs:
+  - csharp
+  - vb
+  name: Server.Core.Behaviours.EatBehaviour
+  nameWithType: Server.Core.Behaviours.EatBehaviour
+  fullName: Server.Core.Behaviours.EatBehaviour
+  type: Namespace
+  assemblies:
+  - Server.Core
+references:
+- uid: Server.Core.Behaviours.EatBehaviour.EatAlwaysBehaviour
+  commentId: T:Server.Core.Behaviours.EatBehaviour.EatAlwaysBehaviour
+  href: Server.Core.Behaviours.EatBehaviour.EatAlwaysBehaviour.html
+  name: EatAlwaysBehaviour
+  nameWithType: EatAlwaysBehaviour
+  fullName: Server.Core.Behaviours.EatBehaviour.EatAlwaysBehaviour
+- uid: Server.Core.Behaviours.EatBehaviour.EatBehaviourBase
+  commentId: T:Server.Core.Behaviours.EatBehaviour.EatBehaviourBase
+  parent: Server.Core.Behaviours.EatBehaviour
+  href: Server.Core.Behaviours.EatBehaviour.EatBehaviourBase.html
+  name: EatBehaviourBase
+  nameWithType: EatBehaviourBase
+  fullName: Server.Core.Behaviours.EatBehaviour.EatBehaviourBase
+- uid: Server.Core.Behaviours.EatBehaviour.EatIfNotPoisonous
+  commentId: T:Server.Core.Behaviours.EatBehaviour.EatIfNotPoisonous
+  href: Server.Core.Behaviours.EatBehaviour.EatIfNotPoisonous.html
+  name: EatIfNotPoisonous
+  nameWithType: EatIfNotPoisonous
+  fullName: Server.Core.Behaviours.EatBehaviour.EatIfNotPoisonous
+- uid: Server.Core.Behaviours.EatBehaviour.EatNeverBehaviour
+  commentId: T:Server.Core.Behaviours.EatBehaviour.EatNeverBehaviour
+  href: Server.Core.Behaviours.EatBehaviour.EatNeverBehaviour.html
+  name: EatNeverBehaviour
+  nameWithType: EatNeverBehaviour
+  fullName: Server.Core.Behaviours.EatBehaviour.EatNeverBehaviour
+- uid: Server.Core.Behaviours.EatBehaviour.EatRandomly60Behaviour
+  commentId: T:Server.Core.Behaviours.EatBehaviour.EatRandomly60Behaviour
+  href: Server.Core.Behaviours.EatBehaviour.EatRandomly60Behaviour.html
+  name: EatRandomly60Behaviour
+  nameWithType: EatRandomly60Behaviour
+  fullName: Server.Core.Behaviours.EatBehaviour.EatRandomly60Behaviour
+- uid: Server.Core.Behaviours.EatBehaviour.EatWhenHungerLesserThanReproductionNeed
+  commentId: T:Server.Core.Behaviours.EatBehaviour.EatWhenHungerLesserThanReproductionNeed
+  href: Server.Core.Behaviours.EatBehaviour.EatWhenHungerLesserThanReproductionNeed.html
+  name: EatWhenHungerLesserThanReproductionNeed
+  nameWithType: EatWhenHungerLesserThanReproductionNeed
+  fullName: Server.Core.Behaviours.EatBehaviour.EatWhenHungerLesserThanReproductionNeed
+- uid: Server.Core.Behaviours.EatBehaviour.EatWhenHungry50Behaviour
+  commentId: T:Server.Core.Behaviours.EatBehaviour.EatWhenHungry50Behaviour
+  href: Server.Core.Behaviours.EatBehaviour.EatWhenHungry50Behaviour.html
+  name: EatWhenHungry50Behaviour
+  nameWithType: EatWhenHungry50Behaviour
+  fullName: Server.Core.Behaviours.EatBehaviour.EatWhenHungry50Behaviour
+- uid: Server.Core.Behaviours.EatBehaviour.EatWhenNotHealthy50Behaviour
+  commentId: T:Server.Core.Behaviours.EatBehaviour.EatWhenNotHealthy50Behaviour
+  href: Server.Core.Behaviours.EatBehaviour.EatWhenNotHealthy50Behaviour.html
+  name: EatWhenNotHealthy50Behaviour
+  nameWithType: EatWhenNotHealthy50Behaviour
+  fullName: Server.Core.Behaviours.EatBehaviour.EatWhenNotHealthy50Behaviour
+- uid: Server.Core.Behaviours.EatBehaviour.EatWithCureBehaviour
+  commentId: T:Server.Core.Behaviours.EatBehaviour.EatWithCureBehaviour
+  href: Server.Core.Behaviours.EatBehaviour.EatWithCureBehaviour.html
+  name: EatWithCureBehaviour
+  nameWithType: EatWithCureBehaviour
+  fullName: Server.Core.Behaviours.EatBehaviour.EatWithCureBehaviour
+- uid: Server.Core.Behaviours.EatBehaviour.PlantEatBehaviour
+  commentId: T:Server.Core.Behaviours.EatBehaviour.PlantEatBehaviour
+  href: Server.Core.Behaviours.EatBehaviour.PlantEatBehaviour.html
+  name: PlantEatBehaviour
+  nameWithType: PlantEatBehaviour
+  fullName: Server.Core.Behaviours.EatBehaviour.PlantEatBehaviour
+- uid: Server.Core.Behaviours.EatBehaviour
+  commentId: N:Server.Core.Behaviours.EatBehaviour
+  href: Server.html
+  name: Server.Core.Behaviours.EatBehaviour
+  nameWithType: Server.Core.Behaviours.EatBehaviour
+  fullName: Server.Core.Behaviours.EatBehaviour
+  spec.csharp:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+  - name: .
+  - uid: Server.Core.Behaviours
+    name: Behaviours
+    href: Server.Core.Behaviours.html
+  - name: .
+  - uid: Server.Core.Behaviours.EatBehaviour
+    name: EatBehaviour
+    href: Server.Core.Behaviours.EatBehaviour.html
+  spec.vb:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+  - name: .
+  - uid: Server.Core.Behaviours
+    name: Behaviours
+    href: Server.Core.Behaviours.html
+  - name: .
+  - uid: Server.Core.Behaviours.EatBehaviour
+    name: EatBehaviour
+    href: Server.Core.Behaviours.EatBehaviour.html

@@ -1,0 +1,149 @@
+### YamlMime:ManagedReference
+items:
+- uid: Server.Core.EntityTypeEnum
+  commentId: T:Server.Core.EntityTypeEnum
+  id: EntityTypeEnum
+  parent: Server.Core
+  children:
+  - Server.Core.EntityTypeEnum.Animal
+  - Server.Core.EntityTypeEnum.Human
+  - Server.Core.EntityTypeEnum.Plant
+  langs:
+  - csharp
+  - vb
+  name: EntityTypeEnum
+  nameWithType: EntityTypeEnum
+  fullName: Server.Core.EntityTypeEnum
+  type: Enum
+  source:
+    remote:
+      path: Shared/SharedLibrary/DTOs/EntitiesDTO/EntityTypeEnum.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: EntityTypeEnum
+    path: Shared/SharedLibrary/DTOs/EntitiesDTO/EntityTypeEnum.cs
+    startLine: 2
+  assemblies:
+  - SharedLibrary
+  namespace: Server.Core
+  syntax:
+    content: >-
+      [Flags]
+
+      public enum EntityTypeEnum
+    content.vb: >-
+      <Flags>
+
+      Public Enum EntityTypeEnum
+  attributes:
+  - type: System.FlagsAttribute
+    ctor: System.FlagsAttribute.#ctor
+    arguments: []
+- uid: Server.Core.EntityTypeEnum.Human
+  commentId: F:Server.Core.EntityTypeEnum.Human
+  id: Human
+  parent: Server.Core.EntityTypeEnum
+  langs:
+  - csharp
+  - vb
+  name: Human
+  nameWithType: EntityTypeEnum.Human
+  fullName: Server.Core.EntityTypeEnum.Human
+  type: Field
+  source:
+    remote:
+      path: Shared/SharedLibrary/DTOs/EntitiesDTO/EntityTypeEnum.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Human
+    path: Shared/SharedLibrary/DTOs/EntitiesDTO/EntityTypeEnum.cs
+    startLine: 5
+  assemblies:
+  - SharedLibrary
+  namespace: Server.Core
+  syntax:
+    content: Human = 1
+    return:
+      type: Server.Core.EntityTypeEnum
+- uid: Server.Core.EntityTypeEnum.Animal
+  commentId: F:Server.Core.EntityTypeEnum.Animal
+  id: Animal
+  parent: Server.Core.EntityTypeEnum
+  langs:
+  - csharp
+  - vb
+  name: Animal
+  nameWithType: EntityTypeEnum.Animal
+  fullName: Server.Core.EntityTypeEnum.Animal
+  type: Field
+  source:
+    remote:
+      path: Shared/SharedLibrary/DTOs/EntitiesDTO/EntityTypeEnum.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Animal
+    path: Shared/SharedLibrary/DTOs/EntitiesDTO/EntityTypeEnum.cs
+    startLine: 6
+  assemblies:
+  - SharedLibrary
+  namespace: Server.Core
+  syntax:
+    content: Animal = 2
+    return:
+      type: Server.Core.EntityTypeEnum
+- uid: Server.Core.EntityTypeEnum.Plant
+  commentId: F:Server.Core.EntityTypeEnum.Plant
+  id: Plant
+  parent: Server.Core.EntityTypeEnum
+  langs:
+  - csharp
+  - vb
+  name: Plant
+  nameWithType: EntityTypeEnum.Plant
+  fullName: Server.Core.EntityTypeEnum.Plant
+  type: Field
+  source:
+    remote:
+      path: Shared/SharedLibrary/DTOs/EntitiesDTO/EntityTypeEnum.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Plant
+    path: Shared/SharedLibrary/DTOs/EntitiesDTO/EntityTypeEnum.cs
+    startLine: 7
+  assemblies:
+  - SharedLibrary
+  namespace: Server.Core
+  syntax:
+    content: Plant = 4
+    return:
+      type: Server.Core.EntityTypeEnum
+references:
+- uid: Server.Core
+  commentId: N:Server.Core
+  href: Server.html
+  name: Server.Core
+  nameWithType: Server.Core
+  fullName: Server.Core
+  spec.csharp:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+  spec.vb:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+- uid: Server.Core.EntityTypeEnum
+  commentId: T:Server.Core.EntityTypeEnum
+  parent: Server.Core
+  href: https://github.com/Manie-K/Distributed-World-Evolution/blob/04d77cccea139c5e616524f8a10c7afb68cc7eb5/Shared/SharedLibrary/DTOs/EntitiesDTO/EntityTypeEnum.cs
+  name: EntityTypeEnum
+  nameWithType: EntityTypeEnum
+  fullName: Server.Core.EntityTypeEnum

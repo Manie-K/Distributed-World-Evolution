@@ -1,0 +1,622 @@
+### YamlMime:ManagedReference
+items:
+- uid: Server.Core.Server
+  commentId: T:Server.Core.Server
+  id: Server
+  parent: Server.Core
+  children:
+  - Server.Core.Server.#ctor(Server.Core.Services.LoggerService,Server.Core.Lobby.LobbyManager)
+  - Server.Core.Server.OnMessageFromClientReceived
+  - Server.Core.Server.StartAsync(System.String[])
+  langs:
+  - csharp
+  - vb
+  name: Server
+  nameWithType: Server
+  fullName: Server.Core.Server
+  type: Class
+  source:
+    remote:
+      path: Server/Server.Core/Server.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Server
+    path: Server/Server.Core/Server.cs
+    startLine: 15
+  assemblies:
+  - Server.Core
+  namespace: Server.Core
+  summary: Singleton class representing the server
+  example: []
+  syntax:
+    content: public class Server
+    content.vb: Public Class Server
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Server.Core.Server.OnMessageFromClientReceived
+  commentId: E:Server.Core.Server.OnMessageFromClientReceived
+  id: OnMessageFromClientReceived
+  parent: Server.Core.Server
+  langs:
+  - csharp
+  - vb
+  name: OnMessageFromClientReceived
+  nameWithType: Server.OnMessageFromClientReceived
+  fullName: Server.Core.Server.OnMessageFromClientReceived
+  type: Event
+  source:
+    remote:
+      path: Server/Server.Core/Server.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: OnMessageFromClientReceived
+    path: Server/Server.Core/Server.cs
+    startLine: 22
+  assemblies:
+  - Server.Core
+  namespace: Server.Core
+  summary: OnMessageFromClientReceived event
+  example: []
+  syntax:
+    content: public static event Action<OnMessageFromClientEventArgs>? OnMessageFromClientReceived
+    return:
+      type: System.Action{Server.Core.OnMessageFromClientEventArgs}
+    content.vb: Public Shared Event OnMessageFromClientReceived As Action(Of OnMessageFromClientEventArgs)
+- uid: Server.Core.Server.#ctor(Server.Core.Services.LoggerService,Server.Core.Lobby.LobbyManager)
+  commentId: M:Server.Core.Server.#ctor(Server.Core.Services.LoggerService,Server.Core.Lobby.LobbyManager)
+  id: '#ctor(Server.Core.Services.LoggerService,Server.Core.Lobby.LobbyManager)'
+  parent: Server.Core.Server
+  langs:
+  - csharp
+  - vb
+  name: Server(LoggerService, LobbyManager)
+  nameWithType: Server.Server(LoggerService, LobbyManager)
+  fullName: Server.Core.Server.Server(Server.Core.Services.LoggerService, Server.Core.Lobby.LobbyManager)
+  type: Constructor
+  source:
+    remote:
+      path: Server/Server.Core/Server.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: .ctor
+    path: Server/Server.Core/Server.cs
+    startLine: 32
+  assemblies:
+  - Server.Core
+  namespace: Server.Core
+  summary: Constructor for the Server class
+  example: []
+  syntax:
+    content: public Server(LoggerService loggerService, LobbyManager lobbyManager)
+    parameters:
+    - id: loggerService
+      type: Server.Core.Services.LoggerService
+    - id: lobbyManager
+      type: Server.Core.Lobby.LobbyManager
+    content.vb: Public Sub New(loggerService As LoggerService, lobbyManager As LobbyManager)
+  overload: Server.Core.Server.#ctor*
+  nameWithType.vb: Server.New(LoggerService, LobbyManager)
+  fullName.vb: Server.Core.Server.New(Server.Core.Services.LoggerService, Server.Core.Lobby.LobbyManager)
+  name.vb: New(LoggerService, LobbyManager)
+- uid: Server.Core.Server.StartAsync(System.String[])
+  commentId: M:Server.Core.Server.StartAsync(System.String[])
+  id: StartAsync(System.String[])
+  parent: Server.Core.Server
+  langs:
+  - csharp
+  - vb
+  name: StartAsync(string[])
+  nameWithType: Server.StartAsync(string[])
+  fullName: Server.Core.Server.StartAsync(string[])
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Core/Server.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: StartAsync
+    path: Server/Server.Core/Server.cs
+    startLine: 44
+  assemblies:
+  - Server.Core
+  namespace: Server.Core
+  summary: Starts the server
+  example: []
+  syntax:
+    content: public Task StartAsync(string[] args)
+    parameters:
+    - id: args
+      type: System.String[]
+    return:
+      type: System.Threading.Tasks.Task
+    content.vb: Public Function StartAsync(args As String()) As Task
+  overload: Server.Core.Server.StartAsync*
+  nameWithType.vb: Server.StartAsync(String())
+  fullName.vb: Server.Core.Server.StartAsync(String())
+  name.vb: StartAsync(String())
+references:
+- uid: Server.Core
+  commentId: N:Server.Core
+  href: Server.html
+  name: Server.Core
+  nameWithType: Server.Core
+  fullName: Server.Core
+  spec.csharp:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+  spec.vb:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Action{Server.Core.OnMessageFromClientEventArgs}
+  commentId: T:System.Action{Server.Core.OnMessageFromClientEventArgs}
+  parent: System
+  definition: System.Action`1
+  href: https://learn.microsoft.com/dotnet/api/system.action-1
+  name: Action<OnMessageFromClientEventArgs>
+  nameWithType: Action<OnMessageFromClientEventArgs>
+  fullName: System.Action<Server.Core.OnMessageFromClientEventArgs>
+  nameWithType.vb: Action(Of OnMessageFromClientEventArgs)
+  fullName.vb: System.Action(Of Server.Core.OnMessageFromClientEventArgs)
+  name.vb: Action(Of OnMessageFromClientEventArgs)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - uid: Server.Core.OnMessageFromClientEventArgs
+    name: OnMessageFromClientEventArgs
+    href: Server.Core.OnMessageFromClientEventArgs.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Server.Core.OnMessageFromClientEventArgs
+    name: OnMessageFromClientEventArgs
+    href: Server.Core.OnMessageFromClientEventArgs.html
+  - name: )
+- uid: System.Action`1
+  commentId: T:System.Action`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.action-1
+  name: Action<T>
+  nameWithType: Action<T>
+  fullName: System.Action<T>
+  nameWithType.vb: Action(Of T)
+  fullName.vb: System.Action(Of T)
+  name.vb: Action(Of T)
+  spec.csharp:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Action`1
+    name: Action
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.action-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: Server.Core.Server.#ctor*
+  commentId: Overload:Server.Core.Server.#ctor
+  href: Server.Core.Server.html#Server_Core_Server__ctor_Server_Core_Services_LoggerService_Server_Core_Lobby_LobbyManager_
+  name: Server
+  nameWithType: Server.Server
+  fullName: Server.Core.Server.Server
+  nameWithType.vb: Server.New
+  fullName.vb: Server.Core.Server.New
+  name.vb: New
+- uid: Server.Core.Services.LoggerService
+  commentId: T:Server.Core.Services.LoggerService
+  parent: Server.Core.Services
+  href: Server.Core.Services.LoggerService.html
+  name: LoggerService
+  nameWithType: LoggerService
+  fullName: Server.Core.Services.LoggerService
+- uid: Server.Core.Lobby.LobbyManager
+  commentId: T:Server.Core.Lobby.LobbyManager
+  parent: Server.Core.Lobby
+  href: Server.Core.Lobby.LobbyManager.html
+  name: LobbyManager
+  nameWithType: LobbyManager
+  fullName: Server.Core.Lobby.LobbyManager
+- uid: Server.Core.Services
+  commentId: N:Server.Core.Services
+  href: Server.html
+  name: Server.Core.Services
+  nameWithType: Server.Core.Services
+  fullName: Server.Core.Services
+  spec.csharp:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+  - name: .
+  - uid: Server.Core.Services
+    name: Services
+    href: Server.Core.Services.html
+  spec.vb:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+  - name: .
+  - uid: Server.Core.Services
+    name: Services
+    href: Server.Core.Services.html
+- uid: Server.Core.Lobby
+  commentId: N:Server.Core.Lobby
+  href: Server.html
+  name: Server.Core.Lobby
+  nameWithType: Server.Core.Lobby
+  fullName: Server.Core.Lobby
+  spec.csharp:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+  - name: .
+  - uid: Server.Core.Lobby
+    name: Lobby
+    href: Server.Core.Lobby.html
+  spec.vb:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+  - name: .
+  - uid: Server.Core.Lobby
+    name: Lobby
+    href: Server.Core.Lobby.html
+- uid: Server.Core.Server.StartAsync*
+  commentId: Overload:Server.Core.Server.StartAsync
+  href: Server.Core.Server.html#Server_Core_Server_StartAsync_System_String___
+  name: StartAsync
+  nameWithType: Server.StartAsync
+  fullName: Server.Core.Server.StartAsync
+- uid: System.String[]
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string[]
+  nameWithType: string[]
+  fullName: string[]
+  nameWithType.vb: String()
+  fullName.vb: String()
+  name.vb: String()
+  spec.csharp:
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: '['
+  - name: ']'
+  spec.vb:
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: (
+  - name: )
+- uid: System.Threading.Tasks.Task
+  commentId: T:System.Threading.Tasks.Task
+  parent: System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.threading.tasks.task
+  name: Task
+  nameWithType: Task
+  fullName: System.Threading.Tasks.Task
+- uid: System.Threading.Tasks
+  commentId: N:System.Threading.Tasks
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Threading.Tasks
+  nameWithType: System.Threading.Tasks
+  fullName: System.Threading.Tasks
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading
+  - name: .
+  - uid: System.Threading.Tasks
+    name: Tasks
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.threading.tasks

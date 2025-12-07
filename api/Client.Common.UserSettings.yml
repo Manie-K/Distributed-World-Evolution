@@ -1,0 +1,616 @@
+### YamlMime:ManagedReference
+items:
+- uid: Client.Common.UserSettings
+  commentId: T:Client.Common.UserSettings
+  id: UserSettings
+  parent: Client.Common
+  children:
+  - Client.Common.UserSettings.#ctor
+  - Client.Common.UserSettings.GlobalEffectVolume
+  - Client.Common.UserSettings.GlobalMusicVolume
+  - Client.Common.UserSettings.LoadUserSettings
+  - Client.Common.UserSettings.PlayerName
+  - Client.Common.UserSettings.SaveUserSettings
+  - Client.Common.UserSettings.ScreenHeight
+  - Client.Common.UserSettings.ScreenWidth
+  langs:
+  - csharp
+  - vb
+  name: UserSettings
+  nameWithType: UserSettings
+  fullName: Client.Common.UserSettings
+  type: Class
+  source:
+    remote:
+      path: Client/Client/Common/UserSettings.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: UserSettings
+    path: Client/Client/Common/UserSettings.cs
+    startLine: 5
+  assemblies:
+  - Client
+  namespace: Client.Common
+  syntax:
+    content: public class UserSettings
+    content.vb: Public Class UserSettings
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Client.Common.UserSettings.PlayerName
+  commentId: P:Client.Common.UserSettings.PlayerName
+  id: PlayerName
+  parent: Client.Common.UserSettings
+  langs:
+  - csharp
+  - vb
+  name: PlayerName
+  nameWithType: UserSettings.PlayerName
+  fullName: Client.Common.UserSettings.PlayerName
+  type: Property
+  source:
+    remote:
+      path: Client/Client/Common/UserSettings.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: PlayerName
+    path: Client/Client/Common/UserSettings.cs
+    startLine: 9
+  assemblies:
+  - Client
+  namespace: Client.Common
+  syntax:
+    content: public string PlayerName { get; set; }
+    parameters: []
+    return:
+      type: System.String
+    content.vb: Public Property PlayerName As String
+  overload: Client.Common.UserSettings.PlayerName*
+- uid: Client.Common.UserSettings.ScreenWidth
+  commentId: P:Client.Common.UserSettings.ScreenWidth
+  id: ScreenWidth
+  parent: Client.Common.UserSettings
+  langs:
+  - csharp
+  - vb
+  name: ScreenWidth
+  nameWithType: UserSettings.ScreenWidth
+  fullName: Client.Common.UserSettings.ScreenWidth
+  type: Property
+  source:
+    remote:
+      path: Client/Client/Common/UserSettings.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: ScreenWidth
+    path: Client/Client/Common/UserSettings.cs
+    startLine: 10
+  assemblies:
+  - Client
+  namespace: Client.Common
+  syntax:
+    content: public int ScreenWidth { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property ScreenWidth As Integer
+  overload: Client.Common.UserSettings.ScreenWidth*
+- uid: Client.Common.UserSettings.ScreenHeight
+  commentId: P:Client.Common.UserSettings.ScreenHeight
+  id: ScreenHeight
+  parent: Client.Common.UserSettings
+  langs:
+  - csharp
+  - vb
+  name: ScreenHeight
+  nameWithType: UserSettings.ScreenHeight
+  fullName: Client.Common.UserSettings.ScreenHeight
+  type: Property
+  source:
+    remote:
+      path: Client/Client/Common/UserSettings.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: ScreenHeight
+    path: Client/Client/Common/UserSettings.cs
+    startLine: 11
+  assemblies:
+  - Client
+  namespace: Client.Common
+  syntax:
+    content: public int ScreenHeight { get; set; }
+    parameters: []
+    return:
+      type: System.Int32
+    content.vb: Public Property ScreenHeight As Integer
+  overload: Client.Common.UserSettings.ScreenHeight*
+- uid: Client.Common.UserSettings.GlobalMusicVolume
+  commentId: P:Client.Common.UserSettings.GlobalMusicVolume
+  id: GlobalMusicVolume
+  parent: Client.Common.UserSettings
+  langs:
+  - csharp
+  - vb
+  name: GlobalMusicVolume
+  nameWithType: UserSettings.GlobalMusicVolume
+  fullName: Client.Common.UserSettings.GlobalMusicVolume
+  type: Property
+  source:
+    remote:
+      path: Client/Client/Common/UserSettings.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: GlobalMusicVolume
+    path: Client/Client/Common/UserSettings.cs
+    startLine: 12
+  assemblies:
+  - Client
+  namespace: Client.Common
+  syntax:
+    content: public float GlobalMusicVolume { get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property GlobalMusicVolume As Single
+  overload: Client.Common.UserSettings.GlobalMusicVolume*
+- uid: Client.Common.UserSettings.GlobalEffectVolume
+  commentId: P:Client.Common.UserSettings.GlobalEffectVolume
+  id: GlobalEffectVolume
+  parent: Client.Common.UserSettings
+  langs:
+  - csharp
+  - vb
+  name: GlobalEffectVolume
+  nameWithType: UserSettings.GlobalEffectVolume
+  fullName: Client.Common.UserSettings.GlobalEffectVolume
+  type: Property
+  source:
+    remote:
+      path: Client/Client/Common/UserSettings.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: GlobalEffectVolume
+    path: Client/Client/Common/UserSettings.cs
+    startLine: 13
+  assemblies:
+  - Client
+  namespace: Client.Common
+  syntax:
+    content: public float GlobalEffectVolume { get; set; }
+    parameters: []
+    return:
+      type: System.Single
+    content.vb: Public Property GlobalEffectVolume As Single
+  overload: Client.Common.UserSettings.GlobalEffectVolume*
+- uid: Client.Common.UserSettings.#ctor
+  commentId: M:Client.Common.UserSettings.#ctor
+  id: '#ctor'
+  parent: Client.Common.UserSettings
+  langs:
+  - csharp
+  - vb
+  name: UserSettings()
+  nameWithType: UserSettings.UserSettings()
+  fullName: Client.Common.UserSettings.UserSettings()
+  type: Constructor
+  source:
+    remote:
+      path: Client/Client/Common/UserSettings.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: .ctor
+    path: Client/Client/Common/UserSettings.cs
+    startLine: 15
+  assemblies:
+  - Client
+  namespace: Client.Common
+  syntax:
+    content: public UserSettings()
+    content.vb: Public Sub New()
+  overload: Client.Common.UserSettings.#ctor*
+  nameWithType.vb: UserSettings.New()
+  fullName.vb: Client.Common.UserSettings.New()
+  name.vb: New()
+- uid: Client.Common.UserSettings.LoadUserSettings
+  commentId: M:Client.Common.UserSettings.LoadUserSettings
+  id: LoadUserSettings
+  parent: Client.Common.UserSettings
+  langs:
+  - csharp
+  - vb
+  name: LoadUserSettings()
+  nameWithType: UserSettings.LoadUserSettings()
+  fullName: Client.Common.UserSettings.LoadUserSettings()
+  type: Method
+  source:
+    remote:
+      path: Client/Client/Common/UserSettings.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: LoadUserSettings
+    path: Client/Client/Common/UserSettings.cs
+    startLine: 20
+  assemblies:
+  - Client
+  namespace: Client.Common
+  syntax:
+    content: public void LoadUserSettings()
+    content.vb: Public Sub LoadUserSettings()
+  overload: Client.Common.UserSettings.LoadUserSettings*
+- uid: Client.Common.UserSettings.SaveUserSettings
+  commentId: M:Client.Common.UserSettings.SaveUserSettings
+  id: SaveUserSettings
+  parent: Client.Common.UserSettings
+  langs:
+  - csharp
+  - vb
+  name: SaveUserSettings()
+  nameWithType: UserSettings.SaveUserSettings()
+  fullName: Client.Common.UserSettings.SaveUserSettings()
+  type: Method
+  source:
+    remote:
+      path: Client/Client/Common/UserSettings.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: SaveUserSettings
+    path: Client/Client/Common/UserSettings.cs
+    startLine: 47
+  assemblies:
+  - Client
+  namespace: Client.Common
+  syntax:
+    content: public void SaveUserSettings()
+    content.vb: Public Sub SaveUserSettings()
+  overload: Client.Common.UserSettings.SaveUserSettings*
+references:
+- uid: Client.Common
+  commentId: N:Client.Common
+  href: Client.html
+  name: Client.Common
+  nameWithType: Client.Common
+  fullName: Client.Common
+  spec.csharp:
+  - uid: Client
+    name: Client
+    href: Client.html
+  - name: .
+  - uid: Client.Common
+    name: Common
+    href: Client.Common.html
+  spec.vb:
+  - uid: Client
+    name: Client
+    href: Client.html
+  - name: .
+  - uid: Client.Common
+    name: Common
+    href: Client.Common.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Client.Common.UserSettings.PlayerName*
+  commentId: Overload:Client.Common.UserSettings.PlayerName
+  href: Client.Common.UserSettings.html#Client_Common_UserSettings_PlayerName
+  name: PlayerName
+  nameWithType: UserSettings.PlayerName
+  fullName: Client.Common.UserSettings.PlayerName
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Client.Common.UserSettings.ScreenWidth*
+  commentId: Overload:Client.Common.UserSettings.ScreenWidth
+  href: Client.Common.UserSettings.html#Client_Common_UserSettings_ScreenWidth
+  name: ScreenWidth
+  nameWithType: UserSettings.ScreenWidth
+  fullName: Client.Common.UserSettings.ScreenWidth
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Client.Common.UserSettings.ScreenHeight*
+  commentId: Overload:Client.Common.UserSettings.ScreenHeight
+  href: Client.Common.UserSettings.html#Client_Common_UserSettings_ScreenHeight
+  name: ScreenHeight
+  nameWithType: UserSettings.ScreenHeight
+  fullName: Client.Common.UserSettings.ScreenHeight
+- uid: Client.Common.UserSettings.GlobalMusicVolume*
+  commentId: Overload:Client.Common.UserSettings.GlobalMusicVolume
+  href: Client.Common.UserSettings.html#Client_Common_UserSettings_GlobalMusicVolume
+  name: GlobalMusicVolume
+  nameWithType: UserSettings.GlobalMusicVolume
+  fullName: Client.Common.UserSettings.GlobalMusicVolume
+- uid: System.Single
+  commentId: T:System.Single
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.single
+  name: float
+  nameWithType: float
+  fullName: float
+  nameWithType.vb: Single
+  fullName.vb: Single
+  name.vb: Single
+- uid: Client.Common.UserSettings.GlobalEffectVolume*
+  commentId: Overload:Client.Common.UserSettings.GlobalEffectVolume
+  href: Client.Common.UserSettings.html#Client_Common_UserSettings_GlobalEffectVolume
+  name: GlobalEffectVolume
+  nameWithType: UserSettings.GlobalEffectVolume
+  fullName: Client.Common.UserSettings.GlobalEffectVolume
+- uid: Client.Common.UserSettings.#ctor*
+  commentId: Overload:Client.Common.UserSettings.#ctor
+  href: Client.Common.UserSettings.html#Client_Common_UserSettings__ctor
+  name: UserSettings
+  nameWithType: UserSettings.UserSettings
+  fullName: Client.Common.UserSettings.UserSettings
+  nameWithType.vb: UserSettings.New
+  fullName.vb: Client.Common.UserSettings.New
+  name.vb: New
+- uid: Client.Common.UserSettings.LoadUserSettings*
+  commentId: Overload:Client.Common.UserSettings.LoadUserSettings
+  href: Client.Common.UserSettings.html#Client_Common_UserSettings_LoadUserSettings
+  name: LoadUserSettings
+  nameWithType: UserSettings.LoadUserSettings
+  fullName: Client.Common.UserSettings.LoadUserSettings
+- uid: Client.Common.UserSettings.SaveUserSettings*
+  commentId: Overload:Client.Common.UserSettings.SaveUserSettings
+  href: Client.Common.UserSettings.html#Client_Common_UserSettings_SaveUserSettings
+  name: SaveUserSettings
+  nameWithType: UserSettings.SaveUserSettings
+  fullName: Client.Common.UserSettings.SaveUserSettings

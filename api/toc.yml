@@ -1,0 +1,766 @@
+### YamlMime:TableOfContent
+items:
+- uid: Client
+  name: Client
+  type: Namespace
+  items:
+  - uid: Client.ActionStatus
+    name: ActionStatus
+    type: Class
+  - uid: Client.AnimationType
+    name: AnimationType
+    type: Enum
+  - uid: Client.Boar
+    name: Boar
+    type: Class
+  - uid: Client.BrownRabbit
+    name: BrownRabbit
+    type: Class
+  - uid: Client.Button
+    name: Button
+    type: Class
+  - uid: Client.Character
+    name: Character
+    type: Class
+  - uid: Client.ClientManager
+    name: ClientManager
+    type: Class
+  - uid: Client.ColoredSprite
+    name: ColoredSprite
+    type: Class
+  - uid: Client.CreateLobbyRow
+    name: CreateLobbyRow
+    type: Class
+  - uid: Client.CreateLobbyScene
+    name: CreateLobbyScene
+    type: Class
+  - uid: Client.CreateModulesScene
+    name: CreateModulesScene
+    type: Class
+  - uid: Client.Direction
+    name: Direction
+    type: Enum
+  - uid: Client.EnemyPlant1
+    name: EnemyPlant1
+    type: Class
+  - uid: Client.EnemyPlant2
+    name: EnemyPlant2
+    type: Class
+  - uid: Client.EnemyPlant3
+    name: EnemyPlant3
+    type: Class
+  - uid: Client.Game1
+    name: Game1
+    type: Class
+  - uid: Client.GameManager
+    name: GameManager
+    type: Class
+  - uid: Client.GameScene
+    name: GameScene
+    type: Class
+  - uid: Client.IScene
+    name: IScene
+    type: Interface
+  - uid: Client.LobbyRow
+    name: LobbyRow
+    type: Class
+  - uid: Client.LobbyScene
+    name: LobbyScene
+    type: Class
+  - uid: Client.MainMenuScene
+    name: MainMenuScene
+    type: Class
+  - uid: Client.MapSelectionScene
+    name: MapSelectionScene
+    type: Class
+  - uid: Client.Orc1
+    name: Orc1
+    type: Class
+  - uid: Client.Orc2
+    name: Orc2
+    type: Class
+  - uid: Client.Orc3
+    name: Orc3
+    type: Class
+  - uid: Client.Pig
+    name: Pig
+    type: Class
+  - uid: Client.Player
+    name: Player
+    type: Class
+  - uid: Client.ScaledSprite
+    name: ScaledSprite
+    type: Class
+  - uid: Client.SceneManager
+    name: SceneManager
+    type: Class
+  - uid: Client.SettingsScene
+    name: SettingsScene
+    type: Class
+  - uid: Client.Slime1
+    name: Slime1
+    type: Class
+  - uid: Client.Slime2
+    name: Slime2
+    type: Class
+  - uid: Client.Slime3
+    name: Slime3
+    type: Class
+  - uid: Client.Sprite
+    name: Sprite
+    type: Class
+  - uid: Client.SwitchButton
+    name: SwitchButton
+    type: Class
+  - uid: Client.SwitchPage
+    name: SwitchPage
+    type: Class
+  - uid: Client.SwitchPageLobby
+    name: SwitchPageLobby
+    type: Class
+  - uid: Client.SwitchPageMapSelection
+    name: SwitchPageMapSelection
+    type: Class
+  - uid: Client.SwitchPageModules
+    name: SwitchPageModules
+    type: Class
+  - uid: Client.Text
+    name: Text
+    type: Class
+  - uid: Client.TextBox
+    name: TextBox
+    type: Class
+  - uid: Client.Vampire1
+    name: Vampire1
+    type: Class
+  - uid: Client.Vampire2
+    name: Vampire2
+    type: Class
+  - uid: Client.Vampire3
+    name: Vampire3
+    type: Class
+  - uid: Client.WhiteRabbit
+    name: WhiteRabbit
+    type: Class
+- uid: Client.Common
+  name: Client.Common
+  type: Namespace
+  items:
+  - uid: Client.Common.InputManager
+    name: InputManager
+    type: Class
+  - uid: Client.Common.UserSettings
+    name: UserSettings
+    type: Class
+- uid: Client.Logic
+  name: Client.Logic
+  type: Namespace
+  items:
+  - uid: Client.Logic.Animation
+    name: Animation
+    type: Class
+  - uid: Client.Logic.AnimationManager
+    name: AnimationManager
+    type: Class
+  - uid: Client.Logic.AssetsManager
+    name: AssetsManager
+    type: Class
+- uid: Client.Logic.Plants
+  name: Client.Logic.Plants
+  type: Namespace
+  items:
+  - uid: Client.Logic.Plants.Cosmo
+    name: Cosmo
+    type: Class
+  - uid: Client.Logic.Plants.Daffodil
+    name: Daffodil
+    type: Class
+  - uid: Client.Logic.Plants.Daisy
+    name: Daisy
+    type: Class
+  - uid: Client.Logic.Plants.Lavender
+    name: Lavender
+    type: Class
+  - uid: Client.Logic.Plants.Lily
+    name: Lily
+    type: Class
+  - uid: Client.Logic.Plants.LilyOfTheValley
+    name: LilyOfTheValley
+    type: Class
+  - uid: Client.Logic.Plants.Orchid
+    name: Orchid
+    type: Class
+  - uid: Client.Logic.Plants.Pansy
+    name: Pansy
+    type: Class
+  - uid: Client.Logic.Plants.Plant
+    name: Plant
+    type: Class
+  - uid: Client.Logic.Plants.Poppy
+    name: Poppy
+    type: Class
+  - uid: Client.Logic.Plants.Rose
+    name: Rose
+    type: Class
+  - uid: Client.Logic.Plants.Sunflower
+    name: Sunflower
+    type: Class
+  - uid: Client.Logic.Plants.Tulip
+    name: Tulip
+    type: Class
+- uid: Client.Panels
+  name: Client.Panels
+  type: Namespace
+  items:
+  - uid: Client.Panels.BestiaryPanel
+    name: BestiaryPanel
+    type: Class
+  - uid: Client.Panels.EscPanel
+    name: EscPanel
+    type: Class
+  - uid: Client.Panels.Inventory
+    name: Inventory
+    type: Class
+  - uid: Client.Panels.PanelsController
+    name: PanelsController
+    type: Class
+- uid: Client.Panels.Stats
+  name: Client.Panels.Stats
+  type: Namespace
+  items:
+  - uid: Client.Panels.Stats.Bar
+    name: Bar
+    type: Class
+  - uid: Client.Panels.Stats.StatsPanel
+    name: StatsPanel
+    type: Class
+- uid: Client.Panels.Windows
+  name: Client.Panels.Windows
+  type: Namespace
+  items:
+  - uid: Client.Panels.Windows.LoadingWindow
+    name: LoadingWindow
+    type: Class
+  - uid: Client.Panels.Windows.Window
+    name: Window
+    type: Class
+  - uid: Client.Panels.Windows.WindowManager
+    name: WindowManager
+    type: Class
+  - uid: Client.Panels.Windows.WindowType
+    name: WindowType
+    type: Enum
+- uid: Client.Rendering
+  name: Client.Rendering
+  type: Namespace
+  items:
+  - uid: Client.Rendering.Camera2D
+    name: Camera2D
+    type: Class
+  - uid: Client.Rendering.WorldMap
+    name: WorldMap
+    type: Class
+- uid: Client.UI
+  name: Client.UI
+  type: Namespace
+  items:
+  - uid: Client.UI.CharacterHealthBar
+    name: CharacterHealthBar
+    type: Class
+- uid: Client.UI.Bestiary_Panel
+  name: Client.UI.Bestiary_Panel
+  type: Namespace
+  items:
+  - uid: Client.UI.Bestiary_Panel.BestiarySlot
+    name: BestiarySlot
+    type: Class
+  - uid: Client.UI.Bestiary_Panel.InventorySlot
+    name: InventorySlot
+    type: Class
+- uid: Client.UI.CreateLobby
+  name: Client.UI.CreateLobby
+  type: Namespace
+  items:
+  - uid: Client.UI.CreateLobby.ModulesImageDisplay
+    name: ModulesImageDisplay
+    type: Class
+- uid: Client.UI.CreateLobby.Parameters
+  name: Client.UI.CreateLobby.Parameters
+  type: Namespace
+  items:
+  - uid: Client.UI.CreateLobby.Parameters.ModuleData
+    name: ModuleData
+    type: Class
+  - uid: Client.UI.CreateLobby.Parameters.ModuleParametersData
+    name: ModuleParametersData
+    type: Class
+  - uid: Client.UI.CreateLobby.Parameters.ParameterRow
+    name: ParameterRow
+    type: Class
+  - uid: Client.UI.CreateLobby.Parameters.SwitchPageParameters
+    name: SwitchPageParameters
+    type: Class
+- uid: Client.UI.CreateModules.Modules
+  name: Client.UI.CreateModules.Modules
+  type: Namespace
+  items:
+  - uid: Client.UI.CreateModules.Modules.DescriptionBox
+    name: DescriptionBox
+    type: Class
+  - uid: Client.UI.CreateModules.Modules.ModuleData
+    name: ModuleData
+    type: Class
+- uid: Client.UI.CreateModules.Modules.Parameters
+  name: Client.UI.CreateModules.Modules.Parameters
+  type: Namespace
+  items:
+  - uid: Client.UI.CreateModules.Modules.Parameters.BehaviourBox
+    name: BehaviourBox
+    type: Class
+  - uid: Client.UI.CreateModules.Modules.Parameters.CheckBox
+    name: CheckBox
+    type: Class
+  - uid: Client.UI.CreateModules.Modules.Parameters.ModuleBehaviourParameter
+    name: ModuleBehaviourParameter
+    type: Class
+  - uid: Client.UI.CreateModules.Modules.Parameters.ModuleParameter
+    name: ModuleParameter
+    type: Class
+  - uid: Client.UI.CreateModules.Modules.Parameters.ModuleStatsParameter
+    name: ModuleStatsParameter
+    type: Class
+  - uid: Client.UI.CreateModules.Modules.Parameters.StatsBox
+    name: StatsBox
+    type: Class
+  - uid: Client.UI.CreateModules.Modules.Parameters.SwitchPageModulesParameters
+    name: SwitchPageModulesParameters
+    type: Class
+- uid: Client.UI.MapSelection
+  name: Client.UI.MapSelection
+  type: Namespace
+  items:
+  - uid: Client.UI.MapSelection.MapData
+    name: MapData
+    type: Class
+  - uid: Client.UI.MapSelection.SelectedMapData
+    name: SelectedMapData
+    type: Class
+- uid: Server.Core
+  name: Server.Core
+  type: Namespace
+  items:
+  - uid: Server.Core.EntityState
+    name: EntityState
+    type: Class
+  - uid: Server.Core.EntityTypeEnum
+    name: EntityTypeEnum
+    type: Enum
+  - uid: Server.Core.OnMessageFromClientEventArgs
+    name: OnMessageFromClientEventArgs
+    type: Class
+  - uid: Server.Core.Server
+    name: Server
+    type: Class
+  - uid: Server.Core.WorldEntity
+    name: WorldEntity
+    type: Class
+- uid: Server.Core.Behaviours
+  name: Server.Core.Behaviours
+  type: Namespace
+  items:
+  - uid: Server.Core.Behaviours.BehaviourInMemoryDB
+    name: BehaviourInMemoryDB
+    type: Class
+  - uid: Server.Core.Behaviours.IBehaviour
+    name: IBehaviour
+    type: Interface
+  - uid: Server.Core.Behaviours.InteractionTypeEnum
+    name: InteractionTypeEnum
+    type: Enum
+- uid: Server.Core.Behaviours.AttackBehaviour
+  name: Server.Core.Behaviours.AttackBehaviour
+  type: Namespace
+  items:
+  - uid: Server.Core.Behaviours.AttackBehaviour.AlwaysAttackAnimalsBehaviour
+    name: AlwaysAttackAnimalsBehaviour
+    type: Class
+  - uid: Server.Core.Behaviours.AttackBehaviour.AlwaysAttackBehaviour
+    name: AlwaysAttackBehaviour
+    type: Class
+  - uid: Server.Core.Behaviours.AttackBehaviour.AlwaysAttackHumansBehaviour
+    name: AlwaysAttackHumansBehaviour
+    type: Class
+  - uid: Server.Core.Behaviours.AttackBehaviour.AttackBehaviourBase
+    name: AttackBehaviourBase
+    type: Class
+  - uid: Server.Core.Behaviours.AttackBehaviour.DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour
+    name: DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour
+    type: Class
+  - uid: Server.Core.Behaviours.AttackBehaviour.EnemyLowHealthAttackBehaviour
+    name: EnemyLowHealthAttackBehaviour
+    type: Class
+  - uid: Server.Core.Behaviours.AttackBehaviour.GreaterAggressionAttackBehaviour
+    name: GreaterAggressionAttackBehaviour
+    type: Class
+  - uid: Server.Core.Behaviours.AttackBehaviour.HumanAttackBehaviour
+    name: HumanAttackBehaviour
+    type: Class
+  - uid: Server.Core.Behaviours.AttackBehaviour.NeverAttackBehaviour
+    name: NeverAttackBehaviour
+    type: Class
+  - uid: Server.Core.Behaviours.AttackBehaviour.OnlyAttackSelfSpiecesAttackBehaviour
+    name: OnlyAttackSelfSpiecesAttackBehaviour
+    type: Class
+  - uid: Server.Core.Behaviours.AttackBehaviour.PlantAttackBehaviour
+    name: PlantAttackBehaviour
+    type: Class
+  - uid: Server.Core.Behaviours.AttackBehaviour.Random25AttackBehaviour
+    name: Random25AttackBehaviour
+    type: Class
+  - uid: Server.Core.Behaviours.AttackBehaviour.Random50AttackBehaviour
+    name: Random50AttackBehaviour
+    type: Class
+  - uid: Server.Core.Behaviours.AttackBehaviour.Random75AttackBehaviour
+    name: Random75AttackBehaviour
+    type: Class
+- uid: Server.Core.Behaviours.EatBehaviour
+  name: Server.Core.Behaviours.EatBehaviour
+  type: Namespace
+  items:
+  - uid: Server.Core.Behaviours.EatBehaviour.EatAlwaysBehaviour
+    name: EatAlwaysBehaviour
+    type: Class
+  - uid: Server.Core.Behaviours.EatBehaviour.EatBehaviourBase
+    name: EatBehaviourBase
+    type: Class
+  - uid: Server.Core.Behaviours.EatBehaviour.EatIfNotPoisonous
+    name: EatIfNotPoisonous
+    type: Class
+  - uid: Server.Core.Behaviours.EatBehaviour.EatNeverBehaviour
+    name: EatNeverBehaviour
+    type: Class
+  - uid: Server.Core.Behaviours.EatBehaviour.EatRandomly60Behaviour
+    name: EatRandomly60Behaviour
+    type: Class
+  - uid: Server.Core.Behaviours.EatBehaviour.EatWhenHungerLesserThanReproductionNeed
+    name: EatWhenHungerLesserThanReproductionNeed
+    type: Class
+  - uid: Server.Core.Behaviours.EatBehaviour.EatWhenHungry50Behaviour
+    name: EatWhenHungry50Behaviour
+    type: Class
+  - uid: Server.Core.Behaviours.EatBehaviour.EatWhenNotHealthy50Behaviour
+    name: EatWhenNotHealthy50Behaviour
+    type: Class
+  - uid: Server.Core.Behaviours.EatBehaviour.EatWithCureBehaviour
+    name: EatWithCureBehaviour
+    type: Class
+  - uid: Server.Core.Behaviours.EatBehaviour.PlantEatBehaviour
+    name: PlantEatBehaviour
+    type: Class
+- uid: Server.Core.Behaviours.GatherBehaviour
+  name: Server.Core.Behaviours.GatherBehaviour
+  type: Namespace
+  items:
+  - uid: Server.Core.Behaviours.GatherBehaviour.GatherBehaviourBase
+    name: GatherBehaviourBase
+    type: Class
+- uid: Server.Core.Behaviours.MoveBehaviour
+  name: Server.Core.Behaviours.MoveBehaviour
+  type: Namespace
+  items:
+  - uid: Server.Core.Behaviours.MoveBehaviour.AvoiderMoveBehaviour
+    name: AvoiderMoveBehaviour
+    type: Class
+  - uid: Server.Core.Behaviours.MoveBehaviour.ConsistentWalkerMoveBehaviour
+    name: ConsistentWalkerMoveBehaviour
+    type: Class
+  - uid: Server.Core.Behaviours.MoveBehaviour.FollowerMoveBehaviour
+    name: FollowerMoveBehaviour
+    type: Class
+  - uid: Server.Core.Behaviours.MoveBehaviour.MoveBehaviourBase
+    name: MoveBehaviourBase
+    type: Class
+  - uid: Server.Core.Behaviours.MoveBehaviour.PlantMoveBehaviour
+    name: PlantMoveBehaviour
+    type: Class
+  - uid: Server.Core.Behaviours.MoveBehaviour.RandomWalkerMoveBehaviour
+    name: RandomWalkerMoveBehaviour
+    type: Class
+- uid: Server.Core.Behaviours.ReproduceBehaviour
+  name: Server.Core.Behaviours.ReproduceBehaviour
+  type: Namespace
+  items:
+  - uid: Server.Core.Behaviours.ReproduceBehaviour.PlantReproduceBehaviour
+    name: PlantReproduceBehaviour
+    type: Class
+  - uid: Server.Core.Behaviours.ReproduceBehaviour.ReproduceAccordingToReproductionNeedBehaviour
+    name: ReproduceAccordingToReproductionNeedBehaviour
+    type: Class
+  - uid: Server.Core.Behaviours.ReproduceBehaviour.ReproduceBehaviourBase
+    name: ReproduceBehaviourBase
+    type: Class
+- uid: Server.Core.Behaviours.TameBehaviour
+  name: Server.Core.Behaviours.TameBehaviour
+  type: Namespace
+  items:
+  - uid: Server.Core.Behaviours.TameBehaviour.TameBehaviourBase
+    name: TameBehaviourBase
+    type: Class
+- uid: Server.Core.Data
+  name: Server.Core.Data
+  type: Namespace
+  items:
+  - uid: Server.Core.Data.ModuleDBEntity
+    name: ModuleDBEntity
+    type: Class
+- uid: Server.Core.Exceptions
+  name: Server.Core.Exceptions
+  type: Namespace
+  items:
+  - uid: Server.Core.Exceptions.BehaviourImplementationNotFoundException
+    name: BehaviourImplementationNotFoundException
+    type: Class
+  - uid: Server.Core.Exceptions.NullLobbyException
+    name: NullLobbyException
+    type: Class
+- uid: Server.Core.Helpers
+  name: Server.Core.Helpers
+  type: Namespace
+  items:
+  - uid: Server.Core.Helpers.CustomBehaviourParams
+    name: CustomBehaviourParams
+    type: Class
+  - uid: Server.Core.Helpers.LobbyParams
+    name: LobbyParams
+    type: Class
+  - uid: Server.Core.Helpers.TypeHelpers
+    name: TypeHelpers
+    type: Class
+- uid: Server.Core.Lobby
+  name: Server.Core.Lobby
+  type: Namespace
+  items:
+  - uid: Server.Core.Lobby.ILobby
+    name: ILobby
+    type: Interface
+  - uid: Server.Core.Lobby.Lobby
+    name: Lobby
+    type: Class
+  - uid: Server.Core.Lobby.LobbyManager
+    name: LobbyManager
+    type: Class
+- uid: Server.Core.Migrations
+  name: Server.Core.Migrations
+  type: Namespace
+  items:
+  - uid: Server.Core.Migrations.AddedInitialModules
+    name: AddedInitialModules
+    type: Class
+  - uid: Server.Core.Migrations.ChangedHumanDamage
+    name: ChangedHumanDamage
+    type: Class
+  - uid: Server.Core.Migrations.HumanInitialData
+    name: HumanInitialData
+    type: Class
+  - uid: Server.Core.Migrations.InitialCreate
+    name: InitialCreate
+    type: Class
+  - uid: Server.Core.Migrations.StatsChanged
+    name: StatsChanged
+    type: Class
+- uid: Server.Core.Modules
+  name: Server.Core.Modules
+  type: Namespace
+  items:
+  - uid: Server.Core.Modules.Module
+    name: Module
+    type: Class
+  - uid: Server.Core.Modules.Module.ModuleBuilder
+    name: Module.ModuleBuilder
+    type: Class
+- uid: Server.Core.Services
+  name: Server.Core.Services
+  type: Namespace
+  items:
+  - uid: Server.Core.Services.BehaviourService
+    name: BehaviourService
+    type: Class
+  - uid: Server.Core.Services.IBehaviourService
+    name: IBehaviourService
+    type: Interface
+  - uid: Server.Core.Services.IModuleService
+    name: IModuleService
+    type: Interface
+  - uid: Server.Core.Services.LoggerService
+    name: LoggerService
+    type: Class
+  - uid: Server.Core.Services.ModuleService
+    name: ModuleService
+    type: Class
+- uid: Server.Tests
+  name: Server.Tests
+  type: Namespace
+  items:
+  - uid: Server.Tests.AttackBehaviourTests
+    name: AttackBehaviourTests
+    type: Class
+  - uid: Server.Tests.EatBeahvioursTests
+    name: EatBeahvioursTests
+    type: Class
+  - uid: Server.Tests.ReproduceBehavioursTests
+    name: ReproduceBehavioursTests
+    type: Class
+  - uid: Server.Tests.TestClass
+    name: TestClass
+    type: Class
+- uid: Server.UI
+  name: Server.UI
+  type: Namespace
+  items:
+  - uid: Server.UI.App
+    name: App
+    type: Class
+  - uid: Server.UI.MainWindow
+    name: MainWindow
+    type: Class
+- uid: SharedLibrary
+  name: SharedLibrary
+  type: Namespace
+  items:
+  - uid: SharedLibrary.TileExtensions
+    name: TileExtensions
+    type: Class
+  - uid: SharedLibrary.TileProperty
+    name: TileProperty
+    type: Class
+  - uid: SharedLibrary.TileType
+    name: TileType
+    type: Enum
+  - uid: SharedLibrary.Tilemap
+    name: Tilemap
+    type: Class
+- uid: SharedLibrary.DTOs.EntitiesDTO
+  name: SharedLibrary.DTOs.EntitiesDTO
+  type: Namespace
+  items:
+  - uid: SharedLibrary.DTOs.EntitiesDTO.EntityStateDTO
+    name: EntityStateDTO
+    type: Class
+  - uid: SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO
+    name: WorldEntityDTO
+    type: Class
+- uid: SharedLibrary.DTOs.LobbyDTO
+  name: SharedLibrary.DTOs.LobbyDTO
+  type: Namespace
+  items:
+  - uid: SharedLibrary.DTOs.LobbyDTO.LobbyDTO
+    name: LobbyDTO
+    type: Class
+- uid: SharedLibrary.DTOs.ModuleDTO
+  name: SharedLibrary.DTOs.ModuleDTO
+  type: Namespace
+  items:
+  - uid: SharedLibrary.DTOs.ModuleDTO.BehaviourDTO
+    name: BehaviourDTO
+    type: Class
+  - uid: SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum
+    name: BehaviourInteractionTypeEnum
+    type: Enum
+  - uid: SharedLibrary.DTOs.ModuleDTO.CreateModuleDTO
+    name: CreateModuleDTO
+    type: Class
+  - uid: SharedLibrary.DTOs.ModuleDTO.ModuleDTO
+    name: ModuleDTO
+    type: Class
+- uid: SharedLibrary.Helpers
+  name: SharedLibrary.Helpers
+  type: Namespace
+  items:
+  - uid: SharedLibrary.Helpers.ModulePropertiesLimits
+    name: ModulePropertiesLimits
+    type: Class
+  - uid: SharedLibrary.Helpers.Position2D
+    name: Position2D
+    type: Class
+- uid: SharedLibrary.Logging
+  name: SharedLibrary.Logging
+  type: Namespace
+  items:
+  - uid: SharedLibrary.Logging.Log
+    name: Log
+    type: Class
+  - uid: SharedLibrary.Logging.LogLevelEnum
+    name: LogLevelEnum
+    type: Enum
+  - uid: SharedLibrary.Logging.OnLogEventArgs
+    name: OnLogEventArgs
+    type: Class
+- uid: SharedLibrary.Messages
+  name: SharedLibrary.Messages
+  type: Namespace
+  items:
+  - uid: SharedLibrary.Messages.CreateLobbyMessage
+    name: CreateLobbyMessage
+    type: Class
+  - uid: SharedLibrary.Messages.CreateModuleMessage
+    name: CreateModuleMessage
+    type: Class
+  - uid: SharedLibrary.Messages.DisjoinLobbyMessage
+    name: DisjoinLobbyMessage
+    type: Class
+  - uid: SharedLibrary.Messages.GetMessage
+    name: GetMessage
+    type: Class
+  - uid: SharedLibrary.Messages.GetMessageTypeEnum
+    name: GetMessageTypeEnum
+    type: Enum
+  - uid: SharedLibrary.Messages.InfoMessage
+    name: InfoMessage
+    type: Class
+  - uid: SharedLibrary.Messages.InfoMessageTypeEnum
+    name: InfoMessageTypeEnum
+    type: Enum
+  - uid: SharedLibrary.Messages.JoinLobbyMessage
+    name: JoinLobbyMessage
+    type: Class
+  - uid: SharedLibrary.Messages.LobbyDataMessage
+    name: LobbyDataMessage
+    type: Class
+  - uid: SharedLibrary.Messages.LobbyListMessage
+    name: LobbyListMessage
+    type: Class
+  - uid: SharedLibrary.Messages.LogMessage
+    name: LogMessage
+    type: Class
+  - uid: SharedLibrary.Messages.MessageBase
+    name: MessageBase
+    type: Class
+  - uid: SharedLibrary.Messages.MessageManager
+    name: MessageManager
+    type: Class
+  - uid: SharedLibrary.Messages.MessageTypeEnum
+    name: MessageTypeEnum
+    type: Enum
+  - uid: SharedLibrary.Messages.ModuleListMessage
+    name: ModuleListMessage
+    type: Class
+  - uid: SharedLibrary.Messages.RoleEnum
+    name: RoleEnum
+    type: Enum
+  - uid: SharedLibrary.Messages.RoleMessage
+    name: RoleMessage
+    type: Class
+  - uid: SharedLibrary.Messages.UserInteractionMessage
+    name: UserInteractionMessage
+    type: Class
+  - uid: SharedLibrary.Messages.WorldStateMessage
+    name: WorldStateMessage
+    type: Class
+- uid: SharedLibrary.Messages.BehaviourMessages
+  name: SharedLibrary.Messages.BehaviourMessages
+  type: Namespace
+  items:
+  - uid: SharedLibrary.Messages.BehaviourMessages.BehaviourListMessage
+    name: BehaviourListMessage
+    type: Class
+memberLayout: SamePage

@@ -1,0 +1,153 @@
+### YamlMime:ManagedReference
+items:
+- uid: Server.Core.Behaviours.AttackBehaviour
+  commentId: N:Server.Core.Behaviours.AttackBehaviour
+  id: Server.Core.Behaviours.AttackBehaviour
+  children:
+  - Server.Core.Behaviours.AttackBehaviour.AlwaysAttackAnimalsBehaviour
+  - Server.Core.Behaviours.AttackBehaviour.AlwaysAttackBehaviour
+  - Server.Core.Behaviours.AttackBehaviour.AlwaysAttackHumansBehaviour
+  - Server.Core.Behaviours.AttackBehaviour.AttackBehaviourBase
+  - Server.Core.Behaviours.AttackBehaviour.DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour
+  - Server.Core.Behaviours.AttackBehaviour.EnemyLowHealthAttackBehaviour
+  - Server.Core.Behaviours.AttackBehaviour.GreaterAggressionAttackBehaviour
+  - Server.Core.Behaviours.AttackBehaviour.HumanAttackBehaviour
+  - Server.Core.Behaviours.AttackBehaviour.NeverAttackBehaviour
+  - Server.Core.Behaviours.AttackBehaviour.OnlyAttackSelfSpiecesAttackBehaviour
+  - Server.Core.Behaviours.AttackBehaviour.PlantAttackBehaviour
+  - Server.Core.Behaviours.AttackBehaviour.Random25AttackBehaviour
+  - Server.Core.Behaviours.AttackBehaviour.Random50AttackBehaviour
+  - Server.Core.Behaviours.AttackBehaviour.Random75AttackBehaviour
+  langs:
+  - csharp
+  - vb
+  name: Server.Core.Behaviours.AttackBehaviour
+  nameWithType: Server.Core.Behaviours.AttackBehaviour
+  fullName: Server.Core.Behaviours.AttackBehaviour
+  type: Namespace
+  assemblies:
+  - Server.Core
+references:
+- uid: Server.Core.Behaviours.AttackBehaviour.AlwaysAttackAnimalsBehaviour
+  commentId: T:Server.Core.Behaviours.AttackBehaviour.AlwaysAttackAnimalsBehaviour
+  href: Server.Core.Behaviours.AttackBehaviour.AlwaysAttackAnimalsBehaviour.html
+  name: AlwaysAttackAnimalsBehaviour
+  nameWithType: AlwaysAttackAnimalsBehaviour
+  fullName: Server.Core.Behaviours.AttackBehaviour.AlwaysAttackAnimalsBehaviour
+- uid: Server.Core.Behaviours.AttackBehaviour.AlwaysAttackBehaviour
+  commentId: T:Server.Core.Behaviours.AttackBehaviour.AlwaysAttackBehaviour
+  href: Server.Core.Behaviours.AttackBehaviour.AlwaysAttackBehaviour.html
+  name: AlwaysAttackBehaviour
+  nameWithType: AlwaysAttackBehaviour
+  fullName: Server.Core.Behaviours.AttackBehaviour.AlwaysAttackBehaviour
+- uid: Server.Core.Behaviours.AttackBehaviour.AlwaysAttackHumansBehaviour
+  commentId: T:Server.Core.Behaviours.AttackBehaviour.AlwaysAttackHumansBehaviour
+  href: Server.Core.Behaviours.AttackBehaviour.AlwaysAttackHumansBehaviour.html
+  name: AlwaysAttackHumansBehaviour
+  nameWithType: AlwaysAttackHumansBehaviour
+  fullName: Server.Core.Behaviours.AttackBehaviour.AlwaysAttackHumansBehaviour
+- uid: Server.Core.Behaviours.AttackBehaviour.AttackBehaviourBase
+  commentId: T:Server.Core.Behaviours.AttackBehaviour.AttackBehaviourBase
+  parent: Server.Core.Behaviours.AttackBehaviour
+  href: Server.Core.Behaviours.AttackBehaviour.AttackBehaviourBase.html
+  name: AttackBehaviourBase
+  nameWithType: AttackBehaviourBase
+  fullName: Server.Core.Behaviours.AttackBehaviour.AttackBehaviourBase
+- uid: Server.Core.Behaviours.AttackBehaviour.DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour
+  commentId: T:Server.Core.Behaviours.AttackBehaviour.DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour
+  href: Server.Core.Behaviours.AttackBehaviour.DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour.html
+  name: DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour
+  nameWithType: DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour
+  fullName: Server.Core.Behaviours.AttackBehaviour.DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour
+- uid: Server.Core.Behaviours.AttackBehaviour.EnemyLowHealthAttackBehaviour
+  commentId: T:Server.Core.Behaviours.AttackBehaviour.EnemyLowHealthAttackBehaviour
+  href: Server.Core.Behaviours.AttackBehaviour.EnemyLowHealthAttackBehaviour.html
+  name: EnemyLowHealthAttackBehaviour
+  nameWithType: EnemyLowHealthAttackBehaviour
+  fullName: Server.Core.Behaviours.AttackBehaviour.EnemyLowHealthAttackBehaviour
+- uid: Server.Core.Behaviours.AttackBehaviour.GreaterAggressionAttackBehaviour
+  commentId: T:Server.Core.Behaviours.AttackBehaviour.GreaterAggressionAttackBehaviour
+  href: Server.Core.Behaviours.AttackBehaviour.GreaterAggressionAttackBehaviour.html
+  name: GreaterAggressionAttackBehaviour
+  nameWithType: GreaterAggressionAttackBehaviour
+  fullName: Server.Core.Behaviours.AttackBehaviour.GreaterAggressionAttackBehaviour
+- uid: Server.Core.Behaviours.AttackBehaviour.HumanAttackBehaviour
+  commentId: T:Server.Core.Behaviours.AttackBehaviour.HumanAttackBehaviour
+  href: Server.Core.Behaviours.AttackBehaviour.HumanAttackBehaviour.html
+  name: HumanAttackBehaviour
+  nameWithType: HumanAttackBehaviour
+  fullName: Server.Core.Behaviours.AttackBehaviour.HumanAttackBehaviour
+- uid: Server.Core.Behaviours.AttackBehaviour.NeverAttackBehaviour
+  commentId: T:Server.Core.Behaviours.AttackBehaviour.NeverAttackBehaviour
+  href: Server.Core.Behaviours.AttackBehaviour.NeverAttackBehaviour.html
+  name: NeverAttackBehaviour
+  nameWithType: NeverAttackBehaviour
+  fullName: Server.Core.Behaviours.AttackBehaviour.NeverAttackBehaviour
+- uid: Server.Core.Behaviours.AttackBehaviour.OnlyAttackSelfSpiecesAttackBehaviour
+  commentId: T:Server.Core.Behaviours.AttackBehaviour.OnlyAttackSelfSpiecesAttackBehaviour
+  href: Server.Core.Behaviours.AttackBehaviour.OnlyAttackSelfSpiecesAttackBehaviour.html
+  name: OnlyAttackSelfSpiecesAttackBehaviour
+  nameWithType: OnlyAttackSelfSpiecesAttackBehaviour
+  fullName: Server.Core.Behaviours.AttackBehaviour.OnlyAttackSelfSpiecesAttackBehaviour
+- uid: Server.Core.Behaviours.AttackBehaviour.PlantAttackBehaviour
+  commentId: T:Server.Core.Behaviours.AttackBehaviour.PlantAttackBehaviour
+  href: Server.Core.Behaviours.AttackBehaviour.PlantAttackBehaviour.html
+  name: PlantAttackBehaviour
+  nameWithType: PlantAttackBehaviour
+  fullName: Server.Core.Behaviours.AttackBehaviour.PlantAttackBehaviour
+- uid: Server.Core.Behaviours.AttackBehaviour.Random25AttackBehaviour
+  commentId: T:Server.Core.Behaviours.AttackBehaviour.Random25AttackBehaviour
+  href: Server.Core.Behaviours.AttackBehaviour.Random25AttackBehaviour.html
+  name: Random25AttackBehaviour
+  nameWithType: Random25AttackBehaviour
+  fullName: Server.Core.Behaviours.AttackBehaviour.Random25AttackBehaviour
+- uid: Server.Core.Behaviours.AttackBehaviour.Random50AttackBehaviour
+  commentId: T:Server.Core.Behaviours.AttackBehaviour.Random50AttackBehaviour
+  href: Server.Core.Behaviours.AttackBehaviour.Random50AttackBehaviour.html
+  name: Random50AttackBehaviour
+  nameWithType: Random50AttackBehaviour
+  fullName: Server.Core.Behaviours.AttackBehaviour.Random50AttackBehaviour
+- uid: Server.Core.Behaviours.AttackBehaviour.Random75AttackBehaviour
+  commentId: T:Server.Core.Behaviours.AttackBehaviour.Random75AttackBehaviour
+  href: Server.Core.Behaviours.AttackBehaviour.Random75AttackBehaviour.html
+  name: Random75AttackBehaviour
+  nameWithType: Random75AttackBehaviour
+  fullName: Server.Core.Behaviours.AttackBehaviour.Random75AttackBehaviour
+- uid: Server.Core.Behaviours.AttackBehaviour
+  commentId: N:Server.Core.Behaviours.AttackBehaviour
+  href: Server.html
+  name: Server.Core.Behaviours.AttackBehaviour
+  nameWithType: Server.Core.Behaviours.AttackBehaviour
+  fullName: Server.Core.Behaviours.AttackBehaviour
+  spec.csharp:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+  - name: .
+  - uid: Server.Core.Behaviours
+    name: Behaviours
+    href: Server.Core.Behaviours.html
+  - name: .
+  - uid: Server.Core.Behaviours.AttackBehaviour
+    name: AttackBehaviour
+    href: Server.Core.Behaviours.AttackBehaviour.html
+  spec.vb:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+  - name: .
+  - uid: Server.Core.Behaviours
+    name: Behaviours
+    href: Server.Core.Behaviours.html
+  - name: .
+  - uid: Server.Core.Behaviours.AttackBehaviour
+    name: AttackBehaviour
+    href: Server.Core.Behaviours.AttackBehaviour.html

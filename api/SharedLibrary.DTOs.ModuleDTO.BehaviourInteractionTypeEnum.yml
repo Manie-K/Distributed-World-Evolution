@@ -1,0 +1,211 @@
+### YamlMime:ManagedReference
+items:
+- uid: SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum
+  commentId: T:SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum
+  id: BehaviourInteractionTypeEnum
+  parent: SharedLibrary.DTOs.ModuleDTO
+  children:
+  - SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum.Attack
+  - SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum.Eat
+  - SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum.Move
+  - SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum.None
+  - SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum.Reproduce
+  langs:
+  - csharp
+  - vb
+  name: BehaviourInteractionTypeEnum
+  nameWithType: BehaviourInteractionTypeEnum
+  fullName: SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum
+  type: Enum
+  source:
+    remote:
+      path: Shared/SharedLibrary/DTOs/ModuleDTO/BehaviourInteractionTypeEnum.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: BehaviourInteractionTypeEnum
+    path: Shared/SharedLibrary/DTOs/ModuleDTO/BehaviourInteractionTypeEnum.cs
+    startLine: 2
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.DTOs.ModuleDTO
+  syntax:
+    content: >-
+      [Serializable]
+
+      public enum BehaviourInteractionTypeEnum
+    content.vb: >-
+      <Serializable>
+
+      Public Enum BehaviourInteractionTypeEnum
+  attributes:
+  - type: System.SerializableAttribute
+    ctor: System.SerializableAttribute.#ctor
+    arguments: []
+- uid: SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum.None
+  commentId: F:SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum.None
+  id: None
+  parent: SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum
+  langs:
+  - csharp
+  - vb
+  name: None
+  nameWithType: BehaviourInteractionTypeEnum.None
+  fullName: SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum.None
+  type: Field
+  source:
+    remote:
+      path: Shared/SharedLibrary/DTOs/ModuleDTO/BehaviourInteractionTypeEnum.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: None
+    path: Shared/SharedLibrary/DTOs/ModuleDTO/BehaviourInteractionTypeEnum.cs
+    startLine: 5
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.DTOs.ModuleDTO
+  syntax:
+    content: None = 0
+    return:
+      type: SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum
+- uid: SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum.Move
+  commentId: F:SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum.Move
+  id: Move
+  parent: SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum
+  langs:
+  - csharp
+  - vb
+  name: Move
+  nameWithType: BehaviourInteractionTypeEnum.Move
+  fullName: SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum.Move
+  type: Field
+  source:
+    remote:
+      path: Shared/SharedLibrary/DTOs/ModuleDTO/BehaviourInteractionTypeEnum.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Move
+    path: Shared/SharedLibrary/DTOs/ModuleDTO/BehaviourInteractionTypeEnum.cs
+    startLine: 6
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.DTOs.ModuleDTO
+  syntax:
+    content: Move = 1
+    return:
+      type: SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum
+- uid: SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum.Attack
+  commentId: F:SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum.Attack
+  id: Attack
+  parent: SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum
+  langs:
+  - csharp
+  - vb
+  name: Attack
+  nameWithType: BehaviourInteractionTypeEnum.Attack
+  fullName: SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum.Attack
+  type: Field
+  source:
+    remote:
+      path: Shared/SharedLibrary/DTOs/ModuleDTO/BehaviourInteractionTypeEnum.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Attack
+    path: Shared/SharedLibrary/DTOs/ModuleDTO/BehaviourInteractionTypeEnum.cs
+    startLine: 7
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.DTOs.ModuleDTO
+  syntax:
+    content: Attack = 2
+    return:
+      type: SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum
+- uid: SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum.Eat
+  commentId: F:SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum.Eat
+  id: Eat
+  parent: SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum
+  langs:
+  - csharp
+  - vb
+  name: Eat
+  nameWithType: BehaviourInteractionTypeEnum.Eat
+  fullName: SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum.Eat
+  type: Field
+  source:
+    remote:
+      path: Shared/SharedLibrary/DTOs/ModuleDTO/BehaviourInteractionTypeEnum.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Eat
+    path: Shared/SharedLibrary/DTOs/ModuleDTO/BehaviourInteractionTypeEnum.cs
+    startLine: 8
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.DTOs.ModuleDTO
+  syntax:
+    content: Eat = 3
+    return:
+      type: SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum
+- uid: SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum.Reproduce
+  commentId: F:SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum.Reproduce
+  id: Reproduce
+  parent: SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum
+  langs:
+  - csharp
+  - vb
+  name: Reproduce
+  nameWithType: BehaviourInteractionTypeEnum.Reproduce
+  fullName: SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum.Reproduce
+  type: Field
+  source:
+    remote:
+      path: Shared/SharedLibrary/DTOs/ModuleDTO/BehaviourInteractionTypeEnum.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Reproduce
+    path: Shared/SharedLibrary/DTOs/ModuleDTO/BehaviourInteractionTypeEnum.cs
+    startLine: 9
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.DTOs.ModuleDTO
+  syntax:
+    content: Reproduce = 4
+    return:
+      type: SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum
+references:
+- uid: SharedLibrary.DTOs.ModuleDTO
+  commentId: N:SharedLibrary.DTOs.ModuleDTO
+  href: SharedLibrary.html
+  name: SharedLibrary.DTOs.ModuleDTO
+  nameWithType: SharedLibrary.DTOs.ModuleDTO
+  fullName: SharedLibrary.DTOs.ModuleDTO
+  spec.csharp:
+  - uid: SharedLibrary
+    name: SharedLibrary
+    href: SharedLibrary.html
+  - name: .
+  - uid: SharedLibrary.DTOs
+    name: DTOs
+    href: SharedLibrary.DTOs.html
+  - name: .
+  - uid: SharedLibrary.DTOs.ModuleDTO
+    name: ModuleDTO
+    href: SharedLibrary.DTOs.ModuleDTO.html
+  spec.vb:
+  - uid: SharedLibrary
+    name: SharedLibrary
+    href: SharedLibrary.html
+  - name: .
+  - uid: SharedLibrary.DTOs
+    name: DTOs
+    href: SharedLibrary.DTOs.html
+  - name: .
+  - uid: SharedLibrary.DTOs.ModuleDTO
+    name: ModuleDTO
+    href: SharedLibrary.DTOs.ModuleDTO.html
+- uid: SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum
+  commentId: T:SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum
+  parent: SharedLibrary.DTOs.ModuleDTO
+  href: SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum.html
+  name: BehaviourInteractionTypeEnum
+  nameWithType: BehaviourInteractionTypeEnum
+  fullName: SharedLibrary.DTOs.ModuleDTO.BehaviourInteractionTypeEnum

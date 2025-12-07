@@ -1,0 +1,588 @@
+### YamlMime:ManagedReference
+items:
+- uid: SharedLibrary.Messages.UserInteractionMessage
+  commentId: T:SharedLibrary.Messages.UserInteractionMessage
+  id: UserInteractionMessage
+  parent: SharedLibrary.Messages
+  children:
+  - SharedLibrary.Messages.UserInteractionMessage.#ctor(SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO,SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO)
+  - SharedLibrary.Messages.UserInteractionMessage.BuildJson
+  - SharedLibrary.Messages.UserInteractionMessage.HumanEntity
+  - SharedLibrary.Messages.UserInteractionMessage.MessageType
+  - SharedLibrary.Messages.UserInteractionMessage.OtherEntity
+  langs:
+  - csharp
+  - vb
+  name: UserInteractionMessage
+  nameWithType: UserInteractionMessage
+  fullName: SharedLibrary.Messages.UserInteractionMessage
+  type: Class
+  source:
+    remote:
+      path: Shared/SharedLibrary/Messages/SimulationMessages/UserInteractionMessage.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: UserInteractionMessage
+    path: Shared/SharedLibrary/Messages/SimulationMessages/UserInteractionMessage.cs
+    startLine: 8
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.Messages
+  summary: Represents a user interaction event.
+  example: []
+  syntax:
+    content: 'public class UserInteractionMessage : MessageBase'
+    content.vb: Public Class UserInteractionMessage Inherits MessageBase
+  inheritance:
+  - System.Object
+  - SharedLibrary.Messages.MessageBase
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: SharedLibrary.Messages.UserInteractionMessage.MessageType
+  commentId: P:SharedLibrary.Messages.UserInteractionMessage.MessageType
+  id: MessageType
+  parent: SharedLibrary.Messages.UserInteractionMessage
+  langs:
+  - csharp
+  - vb
+  name: MessageType
+  nameWithType: UserInteractionMessage.MessageType
+  fullName: SharedLibrary.Messages.UserInteractionMessage.MessageType
+  type: Property
+  source:
+    remote:
+      path: Shared/SharedLibrary/Messages/SimulationMessages/UserInteractionMessage.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: MessageType
+    path: Shared/SharedLibrary/Messages/SimulationMessages/UserInteractionMessage.cs
+    startLine: 11
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.Messages
+  summary: 'Message type, for example: JoinLobby, InfoMessage, WorldState etc.'
+  example: []
+  syntax:
+    content: public override MessageTypeEnum MessageType { get; }
+    parameters: []
+    return:
+      type: SharedLibrary.Messages.MessageTypeEnum
+    content.vb: Public Overrides ReadOnly Property MessageType As MessageTypeEnum
+  overridden: SharedLibrary.Messages.MessageBase.MessageType
+  overload: SharedLibrary.Messages.UserInteractionMessage.MessageType*
+- uid: SharedLibrary.Messages.UserInteractionMessage.HumanEntity
+  commentId: P:SharedLibrary.Messages.UserInteractionMessage.HumanEntity
+  id: HumanEntity
+  parent: SharedLibrary.Messages.UserInteractionMessage
+  langs:
+  - csharp
+  - vb
+  name: HumanEntity
+  nameWithType: UserInteractionMessage.HumanEntity
+  fullName: SharedLibrary.Messages.UserInteractionMessage.HumanEntity
+  type: Property
+  source:
+    remote:
+      path: Shared/SharedLibrary/Messages/SimulationMessages/UserInteractionMessage.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: HumanEntity
+    path: Shared/SharedLibrary/Messages/SimulationMessages/UserInteractionMessage.cs
+    startLine: 15
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.Messages
+  summary: Human entity involved in the interaction.
+  example: []
+  syntax:
+    content: public WorldEntityDTO HumanEntity { get; init; }
+    parameters: []
+    return:
+      type: SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO
+    content.vb: Public Property HumanEntity As WorldEntityDTO
+  overload: SharedLibrary.Messages.UserInteractionMessage.HumanEntity*
+- uid: SharedLibrary.Messages.UserInteractionMessage.OtherEntity
+  commentId: P:SharedLibrary.Messages.UserInteractionMessage.OtherEntity
+  id: OtherEntity
+  parent: SharedLibrary.Messages.UserInteractionMessage
+  langs:
+  - csharp
+  - vb
+  name: OtherEntity
+  nameWithType: UserInteractionMessage.OtherEntity
+  fullName: SharedLibrary.Messages.UserInteractionMessage.OtherEntity
+  type: Property
+  source:
+    remote:
+      path: Shared/SharedLibrary/Messages/SimulationMessages/UserInteractionMessage.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: OtherEntity
+    path: Shared/SharedLibrary/Messages/SimulationMessages/UserInteractionMessage.cs
+    startLine: 19
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.Messages
+  summary: Other entity involved in the interaction, if any.
+  example: []
+  syntax:
+    content: public WorldEntityDTO? OtherEntity { get; init; }
+    parameters: []
+    return:
+      type: SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO
+    content.vb: Public Property OtherEntity As WorldEntityDTO
+  overload: SharedLibrary.Messages.UserInteractionMessage.OtherEntity*
+- uid: SharedLibrary.Messages.UserInteractionMessage.#ctor(SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO,SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO)
+  commentId: M:SharedLibrary.Messages.UserInteractionMessage.#ctor(SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO,SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO)
+  id: '#ctor(SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO,SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO)'
+  parent: SharedLibrary.Messages.UserInteractionMessage
+  langs:
+  - csharp
+  - vb
+  name: UserInteractionMessage(WorldEntityDTO, WorldEntityDTO?)
+  nameWithType: UserInteractionMessage.UserInteractionMessage(WorldEntityDTO, WorldEntityDTO?)
+  fullName: SharedLibrary.Messages.UserInteractionMessage.UserInteractionMessage(SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO, SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO?)
+  type: Constructor
+  source:
+    remote:
+      path: Shared/SharedLibrary/Messages/SimulationMessages/UserInteractionMessage.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: .ctor
+    path: Shared/SharedLibrary/Messages/SimulationMessages/UserInteractionMessage.cs
+    startLine: 23
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.Messages
+  summary: Constructor for UserInteractionMessage.
+  example: []
+  syntax:
+    content: public UserInteractionMessage(WorldEntityDTO humanEntity, WorldEntityDTO? otherEntity)
+    parameters:
+    - id: humanEntity
+      type: SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO
+    - id: otherEntity
+      type: SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO
+    content.vb: Public Sub New(humanEntity As WorldEntityDTO, otherEntity As WorldEntityDTO)
+  overload: SharedLibrary.Messages.UserInteractionMessage.#ctor*
+  nameWithType.vb: UserInteractionMessage.New(WorldEntityDTO, WorldEntityDTO)
+  fullName.vb: SharedLibrary.Messages.UserInteractionMessage.New(SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO, SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO)
+  name.vb: New(WorldEntityDTO, WorldEntityDTO)
+- uid: SharedLibrary.Messages.UserInteractionMessage.BuildJson
+  commentId: M:SharedLibrary.Messages.UserInteractionMessage.BuildJson
+  id: BuildJson
+  parent: SharedLibrary.Messages.UserInteractionMessage
+  langs:
+  - csharp
+  - vb
+  name: BuildJson()
+  nameWithType: UserInteractionMessage.BuildJson()
+  fullName: SharedLibrary.Messages.UserInteractionMessage.BuildJson()
+  type: Method
+  source:
+    remote:
+      path: Shared/SharedLibrary/Messages/SimulationMessages/UserInteractionMessage.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: BuildJson
+    path: Shared/SharedLibrary/Messages/SimulationMessages/UserInteractionMessage.cs
+    startLine: 29
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.Messages
+  summary: Builds the JSON representation of the message.
+  example: []
+  syntax:
+    content: public override string BuildJson()
+    return:
+      type: System.String
+    content.vb: Public Overrides Function BuildJson() As String
+  overridden: SharedLibrary.Messages.MessageBase.BuildJson
+  overload: SharedLibrary.Messages.UserInteractionMessage.BuildJson*
+references:
+- uid: SharedLibrary.Messages
+  commentId: N:SharedLibrary.Messages
+  href: SharedLibrary.html
+  name: SharedLibrary.Messages
+  nameWithType: SharedLibrary.Messages
+  fullName: SharedLibrary.Messages
+  spec.csharp:
+  - uid: SharedLibrary
+    name: SharedLibrary
+    href: SharedLibrary.html
+  - name: .
+  - uid: SharedLibrary.Messages
+    name: Messages
+    href: SharedLibrary.Messages.html
+  spec.vb:
+  - uid: SharedLibrary
+    name: SharedLibrary
+    href: SharedLibrary.html
+  - name: .
+  - uid: SharedLibrary.Messages
+    name: Messages
+    href: SharedLibrary.Messages.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: SharedLibrary.Messages.MessageBase
+  commentId: T:SharedLibrary.Messages.MessageBase
+  parent: SharedLibrary.Messages
+  href: SharedLibrary.Messages.MessageBase.html
+  name: MessageBase
+  nameWithType: MessageBase
+  fullName: SharedLibrary.Messages.MessageBase
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: SharedLibrary.Messages.MessageBase.MessageType
+  commentId: P:SharedLibrary.Messages.MessageBase.MessageType
+  parent: SharedLibrary.Messages.MessageBase
+  href: SharedLibrary.Messages.MessageBase.html#SharedLibrary_Messages_MessageBase_MessageType
+  name: MessageType
+  nameWithType: MessageBase.MessageType
+  fullName: SharedLibrary.Messages.MessageBase.MessageType
+- uid: SharedLibrary.Messages.UserInteractionMessage.MessageType*
+  commentId: Overload:SharedLibrary.Messages.UserInteractionMessage.MessageType
+  href: SharedLibrary.Messages.UserInteractionMessage.html#SharedLibrary_Messages_UserInteractionMessage_MessageType
+  name: MessageType
+  nameWithType: UserInteractionMessage.MessageType
+  fullName: SharedLibrary.Messages.UserInteractionMessage.MessageType
+- uid: SharedLibrary.Messages.MessageTypeEnum
+  commentId: T:SharedLibrary.Messages.MessageTypeEnum
+  parent: SharedLibrary.Messages
+  href: SharedLibrary.Messages.MessageTypeEnum.html
+  name: MessageTypeEnum
+  nameWithType: MessageTypeEnum
+  fullName: SharedLibrary.Messages.MessageTypeEnum
+- uid: SharedLibrary.Messages.UserInteractionMessage.HumanEntity*
+  commentId: Overload:SharedLibrary.Messages.UserInteractionMessage.HumanEntity
+  href: SharedLibrary.Messages.UserInteractionMessage.html#SharedLibrary_Messages_UserInteractionMessage_HumanEntity
+  name: HumanEntity
+  nameWithType: UserInteractionMessage.HumanEntity
+  fullName: SharedLibrary.Messages.UserInteractionMessage.HumanEntity
+- uid: SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO
+  commentId: T:SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO
+  parent: SharedLibrary.DTOs.EntitiesDTO
+  href: https://github.com/Manie-K/Distributed-World-Evolution/blob/04d77cccea139c5e616524f8a10c7afb68cc7eb5/Shared/SharedLibrary/DTOs/EntitiesDTO/WorldEntityDTO.cs
+  name: WorldEntityDTO
+  nameWithType: WorldEntityDTO
+  fullName: SharedLibrary.DTOs.EntitiesDTO.WorldEntityDTO
+- uid: SharedLibrary.DTOs.EntitiesDTO
+  commentId: N:SharedLibrary.DTOs.EntitiesDTO
+  href: SharedLibrary.html
+  name: SharedLibrary.DTOs.EntitiesDTO
+  nameWithType: SharedLibrary.DTOs.EntitiesDTO
+  fullName: SharedLibrary.DTOs.EntitiesDTO
+  spec.csharp:
+  - uid: SharedLibrary
+    name: SharedLibrary
+    href: SharedLibrary.html
+  - name: .
+  - uid: SharedLibrary.DTOs
+    name: DTOs
+    href: SharedLibrary.DTOs.html
+  - name: .
+  - uid: SharedLibrary.DTOs.EntitiesDTO
+    name: EntitiesDTO
+    href: SharedLibrary.DTOs.EntitiesDTO.html
+  spec.vb:
+  - uid: SharedLibrary
+    name: SharedLibrary
+    href: SharedLibrary.html
+  - name: .
+  - uid: SharedLibrary.DTOs
+    name: DTOs
+    href: SharedLibrary.DTOs.html
+  - name: .
+  - uid: SharedLibrary.DTOs.EntitiesDTO
+    name: EntitiesDTO
+    href: SharedLibrary.DTOs.EntitiesDTO.html
+- uid: SharedLibrary.Messages.UserInteractionMessage.OtherEntity*
+  commentId: Overload:SharedLibrary.Messages.UserInteractionMessage.OtherEntity
+  href: SharedLibrary.Messages.UserInteractionMessage.html#SharedLibrary_Messages_UserInteractionMessage_OtherEntity
+  name: OtherEntity
+  nameWithType: UserInteractionMessage.OtherEntity
+  fullName: SharedLibrary.Messages.UserInteractionMessage.OtherEntity
+- uid: SharedLibrary.Messages.UserInteractionMessage.#ctor*
+  commentId: Overload:SharedLibrary.Messages.UserInteractionMessage.#ctor
+  href: SharedLibrary.Messages.UserInteractionMessage.html#SharedLibrary_Messages_UserInteractionMessage__ctor_SharedLibrary_DTOs_EntitiesDTO_WorldEntityDTO_SharedLibrary_DTOs_EntitiesDTO_WorldEntityDTO_
+  name: UserInteractionMessage
+  nameWithType: UserInteractionMessage.UserInteractionMessage
+  fullName: SharedLibrary.Messages.UserInteractionMessage.UserInteractionMessage
+  nameWithType.vb: UserInteractionMessage.New
+  fullName.vb: SharedLibrary.Messages.UserInteractionMessage.New
+  name.vb: New
+- uid: SharedLibrary.Messages.MessageBase.BuildJson
+  commentId: M:SharedLibrary.Messages.MessageBase.BuildJson
+  parent: SharedLibrary.Messages.MessageBase
+  href: SharedLibrary.Messages.MessageBase.html#SharedLibrary_Messages_MessageBase_BuildJson
+  name: BuildJson()
+  nameWithType: MessageBase.BuildJson()
+  fullName: SharedLibrary.Messages.MessageBase.BuildJson()
+  spec.csharp:
+  - uid: SharedLibrary.Messages.MessageBase.BuildJson
+    name: BuildJson
+    href: SharedLibrary.Messages.MessageBase.html#SharedLibrary_Messages_MessageBase_BuildJson
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: SharedLibrary.Messages.MessageBase.BuildJson
+    name: BuildJson
+    href: SharedLibrary.Messages.MessageBase.html#SharedLibrary_Messages_MessageBase_BuildJson
+  - name: (
+  - name: )
+- uid: SharedLibrary.Messages.UserInteractionMessage.BuildJson*
+  commentId: Overload:SharedLibrary.Messages.UserInteractionMessage.BuildJson
+  href: SharedLibrary.Messages.UserInteractionMessage.html#SharedLibrary_Messages_UserInteractionMessage_BuildJson
+  name: BuildJson
+  nameWithType: UserInteractionMessage.BuildJson
+  fullName: SharedLibrary.Messages.UserInteractionMessage.BuildJson
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String

@@ -1,0 +1,150 @@
+### YamlMime:ManagedReference
+items:
+- uid: Client.Direction
+  commentId: T:Client.Direction
+  id: Direction
+  parent: Client
+  children:
+  - Client.Direction.Down
+  - Client.Direction.Left
+  - Client.Direction.Right
+  - Client.Direction.Up
+  langs:
+  - csharp
+  - vb
+  name: Direction
+  nameWithType: Direction
+  fullName: Client.Direction
+  type: Enum
+  source:
+    remote:
+      path: Client/Client/Logic/Characters/Character.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Direction
+    path: Client/Client/Logic/Characters/Character.cs
+    startLine: 8
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: public enum Direction
+    content.vb: Public Enum Direction
+- uid: Client.Direction.Down
+  commentId: F:Client.Direction.Down
+  id: Down
+  parent: Client.Direction
+  langs:
+  - csharp
+  - vb
+  name: Down
+  nameWithType: Direction.Down
+  fullName: Client.Direction.Down
+  type: Field
+  source:
+    remote:
+      path: Client/Client/Logic/Characters/Character.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Down
+    path: Client/Client/Logic/Characters/Character.cs
+    startLine: 10
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: Down = 0
+    return:
+      type: Client.Direction
+- uid: Client.Direction.Up
+  commentId: F:Client.Direction.Up
+  id: Up
+  parent: Client.Direction
+  langs:
+  - csharp
+  - vb
+  name: Up
+  nameWithType: Direction.Up
+  fullName: Client.Direction.Up
+  type: Field
+  source:
+    remote:
+      path: Client/Client/Logic/Characters/Character.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Up
+    path: Client/Client/Logic/Characters/Character.cs
+    startLine: 11
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: Up = 1
+    return:
+      type: Client.Direction
+- uid: Client.Direction.Left
+  commentId: F:Client.Direction.Left
+  id: Left
+  parent: Client.Direction
+  langs:
+  - csharp
+  - vb
+  name: Left
+  nameWithType: Direction.Left
+  fullName: Client.Direction.Left
+  type: Field
+  source:
+    remote:
+      path: Client/Client/Logic/Characters/Character.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Left
+    path: Client/Client/Logic/Characters/Character.cs
+    startLine: 12
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: Left = 2
+    return:
+      type: Client.Direction
+- uid: Client.Direction.Right
+  commentId: F:Client.Direction.Right
+  id: Right
+  parent: Client.Direction
+  langs:
+  - csharp
+  - vb
+  name: Right
+  nameWithType: Direction.Right
+  fullName: Client.Direction.Right
+  type: Field
+  source:
+    remote:
+      path: Client/Client/Logic/Characters/Character.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Right
+    path: Client/Client/Logic/Characters/Character.cs
+    startLine: 13
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: Right = 3
+    return:
+      type: Client.Direction
+references:
+- uid: Client
+  commentId: N:Client
+  href: Client.html
+  name: Client
+  nameWithType: Client
+  fullName: Client
+- uid: Client.Direction
+  commentId: T:Client.Direction
+  parent: Client
+  href: Client.Direction.html
+  name: Direction
+  nameWithType: Direction
+  fullName: Client.Direction

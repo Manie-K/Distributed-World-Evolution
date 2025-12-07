@@ -1,0 +1,1505 @@
+### YamlMime:ManagedReference
+items:
+- uid: Server.UI.App
+  commentId: T:Server.UI.App
+  id: App
+  parent: Server.UI
+  children:
+  - Server.UI.App.InitializeComponent
+  - Server.UI.App.Main
+  langs:
+  - csharp
+  - vb
+  name: App
+  nameWithType: App
+  fullName: Server.UI.App
+  type: Class
+  source:
+    remote:
+      path: Server/Server.UI/obj/Release/net8.0-windows/App.g.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: App
+    path: Server/Server.UI/obj/Release/net8.0-windows/App.g.cs
+    startLine: 40
+  assemblies:
+  - Server.UI
+  namespace: Server.UI
+  summary: Interaction logic for App.xaml
+  example: []
+  syntax:
+    content: 'public class App : Application, IQueryAmbient'
+    content.vb: Public Class App Inherits Application Implements IQueryAmbient
+  inheritance:
+  - System.Object
+  - System.Windows.Threading.DispatcherObject
+  - System.Windows.Application
+  implements:
+  - System.Windows.Markup.IQueryAmbient
+  inheritedMembers:
+  - System.Windows.Application.FindResource(System.Object)
+  - System.Windows.Application.GetContentStream(System.Uri)
+  - System.Windows.Application.GetCookie(System.Uri)
+  - System.Windows.Application.GetRemoteStream(System.Uri)
+  - System.Windows.Application.GetResourceStream(System.Uri)
+  - System.Windows.Application.LoadComponent(System.Object,System.Uri)
+  - System.Windows.Application.LoadComponent(System.Uri)
+  - System.Windows.Application.OnActivated(System.EventArgs)
+  - System.Windows.Application.OnDeactivated(System.EventArgs)
+  - System.Windows.Application.OnExit(System.Windows.ExitEventArgs)
+  - System.Windows.Application.OnFragmentNavigation(System.Windows.Navigation.FragmentNavigationEventArgs)
+  - System.Windows.Application.OnLoadCompleted(System.Windows.Navigation.NavigationEventArgs)
+  - System.Windows.Application.OnNavigated(System.Windows.Navigation.NavigationEventArgs)
+  - System.Windows.Application.OnNavigating(System.Windows.Navigation.NavigatingCancelEventArgs)
+  - System.Windows.Application.OnNavigationFailed(System.Windows.Navigation.NavigationFailedEventArgs)
+  - System.Windows.Application.OnNavigationProgress(System.Windows.Navigation.NavigationProgressEventArgs)
+  - System.Windows.Application.OnNavigationStopped(System.Windows.Navigation.NavigationEventArgs)
+  - System.Windows.Application.OnSessionEnding(System.Windows.SessionEndingCancelEventArgs)
+  - System.Windows.Application.OnStartup(System.Windows.StartupEventArgs)
+  - System.Windows.Application.Run
+  - System.Windows.Application.Run(System.Windows.Window)
+  - System.Windows.Application.SetCookie(System.Uri,System.String)
+  - System.Windows.Application.Shutdown
+  - System.Windows.Application.Shutdown(System.Int32)
+  - System.Windows.Application.TryFindResource(System.Object)
+  - System.Windows.Application.Current
+  - System.Windows.Application.MainWindow
+  - System.Windows.Application.Properties
+  - System.Windows.Application.ResourceAssembly
+  - System.Windows.Application.Resources
+  - System.Windows.Application.ShutdownMode
+  - System.Windows.Application.StartupUri
+  - System.Windows.Application.Windows
+  - System.Windows.Application.Activated
+  - System.Windows.Application.Deactivated
+  - System.Windows.Application.DispatcherUnhandledException
+  - System.Windows.Application.Exit
+  - System.Windows.Application.FragmentNavigation
+  - System.Windows.Application.LoadCompleted
+  - System.Windows.Application.Navigated
+  - System.Windows.Application.Navigating
+  - System.Windows.Application.NavigationFailed
+  - System.Windows.Application.NavigationProgress
+  - System.Windows.Application.NavigationStopped
+  - System.Windows.Application.SessionEnding
+  - System.Windows.Application.Startup
+  - System.Windows.Threading.DispatcherObject.Dispatcher
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Server.UI.App.InitializeComponent
+  commentId: M:Server.UI.App.InitializeComponent
+  id: InitializeComponent
+  parent: Server.UI.App
+  langs:
+  - csharp
+  - vb
+  name: InitializeComponent()
+  nameWithType: App.InitializeComponent()
+  fullName: Server.UI.App.InitializeComponent()
+  type: Method
+  source:
+    remote:
+      path: Server/Server.UI/obj/Release/net8.0-windows/App.g.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: InitializeComponent
+    path: Server/Server.UI/obj/Release/net8.0-windows/App.g.cs
+    startLine: 45
+  assemblies:
+  - Server.UI
+  namespace: Server.UI
+  summary: InitializeComponent
+  example: []
+  syntax:
+    content: public void InitializeComponent()
+    content.vb: Public Sub InitializeComponent()
+  overload: Server.UI.App.InitializeComponent*
+- uid: Server.UI.App.Main
+  commentId: M:Server.UI.App.Main
+  id: Main
+  parent: Server.UI.App
+  langs:
+  - csharp
+  - vb
+  name: Main()
+  nameWithType: App.Main()
+  fullName: Server.UI.App.Main()
+  type: Method
+  source:
+    remote:
+      path: Server/Server.UI/obj/Release/net8.0-windows/App.g.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Main
+    path: Server/Server.UI/obj/Release/net8.0-windows/App.g.cs
+    startLine: 59
+  assemblies:
+  - Server.UI
+  namespace: Server.UI
+  summary: Application Entry Point.
+  example: []
+  syntax:
+    content: >-
+      [STAThread]
+
+      public static void Main()
+    content.vb: >-
+      <STAThread>
+
+      Public Shared Sub Main()
+  overload: Server.UI.App.Main*
+  attributes:
+  - type: System.STAThreadAttribute
+    ctor: System.STAThreadAttribute.#ctor
+    arguments: []
+references:
+- uid: Server.UI
+  commentId: N:Server.UI
+  href: Server.html
+  name: Server.UI
+  nameWithType: Server.UI
+  fullName: Server.UI
+  spec.csharp:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.UI
+    name: UI
+    href: Server.UI.html
+  spec.vb:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.UI
+    name: UI
+    href: Server.UI.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Windows.Threading.DispatcherObject
+  commentId: T:System.Windows.Threading.DispatcherObject
+  parent: System.Windows.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.threading.dispatcherobject
+  name: DispatcherObject
+  nameWithType: DispatcherObject
+  fullName: System.Windows.Threading.DispatcherObject
+- uid: System.Windows.Application
+  commentId: T:System.Windows.Application
+  parent: System.Windows
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application
+  name: Application
+  nameWithType: Application
+  fullName: System.Windows.Application
+- uid: System.Windows.Markup.IQueryAmbient
+  commentId: T:System.Windows.Markup.IQueryAmbient
+  parent: System.Windows.Markup
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.markup.iqueryambient
+  name: IQueryAmbient
+  nameWithType: IQueryAmbient
+  fullName: System.Windows.Markup.IQueryAmbient
+- uid: System.Windows.Application.FindResource(System.Object)
+  commentId: M:System.Windows.Application.FindResource(System.Object)
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.findresource
+  name: FindResource(object)
+  nameWithType: Application.FindResource(object)
+  fullName: System.Windows.Application.FindResource(object)
+  nameWithType.vb: Application.FindResource(Object)
+  fullName.vb: System.Windows.Application.FindResource(Object)
+  name.vb: FindResource(Object)
+  spec.csharp:
+  - uid: System.Windows.Application.FindResource(System.Object)
+    name: FindResource
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.findresource
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Windows.Application.FindResource(System.Object)
+    name: FindResource
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.findresource
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Windows.Application.GetContentStream(System.Uri)
+  commentId: M:System.Windows.Application.GetContentStream(System.Uri)
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.getcontentstream
+  name: GetContentStream(Uri)
+  nameWithType: Application.GetContentStream(Uri)
+  fullName: System.Windows.Application.GetContentStream(System.Uri)
+  spec.csharp:
+  - uid: System.Windows.Application.GetContentStream(System.Uri)
+    name: GetContentStream
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.getcontentstream
+  - name: (
+  - uid: System.Uri
+    name: Uri
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uri
+  - name: )
+  spec.vb:
+  - uid: System.Windows.Application.GetContentStream(System.Uri)
+    name: GetContentStream
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.getcontentstream
+  - name: (
+  - uid: System.Uri
+    name: Uri
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uri
+  - name: )
+- uid: System.Windows.Application.GetCookie(System.Uri)
+  commentId: M:System.Windows.Application.GetCookie(System.Uri)
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.getcookie
+  name: GetCookie(Uri)
+  nameWithType: Application.GetCookie(Uri)
+  fullName: System.Windows.Application.GetCookie(System.Uri)
+  spec.csharp:
+  - uid: System.Windows.Application.GetCookie(System.Uri)
+    name: GetCookie
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.getcookie
+  - name: (
+  - uid: System.Uri
+    name: Uri
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uri
+  - name: )
+  spec.vb:
+  - uid: System.Windows.Application.GetCookie(System.Uri)
+    name: GetCookie
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.getcookie
+  - name: (
+  - uid: System.Uri
+    name: Uri
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uri
+  - name: )
+- uid: System.Windows.Application.GetRemoteStream(System.Uri)
+  commentId: M:System.Windows.Application.GetRemoteStream(System.Uri)
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.getremotestream
+  name: GetRemoteStream(Uri)
+  nameWithType: Application.GetRemoteStream(Uri)
+  fullName: System.Windows.Application.GetRemoteStream(System.Uri)
+  spec.csharp:
+  - uid: System.Windows.Application.GetRemoteStream(System.Uri)
+    name: GetRemoteStream
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.getremotestream
+  - name: (
+  - uid: System.Uri
+    name: Uri
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uri
+  - name: )
+  spec.vb:
+  - uid: System.Windows.Application.GetRemoteStream(System.Uri)
+    name: GetRemoteStream
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.getremotestream
+  - name: (
+  - uid: System.Uri
+    name: Uri
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uri
+  - name: )
+- uid: System.Windows.Application.GetResourceStream(System.Uri)
+  commentId: M:System.Windows.Application.GetResourceStream(System.Uri)
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.getresourcestream
+  name: GetResourceStream(Uri)
+  nameWithType: Application.GetResourceStream(Uri)
+  fullName: System.Windows.Application.GetResourceStream(System.Uri)
+  spec.csharp:
+  - uid: System.Windows.Application.GetResourceStream(System.Uri)
+    name: GetResourceStream
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.getresourcestream
+  - name: (
+  - uid: System.Uri
+    name: Uri
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uri
+  - name: )
+  spec.vb:
+  - uid: System.Windows.Application.GetResourceStream(System.Uri)
+    name: GetResourceStream
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.getresourcestream
+  - name: (
+  - uid: System.Uri
+    name: Uri
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uri
+  - name: )
+- uid: System.Windows.Application.LoadComponent(System.Object,System.Uri)
+  commentId: M:System.Windows.Application.LoadComponent(System.Object,System.Uri)
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.loadcomponent#system-windows-application-loadcomponent(system-object-system-uri)
+  name: LoadComponent(object, Uri)
+  nameWithType: Application.LoadComponent(object, Uri)
+  fullName: System.Windows.Application.LoadComponent(object, System.Uri)
+  nameWithType.vb: Application.LoadComponent(Object, Uri)
+  fullName.vb: System.Windows.Application.LoadComponent(Object, System.Uri)
+  name.vb: LoadComponent(Object, Uri)
+  spec.csharp:
+  - uid: System.Windows.Application.LoadComponent(System.Object,System.Uri)
+    name: LoadComponent
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.loadcomponent#system-windows-application-loadcomponent(system-object-system-uri)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Uri
+    name: Uri
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uri
+  - name: )
+  spec.vb:
+  - uid: System.Windows.Application.LoadComponent(System.Object,System.Uri)
+    name: LoadComponent
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.loadcomponent#system-windows-application-loadcomponent(system-object-system-uri)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Uri
+    name: Uri
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uri
+  - name: )
+- uid: System.Windows.Application.LoadComponent(System.Uri)
+  commentId: M:System.Windows.Application.LoadComponent(System.Uri)
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.loadcomponent#system-windows-application-loadcomponent(system-uri)
+  name: LoadComponent(Uri)
+  nameWithType: Application.LoadComponent(Uri)
+  fullName: System.Windows.Application.LoadComponent(System.Uri)
+  spec.csharp:
+  - uid: System.Windows.Application.LoadComponent(System.Uri)
+    name: LoadComponent
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.loadcomponent#system-windows-application-loadcomponent(system-uri)
+  - name: (
+  - uid: System.Uri
+    name: Uri
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uri
+  - name: )
+  spec.vb:
+  - uid: System.Windows.Application.LoadComponent(System.Uri)
+    name: LoadComponent
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.loadcomponent#system-windows-application-loadcomponent(system-uri)
+  - name: (
+  - uid: System.Uri
+    name: Uri
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uri
+  - name: )
+- uid: System.Windows.Application.OnActivated(System.EventArgs)
+  commentId: M:System.Windows.Application.OnActivated(System.EventArgs)
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.onactivated
+  name: OnActivated(EventArgs)
+  nameWithType: Application.OnActivated(EventArgs)
+  fullName: System.Windows.Application.OnActivated(System.EventArgs)
+  spec.csharp:
+  - uid: System.Windows.Application.OnActivated(System.EventArgs)
+    name: OnActivated
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.onactivated
+  - name: (
+  - uid: System.EventArgs
+    name: EventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.eventargs
+  - name: )
+  spec.vb:
+  - uid: System.Windows.Application.OnActivated(System.EventArgs)
+    name: OnActivated
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.onactivated
+  - name: (
+  - uid: System.EventArgs
+    name: EventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.eventargs
+  - name: )
+- uid: System.Windows.Application.OnDeactivated(System.EventArgs)
+  commentId: M:System.Windows.Application.OnDeactivated(System.EventArgs)
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.ondeactivated
+  name: OnDeactivated(EventArgs)
+  nameWithType: Application.OnDeactivated(EventArgs)
+  fullName: System.Windows.Application.OnDeactivated(System.EventArgs)
+  spec.csharp:
+  - uid: System.Windows.Application.OnDeactivated(System.EventArgs)
+    name: OnDeactivated
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.ondeactivated
+  - name: (
+  - uid: System.EventArgs
+    name: EventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.eventargs
+  - name: )
+  spec.vb:
+  - uid: System.Windows.Application.OnDeactivated(System.EventArgs)
+    name: OnDeactivated
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.ondeactivated
+  - name: (
+  - uid: System.EventArgs
+    name: EventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.eventargs
+  - name: )
+- uid: System.Windows.Application.OnExit(System.Windows.ExitEventArgs)
+  commentId: M:System.Windows.Application.OnExit(System.Windows.ExitEventArgs)
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.onexit
+  name: OnExit(ExitEventArgs)
+  nameWithType: Application.OnExit(ExitEventArgs)
+  fullName: System.Windows.Application.OnExit(System.Windows.ExitEventArgs)
+  spec.csharp:
+  - uid: System.Windows.Application.OnExit(System.Windows.ExitEventArgs)
+    name: OnExit
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.onexit
+  - name: (
+  - uid: System.Windows.ExitEventArgs
+    name: ExitEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.exiteventargs
+  - name: )
+  spec.vb:
+  - uid: System.Windows.Application.OnExit(System.Windows.ExitEventArgs)
+    name: OnExit
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.onexit
+  - name: (
+  - uid: System.Windows.ExitEventArgs
+    name: ExitEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.exiteventargs
+  - name: )
+- uid: System.Windows.Application.OnFragmentNavigation(System.Windows.Navigation.FragmentNavigationEventArgs)
+  commentId: M:System.Windows.Application.OnFragmentNavigation(System.Windows.Navigation.FragmentNavigationEventArgs)
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.onfragmentnavigation
+  name: OnFragmentNavigation(FragmentNavigationEventArgs)
+  nameWithType: Application.OnFragmentNavigation(FragmentNavigationEventArgs)
+  fullName: System.Windows.Application.OnFragmentNavigation(System.Windows.Navigation.FragmentNavigationEventArgs)
+  spec.csharp:
+  - uid: System.Windows.Application.OnFragmentNavigation(System.Windows.Navigation.FragmentNavigationEventArgs)
+    name: OnFragmentNavigation
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.onfragmentnavigation
+  - name: (
+  - uid: System.Windows.Navigation.FragmentNavigationEventArgs
+    name: FragmentNavigationEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.navigation.fragmentnavigationeventargs
+  - name: )
+  spec.vb:
+  - uid: System.Windows.Application.OnFragmentNavigation(System.Windows.Navigation.FragmentNavigationEventArgs)
+    name: OnFragmentNavigation
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.onfragmentnavigation
+  - name: (
+  - uid: System.Windows.Navigation.FragmentNavigationEventArgs
+    name: FragmentNavigationEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.navigation.fragmentnavigationeventargs
+  - name: )
+- uid: System.Windows.Application.OnLoadCompleted(System.Windows.Navigation.NavigationEventArgs)
+  commentId: M:System.Windows.Application.OnLoadCompleted(System.Windows.Navigation.NavigationEventArgs)
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.onloadcompleted
+  name: OnLoadCompleted(NavigationEventArgs)
+  nameWithType: Application.OnLoadCompleted(NavigationEventArgs)
+  fullName: System.Windows.Application.OnLoadCompleted(System.Windows.Navigation.NavigationEventArgs)
+  spec.csharp:
+  - uid: System.Windows.Application.OnLoadCompleted(System.Windows.Navigation.NavigationEventArgs)
+    name: OnLoadCompleted
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.onloadcompleted
+  - name: (
+  - uid: System.Windows.Navigation.NavigationEventArgs
+    name: NavigationEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.navigation.navigationeventargs
+  - name: )
+  spec.vb:
+  - uid: System.Windows.Application.OnLoadCompleted(System.Windows.Navigation.NavigationEventArgs)
+    name: OnLoadCompleted
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.onloadcompleted
+  - name: (
+  - uid: System.Windows.Navigation.NavigationEventArgs
+    name: NavigationEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.navigation.navigationeventargs
+  - name: )
+- uid: System.Windows.Application.OnNavigated(System.Windows.Navigation.NavigationEventArgs)
+  commentId: M:System.Windows.Application.OnNavigated(System.Windows.Navigation.NavigationEventArgs)
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.onnavigated
+  name: OnNavigated(NavigationEventArgs)
+  nameWithType: Application.OnNavigated(NavigationEventArgs)
+  fullName: System.Windows.Application.OnNavigated(System.Windows.Navigation.NavigationEventArgs)
+  spec.csharp:
+  - uid: System.Windows.Application.OnNavigated(System.Windows.Navigation.NavigationEventArgs)
+    name: OnNavigated
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.onnavigated
+  - name: (
+  - uid: System.Windows.Navigation.NavigationEventArgs
+    name: NavigationEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.navigation.navigationeventargs
+  - name: )
+  spec.vb:
+  - uid: System.Windows.Application.OnNavigated(System.Windows.Navigation.NavigationEventArgs)
+    name: OnNavigated
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.onnavigated
+  - name: (
+  - uid: System.Windows.Navigation.NavigationEventArgs
+    name: NavigationEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.navigation.navigationeventargs
+  - name: )
+- uid: System.Windows.Application.OnNavigating(System.Windows.Navigation.NavigatingCancelEventArgs)
+  commentId: M:System.Windows.Application.OnNavigating(System.Windows.Navigation.NavigatingCancelEventArgs)
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.onnavigating
+  name: OnNavigating(NavigatingCancelEventArgs)
+  nameWithType: Application.OnNavigating(NavigatingCancelEventArgs)
+  fullName: System.Windows.Application.OnNavigating(System.Windows.Navigation.NavigatingCancelEventArgs)
+  spec.csharp:
+  - uid: System.Windows.Application.OnNavigating(System.Windows.Navigation.NavigatingCancelEventArgs)
+    name: OnNavigating
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.onnavigating
+  - name: (
+  - uid: System.Windows.Navigation.NavigatingCancelEventArgs
+    name: NavigatingCancelEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.navigation.navigatingcanceleventargs
+  - name: )
+  spec.vb:
+  - uid: System.Windows.Application.OnNavigating(System.Windows.Navigation.NavigatingCancelEventArgs)
+    name: OnNavigating
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.onnavigating
+  - name: (
+  - uid: System.Windows.Navigation.NavigatingCancelEventArgs
+    name: NavigatingCancelEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.navigation.navigatingcanceleventargs
+  - name: )
+- uid: System.Windows.Application.OnNavigationFailed(System.Windows.Navigation.NavigationFailedEventArgs)
+  commentId: M:System.Windows.Application.OnNavigationFailed(System.Windows.Navigation.NavigationFailedEventArgs)
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.onnavigationfailed
+  name: OnNavigationFailed(NavigationFailedEventArgs)
+  nameWithType: Application.OnNavigationFailed(NavigationFailedEventArgs)
+  fullName: System.Windows.Application.OnNavigationFailed(System.Windows.Navigation.NavigationFailedEventArgs)
+  spec.csharp:
+  - uid: System.Windows.Application.OnNavigationFailed(System.Windows.Navigation.NavigationFailedEventArgs)
+    name: OnNavigationFailed
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.onnavigationfailed
+  - name: (
+  - uid: System.Windows.Navigation.NavigationFailedEventArgs
+    name: NavigationFailedEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.navigation.navigationfailedeventargs
+  - name: )
+  spec.vb:
+  - uid: System.Windows.Application.OnNavigationFailed(System.Windows.Navigation.NavigationFailedEventArgs)
+    name: OnNavigationFailed
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.onnavigationfailed
+  - name: (
+  - uid: System.Windows.Navigation.NavigationFailedEventArgs
+    name: NavigationFailedEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.navigation.navigationfailedeventargs
+  - name: )
+- uid: System.Windows.Application.OnNavigationProgress(System.Windows.Navigation.NavigationProgressEventArgs)
+  commentId: M:System.Windows.Application.OnNavigationProgress(System.Windows.Navigation.NavigationProgressEventArgs)
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.onnavigationprogress
+  name: OnNavigationProgress(NavigationProgressEventArgs)
+  nameWithType: Application.OnNavigationProgress(NavigationProgressEventArgs)
+  fullName: System.Windows.Application.OnNavigationProgress(System.Windows.Navigation.NavigationProgressEventArgs)
+  spec.csharp:
+  - uid: System.Windows.Application.OnNavigationProgress(System.Windows.Navigation.NavigationProgressEventArgs)
+    name: OnNavigationProgress
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.onnavigationprogress
+  - name: (
+  - uid: System.Windows.Navigation.NavigationProgressEventArgs
+    name: NavigationProgressEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.navigation.navigationprogresseventargs
+  - name: )
+  spec.vb:
+  - uid: System.Windows.Application.OnNavigationProgress(System.Windows.Navigation.NavigationProgressEventArgs)
+    name: OnNavigationProgress
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.onnavigationprogress
+  - name: (
+  - uid: System.Windows.Navigation.NavigationProgressEventArgs
+    name: NavigationProgressEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.navigation.navigationprogresseventargs
+  - name: )
+- uid: System.Windows.Application.OnNavigationStopped(System.Windows.Navigation.NavigationEventArgs)
+  commentId: M:System.Windows.Application.OnNavigationStopped(System.Windows.Navigation.NavigationEventArgs)
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.onnavigationstopped
+  name: OnNavigationStopped(NavigationEventArgs)
+  nameWithType: Application.OnNavigationStopped(NavigationEventArgs)
+  fullName: System.Windows.Application.OnNavigationStopped(System.Windows.Navigation.NavigationEventArgs)
+  spec.csharp:
+  - uid: System.Windows.Application.OnNavigationStopped(System.Windows.Navigation.NavigationEventArgs)
+    name: OnNavigationStopped
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.onnavigationstopped
+  - name: (
+  - uid: System.Windows.Navigation.NavigationEventArgs
+    name: NavigationEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.navigation.navigationeventargs
+  - name: )
+  spec.vb:
+  - uid: System.Windows.Application.OnNavigationStopped(System.Windows.Navigation.NavigationEventArgs)
+    name: OnNavigationStopped
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.onnavigationstopped
+  - name: (
+  - uid: System.Windows.Navigation.NavigationEventArgs
+    name: NavigationEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.navigation.navigationeventargs
+  - name: )
+- uid: System.Windows.Application.OnSessionEnding(System.Windows.SessionEndingCancelEventArgs)
+  commentId: M:System.Windows.Application.OnSessionEnding(System.Windows.SessionEndingCancelEventArgs)
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.onsessionending
+  name: OnSessionEnding(SessionEndingCancelEventArgs)
+  nameWithType: Application.OnSessionEnding(SessionEndingCancelEventArgs)
+  fullName: System.Windows.Application.OnSessionEnding(System.Windows.SessionEndingCancelEventArgs)
+  spec.csharp:
+  - uid: System.Windows.Application.OnSessionEnding(System.Windows.SessionEndingCancelEventArgs)
+    name: OnSessionEnding
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.onsessionending
+  - name: (
+  - uid: System.Windows.SessionEndingCancelEventArgs
+    name: SessionEndingCancelEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.sessionendingcanceleventargs
+  - name: )
+  spec.vb:
+  - uid: System.Windows.Application.OnSessionEnding(System.Windows.SessionEndingCancelEventArgs)
+    name: OnSessionEnding
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.onsessionending
+  - name: (
+  - uid: System.Windows.SessionEndingCancelEventArgs
+    name: SessionEndingCancelEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.sessionendingcanceleventargs
+  - name: )
+- uid: System.Windows.Application.OnStartup(System.Windows.StartupEventArgs)
+  commentId: M:System.Windows.Application.OnStartup(System.Windows.StartupEventArgs)
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.onstartup
+  name: OnStartup(StartupEventArgs)
+  nameWithType: Application.OnStartup(StartupEventArgs)
+  fullName: System.Windows.Application.OnStartup(System.Windows.StartupEventArgs)
+  spec.csharp:
+  - uid: System.Windows.Application.OnStartup(System.Windows.StartupEventArgs)
+    name: OnStartup
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.onstartup
+  - name: (
+  - uid: System.Windows.StartupEventArgs
+    name: StartupEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.startupeventargs
+  - name: )
+  spec.vb:
+  - uid: System.Windows.Application.OnStartup(System.Windows.StartupEventArgs)
+    name: OnStartup
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.onstartup
+  - name: (
+  - uid: System.Windows.StartupEventArgs
+    name: StartupEventArgs
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.startupeventargs
+  - name: )
+- uid: System.Windows.Application.Run
+  commentId: M:System.Windows.Application.Run
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.run#system-windows-application-run
+  name: Run()
+  nameWithType: Application.Run()
+  fullName: System.Windows.Application.Run()
+  spec.csharp:
+  - uid: System.Windows.Application.Run
+    name: Run
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.run#system-windows-application-run
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Windows.Application.Run
+    name: Run
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.run#system-windows-application-run
+  - name: (
+  - name: )
+- uid: System.Windows.Application.Run(System.Windows.Window)
+  commentId: M:System.Windows.Application.Run(System.Windows.Window)
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.run#system-windows-application-run(system-windows-window)
+  name: Run(Window)
+  nameWithType: Application.Run(Window)
+  fullName: System.Windows.Application.Run(System.Windows.Window)
+  spec.csharp:
+  - uid: System.Windows.Application.Run(System.Windows.Window)
+    name: Run
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.run#system-windows-application-run(system-windows-window)
+  - name: (
+  - uid: System.Windows.Window
+    name: Window
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.window
+  - name: )
+  spec.vb:
+  - uid: System.Windows.Application.Run(System.Windows.Window)
+    name: Run
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.run#system-windows-application-run(system-windows-window)
+  - name: (
+  - uid: System.Windows.Window
+    name: Window
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.window
+  - name: )
+- uid: System.Windows.Application.SetCookie(System.Uri,System.String)
+  commentId: M:System.Windows.Application.SetCookie(System.Uri,System.String)
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.setcookie
+  name: SetCookie(Uri, string)
+  nameWithType: Application.SetCookie(Uri, string)
+  fullName: System.Windows.Application.SetCookie(System.Uri, string)
+  nameWithType.vb: Application.SetCookie(Uri, String)
+  fullName.vb: System.Windows.Application.SetCookie(System.Uri, String)
+  name.vb: SetCookie(Uri, String)
+  spec.csharp:
+  - uid: System.Windows.Application.SetCookie(System.Uri,System.String)
+    name: SetCookie
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.setcookie
+  - name: (
+  - uid: System.Uri
+    name: Uri
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uri
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: string
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+  spec.vb:
+  - uid: System.Windows.Application.SetCookie(System.Uri,System.String)
+    name: SetCookie
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.setcookie
+  - name: (
+  - uid: System.Uri
+    name: Uri
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.uri
+  - name: ','
+  - name: " "
+  - uid: System.String
+    name: String
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.string
+  - name: )
+- uid: System.Windows.Application.Shutdown
+  commentId: M:System.Windows.Application.Shutdown
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.shutdown#system-windows-application-shutdown
+  name: Shutdown()
+  nameWithType: Application.Shutdown()
+  fullName: System.Windows.Application.Shutdown()
+  spec.csharp:
+  - uid: System.Windows.Application.Shutdown
+    name: Shutdown
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.shutdown#system-windows-application-shutdown
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Windows.Application.Shutdown
+    name: Shutdown
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.shutdown#system-windows-application-shutdown
+  - name: (
+  - name: )
+- uid: System.Windows.Application.Shutdown(System.Int32)
+  commentId: M:System.Windows.Application.Shutdown(System.Int32)
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.shutdown#system-windows-application-shutdown(system-int32)
+  name: Shutdown(int)
+  nameWithType: Application.Shutdown(int)
+  fullName: System.Windows.Application.Shutdown(int)
+  nameWithType.vb: Application.Shutdown(Integer)
+  fullName.vb: System.Windows.Application.Shutdown(Integer)
+  name.vb: Shutdown(Integer)
+  spec.csharp:
+  - uid: System.Windows.Application.Shutdown(System.Int32)
+    name: Shutdown
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.shutdown#system-windows-application-shutdown(system-int32)
+  - name: (
+  - uid: System.Int32
+    name: int
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+  spec.vb:
+  - uid: System.Windows.Application.Shutdown(System.Int32)
+    name: Shutdown
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.shutdown#system-windows-application-shutdown(system-int32)
+  - name: (
+  - uid: System.Int32
+    name: Integer
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.int32
+  - name: )
+- uid: System.Windows.Application.TryFindResource(System.Object)
+  commentId: M:System.Windows.Application.TryFindResource(System.Object)
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.tryfindresource
+  name: TryFindResource(object)
+  nameWithType: Application.TryFindResource(object)
+  fullName: System.Windows.Application.TryFindResource(object)
+  nameWithType.vb: Application.TryFindResource(Object)
+  fullName.vb: System.Windows.Application.TryFindResource(Object)
+  name.vb: TryFindResource(Object)
+  spec.csharp:
+  - uid: System.Windows.Application.TryFindResource(System.Object)
+    name: TryFindResource
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.tryfindresource
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Windows.Application.TryFindResource(System.Object)
+    name: TryFindResource
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.application.tryfindresource
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Windows.Application.Current
+  commentId: P:System.Windows.Application.Current
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.current
+  name: Current
+  nameWithType: Application.Current
+  fullName: System.Windows.Application.Current
+- uid: System.Windows.Application.MainWindow
+  commentId: P:System.Windows.Application.MainWindow
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.mainwindow
+  name: MainWindow
+  nameWithType: Application.MainWindow
+  fullName: System.Windows.Application.MainWindow
+- uid: System.Windows.Application.Properties
+  commentId: P:System.Windows.Application.Properties
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.properties
+  name: Properties
+  nameWithType: Application.Properties
+  fullName: System.Windows.Application.Properties
+- uid: System.Windows.Application.ResourceAssembly
+  commentId: P:System.Windows.Application.ResourceAssembly
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.resourceassembly
+  name: ResourceAssembly
+  nameWithType: Application.ResourceAssembly
+  fullName: System.Windows.Application.ResourceAssembly
+- uid: System.Windows.Application.Resources
+  commentId: P:System.Windows.Application.Resources
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.resources
+  name: Resources
+  nameWithType: Application.Resources
+  fullName: System.Windows.Application.Resources
+- uid: System.Windows.Application.ShutdownMode
+  commentId: P:System.Windows.Application.ShutdownMode
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.shutdownmode
+  name: ShutdownMode
+  nameWithType: Application.ShutdownMode
+  fullName: System.Windows.Application.ShutdownMode
+- uid: System.Windows.Application.StartupUri
+  commentId: P:System.Windows.Application.StartupUri
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.startupuri
+  name: StartupUri
+  nameWithType: Application.StartupUri
+  fullName: System.Windows.Application.StartupUri
+- uid: System.Windows.Application.Windows
+  commentId: P:System.Windows.Application.Windows
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.windows
+  name: Windows
+  nameWithType: Application.Windows
+  fullName: System.Windows.Application.Windows
+- uid: System.Windows.Application.Activated
+  commentId: E:System.Windows.Application.Activated
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.activated
+  name: Activated
+  nameWithType: Application.Activated
+  fullName: System.Windows.Application.Activated
+- uid: System.Windows.Application.Deactivated
+  commentId: E:System.Windows.Application.Deactivated
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.deactivated
+  name: Deactivated
+  nameWithType: Application.Deactivated
+  fullName: System.Windows.Application.Deactivated
+- uid: System.Windows.Application.DispatcherUnhandledException
+  commentId: E:System.Windows.Application.DispatcherUnhandledException
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.dispatcherunhandledexception
+  name: DispatcherUnhandledException
+  nameWithType: Application.DispatcherUnhandledException
+  fullName: System.Windows.Application.DispatcherUnhandledException
+- uid: System.Windows.Application.Exit
+  commentId: E:System.Windows.Application.Exit
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.exit
+  name: Exit
+  nameWithType: Application.Exit
+  fullName: System.Windows.Application.Exit
+- uid: System.Windows.Application.FragmentNavigation
+  commentId: E:System.Windows.Application.FragmentNavigation
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.fragmentnavigation
+  name: FragmentNavigation
+  nameWithType: Application.FragmentNavigation
+  fullName: System.Windows.Application.FragmentNavigation
+- uid: System.Windows.Application.LoadCompleted
+  commentId: E:System.Windows.Application.LoadCompleted
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.loadcompleted
+  name: LoadCompleted
+  nameWithType: Application.LoadCompleted
+  fullName: System.Windows.Application.LoadCompleted
+- uid: System.Windows.Application.Navigated
+  commentId: E:System.Windows.Application.Navigated
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.navigated
+  name: Navigated
+  nameWithType: Application.Navigated
+  fullName: System.Windows.Application.Navigated
+- uid: System.Windows.Application.Navigating
+  commentId: E:System.Windows.Application.Navigating
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.navigating
+  name: Navigating
+  nameWithType: Application.Navigating
+  fullName: System.Windows.Application.Navigating
+- uid: System.Windows.Application.NavigationFailed
+  commentId: E:System.Windows.Application.NavigationFailed
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.navigationfailed
+  name: NavigationFailed
+  nameWithType: Application.NavigationFailed
+  fullName: System.Windows.Application.NavigationFailed
+- uid: System.Windows.Application.NavigationProgress
+  commentId: E:System.Windows.Application.NavigationProgress
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.navigationprogress
+  name: NavigationProgress
+  nameWithType: Application.NavigationProgress
+  fullName: System.Windows.Application.NavigationProgress
+- uid: System.Windows.Application.NavigationStopped
+  commentId: E:System.Windows.Application.NavigationStopped
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.navigationstopped
+  name: NavigationStopped
+  nameWithType: Application.NavigationStopped
+  fullName: System.Windows.Application.NavigationStopped
+- uid: System.Windows.Application.SessionEnding
+  commentId: E:System.Windows.Application.SessionEnding
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.sessionending
+  name: SessionEnding
+  nameWithType: Application.SessionEnding
+  fullName: System.Windows.Application.SessionEnding
+- uid: System.Windows.Application.Startup
+  commentId: E:System.Windows.Application.Startup
+  parent: System.Windows.Application
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.application.startup
+  name: Startup
+  nameWithType: Application.Startup
+  fullName: System.Windows.Application.Startup
+- uid: System.Windows.Threading.DispatcherObject.Dispatcher
+  commentId: P:System.Windows.Threading.DispatcherObject.Dispatcher
+  parent: System.Windows.Threading.DispatcherObject
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.windows.threading.dispatcherobject.dispatcher
+  name: Dispatcher
+  nameWithType: DispatcherObject.Dispatcher
+  fullName: System.Windows.Threading.DispatcherObject.Dispatcher
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.Windows.Threading
+  commentId: N:System.Windows.Threading
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Windows.Threading
+  nameWithType: System.Windows.Threading
+  fullName: System.Windows.Threading
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Windows
+    name: Windows
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows
+  - name: .
+  - uid: System.Windows.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.threading
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Windows
+    name: Windows
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows
+  - name: .
+  - uid: System.Windows.Threading
+    name: Threading
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.threading
+- uid: System.Windows
+  commentId: N:System.Windows
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Windows
+  nameWithType: System.Windows
+  fullName: System.Windows
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Windows
+    name: Windows
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Windows
+    name: Windows
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows
+- uid: System.Windows.Markup
+  commentId: N:System.Windows.Markup
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Windows.Markup
+  nameWithType: System.Windows.Markup
+  fullName: System.Windows.Markup
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Windows
+    name: Windows
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows
+  - name: .
+  - uid: System.Windows.Markup
+    name: Markup
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.markup
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Windows
+    name: Windows
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows
+  - name: .
+  - uid: System.Windows.Markup
+    name: Markup
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.windows.markup
+- uid: Server.UI.App.InitializeComponent*
+  commentId: Overload:Server.UI.App.InitializeComponent
+  href: Server.UI.App.html#Server_UI_App_InitializeComponent
+  name: InitializeComponent
+  nameWithType: App.InitializeComponent
+  fullName: Server.UI.App.InitializeComponent
+- uid: Server.UI.App.Main*
+  commentId: Overload:Server.UI.App.Main
+  href: Server.UI.App.html#Server_UI_App_Main
+  name: Main
+  nameWithType: App.Main
+  fullName: Server.UI.App.Main

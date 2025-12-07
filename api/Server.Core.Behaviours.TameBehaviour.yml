@@ -1,0 +1,23 @@
+### YamlMime:ManagedReference
+items:
+- uid: Server.Core.Behaviours.TameBehaviour
+  commentId: N:Server.Core.Behaviours.TameBehaviour
+  id: Server.Core.Behaviours.TameBehaviour
+  children:
+  - Server.Core.Behaviours.TameBehaviour.TameBehaviourBase
+  langs:
+  - csharp
+  - vb
+  name: Server.Core.Behaviours.TameBehaviour
+  nameWithType: Server.Core.Behaviours.TameBehaviour
+  fullName: Server.Core.Behaviours.TameBehaviour
+  type: Namespace
+  assemblies:
+  - Server.Core
+references:
+- uid: Server.Core.Behaviours.TameBehaviour.TameBehaviourBase
+  commentId: T:Server.Core.Behaviours.TameBehaviour.TameBehaviourBase
+  href: Server.Core.Behaviours.TameBehaviour.TameBehaviourBase.html
+  name: TameBehaviourBase
+  nameWithType: TameBehaviourBase
+  fullName: Server.Core.Behaviours.TameBehaviour.TameBehaviourBase

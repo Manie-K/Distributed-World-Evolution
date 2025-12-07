@@ -1,0 +1,505 @@
+### YamlMime:ManagedReference
+items:
+- uid: Client.UI.MapSelection.MapData
+  commentId: T:Client.UI.MapSelection.MapData
+  id: MapData
+  parent: Client.UI.MapSelection
+  children:
+  - Client.UI.MapSelection.MapData.#ctor(Microsoft.Xna.Framework.Graphics.Texture2D,System.String)
+  - Client.UI.MapSelection.MapData.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)
+  - Client.UI.MapSelection.MapData.Name
+  - Client.UI.MapSelection.MapData.Texture
+  langs:
+  - csharp
+  - vb
+  name: MapData
+  nameWithType: MapData
+  fullName: Client.UI.MapSelection.MapData
+  type: Class
+  source:
+    remote:
+      path: Client/Client/UI/MapSelection/MapData.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: MapData
+    path: Client/Client/UI/MapSelection/MapData.cs
+    startLine: 5
+  assemblies:
+  - Client
+  namespace: Client.UI.MapSelection
+  syntax:
+    content: public class MapData
+    content.vb: Public Class MapData
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Client.UI.MapSelection.MapData.Texture
+  commentId: F:Client.UI.MapSelection.MapData.Texture
+  id: Texture
+  parent: Client.UI.MapSelection.MapData
+  langs:
+  - csharp
+  - vb
+  name: Texture
+  nameWithType: MapData.Texture
+  fullName: Client.UI.MapSelection.MapData.Texture
+  type: Field
+  source:
+    remote:
+      path: Client/Client/UI/MapSelection/MapData.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Texture
+    path: Client/Client/UI/MapSelection/MapData.cs
+    startLine: 7
+  assemblies:
+  - Client
+  namespace: Client.UI.MapSelection
+  syntax:
+    content: public Texture2D Texture
+    return:
+      type: Microsoft.Xna.Framework.Graphics.Texture2D
+    content.vb: Public Texture As Texture2D
+- uid: Client.UI.MapSelection.MapData.Name
+  commentId: F:Client.UI.MapSelection.MapData.Name
+  id: Name
+  parent: Client.UI.MapSelection.MapData
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: MapData.Name
+  fullName: Client.UI.MapSelection.MapData.Name
+  type: Field
+  source:
+    remote:
+      path: Client/Client/UI/MapSelection/MapData.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Name
+    path: Client/Client/UI/MapSelection/MapData.cs
+    startLine: 9
+  assemblies:
+  - Client
+  namespace: Client.UI.MapSelection
+  syntax:
+    content: public string Name
+    return:
+      type: System.String
+    content.vb: Public Name As String
+- uid: Client.UI.MapSelection.MapData.#ctor(Microsoft.Xna.Framework.Graphics.Texture2D,System.String)
+  commentId: M:Client.UI.MapSelection.MapData.#ctor(Microsoft.Xna.Framework.Graphics.Texture2D,System.String)
+  id: '#ctor(Microsoft.Xna.Framework.Graphics.Texture2D,System.String)'
+  parent: Client.UI.MapSelection.MapData
+  langs:
+  - csharp
+  - vb
+  name: MapData(Texture2D, string)
+  nameWithType: MapData.MapData(Texture2D, string)
+  fullName: Client.UI.MapSelection.MapData.MapData(Microsoft.Xna.Framework.Graphics.Texture2D, string)
+  type: Constructor
+  source:
+    remote:
+      path: Client/Client/UI/MapSelection/MapData.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: .ctor
+    path: Client/Client/UI/MapSelection/MapData.cs
+    startLine: 11
+  assemblies:
+  - Client
+  namespace: Client.UI.MapSelection
+  syntax:
+    content: public MapData(Texture2D texture, string name)
+    parameters:
+    - id: texture
+      type: Microsoft.Xna.Framework.Graphics.Texture2D
+    - id: name
+      type: System.String
+    content.vb: Public Sub New(texture As Texture2D, name As String)
+  overload: Client.UI.MapSelection.MapData.#ctor*
+  nameWithType.vb: MapData.New(Texture2D, String)
+  fullName.vb: Client.UI.MapSelection.MapData.New(Microsoft.Xna.Framework.Graphics.Texture2D, String)
+  name.vb: New(Texture2D, String)
+- uid: Client.UI.MapSelection.MapData.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)
+  commentId: M:Client.UI.MapSelection.MapData.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)
+  id: Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)
+  parent: Client.UI.MapSelection.MapData
+  langs:
+  - csharp
+  - vb
+  name: Draw(SpriteBatch)
+  nameWithType: MapData.Draw(SpriteBatch)
+  fullName: Client.UI.MapSelection.MapData.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)
+  type: Method
+  source:
+    remote:
+      path: Client/Client/UI/MapSelection/MapData.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Draw
+    path: Client/Client/UI/MapSelection/MapData.cs
+    startLine: 18
+  assemblies:
+  - Client
+  namespace: Client.UI.MapSelection
+  syntax:
+    content: public void Draw(SpriteBatch spriteBatch)
+    parameters:
+    - id: spriteBatch
+      type: Microsoft.Xna.Framework.Graphics.SpriteBatch
+    content.vb: Public Sub Draw(spriteBatch As SpriteBatch)
+  overload: Client.UI.MapSelection.MapData.Draw*
+references:
+- uid: Client.UI.MapSelection
+  commentId: N:Client.UI.MapSelection
+  href: Client.html
+  name: Client.UI.MapSelection
+  nameWithType: Client.UI.MapSelection
+  fullName: Client.UI.MapSelection
+  spec.csharp:
+  - uid: Client
+    name: Client
+    href: Client.html
+  - name: .
+  - uid: Client.UI
+    name: UI
+    href: Client.UI.html
+  - name: .
+  - uid: Client.UI.MapSelection
+    name: MapSelection
+    href: Client.UI.MapSelection.html
+  spec.vb:
+  - uid: Client
+    name: Client
+    href: Client.html
+  - name: .
+  - uid: Client.UI
+    name: UI
+    href: Client.UI.html
+  - name: .
+  - uid: Client.UI.MapSelection
+    name: MapSelection
+    href: Client.UI.MapSelection.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Microsoft.Xna.Framework.Graphics.Texture2D
+  commentId: T:Microsoft.Xna.Framework.Graphics.Texture2D
+  parent: Microsoft.Xna.Framework.Graphics
+  isExternal: true
+  name: Texture2D
+  nameWithType: Texture2D
+  fullName: Microsoft.Xna.Framework.Graphics.Texture2D
+- uid: Microsoft.Xna.Framework.Graphics
+  commentId: N:Microsoft.Xna.Framework.Graphics
+  isExternal: true
+  name: Microsoft.Xna.Framework.Graphics
+  nameWithType: Microsoft.Xna.Framework.Graphics
+  fullName: Microsoft.Xna.Framework.Graphics
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna
+    name: Xna
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna.Framework
+    name: Framework
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna.Framework.Graphics
+    name: Graphics
+    isExternal: true
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna
+    name: Xna
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna.Framework
+    name: Framework
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna.Framework.Graphics
+    name: Graphics
+    isExternal: true
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: Client.UI.MapSelection.MapData.#ctor*
+  commentId: Overload:Client.UI.MapSelection.MapData.#ctor
+  href: Client.UI.MapSelection.MapData.html#Client_UI_MapSelection_MapData__ctor_Microsoft_Xna_Framework_Graphics_Texture2D_System_String_
+  name: MapData
+  nameWithType: MapData.MapData
+  fullName: Client.UI.MapSelection.MapData.MapData
+  nameWithType.vb: MapData.New
+  fullName.vb: Client.UI.MapSelection.MapData.New
+  name.vb: New
+- uid: Client.UI.MapSelection.MapData.Draw*
+  commentId: Overload:Client.UI.MapSelection.MapData.Draw
+  href: Client.UI.MapSelection.MapData.html#Client_UI_MapSelection_MapData_Draw_Microsoft_Xna_Framework_Graphics_SpriteBatch_
+  name: Draw
+  nameWithType: MapData.Draw
+  fullName: Client.UI.MapSelection.MapData.Draw
+- uid: Microsoft.Xna.Framework.Graphics.SpriteBatch
+  commentId: T:Microsoft.Xna.Framework.Graphics.SpriteBatch
+  parent: Microsoft.Xna.Framework.Graphics
+  isExternal: true
+  name: SpriteBatch
+  nameWithType: SpriteBatch
+  fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch

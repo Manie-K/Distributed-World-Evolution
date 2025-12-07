@@ -1,0 +1,61 @@
+### YamlMime:ManagedReference
+items:
+- uid: Client.Logic
+  commentId: N:Client.Logic
+  id: Client.Logic
+  children:
+  - Client.Logic.Animation
+  - Client.Logic.AnimationManager
+  - Client.Logic.AssetsManager
+  langs:
+  - csharp
+  - vb
+  name: Client.Logic
+  nameWithType: Client.Logic
+  fullName: Client.Logic
+  type: Namespace
+  assemblies:
+  - Client
+references:
+- uid: Client.Logic.Animation
+  commentId: T:Client.Logic.Animation
+  href: Client.Logic.Animation.html
+  name: Animation
+  nameWithType: Animation
+  fullName: Client.Logic.Animation
+- uid: Client.Logic.AnimationManager
+  commentId: T:Client.Logic.AnimationManager
+  parent: Client.Logic
+  href: Client.Logic.AnimationManager.html
+  name: AnimationManager
+  nameWithType: AnimationManager
+  fullName: Client.Logic.AnimationManager
+- uid: Client.Logic.AssetsManager
+  commentId: T:Client.Logic.AssetsManager
+  parent: Client.Logic
+  href: Client.Logic.AssetsManager.html
+  name: AssetsManager
+  nameWithType: AssetsManager
+  fullName: Client.Logic.AssetsManager
+- uid: Client.Logic
+  commentId: N:Client.Logic
+  href: Client.html
+  name: Client.Logic
+  nameWithType: Client.Logic
+  fullName: Client.Logic
+  spec.csharp:
+  - uid: Client
+    name: Client
+    href: Client.html
+  - name: .
+  - uid: Client.Logic
+    name: Logic
+    href: Client.Logic.html
+  spec.vb:
+  - uid: Client
+    name: Client
+    href: Client.html
+  - name: .
+  - uid: Client.Logic
+    name: Logic
+    href: Client.Logic.html

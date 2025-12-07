@@ -1,0 +1,496 @@
+### YamlMime:ManagedReference
+items:
+- uid: Client.UI.CreateLobby.Parameters.ModuleParametersData
+  commentId: T:Client.UI.CreateLobby.Parameters.ModuleParametersData
+  id: ModuleParametersData
+  parent: Client.UI.CreateLobby.Parameters
+  children:
+  - Client.UI.CreateLobby.Parameters.ModuleParametersData.#ctor(System.String,System.String,System.Int32,System.String)
+  - Client.UI.CreateLobby.Parameters.ModuleParametersData.AdditionalDescription
+  - Client.UI.CreateLobby.Parameters.ModuleParametersData.Name
+  - Client.UI.CreateLobby.Parameters.ModuleParametersData.Type
+  - Client.UI.CreateLobby.Parameters.ModuleParametersData.Value
+  langs:
+  - csharp
+  - vb
+  name: ModuleParametersData
+  nameWithType: ModuleParametersData
+  fullName: Client.UI.CreateLobby.Parameters.ModuleParametersData
+  type: Class
+  source:
+    remote:
+      path: Client/Client/UI/CreateLobby/Parameters/ModuleParametersData.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: ModuleParametersData
+    path: Client/Client/UI/CreateLobby/Parameters/ModuleParametersData.cs
+    startLine: 2
+  assemblies:
+  - Client
+  namespace: Client.UI.CreateLobby.Parameters
+  syntax:
+    content: public class ModuleParametersData
+    content.vb: Public Class ModuleParametersData
+  inheritance:
+  - System.Object
+  inheritedMembers:
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Client.UI.CreateLobby.Parameters.ModuleParametersData.Name
+  commentId: F:Client.UI.CreateLobby.Parameters.ModuleParametersData.Name
+  id: Name
+  parent: Client.UI.CreateLobby.Parameters.ModuleParametersData
+  langs:
+  - csharp
+  - vb
+  name: Name
+  nameWithType: ModuleParametersData.Name
+  fullName: Client.UI.CreateLobby.Parameters.ModuleParametersData.Name
+  type: Field
+  source:
+    remote:
+      path: Client/Client/UI/CreateLobby/Parameters/ModuleParametersData.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Name
+    path: Client/Client/UI/CreateLobby/Parameters/ModuleParametersData.cs
+    startLine: 4
+  assemblies:
+  - Client
+  namespace: Client.UI.CreateLobby.Parameters
+  syntax:
+    content: public string Name
+    return:
+      type: System.String
+    content.vb: Public Name As String
+- uid: Client.UI.CreateLobby.Parameters.ModuleParametersData.Value
+  commentId: F:Client.UI.CreateLobby.Parameters.ModuleParametersData.Value
+  id: Value
+  parent: Client.UI.CreateLobby.Parameters.ModuleParametersData
+  langs:
+  - csharp
+  - vb
+  name: Value
+  nameWithType: ModuleParametersData.Value
+  fullName: Client.UI.CreateLobby.Parameters.ModuleParametersData.Value
+  type: Field
+  source:
+    remote:
+      path: Client/Client/UI/CreateLobby/Parameters/ModuleParametersData.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Value
+    path: Client/Client/UI/CreateLobby/Parameters/ModuleParametersData.cs
+    startLine: 5
+  assemblies:
+  - Client
+  namespace: Client.UI.CreateLobby.Parameters
+  syntax:
+    content: public string Value
+    return:
+      type: System.String
+    content.vb: Public Value As String
+- uid: Client.UI.CreateLobby.Parameters.ModuleParametersData.Type
+  commentId: F:Client.UI.CreateLobby.Parameters.ModuleParametersData.Type
+  id: Type
+  parent: Client.UI.CreateLobby.Parameters.ModuleParametersData
+  langs:
+  - csharp
+  - vb
+  name: Type
+  nameWithType: ModuleParametersData.Type
+  fullName: Client.UI.CreateLobby.Parameters.ModuleParametersData.Type
+  type: Field
+  source:
+    remote:
+      path: Client/Client/UI/CreateLobby/Parameters/ModuleParametersData.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Type
+    path: Client/Client/UI/CreateLobby/Parameters/ModuleParametersData.cs
+    startLine: 6
+  assemblies:
+  - Client
+  namespace: Client.UI.CreateLobby.Parameters
+  syntax:
+    content: public int Type
+    return:
+      type: System.Int32
+    content.vb: Public Type As Integer
+- uid: Client.UI.CreateLobby.Parameters.ModuleParametersData.AdditionalDescription
+  commentId: F:Client.UI.CreateLobby.Parameters.ModuleParametersData.AdditionalDescription
+  id: AdditionalDescription
+  parent: Client.UI.CreateLobby.Parameters.ModuleParametersData
+  langs:
+  - csharp
+  - vb
+  name: AdditionalDescription
+  nameWithType: ModuleParametersData.AdditionalDescription
+  fullName: Client.UI.CreateLobby.Parameters.ModuleParametersData.AdditionalDescription
+  type: Field
+  source:
+    remote:
+      path: Client/Client/UI/CreateLobby/Parameters/ModuleParametersData.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: AdditionalDescription
+    path: Client/Client/UI/CreateLobby/Parameters/ModuleParametersData.cs
+    startLine: 7
+  assemblies:
+  - Client
+  namespace: Client.UI.CreateLobby.Parameters
+  syntax:
+    content: public string AdditionalDescription
+    return:
+      type: System.String
+    content.vb: Public AdditionalDescription As String
+- uid: Client.UI.CreateLobby.Parameters.ModuleParametersData.#ctor(System.String,System.String,System.Int32,System.String)
+  commentId: M:Client.UI.CreateLobby.Parameters.ModuleParametersData.#ctor(System.String,System.String,System.Int32,System.String)
+  id: '#ctor(System.String,System.String,System.Int32,System.String)'
+  parent: Client.UI.CreateLobby.Parameters.ModuleParametersData
+  langs:
+  - csharp
+  - vb
+  name: ModuleParametersData(string, string, int, string)
+  nameWithType: ModuleParametersData.ModuleParametersData(string, string, int, string)
+  fullName: Client.UI.CreateLobby.Parameters.ModuleParametersData.ModuleParametersData(string, string, int, string)
+  type: Constructor
+  source:
+    remote:
+      path: Client/Client/UI/CreateLobby/Parameters/ModuleParametersData.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: .ctor
+    path: Client/Client/UI/CreateLobby/Parameters/ModuleParametersData.cs
+    startLine: 9
+  assemblies:
+  - Client
+  namespace: Client.UI.CreateLobby.Parameters
+  syntax:
+    content: public ModuleParametersData(string name, string value, int type, string additionalDescription = "")
+    parameters:
+    - id: name
+      type: System.String
+    - id: value
+      type: System.String
+    - id: type
+      type: System.Int32
+    - id: additionalDescription
+      type: System.String
+    content.vb: Public Sub New(name As String, value As String, type As Integer, additionalDescription As String = "")
+  overload: Client.UI.CreateLobby.Parameters.ModuleParametersData.#ctor*
+  nameWithType.vb: ModuleParametersData.New(String, String, Integer, String)
+  fullName.vb: Client.UI.CreateLobby.Parameters.ModuleParametersData.New(String, String, Integer, String)
+  name.vb: New(String, String, Integer, String)
+references:
+- uid: Client.UI.CreateLobby.Parameters
+  commentId: N:Client.UI.CreateLobby.Parameters
+  href: Client.html
+  name: Client.UI.CreateLobby.Parameters
+  nameWithType: Client.UI.CreateLobby.Parameters
+  fullName: Client.UI.CreateLobby.Parameters
+  spec.csharp:
+  - uid: Client
+    name: Client
+    href: Client.html
+  - name: .
+  - uid: Client.UI
+    name: UI
+    href: Client.UI.html
+  - name: .
+  - uid: Client.UI.CreateLobby
+    name: CreateLobby
+    href: Client.UI.CreateLobby.html
+  - name: .
+  - uid: Client.UI.CreateLobby.Parameters
+    name: Parameters
+    href: Client.UI.CreateLobby.Parameters.html
+  spec.vb:
+  - uid: Client
+    name: Client
+    href: Client.html
+  - name: .
+  - uid: Client.UI
+    name: UI
+    href: Client.UI.html
+  - name: .
+  - uid: Client.UI.CreateLobby
+    name: CreateLobby
+    href: Client.UI.CreateLobby.html
+  - name: .
+  - uid: Client.UI.CreateLobby.Parameters
+    name: Parameters
+    href: Client.UI.CreateLobby.Parameters.html
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: System.String
+  commentId: T:System.String
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.string
+  name: string
+  nameWithType: string
+  fullName: string
+  nameWithType.vb: String
+  fullName.vb: String
+  name.vb: String
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Client.UI.CreateLobby.Parameters.ModuleParametersData.#ctor*
+  commentId: Overload:Client.UI.CreateLobby.Parameters.ModuleParametersData.#ctor
+  href: Client.UI.CreateLobby.Parameters.ModuleParametersData.html#Client_UI_CreateLobby_Parameters_ModuleParametersData__ctor_System_String_System_String_System_Int32_System_String_
+  name: ModuleParametersData
+  nameWithType: ModuleParametersData.ModuleParametersData
+  fullName: Client.UI.CreateLobby.Parameters.ModuleParametersData.ModuleParametersData
+  nameWithType.vb: ModuleParametersData.New
+  fullName.vb: Client.UI.CreateLobby.Parameters.ModuleParametersData.New
+  name.vb: New

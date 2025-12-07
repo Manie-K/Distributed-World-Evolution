@@ -1,0 +1,76 @@
+### YamlMime:ManagedReference
+items:
+- uid: Server.Core
+  commentId: N:Server.Core
+  id: Server.Core
+  children:
+  - Server.Core.EntityState
+  - Server.Core.EntityTypeEnum
+  - Server.Core.OnMessageFromClientEventArgs
+  - Server.Core.Server
+  - Server.Core.WorldEntity
+  langs:
+  - csharp
+  - vb
+  name: Server.Core
+  nameWithType: Server.Core
+  fullName: Server.Core
+  type: Namespace
+  assemblies:
+  - Server.Core
+references:
+- uid: Server.Core.EntityState
+  commentId: T:Server.Core.EntityState
+  parent: Server.Core
+  href: Server.Core.EntityState.html
+  name: EntityState
+  nameWithType: EntityState
+  fullName: Server.Core.EntityState
+- uid: Server.Core.WorldEntity
+  commentId: T:Server.Core.WorldEntity
+  parent: Server.Core
+  href: Server.Core.WorldEntity.html
+  name: WorldEntity
+  nameWithType: WorldEntity
+  fullName: Server.Core.WorldEntity
+- uid: Server.Core.OnMessageFromClientEventArgs
+  commentId: T:Server.Core.OnMessageFromClientEventArgs
+  href: Server.Core.OnMessageFromClientEventArgs.html
+  name: OnMessageFromClientEventArgs
+  nameWithType: OnMessageFromClientEventArgs
+  fullName: Server.Core.OnMessageFromClientEventArgs
+- uid: Server.Core.Server
+  commentId: T:Server.Core.Server
+  href: Server.Core.Server.html
+  name: Server
+  nameWithType: Server
+  fullName: Server.Core.Server
+- uid: Server.Core.EntityTypeEnum
+  commentId: T:Server.Core.EntityTypeEnum
+  parent: Server.Core
+  href: https://github.com/Manie-K/Distributed-World-Evolution/blob/04d77cccea139c5e616524f8a10c7afb68cc7eb5/Shared/SharedLibrary/DTOs/EntitiesDTO/EntityTypeEnum.cs
+  name: EntityTypeEnum
+  nameWithType: EntityTypeEnum
+  fullName: Server.Core.EntityTypeEnum
+- uid: Server.Core
+  commentId: N:Server.Core
+  href: Server.html
+  name: Server.Core
+  nameWithType: Server.Core
+  fullName: Server.Core
+  spec.csharp:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+  spec.vb:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html

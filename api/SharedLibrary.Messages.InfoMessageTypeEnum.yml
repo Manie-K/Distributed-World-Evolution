@@ -1,0 +1,448 @@
+### YamlMime:ManagedReference
+items:
+- uid: SharedLibrary.Messages.InfoMessageTypeEnum
+  commentId: T:SharedLibrary.Messages.InfoMessageTypeEnum
+  id: InfoMessageTypeEnum
+  parent: SharedLibrary.Messages
+  children:
+  - SharedLibrary.Messages.InfoMessageTypeEnum.Error
+  - SharedLibrary.Messages.InfoMessageTypeEnum.Info
+  - SharedLibrary.Messages.InfoMessageTypeEnum.LobbyCreated
+  - SharedLibrary.Messages.InfoMessageTypeEnum.LobbyDisjoined
+  - SharedLibrary.Messages.InfoMessageTypeEnum.LobbyJoined
+  - SharedLibrary.Messages.InfoMessageTypeEnum.LobbyNotCreated
+  - SharedLibrary.Messages.InfoMessageTypeEnum.LobbyNotDisjoined
+  - SharedLibrary.Messages.InfoMessageTypeEnum.LobbyNotJoined
+  - SharedLibrary.Messages.InfoMessageTypeEnum.ModuleCreated
+  - SharedLibrary.Messages.InfoMessageTypeEnum.ModuleNotCreated
+  - SharedLibrary.Messages.InfoMessageTypeEnum.ServerConnected
+  - SharedLibrary.Messages.InfoMessageTypeEnum.ServerDisconnected
+  - SharedLibrary.Messages.InfoMessageTypeEnum.ServerNotConnected
+  - SharedLibrary.Messages.InfoMessageTypeEnum.Warning
+  langs:
+  - csharp
+  - vb
+  name: InfoMessageTypeEnum
+  nameWithType: InfoMessageTypeEnum
+  fullName: SharedLibrary.Messages.InfoMessageTypeEnum
+  type: Enum
+  source:
+    remote:
+      path: Shared/SharedLibrary/Messages/InfoMessages/InfoMessageTypeEnum.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: InfoMessageTypeEnum
+    path: Shared/SharedLibrary/Messages/InfoMessages/InfoMessageTypeEnum.cs
+    startLine: 4
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.Messages
+  syntax:
+    content: >-
+      [JsonConverter(typeof(JsonStringEnumConverter))]
+
+      public enum InfoMessageTypeEnum
+    content.vb: >-
+      <JsonConverter(GetType(JsonStringEnumConverter))>
+
+      Public Enum InfoMessageTypeEnum
+  attributes:
+  - type: System.Text.Json.Serialization.JsonConverterAttribute
+    ctor: System.Text.Json.Serialization.JsonConverterAttribute.#ctor(System.Type)
+    arguments:
+    - type: System.Type
+      value: System.Text.Json.Serialization.JsonStringEnumConverter
+- uid: SharedLibrary.Messages.InfoMessageTypeEnum.Info
+  commentId: F:SharedLibrary.Messages.InfoMessageTypeEnum.Info
+  id: Info
+  parent: SharedLibrary.Messages.InfoMessageTypeEnum
+  langs:
+  - csharp
+  - vb
+  name: Info
+  nameWithType: InfoMessageTypeEnum.Info
+  fullName: SharedLibrary.Messages.InfoMessageTypeEnum.Info
+  type: Field
+  source:
+    remote:
+      path: Shared/SharedLibrary/Messages/InfoMessages/InfoMessageTypeEnum.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Info
+    path: Shared/SharedLibrary/Messages/InfoMessages/InfoMessageTypeEnum.cs
+    startLine: 7
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.Messages
+  syntax:
+    content: Info = 0
+    return:
+      type: SharedLibrary.Messages.InfoMessageTypeEnum
+- uid: SharedLibrary.Messages.InfoMessageTypeEnum.Warning
+  commentId: F:SharedLibrary.Messages.InfoMessageTypeEnum.Warning
+  id: Warning
+  parent: SharedLibrary.Messages.InfoMessageTypeEnum
+  langs:
+  - csharp
+  - vb
+  name: Warning
+  nameWithType: InfoMessageTypeEnum.Warning
+  fullName: SharedLibrary.Messages.InfoMessageTypeEnum.Warning
+  type: Field
+  source:
+    remote:
+      path: Shared/SharedLibrary/Messages/InfoMessages/InfoMessageTypeEnum.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Warning
+    path: Shared/SharedLibrary/Messages/InfoMessages/InfoMessageTypeEnum.cs
+    startLine: 8
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.Messages
+  syntax:
+    content: Warning = 1
+    return:
+      type: SharedLibrary.Messages.InfoMessageTypeEnum
+- uid: SharedLibrary.Messages.InfoMessageTypeEnum.Error
+  commentId: F:SharedLibrary.Messages.InfoMessageTypeEnum.Error
+  id: Error
+  parent: SharedLibrary.Messages.InfoMessageTypeEnum
+  langs:
+  - csharp
+  - vb
+  name: Error
+  nameWithType: InfoMessageTypeEnum.Error
+  fullName: SharedLibrary.Messages.InfoMessageTypeEnum.Error
+  type: Field
+  source:
+    remote:
+      path: Shared/SharedLibrary/Messages/InfoMessages/InfoMessageTypeEnum.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Error
+    path: Shared/SharedLibrary/Messages/InfoMessages/InfoMessageTypeEnum.cs
+    startLine: 9
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.Messages
+  syntax:
+    content: Error = 2
+    return:
+      type: SharedLibrary.Messages.InfoMessageTypeEnum
+- uid: SharedLibrary.Messages.InfoMessageTypeEnum.LobbyJoined
+  commentId: F:SharedLibrary.Messages.InfoMessageTypeEnum.LobbyJoined
+  id: LobbyJoined
+  parent: SharedLibrary.Messages.InfoMessageTypeEnum
+  langs:
+  - csharp
+  - vb
+  name: LobbyJoined
+  nameWithType: InfoMessageTypeEnum.LobbyJoined
+  fullName: SharedLibrary.Messages.InfoMessageTypeEnum.LobbyJoined
+  type: Field
+  source:
+    remote:
+      path: Shared/SharedLibrary/Messages/InfoMessages/InfoMessageTypeEnum.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: LobbyJoined
+    path: Shared/SharedLibrary/Messages/InfoMessages/InfoMessageTypeEnum.cs
+    startLine: 10
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.Messages
+  syntax:
+    content: LobbyJoined = 3
+    return:
+      type: SharedLibrary.Messages.InfoMessageTypeEnum
+- uid: SharedLibrary.Messages.InfoMessageTypeEnum.LobbyDisjoined
+  commentId: F:SharedLibrary.Messages.InfoMessageTypeEnum.LobbyDisjoined
+  id: LobbyDisjoined
+  parent: SharedLibrary.Messages.InfoMessageTypeEnum
+  langs:
+  - csharp
+  - vb
+  name: LobbyDisjoined
+  nameWithType: InfoMessageTypeEnum.LobbyDisjoined
+  fullName: SharedLibrary.Messages.InfoMessageTypeEnum.LobbyDisjoined
+  type: Field
+  source:
+    remote:
+      path: Shared/SharedLibrary/Messages/InfoMessages/InfoMessageTypeEnum.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: LobbyDisjoined
+    path: Shared/SharedLibrary/Messages/InfoMessages/InfoMessageTypeEnum.cs
+    startLine: 11
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.Messages
+  syntax:
+    content: LobbyDisjoined = 4
+    return:
+      type: SharedLibrary.Messages.InfoMessageTypeEnum
+- uid: SharedLibrary.Messages.InfoMessageTypeEnum.LobbyNotJoined
+  commentId: F:SharedLibrary.Messages.InfoMessageTypeEnum.LobbyNotJoined
+  id: LobbyNotJoined
+  parent: SharedLibrary.Messages.InfoMessageTypeEnum
+  langs:
+  - csharp
+  - vb
+  name: LobbyNotJoined
+  nameWithType: InfoMessageTypeEnum.LobbyNotJoined
+  fullName: SharedLibrary.Messages.InfoMessageTypeEnum.LobbyNotJoined
+  type: Field
+  source:
+    remote:
+      path: Shared/SharedLibrary/Messages/InfoMessages/InfoMessageTypeEnum.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: LobbyNotJoined
+    path: Shared/SharedLibrary/Messages/InfoMessages/InfoMessageTypeEnum.cs
+    startLine: 12
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.Messages
+  syntax:
+    content: LobbyNotJoined = 5
+    return:
+      type: SharedLibrary.Messages.InfoMessageTypeEnum
+- uid: SharedLibrary.Messages.InfoMessageTypeEnum.LobbyNotDisjoined
+  commentId: F:SharedLibrary.Messages.InfoMessageTypeEnum.LobbyNotDisjoined
+  id: LobbyNotDisjoined
+  parent: SharedLibrary.Messages.InfoMessageTypeEnum
+  langs:
+  - csharp
+  - vb
+  name: LobbyNotDisjoined
+  nameWithType: InfoMessageTypeEnum.LobbyNotDisjoined
+  fullName: SharedLibrary.Messages.InfoMessageTypeEnum.LobbyNotDisjoined
+  type: Field
+  source:
+    remote:
+      path: Shared/SharedLibrary/Messages/InfoMessages/InfoMessageTypeEnum.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: LobbyNotDisjoined
+    path: Shared/SharedLibrary/Messages/InfoMessages/InfoMessageTypeEnum.cs
+    startLine: 13
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.Messages
+  syntax:
+    content: LobbyNotDisjoined = 6
+    return:
+      type: SharedLibrary.Messages.InfoMessageTypeEnum
+- uid: SharedLibrary.Messages.InfoMessageTypeEnum.LobbyCreated
+  commentId: F:SharedLibrary.Messages.InfoMessageTypeEnum.LobbyCreated
+  id: LobbyCreated
+  parent: SharedLibrary.Messages.InfoMessageTypeEnum
+  langs:
+  - csharp
+  - vb
+  name: LobbyCreated
+  nameWithType: InfoMessageTypeEnum.LobbyCreated
+  fullName: SharedLibrary.Messages.InfoMessageTypeEnum.LobbyCreated
+  type: Field
+  source:
+    remote:
+      path: Shared/SharedLibrary/Messages/InfoMessages/InfoMessageTypeEnum.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: LobbyCreated
+    path: Shared/SharedLibrary/Messages/InfoMessages/InfoMessageTypeEnum.cs
+    startLine: 14
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.Messages
+  syntax:
+    content: LobbyCreated = 7
+    return:
+      type: SharedLibrary.Messages.InfoMessageTypeEnum
+- uid: SharedLibrary.Messages.InfoMessageTypeEnum.LobbyNotCreated
+  commentId: F:SharedLibrary.Messages.InfoMessageTypeEnum.LobbyNotCreated
+  id: LobbyNotCreated
+  parent: SharedLibrary.Messages.InfoMessageTypeEnum
+  langs:
+  - csharp
+  - vb
+  name: LobbyNotCreated
+  nameWithType: InfoMessageTypeEnum.LobbyNotCreated
+  fullName: SharedLibrary.Messages.InfoMessageTypeEnum.LobbyNotCreated
+  type: Field
+  source:
+    remote:
+      path: Shared/SharedLibrary/Messages/InfoMessages/InfoMessageTypeEnum.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: LobbyNotCreated
+    path: Shared/SharedLibrary/Messages/InfoMessages/InfoMessageTypeEnum.cs
+    startLine: 15
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.Messages
+  syntax:
+    content: LobbyNotCreated = 8
+    return:
+      type: SharedLibrary.Messages.InfoMessageTypeEnum
+- uid: SharedLibrary.Messages.InfoMessageTypeEnum.ServerConnected
+  commentId: F:SharedLibrary.Messages.InfoMessageTypeEnum.ServerConnected
+  id: ServerConnected
+  parent: SharedLibrary.Messages.InfoMessageTypeEnum
+  langs:
+  - csharp
+  - vb
+  name: ServerConnected
+  nameWithType: InfoMessageTypeEnum.ServerConnected
+  fullName: SharedLibrary.Messages.InfoMessageTypeEnum.ServerConnected
+  type: Field
+  source:
+    remote:
+      path: Shared/SharedLibrary/Messages/InfoMessages/InfoMessageTypeEnum.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: ServerConnected
+    path: Shared/SharedLibrary/Messages/InfoMessages/InfoMessageTypeEnum.cs
+    startLine: 16
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.Messages
+  syntax:
+    content: ServerConnected = 9
+    return:
+      type: SharedLibrary.Messages.InfoMessageTypeEnum
+- uid: SharedLibrary.Messages.InfoMessageTypeEnum.ServerNotConnected
+  commentId: F:SharedLibrary.Messages.InfoMessageTypeEnum.ServerNotConnected
+  id: ServerNotConnected
+  parent: SharedLibrary.Messages.InfoMessageTypeEnum
+  langs:
+  - csharp
+  - vb
+  name: ServerNotConnected
+  nameWithType: InfoMessageTypeEnum.ServerNotConnected
+  fullName: SharedLibrary.Messages.InfoMessageTypeEnum.ServerNotConnected
+  type: Field
+  source:
+    remote:
+      path: Shared/SharedLibrary/Messages/InfoMessages/InfoMessageTypeEnum.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: ServerNotConnected
+    path: Shared/SharedLibrary/Messages/InfoMessages/InfoMessageTypeEnum.cs
+    startLine: 17
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.Messages
+  syntax:
+    content: ServerNotConnected = 10
+    return:
+      type: SharedLibrary.Messages.InfoMessageTypeEnum
+- uid: SharedLibrary.Messages.InfoMessageTypeEnum.ServerDisconnected
+  commentId: F:SharedLibrary.Messages.InfoMessageTypeEnum.ServerDisconnected
+  id: ServerDisconnected
+  parent: SharedLibrary.Messages.InfoMessageTypeEnum
+  langs:
+  - csharp
+  - vb
+  name: ServerDisconnected
+  nameWithType: InfoMessageTypeEnum.ServerDisconnected
+  fullName: SharedLibrary.Messages.InfoMessageTypeEnum.ServerDisconnected
+  type: Field
+  source:
+    remote:
+      path: Shared/SharedLibrary/Messages/InfoMessages/InfoMessageTypeEnum.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: ServerDisconnected
+    path: Shared/SharedLibrary/Messages/InfoMessages/InfoMessageTypeEnum.cs
+    startLine: 18
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.Messages
+  syntax:
+    content: ServerDisconnected = 11
+    return:
+      type: SharedLibrary.Messages.InfoMessageTypeEnum
+- uid: SharedLibrary.Messages.InfoMessageTypeEnum.ModuleCreated
+  commentId: F:SharedLibrary.Messages.InfoMessageTypeEnum.ModuleCreated
+  id: ModuleCreated
+  parent: SharedLibrary.Messages.InfoMessageTypeEnum
+  langs:
+  - csharp
+  - vb
+  name: ModuleCreated
+  nameWithType: InfoMessageTypeEnum.ModuleCreated
+  fullName: SharedLibrary.Messages.InfoMessageTypeEnum.ModuleCreated
+  type: Field
+  source:
+    remote:
+      path: Shared/SharedLibrary/Messages/InfoMessages/InfoMessageTypeEnum.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: ModuleCreated
+    path: Shared/SharedLibrary/Messages/InfoMessages/InfoMessageTypeEnum.cs
+    startLine: 19
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.Messages
+  syntax:
+    content: ModuleCreated = 12
+    return:
+      type: SharedLibrary.Messages.InfoMessageTypeEnum
+- uid: SharedLibrary.Messages.InfoMessageTypeEnum.ModuleNotCreated
+  commentId: F:SharedLibrary.Messages.InfoMessageTypeEnum.ModuleNotCreated
+  id: ModuleNotCreated
+  parent: SharedLibrary.Messages.InfoMessageTypeEnum
+  langs:
+  - csharp
+  - vb
+  name: ModuleNotCreated
+  nameWithType: InfoMessageTypeEnum.ModuleNotCreated
+  fullName: SharedLibrary.Messages.InfoMessageTypeEnum.ModuleNotCreated
+  type: Field
+  source:
+    remote:
+      path: Shared/SharedLibrary/Messages/InfoMessages/InfoMessageTypeEnum.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: ModuleNotCreated
+    path: Shared/SharedLibrary/Messages/InfoMessages/InfoMessageTypeEnum.cs
+    startLine: 20
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary.Messages
+  syntax:
+    content: ModuleNotCreated = 13
+    return:
+      type: SharedLibrary.Messages.InfoMessageTypeEnum
+references:
+- uid: SharedLibrary.Messages
+  commentId: N:SharedLibrary.Messages
+  href: SharedLibrary.html
+  name: SharedLibrary.Messages
+  nameWithType: SharedLibrary.Messages
+  fullName: SharedLibrary.Messages
+  spec.csharp:
+  - uid: SharedLibrary
+    name: SharedLibrary
+    href: SharedLibrary.html
+  - name: .
+  - uid: SharedLibrary.Messages
+    name: Messages
+    href: SharedLibrary.Messages.html
+  spec.vb:
+  - uid: SharedLibrary
+    name: SharedLibrary
+    href: SharedLibrary.html
+  - name: .
+  - uid: SharedLibrary.Messages
+    name: Messages
+    href: SharedLibrary.Messages.html
+- uid: SharedLibrary.Messages.InfoMessageTypeEnum
+  commentId: T:SharedLibrary.Messages.InfoMessageTypeEnum
+  parent: SharedLibrary.Messages
+  href: SharedLibrary.Messages.InfoMessageTypeEnum.html
+  name: InfoMessageTypeEnum
+  nameWithType: InfoMessageTypeEnum
+  fullName: SharedLibrary.Messages.InfoMessageTypeEnum

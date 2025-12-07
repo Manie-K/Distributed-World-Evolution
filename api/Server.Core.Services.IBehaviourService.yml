@@ -1,0 +1,288 @@
+### YamlMime:ManagedReference
+items:
+- uid: Server.Core.Services.IBehaviourService
+  commentId: T:Server.Core.Services.IBehaviourService
+  id: IBehaviourService
+  parent: Server.Core.Services
+  children:
+  - Server.Core.Services.IBehaviourService.GetAllBehaviours
+  - Server.Core.Services.IBehaviourService.GetBehaviourInstanceByID(System.Int32)
+  langs:
+  - csharp
+  - vb
+  name: IBehaviourService
+  nameWithType: IBehaviourService
+  fullName: Server.Core.Services.IBehaviourService
+  type: Interface
+  source:
+    remote:
+      path: Server/Server.Core/Services/IBehaviourService.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: IBehaviourService
+    path: Server/Server.Core/Services/IBehaviourService.cs
+    startLine: 4
+  assemblies:
+  - Server.Core
+  namespace: Server.Core.Services
+  syntax:
+    content: public interface IBehaviourService
+    content.vb: Public Interface IBehaviourService
+- uid: Server.Core.Services.IBehaviourService.GetBehaviourInstanceByID(System.Int32)
+  commentId: M:Server.Core.Services.IBehaviourService.GetBehaviourInstanceByID(System.Int32)
+  id: GetBehaviourInstanceByID(System.Int32)
+  parent: Server.Core.Services.IBehaviourService
+  langs:
+  - csharp
+  - vb
+  name: GetBehaviourInstanceByID(int)
+  nameWithType: IBehaviourService.GetBehaviourInstanceByID(int)
+  fullName: Server.Core.Services.IBehaviourService.GetBehaviourInstanceByID(int)
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Core/Services/IBehaviourService.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: GetBehaviourInstanceByID
+    path: Server/Server.Core/Services/IBehaviourService.cs
+    startLine: 6
+  assemblies:
+  - Server.Core
+  namespace: Server.Core.Services
+  syntax:
+    content: IBehaviour GetBehaviourInstanceByID(int id)
+    parameters:
+    - id: id
+      type: System.Int32
+    return:
+      type: Server.Core.Behaviours.IBehaviour
+    content.vb: Function GetBehaviourInstanceByID(id As Integer) As IBehaviour
+  overload: Server.Core.Services.IBehaviourService.GetBehaviourInstanceByID*
+  nameWithType.vb: IBehaviourService.GetBehaviourInstanceByID(Integer)
+  fullName.vb: Server.Core.Services.IBehaviourService.GetBehaviourInstanceByID(Integer)
+  name.vb: GetBehaviourInstanceByID(Integer)
+- uid: Server.Core.Services.IBehaviourService.GetAllBehaviours
+  commentId: M:Server.Core.Services.IBehaviourService.GetAllBehaviours
+  id: GetAllBehaviours
+  parent: Server.Core.Services.IBehaviourService
+  langs:
+  - csharp
+  - vb
+  name: GetAllBehaviours()
+  nameWithType: IBehaviourService.GetAllBehaviours()
+  fullName: Server.Core.Services.IBehaviourService.GetAllBehaviours()
+  type: Method
+  source:
+    remote:
+      path: Server/Server.Core/Services/IBehaviourService.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: GetAllBehaviours
+    path: Server/Server.Core/Services/IBehaviourService.cs
+    startLine: 7
+  assemblies:
+  - Server.Core
+  namespace: Server.Core.Services
+  syntax:
+    content: IEnumerable<IBehaviour> GetAllBehaviours()
+    return:
+      type: System.Collections.Generic.IEnumerable{Server.Core.Behaviours.IBehaviour}
+    content.vb: Function GetAllBehaviours() As IEnumerable(Of IBehaviour)
+  overload: Server.Core.Services.IBehaviourService.GetAllBehaviours*
+references:
+- uid: Server.Core.Services
+  commentId: N:Server.Core.Services
+  href: Server.html
+  name: Server.Core.Services
+  nameWithType: Server.Core.Services
+  fullName: Server.Core.Services
+  spec.csharp:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+  - name: .
+  - uid: Server.Core.Services
+    name: Services
+    href: Server.Core.Services.html
+  spec.vb:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+  - name: .
+  - uid: Server.Core.Services
+    name: Services
+    href: Server.Core.Services.html
+- uid: Server.Core.Services.IBehaviourService.GetBehaviourInstanceByID*
+  commentId: Overload:Server.Core.Services.IBehaviourService.GetBehaviourInstanceByID
+  href: Server.Core.Services.IBehaviourService.html#Server_Core_Services_IBehaviourService_GetBehaviourInstanceByID_System_Int32_
+  name: GetBehaviourInstanceByID
+  nameWithType: IBehaviourService.GetBehaviourInstanceByID
+  fullName: Server.Core.Services.IBehaviourService.GetBehaviourInstanceByID
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Server.Core.Behaviours.IBehaviour
+  commentId: T:Server.Core.Behaviours.IBehaviour
+  parent: Server.Core.Behaviours
+  href: Server.Core.Behaviours.IBehaviour.html
+  name: IBehaviour
+  nameWithType: IBehaviour
+  fullName: Server.Core.Behaviours.IBehaviour
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Server.Core.Behaviours
+  commentId: N:Server.Core.Behaviours
+  href: Server.html
+  name: Server.Core.Behaviours
+  nameWithType: Server.Core.Behaviours
+  fullName: Server.Core.Behaviours
+  spec.csharp:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+  - name: .
+  - uid: Server.Core.Behaviours
+    name: Behaviours
+    href: Server.Core.Behaviours.html
+  spec.vb:
+  - uid: Server
+    name: Server
+    href: Server.html
+  - name: .
+  - uid: Server.Core
+    name: Core
+    href: Server.Core.html
+  - name: .
+  - uid: Server.Core.Behaviours
+    name: Behaviours
+    href: Server.Core.Behaviours.html
+- uid: Server.Core.Services.IBehaviourService.GetAllBehaviours*
+  commentId: Overload:Server.Core.Services.IBehaviourService.GetAllBehaviours
+  href: Server.Core.Services.IBehaviourService.html#Server_Core_Services_IBehaviourService_GetAllBehaviours
+  name: GetAllBehaviours
+  nameWithType: IBehaviourService.GetAllBehaviours
+  fullName: Server.Core.Services.IBehaviourService.GetAllBehaviours
+- uid: System.Collections.Generic.IEnumerable{Server.Core.Behaviours.IBehaviour}
+  commentId: T:System.Collections.Generic.IEnumerable{Server.Core.Behaviours.IBehaviour}
+  parent: System.Collections.Generic
+  definition: System.Collections.Generic.IEnumerable`1
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<IBehaviour>
+  nameWithType: IEnumerable<IBehaviour>
+  fullName: System.Collections.Generic.IEnumerable<Server.Core.Behaviours.IBehaviour>
+  nameWithType.vb: IEnumerable(Of IBehaviour)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of Server.Core.Behaviours.IBehaviour)
+  name.vb: IEnumerable(Of IBehaviour)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - uid: Server.Core.Behaviours.IBehaviour
+    name: IBehaviour
+    href: Server.Core.Behaviours.IBehaviour.html
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - uid: Server.Core.Behaviours.IBehaviour
+    name: IBehaviour
+    href: Server.Core.Behaviours.IBehaviour.html
+  - name: )
+- uid: System.Collections.Generic.IEnumerable`1
+  commentId: T:System.Collections.Generic.IEnumerable`1
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  name: IEnumerable<T>
+  nameWithType: IEnumerable<T>
+  fullName: System.Collections.Generic.IEnumerable<T>
+  nameWithType.vb: IEnumerable(Of T)
+  fullName.vb: System.Collections.Generic.IEnumerable(Of T)
+  name.vb: IEnumerable(Of T)
+  spec.csharp:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: <
+  - name: T
+  - name: '>'
+  spec.vb:
+  - uid: System.Collections.Generic.IEnumerable`1
+    name: IEnumerable
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic.ienumerable-1
+  - name: (
+  - name: Of
+  - name: " "
+  - name: T
+  - name: )
+- uid: System.Collections.Generic
+  commentId: N:System.Collections.Generic
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System.Collections.Generic
+  nameWithType: System.Collections.Generic
+  fullName: System.Collections.Generic
+  spec.csharp:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic
+  spec.vb:
+  - uid: System
+    name: System
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system
+  - name: .
+  - uid: System.Collections
+    name: Collections
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections
+  - name: .
+  - uid: System.Collections.Generic
+    name: Generic
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.collections.generic

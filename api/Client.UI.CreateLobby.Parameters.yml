@@ -1,0 +1,83 @@
+### YamlMime:ManagedReference
+items:
+- uid: Client.UI.CreateLobby.Parameters
+  commentId: N:Client.UI.CreateLobby.Parameters
+  id: Client.UI.CreateLobby.Parameters
+  children:
+  - Client.UI.CreateLobby.Parameters.ModuleData
+  - Client.UI.CreateLobby.Parameters.ModuleParametersData
+  - Client.UI.CreateLobby.Parameters.ParameterRow
+  - Client.UI.CreateLobby.Parameters.SwitchPageParameters
+  langs:
+  - csharp
+  - vb
+  name: Client.UI.CreateLobby.Parameters
+  nameWithType: Client.UI.CreateLobby.Parameters
+  fullName: Client.UI.CreateLobby.Parameters
+  type: Namespace
+  assemblies:
+  - Client
+references:
+- uid: Client.UI.CreateLobby.Parameters.ModuleData
+  commentId: T:Client.UI.CreateLobby.Parameters.ModuleData
+  parent: Client.UI.CreateLobby.Parameters
+  href: Client.UI.CreateLobby.Parameters.ModuleData.html
+  name: ModuleData
+  nameWithType: ModuleData
+  fullName: Client.UI.CreateLobby.Parameters.ModuleData
+- uid: Client.UI.CreateLobby.Parameters.ModuleParametersData
+  commentId: T:Client.UI.CreateLobby.Parameters.ModuleParametersData
+  href: Client.UI.CreateLobby.Parameters.ModuleParametersData.html
+  name: ModuleParametersData
+  nameWithType: ModuleParametersData
+  fullName: Client.UI.CreateLobby.Parameters.ModuleParametersData
+- uid: Client.UI.CreateLobby.Parameters.ParameterRow
+  commentId: T:Client.UI.CreateLobby.Parameters.ParameterRow
+  href: Client.UI.CreateLobby.Parameters.ParameterRow.html
+  name: ParameterRow
+  nameWithType: ParameterRow
+  fullName: Client.UI.CreateLobby.Parameters.ParameterRow
+- uid: Client.UI.CreateLobby.Parameters.SwitchPageParameters
+  commentId: T:Client.UI.CreateLobby.Parameters.SwitchPageParameters
+  href: Client.UI.CreateLobby.Parameters.SwitchPageParameters.html
+  name: SwitchPageParameters
+  nameWithType: SwitchPageParameters
+  fullName: Client.UI.CreateLobby.Parameters.SwitchPageParameters
+- uid: Client.UI.CreateLobby.Parameters
+  commentId: N:Client.UI.CreateLobby.Parameters
+  href: Client.html
+  name: Client.UI.CreateLobby.Parameters
+  nameWithType: Client.UI.CreateLobby.Parameters
+  fullName: Client.UI.CreateLobby.Parameters
+  spec.csharp:
+  - uid: Client
+    name: Client
+    href: Client.html
+  - name: .
+  - uid: Client.UI
+    name: UI
+    href: Client.UI.html
+  - name: .
+  - uid: Client.UI.CreateLobby
+    name: CreateLobby
+    href: Client.UI.CreateLobby.html
+  - name: .
+  - uid: Client.UI.CreateLobby.Parameters
+    name: Parameters
+    href: Client.UI.CreateLobby.Parameters.html
+  spec.vb:
+  - uid: Client
+    name: Client
+    href: Client.html
+  - name: .
+  - uid: Client.UI
+    name: UI
+    href: Client.UI.html
+  - name: .
+  - uid: Client.UI.CreateLobby
+    name: CreateLobby
+    href: Client.UI.CreateLobby.html
+  - name: .
+  - uid: Client.UI.CreateLobby.Parameters
+    name: Parameters
+    href: Client.UI.CreateLobby.Parameters.html

@@ -1,0 +1,312 @@
+### YamlMime:ManagedReference
+items:
+- uid: SharedLibrary.TileType
+  commentId: T:SharedLibrary.TileType
+  id: TileType
+  parent: SharedLibrary
+  children:
+  - SharedLibrary.TileType.Bridge
+  - SharedLibrary.TileType.DarkGrass
+  - SharedLibrary.TileType.Dirt
+  - SharedLibrary.TileType.Grass
+  - SharedLibrary.TileType.MapBorder
+  - SharedLibrary.TileType.Null
+  - SharedLibrary.TileType.Sand
+  - SharedLibrary.TileType.Snow
+  - SharedLibrary.TileType.Wall
+  - SharedLibrary.TileType.Water
+  langs:
+  - csharp
+  - vb
+  name: TileType
+  nameWithType: TileType
+  fullName: SharedLibrary.TileType
+  type: Enum
+  source:
+    remote:
+      path: Shared/SharedLibrary/WorldMap/TileProperty.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: TileType
+    path: Shared/SharedLibrary/WorldMap/TileProperty.cs
+    startLine: 2
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary
+  syntax:
+    content: public enum TileType
+    content.vb: Public Enum TileType
+- uid: SharedLibrary.TileType.MapBorder
+  commentId: F:SharedLibrary.TileType.MapBorder
+  id: MapBorder
+  parent: SharedLibrary.TileType
+  langs:
+  - csharp
+  - vb
+  name: MapBorder
+  nameWithType: TileType.MapBorder
+  fullName: SharedLibrary.TileType.MapBorder
+  type: Field
+  source:
+    remote:
+      path: Shared/SharedLibrary/WorldMap/TileProperty.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: MapBorder
+    path: Shared/SharedLibrary/WorldMap/TileProperty.cs
+    startLine: 4
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary
+  syntax:
+    content: MapBorder = 0
+    return:
+      type: SharedLibrary.TileType
+- uid: SharedLibrary.TileType.Grass
+  commentId: F:SharedLibrary.TileType.Grass
+  id: Grass
+  parent: SharedLibrary.TileType
+  langs:
+  - csharp
+  - vb
+  name: Grass
+  nameWithType: TileType.Grass
+  fullName: SharedLibrary.TileType.Grass
+  type: Field
+  source:
+    remote:
+      path: Shared/SharedLibrary/WorldMap/TileProperty.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Grass
+    path: Shared/SharedLibrary/WorldMap/TileProperty.cs
+    startLine: 5
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary
+  syntax:
+    content: Grass = 1
+    return:
+      type: SharedLibrary.TileType
+- uid: SharedLibrary.TileType.Wall
+  commentId: F:SharedLibrary.TileType.Wall
+  id: Wall
+  parent: SharedLibrary.TileType
+  langs:
+  - csharp
+  - vb
+  name: Wall
+  nameWithType: TileType.Wall
+  fullName: SharedLibrary.TileType.Wall
+  type: Field
+  source:
+    remote:
+      path: Shared/SharedLibrary/WorldMap/TileProperty.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Wall
+    path: Shared/SharedLibrary/WorldMap/TileProperty.cs
+    startLine: 6
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary
+  syntax:
+    content: Wall = 2
+    return:
+      type: SharedLibrary.TileType
+- uid: SharedLibrary.TileType.Water
+  commentId: F:SharedLibrary.TileType.Water
+  id: Water
+  parent: SharedLibrary.TileType
+  langs:
+  - csharp
+  - vb
+  name: Water
+  nameWithType: TileType.Water
+  fullName: SharedLibrary.TileType.Water
+  type: Field
+  source:
+    remote:
+      path: Shared/SharedLibrary/WorldMap/TileProperty.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Water
+    path: Shared/SharedLibrary/WorldMap/TileProperty.cs
+    startLine: 7
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary
+  syntax:
+    content: Water = 3
+    return:
+      type: SharedLibrary.TileType
+- uid: SharedLibrary.TileType.Sand
+  commentId: F:SharedLibrary.TileType.Sand
+  id: Sand
+  parent: SharedLibrary.TileType
+  langs:
+  - csharp
+  - vb
+  name: Sand
+  nameWithType: TileType.Sand
+  fullName: SharedLibrary.TileType.Sand
+  type: Field
+  source:
+    remote:
+      path: Shared/SharedLibrary/WorldMap/TileProperty.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Sand
+    path: Shared/SharedLibrary/WorldMap/TileProperty.cs
+    startLine: 8
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary
+  syntax:
+    content: Sand = 4
+    return:
+      type: SharedLibrary.TileType
+- uid: SharedLibrary.TileType.Dirt
+  commentId: F:SharedLibrary.TileType.Dirt
+  id: Dirt
+  parent: SharedLibrary.TileType
+  langs:
+  - csharp
+  - vb
+  name: Dirt
+  nameWithType: TileType.Dirt
+  fullName: SharedLibrary.TileType.Dirt
+  type: Field
+  source:
+    remote:
+      path: Shared/SharedLibrary/WorldMap/TileProperty.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Dirt
+    path: Shared/SharedLibrary/WorldMap/TileProperty.cs
+    startLine: 9
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary
+  syntax:
+    content: Dirt = 5
+    return:
+      type: SharedLibrary.TileType
+- uid: SharedLibrary.TileType.DarkGrass
+  commentId: F:SharedLibrary.TileType.DarkGrass
+  id: DarkGrass
+  parent: SharedLibrary.TileType
+  langs:
+  - csharp
+  - vb
+  name: DarkGrass
+  nameWithType: TileType.DarkGrass
+  fullName: SharedLibrary.TileType.DarkGrass
+  type: Field
+  source:
+    remote:
+      path: Shared/SharedLibrary/WorldMap/TileProperty.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: DarkGrass
+    path: Shared/SharedLibrary/WorldMap/TileProperty.cs
+    startLine: 10
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary
+  syntax:
+    content: DarkGrass = 6
+    return:
+      type: SharedLibrary.TileType
+- uid: SharedLibrary.TileType.Snow
+  commentId: F:SharedLibrary.TileType.Snow
+  id: Snow
+  parent: SharedLibrary.TileType
+  langs:
+  - csharp
+  - vb
+  name: Snow
+  nameWithType: TileType.Snow
+  fullName: SharedLibrary.TileType.Snow
+  type: Field
+  source:
+    remote:
+      path: Shared/SharedLibrary/WorldMap/TileProperty.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Snow
+    path: Shared/SharedLibrary/WorldMap/TileProperty.cs
+    startLine: 11
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary
+  syntax:
+    content: Snow = 7
+    return:
+      type: SharedLibrary.TileType
+- uid: SharedLibrary.TileType.Bridge
+  commentId: F:SharedLibrary.TileType.Bridge
+  id: Bridge
+  parent: SharedLibrary.TileType
+  langs:
+  - csharp
+  - vb
+  name: Bridge
+  nameWithType: TileType.Bridge
+  fullName: SharedLibrary.TileType.Bridge
+  type: Field
+  source:
+    remote:
+      path: Shared/SharedLibrary/WorldMap/TileProperty.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Bridge
+    path: Shared/SharedLibrary/WorldMap/TileProperty.cs
+    startLine: 12
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary
+  syntax:
+    content: Bridge = 8
+    return:
+      type: SharedLibrary.TileType
+- uid: SharedLibrary.TileType.Null
+  commentId: F:SharedLibrary.TileType.Null
+  id: "Null"
+  parent: SharedLibrary.TileType
+  langs:
+  - csharp
+  - vb
+  name: "Null"
+  nameWithType: TileType.Null
+  fullName: SharedLibrary.TileType.Null
+  type: Field
+  source:
+    remote:
+      path: Shared/SharedLibrary/WorldMap/TileProperty.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: "Null"
+    path: Shared/SharedLibrary/WorldMap/TileProperty.cs
+    startLine: 13
+  assemblies:
+  - SharedLibrary
+  namespace: SharedLibrary
+  syntax:
+    content: Null = 9
+    return:
+      type: SharedLibrary.TileType
+references:
+- uid: SharedLibrary
+  commentId: N:SharedLibrary
+  href: SharedLibrary.html
+  name: SharedLibrary
+  nameWithType: SharedLibrary
+  fullName: SharedLibrary
+- uid: SharedLibrary.TileType
+  commentId: T:SharedLibrary.TileType
+  parent: SharedLibrary
+  href: SharedLibrary.TileType.html
+  name: TileType
+  nameWithType: TileType
+  fullName: SharedLibrary.TileType

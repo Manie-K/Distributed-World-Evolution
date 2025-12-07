@@ -1,0 +1,813 @@
+### YamlMime:ManagedReference
+items:
+- uid: Client.Orc1
+  commentId: T:Client.Orc1
+  id: Orc1
+  parent: Client
+  children:
+  - Client.Orc1.#ctor(Microsoft.Xna.Framework.Vector2,System.Int32,Microsoft.Xna.Framework.Color)
+  - Client.Orc1.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)
+  langs:
+  - csharp
+  - vb
+  name: Orc1
+  nameWithType: Orc1
+  fullName: Client.Orc1
+  type: Class
+  source:
+    remote:
+      path: Client/Client/Logic/Characters/Orc1.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Orc1
+    path: Client/Client/Logic/Characters/Orc1.cs
+    startLine: 6
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: 'public class Orc1 : Character'
+    content.vb: Public Class Orc1 Inherits Character
+  inheritance:
+  - System.Object
+  - Client.Sprite
+  - Client.ScaledSprite
+  - Client.ColoredSprite
+  - Client.Character
+  inheritedMembers:
+  - Client.Character.speed
+  - Client.Character.currentDirection
+  - Client.Character.am
+  - Client.Character.HealthBar
+  - Client.Character.MaxHealth
+  - Client.Character.IsDead
+  - Client.Character.GetSourceRectangle
+  - Client.Character.SetAnimation(Client.AnimationType)
+  - Client.Character.Update(Microsoft.Xna.Framework.GameTime,SharedLibrary.DTOs.EntitiesDTO.EntityStateDTO)
+  - Client.Character.Update(Microsoft.Xna.Framework.GameTime)
+  - Client.Character.SetCurrentDirection(SharedLibrary.Helpers.Position2D,SharedLibrary.Helpers.Position2D)
+  - Client.ColoredSprite.color
+  - Client.ScaledSprite.width
+  - Client.ScaledSprite.height
+  - Client.Sprite.Texture
+  - Client.Sprite.Position
+  - Client.Sprite.SpriteDrawingOffset
+  - Client.Sprite.GetPosition
+  - Client.Sprite.Update
+  - System.Object.Equals(System.Object)
+  - System.Object.Equals(System.Object,System.Object)
+  - System.Object.GetHashCode
+  - System.Object.GetType
+  - System.Object.MemberwiseClone
+  - System.Object.ReferenceEquals(System.Object,System.Object)
+  - System.Object.ToString
+- uid: Client.Orc1.#ctor(Microsoft.Xna.Framework.Vector2,System.Int32,Microsoft.Xna.Framework.Color)
+  commentId: M:Client.Orc1.#ctor(Microsoft.Xna.Framework.Vector2,System.Int32,Microsoft.Xna.Framework.Color)
+  id: '#ctor(Microsoft.Xna.Framework.Vector2,System.Int32,Microsoft.Xna.Framework.Color)'
+  parent: Client.Orc1
+  langs:
+  - csharp
+  - vb
+  name: Orc1(Vector2, int, Color)
+  nameWithType: Orc1.Orc1(Vector2, int, Color)
+  fullName: Client.Orc1.Orc1(Microsoft.Xna.Framework.Vector2, int, Microsoft.Xna.Framework.Color)
+  type: Constructor
+  source:
+    remote:
+      path: Client/Client/Logic/Characters/Orc1.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: .ctor
+    path: Client/Client/Logic/Characters/Orc1.cs
+    startLine: 8
+  assemblies:
+  - Client
+  namespace: Client
+  syntax:
+    content: public Orc1(Vector2 position, int maxHealth, Color color)
+    parameters:
+    - id: position
+      type: Microsoft.Xna.Framework.Vector2
+    - id: maxHealth
+      type: System.Int32
+    - id: color
+      type: Microsoft.Xna.Framework.Color
+    content.vb: Public Sub New(position As Vector2, maxHealth As Integer, color As Color)
+  overload: Client.Orc1.#ctor*
+  nameWithType.vb: Orc1.New(Vector2, Integer, Color)
+  fullName.vb: Client.Orc1.New(Microsoft.Xna.Framework.Vector2, Integer, Microsoft.Xna.Framework.Color)
+  name.vb: New(Vector2, Integer, Color)
+- uid: Client.Orc1.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)
+  commentId: M:Client.Orc1.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)
+  id: Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)
+  parent: Client.Orc1
+  langs:
+  - csharp
+  - vb
+  name: Draw(SpriteBatch)
+  nameWithType: Orc1.Draw(SpriteBatch)
+  fullName: Client.Orc1.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)
+  type: Method
+  source:
+    remote:
+      path: Client/Client/Logic/Characters/Orc1.cs
+      branch: fix/client-code-clean-up
+      repo: https://github.com/Manie-K/Distributed-World-Evolution.git
+    id: Draw
+    path: Client/Client/Logic/Characters/Orc1.cs
+    startLine: 15
+  assemblies:
+  - Client
+  namespace: Client
+  example: []
+  syntax:
+    content: public override void Draw(SpriteBatch spriteBatch)
+    parameters:
+    - id: spriteBatch
+      type: Microsoft.Xna.Framework.Graphics.SpriteBatch
+    content.vb: Public Overrides Sub Draw(spriteBatch As SpriteBatch)
+  overridden: Client.ColoredSprite.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)
+  overload: Client.Orc1.Draw*
+references:
+- uid: Client
+  commentId: N:Client
+  href: Client.html
+  name: Client
+  nameWithType: Client
+  fullName: Client
+- uid: System.Object
+  commentId: T:System.Object
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object
+  name: object
+  nameWithType: object
+  fullName: object
+  nameWithType.vb: Object
+  fullName.vb: Object
+  name.vb: Object
+- uid: Client.Sprite
+  commentId: T:Client.Sprite
+  parent: Client
+  href: Client.Sprite.html
+  name: Sprite
+  nameWithType: Sprite
+  fullName: Client.Sprite
+- uid: Client.ScaledSprite
+  commentId: T:Client.ScaledSprite
+  parent: Client
+  href: Client.ScaledSprite.html
+  name: ScaledSprite
+  nameWithType: ScaledSprite
+  fullName: Client.ScaledSprite
+- uid: Client.ColoredSprite
+  commentId: T:Client.ColoredSprite
+  parent: Client
+  href: Client.ColoredSprite.html
+  name: ColoredSprite
+  nameWithType: ColoredSprite
+  fullName: Client.ColoredSprite
+- uid: Client.Character
+  commentId: T:Client.Character
+  parent: Client
+  href: Client.Character.html
+  name: Character
+  nameWithType: Character
+  fullName: Client.Character
+- uid: Client.Character.speed
+  commentId: F:Client.Character.speed
+  parent: Client.Character
+  href: Client.Character.html#Client_Character_speed
+  name: speed
+  nameWithType: Character.speed
+  fullName: Client.Character.speed
+- uid: Client.Character.currentDirection
+  commentId: F:Client.Character.currentDirection
+  parent: Client.Character
+  href: Client.Character.html#Client_Character_currentDirection
+  name: currentDirection
+  nameWithType: Character.currentDirection
+  fullName: Client.Character.currentDirection
+- uid: Client.Character.am
+  commentId: F:Client.Character.am
+  parent: Client.Character
+  href: Client.Character.html#Client_Character_am
+  name: am
+  nameWithType: Character.am
+  fullName: Client.Character.am
+- uid: Client.Character.HealthBar
+  commentId: F:Client.Character.HealthBar
+  parent: Client.Character
+  href: Client.Character.html#Client_Character_HealthBar
+  name: HealthBar
+  nameWithType: Character.HealthBar
+  fullName: Client.Character.HealthBar
+- uid: Client.Character.MaxHealth
+  commentId: F:Client.Character.MaxHealth
+  parent: Client.Character
+  href: Client.Character.html#Client_Character_MaxHealth
+  name: MaxHealth
+  nameWithType: Character.MaxHealth
+  fullName: Client.Character.MaxHealth
+- uid: Client.Character.IsDead
+  commentId: F:Client.Character.IsDead
+  parent: Client.Character
+  href: Client.Character.html#Client_Character_IsDead
+  name: IsDead
+  nameWithType: Character.IsDead
+  fullName: Client.Character.IsDead
+- uid: Client.Character.GetSourceRectangle
+  commentId: M:Client.Character.GetSourceRectangle
+  parent: Client.Character
+  href: Client.Character.html#Client_Character_GetSourceRectangle
+  name: GetSourceRectangle()
+  nameWithType: Character.GetSourceRectangle()
+  fullName: Client.Character.GetSourceRectangle()
+  spec.csharp:
+  - uid: Client.Character.GetSourceRectangle
+    name: GetSourceRectangle
+    href: Client.Character.html#Client_Character_GetSourceRectangle
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Client.Character.GetSourceRectangle
+    name: GetSourceRectangle
+    href: Client.Character.html#Client_Character_GetSourceRectangle
+  - name: (
+  - name: )
+- uid: Client.Character.SetAnimation(Client.AnimationType)
+  commentId: M:Client.Character.SetAnimation(Client.AnimationType)
+  parent: Client.Character
+  href: Client.Character.html#Client_Character_SetAnimation_Client_AnimationType_
+  name: SetAnimation(AnimationType)
+  nameWithType: Character.SetAnimation(AnimationType)
+  fullName: Client.Character.SetAnimation(Client.AnimationType)
+  spec.csharp:
+  - uid: Client.Character.SetAnimation(Client.AnimationType)
+    name: SetAnimation
+    href: Client.Character.html#Client_Character_SetAnimation_Client_AnimationType_
+  - name: (
+  - uid: Client.AnimationType
+    name: AnimationType
+    href: Client.AnimationType.html
+  - name: )
+  spec.vb:
+  - uid: Client.Character.SetAnimation(Client.AnimationType)
+    name: SetAnimation
+    href: Client.Character.html#Client_Character_SetAnimation_Client_AnimationType_
+  - name: (
+  - uid: Client.AnimationType
+    name: AnimationType
+    href: Client.AnimationType.html
+  - name: )
+- uid: Client.Character.Update(Microsoft.Xna.Framework.GameTime,SharedLibrary.DTOs.EntitiesDTO.EntityStateDTO)
+  commentId: M:Client.Character.Update(Microsoft.Xna.Framework.GameTime,SharedLibrary.DTOs.EntitiesDTO.EntityStateDTO)
+  parent: Client.Character
+  isExternal: true
+  href: Client.Character.html#Client_Character_Update_Microsoft_Xna_Framework_GameTime_SharedLibrary_DTOs_EntitiesDTO_EntityStateDTO_
+  name: Update(GameTime, EntityStateDTO)
+  nameWithType: Character.Update(GameTime, EntityStateDTO)
+  fullName: Client.Character.Update(Microsoft.Xna.Framework.GameTime, SharedLibrary.DTOs.EntitiesDTO.EntityStateDTO)
+  spec.csharp:
+  - uid: Client.Character.Update(Microsoft.Xna.Framework.GameTime,SharedLibrary.DTOs.EntitiesDTO.EntityStateDTO)
+    name: Update
+    href: Client.Character.html#Client_Character_Update_Microsoft_Xna_Framework_GameTime_SharedLibrary_DTOs_EntitiesDTO_EntityStateDTO_
+  - name: (
+  - uid: Microsoft.Xna.Framework.GameTime
+    name: GameTime
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: SharedLibrary.DTOs.EntitiesDTO.EntityStateDTO
+    name: EntityStateDTO
+    isExternal: true
+    href: https://github.com/Manie-K/Distributed-World-Evolution/blob/04d77cccea139c5e616524f8a10c7afb68cc7eb5/Shared/SharedLibrary/DTOs/EntitiesDTO/EntityStateDTO.cs
+  - name: )
+  spec.vb:
+  - uid: Client.Character.Update(Microsoft.Xna.Framework.GameTime,SharedLibrary.DTOs.EntitiesDTO.EntityStateDTO)
+    name: Update
+    href: Client.Character.html#Client_Character_Update_Microsoft_Xna_Framework_GameTime_SharedLibrary_DTOs_EntitiesDTO_EntityStateDTO_
+  - name: (
+  - uid: Microsoft.Xna.Framework.GameTime
+    name: GameTime
+    isExternal: true
+  - name: ','
+  - name: " "
+  - uid: SharedLibrary.DTOs.EntitiesDTO.EntityStateDTO
+    name: EntityStateDTO
+    isExternal: true
+    href: https://github.com/Manie-K/Distributed-World-Evolution/blob/04d77cccea139c5e616524f8a10c7afb68cc7eb5/Shared/SharedLibrary/DTOs/EntitiesDTO/EntityStateDTO.cs
+  - name: )
+- uid: Client.Character.Update(Microsoft.Xna.Framework.GameTime)
+  commentId: M:Client.Character.Update(Microsoft.Xna.Framework.GameTime)
+  parent: Client.Character
+  isExternal: true
+  href: Client.Character.html#Client_Character_Update_Microsoft_Xna_Framework_GameTime_
+  name: Update(GameTime)
+  nameWithType: Character.Update(GameTime)
+  fullName: Client.Character.Update(Microsoft.Xna.Framework.GameTime)
+  spec.csharp:
+  - uid: Client.Character.Update(Microsoft.Xna.Framework.GameTime)
+    name: Update
+    href: Client.Character.html#Client_Character_Update_Microsoft_Xna_Framework_GameTime_
+  - name: (
+  - uid: Microsoft.Xna.Framework.GameTime
+    name: GameTime
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Client.Character.Update(Microsoft.Xna.Framework.GameTime)
+    name: Update
+    href: Client.Character.html#Client_Character_Update_Microsoft_Xna_Framework_GameTime_
+  - name: (
+  - uid: Microsoft.Xna.Framework.GameTime
+    name: GameTime
+    isExternal: true
+  - name: )
+- uid: Client.Character.SetCurrentDirection(SharedLibrary.Helpers.Position2D,SharedLibrary.Helpers.Position2D)
+  commentId: M:Client.Character.SetCurrentDirection(SharedLibrary.Helpers.Position2D,SharedLibrary.Helpers.Position2D)
+  parent: Client.Character
+  isExternal: true
+  href: Client.Character.html#Client_Character_SetCurrentDirection_SharedLibrary_Helpers_Position2D_SharedLibrary_Helpers_Position2D_
+  name: SetCurrentDirection(Position2D, Position2D)
+  nameWithType: Character.SetCurrentDirection(Position2D, Position2D)
+  fullName: Client.Character.SetCurrentDirection(SharedLibrary.Helpers.Position2D, SharedLibrary.Helpers.Position2D)
+  spec.csharp:
+  - uid: Client.Character.SetCurrentDirection(SharedLibrary.Helpers.Position2D,SharedLibrary.Helpers.Position2D)
+    name: SetCurrentDirection
+    href: Client.Character.html#Client_Character_SetCurrentDirection_SharedLibrary_Helpers_Position2D_SharedLibrary_Helpers_Position2D_
+  - name: (
+  - uid: SharedLibrary.Helpers.Position2D
+    name: Position2D
+    isExternal: true
+    href: https://github.com/Manie-K/Distributed-World-Evolution/blob/04d77cccea139c5e616524f8a10c7afb68cc7eb5/Shared/SharedLibrary/Helpers/Position2D.cs
+  - name: ','
+  - name: " "
+  - uid: SharedLibrary.Helpers.Position2D
+    name: Position2D
+    isExternal: true
+    href: https://github.com/Manie-K/Distributed-World-Evolution/blob/04d77cccea139c5e616524f8a10c7afb68cc7eb5/Shared/SharedLibrary/Helpers/Position2D.cs
+  - name: )
+  spec.vb:
+  - uid: Client.Character.SetCurrentDirection(SharedLibrary.Helpers.Position2D,SharedLibrary.Helpers.Position2D)
+    name: SetCurrentDirection
+    href: Client.Character.html#Client_Character_SetCurrentDirection_SharedLibrary_Helpers_Position2D_SharedLibrary_Helpers_Position2D_
+  - name: (
+  - uid: SharedLibrary.Helpers.Position2D
+    name: Position2D
+    isExternal: true
+    href: https://github.com/Manie-K/Distributed-World-Evolution/blob/04d77cccea139c5e616524f8a10c7afb68cc7eb5/Shared/SharedLibrary/Helpers/Position2D.cs
+  - name: ','
+  - name: " "
+  - uid: SharedLibrary.Helpers.Position2D
+    name: Position2D
+    isExternal: true
+    href: https://github.com/Manie-K/Distributed-World-Evolution/blob/04d77cccea139c5e616524f8a10c7afb68cc7eb5/Shared/SharedLibrary/Helpers/Position2D.cs
+  - name: )
+- uid: Client.ColoredSprite.color
+  commentId: F:Client.ColoredSprite.color
+  parent: Client.ColoredSprite
+  href: Client.ColoredSprite.html#Client_ColoredSprite_color
+  name: color
+  nameWithType: ColoredSprite.color
+  fullName: Client.ColoredSprite.color
+- uid: Client.ScaledSprite.width
+  commentId: F:Client.ScaledSprite.width
+  parent: Client.ScaledSprite
+  href: Client.ScaledSprite.html#Client_ScaledSprite_width
+  name: width
+  nameWithType: ScaledSprite.width
+  fullName: Client.ScaledSprite.width
+- uid: Client.ScaledSprite.height
+  commentId: F:Client.ScaledSprite.height
+  parent: Client.ScaledSprite
+  href: Client.ScaledSprite.html#Client_ScaledSprite_height
+  name: height
+  nameWithType: ScaledSprite.height
+  fullName: Client.ScaledSprite.height
+- uid: Client.Sprite.Texture
+  commentId: F:Client.Sprite.Texture
+  parent: Client.Sprite
+  href: Client.Sprite.html#Client_Sprite_Texture
+  name: Texture
+  nameWithType: Sprite.Texture
+  fullName: Client.Sprite.Texture
+- uid: Client.Sprite.Position
+  commentId: F:Client.Sprite.Position
+  parent: Client.Sprite
+  href: Client.Sprite.html#Client_Sprite_Position
+  name: Position
+  nameWithType: Sprite.Position
+  fullName: Client.Sprite.Position
+- uid: Client.Sprite.SpriteDrawingOffset
+  commentId: F:Client.Sprite.SpriteDrawingOffset
+  parent: Client.Sprite
+  href: Client.Sprite.html#Client_Sprite_SpriteDrawingOffset
+  name: SpriteDrawingOffset
+  nameWithType: Sprite.SpriteDrawingOffset
+  fullName: Client.Sprite.SpriteDrawingOffset
+- uid: Client.Sprite.GetPosition
+  commentId: M:Client.Sprite.GetPosition
+  parent: Client.Sprite
+  href: Client.Sprite.html#Client_Sprite_GetPosition
+  name: GetPosition()
+  nameWithType: Sprite.GetPosition()
+  fullName: Client.Sprite.GetPosition()
+  spec.csharp:
+  - uid: Client.Sprite.GetPosition
+    name: GetPosition
+    href: Client.Sprite.html#Client_Sprite_GetPosition
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Client.Sprite.GetPosition
+    name: GetPosition
+    href: Client.Sprite.html#Client_Sprite_GetPosition
+  - name: (
+  - name: )
+- uid: Client.Sprite.Update
+  commentId: M:Client.Sprite.Update
+  parent: Client.Sprite
+  href: Client.Sprite.html#Client_Sprite_Update
+  name: Update()
+  nameWithType: Sprite.Update()
+  fullName: Client.Sprite.Update()
+  spec.csharp:
+  - uid: Client.Sprite.Update
+    name: Update
+    href: Client.Sprite.html#Client_Sprite_Update
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: Client.Sprite.Update
+    name: Update
+    href: Client.Sprite.html#Client_Sprite_Update
+  - name: (
+  - name: )
+- uid: System.Object.Equals(System.Object)
+  commentId: M:System.Object.Equals(System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  name: Equals(object)
+  nameWithType: object.Equals(object)
+  fullName: object.Equals(object)
+  nameWithType.vb: Object.Equals(Object)
+  fullName.vb: Object.Equals(Object)
+  name.vb: Equals(Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.Equals(System.Object,System.Object)
+  commentId: M:System.Object.Equals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  name: Equals(object, object)
+  nameWithType: object.Equals(object, object)
+  fullName: object.Equals(object, object)
+  nameWithType.vb: Object.Equals(Object, Object)
+  fullName.vb: Object.Equals(Object, Object)
+  name.vb: Equals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.Equals(System.Object,System.Object)
+    name: Equals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.equals#system-object-equals(system-object-system-object)
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.GetHashCode
+  commentId: M:System.Object.GetHashCode
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  name: GetHashCode()
+  nameWithType: object.GetHashCode()
+  fullName: object.GetHashCode()
+  nameWithType.vb: Object.GetHashCode()
+  fullName.vb: Object.GetHashCode()
+  spec.csharp:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetHashCode
+    name: GetHashCode
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gethashcode
+  - name: (
+  - name: )
+- uid: System.Object.GetType
+  commentId: M:System.Object.GetType
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  name: GetType()
+  nameWithType: object.GetType()
+  fullName: object.GetType()
+  nameWithType.vb: Object.GetType()
+  fullName.vb: Object.GetType()
+  spec.csharp:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.GetType
+    name: GetType
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.gettype
+  - name: (
+  - name: )
+- uid: System.Object.MemberwiseClone
+  commentId: M:System.Object.MemberwiseClone
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  name: MemberwiseClone()
+  nameWithType: object.MemberwiseClone()
+  fullName: object.MemberwiseClone()
+  nameWithType.vb: Object.MemberwiseClone()
+  fullName.vb: Object.MemberwiseClone()
+  spec.csharp:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.MemberwiseClone
+    name: MemberwiseClone
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.memberwiseclone
+  - name: (
+  - name: )
+- uid: System.Object.ReferenceEquals(System.Object,System.Object)
+  commentId: M:System.Object.ReferenceEquals(System.Object,System.Object)
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  name: ReferenceEquals(object, object)
+  nameWithType: object.ReferenceEquals(object, object)
+  fullName: object.ReferenceEquals(object, object)
+  nameWithType.vb: Object.ReferenceEquals(Object, Object)
+  fullName.vb: Object.ReferenceEquals(Object, Object)
+  name.vb: ReferenceEquals(Object, Object)
+  spec.csharp:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+  spec.vb:
+  - uid: System.Object.ReferenceEquals(System.Object,System.Object)
+    name: ReferenceEquals
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.referenceequals
+  - name: (
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: ','
+  - name: " "
+  - uid: System.Object
+    name: Object
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object
+  - name: )
+- uid: System.Object.ToString
+  commentId: M:System.Object.ToString
+  parent: System.Object
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  name: ToString()
+  nameWithType: object.ToString()
+  fullName: object.ToString()
+  nameWithType.vb: Object.ToString()
+  fullName.vb: Object.ToString()
+  spec.csharp:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+  spec.vb:
+  - uid: System.Object.ToString
+    name: ToString
+    isExternal: true
+    href: https://learn.microsoft.com/dotnet/api/system.object.tostring
+  - name: (
+  - name: )
+- uid: System
+  commentId: N:System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system
+  name: System
+  nameWithType: System
+  fullName: System
+- uid: Client.Orc1.#ctor*
+  commentId: Overload:Client.Orc1.#ctor
+  href: Client.Orc1.html#Client_Orc1__ctor_Microsoft_Xna_Framework_Vector2_System_Int32_Microsoft_Xna_Framework_Color_
+  name: Orc1
+  nameWithType: Orc1.Orc1
+  fullName: Client.Orc1.Orc1
+  nameWithType.vb: Orc1.New
+  fullName.vb: Client.Orc1.New
+  name.vb: New
+- uid: Microsoft.Xna.Framework.Vector2
+  commentId: T:Microsoft.Xna.Framework.Vector2
+  parent: Microsoft.Xna.Framework
+  isExternal: true
+  name: Vector2
+  nameWithType: Vector2
+  fullName: Microsoft.Xna.Framework.Vector2
+- uid: System.Int32
+  commentId: T:System.Int32
+  parent: System
+  isExternal: true
+  href: https://learn.microsoft.com/dotnet/api/system.int32
+  name: int
+  nameWithType: int
+  fullName: int
+  nameWithType.vb: Integer
+  fullName.vb: Integer
+  name.vb: Integer
+- uid: Microsoft.Xna.Framework.Color
+  commentId: T:Microsoft.Xna.Framework.Color
+  parent: Microsoft.Xna.Framework
+  isExternal: true
+  name: Color
+  nameWithType: Color
+  fullName: Microsoft.Xna.Framework.Color
+- uid: Microsoft.Xna.Framework
+  commentId: N:Microsoft.Xna.Framework
+  isExternal: true
+  name: Microsoft.Xna.Framework
+  nameWithType: Microsoft.Xna.Framework
+  fullName: Microsoft.Xna.Framework
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna
+    name: Xna
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna.Framework
+    name: Framework
+    isExternal: true
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna
+    name: Xna
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna.Framework
+    name: Framework
+    isExternal: true
+- uid: Client.ColoredSprite.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)
+  commentId: M:Client.ColoredSprite.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)
+  parent: Client.ColoredSprite
+  isExternal: true
+  href: Client.ColoredSprite.html#Client_ColoredSprite_Draw_Microsoft_Xna_Framework_Graphics_SpriteBatch_
+  name: Draw(SpriteBatch)
+  nameWithType: ColoredSprite.Draw(SpriteBatch)
+  fullName: Client.ColoredSprite.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)
+  spec.csharp:
+  - uid: Client.ColoredSprite.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)
+    name: Draw
+    href: Client.ColoredSprite.html#Client_ColoredSprite_Draw_Microsoft_Xna_Framework_Graphics_SpriteBatch_
+  - name: (
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteBatch
+    name: SpriteBatch
+    isExternal: true
+  - name: )
+  spec.vb:
+  - uid: Client.ColoredSprite.Draw(Microsoft.Xna.Framework.Graphics.SpriteBatch)
+    name: Draw
+    href: Client.ColoredSprite.html#Client_ColoredSprite_Draw_Microsoft_Xna_Framework_Graphics_SpriteBatch_
+  - name: (
+  - uid: Microsoft.Xna.Framework.Graphics.SpriteBatch
+    name: SpriteBatch
+    isExternal: true
+  - name: )
+- uid: Client.Orc1.Draw*
+  commentId: Overload:Client.Orc1.Draw
+  href: Client.Orc1.html#Client_Orc1_Draw_Microsoft_Xna_Framework_Graphics_SpriteBatch_
+  name: Draw
+  nameWithType: Orc1.Draw
+  fullName: Client.Orc1.Draw
+- uid: Microsoft.Xna.Framework.Graphics.SpriteBatch
+  commentId: T:Microsoft.Xna.Framework.Graphics.SpriteBatch
+  parent: Microsoft.Xna.Framework.Graphics
+  isExternal: true
+  name: SpriteBatch
+  nameWithType: SpriteBatch
+  fullName: Microsoft.Xna.Framework.Graphics.SpriteBatch
+- uid: Microsoft.Xna.Framework.Graphics
+  commentId: N:Microsoft.Xna.Framework.Graphics
+  isExternal: true
+  name: Microsoft.Xna.Framework.Graphics
+  nameWithType: Microsoft.Xna.Framework.Graphics
+  fullName: Microsoft.Xna.Framework.Graphics
+  spec.csharp:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna
+    name: Xna
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna.Framework
+    name: Framework
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna.Framework.Graphics
+    name: Graphics
+    isExternal: true
+  spec.vb:
+  - uid: Microsoft
+    name: Microsoft
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna
+    name: Xna
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna.Framework
+    name: Framework
+    isExternal: true
+  - name: .
+  - uid: Microsoft.Xna.Framework.Graphics
+    name: Graphics
+    isExternal: true
