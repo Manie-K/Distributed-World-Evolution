@@ -12,6 +12,7 @@ namespace Client.Panels.Windows
     public class WindowManager
     {
         private GameManager gameManager;
+
         public Window ErrorWindow;
         public Window WarningWindow;
         public LoadingWindow LoadingWindow;
@@ -30,7 +31,7 @@ namespace Client.Panels.Windows
 
         public bool Update()
         {
-            if (ErrorWindow.isEnabled)
+            if (ErrorWindow.IsEnabled)
             {
                 if (gameManager.InputManager.CheckIfLeftClick())
                 {
@@ -41,7 +42,7 @@ namespace Client.Panels.Windows
                 return true;
             }
 
-            if (WarningWindow.isEnabled)
+            if (WarningWindow.IsEnabled)
             {
                 if (gameManager.InputManager.CheckIfLeftClick())
                 {
@@ -52,7 +53,7 @@ namespace Client.Panels.Windows
                 return true;
             }
 
-            if (InformationWindow.isEnabled)
+            if (InformationWindow.IsEnabled)
             {
                 if (gameManager.InputManager.CheckIfLeftClick())
                 {
@@ -68,10 +69,10 @@ namespace Client.Panels.Windows
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            if (WarningWindow.isEnabled) WarningWindow.Draw(spriteBatch);
-            if (ErrorWindow.isEnabled) ErrorWindow.Draw(spriteBatch);
+            if (WarningWindow.IsEnabled) WarningWindow.Draw(spriteBatch);
+            if (ErrorWindow.IsEnabled) ErrorWindow.Draw(spriteBatch);
             if (LoadingWindow.IsEnabled) LoadingWindow.Draw(spriteBatch);
-            if (InformationWindow.isEnabled) InformationWindow.Draw(spriteBatch);
+            if (InformationWindow.IsEnabled) InformationWindow.Draw(spriteBatch);
         }
 
         public void ShowInformationWindow(string information)
@@ -100,6 +101,5 @@ namespace Client.Panels.Windows
         {
             ShowErrorWindow("Failed connection to the server.");
         }
-
     }
 }

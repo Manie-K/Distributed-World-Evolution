@@ -90,8 +90,17 @@ namespace Client
             {
                 lock (entitiesLock)
                 {
-                    return entities;
+                    return new Dictionary<Guid, WorldEntityDTO>(entities);
                 }
+            }
+        }
+        public IReadOnlyDictionary<Guid, WorldEntityDTO> FlushEntities()
+        {
+            lock (entitiesLock)
+            {
+                Dictionary<Guid, WorldEntityDTO> snapshot = new Dictionary<Guid, WorldEntityDTO>(entities);
+                entities.Clear();
+                return snapshot;
             }
         }
 
@@ -103,7 +112,7 @@ namespace Client
             {
                 lock (lobbiesLock)
                 {
-                    return lobbies;
+                    return new List<LobbyDTO>(lobbies);
                 }
             }
         }
@@ -116,7 +125,7 @@ namespace Client
             {
                 lock (modulesLock)
                 {
-                    return modules;
+                    return new List<ModuleDTO>(modules);
                 }
             }
         }
@@ -129,7 +138,7 @@ namespace Client
             {
                 lock (behavioursLock)
                 {
-                    return behaviours;
+                    return new List<BehaviourDTO>(behaviours);
                 }
             }
         }
@@ -162,7 +171,7 @@ namespace Client
 
         #endregion
 
-        public ClientManager()
+        public ClientManager(IConfigurationRoot config)
         {
             lobbyCreated = ActionStatus.IDLE;
             moduleCreated = ActionStatus.IDLE;
@@ -171,9 +180,6 @@ namespace Client
             moduleListReady = ActionStatus.IDLE;
             behaviourListReady = ActionStatus.IDLE;
 
-            var config = new ConfigurationBuilder()
-              .AddJsonFile("appsettings.json", optional: true, reloadOnChange: true)
-              .Build();
             bool connectToDocker = bool.Parse(config["TcpSettings:UseDocker"]);
             serverIp = config["TcpSettings:ServerIP"];
             if (connectToDocker) port = int.Parse(config["TcpSettings:DockerPort"]);
@@ -323,7 +329,10 @@ namespace Client
                     WorldStateMessage worldStateMessage = (WorldStateMessage)message;
                     lock (entitiesLock)
                     {
-                        entities = worldStateMessage.UpdatedEntities.ToDictionary(e => e.Id);
+                        foreach (WorldEntityDTO entity in worldStateMessage.UpdatedEntities)
+                        {
+                            entities[entity.Id] = entity;
+                        }
                     }
                 }
                 else

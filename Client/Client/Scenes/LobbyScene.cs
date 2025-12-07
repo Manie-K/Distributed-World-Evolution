@@ -10,7 +10,6 @@ namespace Client
     public class LobbyScene : IScene
     {
         private GameManager manager;
-
         private Texture2D backGround;
         private SwitchPage switchPage;
         private Button createButton;
@@ -47,10 +46,7 @@ namespace Client
             manager.ClientManager.LobbyListReady = ActionStatus.PENDING;
         }
 
-        public void Load()
-        {
-
-        }
+        public void Load() {}
 
         public void Update(GameTime gameTime)
         {
@@ -128,10 +124,7 @@ namespace Client
             switchPage.UpdateRows(manager.InputManager.GetMousePosition(), isPressed);
         }
 
-        public void Draw(SpriteBatch spriteBatch)
-        {
-
-        }
+        public void Draw(SpriteBatch spriteBatch) {}
 
         public void DrawStatic(SpriteBatch spriteBatch)
         {

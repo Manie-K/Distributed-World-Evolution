@@ -12,9 +12,9 @@ namespace Client.UI.CreateLobby.Parameters
         private Button[] pageButtons;
         private Text pageNumberText;
         private List<ParameterRow> parameters;
+
         private int pageNumber;
         private int amountOfRows;
-
         private int lastParameterClicked;
 
         public SwitchPageParameters(SpriteFont fontNumbers, Vector2 position, ContentManager contentManager, int amountOfRows)

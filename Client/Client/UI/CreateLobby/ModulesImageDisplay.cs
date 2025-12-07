@@ -14,7 +14,6 @@ namespace Client.UI.CreateLobby
         {
             rect = new Rectangle(583, 213, 66, 52);
             AcctualPicked = 16;
-
             InitializeImages(contentManager);
         }
 

@@ -16,7 +16,7 @@ namespace Client
     public class GameScene : IScene
     {
         private GameManager manager;
-
+        private Text performanceText;
         private PanelsController panelsController;
         private Player player;
         private Dictionary<Guid, Character> characters;
@@ -24,16 +24,18 @@ namespace Client
         private List<WorldEntityDTO> inGameEntities;
         private WorldMap map;
         private Vector2 cameraOffset;
+
+        private bool showPerformance;
         private double clientUpdateTimer;
         private double timeBetweenUpdates;
 
         public GameScene(GameManager manager, int mapID)
         {
             this.manager = manager;
-
             characters = [];
             plants = [];
 
+            performanceText = new Text(manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), "sec", false, new Vector2(900, 10), 106, 40);
             panelsController = new PanelsController(manager);
             cameraOffset = new Vector2(0, 70);
             map = new WorldMap();
@@ -49,6 +51,7 @@ namespace Client
             manager.IsInGame = true;
             clientUpdateTimer = 0;
             timeBetweenUpdates = 1.0 / ClientManager.CLIENT_UPDATES_PER_SECOND;
+            showPerformance = bool.Parse(manager.AppConfig["TcpSettings:ShowPerformance"]);
 
             inGameEntities = new List<WorldEntityDTO>();
             List<WorldEntityDTO> entitiesToLoad = manager.ClientManager.LobbyData.WorldEntities.ToList();
@@ -63,23 +66,23 @@ namespace Client
             }
         }
 
-        public void Load()
-        {
-
-        }
+        public void Load() {}
 
         public void Update(GameTime gameTime)
         {
+            float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            if (showPerformance) performanceText.SetText("sec: " + delta + " ; creatures: " + inGameEntities.Count);
+
             panelsController.Update();
             
-            IReadOnlyDictionary<Guid, WorldEntityDTO> entities = manager.ClientManager.Entities;
+            IReadOnlyDictionary<Guid, WorldEntityDTO> entities = manager.ClientManager.FlushEntities();
             Dictionary<Guid, Character> newCharacterList = [];
             Dictionary<Guid, Plant> newPlantList = [];
 
             // Removing dead creatures
             foreach (Guid guid in characters.Keys)
             {
-                if (!characters[guid].isDead)
+                if (!characters[guid].IsDead)
                 {
                     newCharacterList.Add(guid, characters[guid]);
                 }
@@ -93,7 +96,7 @@ namespace Client
             // Removing dead plants
             foreach (Guid guid in plants.Keys)
             {
-                if (!plants[guid].isDead)
+                if (!plants[guid].IsDead)
                 {
                     newPlantList.Add(guid, plants[guid]);
                 }
@@ -130,7 +133,7 @@ namespace Client
                     plant.Position = GetWorldPosition(entity);
                     if (entity.State.Health <= 0)
                     { 
-                        plant.isDead = true;
+                        plant.IsDead = true;
                     }
                     int index = inGameEntities.FindIndex(e => e.Id == entity.Id);
                     if (index != -1)
@@ -153,11 +156,9 @@ namespace Client
                 }
             }
 
+            // Updating player
             player.Update(gameTime, manager.InputManager, inGameEntities);
-
-            float delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             clientUpdateTimer += delta;
-
             SendPlayerStatus();
         }
 
@@ -179,6 +180,7 @@ namespace Client
 
         public void DrawStatic(SpriteBatch spriteBatch)
         {
+            if (showPerformance) performanceText.Draw(spriteBatch);
             panelsController.Draw(spriteBatch);
         }
 

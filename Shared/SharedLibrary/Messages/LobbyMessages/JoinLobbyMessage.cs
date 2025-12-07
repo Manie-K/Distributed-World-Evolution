@@ -38,5 +38,4 @@ namespace SharedLibrary.Messages
             return JsonSerializer.Serialize(payload);
         }
     }
-
 }

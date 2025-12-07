@@ -3,7 +3,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
-using System.Diagnostics.Metrics;
 
 namespace Client.Panels
 {
@@ -65,9 +64,7 @@ namespace Client.Panels
             {
                 PickSlot(8);
             }
-
         }
-
 
         public void Draw(SpriteBatch spriteBatch)
         {

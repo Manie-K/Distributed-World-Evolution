@@ -8,7 +8,6 @@ namespace Client.Panels.Stats
         private Texture2D panelBackground;
         private Bar healthBar;
         private Bar hungerBar;
-
         private Vector2 position;
 
         public StatsPanel(GameManager manager, Vector2 position)
@@ -19,10 +18,7 @@ namespace Client.Panels.Stats
             hungerBar = new Bar(manager.ContentManager.Load<Texture2D>("Panels/StatsPanel/HungerBar"), new Vector2(position.X + 53, position.Y + 52));
         }
 
-        public void Update()
-        {
-
-        }
+        public void Update() {}
 
         public void Draw(SpriteBatch spriteBatch)
         {

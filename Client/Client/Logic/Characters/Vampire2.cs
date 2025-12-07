@@ -18,11 +18,11 @@ namespace Client
             if (am.CheckDeadAnimation()) return;
 
             spriteBatch.Draw(AssetsManager.GetInstance().GetCharacterTexture((int) am.ActiveAnimation, 10), GetPosition(), GetSourceRectangle(), Color.White);
-            if (CurrentDirection == Direction.Left)
+            if (currentDirection == Direction.Left)
             {
                 HealthBar.Draw(spriteBatch, Position, 1, -30);
             }
-            else if (CurrentDirection == Direction.Right)
+            else if (currentDirection == Direction.Right)
             {
                 HealthBar.Draw(spriteBatch, Position, 5, -30);
             }

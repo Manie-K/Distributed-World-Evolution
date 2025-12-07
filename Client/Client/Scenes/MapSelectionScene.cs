@@ -1,20 +1,13 @@
-﻿using Client.UI.CreateLobby.Parameters;
-using Client.UI.MapSelection;
+﻿using Client.UI.MapSelection;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using SharedLibrary;
-using System;
-using System.Linq.Expressions;
-using System.Text.Json;
-using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace Client
 {
     public class MapSelectionScene : IScene
     {
         private GameManager manager;
-
         private Texture2D backGround;
         private Button exitButton;
         private SwitchPageMapSelection switchPageMapSelection;
@@ -29,21 +22,14 @@ namespace Client
             saveButton = new Button(manager.ContentManager.Load<Texture2D>("UI/Buttons/MapSelection_SaveButton"), null, null, new Vector2(534, 584), 211, 62, new Color(255, 255, 128));
             this.data = data;
             switchPageMapSelection = new SwitchPageMapSelection( manager.ContentManager.Load<SpriteFont>("Fonts/SettingsNumbers"), new Vector2(287, 335), data, manager.ContentManager);
-
         }
 
-        public void Load()
-        {
-
-        }
-
+        public void Load() {}
 
         public void Update(GameTime gameTime)
         {
-
             if (manager.InputManager.CheckIfLeftClick())
             {
-
                 switchPageMapSelection.CheckLeftClick(manager.InputManager.GetMousePosition());        
                 if (exitButton.CheckLeftClick(manager.InputManager.GetMousePosition()))
                 {
@@ -54,9 +40,6 @@ namespace Client
                     switchPageMapSelection.SetSelectedData(ref data);
                     manager.SceneManager.RemoveScene();
                 }
-
-
-
             }
 
             if (manager.InputManager.CheckIfCanPressKey(Keys.Escape))
@@ -64,16 +47,11 @@ namespace Client
                 manager.SceneManager.RemoveScene();
             }
 
-
             exitButton.Update(manager.InputManager.GetMousePosition());
             saveButton.Update(manager.InputManager.GetMousePosition());
         }
 
-        public void Draw(SpriteBatch spriteBatch)
-        {
-
-
-        }
+        public void Draw(SpriteBatch spriteBatch) {}
 
         public void DrawStatic(SpriteBatch spriteBatch)
         {
@@ -82,6 +60,5 @@ namespace Client
             exitButton.Draw(spriteBatch);
             switchPageMapSelection.Draw(spriteBatch);
         }
-
     }
 }

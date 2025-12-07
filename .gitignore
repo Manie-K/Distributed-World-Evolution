@@ -403,3 +403,7 @@ FodyWeavers.xsd
 
 # MonoGame
 *.mgstats
+
+# docfx data
+_site/
+api/
