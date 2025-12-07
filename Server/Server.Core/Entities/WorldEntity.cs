@@ -1,4 +1,5 @@
-﻿using Server.Core.Lobby;
+﻿using Server.Core.Exceptions;
+using Server.Core.Lobby;
 using Server.Core.Modules;
 using Server.Core.Services;
 using SharedLibrary.DTOs.EntitiesDTO;
@@ -40,7 +41,7 @@ namespace Server.Core
             State.Hunger = newState.Hunger;
             State.InteractionCooldownLeft = newState.InteractionCooldownLeft;
 
-            if(State.Health <= 0)
+            if (State.Health <= 0)
             {
                 Die(ModuleService.Instance);
             }
@@ -48,9 +49,19 @@ namespace Server.Core
 
         public void UpdateStateWithDelta(Position2D positionDelta, int healthDelta, int hungerDelta)
         {
+            Module module = ModuleService.Instance.GetModuleById(ModuleID) ?? throw new ModuleNotFoundException($"Module with ID {ModuleID} not found for entity {Id}");
+            
+            if(!positionDelta.Equals(new Position2D(0,0)) && module.Type != EntityTypeEnum.Human)
+            {
+                Console.WriteLine("Non human entity changed position after client update.");
+            }
+
             State.Position += positionDelta;
             State.Health += healthDelta;
             State.Hunger += hungerDelta;
+
+            State.Health = Math.Clamp(State.Health, 0, module.MaxHealth);
+            State.Hunger = Math.Clamp(State.Hunger, 0, module.MaxHunger);
 
             if (State.Health <= 0)
             {
@@ -60,21 +71,19 @@ namespace Server.Core
 
         public void Die(IModuleService moduleService)
         {
-            Module? module = moduleService.GetModuleById(ModuleID);
-            if (module == null)
-            {
-                throw new Exception($"Module with ID {ModuleID} not found for entity {Id}");
-            }
+            Module? module = moduleService.GetModuleById(ModuleID) ?? throw new ModuleNotFoundException($"Module with ID {ModuleID} not found for entity {Id}");
+            this.State.Health = 0;
+            this.State.Hunger = 0;
 
             if (module.Type == EntityTypeEnum.Human)
             {
-                //@EVERYONE, What do we do here?
                 //noop for now
-                //Client side?
+                //Client side
+                this.State.Health = 100;
+                this.State.Hunger = 100;
             }
             else
             {
-                // Remove entity from lobby
                 Lobby.DestroyWorldEntity(this);
             }
         }

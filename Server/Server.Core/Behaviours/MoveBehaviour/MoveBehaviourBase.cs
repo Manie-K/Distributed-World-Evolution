@@ -1,5 +1,4 @@
-﻿using System.Collections.Immutable;
-using Server.Core.Helpers;
+﻿using Server.Core.Helpers;
 using Server.Core.Lobby;
 using Server.Core.Services;
 using SharedLibrary.DTOs.ModuleDTO;
@@ -28,16 +27,14 @@ namespace Server.Core.Behaviours.MoveBehaviour
                 if (otherParams.TryGetValue(CustomBehaviourParams.ENTITIES_MAP_PARAM, out object? entitiesMapObj)
                     && entitiesMapObj is Dictionary<(int, int), WorldEntity?> entitiesMap)
                 {
-                    lock (entitiesMap)
+                    if (otherParams.TryGetValue(CustomBehaviourParams.ENTITIES_MAP_LOCK_PARAM, out object? entitiesMapLock) && entitiesMapLock != null)
                     {
-                        if (entitiesMap[(nextPosition.X, nextPosition.Y)] != null)
+                        lock (entitiesMapLock)
                         {
-                            Console.WriteLine($"[MoveBehaviour] Entity {entity.Id} moves to occupied position {nextPosition.X},{nextPosition.Y}....");
+                            entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = null;
+                            entitiesMap[(nextPosition.X, nextPosition.Y)] = entity;
+                            entity.State.Position = nextPosition;
                         }
-
-                        entitiesMap[(entity.State.Position.X, entity.State.Position.Y)] = null;
-                        entitiesMap[(nextPosition.X, nextPosition.Y)] = entity;
-                        entity.State.Position = nextPosition;
                     }
                 }
             }
@@ -59,7 +56,7 @@ namespace Server.Core.Behaviours.MoveBehaviour
                 && walkableTilesObj is bool[][] tiles ? tiles : null;
 
             ILobby lobby = otherParams.TryGetValue(CustomBehaviourParams.LOBBY_PARAM, out object? lobbyObj)
-                && lobbyObj is ILobby l ? l : throw new ArgumentNullException("Lobby parameter is required for AvoiderMoveBehaviour");
+                && lobbyObj is ILobby l ? l : throw new ArgumentNullException("Lobby parameter is required for BasicMoveBehaviour");
 
             if (walkableTiles == null || lobby == null 
                 || nextPos.X < 0 || nextPos.Y < 0 

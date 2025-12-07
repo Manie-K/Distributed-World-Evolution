@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Server.Core.Connection;
 using Server.Core.Data;
 using Server.Core.Lobby;
 using Server.Core.Services;
@@ -37,7 +38,7 @@ namespace Server.Core
 
             var builder = Host.CreateApplicationBuilder(args);
 
-            builder.Services.AddSingleton<Server>();
+            builder.Services.AddSingleton<IConnectionManager, ConnectionManager>();
             builder.Services.AddSingleton<LobbyManager>();
             builder.Services.AddSingleton<LoggerService>();
             builder.Services.AddHostedService(provider => provider.GetRequiredService<LoggerService>());
@@ -45,8 +46,8 @@ namespace Server.Core
             var host = builder.Build();
             await host.StartAsync();
 
-            var server = host.Services.GetRequiredService<Server>();
-            await server.StartAsync(args);
+            var connectionManager = host.Services.GetRequiredService<IConnectionManager>();
+            await connectionManager.StartAsync(args);
 
             await host.WaitForShutdownAsync();
         }

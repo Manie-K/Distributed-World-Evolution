@@ -24,6 +24,13 @@ namespace Server.Core.Behaviours.AttackBehaviour
                 }
                 
                 Module attackerModule = moduleService.GetModuleById(attacker.ModuleID) ?? throw new ModuleNotFoundException($"Module with ID={attacker.ModuleID} not found!");
+                
+                Module targetModule = moduleService.GetModuleById(target.ModuleID) ?? throw new ModuleNotFoundException($"Module with ID={target.ModuleID} not found!");
+                if(targetModule.Type == EntityTypeEnum.Human)
+                {
+                    Console.WriteLine("Attacked human");
+                }
+
 
                 target.State.Health -= attackerModule.Damage;
                 if (target.State.Health <= 0)

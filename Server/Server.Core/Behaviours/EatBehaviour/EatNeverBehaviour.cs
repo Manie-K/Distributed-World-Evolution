@@ -6,13 +6,16 @@ namespace Server.Core.Behaviours.EatBehaviour
     {
         /// <inheritdoc/>
         public override int DatabaseID => 306;
+
         /// <inheritdoc/>
-        public override string Description => "Eats never";
+        public override string Description => "Never eats";
+
         /// <inheritdoc/>
         public override void Execute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
-            return;
+            Console.WriteLine("We shouldn't be here. EatNeverBehaviour.Execute was called.");
         }
+
         /// <inheritdoc/>
         public override bool CanExecute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
