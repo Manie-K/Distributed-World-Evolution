@@ -23,4 +23,5 @@ namespace Server.Core.Exceptions
             return ToString();
         }
     }
+
 }

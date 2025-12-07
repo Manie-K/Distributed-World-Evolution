@@ -2,6 +2,9 @@
 
 namespace Server.Core.Behaviours.EatBehaviour
 {
+    /// <summary>
+    /// Eat behaviour that never allows eating.
+    /// </summary>
     public class EatNeverBehaviour : EatBehaviourBase
     {
         /// <inheritdoc/>
@@ -21,5 +24,7 @@ namespace Server.Core.Behaviours.EatBehaviour
         {
             return false;
         }
+
     }
+
 }

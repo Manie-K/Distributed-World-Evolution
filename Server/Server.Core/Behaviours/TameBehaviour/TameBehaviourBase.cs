@@ -3,6 +3,9 @@ using SharedLibrary.DTOs.ModuleDTO;
 
 namespace Server.Core.Behaviours.TameBehaviour
 {
+    /// <summary>
+    /// Tame behaviour base class, which do nothing, because tame behaviour is handled on client side.
+    /// </summary>
     public abstract class TameBehaviourBase : IBehaviour
     {
         /// <inheritdoc/>
@@ -25,5 +28,7 @@ namespace Server.Core.Behaviours.TameBehaviour
         {
             return new BehaviourDTO(DatabaseID, Description, Type, BehaviourInteractionTypeEnum.None);
         }
+
     }
+
 }

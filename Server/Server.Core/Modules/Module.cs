@@ -11,21 +11,71 @@ using SharedLibrary.DTOs.ModuleDTO;
 
 namespace Server.Core.Modules
 {
+    /// <summary>
+    /// Class representing a module with various attributes and behaviours.
+    /// </summary>
     public class Module
     {
+        /// <summary>
+        /// ID of the module.
+        /// </summary>  
         public int ID { get; init; }
-        public bool Official { get; init; }
-        public string Name { get; init; }
-        public int Damage { get; private set; }
-        public int Agression { get; private set; }
-        public int ReproductionNeed { get; private set; }
-        public int MaxHunger { get; private set; }
-        public int MaxHealth { get; private set; }
-        public EntityTypeEnum Type { get; init; }
-        public int GraphicalRepresentationID { get; private set; }
 
+        /// <summary>
+        /// Determines if the module is official.
+        /// </summary> 
+        public bool Official { get; init; }
+
+        /// <summary>
+        /// Name of the module.
+        /// </summary> 
+        public string Name { get; init; }
+
+        /// <summary>
+        /// Damage value of the module.
+        /// </summary> 
+        public int Damage { get; init; }
+
+        /// <summary>
+        /// Aggression level of the module.
+        /// </summary> 
+        public int Agression { get; init; }
+
+        /// <summary>
+        /// Reproduction need of the module.
+        /// </summary> 
+        public int ReproductionNeed { get; init; }
+
+        /// <summary>
+        /// Maximum hunger of the module.
+        /// </summary> 
+        public int MaxHunger { get; init; }
+
+        /// <summary>
+        /// Maximum health of the module.
+        /// </summary> 
+        public int MaxHealth { get; init; }
+
+        /// <summary>
+        /// Type of the module.
+        /// </summary> 
+        public EntityTypeEnum Type { get; init; }
+
+        /// <summary>
+        /// ID for graphical representation of the module.
+        /// </summary> 
+        public int GraphicalRepresentationID { get; init; }
+
+        /// <summary>
+        /// Behaviours associated with the module.
+        /// </summary> 
         private readonly Dictionary<Type, IBehaviour> behaviours;
 
+        /// <summary>
+        /// Creates a Module instance from a database entity.
+        /// </summary> 
+        /// <param name="dbEntity"> The database entity representing the module. </param>
+        /// <returns> The created Module instance. </returns>
         public static Module CreateFromDBEntity(ModuleDBEntity dbEntity)
         {
             List<IBehaviour> behaviours = dbEntity.BehaviourIDs
@@ -50,6 +100,19 @@ namespace Server.Core.Modules
             return module;
         }
 
+        /// <summary>
+        /// Private constructor.
+        /// </summary>
+        /// <param name="id"> ID of the module. </param>
+        /// <param name="name"> Name of the module. </param>
+        /// <param name="official"> Whether the module is official. </param>
+        /// <param name="damage"> Damage value of the module. </param>
+        /// <param name="aggresion"> Aggression level of the module. </param>
+        /// <param name="reproductionNeed"> Reproduction need of the module. </param>
+        /// <param name="maxHunger"> Maximum hunger of the module. </param>
+        /// <param name="maxHelath"> Maximum health of the module. </param>
+        /// <param name="type"> Type of the module. </param>
+        /// <param name="graphicsId"> ID for graphical representation of the module. </param>
         private Module(int id, string name, bool official, int damage, int aggresion, int reproductionNeed, int maxHunger, int maxHelath, EntityTypeEnum type, int graphicsId)
         {
             ID = id;
@@ -65,6 +128,10 @@ namespace Server.Core.Modules
             GraphicalRepresentationID = graphicsId;
         }
 
+        /// <summary>
+        /// Adds a behaviour to the module.
+        /// </summary> 
+        /// <param name="behaviour"> The behaviour to add. </param>
         private void AddBehaviour(IBehaviour behaviour)
         {
             Type? type = TypeHelpers.GetFirstAbstractParentType(behaviour.GetType());
@@ -82,6 +149,10 @@ namespace Server.Core.Modules
             behaviours[type] = behaviour;
         }
 
+        /// <summary>
+        /// Retrieves a behaviour of the specified type from the module.
+        /// </summary> 
+        /// <param name="typeEnum"> The type of behaviour to retrieve. </param>
         public IBehaviour GetBehaviourOfType(InteractionTypeEnum typeEnum)
         {
             IBehaviour? found;
@@ -107,6 +178,10 @@ namespace Server.Core.Modules
             }
         }
 
+        /// <summary>
+        /// Creates a DTO representation of the module.
+        /// </summary> 
+        /// <returns> The DTO representation of the module. </returns>
         public ModuleDTO ToDTO()
         {
             List<BehaviourDTO> behaviourDTOs = new List<BehaviourDTO>();

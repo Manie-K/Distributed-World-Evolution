@@ -2,7 +2,9 @@
 
 namespace Server.Core.Behaviours.AttackBehaviour
 {
-    /// <inheritdoc/>
+    /// <summary>
+    /// Random 75% chance to attack behaviour.
+    /// </summary>
     public class Random75AttackBehaviour : AttackBehaviourBase
     {
         /// <inheritdoc/>
@@ -16,5 +18,7 @@ namespace Server.Core.Behaviours.AttackBehaviour
         {
             return target != null && attacker.Id != target.Id && Random.Shared.NextDouble() < 0.75;
         }
+
     }
+
 }

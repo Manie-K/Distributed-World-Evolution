@@ -8,20 +8,45 @@ using System.Net.Sockets;
 
 namespace Server.Core.Services
 {
+    /// <summary>
+    /// Background service for logging messages and sending them to connected UI clients.
+    /// </summary>
     public class LoggerService : BackgroundService
     {
+        /// <summary>
+        /// Queue to hold log messages to be sent to UI clients.
+        /// </summary>
         private readonly ConcurrentQueue<MessageBase> _messageQueue = new();
-        private List<TcpClient> ClientsUI { set; get; } = new List<TcpClient>();
 
-        private readonly object _clientsLock = new object();
-
+        /// <summary>
+        /// Polling interval for checking the message queue.
+        /// </summary>
         private readonly TimeSpan _pollInterval = TimeSpan.FromMilliseconds(50);
 
+        /// <summary>
+        /// Lock object for thread-safe access to the clients list.
+        /// </summary>
+        private readonly object _clientsLock = new object();
+
+        /// <summary>
+        /// UI Clients connected to the logger service.
+        /// </summary>
+        private List<TcpClient> ClientsUI { set; get; } = new List<TcpClient>();
+
+
+        /// <summary>
+        /// Adds a new UI client to the logger service.
+        /// </summary>
+        /// <param name="clientUI"> The TCP client representing the UI. </param>
         public void AddClient(TcpClient clientUI)
         {
             ClientsUI.Add(clientUI);
         }
 
+        /// <summary>
+        /// Sends the provided LobbyDTO to all connected UI clients.
+        /// </summary>
+        /// <param name="lobbyDto"> The LobbyDTO to send. </param>
         public void SendLobbyDTO(LobbyDTO lobbyDto)
         {
             lock (_clientsLock)
@@ -33,6 +58,12 @@ namespace Server.Core.Services
             }
         }
 
+        /// <summary>
+        /// Logs a message with the specified content and log level.
+        /// </summary>
+        /// <param name="content"> The content of the log message. </param>
+        /// <param name="logLevel"> The log level of the message. </param>
+        /// <param name="sender"> Optional sender object, used to identify the source of the log. </param>
         public void Log(string content, LogLevelEnum logLevel, object? sender = null)
         {
             Log log = new Log(content, logLevel);
@@ -54,6 +85,7 @@ namespace Server.Core.Services
             _messageQueue.Enqueue(logMessage);
         }
 
+        /// <inheritdoc/>
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             Console.WriteLine("[LoggerService] Logger service started working...");
@@ -94,4 +126,5 @@ namespace Server.Core.Services
         }
 
     }
+
 }

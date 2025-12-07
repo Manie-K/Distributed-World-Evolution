@@ -2,7 +2,10 @@
 
 namespace Server.Core.Behaviours.ReproduceBehaviour
 {
-    internal class ReproduceWhenHealthyBehaviour : ReproduceBehaviourBase
+    /// <summary>
+    /// Reproduce behaviour that only allows reproduction when the entity is healthy.
+    /// </summary>
+    public class ReproduceWhenHealthyBehaviour : ReproduceBehaviourBase
     {
         /// <inheritdoc/>
         public override int DatabaseID => 403;
@@ -21,5 +24,7 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
             }
             return false;
         }
+
     }
+
 }

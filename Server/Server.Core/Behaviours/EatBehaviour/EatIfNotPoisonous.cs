@@ -3,12 +3,17 @@ using Server.Core.Services;
 
 namespace Server.Core.Behaviours.EatBehaviour
 {
+    /// <summary>
+    /// Eat behaviour that allows eating only if the plant is not poisonous.
+    /// </summary>
     public class EatIfNotPoisonous : EatBehaviourBase
     {
         /// <inheritdoc/>
         public override int DatabaseID => 308;
+        
         /// <inheritdoc/>
         public override string Description => "Eats only if plant is not poisonous";
+        
         /// <inheritdoc/>
         public override bool CanExecute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
@@ -26,5 +31,7 @@ namespace Server.Core.Behaviours.EatBehaviour
 
             return true;
         }
+
     }
+
 }
