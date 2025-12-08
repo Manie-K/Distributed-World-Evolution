@@ -13,24 +13,16 @@ namespace Server.Core.Services
     /// </summary>
     public class LoggerService : BackgroundService
     {
-        /// <summary>
         /// Queue to hold log messages to be sent to UI clients.
-        /// </summary>
         private readonly ConcurrentQueue<MessageBase> _messageQueue = new();
 
-        /// <summary>
         /// Polling interval for checking the message queue.
-        /// </summary>
         private readonly TimeSpan _pollInterval = TimeSpan.FromMilliseconds(50);
 
-        /// <summary>
         /// Lock object for thread-safe access to the clients list.
-        /// </summary>
         private readonly object _clientsLock = new object();
 
-        /// <summary>
         /// UI Clients connected to the logger service.
-        /// </summary>
         private List<TcpClient> ClientsUI { set; get; } = new List<TcpClient>();
 
 
@@ -85,7 +77,6 @@ namespace Server.Core.Services
             _messageQueue.Enqueue(logMessage);
         }
 
-        /// <inheritdoc/>
         protected override async Task ExecuteAsync(CancellationToken stoppingToken)
         {
             Console.WriteLine("[LoggerService] Logger service started working...");

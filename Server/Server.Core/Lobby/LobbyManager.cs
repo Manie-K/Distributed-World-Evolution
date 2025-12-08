@@ -12,24 +12,16 @@ namespace Server.Core.Lobby
     /// </summary>
     public class LobbyManager : ILobbyManager
     {
-        /// <summary>
         /// Lobbies managed by the LobbyManager, identified by their unique lobby IDs.
-        /// </summary>
         private readonly Dictionary<int, ILobby> lobbies;
 
-        /// <summary>
         /// Lock object for thread-safe access to the lobbies dictionary.
-        /// </summary>
         private readonly object lobbyLock;
 
-        /// <summary>
         /// Logger service instance.
-        /// </summary>
         private readonly LoggerService loggerService;
 
-        /// <summary>
         /// Lobby ID counter for generating unique lobby IDs.
-        /// </summary>  
         private int lobbyCounter;
 
         #region Constructor
@@ -184,14 +176,10 @@ namespace Server.Core.Lobby
 
         #region Logging
 
-        /// <summary>
         /// OnLog event handler to route log messages to the logger service.
-        /// </summary>  
-        /// <param name="sender"> The sender of the log event. </param>
-        /// <param name="e"> The log event arguments. </param>
         private void OnLog_Delegate(object? sender, OnLogEventArgs e)
         {
-            loggerService.Log(e.Message, e.LogLevel, sender);
+            loggerService.Log(e.Content, e.LogLevel, sender);
         }
 
         #endregion

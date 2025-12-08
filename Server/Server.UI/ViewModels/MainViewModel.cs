@@ -110,6 +110,7 @@ namespace Server.UI.ViewModels
         {
             return Tabs.OfType<LobbyViewModel>().FirstOrDefault(tab => tab.ID == lobbyId);
         }
+
     }
 
 }

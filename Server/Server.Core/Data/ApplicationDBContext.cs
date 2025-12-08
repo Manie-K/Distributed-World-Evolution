@@ -12,7 +12,6 @@ namespace Server.Core.Data
         /// </summary>
         public DbSet<ModuleDBEntity> Modules => Set<ModuleDBEntity>();
 
-        /// <inheritdoc/>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             var moduleEntity = modelBuilder.Entity<ModuleDBEntity>().ToTable("Modules");
@@ -27,7 +26,6 @@ namespace Server.Core.Data
             base.OnModelCreating(modelBuilder);
         }
 
-        /// <inheritdoc/>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             string? connectionString = Environment.GetEnvironmentVariable("MODULES_DATABASE_CONNECTION_STRING");
