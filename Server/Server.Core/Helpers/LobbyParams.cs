@@ -7,12 +7,40 @@ namespace Server.Core.Helpers
     /// </summary>
     public static class LobbyParams
     {
+        /// <summary>
+        /// Initial number of entities in the lobby.
+        /// </summary>
         public const int NUM_INITIAL_ENTITIES = 750;
+
+        /// <summary>
+        /// Maximum number of entities allowed in the lobby.
+        /// </summary>
         public const int MAX_ENTITIES = 5000;
+
+        /// <summary>
+        /// Number of lobby updates per second.
+        /// </summary>
         public const double LOBBY_UPDATES_PER_SECOND = 64;
+
+        /// <summary>
+        /// Initial number of groups in the lobby.
+        /// </summary>
+        /// <remarks>Used in calculating entities per group to simulate every update.</remarks>
         public const int INITIAL_NUMBER_OF_GROUPS = 4;
+
+        /// <summary>
+        /// Hunger change per stats update.
+        /// </summary>
         public const int HUNGER_CHANGE = 1;
+
+        /// <summary>
+        /// Health change per stats update.
+        /// </summary>
         public const int HEALTH_CHANGE = 2;
+
+        /// <summary>
+        /// Cycles per stats change.
+        /// </summary>
         public const int CYCLES_PER_STATS_CHANGE = 16;
 
         /// <summary>
@@ -36,6 +64,8 @@ namespace Server.Core.Helpers
                     return 1 * modifier;
 
                 case InteractionTypeEnum.Move:
+                    if (entitiesCount >= 750)
+                        return 2 * modifier;
                     if (entitiesCount >= 500)
                         return 2 * modifier;
                     else if (entitiesCount >= 200)

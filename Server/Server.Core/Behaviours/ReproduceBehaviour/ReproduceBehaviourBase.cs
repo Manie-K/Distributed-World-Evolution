@@ -82,7 +82,7 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
                     position,
                     entityModule.MaxHealth,
                     entityModule.MaxHunger,
-                    10
+                    20
                 ),
                 lobby
             );
@@ -93,7 +93,11 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
         /// <inheritdoc/>
         public virtual bool CanExecute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
-            Module entityModule = moduleService.GetModuleById(entity.ModuleID)?? throw new Exception($"Module with ID={entity.ModuleID} not found");
+            Module? entityModule = moduleService.GetModuleById(entity.ModuleID);
+            if (entityModule == null)
+            {
+                return false;
+            }
             
             bool canReproduce = false;
 
@@ -104,7 +108,7 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
 
             if (entity.ModuleID == target.ModuleID && target != entity)
             {
-                int randomRoll = new Random().Next(1, 61);
+                int randomRoll = new Random().Next(1, 51);
                 canReproduce = randomRoll <= entityModule.ReproductionNeed;
             }
 

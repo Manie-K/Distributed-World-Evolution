@@ -82,9 +82,10 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
                 null,
                 entity.ModuleID,
                 new EntityState(
-                    position: position,
-                    health: entityModule.MaxHealth,
-                    hunger: entityModule.MaxHunger
+                    position,
+                    entityModule.MaxHealth,
+                    entityModule.MaxHunger,
+                    80
                 ),
                 lobby
             );
@@ -102,7 +103,7 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
 
             if (entityType == EntityTypeEnum.Plant)
             {
-                int randomRoll = new Random().Next(1, 1100);
+                int randomRoll = new Random().Next(1, 4001);
                 canReproduce = randomRoll <= entityModule.ReproductionNeed;
             }
 
