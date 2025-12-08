@@ -15,24 +15,28 @@ namespace Server.Core.Connection
     /// </summary>
     public class ConnectionManager : IConnectionManager
     {
-        private readonly LobbyManager lobbyManager;
+        /// <summary>
+        /// Lobby manager instance.
+        /// </summary>
+        private readonly ILobbyManager lobbyManager;
 
         /// <summary>
         /// Logger service instance.
         /// </summary>
         private readonly LoggerService loggerService;
 
+        #region Constructor
+
         /// <summary>
         /// Constructor for ConnectionManager.
         /// </summary>
-        public ConnectionManager(LoggerService loggerService, LobbyManager lobbyManager)
+        public ConnectionManager(LoggerService loggerService, ILobbyManager lobbyManager)
         {
             this.loggerService = loggerService;
             this.lobbyManager = lobbyManager;
-
-            lobbyManager.OnLog += OnLog_Delegate;
-            Lobby.Lobby.OnLog += OnLog_Delegate;
         }
+
+        #endregion
 
         #region Client Handling
 
@@ -111,7 +115,7 @@ namespace Server.Core.Connection
 
                 case RoleEnum.UI:
                     loggerService.AddClient(client);
-                    await SafeSendAsync(client, new LobbyListMessage(lobbyManager.GetAllLobbies().Select(l => l.ToDTO()).ToList()));
+                    await SafeSendAsync(client, new LobbyListMessage(lobbyManager.GetAllLobbiesData()));
                     Task.Delay(2000).Wait();
                     _ = loggerService.StartAsync(CancellationToken.None);
                     break;
@@ -198,11 +202,10 @@ namespace Server.Core.Connection
         {
             try
             {
-                int lobbyID = lobbyManager.CreateAndInitializeLobby(
-                    msg.LobbyName, msg.MaxPlayers, msg.MapID, msg.WalkableTiles, msg.FertileTiles, msg.ModuleIDs);
+                int lobbyID = lobbyManager.CreateAndInitializeLobby(msg.LobbyName, msg.MaxPlayers, msg.MapID, msg.WalkableTiles, msg.FertileTiles, msg.ModuleIDs);
 
-                Lobby.Lobby lobby = lobbyManager.GetLobby(lobbyID);
-                loggerService.SendLobbyDTO(lobby.ToDTO());
+                LobbyDTO lobbyDto = lobbyManager.GetLobbyData(lobbyID);
+                loggerService.SendLobbyDTO(lobbyDto);
 
                 await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyCreated, "New lobby created!"));
                 await HandleJoinLobbyAsync(client, new JoinLobbyMessage(lobbyID, msg.UserName));
@@ -223,16 +226,16 @@ namespace Server.Core.Connection
         {
             try
             {
-                lobbyManager.AddUserToLobby(msg.LobbyID, client, msg.UserName, out Guid userEntityID);
-                if (userEntityID == Guid.Empty)
+                bool isAdded = lobbyManager.AddUserToLobby(msg.LobbyID, client, msg.UserName, out Guid userEntityId);
+                if (!isAdded)
                 {
                     await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotJoined, "Lobby is full. Cannot join."));
                     return;
                 }
-                Lobby.Lobby lobby = lobbyManager.GetLobby(msg.LobbyID);
-                loggerService.SendLobbyDTO(lobby.ToDTO());
+                LobbyDTO lobbyDto = lobbyManager.GetLobbyData(msg.LobbyID);
+                loggerService.SendLobbyDTO(lobbyDto);
 
-                await SafeSendAsync(client, new LobbyDataMessage(lobby.ToDTO(), userEntityID));
+                await SafeSendAsync(client, new LobbyDataMessage(lobbyDto, userEntityId));
                 await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyJoined, "Welcome to lobby!"));
             }
             catch (Exception ex)
@@ -251,11 +254,10 @@ namespace Server.Core.Connection
         {
             try
             {
-                Lobby.Lobby lobby = lobbyManager.GetLobby(msg.LobbyID);
-                LobbyDTO lobbyDTO = lobby.ToDTO();
+                LobbyDTO lobbyDto = lobbyManager.GetLobbyData(msg.LobbyID);
 
                 lobbyManager.RemoveUserFromLobby(msg.LobbyID, client);
-                loggerService.SendLobbyDTO(lobbyDTO);
+                loggerService.SendLobbyDTO(lobbyDto);
                 await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyDisjoined, "See you soon!"));
             }
             catch (Exception ex)
@@ -277,7 +279,7 @@ namespace Server.Core.Connection
                 switch (msg.GetMessageType)
                 {
                     case GetMessageTypeEnum.LobbyList:
-                        await SafeSendAsync(client, new LobbyListMessage(lobbyManager.GetAllLobbies().Select(l => l.ToDTO()).ToList()));
+                        await SafeSendAsync(client, new LobbyListMessage(lobbyManager.GetAllLobbiesData()));
                         break;
 
                     case GetMessageTypeEnum.ModuleList:

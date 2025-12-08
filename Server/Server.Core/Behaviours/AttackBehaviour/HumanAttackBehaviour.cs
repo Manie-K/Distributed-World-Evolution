@@ -2,8 +2,9 @@
 
 namespace Server.Core.Behaviours.AttackBehaviour
 {
-    /// <inheritdoc/>
-    /// Don't actually know if this is needed, but here it is.
+    /// <summary>
+    /// Human attack behaviour that allows attacks on any other entity except itself.
+    /// </summary>
     public class HumanAttackBehaviour : AttackBehaviourBase
     {
         /// <inheritdoc/>
@@ -17,5 +18,7 @@ namespace Server.Core.Behaviours.AttackBehaviour
         {
             return attacker.Id != target?.Id;
         }
+
     }
+
 }

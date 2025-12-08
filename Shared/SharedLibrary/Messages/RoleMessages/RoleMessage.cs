@@ -9,17 +9,21 @@ namespace SharedLibrary.Messages
     {
         /// <inheritdoc/>
         public override MessageTypeEnum MessageType => MessageTypeEnum.RoleMessage;
+        
         /// <summary>
-        /// Role of the TCP client, for example Client or UI.
+        /// Role of the TCP client.
         /// </summary>
         public RoleEnum Role { get; init; }
+
         /// <summary>
-        /// Constructor for RoleMessage.
+        /// Constructor.
         /// </summary>
+        /// <param name="role"> Role of the TCP client. </param>
         public RoleMessage(RoleEnum role)
         {
             Role = role;
         }
+        
         /// <inheritdoc/>
         public override string BuildJson()
         {
@@ -31,5 +35,7 @@ namespace SharedLibrary.Messages
 
             return JsonSerializer.Serialize(payload);
         }
+
     }
+
 }

@@ -3,12 +3,17 @@ using Server.Core.Services;
 
 namespace Server.Core.Behaviours.EatBehaviour
 {
+    /// <summary>
+    /// Eat behaviour that allows eating when health is below 50% of maximum health.
+    /// </summary>
     public class EatWhenNotHealthy50Behaviour : EatBehaviourBase
     {
         /// <inheritdoc/>
         public override int DatabaseID => 302;
+        
         /// <inheritdoc/>
         public override string Description => "Eats when health below 50% of organism maximum health";
+        
         /// <inheritdoc/>
         public override bool CanExecute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
@@ -21,5 +26,7 @@ namespace Server.Core.Behaviours.EatBehaviour
 
             return false;
         }
+
     }
+
 }

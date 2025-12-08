@@ -10,22 +10,28 @@ namespace SharedLibrary.Messages
     {
         /// <inheritdoc/>
         public override MessageTypeEnum MessageType => MessageTypeEnum.UserInteraction;
+
         /// <summary>
         /// Human entity involved in the interaction.
         /// </summary>
         public WorldEntityDTO HumanEntity { get; init; }
+        
         /// <summary>
         /// Other entity involved in the interaction, if any.
         /// </summary>
         public WorldEntityDTO? OtherEntity { get; init; }
+
         /// <summary>
-        /// Constructor for UserInteractionMessage.
+        /// Constructor.
         /// </summary>
+        /// <param name="humanEntity"> The human entity (representing user) involved in the interaction. </param>
+        /// <param name="otherEntity"> The other entity involved in the interaction, if any. </param>
         public UserInteractionMessage(WorldEntityDTO humanEntity, WorldEntityDTO? otherEntity) 
         {
             HumanEntity = humanEntity;
             OtherEntity = otherEntity;
         }
+        
         /// <inheritdoc/>
         public override string BuildJson()
         {
@@ -38,5 +44,7 @@ namespace SharedLibrary.Messages
 
             return JsonSerializer.Serialize(payload);
         }
+
     }
+
 }

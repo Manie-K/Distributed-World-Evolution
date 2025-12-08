@@ -2,7 +2,9 @@
 
 namespace Server.Core.Behaviours.AttackBehaviour
 {
-    /// <inheritdoc/>
+    /// <summary>
+    /// Attack behaviour that only allows attacks on organisms of the same species.
+    /// </summary>
     public class OnlyAttackSelfSpiecesAttackBehaviour : AttackBehaviourBase
     {
         /// <inheritdoc/>
@@ -16,5 +18,7 @@ namespace Server.Core.Behaviours.AttackBehaviour
         {
             return target != null && attacker.Id != target.Id && attacker.ModuleID == target.ModuleID;
         }
+
     }
+
 }

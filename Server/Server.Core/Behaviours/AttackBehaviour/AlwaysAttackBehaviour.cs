@@ -2,7 +2,9 @@
 
 namespace Server.Core.Behaviours.AttackBehaviour
 {
-    /// <inheritdoc/>
+    /// <summary>
+    /// Attack behaviour that always allows attacking any target.
+    /// </summary>
     public class AlwaysAttackBehaviour : AttackBehaviourBase
     {
         /// <inheritdoc/>
@@ -16,5 +18,7 @@ namespace Server.Core.Behaviours.AttackBehaviour
         {
             return target != null && attacker.Id != target.Id;
         }
+    
     }
+
 }

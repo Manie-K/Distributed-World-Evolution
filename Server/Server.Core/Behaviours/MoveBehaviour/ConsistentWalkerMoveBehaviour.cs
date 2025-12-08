@@ -1,8 +1,10 @@
-﻿using System.Collections.Immutable;
-using SharedLibrary.Helpers;
+﻿using SharedLibrary.Helpers;
 
 namespace Server.Core.Behaviours.MoveBehaviour
 {
+    /// <summary>
+    /// Move behaviour that moves in a consistent direction with 80% probability.
+    /// </summary>
     public class ConsistentWalkerMoveBehaviour : MoveBehaviourBase
     {
         /// <inheritdoc>
@@ -35,5 +37,7 @@ namespace Server.Core.Behaviours.MoveBehaviour
 
             return (x, y);
         }
+
     }
+
 }

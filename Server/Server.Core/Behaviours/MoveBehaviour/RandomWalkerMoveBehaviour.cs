@@ -1,9 +1,9 @@
-﻿using System.Collections.Immutable;
-
-namespace Server.Core.Behaviours.MoveBehaviour
+﻿namespace Server.Core.Behaviours.MoveBehaviour
 {
 
-    /// <inheritdoc>
+    /// <summary>
+    /// Random walker move behaviour, which moves in a random 8-sided direction.
+    /// </summary>
     public class RandomWalkerMoveBehaviour : MoveBehaviourBase
     {
         /// <inheritdoc>
@@ -23,5 +23,7 @@ namespace Server.Core.Behaviours.MoveBehaviour
             }
             return (x, y);
         }
+
     }
+
 }

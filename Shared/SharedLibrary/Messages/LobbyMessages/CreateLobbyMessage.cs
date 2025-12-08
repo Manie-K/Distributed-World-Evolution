@@ -46,10 +46,16 @@ namespace SharedLibrary.Messages
         public bool[][] FertileTiles { get; init; }
 
         /// <summary>
-        /// Constructor for CreateLobbyMessage.
+        /// Constructor.
         /// </summary
-        public CreateLobbyMessage(string lobbyName, string username, int maxPlayers, int mapID, 
-            IEnumerable<int> moduleIDs, bool[][] walkableTiles, bool[][] fertileTiles)
+        /// <param name="lobbyName"> Name of the lobby to be created. </param>
+        /// <param name="username"> Username of the player creating the lobby. </param>
+        /// <param name="maxPlayers"> Maximum number of players allowed in the lobby. </param>  
+        /// <param name="mapID"> ID of the map for the lobby. </param>
+        /// <param name="moduleIDs"> IDs of modules to be included in the lobby. </param>
+        /// <param name="walkableTiles"> 2D array representing walkable tiles in the world. </param>
+        /// <param name="fertileTiles"> 2D array representing fertile tiles in the world. </param>
+        public CreateLobbyMessage(string lobbyName, string username, int maxPlayers, int mapID, IEnumerable<int> moduleIDs, bool[][] walkableTiles, bool[][] fertileTiles)
         {
             LobbyName = lobbyName;
             UserName = username;
@@ -59,6 +65,7 @@ namespace SharedLibrary.Messages
             WalkableTiles = walkableTiles;
             FertileTiles = fertileTiles;
         }
+        
         /// <inheritdoc/>
         public override string BuildJson()
         {
@@ -76,5 +83,7 @@ namespace SharedLibrary.Messages
 
             return JsonSerializer.Serialize(payload);
         }
+
     }
+
 }

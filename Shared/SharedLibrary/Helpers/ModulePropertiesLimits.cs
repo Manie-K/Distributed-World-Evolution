@@ -1,5 +1,8 @@
 ﻿namespace SharedLibrary.Helpers
 {
+    /// <summary>
+    /// Module properties limits.
+    /// </summary>
     public static class ModulePropertiesLimits
     {
         public const int MIN_DAMAGE = 0;
@@ -13,4 +16,5 @@
         public const int MIN_MAX_HEALTH = 10;
         public const int MAX_MAX_HEALTH = 100;
     }
+
 }

@@ -2,17 +2,32 @@
 
 namespace Server.Core.Services
 {
+    /// <summary>
+    /// Singleton class to manage behaviours.
+    /// </summary>
     public class BehaviourService : IBehaviourService
     {
+        /// <summary>
+        /// Instance of the BehaviourService singleton.
+        /// </summary>
         public static IBehaviourService Instance = new BehaviourService();
-        private BehaviourService(){}
 
+        /// <summary>
+        /// Private constructor to enforce singleton pattern.
+        /// </summary>
+        private BehaviourService()
+        {
+
+        }
+
+        /// <inheritdoc/>
         public IEnumerable<IBehaviour> GetAllBehaviours()
         {
             IEnumerable<IBehaviour> behaviours = BehaviourInMemoryDB.Instance.GetAllInstances();
             return behaviours;
         }
 
+        /// <inheritdoc/>
         public IBehaviour GetBehaviourInstanceByID(int id)
         {
             IBehaviour? instance = BehaviourInMemoryDB.Instance.GetInstanceByID(id) ?? 
@@ -20,5 +35,7 @@ namespace Server.Core.Services
 
             return instance;
         }
+
     }
+
 }

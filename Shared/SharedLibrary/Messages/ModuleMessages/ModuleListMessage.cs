@@ -10,17 +10,20 @@ namespace SharedLibrary.Messages
     {
         /// <inheritdoc/>
         public override MessageTypeEnum MessageType => MessageTypeEnum.ModuleList;
+        
         /// <summary>
         /// ModuleDTO list.
         /// </summary>
         public IEnumerable<ModuleDTO> Modules { get; init; }
+        
         /// <summary>
-        /// Constructor for ModuleListMessage.
+        /// Constructor.
         /// </summary>
         public ModuleListMessage(IEnumerable<ModuleDTO> modules)
         {
             Modules = modules;
         }
+        
         /// <inheritdoc/>
         public override string BuildJson()
         {
@@ -32,5 +35,7 @@ namespace SharedLibrary.Messages
 
             return JsonSerializer.Serialize(payload);
         }
+
     }
+
 }

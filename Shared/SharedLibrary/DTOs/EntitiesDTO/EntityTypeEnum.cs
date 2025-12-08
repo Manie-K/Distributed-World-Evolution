@@ -1,5 +1,11 @@
-﻿namespace Server.Core
+﻿using System.Text.Json.Serialization;
+
+namespace Server.Core
 {
+    /// <summary>
+    /// Enumeration representing different types of entities.
+    /// </summary>
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     [Flags]
     public enum EntityTypeEnum
     {
@@ -7,4 +13,5 @@
         Animal = 1 << 1,
         Plant = 1 << 2
     }
+
 }

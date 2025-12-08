@@ -1,5 +1,8 @@
 ﻿namespace Server.Core.Helpers
 {
+    /// <summary>
+    /// Parameters used in behaviours Execute method.
+    /// </summary>
     public static class CustomBehaviourParams
     {
         public static string MAP_WALKABLE_PARAM = "MapWalkable";
@@ -9,4 +12,5 @@
         public static string ENTITIES_MAP_PARAM = "EntitiesMap";
         public static string ENTITIES_MAP_LOCK_PARAM = "EntitiesMapLock";
     }
+
 }

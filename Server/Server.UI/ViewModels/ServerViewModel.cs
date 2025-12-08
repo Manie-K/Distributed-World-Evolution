@@ -4,7 +4,7 @@ namespace Server.UI.Models
 {
     internal class ServerViewModel : BaseTabViewModel
     {
-        public ServerViewModel(int id) : base(id, "Server", "Info about server")
+        public ServerViewModel(int id) : base(id, "Server", "Global server logs.")
         {
 
         }

@@ -3,12 +3,17 @@ using Server.Core.Services;
 
 namespace Server.Core.Behaviours.ReproduceBehaviour
 {
-    internal class ReproduceReducingHungerBehaviour : ReproduceBehaviourBase
+    /// <summary>
+    /// Reproduce behaviour that reduces hunger of the entity and its target upon reproduction.
+    /// </summary>
+    public class ReproduceReducingHungerBehaviour : ReproduceBehaviourBase
     {
         /// <inheritdoc/>
         public override int DatabaseID => 405;
+        
         /// <inheritdoc/>
         public override string Description => "Reproduction reduce hunger.";
+        
         /// <inheritdoc/>
         public override void Execute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
@@ -20,5 +25,7 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
                 target.State.Hunger -= (int)0.1 * entityModule.MaxHunger;
             }
         }
+
     }
+
 }

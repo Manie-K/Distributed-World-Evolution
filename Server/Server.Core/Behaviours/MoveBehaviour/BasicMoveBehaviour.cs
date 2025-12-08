@@ -1,12 +1,8 @@
-﻿using System.Collections.Immutable;
-using Server.Core.Helpers;
-using Server.Core.Lobby;
-using Server.Core.Services;
-using SharedLibrary.Helpers;
-
-namespace Server.Core.Behaviours.MoveBehaviour
+﻿namespace Server.Core.Behaviours.MoveBehaviour
 {
-    /// <inheritdoc/>
+    /// <summary>
+    /// Basic move behaviour, which randomly moves the entity by -1, 0, or 1 in both x and y directions.
+    /// </summary>
     public class BasicMoveBehaviour : MoveBehaviourBase
     {
         /// <inheritdoc>
@@ -22,5 +18,7 @@ namespace Server.Core.Behaviours.MoveBehaviour
             int y = new Random().Next(3) - 1; // -1, 0, 1
             return (x, y);
         }
+
     }
+
 }

@@ -3,7 +3,7 @@
 namespace Server.Core.Exceptions
 {
     [DebuggerDisplay($"{{{nameof(GetDebuggerDisplay)}(),nq}}")]
-    internal class ModuleNotFoundException : Exception
+    public class ModuleNotFoundException : Exception
     {
         public ModuleNotFoundException()
         {
@@ -22,4 +22,5 @@ namespace Server.Core.Exceptions
             return ToString();
         }
     }
+
 }

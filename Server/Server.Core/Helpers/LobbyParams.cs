@@ -2,7 +2,10 @@
 
 namespace Server.Core.Helpers
 {
-    public class LobbyParams
+    /// <summary>
+    /// Lobby parameters and interaction cooldown calculations.
+    /// </summary>
+    public static class LobbyParams
     {
         public const int NUM_INITIAL_ENTITIES = 750;
         public const int MAX_ENTITIES = 5000;
@@ -15,9 +18,9 @@ namespace Server.Core.Helpers
         /// <summary>
         /// Calculates interaction cooldown in cycles based on the number of entities in the world and interaction type.
         /// </summary>
-        /// <param name="entitiesCount"></param>
-        /// <param name="interactionTypeEnum"></param>
-        /// <returns></returns>
+        /// <param name="entitiesCount"> The number of entities in the world. </param>
+        /// <param name="interactionTypeEnum"> The type of interaction. </param>
+        /// <returns> The calculated cooldown in cycles. </returns>
         public static int InteractionCooldownInCycles(int entitiesCount, InteractionTypeEnum interactionTypeEnum)
         {
             const int modifier = 8;
@@ -64,5 +67,7 @@ namespace Server.Core.Helpers
                     return 1 * modifier;
             }
         }
+
     }
+
 }

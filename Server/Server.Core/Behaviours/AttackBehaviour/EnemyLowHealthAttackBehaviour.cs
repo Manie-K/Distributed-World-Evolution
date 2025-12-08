@@ -4,7 +4,9 @@ using Server.Core.Services;
 
 namespace Server.Core.Behaviours.AttackBehaviour
 {
-    /// <inheritdoc/>
+    /// <summary>
+    /// Enemy attack behaviour that targets only when the target's health is below 30%.
+    /// </summary>
     public class EnemyLowHealthAttackBehaviour : AttackBehaviourBase
     {
         /// <inheritdoc/>
@@ -57,5 +59,7 @@ namespace Server.Core.Behaviours.AttackBehaviour
             Module targetModule = moduleService.GetModuleById(target.ModuleID) ?? throw new Exception($"Module with ID={attacker.ModuleID} not found!");
             return attacker.Id != target.Id && target.State.Health < (int)(0.3f * targetModule.MaxHealth);
         }
+
     }
+
 }

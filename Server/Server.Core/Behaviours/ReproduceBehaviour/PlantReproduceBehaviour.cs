@@ -6,14 +6,20 @@ using SharedLibrary.Helpers;
 
 namespace Server.Core.Behaviours.ReproduceBehaviour
 {
+    /// <summary>
+    /// Plant reproduce behaviour implementation.
+    /// </summary>
     public class PlantReproduceBehaviour : ReproduceBehaviourBase
     {
-        //<inheritdoc/>
+        /// <inheritdoc/>
         public override EntityTypeEnum Type => EntityTypeEnum.Plant;
+        
         ///<inheritdoc/>
         public override int DatabaseID => 401;
+        
         ///<inheritdoc/>
         public override string Description => "Plants reproduce behaviour according to their reproduction need.";
+        
         ///<inheritdoc/>
         public override void Execute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
@@ -104,4 +110,5 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
         }
 
     }
+
 }

@@ -1,10 +1,10 @@
-﻿using Server.Core.Helpers;
-using Server.Core.Services;
-using System.Collections.Immutable;
+﻿using Server.Core.Services;
 
 namespace Server.Core.Behaviours.MoveBehaviour
 {
-    /// <inheritdoc>
+    /// <summary>
+    /// Plant move behaviour where plants do not move.
+    /// </summary>
     public class PlantMoveBehaviour : MoveBehaviourBase
     {
         /// <inheritdoc>
@@ -27,5 +27,7 @@ namespace Server.Core.Behaviours.MoveBehaviour
         {
             return (0, 0);
         }
+
     }
+
 }

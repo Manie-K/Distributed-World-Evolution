@@ -3,12 +3,16 @@ using Server.Core.Services;
 
 namespace Server.Core.Behaviours.EatBehaviour
 {
+    /// <summary>
+    /// Eat behaviour that increases health when eating, but decreases health twice if the food is poisonous.
     public class EatWithCureBehaviour : EatBehaviourBase
     {
         /// <inheritdoc/>
         public override int DatabaseID => 304;
+        
         /// <inheritdoc/>
         public override string Description => "Eats and increase health at the same time, but decrease health twice if plan is poisonous";
+        
         /// <inheritdoc/>
         public override void Execute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
@@ -39,10 +43,13 @@ namespace Server.Core.Behaviours.EatBehaviour
                 entity.Die(moduleService);
             }
         }
+        
         /// <inheritdoc/>
         public override bool CanExecute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
             return true;
         }
+
     }
+
 }
