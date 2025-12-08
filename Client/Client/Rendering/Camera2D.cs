@@ -6,6 +6,9 @@ namespace Client.Rendering
 {
     public class Camera2D
     {
+        private const int DRAWING_BUFFOR_X = 25;
+        private const int DRAWING_BUFFOR_Y = 25;
+
         public Size ScreenSize { get; }
         public Size MapSize { get; set; }
         public Vector2 Position { get; private set; }
@@ -46,6 +49,19 @@ namespace Client.Rendering
                 MathHelper.Clamp(Position.X, 0, Math.Max(0, maxX)),
                 MathHelper.Clamp(Position.Y, 0, Math.Max(0, maxY))
             );
+        }
+
+        public bool IsInCameraView(Vector2 position)
+        {
+            if (position.X < Position.X - DRAWING_BUFFOR_X || position.X > Position.X + ScreenSize.Width + DRAWING_BUFFOR_X)
+            {
+                return false;
+            }
+            if (position.Y < Position.Y - DRAWING_BUFFOR_Y|| position.Y > Position.Y + ScreenSize.Height + DRAWING_BUFFOR_Y)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }
