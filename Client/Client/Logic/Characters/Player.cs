@@ -63,7 +63,7 @@ namespace Client
             HungerToConsume = 0;
         }
 
-        public void Update(GameTime gameTime, InputManager inputManager = null, List<WorldEntityDTO> inGameEntities = null, EntityStateDTO state = null)
+        public void Update(GameTime gameTime, InputManager inputManager = null, Dictionary<Guid, WorldEntityDTO> inGameEntities = null, EntityStateDTO state = null)
         {
             if (map == null && state == null)
             {
@@ -79,7 +79,7 @@ namespace Client
             }
         }
 
-        private void UpdatePlayer(GameTime gameTime, InputManager inputManager, List<WorldEntityDTO> inGameEntities)
+        private void UpdatePlayer(GameTime gameTime, InputManager inputManager, Dictionary<Guid, WorldEntityDTO> inGameEntities)
         {
             if (playerModule == null && PlayerDTO != null)
             {
@@ -194,11 +194,11 @@ namespace Client
             }
         }
 
-        private void HandleInteraction(InteractionType interactionType, List<WorldEntityDTO> inGameEntities)
+        private void HandleInteraction(InteractionType interactionType, Dictionary<Guid, WorldEntityDTO> inGameEntities)
         {
             if (actionCooldown > 0) return;
 
-            TargetEntity = inGameEntities.FirstOrDefault(e => e.State.Position.Equals(map.GetTilePosition2D(Position.X, Position.Y)));
+            TargetEntity = inGameEntities.Values.FirstOrDefault(e => e.State.Position.Equals(map.GetTilePosition2D(Position.X, Position.Y)));
             if (TargetEntity == null)
             {
                 Position2D targetPosition = map.GetTilePosition2D(Position.X, Position.Y);
@@ -219,7 +219,7 @@ namespace Client
                     default:
                         break;
                 }
-                TargetEntity = inGameEntities.FirstOrDefault(e => e.State.Position.Equals(targetPosition));
+                TargetEntity = inGameEntities.Values.FirstOrDefault(e => e.State.Position.Equals(targetPosition));
             }
 
             if (interactionType == InteractionType.Eat)

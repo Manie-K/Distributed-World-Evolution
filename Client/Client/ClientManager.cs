@@ -24,6 +24,10 @@ namespace Client
 
     public class ClientManager
     {
+        /// <summary>
+        /// Time in seconds for server to respond before showing timeout error
+        /// </summary>
+        public const double SERVER_TIMOUT_TIME = 10;
         public const double CLIENT_UPDATES_PER_SECOND = 16;
         public TcpClient Client { get; private set; }
         public WindowManager WindowManager;
