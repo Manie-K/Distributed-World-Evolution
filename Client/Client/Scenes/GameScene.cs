@@ -21,7 +21,7 @@ namespace Client
         private Player player;
         private Dictionary<Guid, Character> characters;
         private Dictionary<Guid, Plant> plants;
-        private List<WorldEntityDTO> inGameEntities;
+        private Dictionary<Guid, WorldEntityDTO> inGameEntities;
         private WorldMap map;
         private Vector2 cameraOffset;
 
@@ -53,7 +53,7 @@ namespace Client
             timeBetweenUpdates = 1.0 / ClientManager.CLIENT_UPDATES_PER_SECOND;
             showPerformance = bool.Parse(manager.AppConfig["TcpSettings:ShowPerformance"]);
 
-            inGameEntities = new List<WorldEntityDTO>();
+            inGameEntities = new Dictionary<Guid, WorldEntityDTO>();
             List<WorldEntityDTO> entitiesToLoad = manager.ClientManager.LobbyData.WorldEntities.ToList();
             foreach (WorldEntityDTO entity in entitiesToLoad)
             {
@@ -78,6 +78,7 @@ namespace Client
             IReadOnlyDictionary<Guid, WorldEntityDTO> entities = manager.ClientManager.FlushEntities();
             Dictionary<Guid, Character> newCharacterList = [];
             Dictionary<Guid, Plant> newPlantList = [];
+            HashSet<Guid> deadEntities = new HashSet<Guid>();
 
             // Removing dead creatures
             foreach (Guid guid in characters.Keys)
@@ -88,7 +89,7 @@ namespace Client
                 }
                 else
                 {
-                    inGameEntities.RemoveAll(e => e.Id == guid);
+                    deadEntities.Add(guid);
                 }
             }
             characters = newCharacterList;
@@ -102,10 +103,15 @@ namespace Client
                 }
                 else
                 {
-                    inGameEntities.RemoveAll(e => e.Id == guid);
+                    deadEntities.Add(guid);
                 }
             }
             plants = newPlantList;
+
+            foreach (Guid deadId in deadEntities)
+            {
+                inGameEntities.Remove(deadId);
+            }
 
             // Updating new state
             foreach (WorldEntityDTO entity in entities.Values)
@@ -122,11 +128,7 @@ namespace Client
                     character.SetCurrentDirection(map.GetTilePosition2D(character.Position.X, character.Position.Y), entity.State.Position);
                     character.Position = GetWorldPosition(entity);
                     character.HealthBar.SetRangeBar((float) entity.State.Health / character.MaxHealth);
-                    int index = inGameEntities.FindIndex(e => e.Id == entity.Id);
-                    if (index != -1)
-                    {
-                        inGameEntities[index] = entity;
-                    }
+                    inGameEntities[entity.Id] = entity;
                 }
                 else if (plants.TryGetValue(entity.Id, out Plant plant))
                 {
@@ -135,11 +137,7 @@ namespace Client
                     { 
                         plant.IsDead = true;
                     }
-                    int index = inGameEntities.FindIndex(e => e.Id == entity.Id);
-                    if (index != -1)
-                    {
-                        inGameEntities[index] = entity;
-                    }
+                    inGameEntities[entity.Id] = entity;
                 }
                 else if (entity.State.Health > 0)
                 {
@@ -169,12 +167,18 @@ namespace Client
             player.Draw(spriteBatch);
             foreach (Character character in characters.Values)
             {
-                character.Draw(spriteBatch);
+                if (manager.Camera.IsInCameraView(character.Position))
+                {
+                    character.Draw(spriteBatch);
+                }
             }
             
             foreach(Plant plant in plants.Values)
             {
-                plant.Draw(spriteBatch);
+                if (manager.Camera.IsInCameraView(plant.Position))
+                {
+                    plant.Draw(spriteBatch);
+                }
             }
         }
 
@@ -186,7 +190,7 @@ namespace Client
 
         private void LoadEntity(WorldEntityDTO entity)
         {
-            inGameEntities.Add(entity);
+            inGameEntities.Add(entity.Id, entity);
             int graphicID = manager.ClientManager.Modules.FirstOrDefault(m => m.DatabaseID == entity.ModuleID)?.GraphicalRepresentationID ?? -1;
             int maxHealth = manager.ClientManager.Modules.FirstOrDefault(m => m.DatabaseID == entity.ModuleID)?.MaxHealth ?? -1;
             Vector2 position = GetWorldPosition(entity);

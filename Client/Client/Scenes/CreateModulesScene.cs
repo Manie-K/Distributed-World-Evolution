@@ -55,7 +55,7 @@ namespace Client
 
         public void Update(GameTime gameTime)
         {
-            if (timeoutTimer > 5)
+            if (timeoutTimer > ClientManager.SERVER_TIMOUT_TIME)
             {
                 ResetLoadingState();
             }
