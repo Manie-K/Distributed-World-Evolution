@@ -7,7 +7,7 @@ namespace Server.Core.Behaviours.EatBehaviour
     /// <summary>
     /// Eat behaviour that allows eating when hunger need is lesser than reproduction need.
     /// </summary>
-    public class EatWhenHungerLesserThanReproductionNeed : EatBehaviourBase
+    public class EatWhenHungerLesserThanReproductionNeedBehaviour : EatBehaviourBase
     {
         /// <inheritdoc/>
         public override int DatabaseID => 303;

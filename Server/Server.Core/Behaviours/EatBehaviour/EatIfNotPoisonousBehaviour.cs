@@ -6,7 +6,7 @@ namespace Server.Core.Behaviours.EatBehaviour
     /// <summary>
     /// Eat behaviour that allows eating only if the plant is not poisonous.
     /// </summary>
-    public class EatIfNotPoisonous : EatBehaviourBase
+    public class EatIfNotPoisonousBehaviour : EatBehaviourBase
     {
         /// <inheritdoc/>
         public override int DatabaseID => 308;

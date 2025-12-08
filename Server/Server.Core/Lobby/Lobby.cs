@@ -16,6 +16,9 @@ using System.Runtime.InteropServices;
 
 namespace Server.Core.Lobby
 {
+    /// <summary>
+    /// Class representing a game lobby.
+    /// </summary>
     public class Lobby : ILobby
     {
         /// <inheritdoc/>
@@ -66,15 +69,15 @@ namespace Server.Core.Lobby
         /// <summary>
         /// Static factory method used for creating Lobby objects.
         /// </summary>
-        /// <param name="id">ID of the lobby</param>
-        /// <param name="name">Name of the lobby</param>
-        /// <param name="maxPlayers">Max allowed number of players in lobby</param>
-        /// <param name="mapId">ID of the map used in lobby</param>
-        /// <param name="walkableTiles">Water walkableTiles</param>
-        /// <param name="fertileTiles">Fertile walkableTiles for plants</param>
-        /// <param name="moduleIDs">List of allowed modules' IDs</param>
-        /// <param name="moduleService">IModuleService instance</param>
-        /// <returns>Created Lobby object</returns>
+        /// <param name="id"> ID of the lobby. </param>
+        /// <param name="name"> Name of the lobby. </param>
+        /// <param name="maxPlayers"> Max allowed number of players in lobby. </param>
+        /// <param name="mapId"> ID of the map used in lobby. </param>
+        /// <param name="walkableTiles"> Water walkableTiles. </param>
+        /// <param name="fertileTiles"> Fertile walkableTiles for plants. </param>
+        /// <param name="moduleIDs"> List of allowed modules' IDs. </param>
+        /// <param name="moduleService"> IModuleService instance. </param>
+        /// <returns> Created Lobby object </returns>
         public static Lobby CreateLobby(int id, string name, int maxPlayers, int mapId, bool[][] walkableTiles, bool[][] fertileTiles, IEnumerable<int> moduleIDs, IModuleService moduleService)
         {
             Lobby lobby = new Lobby(id, name, maxPlayers, mapId, walkableTiles, fertileTiles, moduleService);
@@ -95,6 +98,7 @@ namespace Server.Core.Lobby
             return lobby;
         }
 
+        /// Private constructor.
         private Lobby(int id, string name, int maxPlayers, int mapId, bool[][] walkableTiles, bool[][] fertileTiles, IModuleService moduleService)
         {
             LobbyId = id;
@@ -933,11 +937,17 @@ namespace Server.Core.Lobby
 
         #region Handlers
 
+        /// <summary>
+        /// Handles info messages from clients, for now just logs a warning as unsupported.
+        /// </summary>
         private void HandleInfoMessage(TcpClient client, InfoMessage message)
         {
             Log($"Received unsupported info message of type: {message.MessageType}", LogLevelEnum.Warning);
         }
 
+        /// <summary>
+        /// Handles unsupported messages from clients - just logs a warning as unsupported.
+        /// </summary>
         private void HandleUnsupportedMessageType(TcpClient client, MessageBase message)
         {
             Log($"Received unsupported message type: {message.MessageType}", LogLevelEnum.Error);
@@ -947,11 +957,14 @@ namespace Server.Core.Lobby
 
 
         #region Logging
+
+        /// Logs an exception message with the specified log level.
         private void Log(Exception ex, LogLevelEnum level)
         {
             Log(ex.Message, level);
         }
 
+        /// Logs a message with the specified log level.
         private void Log(string message, LogLevelEnum level)
         {
             OnLogEventArgs args = new OnLogEventArgs(message, level);
@@ -960,5 +973,7 @@ namespace Server.Core.Lobby
         }
 
         #endregion
+
     }
+
 }
