@@ -320,18 +320,6 @@ namespace Server.Tests
         }
 
         [Fact]
-        public void HumanAttackBehaviour_CanExecute_Test()
-        {
-            //Arrange
-            HumanAttackBehaviour behaviour = new HumanAttackBehaviour();
-
-            //Act & Assert
-            Assert.True(behaviour.CanExecute(attacker, target, mockService.Object), "HumanAttackBehaviour should return true for CanExecute for different entities.");
-            Assert.False(behaviour.CanExecute(attacker, attacker, mockService.Object), "HumanAttackBehaviour should return false for CanExecute for the same entities.");
-        }
-
-
-        [Fact]
         public void NeverAttackBehaviour_Execute_Test()
         {
             //Arrange

@@ -66,9 +66,7 @@ namespace Server.Core.Modules
         /// </summary> 
         public int GraphicalRepresentationID { get; init; }
 
-        /// <summary>
         /// Behaviours associated with the module.
-        /// </summary> 
         private readonly Dictionary<Type, IBehaviour> behaviours;
 
         /// <summary>
@@ -100,19 +98,7 @@ namespace Server.Core.Modules
             return module;
         }
 
-        /// <summary>
         /// Private constructor.
-        /// </summary>
-        /// <param name="id"> ID of the module. </param>
-        /// <param name="name"> Name of the module. </param>
-        /// <param name="official"> Whether the module is official. </param>
-        /// <param name="damage"> Damage value of the module. </param>
-        /// <param name="aggresion"> Aggression level of the module. </param>
-        /// <param name="reproductionNeed"> Reproduction need of the module. </param>
-        /// <param name="maxHunger"> Maximum hunger of the module. </param>
-        /// <param name="maxHelath"> Maximum health of the module. </param>
-        /// <param name="type"> Type of the module. </param>
-        /// <param name="graphicsId"> ID for graphical representation of the module. </param>
         private Module(int id, string name, bool official, int damage, int aggresion, int reproductionNeed, int maxHunger, int maxHelath, EntityTypeEnum type, int graphicsId)
         {
             ID = id;
@@ -128,10 +114,7 @@ namespace Server.Core.Modules
             GraphicalRepresentationID = graphicsId;
         }
 
-        /// <summary>
         /// Adds a behaviour to the module.
-        /// </summary> 
-        /// <param name="behaviour"> The behaviour to add. </param>
         private void AddBehaviour(IBehaviour behaviour)
         {
             Type? type = TypeHelpers.GetFirstAbstractParentType(behaviour.GetType());

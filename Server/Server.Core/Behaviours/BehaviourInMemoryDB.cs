@@ -7,19 +7,13 @@ namespace Server.Core.Behaviours
     /// </summary>  
     public class BehaviourInMemoryDB
     {
-        /// <summary>
         /// Instance of the BehaviourInMemoryDB singleton.
-        /// </summary>
         public static BehaviourInMemoryDB Instance = new BehaviourInMemoryDB();
 
-        /// <summary>
         /// Behaviour instances stored in the in-memory database, keyed by their DatabaseID.
-        /// </summary>
         private readonly Dictionary<int, IBehaviour> behaviourInstances;
 
-        /// <summary>
         /// Private constructor.
-        /// </summary>
         private BehaviourInMemoryDB()
         {
             // Initialize the in-memory database with all behaviours.

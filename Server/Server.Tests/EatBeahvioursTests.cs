@@ -205,7 +205,7 @@ namespace Server.Tests
         public void EatWhenHungerLesserThanReproductionNeed_CanExecute_Test()
         {
             //Arrange, Act & Assert when hunger is not lesser than reproduction need
-            EatWhenHungerLesserThanReproductionNeed behaviour = new EatWhenHungerLesserThanReproductionNeed();
+            EatWhenHungerLesserThanReproductionNeedBehaviour behaviour = new EatWhenHungerLesserThanReproductionNeedBehaviour();
 
             eaterEntity.State.Hunger = 50;
 
@@ -268,7 +268,7 @@ namespace Server.Tests
         public void EatIfNotPoisonous_CanExecute_Test()
         {
             //Arrange
-            EatIfNotPoisonous behaviour = new EatIfNotPoisonous();
+            EatIfNotPoisonousBehaviour behaviour = new EatIfNotPoisonousBehaviour();
 
             //Act & Assert
             Assert.True(behaviour.CanExecute(eaterEntity, normalPlantEntity, mockService.Object), "EatIfNotPoisonous should return true for CanExecute if plant is not poisonous.");

@@ -50,9 +50,7 @@ namespace Server.Core
             return new WorldEntity(name, moduleId, state, lobby);
         }
 
-        /// <summary>
         /// Private constructor.
-        /// </summary>
         private WorldEntity(string? name, int moduleId, EntityState state, ILobby lobby) 
         {
             Name = name;

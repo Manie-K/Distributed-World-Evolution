@@ -14,17 +14,13 @@ namespace Server.Core.Services
         /// </summary>
         public static IModuleService Instance = new ModuleService();
 
-        /// <summary>
         /// Private constructor to enforce singleton pattern.
-        /// </summary>
         private ModuleService() 
         { 
         
         }
 
-        /// <summary>
         /// Module cache to store previously retrieved modules.
-        /// </summary>
         private readonly Dictionary<int, Module> moduleCache = new Dictionary<int, Module>();
 
         /// <inheritdoc/>
@@ -75,7 +71,6 @@ namespace Server.Core.Services
         }
 
         /// <inheritdoc/>
-
         public int GetHumanModuleId()
         {
             using (var dbContext = new ApplicationDBContext())
