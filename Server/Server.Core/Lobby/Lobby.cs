@@ -16,6 +16,7 @@ using Server.Core.Behaviours.ReproduceBehaviour;
 using SharedLibrary.Helpers;
 using System.Runtime.InteropServices;
 using System.Diagnostics;
+using Server.Core.Exceptions;
 
 namespace Server.Core.Lobby
 {
@@ -64,11 +65,6 @@ namespace Server.Core.Lobby
         private int currentGroupIndex = 0;
         private int totalCycles = 1; //Starts from 1 so we don't reduce health/hunger on first update
 
-        private long totalTime = 0;
-        private int minTime = int.MaxValue;
-        private int maxTime = int.MinValue;
-        private Stopwatch stopwatch = new Stopwatch();
-
         #region Constructors
 
         /// <summary>
@@ -82,6 +78,7 @@ namespace Server.Core.Lobby
         /// <param name="fertileTiles">Fertile walkableTiles for plants</param>
         /// <param name="moduleIDs">List of allowed modules' IDs</param>
         /// <param name="moduleService">IModuleService instance</param>
+        /// <returns>Created Lobby object</returns>
         public static Lobby CreateLobby(int id, string name, int maxPlayers, int mapId, bool[][] walkableTiles, bool[][] fertileTiles, IEnumerable<int> moduleIDs, IModuleService moduleService)
         {
             Lobby lobby = new Lobby(id, name, maxPlayers, mapId, walkableTiles, fertileTiles, moduleService);
@@ -91,7 +88,7 @@ namespace Server.Core.Lobby
                 Module? module = moduleService.GetModuleById(mId);
                 if (module == null)
                 {
-                    throw new Exception($"ModuleDTO with ID {mId} not found.");
+                    continue;
                 }
 
                 lobby.AddAllowedModule(mId);
@@ -135,7 +132,7 @@ namespace Server.Core.Lobby
         #endregion
 
 
-        #region ILooby Implementation
+        #region ILobby Implementation
 
         /// <inheritdoc/>
         public void Run()
@@ -149,8 +146,6 @@ namespace Server.Core.Lobby
                     Task.Delay((int)((1 / LobbyParams.LOBBY_UPDATES_PER_SECOND) * 1000)).Wait();
                     PublishWorldState();
                 }
-                double avgTimeMs = totalCycles > 0 ? (double)totalTime / totalCycles : 0;
-                Log($"Lobby {LobbyId} stopped. Number of entities: {entities.Count}. Total cycles: {totalCycles}, Avg update time: {avgTimeMs} ms, Min update time: {minTime} ms, Max update time: {maxTime} ms.", LogLevelEnum.Info);
             }
             catch (Exception ex)
             {
@@ -171,7 +166,8 @@ namespace Server.Core.Lobby
                 }
             }
 
-            return false; //Out of bounds?
+            // Out of bounds
+            return false; 
         }
 
         /// <inheritdoc/>
@@ -238,6 +234,12 @@ namespace Server.Core.Lobby
         public bool AddAllowedModule(int moduleId)
         {
             Module? module = moduleService.GetModuleById(moduleId);
+            if (module == null)
+            {
+                Log($"Module with ID={moduleId} not found. Cannot add to allowed modules in lobby {LobbyId}.", LogLevelEnum.Warning);
+                return false;
+            }
+
             lock (allowedModulesLock)
             {
                 if (allowedModulesIDs.Contains(moduleId))
@@ -245,6 +247,7 @@ namespace Server.Core.Lobby
                     Log($"ModuleDTO {module?.Name} already allowed in lobby {LobbyId}.", LogLevelEnum.Warning);
                     return false;
                 }
+
                 allowedModulesIDs.Add(moduleId);
                 return true;
             }
@@ -253,10 +256,18 @@ namespace Server.Core.Lobby
         /// <inheritdoc/>
         public bool AddWorldEntity(WorldEntity entity)
         {
-            if (!allowedModulesIDs.Contains(entity.ModuleID))
+            if (entity == null)
             {
-                Log($"Entity's {entity.Id} module is not allowed in lobby {LobbyId}.", LogLevelEnum.Warning);
                 return false;
+            }
+
+            lock (allowedModulesLock)
+            {
+                if (!allowedModulesIDs.Contains(entity.ModuleID))
+                {
+                    Log($"Entity's {entity.Id} module is not allowed in lobby {LobbyId}.", LogLevelEnum.Warning);
+                    return false;
+                }
             }
 
             if (moduleService.GetModuleById(entity.ModuleID)?.Type != EntityTypeEnum.Human && !IsPositionFree(entity.State.Position))
@@ -317,7 +328,7 @@ namespace Server.Core.Lobby
             }
             lock (entitiesToUpdateLock)
             {
-                if(!updatedEntitiesToPublish.Contains(entity))
+                if (!updatedEntitiesToPublish.Contains(entity))
                 {
                     updatedEntitiesToPublish.Add(entity);
                 }
@@ -349,7 +360,7 @@ namespace Server.Core.Lobby
         {
             lock (clientsLock)
             {
-                return clients.ContainsKey(client);
+                return client != null && clients.ContainsKey(client);
             }
 
         }
@@ -357,15 +368,36 @@ namespace Server.Core.Lobby
         /// <inheritdoc/>
         public void HandleClientMessage(TcpClient client, MessageBase message)
         {
+            if (message == null)
+            {
+                Log("Received null message from client.", LogLevelEnum.Warning);
+                return;
+            }
+
             lock (clientsLock)
             {
-                if (!clients.Keys.Contains(client))
+                if (client == null || !clients.Keys.Contains(client))
                 {
                     return;
                 }
             }
 
-            UpdateServerState(message, client);
+            switch (message.MessageType)
+            {
+                case MessageTypeEnum.UserInteraction:
+                    WorldEntityDTO human = ((UserInteractionMessage)message).HumanEntity;
+                    WorldEntityDTO? other = ((UserInteractionMessage)message).OtherEntity;
+                    SimulateHumanEntityUpdate(human, other);
+                    break;
+
+                case MessageTypeEnum.InfoMessage:
+                    HandleInfoMessage(client, (InfoMessage)message);
+                    break;
+
+                default:
+                    HandleUnsupportedMessageType(client, message);
+                    break;
+            }
         }
 
         #endregion
@@ -373,24 +405,28 @@ namespace Server.Core.Lobby
 
         #region Helpers
 
-        /// <summary>
         /// Creates initial world entities in the lobby.
-        /// </summary>
         private void InitializeWorldEntities()
         {
-            List<Module> modules = allowedModulesIDs.Select(id => moduleService.GetModuleById(id))
+            List<Module> modules;
+            lock (allowedModulesLock)
+            {
+                modules = allowedModulesIDs.Select(id => moduleService.GetModuleById(id))
                                                     .Where(m => m != null)
                                                     .Cast<Module>()
                                                     .ToList()!;
-            int modulesCount = modules.Count;
-            Log("Initializing world entities...", LogLevelEnum.Info);
-            Log($"World map size {walkableTiles.Length} x {walkableTiles[0].Length}", LogLevelEnum.Info);
+            }
 
+            int modulesCount = modules.Count;
+            
             if (modulesCount <= 1)
             {
                 Log("No allowed modules in lobby to create world entities.", LogLevelEnum.Warning);
                 return;
             }
+            
+            Log("Initializing world entities...", LogLevelEnum.Info);
+
 
             for (int i = 0; i < LobbyParams.NUM_INITIAL_ENTITIES; i++)
             {
@@ -429,16 +465,9 @@ namespace Server.Core.Lobby
             }
         }
 
-        /// <summary>
         /// Publishes the current world state to all connected clients.
-        /// </summary>
         private void PublishWorldState()
         {
-            if (currentGroupIndex == 0)
-            {
-                stopwatch = Stopwatch.StartNew();
-            }
-
             int startIndex = 0, endIndex = 0;
             lock (entitiesLock)
             {
@@ -455,25 +484,13 @@ namespace Server.Core.Lobby
                 {
                     totalCycles++;
                     currentGroupIndex = 0;
-                    stopwatch.Stop();
-
-                    long elapsedMs = stopwatch.ElapsedMilliseconds;
-                    totalTime += elapsedMs;
-
-                    if (elapsedMs < minTime)
-                    {
-                        minTime = (int)elapsedMs;
-                    }
-                    if (elapsedMs > maxTime && totalCycles > 5)
-                    {
-                        maxTime = (int)elapsedMs;
-                    }
                 }
                 else
                 {
                     currentGroupIndex++;
                 }
             }
+
             UpdateWorldState(startIndex, endIndex);
 
             WorldStateMessage worldStateMessage;
@@ -487,16 +504,12 @@ namespace Server.Core.Lobby
             {
                 foreach (var clientPair in clients)
                 {
-                    _ = MessageManager.SendMessageAsync(clientPair.Key, worldStateMessage); //TODO: Check if sending the same ref is ok
+                    _ = MessageManager.SendMessageAsync(clientPair.Key, worldStateMessage);
                 }
             }
         }
 
-        /// <summary>
         /// Updates the world state by simulating non-human entities.
-        /// </summary>
-        /// <param name="startIndex">Index of first entity to be updated.</param>
-        /// <param name="endIndex">Index of last entity to be updated (inclusive).</param>
         private void UpdateWorldState(int startIndex, int endIndex)
         {
             lock (entitiesLock)
@@ -513,7 +526,7 @@ namespace Server.Core.Lobby
                 WorldEntity entity;
                 lock (entitiesLock)
                 {
-                    if (i >= entities.Count) //In case entities were removed during the update, so the count is lower than index
+                    if (i >= entities.Count) //In case entities were removed during the update, so the count is always lower than index
                     {
                         break;
                     }
@@ -547,16 +560,16 @@ namespace Server.Core.Lobby
 
                 if (totalCycles % LobbyParams.CYCLES_PER_STATS_CHANGE == 0 && entityModule.Type != EntityTypeEnum.Plant)
                 {
-                    if (entity.State.Hunger > 0)
+                    if (entity.State.Hunger > 0) // Deplete hunger
                     {
                         entity.State.Hunger -= LobbyParams.HUNGER_CHANGE;
                     }
-                    else if (entity.State.Health > 0)
+                    else if (entity.State.Health > 0) // Deplete health if no hunger
                     {
                         entity.State.Health -= LobbyParams.HEALTH_CHANGE;
                     }
 
-                    if (entity.State.Hunger > 0 && entity.State.Health < entityModule.MaxHealth)
+                    if (entity.State.Hunger > 0 && entity.State.Health < entityModule.MaxHealth) // Regenerate health if has hunger
                     {
                         entity.State.Health += LobbyParams.HEALTH_CHANGE;
                     }
@@ -594,48 +607,26 @@ namespace Server.Core.Lobby
             }
         }
 
-        private void UpdateServerState(MessageBase message, TcpClient client)
-        {
-            if (message == null)
-            {
-                Log("Received null message from client.", LogLevelEnum.Warning);
-                return;
-            }
-
-            switch (message.MessageType)
-            {
-                case MessageTypeEnum.UserInteraction:
-                    HandleUpdateHumanWorldEntityMessage(client, (UserInteractionMessage)message);
-                    break;
-                case MessageTypeEnum.InfoMessage:
-                    HandleInfoMessage(client, (InfoMessage)message);
-                    break;
-                default:
-                    HandleUnsupportedMessageType(client, message);
-                    break;
-            }
-        }
-
-        /// <summary>
         /// Simulates the update of a non-human entity based on its new state (position).
-        /// </summary>
-        /// <param name="entity">Entity to be simulated.</param>
-        /// <param name="newState">This entity's new state, with next simulated position.</param>
-        /// <exception cref="ArgumentNullException">entity and newState must not be null.</exception>
-        /// <exception cref="Exception">entity module must be correct.</exception>
         private void SimulateNonHumanEntityUpdate(WorldEntity entity, EntityState newState)
         {
             if (entity == null)
             {
-                throw new ArgumentNullException(nameof(entity), "Entity cannot be null.");
+                Log(new ArgumentNullException(nameof(entity), "Entity cannot be null."), LogLevelEnum.Error);
+                return;
             }
             if (newState == null)
             {
-                throw new ArgumentNullException(nameof(newState), "New state cannot be null.");
+                Log(new ArgumentNullException(nameof(entity), "New state cannot be null."), LogLevelEnum.Error);
+                return;
             }
 
-            Module? entityModule = moduleService.GetModuleById(entity.ModuleID)
-                ?? throw new Exception($"Entity's {entity.Id} module not found.");
+            Module? entityModule = moduleService.GetModuleById(entity.ModuleID);
+            if (entityModule == null)
+            {
+                Log($"Entity's {entity.Id} module not found in lobby {LobbyId}.", LogLevelEnum.Error);
+                return;
+            }
 
             WorldEntity? targetEntity;
             lock (entitiesMapLock)
@@ -736,15 +727,9 @@ namespace Server.Core.Lobby
             }
         }
 
-        /// <summary>
         /// Updates the state of a human entity and optionally another entity. Based on data received from client and treated as delta from last update.
-        /// </summary>
-        /// <param name="human">Human entity to be changed. Must be human. State is treated as delta from previous</param>
-        /// <param name="other">Other entity to be changed. Optional. State is treated as delta from previous</param>
-        /// <exception cref="ArgumentNullException">Human entity can not be null.</exception>
         private void SimulateHumanEntityUpdate(WorldEntityDTO human, WorldEntityDTO? other)
         {
-            
             WorldEntity? entHuman;
             WorldEntity? entOther;
 
@@ -755,11 +740,13 @@ namespace Server.Core.Lobby
 
             if (entHuman == null)
             {
-                throw new ArgumentNullException(nameof(entHuman), "Entity not found");
+                Log(new ArgumentNullException(nameof(entHuman), "Entity not found"), LogLevelEnum.Error);
+                return;
             }
             if (entHuman.ModuleID != moduleService.GetHumanModuleId())
             {
-                throw new ArgumentNullException(nameof(entHuman), "Entity not of human type");
+                Log(new ArgumentNullException(nameof(entHuman), "Entity not of human type"), LogLevelEnum.Error);
+                return;
             }
 
             lock (entitiesMapLock)
@@ -776,6 +763,7 @@ namespace Server.Core.Lobby
                     updatedEntitiesToPublish.Add(entHuman);
                 }
             }
+
             if (other == null)
             {
                 return;
@@ -800,8 +788,6 @@ namespace Server.Core.Lobby
                 return;
             }
 
-            Log($"Other entity health={entOther.State.Health}.", LogLevelEnum.Debug);
-
             lock (entitiesMapLock)
             {
                 entitiesMap[(entOther.State.Position.X, entOther.State.Position.Y)] = null;
@@ -820,20 +806,19 @@ namespace Server.Core.Lobby
                     updatedEntitiesToPublish.Add(entOther);
                 }
             }
-            
-            //Log($"Entity health={entOther.State.Health}", LogLevelEnum.Debug);
         }
 
-        /// <summary>
+
         /// Determines the type of interaction that will occur when an entity moves to a new state.
-        /// </summary>
-        /// <param name="entity">Entity to be checked</param>
-        /// <param name="newState">Entity's new state</param>
-        /// <returns>Type of the interaction, or null if no interaction should occur</returns>
-        /// <exception cref="Exception">Modules must be correct</exception>
         private InteractionTypeEnum GetInteractionType(WorldEntity entity, EntityState newState)
         {
-            Module entityModule = moduleService.GetModuleById(entity.ModuleID) ?? throw new Exception($"Module with ID={entity.ModuleID} not found");
+            Module? entityModule = moduleService.GetModuleById(entity.ModuleID);
+            if (entityModule == null)
+            {
+                Log($"Entity's {entity.Id} module [{entity.ModuleID}] not found in lobby {LobbyId}.", LogLevelEnum.Error);
+                return InteractionTypeEnum.None;
+            }
+
             EntityTypeEnum entityType = entityModule.Type;
             WorldEntity? entityOnPosition;
             int entitiesCount;
@@ -843,7 +828,7 @@ namespace Server.Core.Lobby
                 entitiesCount = entities.Count;
             }
             
-            // We refactored this so that humans dont use this method, the clients send the human updates directly
+            // We refactored this so that humans don't use this method, the clients send the human updates directly.
             if (entityType == EntityTypeEnum.Human) return InteractionTypeEnum.None;
 
             lock (entitiesMapLock)
@@ -851,14 +836,9 @@ namespace Server.Core.Lobby
                 entityOnPosition = entitiesMap[(newState.Position.X, newState.Position.Y)];
             }
 
-            // Plants reproduce by themselves - and do only this
+            // Plants reproduce by themselves - and do only this.
             if (entityType == EntityTypeEnum.Plant)
             {
-                if (entityOnPosition != entity)
-                {
-                    Log($"Plant is on the same position as another entity {entity.State.Position}.", LogLevelEnum.Error);
-                }
-
                 if (entitiesCount < LobbyParams.MAX_ENTITIES && entityModule.GetBehaviourOfType(InteractionTypeEnum.Reproduce)
                     .CanExecute(entity, entityOnPosition, ModuleService.Instance, new Dictionary<string, object>()
                     {
@@ -887,11 +867,9 @@ namespace Server.Core.Lobby
                     Math.Abs(lastAttackedEntity.State.Position.Y - entity.State.Position.Y) <= 1 &&
                     attackBehaviour.CanExecute(entity, lastAttackedEntity, ModuleService.Instance))
                 {
-                    //Log($"Entity= {entity.Id} attacked LastAttackedEntityId= {lastAttackedEntity.Id} again.", LogLevelEnum.Debug);
                     return InteractionTypeEnum.Attack;
                 }
 
-                //Log($"Entity= {entity.Id} removed LastAttackedEntityId= {entity.State.LastAttackedEntityId}.", LogLevelEnum.Debug);
                 entity.State.LastAttackedEntityId = Guid.Empty;
             }
 
@@ -910,7 +888,12 @@ namespace Server.Core.Lobby
                 return InteractionTypeEnum.None;
             }
 
-            EntityTypeEnum targetType = moduleService.GetModuleById(entityOnPosition.ModuleID)?.Type ?? throw new Exception($"Module with ID={entity.ModuleID} not found"); ;
+            EntityTypeEnum? targetType = moduleService.GetModuleById(entityOnPosition.ModuleID)?.Type;
+            if (targetType == null)
+            {
+                Log($"Target's [{entityOnPosition.Id}] module [{entityOnPosition.ModuleID}] not found.", LogLevelEnum.Error);
+                return InteractionTypeEnum.None;
+            }
 
             // Reproduce - Animals reproduce with animals
             if (entityType == EntityTypeEnum.Animal && targetType == EntityTypeEnum.Animal)
@@ -946,28 +929,6 @@ namespace Server.Core.Lobby
                 }
             }
 
-            /*
-            // Gather - old code, Humans won't be here
-            if (entityType == EntityTypeEnum.Human && targetType == EntityTypeEnum.Plant)
-            {
-                GatherBehaviourBase gatherBehaviour = (GatherBehaviourBase)entityModule.GetBehaviourOfType(typeof(GatherBehaviourBase));
-                if (gatherBehaviour.CanExecute(entity, entityOnPosition, ModuleService.Instance))
-                {
-                    return typeof(GatherBehaviourBase);
-                }
-            }
-
-            // Tame - old code, Humans won't be here
-            if (entityType == EntityTypeEnum.Human && targetType == EntityTypeEnum.Animal)
-            {
-                TameBehaviourBase tameBehaviour = (TameBehaviourBase)entityModule.GetBehaviourOfType(typeof(TameBehaviourBase));
-                if (tameBehaviour.CanExecute(entity, entityOnPosition, ModuleService.Instance))
-                {
-                    return typeof(TameBehaviourBase);
-                }
-            }
-            */
-
             return InteractionTypeEnum.None;
         }
 
@@ -976,23 +937,14 @@ namespace Server.Core.Lobby
 
         #region Handlers
 
-        private void HandleUpdateHumanWorldEntityMessage(TcpClient client, UserInteractionMessage message)
-        {
-            WorldEntityDTO human = message.HumanEntity;
-            WorldEntityDTO? other = message.OtherEntity;
-
-            SimulateHumanEntityUpdate(human, other);
-        }
-
         private void HandleInfoMessage(TcpClient client, InfoMessage message)
         {
-            throw new NotImplementedException("InfoMessage handling is not implemented yet.");
+            Log($"Received unsupported info message of type: {message.MessageType}", LogLevelEnum.Warning);
         }
 
         private void HandleUnsupportedMessageType(TcpClient client, MessageBase message)
         {
             Log($"Received unsupported message type: {message.MessageType}", LogLevelEnum.Error);
-            throw new NotImplementedException($"Unsupported message type: {message.MessageType}.");
         }
 
         #endregion
@@ -1010,7 +962,7 @@ namespace Server.Core.Lobby
 
             OnLog?.Invoke(this, args);
         }
-        #endregion
 
+        #endregion
     }
 }
