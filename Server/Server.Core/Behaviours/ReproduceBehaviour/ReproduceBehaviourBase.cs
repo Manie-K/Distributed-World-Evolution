@@ -7,6 +7,9 @@ using SharedLibrary.Helpers;
 
 namespace Server.Core.Behaviours.ReproduceBehaviour
 {
+    /// <summary>
+    /// Reproduce behaviour base class, which provides base logic for reproduction behaviours.
+    /// </summary>
     public abstract class ReproduceBehaviourBase : IBehaviour
     {
         /// <inheritdoc/>
@@ -17,7 +20,6 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
 
         /// <inheritdoc/>
         public abstract string Description { get; }
-
 
         /// <inheritdoc/>
         public virtual void Execute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
@@ -80,7 +82,7 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
                     position,
                     entityModule.MaxHealth,
                     entityModule.MaxHunger,
-                    10
+                    20
                 ),
                 lobby
             );
@@ -89,10 +91,13 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
         }
 
         /// <inheritdoc/>
-        /// Reproduction can occur if both entities are of the same module type and based on random roll with taking reproduction need into account.
         public virtual bool CanExecute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
-            Module entityModule = moduleService.GetModuleById(entity.ModuleID)?? throw new Exception($"Module with ID={entity.ModuleID} not found");
+            Module? entityModule = moduleService.GetModuleById(entity.ModuleID);
+            if (entityModule == null)
+            {
+                return false;
+            }
             
             bool canReproduce = false;
 
@@ -103,7 +108,7 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
 
             if (entity.ModuleID == target.ModuleID && target != entity)
             {
-                int randomRoll = new Random().Next(1, 61);
+                int randomRoll = new Random().Next(1, 51);
                 canReproduce = randomRoll <= entityModule.ReproductionNeed;
             }
 
@@ -123,5 +128,7 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
         {
             return new BehaviourDTO(DatabaseID, Description, Type, BehaviourInteractionTypeEnum.Reproduce);
         }
+
     }
+
 }

@@ -2,12 +2,18 @@
 
 namespace Server.Core.Behaviours
 {
+    /// <summary>
+    /// Defines an in-memory database for storing and retrieving behaviour instances.
+    /// </summary>  
     public class BehaviourInMemoryDB
     {
+        /// Instance of the BehaviourInMemoryDB singleton.
         public static BehaviourInMemoryDB Instance = new BehaviourInMemoryDB();
 
+        /// Behaviour instances stored in the in-memory database, keyed by their DatabaseID.
         private readonly Dictionary<int, IBehaviour> behaviourInstances;
 
+        /// Private constructor.
         private BehaviourInMemoryDB()
         {
             // Initialize the in-memory database with all behaviours.
@@ -38,15 +44,26 @@ namespace Server.Core.Behaviours
             }
         }
 
+        /// <summary>
+        /// Retrieves a behaviour instance by its DatabaseID.
+        /// </summary>
+        /// <param name="id"> The ID of the behaviour to retrieve. </param>
+        /// <returns> The behaviour instance if found; otherwise, null. </returns>
         public IBehaviour? GetInstanceByID(int id)
         {
             behaviourInstances.TryGetValue(id, out IBehaviour? value);
             return value;
         }
 
+        /// <summary>
+        /// Retrieves all behaviour instances stored in the in-memory database.
+        /// </summary>
+        /// <returns> A list of all behaviour instances. </returns>
         public List<IBehaviour> GetAllInstances() 
         {
             return behaviourInstances.Values.ToList();
         }
+
     }
+
 }

@@ -4,7 +4,9 @@ using Server.Core.Services;
 
 namespace Server.Core.Behaviours.AttackBehaviour
 {
-    /// <inheritdoc/>
+    /// <summary>
+    /// Different damage calculation attack behaviour that attacks only when the attacker's aggression is greater than the target's.
+    /// </summary>
     public class DifferentDamageCalculationAttackWhenAgressionGreaterAttackBehaviour : AttackBehaviourBase
     {
         /// <inheritdoc/>
@@ -52,5 +54,7 @@ namespace Server.Core.Behaviours.AttackBehaviour
             Module targetModule = moduleService.GetModuleById(target.ModuleID) ?? throw new Exception($"Module with ID={attacker.ModuleID} not found!");
             return attacker.Id != target.Id && attackerModule.Agression > targetModule.Agression;
         }
+
     }
+
 }

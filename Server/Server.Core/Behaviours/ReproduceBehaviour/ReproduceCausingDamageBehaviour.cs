@@ -3,12 +3,17 @@ using Server.Core.Services;
 
 namespace Server.Core.Behaviours.ReproduceBehaviour
 {
-    internal class ReproduceCausingDamageBehaviour : ReproduceBehaviourBase
+    /// <summary>
+    /// Reproduce behaviour that causes damage to the entity and its target upon reproduction.
+    /// </summary>
+    public class ReproduceCausingDamageBehaviour : ReproduceBehaviourBase
     {
         /// <inheritdoc/>
         public override int DatabaseID => 406;
+        
         /// <inheritdoc/>
         public override string Description => "Reproduction cause damage.";
+        
         /// <inheritdoc/>
         public override void Execute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
@@ -23,4 +28,5 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
         }
 
     }
+
 }

@@ -1,26 +1,45 @@
 ﻿using Server.Core.Exceptions;
 using Server.Core.Services;
+using SharedLibrary.DTOs.LobbyDTO;
 using SharedLibrary.Logging;
 using SharedLibrary.Messages;
-using System.CodeDom;
 using System.Net.Sockets;
 
 namespace Server.Core.Lobby
 {
-    public class LobbyManager
+    /// <summary>
+    /// Singleton class that manages multiple lobbies.
+    /// </summary>
+    public class LobbyManager : ILobbyManager
     {
         private readonly Dictionary<int, ILobby> lobbies;
+        private readonly LoggerService loggerService;
+        
+        private readonly object lobbyLock;
+        
         private int lobbyCounter;
-        private readonly object lobbyLock = new object();
 
-        public event EventHandler<OnLogEventArgs>? OnLog;
+        #region Constructor
 
-        public LobbyManager()
+        /// <summary>
+        /// Constructor.
+        /// </summary>
+        public LobbyManager(LoggerService loggerService)
         {
+            this.loggerService = loggerService;
+            this.lobbyLock = new object();
+
             lobbyCounter = 0;
             lobbies = new Dictionary<int, ILobby>();
+            Lobby.OnLog += OnLog_Delegate;
         }
 
+        #endregion
+
+
+        #region ILobbyManager Implementation
+
+        /// <inheritdoc/>
         public int CreateAndInitializeLobby(string name, int maxPlayers, int mapId, bool[][] walkableTiles, bool[][] fertileTiles, IEnumerable<int> modulesIDs)
         {
             int lobbyId;
@@ -28,14 +47,12 @@ namespace Server.Core.Lobby
             lock (lobbyLock)
             {
                 lobbyId = lobbyCounter++;
+                
                 lobbies[lobbyId] = Lobby.CreateLobby(lobbyId, name, maxPlayers, mapId, walkableTiles, fertileTiles, modulesIDs, ModuleService.Instance);
                 lobbies[lobbyId].OnLobbyClosed += () =>
                 {
-                    lock (lobbyLock)
-                    {
-                        lobbies.Remove(lobbyId);
-                        Log($"Lobby {lobbyId} closed and removed from LobbyManager.", LogLevelEnum.Info);
-                    }
+                    lobbies.Remove(lobbyId);
+                    loggerService.Log($"Lobby {lobbyId} closed and removed from LobbyManager.", LogLevelEnum.Info);
                 };
 
                 Task.Factory.StartNew(() => lobbies[lobbyId].Run(), TaskCreationOptions.LongRunning);
@@ -44,32 +61,37 @@ namespace Server.Core.Lobby
             return lobbyId;
         }
 
-        public bool AddUserToLobby(int lobbyId, TcpClient client, string username, out Guid userEntityID)
+        /// <inheritdoc/>
+        public bool AddUserToLobby(int lobbyId, TcpClient client, string username, out Guid userEntityId)
         {
-            userEntityID = Guid.Empty;
             lock (lobbyLock)
             {
                 if (lobbies.TryGetValue(lobbyId, out ILobby? lobby))
                 {
                     if(lobby is not null)
                     {
-                        userEntityID = lobby.AddClient(client, username);
-                        Log($"Client added to lobby {lobbyId}.", LogLevelEnum.Info);
-                        return true;
+                        userEntityId = lobby.AddClient(client, username);
+                        if (userEntityId != Guid.Empty)
+                        {
+                            loggerService.Log($"Client added to lobby {lobbyId}.", LogLevelEnum.Info);
+                            return true;
+                        }
+
+                        loggerService.Log($"Client not added to lobby {lobbyId}. Lobby is full.", LogLevelEnum.Info);
+                        return false;
                     }
                     else
                     {
-                        Log($"Lobby with ID {lobbyId} is null.", LogLevelEnum.Error);
-                        throw new NullLobbyException($"Lobby with ID {lobbyId} is null.");
+                        throw new LobbyNotFoundException($"Lobby with ID {lobbyId} is null.");
                     }
                 }
             }
 
-            Log($"Lobby with ID {lobbyId} does not exist.", LogLevelEnum.Warning);
-            throw new NullLobbyException($"Lobby with ID {lobbyId} does not exist.");
+            throw new LobbyNotFoundException($"Lobby with ID {lobbyId} does not exist.");
         }
 
-        public bool RemoveUserFromLobby(int lobbyId, TcpClient client)
+        /// <inheritdoc/>
+        public void RemoveUserFromLobby(int lobbyId, TcpClient client)
         {
             lock (lobbyLock)
             {
@@ -78,22 +100,21 @@ namespace Server.Core.Lobby
                     if (lobby is not null)
                     {
                         lobby.RemoveClient(client);
-                        Log($"Client removed from lobby {lobbyId}.", LogLevelEnum.Info);
-
-                        return true;
+                        loggerService.Log($"Client removed from lobby {lobbyId}.", LogLevelEnum.Info);
+                        return;
                     }
                     else
                     {
-                        throw new NullLobbyException($"Lobby with ID {lobbyId} does not exist or is null.");
+                        throw new LobbyNotFoundException($"Lobby with ID {lobbyId} is null.");
                     }
                 }
             }
 
-            Log($"Lobby with ID {lobbyId} does not exist.", LogLevelEnum.Warning);
-            return false;
+            throw new LobbyNotFoundException($"Lobby with ID {lobbyId} does not exist.");
         }
 
-        public Lobby GetLobby(int lobbyId)
+        /// <inheritdoc/>
+        public LobbyDTO GetLobbyData(int lobbyId)
         {
             lock (lobbyLock)
             {
@@ -101,17 +122,18 @@ namespace Server.Core.Lobby
                 {
                     if (lobby is not null)
                     {
-                        return (Lobby)lobby;
+                        return lobby.ToDTO();
                     }
                     else
                     {
-                        throw new NullLobbyException($"Lobby with ID {lobbyId} does not exist or is null.");
+                        throw new LobbyNotFoundException($"Lobby with ID {lobbyId} does not exist or is null.");
                     }
                 }
-                throw new NullLobbyException($"Lobby with ID {lobbyId} does not exist.");
+                throw new LobbyNotFoundException($"Lobby with ID {lobbyId} does not exist.");
             }
         }
 
+        /// <inheritdoc/>
         public void RemoveUserFromLobbies(TcpClient client)
         {
             lock (lobbyLock)
@@ -126,6 +148,7 @@ namespace Server.Core.Lobby
             }
         }
 
+        /// <inheritdoc/>
         public void SendMessageToLobbyWithClient(TcpClient client, MessageBase message)
         {
             lock (lobbyLock)
@@ -137,24 +160,27 @@ namespace Server.Core.Lobby
             }
         }
 
-        public List<ILobby> GetAllLobbies()
+        /// <inheritdoc/>
+        public List<LobbyDTO> GetAllLobbiesData()
         {
             lock (lobbyLock)
             {
-                return lobbies.Values.ToList();
+                return lobbies.Values.Select(l => l.ToDTO()).ToList();
             }
         }
 
-        private void Log(Exception ex, LogLevelEnum level)
+        #endregion
+
+
+        #region Logging
+
+        /// OnLog event handler to route log messages to the logger service.
+        private void OnLog_Delegate(object? sender, OnLogEventArgs e)
         {
-            Log(ex.Message, level);
+            loggerService.Log(e.Content, e.LogLevel, sender);
         }
 
-        private void Log(string message, LogLevelEnum level)
-        {
-            OnLogEventArgs args = new OnLogEventArgs(message, level);
+        #endregion
 
-            OnLog?.Invoke(this, args);
-        }
     }
 }

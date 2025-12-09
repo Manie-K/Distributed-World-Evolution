@@ -6,7 +6,9 @@ using SharedLibrary.Helpers;
 
 namespace Server.Core.Behaviours.MoveBehaviour
 {
-    /// <inheritdoc>
+    /// <summary>
+    /// Base class for move behaviours, which define how entities move in the game world.
+    /// </summary>
     public abstract class MoveBehaviourBase : IBehaviour
     {
         /// <inheritdoc/>
@@ -17,7 +19,6 @@ namespace Server.Core.Behaviours.MoveBehaviour
 
         /// <inheritdoc/>
         public abstract string Description { get; }
-
 
         /// <inheritdoc/>
         public virtual void Execute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
@@ -71,17 +72,12 @@ namespace Server.Core.Behaviours.MoveBehaviour
             return true;
         }
 
-        /// TODO: Optimize if needed
         /// <summary>
         /// Returns the next movement vector as (x, y).
         /// </summary>
-        /// <param name="entity"> Entity </param>
-        /// <param name="otherEntites"> Other world entites </param>
-        /// <returns> Next movement candidate vector (x,y) </returns>       
-        /// <remarks> 
-        /// If the creation of immutable list from normal list and then traversing through all world entites will be too time consuming,
-        /// we should change the data structure to something more optimized, 2d spatial map etc.Marked it as possible TODO.    
-        /// </remarks>
+        /// <param name="entity"> The entity for which to determine the next movement. </param>
+        /// <param name="otherEntites"> Span of other world entities in the game world. </param>
+        /// <returns> Next movement candidate vector (x,y). </returns>       
         public abstract (int, int) GetNextMovement(WorldEntity entity, Span<WorldEntity> otherEntites);
 
         /// <inheritdoc/>
@@ -89,5 +85,7 @@ namespace Server.Core.Behaviours.MoveBehaviour
         {
             return new BehaviourDTO(DatabaseID, Description, Type, BehaviourInteractionTypeEnum.Move);
         }
+
     }
+
 }

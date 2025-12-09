@@ -24,4 +24,5 @@ namespace SharedLibrary.Messages
         GetMessage,
         LobbyData,
     }
+
 }

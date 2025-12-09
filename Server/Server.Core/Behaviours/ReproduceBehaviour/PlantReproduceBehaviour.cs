@@ -6,14 +6,20 @@ using SharedLibrary.Helpers;
 
 namespace Server.Core.Behaviours.ReproduceBehaviour
 {
+    /// <summary>
+    /// Plant reproduce behaviour implementation.
+    /// </summary>
     public class PlantReproduceBehaviour : ReproduceBehaviourBase
     {
-        //<inheritdoc/>
+        /// <inheritdoc/>
         public override EntityTypeEnum Type => EntityTypeEnum.Plant;
+        
         ///<inheritdoc/>
         public override int DatabaseID => 401;
+        
         ///<inheritdoc/>
         public override string Description => "Plants reproduce behaviour according to their reproduction need.";
+        
         ///<inheritdoc/>
         public override void Execute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
@@ -76,9 +82,10 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
                 null,
                 entity.ModuleID,
                 new EntityState(
-                    position: position,
-                    health: entityModule.MaxHealth,
-                    hunger: entityModule.MaxHunger
+                    position,
+                    entityModule.MaxHealth,
+                    entityModule.MaxHunger,
+                    80
                 ),
                 lobby
             );
@@ -96,7 +103,7 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
 
             if (entityType == EntityTypeEnum.Plant)
             {
-                int randomRoll = new Random().Next(1, 1100);
+                int randomRoll = new Random().Next(1, 4001);
                 canReproduce = randomRoll <= entityModule.ReproductionNeed;
             }
 
@@ -104,4 +111,5 @@ namespace Server.Core.Behaviours.ReproduceBehaviour
         }
 
     }
+
 }

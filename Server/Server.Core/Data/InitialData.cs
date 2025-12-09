@@ -1,7 +1,14 @@
 ﻿namespace Server.Core.Data
 {
+    /// <summary>
+    /// Initial data for seeding the database with default modules.
+    /// </summary>
     internal static class InitialData
     {
+        /// <summary>
+        /// Retrieves the initial set of ModuleDBEntity objects for database seeding.
+        /// </summary>
+        /// <returns> Array of ModuleDBEntity objects. </returns>
         public static ModuleDBEntity[] GetInitialData() => new ModuleDBEntity[] 
         {
             new ModuleDBEntity(true, "Red Plant", 1, 1, 10, 80, 80, EntityTypeEnum.Animal, 0, new int[] {101, 212, 307, 405})
@@ -128,4 +135,5 @@
             }
         };
     }
+
 }

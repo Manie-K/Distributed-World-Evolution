@@ -15,24 +15,22 @@ namespace Server.Core.Connection
     /// </summary>
     public class ConnectionManager : IConnectionManager
     {
-        private readonly LobbyManager lobbyManager;
-
-        /// <summary>
-        /// Logger service instance.
-        /// </summary>
+        private readonly ILobbyManager lobbyManager;
         private readonly LoggerService loggerService;
+
+        #region Constructor
 
         /// <summary>
         /// Constructor for ConnectionManager.
         /// </summary>
-        public ConnectionManager(LoggerService loggerService, LobbyManager lobbyManager)
+        public ConnectionManager(LoggerService loggerService, ILobbyManager lobbyManager)
         {
             this.loggerService = loggerService;
             this.lobbyManager = lobbyManager;
-
-            lobbyManager.OnLog += OnLog_Delegate;
-            Lobby.Lobby.OnLog += OnLog_Delegate;
         }
+
+        #endregion
+
 
         #region Client Handling
 
@@ -43,9 +41,7 @@ namespace Server.Core.Connection
             await StartAcceptingClientsAsync();
         }
 
-        /// <summary>
         /// Starts accepting client connections asynchronously.
-        /// </summary>
         private async Task StartAcceptingClientsAsync()
         {
             var config = new ConfigurationBuilder()
@@ -67,10 +63,7 @@ namespace Server.Core.Connection
             }
         }
 
-        /// <summary>
         /// Handles a connected client.
-        /// </summary>
-        /// <param name="client"> The connected TCP client. </param>
         private async Task HandleClientAsync(TcpClient client)
         {
             try
@@ -95,11 +88,7 @@ namespace Server.Core.Connection
             }
         }
 
-        /// <summary>
         /// Handles the client based on its role.
-        /// </summary>
-        /// <param name="client"> The connected TCP client. </param>
-        /// <param name="role"> The role of the client. </param>
         private async Task HandleClientByRoleAsync(TcpClient client, RoleEnum role)
         {
             switch (role)
@@ -111,7 +100,7 @@ namespace Server.Core.Connection
 
                 case RoleEnum.UI:
                     loggerService.AddClient(client);
-                    await SafeSendAsync(client, new LobbyListMessage(lobbyManager.GetAllLobbies().Select(l => l.ToDTO()).ToList()));
+                    await SafeSendAsync(client, new LobbyListMessage(lobbyManager.GetAllLobbiesData()));
                     Task.Delay(2000).Wait();
                     _ = loggerService.StartAsync(CancellationToken.None);
                     break;
@@ -124,12 +113,10 @@ namespace Server.Core.Connection
 
         #endregion
 
+
         #region User Handling
 
-        /// <summary>
         /// Handles the connection for a user client.
-        /// </summary>
-        /// <param name="client"> The connected TCP client. </param>
         private async Task HandleUserConnectionAsync(TcpClient client)
         {
             try
@@ -154,11 +141,7 @@ namespace Server.Core.Connection
             client.Close();
         }
 
-        /// <summary>
         /// Delegates message handling based on message type.
-        /// </summary>
-        /// <param name="client"> The connected TCP client. </param>
-        /// <param name="message"> The received message. </param>
         private async Task HandleMessageAsync(TcpClient client, MessageBase message)
         {
             switch (message.MessageType)
@@ -189,20 +172,15 @@ namespace Server.Core.Connection
             }
         }
 
-        /// <summary>
         /// Creates a new lobby and adds the user to it.
-        /// </summary>
-        /// <param name="client"> The connected TCP client. </param>
-        /// <param name="msg"> The create lobby message. </param>
         private async Task HandleCreateLobbyAsync(TcpClient client, CreateLobbyMessage msg)
         {
             try
             {
-                int lobbyID = lobbyManager.CreateAndInitializeLobby(
-                    msg.LobbyName, msg.MaxPlayers, msg.MapID, msg.WalkableTiles, msg.FertileTiles, msg.ModuleIDs);
+                int lobbyID = lobbyManager.CreateAndInitializeLobby(msg.LobbyName, msg.MaxPlayers, msg.MapID, msg.WalkableTiles, msg.FertileTiles, msg.ModuleIDs);
 
-                Lobby.Lobby lobby = lobbyManager.GetLobby(lobbyID);
-                loggerService.SendLobbyDTO(lobby.ToDTO());
+                LobbyDTO lobbyDto = lobbyManager.GetLobbyData(lobbyID);
+                loggerService.SendLobbyDTO(lobbyDto);
 
                 await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyCreated, "New lobby created!"));
                 await HandleJoinLobbyAsync(client, new JoinLobbyMessage(lobbyID, msg.UserName));
@@ -214,25 +192,21 @@ namespace Server.Core.Connection
             }
         }
 
-        /// <summary>
         /// Adds a user to an existing lobby.
-        /// </summary>
-        /// <param name="client"> The connected TCP client. </param>
-        /// <param name="msg"> The join lobby message. </param>
         private async Task HandleJoinLobbyAsync(TcpClient client, JoinLobbyMessage msg)
         {
             try
             {
-                lobbyManager.AddUserToLobby(msg.LobbyID, client, msg.UserName, out Guid userEntityID);
-                if (userEntityID == Guid.Empty)
+                bool isAdded = lobbyManager.AddUserToLobby(msg.LobbyID, client, msg.UserName, out Guid userEntityId);
+                if (!isAdded)
                 {
                     await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyNotJoined, "Lobby is full. Cannot join."));
                     return;
                 }
-                Lobby.Lobby lobby = lobbyManager.GetLobby(msg.LobbyID);
-                loggerService.SendLobbyDTO(lobby.ToDTO());
+                LobbyDTO lobbyDto = lobbyManager.GetLobbyData(msg.LobbyID);
+                loggerService.SendLobbyDTO(lobbyDto);
 
-                await SafeSendAsync(client, new LobbyDataMessage(lobby.ToDTO(), userEntityID));
+                await SafeSendAsync(client, new LobbyDataMessage(lobbyDto, userEntityId));
                 await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyJoined, "Welcome to lobby!"));
             }
             catch (Exception ex)
@@ -242,20 +216,15 @@ namespace Server.Core.Connection
             }
         }
 
-        /// <summary>
         /// Removes a user from a lobby.
-        /// </summary>
-        /// <param name="client"> The connected TCP client. </param>
-        /// <param name="msg"> The disjoin lobby message. </param>
         private async Task HandleDisjoinLobbyAsync(TcpClient client, DisjoinLobbyMessage msg)
         {
             try
             {
-                Lobby.Lobby lobby = lobbyManager.GetLobby(msg.LobbyID);
-                LobbyDTO lobbyDTO = lobby.ToDTO();
+                LobbyDTO lobbyDto = lobbyManager.GetLobbyData(msg.LobbyID);
 
                 lobbyManager.RemoveUserFromLobby(msg.LobbyID, client);
-                loggerService.SendLobbyDTO(lobbyDTO);
+                loggerService.SendLobbyDTO(lobbyDto);
                 await SafeSendAsync(client, new InfoMessage(InfoMessageTypeEnum.LobbyDisjoined, "See you soon!"));
             }
             catch (Exception ex)
@@ -265,11 +234,7 @@ namespace Server.Core.Connection
             }
         }
 
-        /// <summary>
         /// Retrieves requested data based on GetMessage type.
-        /// </summary>
-        /// <param name="client"> The connected TCP client. </param>
-        /// <param name="msg"> The get message. </param>
         private async Task HandleGetMessageAsync(TcpClient client, GetMessage msg)
         {
             try
@@ -277,7 +242,7 @@ namespace Server.Core.Connection
                 switch (msg.GetMessageType)
                 {
                     case GetMessageTypeEnum.LobbyList:
-                        await SafeSendAsync(client, new LobbyListMessage(lobbyManager.GetAllLobbies().Select(l => l.ToDTO()).ToList()));
+                        await SafeSendAsync(client, new LobbyListMessage(lobbyManager.GetAllLobbiesData()));
                         break;
 
                     case GetMessageTypeEnum.ModuleList:
@@ -302,11 +267,7 @@ namespace Server.Core.Connection
             }
         }
 
-        /// <summary>
         /// Creates a new module based on the provided DTO.
-        /// </summary>
-        /// <param name="client"> The connected TCP client. </param>
-        /// <param name="msg"> The create module message. </param>
         private async Task HandleCreateModuleAsync(TcpClient client, CreateModuleMessage msg)
         {
             try
@@ -323,23 +284,17 @@ namespace Server.Core.Connection
 
         #endregion
 
+
         #region Message Sending Helpers
-        /// <summary>
+
         /// Sends a message to the client and closes the connection.
-        /// </summary>
-        /// <param name="client"> The connected TCP client. </param>
-        /// <param name="message"> The message to be sent. </param>
         private async Task SendAndCloseAsync(TcpClient client, InfoMessage message)
         {
             await SafeSendAsync(client, message);
             client.Close();
         }
 
-        /// <summary>
         /// Safely sends a message to the client, logging any exceptions.
-        /// </summary>
-        /// <param name="client"> The connected TCP client. </param>
-        /// <param name="message"> The message to be sent. </param>
         private async Task SafeSendAsync(TcpClient client, MessageBase message)
         {
             try
@@ -354,16 +309,13 @@ namespace Server.Core.Connection
 
         #endregion
 
+
         #region Logging
 
-        /// <summary>
         /// OnLog event handler to route log messages to the logger service.
-        /// </summary>  
-        /// <param name="sender"> The sender of the log event. </param>
-        /// <param name="e"> The log event arguments. </param>
         private void OnLog_Delegate(object? sender, OnLogEventArgs e)
         {
-            loggerService.Log(e.Message, e.LogLevel, sender);
+            loggerService.Log(e.Content, e.LogLevel, sender);
         }
 
         #endregion

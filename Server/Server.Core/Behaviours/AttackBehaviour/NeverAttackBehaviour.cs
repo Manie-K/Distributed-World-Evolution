@@ -2,7 +2,9 @@
 
 namespace Server.Core.Behaviours.AttackBehaviour
 {
-    /// <inheritdoc/>
+    /// <summary>
+    /// Attack behaviour that never allows an attack to be executed.
+    /// </summary>
     public class NeverAttackBehaviour : AttackBehaviourBase
     {
         /// <inheritdoc/>
@@ -23,5 +25,7 @@ namespace Server.Core.Behaviours.AttackBehaviour
         {
             return false;
         }
+
     }
+
 }

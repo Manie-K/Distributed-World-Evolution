@@ -10,17 +10,21 @@ namespace SharedLibrary.Messages.BehaviourMessages
     {
         /// <inheritdoc/>
         public override MessageTypeEnum MessageType => MessageTypeEnum.BehaviourList;
+        
         /// <summary>
         /// List of behaviours available on the server.
         /// </summary>
         public IEnumerable<BehaviourDTO> Behaviours { get; init; }
+
         /// <summary>
-        /// Constructor for BehaviourListMessage.
+        /// Constructor.
         /// </summary>
+        /// <param name="behaviours"> List of behaviours available on the server. </param>
         public BehaviourListMessage(IEnumerable<BehaviourDTO> behaviours)
         {
             Behaviours = behaviours;
         }
+        
         /// <inheritdoc/>
         public override string BuildJson()
         {
@@ -31,5 +35,7 @@ namespace SharedLibrary.Messages.BehaviourMessages
             };
             return JsonSerializer.Serialize(payload);
         }
+
     }
+
 }

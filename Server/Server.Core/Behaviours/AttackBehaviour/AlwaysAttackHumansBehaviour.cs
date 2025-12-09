@@ -3,7 +3,9 @@ using Server.Core.Services;
 
 namespace Server.Core.Behaviours.AttackBehaviour
 {
-    /// <inheritdoc/>
+    /// <summary>
+    /// Attack behaviour that targets only humans.
+    /// </summary>
     public class AlwaysAttackHumansBehaviour : AttackBehaviourBase
     {
         /// <inheritdoc/>
@@ -23,5 +25,7 @@ namespace Server.Core.Behaviours.AttackBehaviour
             Module targetModule = moduleService.GetModuleById(target.ModuleID) ?? throw new Exception($"Module with ID={attacker.ModuleID} not found!");
             return attacker.Id != target.Id && targetModule.Type == EntityTypeEnum.Human;
         }
+
     }
+
 }

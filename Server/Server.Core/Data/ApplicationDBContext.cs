@@ -2,8 +2,14 @@
 
 namespace Server.Core.Data
 {
+    /// <summary>
+    /// Database context for the application, managing ModuleDBEntity objects.
+    /// </summary>
     internal class ApplicationDBContext : DbContext
     {
+        /// <summary>
+        /// Modules table in the database.
+        /// </summary>
         public DbSet<ModuleDBEntity> Modules => Set<ModuleDBEntity>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -35,4 +41,5 @@ namespace Server.Core.Data
         }
 
     }
+
 }

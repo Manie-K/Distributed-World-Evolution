@@ -1,18 +1,30 @@
-﻿using System.Diagnostics;
-using Server.Core.Data;
+﻿using Server.Core.Data;
 using Server.Core.Modules;
 using SharedLibrary.DTOs.ModuleDTO;
 
 namespace Server.Core.Services
 {
+    /// <summary>
+    /// Singleton service for managing modules.
+    /// </summary>
     public class ModuleService : IModuleService
     {
-        //Singleton instance
+        /// <summary>
+        /// Singleton instance of the ModuleService.
+        /// </summary>
         public static IModuleService Instance = new ModuleService();
-        private ModuleService() { }
 
+        /// Private constructor to enforce singleton pattern.
+        private ModuleService() 
+        { 
+        
+        }
+
+
+        /// Module cache to store previously retrieved modules.
         private readonly Dictionary<int, Module> moduleCache = new Dictionary<int, Module>();
 
+        /// <inheritdoc/>
         public Module? GetModuleById(int id)
         {
             if (moduleCache.TryGetValue(id, out Module? value))
@@ -34,6 +46,7 @@ namespace Server.Core.Services
             }
         }
 
+        /// <inheritdoc/>
         public IEnumerable<Module> GetAllModules()
         {
             using (var dbContext = new ApplicationDBContext())
@@ -43,6 +56,7 @@ namespace Server.Core.Services
             }
         }
 
+        /// <inheritdoc/>
         public void CreateModule(CreateModuleDTO dto)
         {
             using (var dbContext = new ApplicationDBContext())
@@ -57,6 +71,7 @@ namespace Server.Core.Services
             }
         }
 
+        /// <inheritdoc/>
         public int GetHumanModuleId()
         {
             using (var dbContext = new ApplicationDBContext())
@@ -74,5 +89,7 @@ namespace Server.Core.Services
                 return modules.First().ID;
             }
         }
+
     }
+
 }
