@@ -45,7 +45,7 @@ namespace Server.Core.Lobby
         /// <summary>
         /// Retrieves the data of all existing lobbies.
         /// </summary>
-        /// <returns> List of LobbyDTOs containing data of all lobbies. </returns
+        /// <returns> List of LobbyDTOs containing data of all lobbies. </returns>
         public List<LobbyDTO> GetAllLobbiesData();
 
         /// <summary>

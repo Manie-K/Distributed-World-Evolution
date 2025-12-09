@@ -41,16 +41,20 @@ namespace Server.Core.Lobby
         /// <inheritdoc/>
         public event Action OnLobbyClosed = delegate { };
 
+        
+        private readonly List<WorldEntity> entities;                        // All entities in the lobby
+        private readonly Dictionary<(int, int), WorldEntity?> entitiesMap;  // Fast lookup by position
+        private readonly Dictionary<Guid, WorldEntity> entitiesId;          // Fast lookup by ID
+        private readonly List<WorldEntity> updatedEntitiesToPublish;        // Entities that have updates to be sent to clients
+
         private readonly IModuleService moduleService;
-        private readonly List<WorldEntity> entities;
-        private readonly Dictionary<(int, int), WorldEntity?> entitiesMap;
-        private readonly Dictionary<Guid, WorldEntity> entitiesId;
-        private readonly List<WorldEntity> updatedEntitiesToPublish;
         private readonly List<int> allowedModulesIDs;
         private readonly Dictionary<TcpClient, WorldEntity> clients;
-        private readonly bool[][] walkableTiles;
-        private readonly bool[][] fertileTiles;
 
+        private readonly bool[][] walkableTiles; // Can be walked on
+        private readonly bool[][] fertileTiles;  // Plants can be placed on
+
+        // Locks for thread safety
         private readonly object entitiesLock = new object();
         private readonly object entitiesMapLock = new object();
         private readonly object entitiesIdLock = new object();
@@ -60,9 +64,10 @@ namespace Server.Core.Lobby
 
         private bool running;
 
-        private readonly int entitiesPerGroup = (int)Math.Ceiling((double)LobbyParams.NUM_INITIAL_ENTITIES / LobbyParams.INITIAL_NUMBER_OF_GROUPS);
-        private int currentGroupIndex = 0;
+        private readonly int entitiesPerGroup = (int)Math.Ceiling((double)LobbyParams.NUM_INITIAL_ENTITIES / LobbyParams.INITIAL_NUMBER_OF_GROUPS); // Number of entities to update per update
+        private int currentGroupIndex = 0; 
         private int totalCycles = 1; //Starts from 1 so we don't reduce health/hunger on first update
+
 
         #region Constructors
 

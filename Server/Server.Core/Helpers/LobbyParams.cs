@@ -52,6 +52,7 @@ namespace Server.Core.Helpers
         public static int InteractionCooldownInCycles(int entitiesCount, InteractionTypeEnum interactionTypeEnum)
         {
             const int modifier = 8;
+
             if (entitiesCount >= 1000)
                 if(interactionTypeEnum == InteractionTypeEnum.Move)
                     return 2 * modifier;

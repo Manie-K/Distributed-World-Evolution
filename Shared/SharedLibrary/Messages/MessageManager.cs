@@ -71,7 +71,7 @@ namespace SharedLibrary.Messages
 
                 return message ?? throw new Exception("Message null");
             }
-            catch (IOException ex)
+            catch (Exception ex)
             {
                 throw new IOException("Client is diconnected.", ex);
             }

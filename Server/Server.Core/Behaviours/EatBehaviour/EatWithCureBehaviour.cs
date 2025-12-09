@@ -5,6 +5,7 @@ namespace Server.Core.Behaviours.EatBehaviour
 {
     /// <summary>
     /// Eat behaviour that increases health when eating, but decreases health twice if the food is poisonous.
+    /// </summary>
     public class EatWithCureBehaviour : EatBehaviourBase
     {
         /// <inheritdoc/>
