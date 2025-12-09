@@ -12,16 +12,11 @@ namespace Server.Core.Lobby
     /// </summary>
     public class LobbyManager : ILobbyManager
     {
-        /// Lobbies managed by the LobbyManager, identified by their unique lobby IDs.
         private readonly Dictionary<int, ILobby> lobbies;
-
-        /// Lock object for thread-safe access to the lobbies dictionary.
-        private readonly object lobbyLock;
-
-        /// Logger service instance.
         private readonly LoggerService loggerService;
-
-        /// Lobby ID counter for generating unique lobby IDs.
+        
+        private readonly object lobbyLock;
+        
         private int lobbyCounter;
 
         #region Constructor
@@ -40,6 +35,7 @@ namespace Server.Core.Lobby
         }
 
         #endregion
+
 
         #region ILobbyManager Implementation
 
@@ -174,6 +170,7 @@ namespace Server.Core.Lobby
         }
 
         #endregion
+
 
         #region Logging
 

@@ -15,10 +15,7 @@ namespace Server.Core.Connection
     /// </summary>
     public class ConnectionManager : IConnectionManager
     {
-        /// Lobby manager instance.
         private readonly ILobbyManager lobbyManager;
-
-        /// Logger service instance.
         private readonly LoggerService loggerService;
 
         #region Constructor
@@ -33,6 +30,7 @@ namespace Server.Core.Connection
         }
 
         #endregion
+
 
         #region Client Handling
 
@@ -114,6 +112,7 @@ namespace Server.Core.Connection
         }
 
         #endregion
+
 
         #region User Handling
 
@@ -285,6 +284,7 @@ namespace Server.Core.Connection
 
         #endregion
 
+
         #region Message Sending Helpers
 
         /// Sends a message to the client and closes the connection.
@@ -308,6 +308,7 @@ namespace Server.Core.Connection
         }
 
         #endregion
+
 
         #region Logging
 

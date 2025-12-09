@@ -13,17 +13,11 @@ namespace Server.Core.Services
     /// </summary>
     public class LoggerService : BackgroundService
     {
-        /// Queue to hold log messages to be sent to UI clients.
         private readonly ConcurrentQueue<MessageBase> _messageQueue = new();
-
-        /// Polling interval for checking the message queue.
+        private readonly List<TcpClient> clientsUI = new();
         private readonly TimeSpan _pollInterval = TimeSpan.FromMilliseconds(50);
 
-        /// Lock object for thread-safe access to the clients list.
         private readonly object _clientsLock = new object();
-
-        /// UI Clients connected to the logger service.
-        private List<TcpClient> ClientsUI { set; get; } = new List<TcpClient>();
 
 
         /// <summary>
@@ -32,7 +26,7 @@ namespace Server.Core.Services
         /// <param name="clientUI"> The TCP client representing the UI. </param>
         public void AddClient(TcpClient clientUI)
         {
-            ClientsUI.Add(clientUI);
+            clientsUI.Add(clientUI);
         }
 
         /// <summary>
@@ -43,7 +37,7 @@ namespace Server.Core.Services
         {
             lock (_clientsLock)
             {
-                foreach (var ClientUI in ClientsUI)
+                foreach (var ClientUI in clientsUI)
                 {
                     _messageQueue.Enqueue(new LobbyDataMessage(lobbyDto, Guid.Empty));
                 }
@@ -87,7 +81,7 @@ namespace Server.Core.Services
                 {
                     lock (_clientsLock)
                     {
-                        foreach (var ClientUI in ClientsUI)
+                        foreach (var ClientUI in clientsUI)
                         {
                             if (ClientUI.Connected)
                             {
@@ -97,13 +91,13 @@ namespace Server.Core.Services
                                 }
                                 catch (IOException)
                                 {
-                                    ClientsUI.Remove(ClientUI);
+                                    clientsUI.Remove(ClientUI);
                                     ClientUI.Close();
                                 }
                             }
                             else
                             {
-                                ClientsUI.Remove(ClientUI);
+                                clientsUI.Remove(ClientUI);
                                 ClientUI.Close();
                             }
                         }

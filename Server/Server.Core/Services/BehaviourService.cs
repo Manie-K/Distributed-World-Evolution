@@ -12,6 +12,7 @@ namespace Server.Core.Services
         /// </summary>
         public static IBehaviourService Instance = new BehaviourService();
 
+
         /// Private constructor to enforce singleton pattern.
         private BehaviourService()
         {
