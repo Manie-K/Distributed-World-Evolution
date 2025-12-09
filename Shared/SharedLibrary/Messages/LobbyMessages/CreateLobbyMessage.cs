@@ -47,7 +47,7 @@ namespace SharedLibrary.Messages
 
         /// <summary>
         /// Constructor.
-        /// </summary
+        /// </summary>
         /// <param name="lobbyName"> Name of the lobby to be created. </param>
         /// <param name="username"> Username of the player creating the lobby. </param>
         /// <param name="maxPlayers"> Maximum number of players allowed in the lobby. </param>  

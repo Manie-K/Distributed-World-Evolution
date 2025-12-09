@@ -20,7 +20,6 @@ namespace Server.Core.Behaviours.MoveBehaviour
         /// <inheritdoc/>
         public abstract string Description { get; }
 
-
         /// <inheritdoc/>
         public virtual void Execute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
@@ -79,10 +78,6 @@ namespace Server.Core.Behaviours.MoveBehaviour
         /// <param name="entity"> The entity for which to determine the next movement. </param>
         /// <param name="otherEntites"> Span of other world entities in the game world. </param>
         /// <returns> Next movement candidate vector (x,y). </returns>       
-        /// <remarks> 
-        /// If the creation of immutable list from normal list and then traversing through all world entites will be too time consuming,
-        /// we should change the data structure to something more optimized, 2d spatial map etc.Marked it as possible TODO.    
-        /// </remarks>
         public abstract (int, int) GetNextMovement(WorldEntity entity, Span<WorldEntity> otherEntites);
 
         /// <inheritdoc/>

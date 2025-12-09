@@ -5,13 +5,13 @@
     /// </summary>
     public class BasicMoveBehaviour : MoveBehaviourBase
     {
-        /// <inheritdoc>
+        /// <inheritdoc/>
         public override int DatabaseID => 103;
 
-        /// <inheritdoc>
+        /// <inheritdoc/>
         public override string Description => "Won't go to occupied tiles";
 
-        /// <inheritdoc>
+        /// <inheritdoc/>
         public override (int, int) GetNextMovement(WorldEntity entity, Span<WorldEntity> otherEntites)
         {
             int x = new Random().Next(3) - 1; // -1, 0, 1

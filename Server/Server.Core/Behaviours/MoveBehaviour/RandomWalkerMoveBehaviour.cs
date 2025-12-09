@@ -6,13 +6,13 @@
     /// </summary>
     public class RandomWalkerMoveBehaviour : MoveBehaviourBase
     {
-        /// <inheritdoc>
+        /// <inheritdoc/>
         public override int DatabaseID => 101;
 
-        /// <inheritdoc>
+        /// <inheritdoc/>
         public override string Description => "Basic move behaviour, random 8-sided movement";
-        
-        /// <inheritdoc>
+
+        /// <inheritdoc/>
         public override (int, int) GetNextMovement(WorldEntity entity, Span<WorldEntity> otherEntites)
         {
             int x = 0, y = 0;

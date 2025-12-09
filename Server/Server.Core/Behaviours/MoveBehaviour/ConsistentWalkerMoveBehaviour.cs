@@ -7,13 +7,13 @@ namespace Server.Core.Behaviours.MoveBehaviour
     /// </summary>
     public class ConsistentWalkerMoveBehaviour : MoveBehaviourBase
     {
-        /// <inheritdoc>
+        /// <inheritdoc/>
         public override int DatabaseID => 102;
 
-        /// <inheritdoc>
+        /// <inheritdoc/>
         public override string Description => "Consistent move behaviour, moves in a set direction with 80% consistency";
 
-        /// <inheritdoc>
+        /// <inheritdoc/>
         public override (int, int) GetNextMovement(WorldEntity entity, Span<WorldEntity> otherEntites)
         {
             Position2D lastMovementVector = entity.State.LastMovementVector ?? new Position2D(0, 0);
