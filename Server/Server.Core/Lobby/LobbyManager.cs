@@ -105,6 +105,7 @@ namespace Server.Core.Lobby
                     {
                         lobby.RemoveClient(client);
                         loggerService.Log($"Client removed from lobby {lobbyId}.", LogLevelEnum.Info);
+                        return;
                     }
                     else
                     {
