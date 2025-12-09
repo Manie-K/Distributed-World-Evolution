@@ -1,0 +1,99 @@
+servercore  | [19:31:23] [Info] Lobby 0 started.
+servercore  | [DEBUG] Update #1
+servercore  | [DEBUG] World state update #1 took 887ms.
+servercore  | [19:31:24] [Info] Client added to lobby 0.
+servercore  | [DEBUG] Update #2
+servercore  | [DEBUG] World state update #2 took 414ms.
+servercore  | [DEBUG] Update #3
+servercore  | [DEBUG] World state update #3 took 412ms.
+servercore  | [DEBUG] Update #4
+servercore  | [DEBUG] World state update #4 took 342ms.
+servercore  | [DEBUG] Update #5
+servercore  | [DEBUG] World state update #5 took 287ms.
+servercore  | [DEBUG] Update #6
+servercore  | [DEBUG] World state update #6 took 259ms.
+servercore  | [DEBUG] Update #7
+servercore  | [DEBUG] World state update #7 took 257ms.
+servercore  | [DEBUG] Update #8
+servercore  | [DEBUG] World state update #8 took 261ms.
+servercore  | [DEBUG] Update #9
+servercore  | [DEBUG] World state update #9 took 254ms.
+servercore  | [DEBUG] Update #10
+servercore  | [DEBUG] World state update #10 took 252ms.
+servercore  | [DEBUG] Update #11
+servercore  | [DEBUG] World state update #11 took 231ms.
+servercore  | [DEBUG] Update #12
+servercore  | [DEBUG] World state update #12 took 234ms.
+servercore  | [DEBUG] Update #13
+servercore  | [DEBUG] World state update #13 took 234ms.
+servercore  | [DEBUG] Update #14
+servercore  | [DEBUG] World state update #14 took 223ms.
+servercore  | [DEBUG] Update #15
+servercore  | [DEBUG] World state update #15 took 225ms.
+servercore  | [DEBUG] Update #16
+servercore  | [DEBUG] World state update #16 took 232ms.
+servercore  | [DEBUG] Update #17
+servercore  | [DEBUG] World state update #17 took 230ms.
+servercore  | [DEBUG] Update #18
+servercore  | [DEBUG] World state update #18 took 237ms.
+servercore  | [DEBUG] Update #19
+servercore  | [DEBUG] World state update #19 took 237ms.
+servercore  | [DEBUG] Update #20
+servercore  | [DEBUG] World state update #20 took 231ms.
+servercore  | [DEBUG] Update #21
+servercore  | [DEBUG] World state update #21 took 256ms.
+servercore  | [DEBUG] Update #22
+servercore  | [DEBUG] World state update #22 took 248ms.
+servercore  | [DEBUG] Update #23
+servercore  | [DEBUG] World state update #23 took 248ms.
+servercore  | [DEBUG] Update #24
+servercore  | [DEBUG] World state update #24 took 243ms.
+servercore  | [DEBUG] Update #25
+servercore  | [DEBUG] World state update #25 took 243ms.
+servercore  | [DEBUG] Update #26
+servercore  | [DEBUG] World state update #26 took 255ms.
+servercore  | [DEBUG] Update #27
+servercore  | [DEBUG] World state update #27 took 263ms.
+servercore  | [DEBUG] Update #28
+servercore  | [DEBUG] World state update #28 took 253ms.
+servercore  | [DEBUG] Update #29
+servercore  | [DEBUG] World state update #29 took 257ms.
+servercore  | [DEBUG] Update #30
+servercore  | [DEBUG] World state update #30 took 255ms.
+servercore  | [DEBUG] Update #31
+servercore  | [DEBUG] World state update #31 took 243ms.
+servercore  | [DEBUG] Update #32
+servercore  | [DEBUG] World state update #32 took 232ms.
+servercore  | [DEBUG] Update #33
+servercore  | [DEBUG] World state update #33 took 232ms.
+servercore  | [DEBUG] Update #34
+servercore  | [DEBUG] World state update #34 took 372ms.
+servercore  | [DEBUG] Update #35
+servercore  | [DEBUG] World state update #35 took 261ms.
+servercore  | [DEBUG] Update #36
+servercore  | [DEBUG] World state update #36 took 259ms.
+servercore  | [DEBUG] Update #37
+servercore  | [DEBUG] World state update #37 took 230ms.
+servercore  | [DEBUG] Update #38
+servercore  | [DEBUG] World state update #38 took 229ms.
+servercore  | [DEBUG] Update #39
+servercore  | [DEBUG] World state update #39 took 237ms.
+servercore  | [DEBUG] Update #40
+servercore  | [DEBUG] World state update #40 took 238ms.
+servercore  | [DEBUG] Update #41
+servercore  | [DEBUG] World state update #41 took 239ms.
+servercore  | [DEBUG] Update #42
+servercore  | [DEBUG] World state update #42 took 247ms.
+servercore  | [DEBUG] Update #43
+servercore  | [DEBUG] World state update #43 took 245ms.
+servercore  | [DEBUG] Update #44
+servercore  | [DEBUG] World state update #44 took 246ms.
+servercore  | [DEBUG] Update #45
+servercore  | [DEBUG] World state update #45 took 249ms.
+servercore  | [DEBUG] Update #46
+servercore  | [DEBUG] World state update #46 took 241ms.
+servercore  | [DEBUG] Update #47
+Gracefully stopping... (press Ctrl+C again to force)
+[+] Stopping 2/2
+ ✔ Container servercore  Stopped                                                                                   0.2s
+ ✔ Container modulesdb   Stopped 
