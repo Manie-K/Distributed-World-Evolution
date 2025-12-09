@@ -41,27 +41,61 @@ namespace Server.Core.Lobby
         /// <inheritdoc/>
         public event Action OnLobbyClosed = delegate { };
 
+        /// Module service used for retrieving module information.
         private readonly IModuleService moduleService;
+
+        /// Entities present in the lobby.
         private readonly List<WorldEntity> entities;
+
+        /// Map of positions to entities for quick lookup.
         private readonly Dictionary<(int, int), WorldEntity?> entitiesMap;
+
+        /// Entities mapped by their unique IDs for quick access.
         private readonly Dictionary<Guid, WorldEntity> entitiesId;
+
+        /// Updated entities to be published in the next world state update.
         private readonly List<WorldEntity> updatedEntitiesToPublish;
+
+        /// Allowed modules' IDs in the lobby.
         private readonly List<int> allowedModulesIDs;
+
+        /// Clients connected to the lobby mapped to their user world entities.
         private readonly Dictionary<TcpClient, WorldEntity> clients;
+
+        /// Walkable tiles on the map.
         private readonly bool[][] walkableTiles;
+
+        /// Walkable fertile tiles for plants on the map.
         private readonly bool[][] fertileTiles;
 
+        /// Entities list lock for thread-safe access.
         private readonly object entitiesLock = new object();
+
+        /// Entities map lock for thread-safe access.
         private readonly object entitiesMapLock = new object();
+
+        /// Entities by ID lock for thread-safe access.
         private readonly object entitiesIdLock = new object();
+
+        /// Entities to update lock for thread-safe access.
         private readonly object entitiesToUpdateLock = new object();
+
+        /// Clients lock for thread-safe access.
         private readonly object clientsLock = new object();
+
+        /// Allowed modules lock for thread-safe access.
         private readonly object allowedModulesLock = new object();
 
+        /// Indicates whether the lobby is currently running.
         private bool running;
 
+        /// Number of entities to update per group in each world state update cycle.
         private readonly int entitiesPerGroup = (int)Math.Ceiling((double)LobbyParams.NUM_INITIAL_ENTITIES / LobbyParams.INITIAL_NUMBER_OF_GROUPS);
+
+        /// Current group index for world state updates.
         private int currentGroupIndex = 0;
+
+        /// Total number of update cycles completed.
         private int totalCycles = 1; //Starts from 1 so we don't reduce health/hunger on first update
 
         #region Constructors
