@@ -17,8 +17,9 @@ namespace SharedLibrary.Messages
         public CreateModuleDTO ModuleDTO { get; init; }
 
         /// <summary>
-        /// Constructor for CreateModuleMessage.
+        /// Constructor.
         /// </summary>
+        /// <param name="moduleDTO"> ModuleDTO information to be created. </param>
         public CreateModuleMessage(CreateModuleDTO moduleDTO)
         {
             ModuleDTO = moduleDTO;
@@ -35,5 +36,7 @@ namespace SharedLibrary.Messages
 
             return JsonSerializer.Serialize(payload);
         }
+
     }
+
 }

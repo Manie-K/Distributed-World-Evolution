@@ -2,6 +2,9 @@
 
 namespace Server.Core.Behaviours.EatBehaviour
 {
+    /// <summary>
+    /// Random eat behaviour with 60% chance to eat.
+    /// </summary>
     public class EatRandomly60Behaviour : EatBehaviourBase
     {
         /// <inheritdoc/>
@@ -26,4 +29,5 @@ namespace Server.Core.Behaviours.EatBehaviour
         }
 
     }
+
 }

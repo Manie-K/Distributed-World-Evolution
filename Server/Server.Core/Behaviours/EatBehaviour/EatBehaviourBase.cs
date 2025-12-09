@@ -5,6 +5,9 @@ using SharedLibrary.DTOs.ModuleDTO;
 
 namespace Server.Core.Behaviours.EatBehaviour
 {
+    /// <summary>
+    /// Class that provide basic logic of eating.
+    /// </summary>
     public abstract class EatBehaviourBase : IBehaviour
     {
         /// <inheritdoc/>
@@ -48,4 +51,5 @@ namespace Server.Core.Behaviours.EatBehaviour
         }
 
     }
+
 }

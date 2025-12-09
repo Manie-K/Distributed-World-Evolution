@@ -10,20 +10,28 @@ namespace SharedLibrary.Messages
     {
         /// <inheritdoc/>
         public override MessageTypeEnum MessageType => MessageTypeEnum.LobbyData;
+        
         /// <summary>
         /// Lobby information.
         /// </summary>
         public LobbyDTO Lobby { get; init; }
+        
         /// <summary>
         /// Guid of the user entity.
         /// </summary>
         public Guid UserEntityID { get; init; }
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>  
+        /// <param name="lobby"> Lobby information. </param>
+        /// <param name="userEntityId"> Guid of the user entity. </param>
         public LobbyDataMessage(LobbyDTO lobby, Guid userEntityId)
         {
             Lobby = lobby;
             UserEntityID = userEntityId;
         }
+        
         /// <inheritdoc/>
         public override string BuildJson()
         {
@@ -36,5 +44,7 @@ namespace SharedLibrary.Messages
 
             return JsonSerializer.Serialize(payload);
         }
+
     }
+
 }

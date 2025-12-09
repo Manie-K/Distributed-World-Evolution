@@ -11,17 +11,9 @@ namespace SharedLibrary.Messages
     public class MessageManager
     {
         /// <summary>
-        /// Invoked when a message is received.
-        /// </summary>
-        public static event Action<MessageBase?>? MessageReceived;
-        /// <summary>
-        /// Invoked when a message is sent.
-        /// </summary>
-        public static event Action<bool>? MessageSended;
-
-        /// <summary>
         /// Receives a message from the specified TCP client asynchronously.
         /// </summary>
+        /// <param name="client"> The TCP client to receive the message from. </param>
         public static async Task<MessageBase> ReceiveMessageAsync(TcpClient client)
         {
             try
@@ -77,12 +69,10 @@ namespace SharedLibrary.Messages
                     throw new NotSupportedException($"Undefined message type: {messageTypeString}");
                 }
 
-                MessageReceived?.Invoke(message);
                 return message ?? throw new Exception("Message null");
             }
-            catch (IOException ex)
+            catch (Exception ex)
             {
-                MessageReceived?.Invoke(null);
                 throw new IOException("Client is diconnected.", ex);
             }
         }
@@ -90,6 +80,7 @@ namespace SharedLibrary.Messages
         /// <summary>
         /// Sends a message to the specified TCP client asynchronously.
         /// </summary>
+        /// <param name="client"> The TCP client to send the message to. </param>
         public static async Task<bool> SendMessageAsync(TcpClient client, MessageBase message)
         {
             try
@@ -106,14 +97,14 @@ namespace SharedLibrary.Messages
                 await stream.WriteAsync(messageBytes, 0, messageBytes.Length);
                 await stream.FlushAsync();
 
-                MessageSended?.Invoke(true);
                 return true;
             }
             catch (IOException ex)
             {
-                MessageSended?.Invoke(false);
                 throw new IOException("Client is diconnected.", ex);
             }
         }
+
     }
+
 }

@@ -10,17 +10,21 @@ namespace SharedLibrary.Messages
     {
         /// <inheritdoc/>
         public override MessageTypeEnum MessageType => MessageTypeEnum.LobbyList;
+        
         /// <summary>
         /// List of available lobbies.
         /// </summary>
         public IEnumerable<LobbyDTO> Lobbies { get; init; }
+
         /// <summary>
-        /// Constructor for LobbyListMessage.
+        /// Constructor.
         /// </summary>
+        /// <param name="lobbies"> List of available lobbies. </param>
         public LobbyListMessage(IEnumerable<LobbyDTO> lobbies)
         {
             Lobbies = lobbies;
         }
+        
         /// <inheritdoc/>
         public override string BuildJson()
         {
@@ -32,5 +36,7 @@ namespace SharedLibrary.Messages
 
             return JsonSerializer.Serialize(payload);
         }
+
     }
+
 }

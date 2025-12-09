@@ -3,6 +3,9 @@ using SharedLibrary.DTOs.ModuleDTO;
 
 namespace Server.Core.Behaviours.GatherBehaviour
 {
+    /// <summary>
+    /// Gather behaviour base class, which do nothing, because gather behaviour is handled on client side.
+    /// </summary>
     public abstract class GatherBehaviourBase : IBehaviour
     {
         /// <inheritdoc/>
@@ -13,7 +16,6 @@ namespace Server.Core.Behaviours.GatherBehaviour
 
         /// <inheritdoc/>
         public abstract string Description { get; }
-
 
         /// <inheritdoc/>
         public abstract void Execute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null);
@@ -26,5 +28,7 @@ namespace Server.Core.Behaviours.GatherBehaviour
         {
             return new BehaviourDTO(DatabaseID, Description, Type, BehaviourInteractionTypeEnum.None);
         }
+
     }
+
 }

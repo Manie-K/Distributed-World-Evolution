@@ -9,8 +9,6 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server.UI", "Server.UI\Serv
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Server.Tests", "Server.Tests\Server.Tests.csproj", "{14886B02-C80F-4CAD-9D19-4BA2BD45B234}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TemporaryManualServerTests", "TemporaryManualServerTests\TemporaryManualServerTests.csproj", "{6223273D-8A02-4A55-BDA2-DD9C252C6578}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SharedLibrary", "..\Shared\SharedLibrary\SharedLibrary.csproj", "{3B80377C-BB53-F2CC-C7E4-DBE3911C76CF}"
 EndProject
 Global
@@ -31,10 +29,6 @@ Global
 		{14886B02-C80F-4CAD-9D19-4BA2BD45B234}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{14886B02-C80F-4CAD-9D19-4BA2BD45B234}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{14886B02-C80F-4CAD-9D19-4BA2BD45B234}.Release|Any CPU.Build.0 = Release|Any CPU
-		{6223273D-8A02-4A55-BDA2-DD9C252C6578}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6223273D-8A02-4A55-BDA2-DD9C252C6578}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6223273D-8A02-4A55-BDA2-DD9C252C6578}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6223273D-8A02-4A55-BDA2-DD9C252C6578}.Release|Any CPU.Build.0 = Release|Any CPU
 		{3B80377C-BB53-F2CC-C7E4-DBE3911C76CF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{3B80377C-BB53-F2CC-C7E4-DBE3911C76CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3B80377C-BB53-F2CC-C7E4-DBE3911C76CF}.Release|Any CPU.ActiveCfg = Release|Any CPU

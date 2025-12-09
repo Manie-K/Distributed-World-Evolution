@@ -8,31 +8,48 @@ using System.Net.Sockets;
 
 namespace Server.Core.Services
 {
+    /// <summary>
+    /// Background service for logging messages and sending them to connected UI clients.
+    /// </summary>
     public class LoggerService : BackgroundService
     {
         private readonly ConcurrentQueue<MessageBase> _messageQueue = new();
-        private List<TcpClient> ClientsUI { set; get; } = new List<TcpClient>();
+        private readonly List<TcpClient> clientsUI = new();
+        private readonly TimeSpan _pollInterval = TimeSpan.FromMilliseconds(50);
 
         private readonly object _clientsLock = new object();
 
-        private readonly TimeSpan _pollInterval = TimeSpan.FromMilliseconds(50);
 
+        /// <summary>
+        /// Adds a new UI client to the logger service.
+        /// </summary>
+        /// <param name="clientUI"> The TCP client representing the UI. </param>
         public void AddClient(TcpClient clientUI)
         {
-            ClientsUI.Add(clientUI);
+            clientsUI.Add(clientUI);
         }
 
+        /// <summary>
+        /// Sends the provided LobbyDTO to all connected UI clients.
+        /// </summary>
+        /// <param name="lobbyDto"> The LobbyDTO to send. </param>
         public void SendLobbyDTO(LobbyDTO lobbyDto)
         {
             lock (_clientsLock)
             {
-                foreach (var ClientUI in ClientsUI)
+                foreach (var ClientUI in clientsUI)
                 {
                     _messageQueue.Enqueue(new LobbyDataMessage(lobbyDto, Guid.Empty));
                 }
             }
         }
 
+        /// <summary>
+        /// Logs a message with the specified content and log level.
+        /// </summary>
+        /// <param name="content"> The content of the log message. </param>
+        /// <param name="logLevel"> The log level of the message. </param>
+        /// <param name="sender"> Optional sender object, used to identify the source of the log. </param>
         public void Log(string content, LogLevelEnum logLevel, object? sender = null)
         {
             Log log = new Log(content, logLevel);
@@ -64,7 +81,7 @@ namespace Server.Core.Services
                 {
                     lock (_clientsLock)
                     {
-                        foreach (var ClientUI in ClientsUI)
+                        foreach (var ClientUI in clientsUI)
                         {
                             if (ClientUI.Connected)
                             {
@@ -74,13 +91,13 @@ namespace Server.Core.Services
                                 }
                                 catch (IOException)
                                 {
-                                    ClientsUI.Remove(ClientUI);
+                                    clientsUI.Remove(ClientUI);
                                     ClientUI.Close();
                                 }
                             }
                             else
                             {
-                                ClientsUI.Remove(ClientUI);
+                                clientsUI.Remove(ClientUI);
                                 ClientUI.Close();
                             }
                         }
@@ -94,4 +111,5 @@ namespace Server.Core.Services
         }
 
     }
+
 }

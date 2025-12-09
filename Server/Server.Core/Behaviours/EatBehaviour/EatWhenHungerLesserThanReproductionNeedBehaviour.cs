@@ -4,12 +4,17 @@ using SharedLibrary.Helpers;
 
 namespace Server.Core.Behaviours.EatBehaviour
 {
-    public class EatWhenHungerLesserThanReproductionNeed : EatBehaviourBase
+    /// <summary>
+    /// Eat behaviour that allows eating when hunger need is lesser than reproduction need.
+    /// </summary>
+    public class EatWhenHungerLesserThanReproductionNeedBehaviour : EatBehaviourBase
     {
         /// <inheritdoc/>
         public override int DatabaseID => 303;
+        
         /// <inheritdoc/>
         public override string Description => "Eats when reproduction need is lesser than hunger need";
+        
         /// <inheritdoc/>
         public override bool CanExecute(WorldEntity entity, WorldEntity? target, IModuleService moduleService, Dictionary<string, object>? otherParams = null)
         {
@@ -22,5 +27,7 @@ namespace Server.Core.Behaviours.EatBehaviour
 
             return false;
         }
+
     }
+
 }

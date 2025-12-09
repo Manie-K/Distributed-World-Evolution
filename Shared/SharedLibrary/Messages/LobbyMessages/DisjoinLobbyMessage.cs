@@ -9,17 +9,21 @@ namespace SharedLibrary.Messages
     {
         /// <inheritdoc/>
         public override MessageTypeEnum MessageType => MessageTypeEnum.DisjoinLobby;
+        
         /// <summary>
         /// ID of the lobby to disjoin from.
         /// </summary>
         public int LobbyID { get; init; }
+
         /// <summary>
-        /// Constructor for DisjoinLobbyMessage.
+        /// Constructor.
         /// </summary>
+        /// <param name="lobbyID"> ID of the lobby to disjoin from. </param>
         public DisjoinLobbyMessage(int lobbyID)
         {
             LobbyID = lobbyID;
         }
+        
         /// <inheritdoc/>
         public override string BuildJson()
         {
@@ -31,5 +35,7 @@ namespace SharedLibrary.Messages
 
             return JsonSerializer.Serialize(payload);
         }
+
     }
+
 }

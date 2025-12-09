@@ -8,6 +8,9 @@ using System.Threading.Tasks;
 
 namespace Server.Core.Connection
 {
+    /// <summary>
+    /// Interface for managing client connections to the server.
+    /// </summary>
     public interface IConnectionManager
     {
 

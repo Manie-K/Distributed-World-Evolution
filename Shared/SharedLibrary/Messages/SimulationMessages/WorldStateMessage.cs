@@ -1,27 +1,30 @@
 ﻿using System.Text.Json;
-using SharedLibrary;
 using SharedLibrary.DTOs.EntitiesDTO;
 
 namespace SharedLibrary.Messages
 {
     /// <summary>
-    /// Contains the state of the world.
+    /// Contains the updated state of the world's entities.
     /// </summary>
     public class WorldStateMessage : MessageBase
     {
         /// <inheritdoc/>
         public override MessageTypeEnum MessageType => MessageTypeEnum.WorldState;
+
         /// <summary>
-        /// World entities.
+        /// Updated entities in the world.
         /// </summary>
         public IEnumerable<WorldEntityDTO> UpdatedEntities { get; init; }
+
         /// <summary>
-        /// Constructor for WorldStateMessage.
+        /// Constructor.
         /// </summary>
+        /// <param name="updatedEntities"> Updated entities in the world. </param>
         public WorldStateMessage(IEnumerable<WorldEntityDTO> updatedEntities)
         {
             UpdatedEntities = updatedEntities;
         }
+        
         /// <inheritdoc/>
         public override string BuildJson()
         {
@@ -33,5 +36,7 @@ namespace SharedLibrary.Messages
 
             return JsonSerializer.Serialize(payload);
         }
+
     }
+
 }

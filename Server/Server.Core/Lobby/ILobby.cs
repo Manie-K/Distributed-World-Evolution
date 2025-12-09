@@ -1,11 +1,13 @@
 ﻿using SharedLibrary.DTOs.LobbyDTO;
 using SharedLibrary.Helpers;
-using SharedLibrary.Logging;
 using SharedLibrary.Messages;
 using System.Net.Sockets;
 
 namespace Server.Core.Lobby
 {
+    /// <summary>
+    /// Interface representing a game lobby.
+    /// </summary>
     public interface ILobby
     {
         /// <summary>
@@ -33,20 +35,19 @@ namespace Server.Core.Lobby
         /// </summary>
         public event Action OnLobbyClosed;
 
-
         /// <summary>
         /// Adds a client to the lobby and returns a unique identifier for the user world entity.
         /// </summary>
-        /// <param name="client">TCP client to be added.</param>
-        /// <param name="username">Name of user's entity.</param>
-        /// <returns>ID of created WorldEntity. </returns>
+        /// <param name="client"> TCP client to be added. </param>
+        /// <param name="username"> Name of user's entity. </param>
+        /// <returns> ID of created WorldEntity. </returns>
         public Guid AddClient(TcpClient client, string username);
 
         /// <summary>
         /// Removes client from the lobby. Removes his world entity as well.
         /// </summary>
-        /// <param name="client">TCP client to be removed.</param>"
-        /// <returns>True if client was removed, false otherwise.</returns>
+        /// <param name="client"> TCP client to be removed. </param>"
+        /// <returns> True if client was removed, false otherwise. </returns>
         public bool RemoveClient(TcpClient client);
 
         /// <summary>
@@ -66,15 +67,15 @@ namespace Server.Core.Lobby
         /// <summary>
         /// Checks if a position in the lobby is free (no world entity occupies it).
         /// </summary>
-        /// <param name="position">Position to be checked.</param>
-        /// <returns>True if the position is unoccupied, false otherwise.</returns>
+        /// <param name="position"> Position to be checked. </param>
+        /// <returns> True if the position is unoccupied, false otherwise. </returns>
         public bool IsPositionFree(Position2D position);
 
         /// <summary>
         /// Adds a module to the list of allowed modules in the lobby.
         /// </summary>
-        /// <param name="moduleId">ID of the module to add.</param>
-        /// <returns>True if successful, false otherwise.</returns>
+        /// <param name="moduleId"> ID of the module to add. </param>
+        /// <returns> True if successful, false otherwise. </returns>
         public bool AddAllowedModule(int moduleId);
         
         /// <summary>
@@ -99,9 +100,9 @@ namespace Server.Core.Lobby
         /// <summary>
         /// Converts the lobby to a LobbyDTO for data transfer.
         /// </summary>
-        /// <returns> DataTransferObject representing this lobby </returns>
+        /// <returns> DataTransferObject representing this lobby. </returns>
         public LobbyDTO ToDTO();
 
-
     }
+
 }

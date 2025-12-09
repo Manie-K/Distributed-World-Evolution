@@ -8,8 +8,14 @@ using Server.Core.Services;
 
 namespace Server.Core
 {
+    /// <summary>
+    /// Main program class for the Server.Core project.
+    /// </summary>
     internal class Program
     {
+        /// <summary>
+        /// Main entry point for the application.
+        /// </summary>
         private static async Task Main(string[] args)
         {
             Console.WriteLine("[DEBUG]: Debug console for Core project, independent from UI project.");
@@ -39,7 +45,7 @@ namespace Server.Core
             var builder = Host.CreateApplicationBuilder(args);
 
             builder.Services.AddSingleton<IConnectionManager, ConnectionManager>();
-            builder.Services.AddSingleton<LobbyManager>();
+            builder.Services.AddSingleton<ILobbyManager, LobbyManager>();
             builder.Services.AddSingleton<LoggerService>();
             builder.Services.AddHostedService(provider => provider.GetRequiredService<LoggerService>());
 
@@ -51,5 +57,7 @@ namespace Server.Core
 
             await host.WaitForShutdownAsync();
         }
+
     }
+
 }

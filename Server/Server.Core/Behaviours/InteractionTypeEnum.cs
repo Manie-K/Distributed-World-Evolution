@@ -1,6 +1,11 @@
-﻿
+﻿using System.Text.Json.Serialization;
+
 namespace Server.Core.Behaviours
 {
+    /// <summary>
+    /// Enumeration representing different types of interactions that entities can perform.
+    /// </summary>
+    [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum InteractionTypeEnum
     {
         None = 0,
@@ -9,4 +14,5 @@ namespace Server.Core.Behaviours
         Eat = 3,
         Reproduce = 4
     }
+
 }

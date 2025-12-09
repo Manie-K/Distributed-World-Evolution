@@ -2,6 +2,9 @@
 
 namespace SharedLibrary.Messages
 {
+    /// <summary>
+    /// Info message type enumeration.
+    /// </summary>
     [JsonConverter(typeof(JsonStringEnumConverter))]
     public enum InfoMessageTypeEnum
     {
@@ -20,4 +23,5 @@ namespace SharedLibrary.Messages
         ModuleCreated,
         ModuleNotCreated,
     }
+
 }

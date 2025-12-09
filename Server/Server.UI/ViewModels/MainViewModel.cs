@@ -1,5 +1,4 @@
 ﻿using Microsoft.Extensions.Configuration;
-using Server.Core.Lobby;
 using Server.UI.Models;
 using SharedLibrary.DTOs.LobbyDTO;
 using SharedLibrary.Logging;
@@ -9,13 +8,27 @@ using System.Net.Sockets;
 
 namespace Server.UI.ViewModels
 {
+    /// <summary>
+    /// Class representing the main view model for the server UI.
+    /// </summary>
     internal class MainViewModel
     {
+        /// <summary>
+        /// Server tab view model.
+        /// </summary>
         public ServerViewModel ServerTab { get; }
+
+        /// <summary>
+        /// Observable collection of tab view models.
+        /// </summary>
         public ObservableCollection<BaseTabViewModel> Tabs { get; } = new();
 
+        /// Client for TCP communication with the server.
         private TcpClient _client;
 
+        /// <summary>
+        /// Constructor.
+        /// </summary>
         public MainViewModel()
         {
             var config = new ConfigurationBuilder()
@@ -35,6 +48,7 @@ namespace Server.UI.ViewModels
             InitializeAsync();
         }
 
+        /// Initializes the view model asynchronously.
         private async void InitializeAsync()
         {
             await MessageManager.SendMessageAsync(_client, new RoleMessage(RoleEnum.UI));
@@ -67,11 +81,16 @@ namespace Server.UI.ViewModels
 
         }
 
-        public void HandleLog(int senderID, Log log)
+        /// <summary>
+        /// Handles a log message.
+        /// </summary>
+        /// <param name="senderID"> ID of the sender. </param>
+        /// <param name="log"> Log message. </param>
+        private void HandleLog(int senderID, Log log)
         {
             if (senderID != -1)
             {
-                LobbyViewModel? lobby = FindLobbyTabById(senderID);
+                LobbyViewModel? lobby = GetLobbyTabById(senderID);
                 if (lobby != null)
                 {
                     lobby.AppendLog(log);
@@ -87,7 +106,11 @@ namespace Server.UI.ViewModels
             }
         }
 
-        public void HandleLobby(LobbyDTO lobbyDto)
+        /// <summary>
+        /// Handles lobby data.
+        /// </summary>
+        /// <param name="lobbyDto"> Lobby data transfer object. </param>
+        private void HandleLobby(LobbyDTO lobbyDto)
         {
             var existing = Tabs.FirstOrDefault(t => t.ID == lobbyDto.ID);
             if (existing is LobbyViewModel vm)
@@ -106,10 +129,15 @@ namespace Server.UI.ViewModels
             }
         }
 
-        private LobbyViewModel? FindLobbyTabById(int lobbyId)
+        /// <summary>
+        /// Retrieves a lobby tab by its ID.
+        /// </summary>
+        /// <param name="lobbyId"> ID of the lobby. </param>
+        private LobbyViewModel? GetLobbyTabById(int lobbyId)
         {
             return Tabs.OfType<LobbyViewModel>().FirstOrDefault(tab => tab.ID == lobbyId);
         }
+
     }
 
 }

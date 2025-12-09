@@ -11,10 +11,12 @@
         <!-- LogsTemplate -->
         <DataTemplate x:Key="LogsListTemplate">
             <ListBox ItemsSource="{Binding Logs}" 
-             Height="300"
+             Margin="10"
              FontFamily="Consolas"
              Background="Black"
              BorderThickness="1"
+             HorizontalAlignment="Stretch"
+             VerticalAlignment="Stretch"
              ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
@@ -23,7 +25,7 @@
                                 <MultiBinding StringFormat="[{0:HH:mm:ss}] [{1}] {2}">
                                     <Binding Path="Timestamp"/>
                                     <Binding Path="LogLevel"/>
-                                    <Binding Path="Message"/>
+                                    <Binding Path="Content"/>
                                 </MultiBinding>
                             </TextBlock.Text>
                             <TextBlock.Style>
@@ -55,20 +57,44 @@
         </DataTemplate>
 
         <!-- ServerTemplate -->
-        <DataTemplate x:Key="ServerTemplate" >
-            <StackPanel Margin="10">
-                <TextBlock Text="{Binding Info}" FontWeight="Bold" Foreground="DarkBlue"/>
-                <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource LogsListTemplate}"/>
-            </StackPanel>
+        <DataTemplate x:Key="ServerTemplate">
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="{Binding Info}" 
+                   FontWeight="Bold" 
+                   Foreground="DarkBlue" 
+                   Margin="0 0 0 10"/>
+
+                <ContentPresenter Grid.Row="1"
+                          Content="{Binding}" 
+                          ContentTemplate="{StaticResource LogsListTemplate}"/>
+            </Grid>
         </DataTemplate>
+
 
         <!-- LobbyTemplate -->
         <DataTemplate x:Key="LobbyTemplate">
-            <StackPanel Margin="10">
-                <TextBlock Text="{Binding Info}" FontWeight="Bold" Foreground="DarkGreen"/>
-                <ContentPresenter Content="{Binding}" ContentTemplate="{StaticResource LogsListTemplate}"/>
-            </StackPanel>
+            <Grid Margin="10">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <TextBlock Text="{Binding Info}" 
+                   FontWeight="Bold" 
+                   Foreground="DarkGreen" 
+                   Margin="0 0 0 10"/>
+
+                <ContentPresenter Grid.Row="1"
+                          Content="{Binding}" 
+                          ContentTemplate="{StaticResource LogsListTemplate}"/>
+            </Grid>
         </DataTemplate>
+
 
         <!-- Selector -->
         <local:TabTemplateSelector x:Key="MyTabSelector"

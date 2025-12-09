@@ -3,6 +3,9 @@ using SharedLibrary.Helpers;
 
 namespace Server.Core
 {
+    /// <summary>
+    /// Class representing the state of an entity in the game world.
+    /// </summary>
     public class EntityState
     {
         /// <summary>
@@ -35,15 +38,18 @@ namespace Server.Core
         public Position2D LastMovementVector { get; set; } = new Position2D(0, 0);
         //We don't persist this value, it's only for runtime use. Reset to (0,0) won't break anything.
 
+        /// <summary>
+        /// Last attacked entity ID - used for combat mechanics.
+        /// </summary>
         public Guid LastAttackedEntityId { get; set; } = Guid.Empty; //Skip in DTOs as well.
 
         /// <summary>
         /// Creates a new instance of EntityState.
         /// </summary>
-        /// <param name="position">Position</param>
-        /// <param name="health">Health</param>
-        /// <param name="hunger">Hunger</param>
-        /// <param name="interactionFramesLeft">Cooldown left</param>
+        /// <param name="position"> Position of the entity. </param>
+        /// <param name="health"> Health of the entity. </param>
+        /// <param name="hunger"> Hunger level of the entity. </param>
+        /// <param name="interactionFramesLeft"> Number of frames left for interaction cooldown. </param>
         public EntityState(Position2D position, int health, int hunger, int interactionFramesLeft = 0)
         {
             Position = new Position2D(position.X, position.Y);
@@ -55,7 +61,7 @@ namespace Server.Core
         /// <summary>
         /// Creates a new instance of EntityState by copying another instance values.
         /// </summary>
-        /// <param name="other"></param>
+        /// <param name="other"> Other EntityState to copy values from. </param>
         public EntityState(EntityState other)
         {
             Position = new Position2D(other.Position.X, other.Position.Y);
@@ -67,29 +73,28 @@ namespace Server.Core
         /// <summary>
         /// Creates a new instance of EntityState from a DTO.
         /// </summary>
-        /// <param name="dto">Data transfer object</param>
+        /// <param name="dto"> DTO to create the EntityState from. </param>
         public EntityState(EntityStateDTO dto)
         {
             Position = new Position2D(dto.Position.X, dto.Position.Y);
             Health = dto.Health;
             Hunger = dto.Hunger;
-            InteractionCooldownLeft = dto.InteractionFramesLeft;
         }
 
         /// <summary>
         /// Converts the EntityState to a DTO.
         /// </summary>
-        /// <returns></returns>
+        /// <returns> DTO representing the EntityState. </returns>
         public EntityStateDTO ToDTO()
         {
-            return new EntityStateDTO(Position, Health, Hunger, InteractionCooldownLeft, LastInteractionName);
+            return new EntityStateDTO(Position, Health, Hunger, LastInteractionName);
         }
 
         /// <summary>
         /// Compares the EntityState with a DTO.
         /// </summary>
-        /// <param name="dto"></param>
-        /// <returns></returns>
+        /// <param name="dto"> DTO to compare with. </param>
+        /// <returns> True if the EntityState is equal to the DTO; otherwise, false. </returns>
         public bool EqualsDto(EntityStateDTO? dto)
         {
             if (dto == null)
@@ -100,9 +105,9 @@ namespace Server.Core
             return Position.Equals(dto.Position)
                 && Health == dto.Health
                 && Hunger == dto.Hunger
-                && InteractionCooldownLeft == dto.InteractionFramesLeft
                 && LastInteractionName == dto.LastInteractionName;
         }
 
     }
+
 }
